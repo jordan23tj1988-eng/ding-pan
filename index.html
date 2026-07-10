@@ -1,0 +1,116 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>情绪盯盘台 · 概览</title><style>
+:root{color-scheme:light;--ink:#1c2530;--sub:#5b6672;--line:#e6e1d8;--paper:#f6f4ef;--card:#fffdf9;--up:#c0392b;--down:#1e8449;--hit:#0f766e;--half:#b45309;--miss:#b91c1c;--accent:#8a6d3b;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.nav{position:sticky;top:0;z-index:9;background:rgba(28,37,48,.97);display:flex;gap:2px;align-items:center;padding:10px 18px;box-shadow:0 2px 12px rgba(0,0,0,.15);flex-wrap:wrap}
+.nav .brand{color:#c9b892;font-size:13px;letter-spacing:2px;font-weight:700;margin-right:12px}
+.nav a{color:#c3ccd3;text-decoration:none;font-size:13px;padding:6px 12px;border-radius:8px;transition:.15s}
+.nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav a.on{background:#c9b892;color:#1c2530;font-weight:600}
+.nav .upd{margin-left:auto;color:#8a94a0;font-size:11.5px}
+.wrap{max-width:940px;margin:0 auto;padding:24px 16px 60px}
+.hero{background:linear-gradient(135deg,#1c2530,#2f3a46 60%,#3a4b3f);color:#f4efe6;border-radius:18px;padding:26px 30px;box-shadow:0 12px 30px rgba(28,37,48,.2)}
+.hero .kick{font-size:12px;letter-spacing:3px;color:#c9b892;text-transform:uppercase}
+.hero h1{font-size:23px;margin:8px 0 6px;font-weight:700}
+.hero p{color:#c3ccd3;font-size:13.8px;max-width:670px}
+.stance{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:6px 14px;border-radius:22px;font-size:13px;color:#eadfca}
+.pill b{color:#fff}.pill.warn{background:rgba(192,57,43,.22);border-color:rgba(192,57,43,.4);color:#f3c8c2}
+h2{font-size:16px;margin:30px 0 4px;padding-left:12px;border-left:4px solid var(--accent)}
+h2.hot{border-left-color:var(--up)}
+.hint{color:var(--sub);font-size:12.5px;margin:4px 0 14px;padding-left:14px}
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.kv .l{font-size:12px;color:var(--sub)}.kv .v{font-size:19px;font-weight:800;margin-top:3px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:14px;box-shadow:0 3px 9px rgba(0,0,0,.03)}
+.card p{font-size:13.7px;color:#3f4854}
+.card.hotcard{border:1px solid #e3c7bf;background:linear-gradient(135deg,#fffaf7,#fbf0ec)}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;display:block;transition:.15s}
+.mith:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.09)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:#4a4c50}
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th,td{overflow-wrap:anywhere;word-break:break-word}
+table{table-layout:auto}
+.wrap{overflow-x:hidden}
+th{color:var(--sub);font-weight:600;font-size:12px}
+th:first-child,td:first-child{min-width:78px}
+.dS{color:#8a1c8a;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px}
+.t-attack{background:#e2f1ef;color:var(--hit)}.t-watch{background:#fbeed8;color:var(--half)}.t-avoid{background:#f7e0e0;color:var(--miss)}
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid var(--paper)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700}
+.tli .h{font-size:14px;font-weight:600;margin:2px 0 4px}.tli .b{font-size:13px;color:#3f4854}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:5px;background:#efeae0;border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:9px;background:#ece7dc;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#8a6d3b,#c0392b)}
+.track.teal>i{background:linear-gradient(90deg,#0f766e,#3a9d8f)}
+.base{font-size:11.5px;color:var(--sub);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:#f7e0e0;border-style:dashed;border-color:#e0b4b4;color:var(--miss)}
+.rung.high{border-color:#c0392b}
+.foot{margin-top:32px;padding:15px 18px;background:#efeae0;border-radius:12px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:#e6f0ee;color:#0f766e}.bC{background:#faf0df;color:#b45309}.bMix{background:#eee9f5;color:#6b4fa0}
+.hlist{list-style:none}.hlist li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px}.hlist .st{flex:1;font-size:13.3px;color:#3f4854;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+
+.jjr td{background:linear-gradient(90deg,#f3eee1,#faf7f0);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#4a5460}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:#8a6d3b;background:#eae1cc;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:linear-gradient(90deg,#e9f1ee,#f4faf8);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#3f5a52}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:#0f766e;background:#d8ebe6;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obswrap{margin-top:6px}
+.obs{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;box-shadow:0 3px 9px rgba(0,0,0,.03)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:5px}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#3f4854;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.3px;color:#2f3a46;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#8a1c1c;background:#f3dedb}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#3f5a52;background:linear-gradient(90deg,#e9f1ee,#f4faf8);overflow-wrap:anywhere}
+.obs-lab2{color:#0f766e;background:#d8ebe6}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#4a5460;background:linear-gradient(90deg,#f3eee1,#faf7f0);overflow-wrap:anywhere}
+
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+
+details.chain{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:12px;padding:0 18px;box-shadow:0 3px 9px rgba(0,0,0,.03)}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"▸";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"▾"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:#efeae0;color:var(--sub)}
+details.chain summary .chip.hot{background:#f7e0e0;color:var(--miss)}
+details.chain summary .chip.cold{background:#e2f1ef;color:var(--hit)}
+details.chain .inner{padding:2px 0 16px}
+</style></head><body><div class="nav"><span class="brand">情绪盯盘台</span><a class="on" href="index.html">概览</a><a class="" href="limitup.html">涨停复盘</a><a class="" href="cycle.html">周期情绪</a><a class="" href="theme.html">主线题材</a><a class="" href="logic.html">产业逻辑</a><a class="" href="lhb.html">龙虎榜</a><a class="" href="auction.html">竞价</a><a class="" href="history.html">历史</a><span class="upd">更新 2026-07-10 收盘 · 换线日:商业航天事件点火</span></div><div class="wrap"><div class="hero"><div class="kick">Daily Overview · 我当前的判断</div><h1>复盘概览 · 截至 2026-07-10 收盘</h1><p>此刻我对市场的判断。明日观察点在第一屏;周期/情绪、主线、产业逻辑、龙虎榜、竞价深入看各页。每天18:00更新,旧的进历史存档。</p><div class="stance"><span class="pill">情绪档 · <b>换线混沌·事件点火</b></span><span class="pill">周期 · <b>量能台阶三连升·高度崩塌</b></span><span class="pill warn">攻防 · <b>谨慎试探·仅商业航天核心 3-4成</b></span></div></div>
+<h2>明日核心观察点(07-11周末后为07-13)· 对应股票</h2><div class="hint">五路荐票综合(竞价/席位/题材/产业逻辑/涨停复盘质量)→总agent裁决。每只标荐票来源+共振数+质量分(分数唯一源=涨停质量荐票_20260710.json)。★资金温度93分位=热天,全部追买观察点整体调降半档。给观察点不给买卖指令;含规避型。</div>
+<div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:118px"><col><col style="width:150px"><col style="width:96px"></colgroup>
+<tr><th>标的</th><th>身位逻辑 · 明日触发</th><th>荐票来源·共振</th><th>类型</th></tr>
+<tr><td style="white-space:nowrap"><b>海兰信</b><br><span class="mut">300065</span></td><td><b>商业航天·火箭回收+海底数据中心</b>,20cm首板直线,A档席位(国泰海通成都北一环)净买1.37亿。明日看竞价:高开3-7%有承接=新主线人气龙候选;平低开=事件脉冲存疑。20cm波动大,不追高开。</td><td style="word-break:break-word"><b>3路共振</b>(席位/题材/产逻)· 质量分10</td><td>进攻观察<br><span class="mut">热天降半档→观察+</span></td></tr>
+<tr><td style="white-space:nowrap"><b>中天火箭</b><br><span class="mut">003009</span></td><td><b>整箭正统·链条洼地</b>(整箭环节60日-7.7%距高-43.7%)。央企小箭总装,回收成功最直接映射。看能否2板确立线内正统身位。</td><td style="word-break:break-word"><b>2路</b>(题材/产逻)· 质量分10</td><td>观察</td></tr>
+<tr><td style="white-space:nowrap"><b>九丰能源</b><br><span class="mut">605090</span></td><td><b>特燃特气·本次发射保障单位(官媒点名=A档)</b>,发射频次增加=直接业绩弹性,60日-4.1%低位。看回封与量能。</td><td style="word-break:break-word"><b>2路</b>(题材/产逻·A档催化)· 质量分14</td><td>观察</td></tr>
+<tr><td style="white-space:nowrap"><b>同益中</b><br><span class="mut">688722</span></td><td><b>阻拦网UHMWPE纤维=网系回收独门卡位</b>(全球首创网系回收的新增量环节,60日+8%中低位)。产逻最纯挖掘;20cm。</td><td style="word-break:break-word"><b>1路强</b>(产逻卡位)· 质量分15</td><td>观察</td></tr>
+<tr><td style="white-space:nowrap"><b>三维通信</b><br><span class="mut">002115</span></td><td><b>预增1428~2002%(A档公告)+卫星通信</b>,今日一字·竞价池首。业绩+题材双击,但一字执行口径无肉,看开板换手后的低吸位,不追一字。</td><td style="word-break:break-word"><b>2路</b>(竞价/业绩A档)· 质量分7</td><td>观察·禁追一字</td></tr>
+<tr><td style="white-space:nowrap"><b>高德红外</b><br><span class="mut">002414</span></td><td><b>军工红外·预增最高7倍</b>,2板但今日炸5次=分歧加重。席位路A档(广发郑州农业路0.86亿)。3板需竞价干净,再炸即衰。</td><td style="word-break:break-word"><b>2路</b>(席位/竞价池)· 质量分12</td><td>观察·分歧中</td></tr>
+<tr><td style="white-space:nowrap"><b>恒尚节能</b><br><span class="mut">603137</span></td><td><b>9板一字炸22次收+6.15%=空间板断头</b>。断头票次日修复博弈胜率极低,旧主线(存储重组)情绪旗帜倒下。</td><td style="word-break:break-word">荐票·规避</td><td><b>高危规避</b></td></tr>
+</table></div>
+<h2>四维看牌 · 命门温度</h2><div class="card"><table style="table-layout:fixed;width:100%"><tr><th style="width:110px">命门</th><th>温度</th><th>读数</th></tr>
+<tr><td><b>席位·资金</b></td><td><b class="s-mid">中性偏暖·过热预警</b></td><td>S/A真金进商业航天(海兰信1.37亿/金利华电/航天环宇/星网)但量级中等;大钱(兆易50.4亿/晶合12.5亿)仍在半导体权重对倒。★资金温度93分位=热,倒U顶部区(过热日跟买历史胜率仅45.7%)。</td></tr>
+<tr><td><b>竞价·时机</b></td><td><b class="s-weak">冷</b></td><td>一字仅3只/早封(≤9:31)12只/封单≥2%仅8只;商业航天全线午后封(事件12:15才落地,未经竞价检验)。昨池终结算封板33%、执行均收-0.17%。</td></tr>
+<tr><td><b>题材·方向</b></td><td><b class="s-mid">温·主流候选Day1</b></td><td>聚类6有最高=商业航天4/6(28只,缺"高度"与"竞价强度"两有)>AI算力4/6(42→15缩圈)。无5/6主流,但商业航天=A档事件+低位链条的主流候选,明日竞价定成色。</td></tr>
+<tr><td><b>质量·Top5</b></td><td><b class="s-weak">冷·连续第3日无高分</b></td><td>Top5最高仅22分(佳缘22/宏达18/鑫汇科17/优机16/美诺华16)且全是"爆量高换手分歧板"因子驱动;全场无高分=追板无肉,环境仪表盘持续防守。今日全场涨停执行均收昨为-2.52%,与炸板率49.7%互证。</td></tr></table></div>
+<h2>⚠ 拐点预警 · 命门温度背离</h2><div class="card"><b>今天不是昨天预设的两个剧本,市场走了第三条路:A档事件换线。</b>旧主线(半导体高位)如期见顶(恒尚9板断头/华天一字炸/42→15缩圈)——昨日"背离拐点预警"方向兑现;但量能33885亿三连放+跌停仅4=资金没走,切换进商业航天(28只,全链60日低位)。<b>新背离:</b>题材宽(28只)vs 高度无(最高2板)vs 竞价未验(午后事件封板)vs 资金温度93分位过热+炸板率49.7%绞肉。<b>可证伪转向条件:</b>①<b>主流确立</b>=下一交易日商业航天线涨停(新+回封)≥10只、且海兰信/中天火箭/中国卫星/贵绳/九丰中≥2只再封板→混沌转启动,做纵深分层;②<b>事件一日游</b>=商业航天新涨停&lt;5只、核心5票竞价平低开→退回混沌防守2-3成;③<b>顶部特征强化</b>=炸板率仍&gt;35%→不论线成不成,总仓位压2-3成。</div>
+<h2>我的认知迭代 · 最新</h2><div class="hint">完整时间线见各页与历史存档;此处只显最新一条。</div><div class="tl"><div class="tli"><div class="d">2026-07-10</div><div class="h">★换线日:旧主线断头+新主线A档事件点火,两个预设剧本全被绕开</div><div class="b">量能33885亿(+4748,三连放)、涨停92、跌停仅4=赚钱面继续扩张;但炸板率49.7%(91家)、最高板压到2=<b>数量繁荣×质量崩塌</b>。恒尚9板一字炸22次断头/华天一字炸3次=旧主线(半导体高位)情绪见顶兑现昨日预警;12:15长十乙海上网系回收成功(A档硬催化)→商业航天28只午后点火,全链60日低位=<b>低位事件换线,非高位接力</b>。教训:①二元情景(主升/退潮)漏掉"事件换线"第三路径——发射窗口7/10-13在6月底已公开,本该进前置预期雷达,漏看公开日历=可修复失误;②脚本"晚封=末端外溢"画像对午后事件线失真(钟表原因非情绪原因),已在涨停复盘页标注边界。明日焦点唯一:商业航天竞价承接=主流确立or一日游。</div><div class="sup"><b>支撑:</b>07-10量33885亿(+4748)/涨停92/跌停4/炸板91(炸板率49.7%)/最高2板/梯队{2:10,1:82};长征十号乙12:15一子级海上网系回收成功(央视/证券时报);聚类6有商业航天4/6(28只)·AI算力4/6(15只);资金温度93分位(总买入206.8亿);竞价池终结算封板4/12执行均收-0.17%;质量路结算1/5均收-1.0%增益+1.52pp;席位路结算0/5均收-4.58%</div></div></div></div></body></html>

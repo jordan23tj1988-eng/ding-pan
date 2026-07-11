@@ -1,0 +1,55 @@
+<!doctype html><html lang=zh><head><meta charset=utf-8><title>集合竞价训练</title>
+<style>:root{color-scheme:light}body{font-family:-apple-system,'Microsoft YaHei',sans-serif;background:#f5f6f8;color:#1a1a2e;margin:0;padding:16px;font-size:14px}.wrap{max-width:1000px;margin:0 auto}.card{background:#fff;border-radius:12px;padding:16px 20px;margin:12px 0;box-shadow:0 1px 4px rgba(0,0,0,.06)}h1{font-size:22px;margin:0 0 4px}h2{font-size:16px;border-left:4px solid #4361ee;padding-left:8px;margin:6px 0 12px}h3{font-size:14px;margin:10px 0 4px;color:#333}table{border-collapse:collapse;width:100%;font-size:13px}th,td{padding:6px 8px;text-align:left;border-bottom:1px solid #eee}th{color:#666;background:#fafafa}.pos{color:#e63946;font-weight:600}.mut{color:#888;font-size:12px}.barwrap{background:#eee;border-radius:4px;height:9px;width:80px;display:inline-block;vertical-align:middle}.bar{height:9px;border-radius:4px}.tag{padding:1px 7px;border-radius:6px;font-size:12px;color:#fff}.s{background:#e63946}.a{background:#e9a23b}.b{background:#6c8}.c{background:#9aa0a6}.nav{display:flex;gap:8px;margin:0 0 12px;flex-wrap:wrap}.nav a{padding:6px 14px;background:#fff;border:1px solid #dde;border-radius:8px;text-decoration:none;color:#345;font-size:13px;font-weight:600}.nav a.on{background:#4361ee;color:#fff;border-color:#4361ee}</style>
+</head><body><div class=wrap>
+<div class=nav><a class='' href='latest.html'>🏠 首页</a><a class='' href='学习日记.html'>📓 学习笔记</a><a class='on' href='集合竞价训练.html'>⚡ 集合竞价训练</a><a class='' href='龙虎榜训练.html'>🐯 龙虎榜训练</a></div>
+<h1>⚡ 集合竞价训练</h1>
+<div class=card><div class=mut>窗口 20260615~20260707 · 1577样本 · 基准次日封板率 15.0% · 条件=T日特征→T+1封板概率</div></div>
+<div class=card><h2>按封板时间（越早越强）</h2>
+<div class=mut>竞价一字/秒封=次日封板概率最高</div>
+<table><tr><th>分档</th><th>次日封板率</th><th>样本</th></tr>
+<tr><td>午前</td><td><div class=barwrap><div class=bar style='width:24%;background:#9aa0a6'></div></div> <b>12.2%</b></td><td class=mut>442</td></tr>
+<tr><td>午后封</td><td><div class=barwrap><div class=bar style='width:16%;background:#9aa0a6'></div></div> <b>8.1%</b></td><td class=mut>197</td></tr>
+<tr><td>早盘封</td><td><div class=barwrap><div class=bar style='width:29%;background:#9aa0a6'></div></div> <b>14.7%</b></td><td class=mut>796</td></tr>
+<tr><td>秒板(≤9:31)</td><td><div class=barwrap><div class=bar style='width:49%;background:#e9a23b'></div></div> <b>24.5%</b></td><td class=mut>53</td></tr>
+<tr><td>竞价一字</td><td><div class=barwrap><div class=bar style='width:83%;background:#e63946'></div></div> <b>41.6%</b></td><td class=mut>89</td></tr>
+</table></div>
+<div class=card><h2>按封单强度（封成比=封单/流通市值）</h2>
+<table><tr><th>分档</th><th>次日封板率</th><th>样本</th></tr>
+<tr><td>中(1-3%)</td><td><div class=barwrap><div class=bar style='width:39%;background:#9aa0a6'></div></div> <b>19.7%</b></td><td class=mut>355</td></tr>
+<tr><td>弱(&lt;1%)</td><td><div class=barwrap><div class=bar style='width:25%;background:#9aa0a6'></div></div> <b>12.6%</b></td><td class=mut>1162</td></tr>
+<tr><td>强(封成比&gt;3%)</td><td><div class=barwrap><div class=bar style='width:70%;background:#e63946'></div></div> <b>35.0%</b></td><td class=mut>60</td></tr>
+</table></div>
+<div class=card><h2>按连板层</h2>
+<table><tr><th>分档</th><th>次日封板率</th><th>样本</th></tr>
+<tr><td>2板</td><td><div class=barwrap><div class=bar style='width:42%;background:#e9a23b'></div></div> <b>21.0%</b></td><td class=mut>186</td></tr>
+<tr><td>3板+</td><td><div class=barwrap><div class=bar style='width:63%;background:#e9a23b'></div></div> <b>31.7%</b></td><td class=mut>60</td></tr>
+<tr><td>首板</td><td><div class=barwrap><div class=bar style='width:26%;background:#9aa0a6'></div></div> <b>13.4%</b></td><td class=mut>1331</td></tr>
+</table></div>
+<div class=card><h2>按题材</h2>
+<div class=mut>反直觉:主线内涨停多、分歧大，次日反易分化</div>
+<table><tr><th>分档</th><th>次日封板率</th><th>样本</th></tr>
+<tr><td>主线内(行业≥3涨停)</td><td><div class=barwrap><div class=bar style='width:30%;background:#9aa0a6'></div></div> <b>15.1%</b></td><td class=mut>860</td></tr>
+<tr><td>散票</td><td><div class=barwrap><div class=bar style='width:29%;background:#9aa0a6'></div></div> <b>14.9%</b></td><td class=mut>717</td></tr>
+</table></div>
+<div class=card><h2>黄金组合 Top（多因子叠加，样本≥8）</h2>
+<div class=mut>20260707 符合组合的涨停股=明日封板候选(带龙头分/席位)</div>
+<table><tr><th>T+1封板率</th><th>样本</th><th>T日条件</th><th>今日符合票</th></tr>
+<tr><td class=pos><b>75%</b></td><td>8</td><td class=mut>竞价一字 + 3板+ + 强(封成比&gt;3%) + 0炸板 + 散票</td><td><b>恒尚节能</b><span class=mut>(装修装饰)龙头分62</span></td></tr>
+<tr><td class=pos><b>60%</b></td><td>10</td><td class=mut>竞价一字 + 首板 + 中(1-3%) + 0炸板 + 散票</td><td><b>视源股份</b><span class=mut>(消费电子)龙头分63 · 机构</span><br><b>宝地矿业</b><span class=mut>(冶钢原料)龙头分53</span></td></tr>
+<tr><td class=pos><b>27%</b></td><td>11</td><td class=mut>早盘封 + 2板 + 弱(&lt;1%) + 0炸板 + 主线内(行业≥3涨停)</td><td><span class=mut>无</span></td></tr>
+<tr><td class=pos><b>26%</b></td><td>27</td><td class=mut>早盘封 + 首板 + 中(1-3%) + 有炸板 + 主线内(行业≥3涨停)</td><td><span class=mut>无</span></td></tr>
+<tr><td class=pos><b>23%</b></td><td>22</td><td class=mut>早盘封 + 首板 + 中(1-3%) + 有炸板 + 散票</td><td><b>实益达</b><span class=mut>(光学光电)龙头分58</span><br><b>中远通</b><span class=mut>(其他电源)龙头分56</span></td></tr>
+<tr><td class=pos><b>21%</b></td><td>34</td><td class=mut>早盘封 + 2板 + 弱(&lt;1%) + 有炸板 + 主线内(行业≥3涨停)</td><td><span class=mut>无</span></td></tr>
+<tr><td class=pos><b>20%</b></td><td>10</td><td class=mut>午前 + 2板 + 弱(&lt;1%) + 有炸板 + 主线内(行业≥3涨停)</td><td><span class=mut>无</span></td></tr>
+<tr><td class=pos><b>17%</b></td><td>153</td><td class=mut>早盘封 + 首板 + 弱(&lt;1%) + 有炸板 + 散票</td><td><b>TCL中环</b><span class=mut>(光伏设备)龙头分58</span><br><b>佛塑科技</b><span class=mut>(塑料)龙头分57</span></td></tr>
+<tr><td class=pos><b>17%</b></td><td>66</td><td class=mut>早盘封 + 首板 + 弱(&lt;1%) + 0炸板 + 散票</td><td><span class=mut>无</span></td></tr>
+<tr><td class=pos><b>16%</b></td><td>114</td><td class=mut>午前 + 首板 + 弱(&lt;1%) + 有炸板 + 主线内(行业≥3涨停)</td><td><b>华天科技</b><span class=mut>(半导体)龙头分69 · 外资(北向)/紫阳东路</span><br><b>百合花</b><span class=mut>(化学制品)龙头分64</span></td></tr>
+<tr><td class=pos><b>15%</b></td><td>60</td><td class=mut>早盘封 + 首板 + 中(1-3%) + 0炸板 + 散票</td><td><b>双星新材</b><span class=mut>(塑料)龙头分61</span><br><b>依依股份</b><span class=mut>(个护用品)龙头分55</span><br><b>金时科技</b><span class=mut>(其他电源)龙头分52</span></td></tr>
+<tr><td class=pos><b>14%</b></td><td>28</td><td class=mut>午前 + 首板 + 中(1-3%) + 0炸板 + 主线内(行业≥3涨停)</td><td><b>声迅股份</b><span class=mut>(计算机设)龙头分58</span></td></tr>
+</table></div>
+<div class=card><h2>★竞价盘口深度（9:25前 涨幅/量比 → T日涨停+隔日溢价）</h2>
+<div class=mut>免费源(akshare)无历史竞价tick，此维度靠早盘9:40任务每天抓竞价快照<b>逐日累积</b>，样本够(≥60天)后自动出'竞价高开/量比→当日涨停率、隔日溢价率'的分档统计。当前累积中，未够不硬编。</div>
+<div class=mut style='margin-top:6px'>已累积竞价快照：<b>1</b> 个交易日</div>
+</div>
+<div class=mut style='text-align:center;margin:16px'>数据源 akshare · 非买卖指令 · 生成于 2026-07-07 19:25</div>
+</div></body></html>

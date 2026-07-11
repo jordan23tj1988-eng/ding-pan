@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股短线情绪复盘 · 两天验证 20260706→07</title>
+<style>
+:root{color-scheme:light;
+ --ink:#1c2530;--sub:#5b6672;--line:#e6e1d8;--paper:#f6f4ef;--card:#fffdf9;
+ --up:#c0392b;--down:#1e8449;--hit:#0f766e;--half:#b45309;--miss:#b91c1c;--accent:#8a6d3b;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+ font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+ line-height:1.65;-webkit-font-smoothing:antialiased;padding:28px 16px 60px}
+.wrap{max-width:940px;margin:0 auto}
+.hero{background:linear-gradient(135deg,#1c2530,#2f3a46 60%,#3a4b3f);color:#f4efe6;
+ border-radius:18px;padding:30px 32px;box-shadow:0 12px 34px rgba(28,37,48,.22)}
+.hero .kick{font-size:12.5px;letter-spacing:3px;color:#c9b892;text-transform:uppercase}
+.hero h1{font-size:25px;margin:8px 0 6px;font-weight:700;letter-spacing:.5px}
+.hero p{color:#c3ccd3;font-size:14px;max-width:640px}
+.hero .range{display:inline-block;margin-top:14px;background:rgba(255,255,255,.1);
+ border:1px solid rgba(255,255,255,.18);padding:5px 13px;border-radius:20px;font-size:12.5px;color:#e8dfce}
+.verdict{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0 6px}
+.vcard{flex:1;min-width:210px;background:var(--card);border:1px solid var(--line);
+ border-radius:14px;padding:16px 18px;box-shadow:0 3px 10px rgba(0,0,0,.03)}
+.vcard .n{font-size:26px;font-weight:800;letter-spacing:.5px}
+.vcard.hit .n{color:var(--hit)} .vcard.miss .n{color:var(--miss)}
+.vcard .l{font-size:13px;color:var(--sub);margin-top:2px}
+.vcard .d{font-size:12.5px;color:var(--sub);margin-top:8px;border-top:1px dashed var(--line);padding-top:8px}
+h2{font-size:16.5px;margin:34px 0 4px;padding-left:12px;border-left:4px solid var(--accent);letter-spacing:.5px}
+.hint{color:var(--sub);font-size:12.5px;margin:4px 0 14px;padding-left:14px}
+.days{display:flex;gap:14px;flex-wrap:wrap}
+.day{flex:1;min-width:260px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.day h3{font-size:14.5px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline}
+.day h3 span{font-size:12px;color:var(--sub);font-weight:400}
+.metric{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.metric:last-child{border-bottom:none}
+.metric b{font-variant-numeric:tabular-nums}
+.dn{color:var(--down)} .up{color:var(--up)} .mut{color:var(--sub)}
+.bar{height:7px;background:#ece7dc;border-radius:4px;overflow:hidden;margin-top:5px}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,#c0392b,#8a6d3b)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:14px}
+.pred{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.pred:last-child{border-bottom:none}
+.pred .id{flex:0 0 26px;height:26px;border-radius:50%;background:#2f3a46;color:#f4efe6;
+ display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700}
+.pred .body{flex:1}
+.pred .txt{font-size:13.8px}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;margin-left:6px;font-weight:600;vertical-align:middle}
+.bA{background:#e6f0ee;color:#0f766e} .bC{background:#faf0df;color:#b45309}
+.bC{background:#faf0df;color:#b45309} .bMix{background:#eee9f5;color:#6b4fa0}
+.scard{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.scard:last-child{border-bottom:none}
+.res{flex:0 0 74px;text-align:center;font-size:12px;font-weight:700;padding:4px 0;border-radius:8px}
+.r-hit{background:#e2f1ef;color:var(--hit)} .r-half{background:#fbeed8;color:var(--half)} .r-miss{background:#f7e0e0;color:var(--miss)}
+.scard .c{flex:1;font-size:13.5px}
+.scard .c .q{color:var(--ink)} .scard .c .a{color:var(--sub);font-size:12.8px;margin-top:3px}
+.spotlight{background:linear-gradient(135deg,#fbf7ee,#f3ede0);border:1px solid #e6dcc5;
+ border-radius:14px;padding:18px 20px;margin-top:14px}
+.spotlight h4{font-size:14px;color:#7a5c22;margin-bottom:8px}
+.spotlight p{font-size:13.5px;color:#4a4336}
+.flow{font-size:13px;color:#5b6672;margin-top:8px;font-weight:600}
+.flow b{color:var(--up)}
+.foot{margin-top:34px;padding:16px 18px;background:#efeae0;border-radius:12px;font-size:12.3px;color:var(--sub)}
+.foot b{color:var(--ink)}
+.tag{font-size:11px;color:var(--sub)}
+.selfnote{background:#22303b;color:#e7ddc9;border-radius:12px;padding:16px 20px;margin-top:16px;font-size:13.3px}
+.selfnote b{color:#e9c877}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="kick">Sentiment Review · Backtest of Judgment</div>
+    <h1>A股短线情绪复盘 · 两天推演验证</h1>
+    <p>前一天（07-06）在<strong>不知道次日结果</strong>的前提下做出判断与推演，后一天（07-07）用<strong>真实市场结果</strong>逐条打分。检验的不是行情，是我的逻辑。</p>
+    <div class="range">2026-07-06 → 2026-07-07 ｜ 数据源：真实盘后 · 零编造</div>
+  </div>
+
+  <div class="verdict">
+    <div class="vcard hit">
+      <div class="n">4 / 4</div>
+      <div class="l">宏观判断命中（A档：环境·情绪·题材·资金流向）</div>
+      <div class="d">量能退潮、涨停腰斩、跌停两位数、资金转半导体——全部提前判对。</div>
+    </div>
+    <div class="vcard miss">
+      <div class="n">1 次打脸</div>
+      <div class="l">个股高度判断（C档盘感）</div>
+      <div class="d">判恒尚节能5板难续，实际走出6板。低估孤标硬撑——这正是该靠数据、不靠盘感之处。</div>
+    </div>
+  </div>
+
+  <h2>一、环境对比 · 退潮实锤</h2>
+  <div class="hint">两市量能一天从 3.09 万亿缩到 2.58 万亿、跌破 3 万亿退潮线，涨停腰斩。这是一段标准的退潮样本。</div>
+  <div class="days">
+    <div class="day">
+      <h3>07-06（周一）<span>推演日</span></h3>
+      <div class="metric"><span class="mut">两市成交额</span><b>3.09 万亿</b></div>
+      <div class="bar"><i style="width:100%"></i></div>
+      <div class="metric"><span class="mut">涨停 / 跌停</span><b>64 <span class="mut">/</span> <span class="up">46</span></b></div>
+      <div class="metric"><span class="mut">炸板率</span><b>39%</b></div>
+      <div class="metric"><span class="mut">最高板</span><b>5板 · 恒尚节能</b></div>
+      <div class="metric"><span class="mut">龙虎榜</span><b>98 条</b></div>
+    </div>
+    <div class="day">
+      <h3>07-07（周二）<span>验证日</span></h3>
+      <div class="metric"><span class="mut">两市成交额</span><b class="dn">2.58 万亿 ↓</b></div>
+      <div class="bar"><i style="width:83.5%"></i></div>
+      <div class="metric"><span class="mut">涨停 / 跌停</span><b><span class="dn">33 ↓</span> <span class="mut">/</span> 30</b></div>
+      <div class="metric"><span class="mut">炸板率</span><b>41.1%</b></div>
+      <div class="metric"><span class="mut">最高板</span><b class="up">6板 · 恒尚节能 ↑</b></div>
+      <div class="metric"><span class="mut">龙虎榜</span><b>93 条</b></div>
+    </div>
+  </div>
+
+  <h2>二、07-06 我的认知与推演（零后视镜）</h2>
+  <div class="hint">当天收盘后，只用 07-06 及之前的信息做出以下判断。每条标注 A档（可数据验证）/ C档（只能实盘·盘感）。</div>
+  <div class="card">
+    <div style="font-size:13.5px;color:#4a4336;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--line)">
+      <b>认知：</b>量能勉强站 3 万亿但<strong style="color:var(--up)">跌停 46 家</strong>已报警，炸板 39%，情绪很差 → <strong>临界偏退潮，仓位偏防守</strong>。题材涣散无主线，恒尚节能 5 板是装修装饰<strong>孤高标（仅 2 涨停、无梯队）</strong>。唯一亮点：顶级量化+外资在科技/算力低位建仓。
+    </div>
+    <div class="pred"><div class="id">1</div><div class="body"><div class="txt">退潮延续，量能维持 3 万亿附近或下破<span class="badge bA">A档</span></div></div></div>
+    <div class="pred"><div class="id">2</div><div class="body"><div class="txt">涨停家数较 64 下降，情绪继续退<span class="badge bA">A档</span></div></div></div>
+    <div class="pred"><div class="id">3</div><div class="body"><div class="txt">跌停维持 ≥ 两位数<span class="badge bA">A档</span></div></div></div>
+    <div class="pred"><div class="id">4</div><div class="body"><div class="txt">恒尚节能 5 板孤高标 + 无梯队 + 退潮 → 续板难、断板/强分歧风险高<span class="badge bMix">混合</span></div></div></div>
+    <div class="pred"><div class="id">5</div><div class="body"><div class="txt">无新主线成型，题材继续涣散<span class="badge bA">半A</span></div></div></div>
+    <div class="pred"><div class="id">6</div><div class="body"><div class="txt">科技/算力（紫光、中国长城）有顶级量化席位护盘，是次日唯一值得盯的接力方向<span class="badge bC">A资金+C接力</span></div></div></div>
+  </div>
+
+  <h2>三、07-07 校准记分卡 · 真实结果逐条打脸</h2>
+  <div class="hint">拿 07-07 真实结果结算上面 6 条。一个数不许编、打脸的如实记。</div>
+  <div class="card">
+    <div class="scard"><div class="res r-hit">✓ 命中</div><div class="c"><div class="q">① 退潮延续</div><div class="a">实际量能 2.58 万亿，跌破 3 万亿（比预判更弱）。</div></div></div>
+    <div class="scard"><div class="res r-hit">✓ 命中</div><div class="c"><div class="q">② 涨停下降</div><div class="a">64 → 33 腰斩，情绪强退。</div></div></div>
+    <div class="scard"><div class="res r-hit">✓ 命中</div><div class="c"><div class="q">③ 跌停两位数</div><div class="a">实际跌停 30 家。</div></div></div>
+    <div class="scard"><div class="res r-miss">✗ 打脸</div><div class="c"><div class="q">④ 恒尚节能续板难</div><div class="a">实际走出 <b style="color:var(--up)">6 板</b>——我低估了孤标辨识度硬撑。宏观退潮判断没错，但个股能否续板是 C档盘感，是我的弱项。（不过 6 板已极高危）</div></div></div>
+    <div class="scard"><div class="res r-hit">✓ 命中</div><div class="c"><div class="q">⑤ 题材继续散</div><div class="a">化学4/半导体4/计算机3 全是首板，连板梯队为 0，比昨天更散。</div></div></div>
+    <div class="scard"><div class="res r-half">◐ 半中</div><div class="c"><div class="q">⑥ 科技是唯一接力方向</div><div class="a">资金确从算力转到半导体，华天科技被深股通 6.45亿 + 三亚 3.08亿(A档) + 紫阳/知春爆买——方向判对；但仍首板未成梯队，接力弱（退潮压制）。</div></div></div>
+  </div>
+
+  <h2>四、席位暗线 · 我 07-06 就看到的资金路径</h2>
+  <div class="spotlight">
+    <h4>顶级资金在退潮里没走，只是换了方向</h4>
+    <p>07-06 龙虎榜：紫光股份被<strong>北京知春路（派神）净买 1.92 亿（A档 61%胜率）</strong>+ 太华路 2.13 亿 + 紫阳东路 2.08 亿；中国长城被深股通 2.27 亿 + 太华路 2.07 亿。三大顶级量化席位齐聚<strong>算力</strong>。</p>
+    <div class="flow">路径：07-06 <b>算力（紫光/中国长城）</b> ——→ 07-07 <b>半导体（华天科技·龙头分75.1·被爆买6亿+）</b></div>
+    <p style="margin-top:8px">这条暗线在 07-06 收盘就能读出来，07-07 得到验证：科技是退潮中唯一有真金的方向。</p>
+  </div>
+
+  <h2>五、07-07 我的判断 · 对 07-08 的推演</h2>
+  <div class="card">
+    <div style="font-size:13.5px;color:#4a4336;margin-bottom:10px">
+      <b>认知：</b>2.58 万亿跌破退潮线，跌停 30，四层背离·弱，拐点预警（高位抱团松动）。<strong>攻防：防守/空仓 0-2 成，退潮期禁套利。</strong>
+    </div>
+    <div class="pred"><div class="id">A</div><div class="body"><div class="txt">量能大概率仍在 3 万亿下方，退潮未止<span class="badge bA">A档</span></div></div></div>
+    <div class="pred"><div class="id">B</div><div class="body"><div class="txt">恒尚节能 6 板处极高位，随时 A 杀，遇强分歧/断板风险最高<span class="badge bMix">混合</span></div></div></div>
+    <div class="pred"><div class="id">C</div><div class="body"><div class="txt">半导体华天科技资金最强（龙头分 75.1），看能否 2 板确认、带出梯队——这是退潮里唯一的进攻观察点<span class="badge bC">C档·实盘</span></div></div></div>
+    <div class="pred"><div class="id">D</div><div class="body"><div class="txt">跌停维持两位数附近，情绪难快速修复<span class="badge bA">A档</span></div></div></div>
+  </div>
+
+  <div class="selfnote">
+    <b>我的自评（审查权在我）：</b>这两天最该留下的一条不是"我判对了退潮"，而是——<b>我的 A档（环境/量能/情绪/资金流向）判断可靠，C档（个股能否续板的盘感）是弱项。</b>这恰好印证了我们定的演进原则：靠严谨逻辑攻可验证的部分取胜，对不可验证的盘感保持怀疑。恒尚这次打脸，正是提醒我别用盘感赌个股高度。
+  </div>
+
+  <div class="foot">
+    <b>档位说明：</b>A档=可用真实数据因果验证（量能/涨跌停/龙虎榜数字/位置）；C档=只能实盘、历史不可复现（竞价第一式/盘口逐笔/席位当日行为/个股续板盘感）。<b>提炼时只量化进化 A档，C档只沉淀实盘观察，绝不事后回测编造。</b><br>
+    <span class="tag">本页为 Claude 认知/推演训练产物，给用户作参考，不构成买卖指令。数据取自真实盘后，拿不到即标 null。</span>
+  </div>
+
+</div>
+</body>
+</html>

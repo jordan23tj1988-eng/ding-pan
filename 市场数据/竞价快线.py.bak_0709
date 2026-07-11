@@ -1,0 +1,70 @@
+# -*- coding: utf-8 -*-
+"""竞价快线.py [d] [--now] [--dry] —— 早盘快速通道:9:26前自动等待→sina抓观察点实时竞价→
+机判初评写 竞价验证_{d}.json→调 竞价上首页.py 注入首页。纯脚本无推理,目标9:27前页面可见。
+机判只做A档规则初评(标"机判"),深评由agent随后覆盖(状态含"深评"时本脚本拒绝覆盖,除非--force)。"""
+import os,sys,json,re,glob,time,datetime,subprocess,urllib.request
+BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
+def parse_watchlist():
+    js=sorted(glob.glob(os.path.join(L,"judgment_*.json")))
+    jp=js[-1]; j=json.load(open(jp,encoding="utf-8"))
+    cand=j["date"] if "date" in j else re.search(r'judgment_(\d{8})',jp).group(1)
+    m=re.search(r'<table.*?</table>',j["bodies"]["index"],re.S)
+    rows=re.findall(r'<tr>(.*?)</tr>',m.group(0),re.S)[1:]
+    wl=[]
+    for r in rows:
+        c=re.search(r'class="mut">(\d{6})<',r); n=re.search(r'<b>([^<]+)</b>',r)
+        t=re.search(r'tag2 [^"]*">([^<]+)<',r)
+        tds=re.findall(r'<td[^>]*>(.*?)</td>',r,re.S)
+        yu=re.sub(r'<[^>]+>','',tds[2]).strip()[:80] if len(tds)>2 else ""
+        if c and n: wl.append(dict(代码=c.group(1),名称=n.group(1),类型=t.group(1) if t else "",昨日预判=yu))
+    return cand,wl
+def sina(codes):
+    lst=",".join(("sh" if c[0] in "69" else "sz")+c for c in codes)
+    req=urllib.request.Request("https://hq.sinajs.cn/list="+lst,headers={"Referer":"https://finance.sina.com.cn"})
+    out={}
+    for l in urllib.request.urlopen(req,timeout=10).read().decode("gbk").strip().split("\n"):
+        mm=re.search(r'str_(?:sh|sz)(\d{6})="([^"]*)"',l)
+        if not mm: continue
+        p=mm.group(2).split(",")
+        if len(p)>10 and float(p[2])>0:
+            out[mm.group(1)]=dict(名=p[0],今开=float(p[1]),昨收=float(p[2]),现价=float(p[3]),成交额=float(p[9]))
+    return out
+def limit_pct(code): return 19.9 if code[:2] in ("30","68") else 9.9
+def judge(code,gk,q):
+    if gk is None: return None
+    if gk>=limit_pct(code)-0.15: return "机判:开在涨停价(一字),兑现看强"
+    if gk>=4: return f"机判:高开{gk:+.1f}%强势,待盘中确认"
+    if gk>=2: return f"机判:高开{gk:+.1f}%寻常"
+    if gk>-2: return f"机判:平开({gk:+.1f}%),无方向"
+    return f"机判:低开{gk:+.1f}%走弱/被弃"
+def main():
+    a=sys.argv[1:]
+    d=next((x for x in a if x.isdigit()),datetime.date.today().strftime("%Y%m%d"))
+    now="--now" in a; dry="--dry" in a; force="--force" in a
+    vp=os.path.join(L,"竞价验证_"+d+".json")
+    if os.path.exists(vp) and not force:
+        old=json.load(open(vp,encoding="utf-8"))
+        if "深评" in str(old.get("状态","")): print("已有深评,拒绝覆盖(--force强制)"); return 0
+    t=datetime.datetime.now()
+    tgt=t.replace(hour=9,minute=26,second=0)
+    if not now and t<tgt and t.hour>=8:
+        w=(tgt-t).total_seconds(); print(f"等待竞价结束 {w:.0f}s..."); time.sleep(w)
+    cand,wl=parse_watchlist()
+    if cand==d: print("!候选judgment与今日同日,退出"); return 1
+    try: q=sina([w["代码"] for w in wl])
+    except Exception as e: q={}; print("sina失败:",str(e)[:60])
+    in_window=datetime.datetime.now()<datetime.datetime.now().replace(hour=9,minute=30,second=30)
+    mx=[]
+    for w in wl:
+        s=q.get(w["代码"]); gk=round((s["今开"]/s["昨收"]-1)*100,2) if s else None
+        je=("%.1f亿"%(s["成交额"]/1e8)) if (s and in_window and s["成交额"]>0) else None
+        mx.append(dict(代码=w["代码"],名称=w["名称"],类型=w["类型"],档="A",昨日预判=w["昨日预判"],
+            今晨竞价实况={"高开幅度":(("%+.2f%%"%gk) if gk is not None else None),"竞价成交额":je,"是否秒板/一字":("开在涨停价" if (gk is not None and gk>=limit_pct(w["代码"])-0.15) else None)},
+            兑现判定=judge(w["代码"],gk,s),备注="快线机判"+("(9:26竞价额)" if je else "(竞价额未取到)")))
+    v=dict(验证日=d,候选日=cand,状态="快线机判"+datetime.datetime.now().strftime("(%H:%M)"),观察点数=len(mx),明细=mx)
+    if dry: print(json.dumps(v,ensure_ascii=False,indent=1)[:1200]); return 0
+    json.dump(v,open(vp,"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+    subprocess.run([sys.executable,os.path.join(BASE,"竞价上首页.py"),d],check=True)
+    print("快线完成:",d,"| 取到实时",len(q),"/",len(wl))
+    return 0
+if __name__=="__main__": sys.exit(main())

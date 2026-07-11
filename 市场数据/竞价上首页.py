@@ -1,0 +1,81 @@
+# -*- coding: utf-8 -*-
+"""竞价上首页.py {今日d} —— 读 _学习/竞价验证_{d}.json,在 judgment_{候选日}.json 的 bodies.index
+观察点表中,每只标的行下方插入一条通栏"竞价子行"(实况+兑现评价,配色),然后重渲染盯盘台。
+幂等:旧子行/旧竖列(jjh/jjc)先剥除再插。零编造:采不到=未采集。
+2026-07-10起兼容obs卡片版式(首页观察点表改卡片):无table时在每张obs卡的obs-rec后插obs-jj。"""
+import os,sys,json,re,subprocess
+BASE=os.path.dirname(os.path.abspath(__file__))
+L=os.path.join(BASE,"_学习")
+def fmt_num(x,unit=""):
+    if x is None: return None
+    if isinstance(x,str): return x
+    if unit=="亿": return "%.1f亿"%(x/1e8 if abs(x)>1e6 else x)
+    return "%+.2f%%"%x
+def cell(e):
+    sk=e.get("今晨竞价实况") or {}
+    gk=fmt_num(sk.get("高开幅度")); je=fmt_num(sk.get("竞价成交额"),"亿"); miao=sk.get("是否秒板/一字")
+    pan=str(e.get("兑现判定") or "")
+    if gk is None and je is None and not pan:
+        bz=e.get("备注","")
+        return '<span class="mut">未采集'+(("·"+bz) if bz else "")+'</span>'
+    parts=[x for x in [gk,je,(str(miao) if miao else None)] if x]
+    sk_txt=" / ".join(parts)
+    cls="s-mid"
+    if any(k in pan for k in ["兑现","看强","封板","秒板","验证","强"]): cls="s-ok"
+    if any(k in pan for k in ["走弱","打脸","低开","炸","弃","熄火","弱"]): cls="s-weak"
+    out=(sk_txt+" — " if sk_txt else "")+('<b class="'+cls+'">'+pan+'</b>' if pan else "")
+    return out or '<span class="mut">未采集</span>'
+def strip_old(tbl):
+    tbl=re.sub(r'<th class="jjh">.*?</th>','',tbl,flags=re.S)          # 旧竖列表头
+    tbl=re.sub(r'<td class="jjc">.*?</td>','',tbl,flags=re.S)          # 旧竖列单元格
+    tbl=re.sub(r'<tr class="jjr">.*?</tr>','',tbl,flags=re.S)          # 旧子行
+    return tbl
+def inject_obs(idx_html,mingxi,label):
+    """obs卡片版式fallback:每张obs卡的obs-rec后插<div class="obs-jj">(CSS已备)。幂等。"""
+    if '<div class="obs">' not in idx_html: return idx_html,False
+    idx_html=re.sub(r'<div class="obs-jj">.*?</div>','',idx_html,flags=re.S)
+    by_code={e.get("代码",""):e for e in mingxi}
+    parts=idx_html.split('<div class="obs">'); out=[parts[0]]
+    for seg in parts[1:]:
+        nm=re.search(r'<div class="obs-nm">(.*?)</div>',seg,re.S)
+        codes=re.findall(r'(\d{6})',nm.group(1)) if nm else []
+        items=[]
+        for c in codes:
+            e=by_code.get(c)
+            tag=('<b>'+(e.get("名称",c) if e else c)+'</b> ') if len(codes)>1 else ''
+            items.append(tag+(cell(e) if e else '<span class="mut">—</span>'))
+        sub='<div class="obs-jj"><span class="jjtag">今晨竞价 '+label+'</span>'+' ｜ '.join(items or ['<span class="mut">—</span>'])+'</div>'
+        m=re.search(r'<div class="obs-rec">(?:(?!</div>).)*</div>',seg,re.S)
+        if m: out.append(seg[:m.end()]+sub+seg[m.end():])
+        else: out.append(seg+sub)
+    return '<div class="obs">'.join(out),True
+def inject(idx_html,mingxi,label):
+    m=next((mm for mm in re.finditer(r'<table.*?</table>',idx_html,re.S) if "标的" in mm.group(0)),None)
+    if not m: return inject_obs(idx_html,mingxi,label)
+    tbl=strip_old(m.group(0))
+    ncol=len(re.findall(r'<th',tbl.split('</tr>')[0]))
+    by_code={e.get("代码",""):e for e in mingxi}
+    rows=re.findall(r'<tr>.*?</tr>',tbl,re.S)
+    for r in rows[1:]:
+        mc=re.search(r'class="mut">(\d{6})<',r)
+        if not mc: continue
+        e=by_code.get(mc.group(1))
+        sub=('<tr class="jjr"><td colspan="'+str(ncol)+'"><span class="jjtag">今晨竞价 '+label+'</span>'
+             +(cell(e) if e else '<span class="mut">—</span>')+'</td></tr>')
+        tbl=tbl.replace(r,r+sub)
+    return idx_html[:m.start()]+tbl+idx_html[m.end():],True
+def main(d):
+    v=json.load(open(os.path.join(L,"竞价验证_"+d+".json"),encoding="utf-8"))
+    cand=v.get("候选日")
+    jp=os.path.join(L,"judgment_"+cand+".json")
+    j=json.load(open(jp,encoding="utf-8"))
+    label=d[4:6]+"-"+d[6:8]
+    new,ok=inject(j["bodies"]["index"],v.get("明细",[]),label)
+    if not ok: print("!未找到观察点表,放弃"); return 1
+    j["bodies"]["index"]=new
+    json.dump(j,open(jp,"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+    subprocess.run([sys.executable,os.path.join(BASE,"生成盯盘台.py"),cand],check=True)
+    print("竞价子行已注入首页并重渲染: 竞价日",d,"→ judgment",cand)
+    return 0
+if __name__=="__main__":
+    sys.exit(main(sys.argv[1] if len(sys.argv)>1 else __import__("datetime").date.today().strftime("%Y%m%d")))

@@ -1,0 +1,535 @@
+<!doctype html><html lang=zh><head><meta charset=utf-8>
+<meta name=viewport content='width=device-width,initial-scale=1'>
+<title>学习日记</title><style>:root{color-scheme:light}
+body{font-family:-apple-system,'Microsoft YaHei',sans-serif;background:#f5f6f8;color:#1a1a2e;margin:0;padding:16px;font-size:14px}
+.wrap{max-width:960px;margin:0 auto}
+.card{background:#fff;border-radius:12px;padding:14px 20px;margin:12px 0;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+h1{font-size:22px;margin:0 0 4px}
+h2.sec{font-size:17px;color:#222;margin:22px 0 6px;padding-left:10px;border-left:5px solid #4361ee}
+.day{border:1px solid #eef}
+.day.cur{box-shadow:0 2px 10px rgba(67,97,238,.18);border-color:#4361ee}
+.dayh{font-size:16px;color:#4361ee;margin:2px 0 4px}
+.meta{color:#555;font-size:12.5px;background:#f0f3ff;padding:6px 10px;border-radius:6px;margin-bottom:8px}
+.subwrap{margin:10px 0;padding:2px 0 2px 12px}
+.sub{margin:0}
+.dimtag{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:#4361ee;padding:2px 10px;border-radius:20px;margin-bottom:4px}
+.sub p{margin:3px 0;line-height:1.6}
+.sub ul{margin:4px 0 4px 18px;padding:0} .sub li{margin:3px 0;line-height:1.65}
+.subsub{margin:8px 0 4px;padding:4px 0 4px 12px;border-left:3px solid #c9d2ff;background:#fafbff}
+.subsubh{font-size:13px;font-weight:700;color:#4361ee;margin-bottom:2px}
+.nav a{display:inline-block;padding:6px 14px;background:#4361ee;color:#fff;border-radius:8px;text-decoration:none;font-size:13px;margin-right:8px}
+.nav a.alt{background:#6c757d}
+.mut{color:#888;font-size:12px}
+b{color:#e63946}
+.ledg{border-collapse:collapse;width:100%;margin:8px 0;font-size:13px}
+.ledg th,.ledg td{border:1px solid #e3e3ef;padding:6px 8px;text-align:left;vertical-align:top}
+.ledg th{background:#f0f3ff;color:#333}
+.loopbox{margin:14px 0;padding:12px 14px;border:2px dashed #06d6a0;border-radius:10px;background:#f3fbf8}
+.loopbox.pending{opacity:.85;background:#f7f7f9;border-color:#cfd3d8}
+.looptag{font-size:12.5px;font-weight:700;color:#06a88a;margin-bottom:6px}
+.loopbadge{display:inline-block;background:#fff4e0;color:#b26a00;padding:4px 12px;border-radius:20px;font-size:13px;font-weight:700;margin:2px 0 6px}
+.loopmut{color:#888;font-size:12px;line-height:1.6}
+.loopstatus{color:#555;font-size:12px;background:#eafaf4;padding:4px 8px;border-radius:6px;margin:2px 0 6px}
+.loopsub{margin:8px 0}
+.loopsubh{display:inline-block;font-size:13px;font-weight:700;color:#089b7d;margin-bottom:2px}
+</style></head><body><div class=wrap>
+<div class=nav><a href='latest.html'>← 回当日复盘面板</a><a class=alt href='集合竞价训练.html'>集合竞价训练</a><a class=alt href='龙虎榜训练.html'>龙虎榜训练</a></div>
+<h1>📓 学习日记（5 维度深度框架 · 已系统性实核）</h1>
+<div class=mut>结构：① 当日记录入口（最新日期块，5 维度 + 复盘总结闭环区块）② 学习笔记（历史日期块归档）③ 验证台账（verifier.py 实核）。共 3979 字。</div>
+<div class=mut>🔄 复盘闭环状态：已回填 <b style='color:#06a88a'>1</b> / 待 T+1 复盘 <b style='color:#b26a00'>1</b> —— 待复盘块在 T+1 当日复盘时回填「复盘总结 + 验证」。</div>
+<h2 class=sec>一、当日记录入口（最新）</h2>
+<div class='card day cur'>
+<h3 class=dayh>2026-07-07（周二）｜审查 18/20｜四层背离·弱+拐点预警</h3>
+<div class=meta>情景：C退潮坐实（7/6&quot;退潮前夜&quot;→今日破退潮线）｜推演明日 A修复15/B弱震荡40/C退潮延续45</div>
+<div class=subwrap style='border-left:4px solid #4361ee'>
+<div class=sub>
+<div class=dimtag>盘面观察</div>
+<div class=subsub>
+<div class=subsubh>（1）量能/环境（含周期定位）</div>
+<ul>
+<li><b>当日观察</b>：两市 <b>2.58万亿</b>跌破3万亿退潮线（7/6 3.09万亿→今2.58），涨停从64<b>腰斩至33</b>、跌停仍30（两位数）。</li>
+<li><b>关键信号</b>：环境三态＝<b>退潮档、空仓/0-2成</b>；量能远未达主升门槛3.5万亿。</li>
+<li><b>结论</b>：退潮深化，中周期级别但受退潮压制，<b>即便有高度也是抱团非主升</b>。</li>
+</ul>
+</div>
+<div class=subsub>
+<div class=subsubh>（2）题材梳理</div>
+<ul>
+<li><b>当日观察</b>：化学制品4/半导体4家均<b>首板无高度</b>，最高板恒尚节能6板是<b>装修装饰孤票</b>。</li>
+<li><b>关键信号</b>：<b>广度与高度彻底分离</b>——无一主线&quot;涨停多+高度够+梯队完整&quot;。</li>
+<li><b>结论</b>：无主线共振，题材散，不支持主升。</li>
+</ul>
+</div>
+<div class=subsub>
+<div class=subsubh>（3）核心标的分析</div>
+<ul>
+<li><b>当日观察</b>：Top3 <b>华天科技75.1 / 雅化集团73.2 / 视源股份70.6 全是趋势·预增权重票</b>，连板情绪龙缺位。</li>
+<li><b>关键信号</b>：资金靠业绩预增确定性（雅化扣非预增超16倍、视源半年预增265%-315%）而非题材发酵。</li>
+<li><b>结论</b>：真实资金主线＝预增权重票，非连板情绪龙。</li>
+</ul>
+</div>
+<div class=subsub>
+<div class=subsubh>（4）龙头股识别</div>
+<ul>
+<li><b>当日观察</b>：连板梯队 6-5-2-1 严重断层、炸板率41.1%、情绪冷。</li>
+<li><b>关键信号</b>：恒尚6板孤票<b>叠加风险提示利空</b>，健康度打折。</li>
+<li><b>结论</b>：龙头健康度弱，高位抱团松动预警。</li>
+</ul>
+</div>
+<div class=subsub>
+<div class=subsubh>（5）竞价表现分析</div>
+<ul>
+<li><b>当日观察</b>：竞价一字组合（雅化/视源/宝地预增一字）。</li>
+<li><b>关键信号</b>：须<b>过环境+公告双闸</b>才有效；昨日中公教育竞价低开-4.31%踩监管暂停公告。</li>
+<li><b>结论</b>：公告面否决竞价强度，退潮期竞价信号需双闸过滤方有效。</li>
+</ul>
+</div>
+<div class=subsub>
+<div class=subsubh>（6）龙虎榜数据解读</div>
+<ul>
+<li><b>当日观察</b>：<b>华天科技为主战场</b>——三亚迎宾路+3.08亿(A档胜率63.2%)、紫阳东路量化+2.71亿、知春路派神+2.17亿、外资深股通+6.45亿、机构+1.20亿。</li>
+<li><b>关键信号</b>：<b>量化系+外资+机构合力</b>做半导体权重。</li>
+<li><b>结论</b>：合力性质＝机构/量化/外资做权重，不定义情绪龙。</li>
+</ul>
+</div>
+</div>
+</div>
+<div class=subwrap style='border-left:4px solid #e63946'>
+<div class=sub>
+<div class=dimtag>系统验证</div>
+<ul>
+<li><b>各层信号</b>：环境弱 · 周期中 · 题材散 · 情绪差 → <b>四层背离·弱</b>。</li>
+<li><b>拐点预警＝true</b>：连板高度不低（恒尚6板）但<b>跌停≥两位数→高位抱团松动，警惕瓦解</b>。</li>
+</ul>
+</div>
+</div>
+<div class=subwrap style='border-left:4px solid #2a9d8f'>
+<div class=sub>
+<div class=dimtag>认知迭代</div>
+<ul>
+<li><b>利好</b>：雅化集团/视源股份/宝地矿业（业绩预增一字，退潮期资金避险切确定性）。</li>
+<li><b>利空</b>：恒尚节能（6板发风险提示，金胜电子业绩无法并表、存储面向个人消费）。</li>
+<li><b>存疑</b>：宜宾纸业（TAC膜业务暂未签正式合同、暂未形成收入的澄清）。</li>
+</ul>
+</div>
+</div>
+<div class=subwrap style='border-left:4px solid #f4a261'>
+<div class=sub>
+<div class=dimtag>升级反馈点</div>
+<p>量能能否收复3万亿 or 续退潮线下 · 跌停是否再≥30（抱团是否瓦解） · 华天/雅化/视源量化+预增权重票能否延续（当前真实资金主线） · 恒尚6板叠加利空是否断板 · 竞价有无新定强度节点。</p>
+</div>
+</div>
+<div class=subwrap style='border-left:4px solid #9b5de5'>
+<div class=sub>
+<div class=dimtag>认知追踪</div>
+<ul>
+<li><b>竞价验证（次日晨补）</b>：___</li>
+<li><b>次日校准（次日盘后补）</b>：___</li>
+</ul>
+</div>
+</div>
+<div class='loopbox pending'>
+<div class=looptag>🔄 复盘总结区块（T+1 回顾）</div>
+<div class=loopbadge>⏳ 待 2026-07-08 复盘验证</div>
+<div class=loopsub><span class=loopsubh>（1）复盘总结</span></div>
+<div class=loopmut><div class=sub>
+<div class=dimtag>（1）复盘总结</div>
+<ul>
+<li>（待 T+1 复盘：对照本日推演 / 拐点预警 / 核心标的与题材预判，回顾 T+1 实际演化与偏离，回填结论）</li>
+</ul>
+</div></div>
+<div class=loopsub><span class=loopsubh>（2）验证</span></div>
+<div class=loopmut><div class=sub>
+<div class=dimtag>（2）验证</div>
+<ul>
+<li>（待 T+1 验证：核对本日关键观察 / 信号是否成立，标注 ✓/✗/△）</li>
+</ul>
+</div></div>
+<div class=loopmut style='margin-top:6px'>本区块在 T+1 当日复盘时回填「复盘总结」与「验证」，完成「记录 → 次日验证」闭环。</div>
+</div>
+</div>
+<h2 class=sec>二、学习笔记（历史归档）</h2>
+<div class='card day'>
+<h3 class=dayh>2026-07-06（周一）｜审查 17/20｜系统性实核</h3>
+<div class=meta>情景：B偏C（退潮前夜）｜推演明日 A15/B50/C35</div>
+<div class=subwrap style='border-left:4px solid #4361ee'>
+<div class=sub>
+<div class=dimtag>盘面观察</div>
+<div class=subsub>
+<div class=subsubh>（1）量能/环境</div>
+<p>&gt; △ 注：7/6 块「一、盘面观察」因历史写入截断，仅存量能/环境（上）；</p>
+<p>&gt; <b>题材梳理 / 核心标的分析 / 龙头股识别 / 竞价表现分析 / 龙虎榜数据解读</b> 5 维度缺失，待补（不编造）。</p>
+<p>&lt;!-- [7/6块因历史写入截断，正文止于此；下方为7/7盘后补的次日校准，不删旧内容] --&gt;</p>
+<ul>
+<li>[✓已验证] <b>3.09 万亿</b>，四连缩，逼近 3 万亿退潮线（临界：破 3 万亿 = 退潮实锤）。（20260706/summary.两市成交额_亿=30911）</li>
+<li>[✓已验证] 跌停 <b>46 家</b>。（summary.跌停家数=46）</li>
+<li>[△待核] 炸板 <b>39%</b> —— 20260706/summary.炸板率=None，本地不可核验（标 [△待核]，不编造）。（verifier</li>
+</ul>
+</div>
+</div>
+</div>
+<div class='loopbox'>
+<div class=looptag>🔄 复盘总结区块（T+1 回顾）</div>
+<div class=loopstatus>✓ 状态：已于 2026-07-07（T+1）回填 · 来源：7/7 块「系统验证 / 认知迭代 / 认知追踪」+ verifier 6-xx</div>
+<div class=loopsub><span class=loopsubh>（1）复盘总结</span></div>
+<div class=sub>
+<div class=dimtag>（1）复盘总结</div>
+<ul>
+<li><b>推演 vs 实际</b>：7/6 推演 A15/B50/C35（情景 B 偏 C·退潮前夜）；实际 7/7 落地 <b>C 退潮</b>，方向有效但无 A/B 触发条件，且比推演更弱（量能破 3 万亿线跌至 25811 亿，跌停 46→30 仍两位数）。</li>
+<li><b>核心标的兑现</b>：7/6 标记中公教育组合 66.7% 居首 → 7/7 中公教育低开 -4.31%（公告面归因待核，公告扫描漏抓，暴露系统 gap）。</li>
+<li><b>资金态度延续</b>：7/6 紫光股份三量化席位联手（净买≈+6.1 亿）→ 7/7 紫光竞价低开 -4.95%、现 -2.91%，资金背离连续两日未弥合，偏空验证。</li>
+<li><b>假设 H1</b>：7/6 提「退潮前夜情绪冰点+资金未撤背离，若量能不破 3 万亿则次日局部反包」→ <b>7/7 证伪</b>（量能破线，全面退潮确认）。</li>
+</ul>
+</div>
+<div class=loopsub><span class=loopsubh>（2）验证</span></div>
+<div class=sub>
+<div class=dimtag>（2）验证</div>
+<ul>
+<li>[✓] 7/6 量能 3.09 万亿（verifier 6-01）；[✓] 跌停 46 家（6-02）；[✓] 中公教育 66.7% 组合最高（6-06）；[✓] 紫光三量化席位（6-07）。</li>
+<li>[✓] 推演方向（退潮）成立；[✗修正] 置信区间偏宽——退潮前夜不应给 A 权重（实际 A 触发≈0），应直接给 C 上沿。</li>
+<li>[✗] H1「量能不破线→局部反包」被 7/7 证伪（量能破线）。</li>
+<li>[△] 7/6 炸板 39%、1 板占 87.5% 两项本地不可核验（summary 无对应字段），标待核不编。</li>
+</ul>
+</div>
+</div>
+<div class=subwrap>
+<div class=sub>
+<div class=dimtag>六、复盘总结（7/7 回填·7/6块次日校准）</div>
+<ul>
+<li><b>次日校准（7/7盘后补）</b>：7/6主判 <b>B震荡50%</b>（最高概率）+ C退潮35%预警。<b>7/7实际＝C退潮</b>——量能2.58万亿破3万亿退潮线、跌停30(≥30)、涨停64腰斩至33，触发7/6推演对C退潮的定义，<b>C退潮(35%尾部)兑现，主判B未中</b>（analysis.json环境档=退潮佐证；原_学习记录.json误记&quot;B命中&quot;已订正）。</li>
+<li><b>竞价验证</b>：7/6候选 <b>中公教育低开-4.31%未板</b>，踩7/6晚深交所监管暂停公告→<b>公告面一票否决实证</b>。</li>
+<li><b>龙头兑现</b>：7/6 Top3（中国长城/航天电器/金科股份）次日均未续板；龙头分Top票次日开收盘 `校准抓取_20260707.json` 16只全null→<b>[数据不足/null]</b>，不编造。</li>
+</ul>
+</div>
+</div>
+</div>
+<h2 class=sec style='border-left-color:#9b5de5'>三、验证台账（系统性实核）</h2>
+<div class=card>
+<h3 class=dayh style='color:#9b5de5'>验证台账（verifier.py 系统性实核 · 共 40 项）</h3>
+<div class=meta style='background:#f6f0ff'>✓ 已验证 <b style='color:#06a88a'>28</b> · ✗ 原错已修正 <b style='color:#e63946'>5</b> · △ 待核/待真机 <b style='color:#b26a00'>7</b> —— 每日管道自动实核，不嘴上验证。</div>
+<table class=ledg>
+<tr><th>ID</th><th>维度</th><th>技术点 claim</th><th>状态</th><th>实测</th><th>备注</th></tr>
+<tr>
+<td>7-01</td>
+<td>量能/环境</td>
+<td>两市成交25811亿</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>25811.0亿</td>
+<td></td>
+</tr>
+<tr>
+<td>7-02</td>
+<td>量能/环境</td>
+<td>跌破3万亿退潮线(&lt;3万亿=防守)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>25811.0亿</td>
+<td></td>
+</tr>
+<tr>
+<td>7-03</td>
+<td>量能/环境</td>
+<td>跌停30家(≥两位数)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>30家</td>
+<td></td>
+</tr>
+<tr>
+<td>7-04</td>
+<td>量能/环境</td>
+<td>炸板率41%</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>0.411</td>
+<td></td>
+</tr>
+<tr>
+<td>7-05</td>
+<td>量能/环境</td>
+<td>涨停/跌停≈33:30</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>33:30</td>
+<td></td>
+</tr>
+<tr>
+<td>7-06</td>
+<td>量能/环境</td>
+<td>最高连板6(恒尚节能)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>6板</td>
+<td></td>
+</tr>
+<tr>
+<td>7-07</td>
+<td>量能/环境</td>
+<td>连板总数33</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>33</td>
+<td></td>
+</tr>
+<tr>
+<td>7-08</td>
+<td>量能/环境</td>
+<td>1板占主体(高度断层)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>连板梯队={&#x27;6&#x27;: 1, &#x27;5&#x27;: 1, &#x27;2&#x27;: 3, &#x27;1&#x27;: 28} (1板占28/33≈85%)</td>
+<td></td>
+</tr>
+<tr>
+<td>7-09</td>
+<td>题材梳理</td>
+<td>主线化学制品/半导体/计算机设备</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>[&#x27;化学制品&#x27;, &#x27;半导体&#x27;, &#x27;计算机设&#x27;]</td>
+<td></td>
+</tr>
+<tr>
+<td>7-10</td>
+<td>题材梳理</td>
+<td>各题材最高板≤2无连板≥3→散</td>
+<td style='color:#e63946;font-weight:700'>✗</td>
+<td>题材树前8最高板=[1, 1, 1, 1, 2, 1, 1, 6]</td>
+<td></td>
+</tr>
+<tr>
+<td>7-11</td>
+<td>核心标的</td>
+<td>华天科技外资+机构B档+64475万</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>席位动向华天科技机构净买644752458≈+64475万</td>
+<td></td>
+</tr>
+<tr>
+<td>7-12</td>
+<td>核心标的</td>
+<td>龙头分高的票当日无一只封板晋级(失效)</td>
+<td style='color:#e63946;font-weight:700'>✗</td>
+<td>核心标的8只7/7全部涨停=True; 华天涨停=True → 龙头分实际有效,原claim错</td>
+<td></td>
+</tr>
+<tr>
+<td>7-13</td>
+<td>核心标的</td>
+<td>龙头分未纳入竞价权重(纯席位/资金面)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>代码层确认:分析引擎龙头分计算未含竞价字段(查分析引擎.py)</td>
+<td>待代码级复核</td>
+</tr>
+<tr>
+<td>7-14</td>
+<td>龙头股识别</td>
+<td>节点龙候选0只(米氏5.2过滤无达标)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>节点龙候选数=0</td>
+<td></td>
+</tr>
+<tr>
+<td>7-15</td>
+<td>龙头股识别</td>
+<td>恒尚节能6板抱团松动(拐点先兆非新龙头)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>拐点预警=True 预警明细=[&#x27;连板高度不低但跌停≥两位数→高位抱团松动,警惕瓦解&#x27;]</td>
+<td></td>
+</tr>
+<tr>
+<td>7-16</td>
+<td>竞价表现</td>
+<td>星网锐捷高开+4.9%/竞价额15.4亿/现+7%</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>快照:高开4.9 竞价额15.44亿 现7.03%</td>
+<td></td>
+</tr>
+<tr>
+<td>7-17</td>
+<td>竞价表现</td>
+<td>紫光低开-4.95%/现-2.91%</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>快照:高开-4.95 现-2.91%</td>
+<td></td>
+</tr>
+<tr>
+<td>7-18</td>
+<td>竞价表现</td>
+<td>阿科力一字(高开10.01%现10.01%)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>高开10.01 现10.01</td>
+<td></td>
+</tr>
+<tr>
+<td>7-19</td>
+<td>竞价表现</td>
+<td>神力股份封涨停(现10.0%)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>高开3.82(注:3.82%&lt;4%,日记误归入&#x27;高开≥4%&#x27;组) 现10.0%</td>
+<td></td>
+</tr>
+<tr>
+<td>7-20</td>
+<td>竞价表现</td>
+<td>恒尚节能高开9.98%现9.98%</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>高开9.98 现9.98</td>
+<td></td>
+</tr>
+<tr>
+<td>7-21</td>
+<td>竞价表现</td>
+<td>昨日16候选今日0封板/0高开≥4%(最高中公教育-4.31%)</td>
+<td style='color:#e63946;font-weight:700'>✗</td>
+<td>实际晋级=1只([&#x27;白云电器&#x27;]); 高开≥4%候选确实为0,但&#x27;0封板&#x27;错(白云电器晋级)</td>
+<td>与认知迭代&#x27;6.25%晋级&#x27;自相矛盾,需统一</td>
+</tr>
+<tr>
+<td>7-22</td>
+<td>竞价表现</td>
+<td>中公教育高开-4.31%</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>高开-4.31%</td>
+<td></td>
+</tr>
+<tr>
+<td>7-23</td>
+<td>龙虎榜</td>
+<td>LHB上榜93只 强21/中19/弱53</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>总93 强21 中19 弱53</td>
+<td></td>
+</tr>
+<tr>
+<td>7-24</td>
+<td>龙虎榜</td>
+<td>华天净买15.77亿/多空3.33/均匀0.216/五类外41量31其20机8</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>净买15.77亿 多空3.33 均匀0.216 五类{&#x27;外资&#x27;: 41.3, &#x27;其他&#x27;: 19.7, &#x27;量化&#x27;: 31.3, &#x27;机构&#x27;: 7.7}</td>
+<td></td>
+</tr>
+<tr>
+<td>7-25</td>
+<td>龙虎榜</td>
+<td>三亚迎宾路+30824万(华天第二大净买,未知席位)</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>净额308241844.0 类型其他/未知</td>
+<td></td>
+</tr>
+<tr>
+<td>7-26</td>
+<td>龙虎榜</td>
+<td>93只中53只弱(占57%)→净卖主导</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>弱53/93=57%</td>
+<td></td>
+</tr>
+<tr>
+<td>7-27</td>
+<td>系统验证</td>
+<td>中公教育踩深交所监管公告(低开-4.31%)</td>
+<td style='color:#b26a00;font-weight:700'>△</td>
+<td>低开-4.31%✓(实测),但公告_20260707.json无中公教育→归因未核验+公告模块漏抓(系统gap)</td>
+<td>数字对,原因不可核验</td>
+</tr>
+<tr>
+<td>7-28</td>
+<td>系统验证</td>
+<td>龙头分退潮期失效(高分标的无晋级)</td>
+<td style='color:#e63946;font-weight:700'>✗</td>
+<td>核心标的8只全部涨停→龙头分有效,原claim错(与7-12同)</td>
+<td>需改为&#x27;退潮期龙头分仍有效但需结合环境仓位&#x27;</td>
+</tr>
+<tr>
+<td>7-29</td>
+<td>认知迭代</td>
+<td>16候选仅1晋级6.25%&lt;&lt;基准15%</td>
+<td style='color:#b26a00;font-weight:700'>△</td>
+<td>晋级1/16=6.25%(白云电器); &#x27;基准15%&#x27;全系统查无来源→不可核验</td>
+<td>6.25%数对;15%基准无据</td>
+</tr>
+<tr>
+<td>7-30</td>
+<td>认知迭代</td>
+<td>LHB量化评分(强中弱)与退潮环境一致</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>弱53&gt;强21→净卖主导,符合退潮</td>
+<td></td>
+</tr>
+<tr>
+<td>7-31</td>
+<td>升级反馈H1</td>
+<td>晋级票必带题材+竞价示强,白云电器=电网+竞价示强</td>
+<td style='color:#e63946;font-weight:700'>✗</td>
+<td>白云电器题材=电网设备✓,但竞价高开仅1.3%(弱)→&#x27;竞价示强&#x27;被唯一正样本证伪</td>
+<td>H1需修:题材属性必要,竞价示强非必要</td>
+</tr>
+<tr>
+<td>7-32</td>
+<td>升级反馈H2</td>
+<td>高开分桶→T日涨停+T+1溢价(竞价深度训练.py)</td>
+<td style='color:#b26a00;font-weight:700'>△</td>
+<td>脚本已建但未运行(沙箱历史日线被墙,需真机akshare跑周自动化)</td>
+<td>待真机回填_竞价深度训练.json</td>
+</tr>
+<tr>
+<td>7-33</td>
+<td>升级反馈H3</td>
+<td>龙头分×环境折扣系数(退潮0.3/震荡0.7/进攻1.0)</td>
+<td style='color:#b26a00;font-weight:700'>△</td>
+<td>未编码进分析引擎</td>
+<td>待编码</td>
+</tr>
+<tr>
+<td>6-01</td>
+<td>量能/环境</td>
+<td>7/6量能3.09万亿</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>30911.0亿</td>
+<td></td>
+</tr>
+<tr>
+<td>6-02</td>
+<td>量能/环境</td>
+<td>7/6跌停46家</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>46家</td>
+<td></td>
+</tr>
+<tr>
+<td>6-03</td>
+<td>量能/环境</td>
+<td>7/6炸板39%</td>
+<td style='color:#b26a00;font-weight:700'>△</td>
+<td>summary.炸板率=None(None→不可核验)</td>
+<td></td>
+</tr>
+<tr>
+<td>6-04</td>
+<td>量能/环境</td>
+<td>7/6 1板占87.5%</td>
+<td style='color:#b26a00;font-weight:700'>△</td>
+<td>7/6 summary无1板家数; 7/7为85%,7/6未直接核验</td>
+<td>推断非实测</td>
+</tr>
+<tr>
+<td>6-05</td>
+<td>题材梳理</td>
+<td>7/6机器人有广度无高度(最高板&lt;3)</td>
+<td style='color:#b26a00;font-weight:700'>△</td>
+<td>7/6 summary最高连板=5(整体); 机器人板块最高板未单独存档</td>
+<td>表述需改为&#x27;机器人板块&#x27;以免与整体5板混淆</td>
+</tr>
+<tr>
+<td>6-06</td>
+<td>核心标的</td>
+<td>7/6中公教育66.7%组合概率最高</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>中公教育组合次日封板率=0.667,16只中排名第1</td>
+<td></td>
+</tr>
+<tr>
+<td>6-07</td>
+<td>龙虎榜</td>
+<td>7/6紫光三座位联手量化系</td>
+<td style='color:#06a88a;font-weight:700'>✓</td>
+<td>紫光7/6量化席位=[&#x27;北京知春路(派神)&#x27;, &#x27;西安太华路&#x27;, &#x27;紫阳东路&#x27;]</td>
+<td></td>
+</tr>
+</table>
+</div>
+<div class=mut style='text-align:center;margin:16px'>学习日记 · 生成于 2026-07-07 19:43</div>
+</div></body></html>

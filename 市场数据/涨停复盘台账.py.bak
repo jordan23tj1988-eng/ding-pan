@@ -1,0 +1,62 @@
+# -*- coding: utf-8 -*-
+"""涨停复盘台账.py {d} [--from-data] —— 每日涨停复盘按日累积的运行台账。
+每天把当日涨停三层归位块存进 _学习/涨停复盘存档/{d}.json,再组装成"台账"(最新在上、当天展开、旧日折叠)
+注入最新judgment的 limitup 页 <!--LEDGER-->..<!--/LEDGER--> 之间。傍晚链路每天调一次。
+--from-data: 从 涨停对链条_{d}.json+主流题材6有_{d}.json 现算日块(用于回填/无现成正文时);缺则自动跑对应脚本。"""
+import os,sys,re,json,glob,subprocess,html
+BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习"); STORE=os.path.join(L,"涨停复盘存档")
+esc=html.escape
+def ensure(d):
+    for scr,out in [("涨停对链条.py",f"涨停对链条_{d}.json"),("主流题材6有.py",f"主流题材6有_{d}.json")]:
+        if not os.path.isfile(os.path.join(L,out)):
+            subprocess.run([sys.executable,os.path.join(BASE,scr),d],check=True)
+def vcls(v):
+    return {'主线承载核心':'s-ok','分歧/末端':'s-weak','末端扩散':'s-mid'}.get(v.split(':')[0],'mut')
+def three_layer(zt):
+    rows=[]
+    for t in zt['题材线']:
+        rows.append(f'<tr style="background:#f3eee1"><td colspan="4"><b>【{esc(t["大方向"])}】</b>{t["家数"]}只·最高{t["最高连板"]}板·承载{esc(t.get("承载环节") or "-")}</td></tr>')
+        for s in t['环节']:
+            rows.append(f'<tr><td colspan="4" style="background:#faf7f0"><b>── {esc(s["环节"])}</b> <span class="mut">({s["家数"]}只·开板{s["开板占比"]})</span> <span class="{vcls(s["快判"])}">{esc(s["快判"])}</span></td></tr>')
+            for g in s['个股']:
+                fdb=f'{g["封单比"]}%' if g["封单比"] is not None else '—'
+                src={'A':'<span class="badge bA">A</span>','C':'<span class="badge bC">C</span>'}.get(g.get("来源档",""),'<span class="mut" style="font-size:11px">B</span>')
+                kb='<span class="tag2 t-avoid">开</span>' if g["开板次数"]>0 else ''
+                lb=f'<span class="tag2 t-attack">{g["连板"]}板</span>' if g["连板"]>1 else ''
+                rows.append(f'<tr><td>{esc(g["首封"])}</td><td><b>{esc(g["名称"])}</b> <span class="mut">{esc(g["代码"])}</span></td><td>封{fdb} {kb}{lb}</td><td>{esc(g.get("催化") or "(模板)")} {src}</td></tr>')
+    return '<div class="card"><table><tr><th>首封</th><th>标的</th><th>封单/身位</th><th>催化·档</th></tr>'+''.join(rows)+'</table></div>'
+def build_from_data(d):
+    ensure(d)
+    zt=json.load(open(os.path.join(L,f"涨停对链条_{d}.json"),encoding="utf-8"))
+    six=json.load(open(os.path.join(L,f"主流题材6有_{d}.json"),encoding="utf-8"))
+    cl=six.get("题材_聚类口径") or []
+    top=cl[0] if cl else None
+    summary=f'涨停{zt["涨停总数"]} · '+(f'主流{esc(top["题材(题材聚类口径)"])}{top["得分"]}/6({top["涨停数"]})' if top and top["得分"]>=5 else esc(six.get("全场判定",""))[:24])
+    speed=f'<div class="strip"><div class="kv"><div class="l">涨停</div><div class="v">{zt["涨停总数"]}</div></div><div class="kv"><div class="l">题材线</div><div class="v">{zt["题材线数"]}</div></div><div class="kv"><div class="l">全场判定</div><div class="v" style="font-size:13px">{esc(six.get("全场判定",""))}</div></div></div>'
+    inner=speed+three_layer(zt)
+    return summary,inner
+def save(d,summary,inner):
+    os.makedirs(STORE,exist_ok=True)
+    json.dump({"date":d,"summary":summary,"html":inner},open(os.path.join(STORE,f"{d}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+def assemble():
+    fs=sorted(glob.glob(os.path.join(STORE,"20*.json")),reverse=True)   # 日期DESC=最新在上
+    parts=[]
+    for i,f in enumerate(fs):
+        j=json.load(open(f,encoding="utf-8")); d=j["date"]; disp=d[4:6]+"-"+d[6:8]
+        op=" open" if i==0 else ""
+        chip='<span class="chip cold">最新</span>' if i==0 else '<span class="chip">存档</span>'
+        parts.append(f'<details class="chain"{op}><summary><b>{disp}</b> {chip} {esc(j["summary"])}</summary><div class="inner">{j["html"]}</div></details>')
+    return "".join(parts) or '<div class="hint">暂无存档日</div>'
+def inject(section):
+    js=sorted(glob.glob(os.path.join(L,"judgment_*.json"))); jp=js[-1]
+    J=json.load(open(jp,encoding="utf-8")); b=J["bodies"]["limitup"]
+    b=re.sub(r'<!--LEDGER-->.*?<!--/LEDGER-->','<!--LEDGER-->'+section.replace('\\\\','\\\\\\\\')+'<!--/LEDGER-->',b,flags=re.S)
+    J["bodies"]["limitup"]=b; json.dump(J,open(jp,"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+    return os.path.basename(jp)
+def main():
+    a=sys.argv[1:]; d=next((x for x in a if x.isdigit()),None)
+    if d and "--from-data" in a:
+        s,inner=build_from_data(d); save(d,s,inner); print(f"{d}日块(from-data)已存")
+    sec=assemble(); jp=inject(sec)
+    print(f"台账已组装注入 {jp} | 存档日数 {len(glob.glob(os.path.join(STORE,'20*.json')))}")
+if __name__=="__main__": main()

@@ -68,10 +68,10 @@ def main(dprev):
     js=sorted(glob.glob(os.path.join(L,"judgment_*.json"))); jp=js[-1]
     J=json.load(open(jp,encoding="utf-8")); a=J["bodies"]["auction"]
     a=re.sub(r'<h2 class="hot">(?:二·今晨初读、|★今晨初读 · ).*?(?=<h2)','',a,flags=re.S)  # 删旧初读段(兼容旧编号版)
-    anchor=next((m for m in ['<h2>二 昨日','<h2 class="hot">二 昨日','<h2>三 今日竞价温度','<h2>附·','<h2>二、昨日选股池结算','<h2 class="hot">二、昨日选股池结算','<h2>三、竞价信号','<h2 class="hot">三、竞价信号'] if m in a),None)
+    anchor=next((m for m in ['<h2>二 今日竞价温度','<h2 class="hot">二 今日竞价温度','<h2>三 昨日','<h2 class="hot">三 昨日','<h2>二 昨日','<h2 class="hot">二 昨日','<h2>三 今日竞价温度','<h2>附·','<h2>二、昨日选股池结算','<h2 class="hot">二、昨日选股池结算','<h2>三、竞价信号','<h2 class="hot">三、竞价信号'] if m in a),None)
     if anchor:
         a=a.replace('<h2>二、昨日选股池结算','<h2>附·历史池结算',1).replace('<h2 class="hot">二、昨日选股池结算','<h2>附·历史池结算',1)
-        anchor=next((m for m in ['<h2>二 昨日','<h2 class="hot">二 昨日','<h2>三 今日竞价温度','<h2>附·','<h2>三、竞价信号','<h2 class="hot">三、竞价信号'] if m in a),None)
+        anchor=next((m for m in ['<h2>二 今日竞价温度','<h2 class="hot">二 今日竞价温度','<h2>三 昨日','<h2 class="hot">三 昨日','<h2>二 昨日','<h2 class="hot">二 昨日','<h2>三 今日竞价温度','<h2>附·','<h2>三、竞价信号','<h2 class="hot">三、竞价信号'] if m in a),None)
         i=a.find(anchor); a=a[:i]+block+"\n"+a[i:]
     else: a=a+block
     J["bodies"]["auction"]=a

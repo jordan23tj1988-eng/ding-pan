@@ -334,5 +334,30 @@ def build(date):
         +lis+'</ul><div class="foot">存档只加不删,对应每日18:00傍晚链路产物。</div>')
     open(os.path.join(SITE,'history.html'),'w',encoding='utf-8').write(shell('情绪盯盘台 · 历史',nav('history.html',upd),hb))
     print('盯盘台已生成:',date,'| 存档天数',len(dates))
+    # ★2026-07-13封堵:每次重建都会冲掉PAPERTRADE看板→自动补跑模拟盘inject+六页锚点自检(保证下沉到代码,不依赖prompt纪律)
+    import subprocess
+    _eng=os.path.join(BASE,'模拟盘引擎.py')
+    if os.path.exists(_eng):
+        _r=subprocess.run([sys.executable,_eng,'inject',date],capture_output=True,text=True)
+        if _r.returncode!=0:
+            print('!!!模拟盘inject失败,页面缺PAPERTRADE看板:',((_r.stderr or _r.stdout) or '')[-300:])
+        elif _r.stdout: print(_r.stdout.strip())
+    else:
+        print('!!!未找到模拟盘引擎.py,PAPERTRADE看板未注入')
+    _miss=[k for k in ('index','auction','lhb','theme','logic','limitup')
+        if os.path.exists(os.path.join(SITE,k+'.html'))
+        and '<!--PAPERTRADE-->' not in open(os.path.join(SITE,k+'.html'),encoding='utf-8').read()]
+    if _miss: print('!!!出页自检失败:以下页面缺PAPERTRADE锚 →',','.join(_miss))
+    else: print('出页自检通过:六页PAPERTRADE看板在位')
+    # ★重复段标题自检(2026-07-13加:抓"agent手写h2+脚本块自带h2"类重复,lhb资金温度双标题事故)
+    import re as _re2
+    for _k in ('index','cycle','auction','lhb','theme','logic','limitup'):
+        _fp=os.path.join(SITE,_k+'.html')
+        if not os.path.exists(_fp): continue
+        _hs=[_m.group(1).strip() for _m in _re2.finditer(r'<h2[^>]*>([^<]+)</h2>',open(_fp,encoding='utf-8').read())]
+        _dup=sorted({h for h in _hs if _hs.count(h)>1})
+        if _dup: print('!!!出页自检失败:'+_k+'页重复段标题 →','; '.join(_dup))
+
+
 if __name__=='__main__':
     build(sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d'))

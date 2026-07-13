@@ -553,7 +553,7 @@ def morning(d):
     codes = {}
     for route in ROUTES:
         plan = jload(os.path.join(learn(),'交易计划_%s_%s.json'%(route,pd_)),{}) if pd_ else {}
-        for p in (plan.get('positions') or [])[:5]:
+        for p in (plan.get('buys') or plan.get('positions') or [])[:5]:
             codes.setdefault(str(p.get('code','')).zfill(6),[]).append((route,'buy',p))
         sell_codes = {str(o.get('code','')).zfill(6):o for o in (plan.get('sells') or [])}
         st = load_state(route)

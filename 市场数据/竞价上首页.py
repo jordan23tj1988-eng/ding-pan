@@ -66,7 +66,7 @@ def inject(idx_html,mingxi,label):
     return idx_html[:m.start()]+tbl+idx_html[m.end():],True
 def main(d):
     v=json.load(open(os.path.join(L,"竞价验证_"+d+".json"),encoding="utf-8"))
-    cand=v.get("候选日")
+    cand=(v.get("候选日") or "").replace("-","")  # ★格式归一:兼容"2026-07-13"与"20260713"(07-14修)
     jp=os.path.join(L,"judgment_"+cand+".json")
     j=json.load(open(jp,encoding="utf-8"))
     label=d[4:6]+"-"+d[6:8]

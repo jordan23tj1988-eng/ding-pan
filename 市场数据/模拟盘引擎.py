@@ -11,7 +11,7 @@
  buy_gate={"max_gap_pct":5}/{"min_gap_pct":-3} → T+1开盘gap越界=闸门弃单(用bars结算:开盘价=9:25竞价价)
  sell_switch={"if_gap_ge_pct":3,"then":"T2_close"} → T+2高开达阈改持到收盘卖(仅首次卖出日生效,顺延日不适用)
  morning {d} = 9:25-9:31实时预告(sina竞价价机判买卖动作,写_模拟盘/早盘执行_{d}.json供早盘页展示;结算以bars为准)
-★v1.3: 止损腿已撤销(用户拍板:有些策略T+1浮亏T+2才兑现;硬边界=最晚T+2收盘强制卖,本引擎天然如此,跌停/停牌顺延除外);买入记流动性(股数/当日成交量,≥1%警示);
+★v2.0持有期自主(取代v1.3): 止损腿+固定T+2强制卖均撤销(用户拍板:有些策略T+1浮亏T+2才兑现);现行=无卖单默认继续持有,卖出由指令单驱动,最早T+2可卖无上限,跌停/停牌顺延;买入记流动性(股数/当日成交量,≥1%警示);
  weekly增: 路内池基准(该路当周荐票发出版全体票同规则均收,对照全场涨停基准)+卖腿反事实对照(仅归因非战绩)+票一致率
 零编造:缺数据标注跳过;所有战绩数字只出自本引擎。
 """
@@ -331,15 +331,15 @@ def write_status(route,d,st,nav):
     jsave(os.path.join(simdir(route),'状态.json'),obj)
 
 # ── dashboard ─────────────────────────────────────────
-CSS_D = 'background:#14171e;border:1px solid #2a2f3a;border-left:3px solid #d9a441;border-radius:14px;padding:20px 24px;margin:18px 0;color:#d8dee9;font-size:13px'
+CSS_D = 'background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)'
 def color_ret(x):
-    if x is None: return '<span style="color:#8892a0">--</span>'
-    c = '#e05d5d' if x>0 else ('#4caf7d' if x<0 else '#8892a0')
+    if x is None: return '<span style="color:#8d93a8">--</span>'
+    c = '#ff5f56' if x>0 else ('#3fcb86' if x<0 else '#8d93a8')
     return '<b style="color:%s;font-family:ui-monospace,monospace">%+.2f%%</b>'%(c,x)
 
 def nav_svg(navdict,bench,d):
     ks = sorted(navdict.keys())[-60:]
-    if not ks: return '<div style="color:#8892a0">尚无净值数据(明晚首个结算点)</div>'
+    if not ks: return '<div style="color:#8d93a8">尚无净值数据(明晚首个结算点)</div>'
     def series(dic):
         out = []
         for k in ks:
@@ -356,11 +356,13 @@ def nav_svg(navdict,bench,d):
         return ' '.join('%.1f,%.1f'%(20+(W-40)*i/max(n-1,1), H-18-(H-36)*(v-lo)/(hi-lo)) for i,v in enumerate(vs))
     y1 = H-18-(H-36)*(1.0-lo)/(hi-lo)
     s = ['<svg viewBox="0 0 %d %d" style="width:100%%;max-width:680px;display:block">'%(W,H)]
-    s.append('<line x1="20" y1="%.1f" x2="%d" y2="%.1f" stroke="#3a4150" stroke-dasharray="3 4"/>'%(y1,W-20,y1))
-    if b: s.append('<polyline points="%s" fill="none" stroke="#8892a0" stroke-width="1.2" stroke-dasharray="5 4" opacity=".8"/>'%pts(b))
-    s.append('<polyline points="%s" fill="none" stroke="#d9a441" stroke-width="2.2"/>'%pts(a))
-    s.append('<text x="20" y="12" fill="#8892a0" font-size="10" font-family="monospace">%s~%s  金=本账净值  灰虚线=影子基准(全场涨停同规则)  横线=1.0</text>'%(ks[0],ks[-1]))
-    s.append('<text x="%d" y="%.1f" fill="#d9a441" font-size="11" font-family="monospace" text-anchor="end">%.4f</text>'%(W-22,H-18-(H-36)*(a[-1]-lo)/(hi-lo)-5,a[-1]))
+    s.append('<line x1="20" y1="%.1f" x2="%d" y2="%.1f" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/>'%(y1,W-20,y1))
+    if b: s.append('<polyline points="%s" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/>'%pts(b))
+    s.append('<polyline class="drawin" points="%s" fill="none" stroke="#e8a33d" stroke-width="2.2"/>'%pts(a))
+    _lx,_ly = 20+(W-40), H-18-(H-36)*(a[-1]-lo)/(hi-lo)
+    s.append('<circle cx="%.1f" cy="%.1f" r="3" fill="#e8a33d"/>'%(_lx,_ly))
+    s.append('<text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">%s~%s  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text>'%(ks[0],ks[-1]))
+    s.append('<text x="%d" y="%.1f" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">%.4f</text>'%(W-22,H-18-(H-36)*(a[-1]-lo)/(hi-lo)-5,a[-1]))
     s.append('</svg>')
     return ''.join(s)
 
@@ -372,70 +374,73 @@ def dashboard(d):
         stat = jload(os.path.join(simdir(route),'状态.json'),{})
         plan = jload(os.path.join(learn(),'交易计划_%s_%s.json'%(route,d)),{})
         h = ['<div style="%s">'%CSS_D]
-        h.append('<div style="font-size:11.5px;letter-spacing:3px;color:#d9a441;font-family:monospace">PAPER TRADING · 模拟实盘 · %s</div>'%RNAME[route])
+        h.append('<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · %s</div>'%RNAME[route])
         cum = stat.get('累计pct'); wk = stat.get('本周pct'); bwk = stat.get('基准本周pct')
         chips = ['累计 %s'%color_ret(cum),'本周 %s'%color_ret(wk),'基准本周 %s'%color_ret(bwk)]
         if stat.get('胜率pct') is not None: chips.append('平仓胜率 <b style="font-family:monospace">%s%%</b>(n=%s)'%(stat['胜率pct'],stat['已平仓笔数']))
         chips.append('本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)')
-        h.append('<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#aab3c0">'+ ' '.join('<span>%s</span>'%c for c in chips)+'</div>')
-        h.append(nav_svg(nav,bn,d))
+        h.append('<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd">'+ ' '.join('<span>%s</span>'%c for c in chips)+'</div>')
+        h.append('<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>')
+        h.append('<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px">'+nav_svg(nav,bn,d)+'</div>')
+        if plan and plan.get('notes'):
+            h.append('<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · %s</div>'%plan['notes'])
+        h.append('</div><div>')
         # 持仓
         if st['positions']:
             cal2 = calendar()
             sells_tonight = {str(o.get('code','')).zfill(6):o for o in (plan.get('sells') or [])} if plan else {}
-            h.append('<div style="margin-top:12px;color:#d9a441;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">')
-            h.append('<tr style="color:#8892a0"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>')
+            h.append('<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">')
+            h.append('<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>')
             for p in st['positions']:
                 b = load_bars(p['code']); ks = [k for k in sorted(b.keys()) if k<=d]
                 px = b[ks[-1]][3] if ks else p['buy_px']
                 fl = (p['shares']*px/(p['cost'])-1)*100
                 hd = len([x for x in cal2 if p['buy_date'] <= x <= d])
-                if p.get('defer_sell'): ins = '<span style="color:#e05d5d">顺延卖出中(%d次)</span>'%p.get('defers',0)
+                if p.get('defer_sell'): ins = '<span style="color:#ff5f56">顺延卖出中(%d次)</span>'%p.get('defers',0)
                 elif p['code'] in sells_tonight:
                     o = sells_tonight[p['code']]
-                    ins = '<b style="color:#d9a441">明日卖·%s</b>%s'%('收盘' if o.get('leg')=='close' else '开盘',
+                    ins = '<b style="color:#e8a33d">明日卖·%s</b>%s'%('收盘' if o.get('leg')=='close' else '开盘',
                           '(高开≥%s%%改收)'%o['sell_switch']['if_gap_ge_pct'] if o.get('sell_switch') else '')
                 else: ins = '继续持有'
-                h.append('<tr style="border-top:1px solid #2a2f3a"><td>%s %s</td><td style="font-family:monospace">%d</td><td style="font-family:monospace">%.2f</td><td>%s</td><td style="font-family:monospace">%d</td><td>%s</td></tr>'%(
+                h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%d</td><td style="font-family:monospace">%.2f</td><td>%s</td><td style="font-family:monospace">%d</td><td>%s</td></tr>'%(
                     p['code'],p['name'],p['shares'],p['buy_px'],color_ret(fl),hd,ins))
             h.append('</table>')
         else:
-            h.append('<div style="margin-top:12px;color:#8892a0">当前空仓</div>')
+            h.append('<div style="margin-top:12px;color:#8d93a8">当前空仓</div>')
         # 当晚计划
-        h.append('<div style="margin-top:12px;color:#d9a441;font-size:12px">今晚指令单(%s发出,明日固定价执行)</div>'%d)
+        h.append('<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(%s发出,明日固定价执行)</div>'%d)
         buys = (plan.get('buys') or plan.get('positions') or []) if plan else []
         sells = (plan.get('sells') or []) if plan else []
         if plan and (buys or sells):
-            h.append('<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8892a0"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>')
+            h.append('<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8d93a8"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>')
             for p in buys[:5]:
                 gate = p.get('buy_gate') or {}
                 gtxt = '·闸门高开≥%s弃'%gate['max_gap_pct'] if 'max_gap_pct' in gate else ('·闸门低开≤%s弃'%gate['min_gap_pct'] if 'min_gap_pct' in gate else '')
-                h.append('<tr style="border-top:1px solid #2a2f3a"><td style="color:#e05d5d">买</td><td>%s %s</td><td style="font-family:monospace">%s%%%s</td><td style="color:#aab3c0">%s</td></tr>'%(
+                h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%s%%%s</td><td style="color:#a8adbd">%s</td></tr>'%(
                     p.get('code'),p.get('name'),p.get('weight_pct'),gtxt,p.get('reason','')))
             for o in sells:
                 stxt = '开盘' if o.get('leg')!='close' else '收盘'
                 if o.get('sell_switch'): stxt += '(高开≥%s%%改收)'%o['sell_switch'].get('if_gap_ge_pct')
-                h.append('<tr style="border-top:1px solid #2a2f3a"><td style="color:#4caf7d">卖</td><td>%s %s</td><td>%s</td><td style="color:#aab3c0">%s</td></tr>'%(
+                h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">%s %s</td><td>%s</td><td style="color:#a8adbd">%s</td></tr>'%(
                     o.get('code'),o.get('name',''),stxt,o.get('reason','')))
             h.append('</table>')
         elif plan:
-            h.append('<div style="color:#8892a0;margin-top:4px">★今晚无买卖指令(在持票默认继续持有/或空仓)</div>')
+            h.append('<div style="color:#8d93a8;margin-top:4px">★今晚无买卖指令(在持票默认继续持有/或空仓)</div>')
         else:
-            h.append('<div style="color:#8892a0;margin-top:4px">今晚指令单未发出</div>')
-        if plan and plan.get('notes'):
-            h.append('<div style="margin-top:10px;border-left:2px solid #3a4150;padding:6px 10px;color:#aab3c0;font-size:12.3px"><span style="color:#d9a441">交易心得</span> · %s</div>'%plan['notes'])
+            h.append('<div style="color:#8d93a8;margin-top:4px">今晚指令单未发出</div>')
+        h.append('</div></div>')
         # 最近平仓
         rc = (stat.get('最近平仓') or [])
         if rc:
-            h.append('<details style="margin-top:10px"><summary style="color:#8892a0;cursor:pointer;font-size:12px">最近平仓明细(%d)</summary><table style="width:100%%;border-collapse:collapse;font-size:12px;margin-top:4px">'%len(rc))
-            h.append('<tr style="color:#8892a0"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>')
+            h.append('<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(%d)</summary><table style="width:100%%;border-collapse:collapse;font-size:12px;margin-top:4px">'%len(rc))
+            h.append('<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>')
             for t in reversed(rc):
-                h.append('<tr style="border-top:1px solid #2a2f3a"><td>%s %s</td><td style="font-family:monospace">%s@%.2f</td><td style="font-family:monospace">%s@%.2f</td><td>%s</td><td>%s%s</td></tr>'%(
+                h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>%s %s</td><td style="font-family:monospace">%s@%.2f</td><td style="font-family:monospace">%s@%.2f</td><td>%s</td><td>%s%s</td></tr>'%(
                     t['code'],t['name'],t['buy_date'],t['buy_px'],t['sell_date'],t['sell_px'],
                     color_ret(t['ret_pct']),('%s·持%d日'%('收' if t.get('leg')=='T_close' or t.get('leg')=='T2_close' else '开',t.get('hold_days',2))),
                     ('·顺延%d'%t['defers'] if t.get('defers') else '')))
             h.append('</table></details>')
-        h.append('<div style="margin-top:10px;color:#5c6674;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>')
+        h.append('<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>')
         h.append('</div>')
         out = os.path.join(simdir(route),'看板_%s.html'%d)
         with open(out,'w',encoding='utf-8') as f: f.write('\n'.join(h))

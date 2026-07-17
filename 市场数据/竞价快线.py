@@ -21,16 +21,22 @@ def parse_watchlist():
         if c and n: wl.append(dict(代码=c.group(1),名称=n.group(1),类型=t.group(1) if t else "",昨日预判=yu))
     if not wl and '<div class="obs">' in idx:   # obs卡片版式fallback(2026-07起首页观察点改卡片)
         for seg in idx.split('<div class="obs">')[1:]:
-            nm=re.search(r'<div class="obs-nm">(.*?)</div>',seg,re.S)
+            # obs-nm 可能是 <div> 或 <span>(2026-07-16起首页改span卡片);兼容两版
+            nm=re.search(r'class="obs-nm">(.*?)</(?:div|span)>\s*<span class="obs-pos',seg,re.S) \
+               or re.search(r'class="obs-nm">(.*?)</div>',seg,re.S) \
+               or re.search(r'class="obs-nm">(.*?)</span></span>',seg,re.S)
             if not nm: continue
-            t=re.search(r'tag2 [^"]*">([^<]+)<',seg)
+            # 类型/身位:新版在 obs-pos,旧版在 tag2
+            t=re.search(r'class="obs-pos[^"]*">([^<]+)<',seg) or re.search(r'tag2 [^"]*">([^<]+)<',seg)
             w=re.search(r'<div class="obs-watch">(.*?)</div>',seg,re.S)
             yu=re.sub(r'<[^>]+>','',w.group(1)).strip()[:80] if w else ""
             txt=nm.group(1); fb=re.search(r'<b>([^<]+)</b>',txt)
+            # 卡片首名(mut span之前的纯文本),用于新版 name 提取
+            head_nm=re.search(r'^\s*([^<]+?)\s*<span class="mut"',txt)
             for sp in re.findall(r'class="mut">([^<]+)<',txt):
                 mc=re.search(r'(\d{6})',sp)
                 if not mc: continue
-                name=sp.replace(mc.group(1),'').strip() or (fb.group(1) if fb else mc.group(1))
+                name=sp.replace(mc.group(1),'').strip() or (head_nm.group(1).strip() if head_nm else "") or (fb.group(1) if fb else mc.group(1))
                 wl.append(dict(代码=mc.group(1),名称=name,类型=t.group(1) if t else "",昨日预判=yu))
     return cand,wl
 def sina(codes):

@@ -95,6 +95,8 @@ def inject(section):
     return os.path.basename(jp)
 def main():
     a=sys.argv[1:]; d=next((x for x in a if x.isdigit()),None)
+    if "--from-data" in a and not d:
+        print("!!! 龙虎榜台账.py --from-data 缺日期参数(YYYYMMDD),拒绝静默跳过当日日块(2026-07-16事故)。用法: python3 龙虎榜台账.py 20260716 --from-data"); sys.exit(2)
     if d and "--from-data" in a:
         s,inner=build_from_data(d); save(d,s,inner); print(f"{d} lhb日块已存: {s}")
     jp=inject(assemble())

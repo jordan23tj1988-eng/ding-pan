@@ -49,7 +49,7 @@ def main(sector,d):
         m60=round(sum(r60s)/len(r60s),1) if r60s else None
         md=round(sum(dists)/len(dists),1)
         out["环节"][seg]={"个股":rows,"均60日":m60,"均距高":md,"位置":judge(m60,md)}
-    json.dump(out,open(os.path.join(BASE,"_学习",f"链条位置_{sector}_{d}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+    json.dump(out,open(os.path.join(BASE,"_学习",f"链条位置_{sector.replace(chr(47),chr(95))}_{d}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
     for seg,v in out["环节"].items():
         if "个股" not in v: print(f"{seg}: {v['注']}"); continue
         print(f'{seg:14s} 均60日{v["均60日"]:+7.1f}% 均距高{v["均距高"]:+6.1f}% [{v["位置"]}] | '+", ".join(f'{r["名"]}{r["r60"]:+.0f}/{r["距250日高"]:+.0f}' for r in v["个股"]))

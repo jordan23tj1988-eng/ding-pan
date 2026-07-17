@@ -37,7 +37,10 @@ def inject_obs(idx_html,mingxi,label):
     by_code={e.get("代码",""):e for e in mingxi}
     parts=idx_html.split('<div class="obs">'); out=[parts[0]]
     for seg in parts[1:]:
-        nm=re.search(r'<div class="obs-nm">(.*?)</div>',seg,re.S)
+        # obs-nm 可能是 <div> 或 <span>(2026-07-16起首页改span卡片);兼容两版
+        nm=re.search(r'class="obs-nm">(.*?)</(?:div|span)>\s*<span class="obs-pos',seg,re.S) \
+           or re.search(r'class="obs-nm">(.*?)</div>',seg,re.S) \
+           or re.search(r'class="obs-nm">(.*?)</span></span>',seg,re.S)
         codes=re.findall(r'(\d{6})',nm.group(1)) if nm else []
         items=[]
         for c in codes:

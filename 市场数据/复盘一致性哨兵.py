@@ -10,6 +10,11 @@
   C6 HTML结构完好+时间线折叠  C7 脚本产出卡陈旧嵌入
   C8 改动登记核对(正式.py/规格/规范mtime晚于_变更总账.md=改了没登记;2026-07-16改动三合一)
   C9 台账最新日块日期对账(涨停/龙虎榜=d,竞价=dprev;台账脚本--from-data漏日期会静默跳过当日日块=2026-07-16龙虎榜事故)
+  C10 obs卡×竞价验证对账(竞价验证明细>0但昨judgment index obs-jj全空=obs卡markup漂移,2026-07-17 E3事故)
+  C11 ths涨停池新鲜度(最新日<当日=停更静默错数,2026-07-17 #008事故:先行指标日历跳回0710错数一周)
+  C12 宿主取数日志新鲜度(傍晚日志缺=当日链路无米下锅;步骤rc非0列警;总账#012注的欠账,2026-07-18补)
+  C13 盘中流水完整性(阶段②,#032:playbook有单但执行流水缺=引擎没跑;第七账净值缺当日=结算没跑;sells带stop缺ref_px列警)
+  C14 盘中决断json与第七账账本一致性(阶段②,#032:决断fills必带px_exec且必须已入账本,否则结算漏读)
 退出码: 0=全过 1=有FAIL(打印明细,流水线应停下重看)
 """
 import os,sys,glob,json,re,datetime
@@ -182,6 +187,105 @@ else:
         _ds=re.findall(r'<summary><b>(\d\d-\d\d)',_s); _new=_ds[0] if _ds else None
         if _new!=_exp:
             FAIL.append('C9 %s %s 最新日块=%s 应=%s(%s)——台账脚本 --from-data 可能漏了日期参数,当日日块没建;补跑"台账脚本 %s --from-data"+dashboard+生成盯盘台+inject'%(_pg,_an,_new,_exp,_ku,d))
+
+# ---------- C10 obs卡×竞价验证对账(2026-07-17 E3: obs卡markup漂移→晨场脚本静默0/0) ----------
+_vf=os.path.join(L,'竞价验证_%s.json'%d)
+if dprev and os.path.isfile(_vf):
+    try: _vv=json.load(open(_vf,encoding='utf-8'))
+    except Exception: _vv={}
+    if (_vv.get('观察点数') or 0)>0 or len(_vv.get('明细') or [])>0:
+        _jp=os.path.join(L,'judgment_%s.json'%dprev)
+        if os.path.isfile(_jp):
+            _ib=json.load(open(_jp,encoding='utf-8')).get('bodies',{}).get('index','')
+            _blocks=re.findall(r'class="obs-jj".*?</div>',_ib,re.S)
+            def _c10_filled(b):
+                _t=re.sub(r'<span class="jjtag">.*?</span>','',b)
+                _t=re.sub(r'<[^>]+>','',_t)
+                return bool(re.search(r'[0-9]',_t)) and ('未采集' not in _t)
+            if not _blocks:
+                FAIL.append('C10 竞价验证_%s 明细%d条>0 但 judgment_%s index无obs-jj块——晨场注入没跑或obs卡结构漂移(同步 竞价快线.parse_watchlist + 竞价上首页.inject_obs,见链路地图E3)'%(d,len(_vv.get('明细') or []),dprev))
+            elif not any(_c10_filled(b) for b in _blocks):
+                FAIL.append('C10 竞价验证_%s 明细>0 但 judgment_%s index的obs-jj全为—/未采集——obs卡markup漂移致晨场脚本静默解析0只(E3),修两parser后补注入'%(d,dprev))
+        else:
+            WARN.append('C10 judgment_%s 缺,obs对账跳过'%dprev)
+
+# ---------- C11 ths涨停池新鲜度(2026-07-17 #008: 停更→先行指标/题材四维/质量训练静默错数) ----------
+_tf=os.path.join(L,'_ths_zt_pool.json')
+if not os.path.isfile(_tf):
+    WARN.append('C11 _ths_zt_pool.json 不存在,新鲜度核对跳过')
+else:
+    _tmax=None
+    try:
+        _tk=sorted(json.load(open(_tf,encoding='utf-8')).keys())
+        _tmax=_tk[-1] if _tk else None
+    except Exception as _e:
+        WARN.append('C11 ths池读取异常:%s'%str(_e)[:60])
+    if _tmax and _tmax<d:
+        FAIL.append('C11 _ths_zt_pool.json 最新=%s < 当日%s——THS池停更(#008静默错数源头):宿主跑 涨停池回填.py 补齐,再重跑 情绪先行指标.py {d}/题材四维/质量训练'%(_tmax,d))
+
+# ---------- C12 宿主取数日志新鲜度(#012欠账,2026-07-18补;新机沙箱无外网,宿主没跑=无米下锅) ----------
+_hl=os.path.join(L,'宿主取数日志_%s.json'%d)
+if not os.path.isfile(_hl):
+    FAIL.append('C12 _学习/宿主取数日志_%s.json 不存在——宿主傍晚取数(17:40计划任务)当日没跑:请用户双击 宿主取数_傍晚.bat 后重开链路,禁沙箱诊断网络'%d)
+else:
+    try:
+        _hj=json.load(open(_hl,encoding='utf-8'))
+        _bad=[s.get('script') for s in (_hj.get('steps') or []) if s.get('rc') not in (0,None)]
+        if _bad:
+            WARN.append('C12 宿主傍晚取数有失败步骤: %s(查宿主日志steps.rc,涉及数据消费方需核缺口)'%_bad[:6])
+    except Exception as _e:
+        WARN.append('C12 宿主日志读取异常:%s'%str(_e)[:60])
+_ml=os.path.join(L,'宿主取数日志_早盘_%s.json'%d)
+if not os.path.isfile(_ml):
+    WARN.append('C12 早盘宿主日志缺(%s)——晨场快线/快照/闸门当日未跑或宿主9:24任务未触发(非傍晚链阻断项,列警)'%('宿主取数日志_早盘_%s.json'%d))
+
+# ---------- C13 盘中流水完整性(阶段②,#032;盘中/{d}/playbook.json在=盘中通道活跃日,缺=未上线跳过) ----------
+_pb=os.path.join(R,'盘中',d,'playbook.json')
+if os.path.isfile(_pb):
+    try:
+        _pbo=json.load(open(_pb,encoding='utf-8'))
+        if isinstance(_pbo,dict) and isinstance(_pbo.get('routes'),list): _rts=_pbo['routes']
+        elif isinstance(_pbo,list): _rts=_pbo
+        elif isinstance(_pbo,dict): _rts=[_pbo]
+        else: _rts=[]
+        _nbuy=sum(len(p.get('buys') or []) for p in _rts if isinstance(p,dict))
+        _nsell=sum(len(p.get('sells') or []) for p in _rts if isinstance(p,dict))
+        _fl=os.path.join(R,'盘中',d,'执行流水.jsonl')
+        if (_nbuy+_nsell)>0 and not os.path.isfile(_fl):
+            FAIL.append('C13 盘中/%s/playbook有%d买%d卖但执行流水.jsonl不存在——盘中规则引擎当日没跑(查宿主计划任务),第七账当日成交缺失'%(d,_nbuy,_nsell))
+        _noref=[str(o.get('code')) for p in _rts if isinstance(p,dict) for o in (p.get('sells') or [])
+                if isinstance(o,dict) and (o.get('intraday') or {}).get('stop_pct') is not None and not o.get('ref_px')]
+        if _noref: WARN.append('C13 playbook sells声明stop_pct但缺ref_px(v1.9.1裁定②,引擎将skip留人判;晚间发单prompt要带成本价): %s'%','.join(_noref[:5]))
+        _nvp=os.path.join(L,'_模拟盘','intraday','净值.json')
+        _nvo=json.load(open(_nvp,encoding='utf-8')) if os.path.isfile(_nvp) else {}
+        if d not in _nvo:
+            FAIL.append('C13 第七账净值.json缺当日%s——盘中账本结算.py settle %s 没跑(18:00链路步骤10b)'%(d,d))
+    except Exception as _e:
+        WARN.append('C13 盘中完整性检查异常:%s'%str(_e)[:60])
+
+# ---------- C14 盘中决断json与第七账账本一致性(阶段②,#032) ----------
+_decs=sorted(glob.glob(os.path.join(R,'盘中',d,'临盘决断_*.json')))
+if _decs:
+    _lgp=os.path.join(L,'_模拟盘','intraday','账本.jsonl')
+    _seen=set()
+    if os.path.isfile(_lgp):
+        for _ln in open(_lgp,encoding='utf-8'):
+            try:
+                _ev=json.loads(_ln)
+                if _ev.get('d')==d and _ev.get('acct')=='real': _seen.add(str(_ev.get('code')))
+            except Exception: pass
+    for _df in _decs:
+        try: _do=json.load(open(_df,encoding='utf-8'))
+        except Exception:
+            FAIL.append('C14 %s 解析失败(决断json必须合法)'%os.path.basename(_df));continue
+        for _f2 in (_do.get('fills') or []):
+            if not isinstance(_f2,dict): continue
+            _c=str(_f2.get('code','')).zfill(6)
+            if _f2.get('action') in ('fill_buy','fill_sell'):
+                if not _f2.get('px_exec'):
+                    FAIL.append('C14 %s fills缺px_exec(决断接口铁律#031): %s'%(os.path.basename(_df),_c))
+                if _c not in _seen:
+                    FAIL.append('C14 决断成交未入第七账账本: %s(%s)——结算漏读或决断写在settle之后,按数据补齐SOP处理后重跑哨兵'%(_c,os.path.basename(_df)))
 
 print(f'== 复盘一致性哨兵 {d} ==')
 for w in WARN: print('  WARN',w)

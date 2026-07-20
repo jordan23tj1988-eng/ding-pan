@@ -1,0 +1,17 @@
+{"ts": "15:00:36", "code": "600436", "name": "样本600436", "action": "skip", "px": null, "rule": "unparsed_skip", "route": "master", "note": "abort_if条件不可机读(感觉不对就撤),留检查点会话人判"}
+{"ts": "15:00:36", "code": "600601", "name": "样本600601", "action": "skip", "px": null, "rule": "unparsed_skip", "route": "master", "note": "stop_pct=-6缺ref_px,止损需晚间预案带成本价,留检查点会话人判"}
+{"ts": "15:00:36", "code": "300146", "name": "样本300146", "action": "skip", "px": null, "rule": "watch", "route": "master", "note": "watch观察项(if=放量过前高;then=检查点可升级买入,weight≤10)=拍板层职责,引擎不执行,留检查点会话"}
+{"ts": "09:25:10", "code": "605179", "name": "样本605179", "action": "confirm", "px": 14.63, "rule": "trigger:open_range[-3,5]", "route": "master", "note": "竞价确认 gap=4.72%;开盘价14.63;成交=下一tick(3.3.1①)"}
+{"ts": "09:25:10", "code": "300105", "name": "样本300105", "action": "abort", "px": 9.1, "rule": "trigger:open_range[-3,5]", "route": "master", "note": "竞价gap 8.72%越界[-3,5],弃单"}
+{"ts": "09:25:10", "code": "002432", "name": "样本002432", "action": "abort", "px": 79.2, "rule": "zt_no_chase", "route": "master", "note": "9:25一字/涨停封板,禁追(3.3.1买侧对称)"}
+{"ts": "09:25:10", "code": "600629", "name": "样本600629", "action": "confirm", "px": 12.41, "rule": "stop_pct:-5", "route": "master", "note": "止损触发: 当前-8.55%<=线-5%(基准=ref_px13.57);成交=下一tick(3.3.1①)"}
+{"ts": "09:25:10", "code": "000566", "name": "样本000566", "action": "confirm", "px": 5.1, "rule": "stop_pct:-8", "route": "master", "note": "止损触发: 当前-10.05%<=线-8%(基准=ref_px5.67);成交=下一tick(3.3.1①)"}
+{"ts": "09:25:10", "code": "600436", "name": "样本600436", "action": "confirm", "px": 146.63, "rule": "trigger:open_range[-3,5]", "route": "master", "note": "竞价确认 gap=3.88%;开盘价146.63;成交=下一tick(3.3.1①)"}
+{"ts": "09:25:10", "code": "600332", "name": "样本600332", "action": "confirm", "px": 22.18, "rule": "trigger:open_range[-3,5]", "route": "master", "note": "竞价确认 gap=-2.12%;开盘价22.18;成交=下一tick(3.3.1①)"}
+{"ts": "09:30:05", "code": "605179", "name": "样本605179", "action": "fill_buy", "px": 14.7, "rule": "trigger:open_range[-3,5]", "route": "master", "note": "下一tick价成交;滑点0.10%→exec14.7147;费双边0.15%由模拟盘结算侧计;liquidity_unknown(无量字段,20%帽待字段后补);整手13500股(weight20%/本金100万)", "px_exec": 14.7147, "qty": 13500}
+{"ts": "09:30:05", "code": "600629", "name": "样本600629", "action": "fill_sell", "px": 12.35, "rule": "stop_pct:-5", "route": "master", "note": "下一tick价成交;滑点0.10%→exec12.3377;费双边0.15%由模拟盘结算侧计;liquidity_unknown(无量字段,20%帽待字段后补);数量=在持全量(结算侧核定)", "px_exec": 12.3377}
+{"ts": "09:30:05", "code": "000566", "name": "样本000566", "action": "defer", "px": 5.1, "rule": "stop_pct:-8", "route": "master", "note": "跌停封死(≈5.10),卖单顺延: 盘中开板按开板tick成交;收盘仍封→顺延次日开盘(模拟盘引擎接管)"}
+{"ts": "09:30:05", "code": "600436", "name": "样本600436", "action": "fill_buy", "px": 147.0, "rule": "trigger:open_range[-3,5]", "route": "master", "note": "下一tick价成交;滑点0.10%→exec147.1470;费双边0.15%由模拟盘结算侧计;liquidity_unknown(无量字段,20%帽待字段后补);整手600股(weight10%/本金100万)", "px_exec": 147.147, "qty": 600}
+{"ts": "09:30:05", "code": "600332", "name": "样本600332", "action": "abort", "px": 21.4, "rule": "abort_if:跌破开盘价-3%", "route": "master", "note": "现价21.40<=开盘22.18×(1-3%),放弃买入"}
+{"ts": "09:40:00", "code": "603580", "name": "样本603580", "action": "confirm", "px": 44.5, "rule": "take_zt:炸板即卖", "route": "master", "note": "炸板即卖触发(曾封涨停,现44.50已开板);成交=下一tick(3.3.1①)"}
+{"ts": "09:40:30", "code": "603580", "name": "样本603580", "action": "fill_sell", "px": 44.3, "rule": "take_zt:炸板即卖", "route": "master", "note": "下一tick价成交;滑点0.10%→exec44.2557;费双边0.15%由模拟盘结算侧计;liquidity_unknown(无量字段,20%帽待字段后补);数量=在持全量(结算侧核定)", "px_exec": 44.2557}

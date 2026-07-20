@@ -1,0 +1,114 @@
+{
+ "date": "99990101",
+ "route": "master",
+ "cash_pct": 30,
+ "notes": "TEST合成预案(价位=0718真实样本)",
+ "buys": [
+  {
+   "code": "605179",
+   "name": "样本605179",
+   "weight_pct": 20,
+   "reason": "S1区间成交",
+   "trigger": {
+    "type": "open_range",
+    "min_gap": -3,
+    "max_gap": 5
+   }
+  },
+  {
+   "code": "300105",
+   "name": "样本300105",
+   "weight_pct": 10,
+   "reason": "S2高开弃",
+   "trigger": {
+    "type": "open_range",
+    "min_gap": -3,
+    "max_gap": 5
+   }
+  },
+  {
+   "code": "002432",
+   "name": "样本002432",
+   "weight_pct": 10,
+   "reason": "S3一字禁追",
+   "trigger": {
+    "type": "open_range",
+    "min_gap": -3,
+    "max_gap": 12
+   }
+  },
+  {
+   "code": "600436",
+   "name": "样本600436",
+   "weight_pct": 10,
+   "reason": "S7自由文本abort_if",
+   "trigger": {
+    "type": "open_range",
+    "min_gap": -3,
+    "max_gap": 5
+   },
+   "intraday": {
+    "abort_if": "感觉不对就撤"
+   }
+  },
+  {
+   "code": "600332",
+   "name": "样本600332",
+   "weight_pct": 10,
+   "reason": "S8跌破开盘价放弃",
+   "trigger": {
+    "type": "open_range",
+    "min_gap": -3,
+    "max_gap": 5
+   },
+   "intraday": {
+    "abort_if": "跌破开盘价-3%"
+   }
+  }
+ ],
+ "sells": [
+  {
+   "code": "600629",
+   "name": "样本600629",
+   "leg": "open",
+   "intraday": {
+    "stop_pct": -5,
+    "ref_px": 13.57
+   }
+  },
+  {
+   "code": "000566",
+   "name": "样本000566",
+   "leg": "open",
+   "intraday": {
+    "stop_pct": -8,
+    "ref_px": 5.67
+   }
+  },
+  {
+   "code": "603580",
+   "name": "样本603580",
+   "leg": "open",
+   "intraday": {
+    "stop_pct": null,
+    "take_zt": "炸板即卖"
+   }
+  },
+  {
+   "code": "600601",
+   "name": "样本600601",
+   "leg": "open",
+   "intraday": {
+    "stop_pct": -6
+   }
+  }
+ ],
+ "watch": [
+  {
+   "code": "300146",
+   "name": "样本300146",
+   "if": "放量过前高",
+   "then": "检查点可升级买入,weight≤10"
+  }
+ ]
+}

@@ -252,6 +252,40 @@ def _enrich(P,forward=True):
     for k in out: P[k]=out[k]
     return P
 
+def _fetch_ifind(todo):
+    """★iFind日K批量首选(2026-07-18 变更总账#011)。写cache同sina口径(date,open,high,low,close,volume[,turnover,circ_mv亿]);
+    turnoverRatio→turnover(换手率%,与本地导出列同义),新行circ_mv亿=None。返回没搞定的码(交给sina线程回退)。"""
+    import ifind_source as ifs
+    if not ifs.login(verbose=False): return todo
+    df=ifs.daily_bars(todo,"2025-06-01",datetime.date.today().strftime("%Y-%m-%d"))
+    if df is None or not len(df): return todo
+    df=df.copy(); df["c6"]=df["thscode"].astype(str).str[:6]
+    done=set()
+    for c,g in df.groupby("c6"):
+        try:
+            g=g.dropna(subset=["close"]).copy()
+            if not len(g): continue
+            b=pd.DataFrame({"date":g["time"].astype(str).str[:10],
+                            "open":g["open"],"high":g["high"],"low":g["low"],
+                            "close":g["close"],"volume":g["volume"],
+                            "turnover":g["turnoverRatio"] if "turnoverRatio" in g.columns else None})
+            f=os.path.join(CDIR,c+".csv")
+            if os.path.isfile(f):
+                ob=pd.read_csv(f)
+                b["date"]=b["date"].astype(str); mx=str(ob["date"].max())
+                nb=b[b["date"]>mx].copy()
+                if len(nb):
+                    for col in ob.columns:
+                        if col not in nb.columns: nb[col]=None
+                    pd.concat([ob,nb[ob.columns]]).to_csv(f,index=False)
+            else:
+                b["circ_mv亿"]=None
+                b.to_csv(f,index=False)
+            done.add(c)
+        except Exception: pass
+    print("  [iFind日K] 搞定%d/%d,余走sina"%(len(done),len(todo)),flush=True)
+    return [c for c in todo if c not in done]
+
 def _fetch(codes,last_map=None):
     import akshare as ak
     from concurrent.futures import ThreadPoolExecutor
@@ -267,6 +301,9 @@ def _fetch(codes,last_map=None):
         except Exception: return True
     todo=[c for c in codes if needs(c)]
     print(f"fetch增量: {len(todo)}/{len(codes)}",flush=True)
+    if todo:   # ★iFind首选,失败全量降级sina(2026-07-18 #011)
+        try: todo=_fetch_ifind(todo)
+        except Exception as e: print("  [iFind批量失败,全走sina] "+str(e)[:80],flush=True)
     def one(c):
         try:
             pre="bj" if (c[0] in "48" or c.startswith("92")) else ("sh" if c[0] in "69" else "sz")

@@ -1,16 +1,16 @@
 ---
 name: sentiment-memory-snapshot
-description: 每天18:40把情绪复盘相关的Claude持久记忆导出成快照,存进市场数据供19:00 GitHub同步
-backup_date: 2026-07-13晚(加任务二:技能备份自动刷新)
-cron: 40 18 * * *
+description: 每天19:00(复盘链路之后)把情绪复盘相关的Claude持久记忆导出成快照,存进市场数据,供用户手动GitHub同步留档
+backup_date: 2026-07-17(新机迁移当日:18:40→19:00挪到复盘后;19:00自动GitHub同步取消改手动,快照与同步解耦)
+cron: 0 19 * * *
 ---
 
-把你的持久记忆中【情绪复盘系统相关】的条目导出为一份快照文件,供用户的GitHub每日同步(19:00)留档。用中文。
+把你的持久记忆中【情绪复盘系统相关】的条目导出为一份快照文件,供用户的GitHub同步(现为手动推送)留档。用中文。★本任务排在每晚18:00复盘链路之后(19:00),目的是抓到当晚复盘产生的最新认知;若发现傍晚复盘链路疑似还在运行,照常导出并在通知里注明"当晚复盘可能未完成,快照或为复盘前状态"。
 
 ## 任务一:记忆快照
 
 ### 选取范围
-读你的记忆索引 MEMORY.md(在你的持久记忆目录,如 C:\Users\66353\AppData\Local\Claude-3p\local-agent-mode-sessions\a021c5d4\00000000\memory\memory\),动态选取所有与"情绪复盘系统"相关的记忆文件,包括但不限于:sentiment_* 系列、auction_pool_bucket_lib、logic_autonomous_expansion、mikai_corpus(只导体系/手册要点,语料本身不入库)、feedback_concurrent_overwrite、feedback_visual_review。以后新增的情绪复盘相关记忆(索引里含"情绪/复盘/盯盘台/竞价/席位/题材/涨停/模拟盘/温度/三窗"等关键词)也要纳入。
+读你的记忆索引 MEMORY.md(在你的持久记忆目录,如 C:\Users\ASUS\AppData\Local\Claude-3p\local-agent-mode-sessions\b30d5aef\00000000\memory\memory\),动态选取所有与"情绪复盘系统"相关的记忆文件,包括但不限于:sentiment_* 系列、auction_pool_bucket_lib、logic_autonomous_expansion、mikai_corpus(只导体系/手册要点,语料本身不入库)、feedback_concurrent_overwrite、feedback_visual_review。以后新增的情绪复盘相关记忆(索引里含"情绪/复盘/盯盘台/竞价/席位/题材/涨停/模拟盘/温度/三窗"等关键词)也要纳入。
 ★排除铁律:自研战法(5分V6/V8/aAb/反转底b段)、缠论引擎/隧道画法、qlib、tdxrs 等私有策略记忆一律不导——目标仓库是公开的。
 
 ## 输出
@@ -29,4 +29,4 @@ cron: 40 18 * * *
 `cp /sessions/*/mnt/.claude/skills/sentiment-review-system/SKILL.md /sessions/*/mnt/股票数据/同步GitHub/_extras/skill/sentiment-review-system/SKILL.md`(目标只读先chmod u+w;复制后md5比对+UTF-8解码末行验完整;若源缓存疑似截断则跳过并在通知里报警,禁止用坏源覆盖好备份)。通知里报技能版本号。
 
 ## 收尾
-一句话通知用户:快照已刷新(共N条记忆/字节数/较昨日有无新增条目)。若当天记忆索引读不到或无变化,照常覆盖写并如实说明。
+一句话通知用户:快照已刷新(共N条记忆/字节数/较昨日有无新增条目),并提醒用户GitHub现为手动同步——记得空了双击 同步到GitHub.bat 推一次。若当天记忆索引读不到或无变化,照常覆盖写并如实说明。

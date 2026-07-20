@@ -114,26 +114,113 @@ def nuke(d, dprev):
     hit = len(zs & ds)
     return {"昨日涨停数": len(zs), "今日跌停回杀": hit, "核按钮率": round(hit / len(zs), 3)}
 
+def premium_bars(d, dprev):
+    """★昨停溢价+大面率·bars_cache本地精确计算(2026-07-17新增,spot不可达时的等价口径):
+    对dprev涨停票(剔ST/退/N/C),读 _bars_cache/{code}.csv 的d日bar:
+    执行=今开→今收(与spot版同口径);涨跌幅=今收/昨收-1(大面率<-5%、再封率>=9.7%同spot版)。
+    覆盖率<80%返回None(宁缺毋编);来源标bars_cache。"""
+    zp = os.path.join(BASE, dprev, "zt_pool.csv") if dprev else None
+    if not (zp and os.path.isfile(zp)):
+        return None
+    z = pd.read_csv(zp, dtype={"代码": str})
+    z = z[~z["名称"].astype(str).map(is_junk)]
+    codes = list(z["代码"].str.zfill(6))
+    dd = d[:4] + "-" + d[4:6] + "-" + d[6:8]
+    exe, pct, miss = [], [], 0
+    cdir = os.path.join(BASE, "_学习", "_bars_cache")
+    for c in codes:
+        f = os.path.join(cdir, c + ".csv")
+        try:
+            b = pd.read_csv(f)
+            dcol = "date" if "date" in b.columns else b.columns[0]
+            b[dcol] = b[dcol].astype(str).str.replace("-", "").str[:8]
+            b = b.set_index(dcol)
+            if d not in b.index:
+                miss += 1; continue
+            row = b.loc[d]
+            ocol = "open" if "open" in b.columns else "今开"
+            ccol = "close" if "close" in b.columns else "收盘"
+            o = float(row[ocol]); cl = float(row[ccol])
+            idx = list(b.index); pos = idx.index(d)
+            if pos == 0:
+                miss += 1; continue
+            pcl = float(b.iloc[pos - 1][ccol])
+            if o > 0:
+                exe.append((cl - o) / o * 100)
+            if pcl > 0:
+                pct.append((cl - pcl) / pcl * 100)
+        except Exception:
+            miss += 1
+    n = len(exe)
+    if not n or n / max(len(codes), 1) < 0.8:
+        print("  [bars覆盖不足%s/%s,溢价标null]" % (n, len(codes)))
+        return None
+    if miss:
+        print("  [bars_cache溢价: 覆盖%s/%s,缺%s只]" % (n, len(codes), miss))
+    return {"样本": n,
+            "执行均收": round(sum(exe) / n, 2),
+            "执行胜率": round(sum(1 for x in exe if x > 0) / n, 3),
+            "再封率": round(sum(1 for x in pct if x >= 9.7) / len(pct), 3) if pct else None,
+            "大面率": round(sum(1 for x in pct if x < -5) / len(pct), 3) if pct else None,
+            "来源": "bars_cache"}
+
 def premium_spot(d, dprev):
-    """昨日涨停溢价+大面率:仅当d=当天且盘后,用spot一次全场快照。拿不到标null。"""
+    """昨日涨停溢价+大面率:仅当d=当天且盘后。★源序(2026-07-18 变更总账#011):
+    iFind快照(仅池票,轻量,盘后latest=收盘)→EM全场spot→bars_cache本地。口径三源逐字一致。拿不到标null。"""
     import datetime
     if d != datetime.date.today().strftime("%Y%m%d"):
         return None
     zp = os.path.join(BASE, dprev, "zt_pool.csv") if dprev else None
     if not (zp and os.path.isfile(zp)):
         return None
+    z = pd.read_csv(zp, dtype={"代码": str})
+    z = z[~z["名称"].astype(str).map(is_junk)]
+    codes = list(z["代码"].str.zfill(6))
+
+    def _pack(exe, pct, src):
+        if not exe:
+            return None
+        n = len(exe)
+        return {"样本": n,
+                "执行均收": round(sum(exe) / n, 2),
+                "执行胜率": round(sum(1 for x in exe if x > 0) / n, 3),
+                "再封率": round(sum(1 for x in pct if x >= 9.7) / len(pct), 3) if pct else None,
+                "大面率": round(sum(1 for x in pct if x < -5) / len(pct), 3) if pct else None,
+                "来源": src}
+
+    # ★首选: iFind快照(2026-07-18 #011)。覆盖<80%不敢当全样本(如北交所缺行情),降级后续路
+    try:
+        import ifind_source as ifs
+        q = ifs.spot(codes, "open,latest,changeRatio")
+    except Exception:
+        q = None
+    if q is not None and len(q):
+        exe, pct = [], []
+        for _, r in q.iterrows():
+            o = pd.to_numeric(r.get("open"), errors="coerce")
+            cl = pd.to_numeric(r.get("latest"), errors="coerce")
+            ch = pd.to_numeric(r.get("changeRatio"), errors="coerce")
+            if pd.notna(o) and o > 0 and pd.notna(cl):
+                exe.append((cl - o) / o * 100)
+            if pd.notna(ch):
+                pct.append(float(ch))
+        got = _pack(exe, pct, "ifind_spot")
+        if got and got["样本"] / max(len(codes), 1) >= 0.8:
+            print("  [溢价源=iFind快照 %s/%s]" % (got["样本"], len(codes)))
+            return got
+        if got:
+            print("  [iFind快照覆盖不足%s/%s,降级EM spot]" % (got["样本"], len(codes)))
+    # 回退: EM全场spot
     try:
         import akshare as ak
         sp = ak.stock_zh_a_spot_em()
     except Exception as e:
-        print("  [spot失败,溢价标null] " + str(e))
-        return None
+        print("  [spot失败,改用bars_cache本地计算] " + str(e)[:120])
+        return premium_bars(d, dprev)   # ★2026-07-17: 本机push2 clist被封;bars已由宿主补齐,本地算执行口径,零编造
     sp["代码"] = sp["代码"].astype(str).str.zfill(6)
     sp = sp.set_index("代码")
-    z = pd.read_csv(zp, dtype={"代码": str})
-    z = z[~z["名称"].astype(str).map(is_junk)]
     exe, pct = [], []
-    for c in z["代码"].str.zfill(6):
+    for c in codes:
         if c not in sp.index:
             continue
         r = sp.loc[c]
@@ -144,15 +231,8 @@ def premium_spot(d, dprev):
             exe.append((cl - o) / o * 100)
         if pd.notna(ch):
             pct.append(ch)
-    if not exe:
-        return None
-    n = len(exe)
-    return {"样本": n,
-            "执行均收": round(sum(exe) / n, 2),
-            "执行胜率": round(sum(1 for x in exe if x > 0) / n, 3),
-            "再封率": round(sum(1 for x in pct if x >= 9.7) / len(pct), 3) if pct else None,
-            "大面率": round(sum(1 for x in pct if x < -5) / len(pct), 3) if pct else None,
-            "来源": "spot"}
+    got = _pack(exe, pct, "spot")
+    return got if got else premium_bars(d, dprev)
 
 def load_out():
     return json.load(open(OUT, encoding="utf-8")) if os.path.isfile(OUT) else {}
@@ -181,7 +261,11 @@ def settle_premium_backfill(t):
             t[nxt]["昨日涨停溢价"] = {"执行均收": v, "来源": "竞价池结算jsonl"}
 
 def run_day(d, ths, t, with_spot=True):
-    days = sorted(ths.keys())
+    # ★2026-07-17: 日历=ths∪本地zt_pool目录并集——THS停更时(曾停在0710)dprev会悄悄跳回一周前,晋级/核按钮/溢价全算错;
+    # pool_of本就有缺日走本地zt_pool的兜底,日历也必须兜底(本地日历并集)。
+    local = [x for x in os.listdir(BASE) if x.isdigit() and len(x) == 8
+             and os.path.isfile(os.path.join(BASE, x, "zt_pool.csv"))]
+    days = sorted(set(ths.keys()) | set(local))
     if d in days:
         i = days.index(d)
         dprev = days[i - 1] if i > 0 else None

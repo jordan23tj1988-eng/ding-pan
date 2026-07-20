@@ -13,6 +13,7 @@
  morning {d} = 9:25-9:31实时预告(sina竞价价机判买卖动作,写_模拟盘/早盘执行_{d}.json供早盘页展示;结算以bars为准)
 ★v2.0持有期自主(取代v1.3): 止损腿+固定T+2强制卖均撤销(用户拍板:有些策略T+1浮亏T+2才兑现);现行=无卖单默认继续持有,卖出由指令单驱动,最早T+2可卖无上限,跌停/停牌顺延;买入记流动性(股数/当日成交量,≥1%警示);
  weekly增: 路内池基准(该路当周荐票发出版全体票同规则均收,对照全场涨停基准)+卖腿反事实对照(仅归因非战绩)+票一致率
+ v2.1(2026-07-18): 周考核两级化(单周不合格只归因禁重训,滚动4周确认才重训且须具体靶子)+周均仓位chip与低仓胜标注+持仓日龄≥3警示(因子半衰期对照)+持有日龄×收益归因
 零编造:缺数据标注跳过;所有战绩数字只出自本引擎。
 """
 import os, sys, json, csv, math, time, glob, hashlib
@@ -315,6 +316,27 @@ def week_ret(navdict,d,cal):
     if pe: return (at(we)/at(pe)-1)*100
     return (at(we)-1)*100
 
+def roll4_ret(navdict,d,cal):
+    """滚动4周(20交易日)收益%;净值历史不足4周返回None(v2.1周考核:单周只归因,滚动4周确认才重训)"""
+    ks=[k for k in sorted(navdict) if k<=d]
+    if not ks: return None
+    tds=[x for x in cal if x<=d]
+    if len(tds)<21: return None
+    anchor=tds[-21]
+    ks0=[k for k in ks if k<=anchor]
+    if not ks0: return None
+    v1=navdict[ks[-1]]; v0=navdict[ks0[-1]]
+    n1=v1.get('nav') if isinstance(v1,dict) else v1
+    n0=v0.get('nav') if isinstance(v0,dict) else v0
+    if not n0: return None
+    return (n1/n0-1)*100
+
+def avg_pos_pct(navdict,monday,d):
+    """周均仓位%=本周各日 mv/(mv+cash) 均值(v2.1:跑赢基准但低仓的要标'低仓胜非选股胜')"""
+    wk=[v for k,v in navdict.items() if monday<=k<=d and isinstance(v,dict)]
+    if not wk: return None
+    return round(sum((x.get('mv') or 0)/max((x.get('mv') or 0)+(x.get('cash') or 0),1.0) for x in wk)/len(wk)*100,1)
+
 def write_status(route,d,st,nav):
     cal = calendar()
     bn = jload(os.path.join(simdir(),'基准净值.json'),{})
@@ -378,6 +400,12 @@ def dashboard(d):
         cum = stat.get('累计pct'); wk = stat.get('本周pct'); bwk = stat.get('基准本周pct')
         chips = ['累计 %s'%color_ret(cum),'本周 %s'%color_ret(wk),'基准本周 %s'%color_ret(bwk)]
         if stat.get('胜率pct') is not None: chips.append('平仓胜率 <b style="font-family:monospace">%s%%</b>(n=%s)'%(stat['胜率pct'],stat['已平仓笔数']))
+        try:
+            import datetime as _dtm
+            _dt0=_dtm.date(int(d[:4]),int(d[4:6]),int(d[6:])); _mon=(_dt0-_dtm.timedelta(days=_dt0.weekday())).strftime('%Y%m%d')
+            _ap=avg_pos_pct(nav,_mon,d)
+            if _ap is not None: chips.append('周均仓位 <b style="font-family:monospace">%.0f%%</b>'%_ap)
+        except Exception: pass
         chips.append('本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)')
         h.append('<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd">'+ ' '.join('<span>%s</span>'%c for c in chips)+'</div>')
         h.append('<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>')
@@ -402,8 +430,11 @@ def dashboard(d):
                     ins = '<b style="color:#e8a33d">明日卖·%s</b>%s'%('收盘' if o.get('leg')=='close' else '开盘',
                           '(高开≥%s%%改收)'%o['sell_switch']['if_gap_ge_pct'] if o.get('sell_switch') else '')
                 else: ins = '继续持有'
-                h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%d</td><td style="font-family:monospace">%.2f</td><td>%s</td><td style="font-family:monospace">%d</td><td>%s</td></tr>'%(
-                    p['code'],p['name'],p['shares'],p['buy_px'],color_ret(fl),hd,ins))
+                if hd>=3 and not p.get('defer_sell') and p['code'] not in sells_tonight:
+                    ins += ' <span style="color:#e8a33d">·日龄%d≥3:今晚须给继续持有的新证据(评分卡因子半衰期&lt;2天)</span>'%hd
+                hdtxt = '<b style="color:#e8a33d">%d⚠</b>'%hd if hd>=3 else '%d'%hd
+                h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%d</td><td style="font-family:monospace">%.2f</td><td>%s</td><td style="font-family:monospace">%s</td><td>%s</td></tr>'%(
+                    p['code'],p['name'],p['shares'],p['buy_px'],color_ret(fl),hdtxt,ins))
             h.append('</table>')
         else:
             h.append('<div style="margin-top:12px;color:#8d93a8">当前空仓</div>')
@@ -462,6 +493,10 @@ def inject(d):
             i = h.find('class="hero"')
             j = h.find('<h2', i) if i>=0 else -1
             if j<0:
+                # archive存档页0715起为archive_body摘要体,无hero:回退锚=首个card,再退=首个h2(0715过渡格式)(#014)
+                j = h.find('<div class="card">')
+                if j<0: j = h.find('<h2')
+            if j<0:
                 print('!未找到锚点',pg); continue
             h = h[:j]+block+'\n'+h[j:]
             with open(pg,'w',encoding='utf-8') as f: f.write(h)
@@ -502,12 +537,28 @@ def weekly(d):
         navd = jload(nav_path(route),{})
         wr = week_ret(navd,d,cal) if navd else None
         fail = []
+        r4 = roll4_ret(navd,d,cal) if navd else None
+        b4 = roll4_ret(bn,d,cal) if bn else None
+        import datetime as _dtm
+        _dt0=_dtm.date(int(d[:4]),int(d[4:6]),int(d[6:])); _mon=(_dt0-_dtm.timedelta(days=_dt0.weekday())).strftime('%Y%m%d')
+        ap = avg_pos_pct(navd,_mon,d) if navd else None
         if wr is None: verdict='无数据'
         else:
             if wr < 0: fail.append('绝对收益为负')
             if bwr is not None and wr < bwr: fail.append('跑输影子基准(%.2f%% vs %.2f%%)'%(wr,bwr))
-            verdict = '不合格·须重训并写优化方向报告' if fail else '合格·写简短周记'
+            fail4 = []
+            if r4 is not None:
+                if r4 < 0: fail4.append('滚动4周绝对为负')
+                if b4 is not None and r4 < b4: fail4.append('滚动4周跑输基准(%.2f%% vs %.2f%%)'%(r4,b4))
+            if fail and fail4:
+                verdict = '不合格(滚动4周确认)·先归因到具体靶子(坏因子/坏环节)再重训+写优化方向报告;无具体靶子禁重训(v2.1)'
+            elif fail:
+                verdict = '单周不合格·只做逐笔归因写观察;样本≤5日禁重训禁大改(v2.1,防噪声过拟合)' + ('' if r4 is not None else '(净值历史不足4周,滚动口径待攒)')
+            else: verdict = '合格·写简短周记(不许大改)'
+        low_flag = (wr is not None and bwr is not None and wr >= bwr and ap is not None and ap < 20)
         out['agents'][route] = {'名':RNAME[route],'周收益pct':round(wr,2) if wr is not None else None,
+                                '滚动4周pct':round(r4,2) if r4 is not None else None,
+                                '周均仓位pct':ap,'仓位注':('低仓胜,非选股胜(周均仓位%.0f%%<20%%)'%ap if low_flag else None),
                                 '判定':verdict,'原因':fail}
         print(route,out['agents'][route])
     # 路内池基准(该路当周荐票发出版全体票,同规则同成本;跨周末未实现cohort自动跳过记覆盖)
@@ -546,6 +597,19 @@ def weekly(d):
                          '全T2开均pct':round(sum(ao)/len(ao),2),'全T2收均pct':round(sum(ac)/len(ac),2),
                          '跳过(顺延/缺bars)':skip,'口径':'反事实仅归因,非战绩'}
     out['卖腿反事实'] = cf
+    # 持有日龄×收益归因(v2.1: 自家结论"因子半衰期<2天"与持有期自主的对照账,回答"我的肉在第几天")
+    ha = {}
+    for route in ROUTES:
+        st = load_state(route)
+        rows = [t for t in st['closed'] if monday <= t['sell_date'] <= d]
+        if not rows: continue
+        bk = {}
+        for t in rows:
+            hdv = t.get('hold_days') or 0
+            key = '2日' if hdv <= 2 else ('3日' if hdv == 3 else '4日+')
+            bk.setdefault(key,[]).append(t['ret_pct'])
+        ha[route] = {k:{'n':len(v),'均pct':round(sum(v)/len(v),2)} for k,v in sorted(bk.items())}
+    out['持有日龄归因'] = ha
     p = os.path.join(simdir(),'周考核_%s.json'%d); jsave(p,out)
     print('路内池基准:',json.dumps(pools,ensure_ascii=False))
     print('卖腿反事实:',json.dumps(cf,ensure_ascii=False))

@@ -30,8 +30,8 @@ def 卡html(d,out,top5):
             f'<span class="mut">执2 {x["预测执2胜率"]}%/{x["预测执2均涨"]:+.2f}%</span></td>'
             f'<td>{H.escape(x.get("大方向") or "待归位")}</td></tr>')
     env=next((x.get('环境提示') for x in top5 if x.get('环境提示')),None)   # v6环境规则(温度两端,训练脚本产)
-    envh=('<div class="hint" style="color:#c62828">★环境规则v6: 市场温度过热≥85(历史日均执1约-1.8%),本日第5路荐票<b>全场回避·仅观察不追买</b></div>' if env=='过热回避'
-          else '<div class="hint">★环境规则v6: 市场温度冰点&lt;25(历史日均执1约+0.3%),全场加分观察</div>' if env=='冰点加分' else '')
+    envh=('<div class="hint" style="color:#c62828">★环境规则v6: 市场温度过热≥85(历史日均执1约-1.8%),本日第5路荐票<b>全场回避·仅观察不追买</b><span class="mut">(2025-07~2026-07牛市样本n=6,适用域随周期标签回填更新)</span></div>' if env=='过热回避'
+          else '<div class="hint">★环境规则v6: 市场温度冰点&lt;25(历史日均执1约+0.3%),全场加分观察<span class="mut">(2025-07~2026-07牛市样本n=15,适用域随周期标签回填更新)</span></div>' if env=='冰点加分' else '')
     card=(envh+f'<div class="card"><table style="table-layout:fixed;width:100%">'
      f'<colgroup><col style="width:26px"><col style="width:106px"><col style="width:62px">'
      f'<col><col style="width:150px"><col style="width:96px"></colgroup>'

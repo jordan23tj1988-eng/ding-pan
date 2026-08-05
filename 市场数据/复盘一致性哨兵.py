@@ -15,16 +15,41 @@
   C12 宿主取数日志新鲜度(傍晚日志缺=当日链路无米下锅;步骤rc非0列警;总账#012注的欠账,2026-07-18补)
   C13 盘中流水完整性(阶段②,#032:playbook有单但执行流水缺=引擎没跑;第七账净值缺当日=结算没跑;sells带stop缺ref_px列警)
   C14 盘中决断json与第七账账本一致性(阶段②,#032:决断fills必带px_exec且必须已入账本,否则结算漏读)
+  C15 六账本跨日连续性(上一交易日每笔计划必须有当日账本事件,且执行回执已进页面)
+  C16 早盘宿主内部步骤退出码(防计划任务外层返回0掩盖子步骤失败,2026-07-21编码事故)
+  C17 竞价分桶库新鲜度(防circ_mv空值使回填异常退出却继续沿用旧库)
+  C18 七页输出合同(段序/最低分析深度/职责字段/支持反证确认/未来日期)
+  C19 结构化输出合同(judgment/归档/总审/playbook/临盘决断)
+  C20 计划任务根漂移(生产日志缺失但runtime同日日志出现=宿主任务仍写迁移镜像)
 退出码: 0=全过 1=有FAIL(打印明细,流水线应停下重看)
 """
-import os,sys,glob,json,re,datetime
+import os,sys,glob,json,re,datetime,argparse
+
+def _parse_date_arg():
+    """Parse the optional review date before any filesystem checks run."""
+    parser=argparse.ArgumentParser(
+        prog='复盘一致性哨兵.py',
+        description='运行指定交易日的情绪复盘一致性检查；不传日期时使用今天。')
+    parser.add_argument('date',nargs='?',default=datetime.date.today().strftime('%Y%m%d'),
+                        help='交易日 YYYYMMDD，例如 20260724')
+    args=parser.parse_args()
+    if not re.fullmatch(r'\d{8}',args.date):
+        parser.error('date 必须是 YYYYMMDD 八位数字')
+    return args.date
+
+d=_parse_date_arg()
 
 R=None
+_SCRIPT_DIR=os.path.dirname(os.path.abspath(__file__))
+_ENV_ROOT=os.environ.get('SENTIMENT_ROOT')
+if _ENV_ROOT and os.path.isdir(_ENV_ROOT): R=os.path.abspath(_ENV_ROOT)
 for g in glob.glob('/sessions/*/mnt/股票数据/市场数据'):
-    R=g;break
+    if R is None: R=g
+    break
+if R is None and os.path.basename(os.path.dirname(_SCRIPT_DIR))!='ding-pan仓库' and os.path.isdir(os.path.join(_SCRIPT_DIR,'复盘')):
+    R=_SCRIPT_DIR
 if R is None and os.path.isdir(r'D:\股票数据\市场数据'): R=r'D:\股票数据\市场数据'
 L=os.path.join(R,'_学习');SITE=os.path.join(R,'复盘','盯盘台')
-d=sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d')
 dprev_dirs=sorted([x for x in os.listdir(R) if x.isdigit() and len(x)==8 and x<d])
 dprev=dprev_dirs[-1] if dprev_dirs else None
 FAIL=[];WARN=[]
@@ -223,6 +248,22 @@ else:
     if _tmax and _tmax<d:
         FAIL.append('C11 _ths_zt_pool.json 最新=%s < 当日%s——THS池停更(#008静默错数源头):宿主跑 涨停池回填.py 补齐,再重跑 情绪先行指标.py {d}/题材四维/质量训练'%(_tmax,d))
 
+# ---------- C17 竞价分桶库新鲜度(2026-07-21: circ_mv=None导致回填中断但旧库仍可被评分读取) ----------
+_bf=os.path.join(L,'_竞价池分桶库.json')
+if not os.path.isfile(_bf):
+    FAIL.append('C17 _竞价池分桶库.json 不存在——竞价池分桶回填.py 未成功产库')
+else:
+    try:
+        _bfo=json.load(open(_bf,encoding='utf-8'))
+        _bend=str(_bfo.get('窗口') or '').split('~')[-1]
+        _bupd=str(_bfo.get('更新') or '')[:10].replace('-','')
+        if dprev and _bend<dprev:
+            FAIL.append('C17 竞价分桶库窗口末日=%s < 前一交易日%s——回填失败或旧库未滚动,修复后重跑分桶→竞价评分'%(_bend,dprev))
+        if _bupd<d:
+            FAIL.append('C17 竞价分桶库更新时间=%s < 当日%s——当晚回填未成功完成'%(_bupd,d))
+    except Exception as _e:
+        FAIL.append('C17 竞价分桶库解析异常:%s'%str(_e)[:60])
+
 # ---------- C12 宿主取数日志新鲜度(#012欠账,2026-07-18补;新机沙箱无外网,宿主没跑=无米下锅) ----------
 _hl=os.path.join(L,'宿主取数日志_%s.json'%d)
 if not os.path.isfile(_hl):
@@ -238,6 +279,29 @@ else:
 _ml=os.path.join(L,'宿主取数日志_早盘_%s.json'%d)
 if not os.path.isfile(_ml):
     WARN.append('C12 早盘宿主日志缺(%s)——晨场快线/快照/闸门当日未跑或宿主9:24任务未触发(非傍晚链阻断项,列警)'%('宿主取数日志_早盘_%s.json'%d))
+
+# ---------- C16 早盘宿主内部步骤退出码(2026-07-21: 外层返回0掩盖竞价闸门rc=1) ----------
+if os.path.isfile(_ml):
+    try:
+        _mj=json.load(open(_ml,encoding='utf-8'))
+        _msteps=_mj.get('steps') or []
+        _mbad=[str(s.get('script')) for s in _msteps if s.get('rc') not in (0,None) and s.get('repair_rc') != 0]
+        _mrepaired=[str(s.get('script')) for s in _msteps if s.get('rc') not in (0,None) and s.get('repair_rc') == 0]
+        if _mbad:
+            FAIL.append('C16 宿主早盘取数有失败步骤: %s——计划任务不得外绿内红,查宿主取数控制台.log与steps.rc后补齐晨场产物'%','.join(_mbad[:6]))
+        if _mrepaired:
+            WARN.append('C16 宿主早盘原失败步骤已有保留原rc的成功修复记录: %s'%','.join(_mrepaired[:6]))
+    except Exception as _e:
+        FAIL.append('C16 宿主早盘日志解析异常:%s'%str(_e)[:60])
+
+# ---------- C20 计划任务根漂移(2026-07-27:宿主任务写runtime、复盘读生产) ----------
+_shadow_root=r'D:\股票数据\codex_workspace\migration_20260722\runtime\市场数据'
+if d>='20260727' and os.path.isdir(_shadow_root) and os.path.normcase(os.path.abspath(R))!=os.path.normcase(os.path.abspath(_shadow_root)):
+    for _label,_name in (('傍晚','宿主取数日志_%s.json'%d),('早盘','宿主取数日志_早盘_%s.json'%d)):
+        _prod_log=os.path.join(L,_name)
+        _shadow_log=os.path.join(_shadow_root,'_学习',_name)
+        if not os.path.isfile(_prod_log) and os.path.isfile(_shadow_log):
+            FAIL.append('C20 %s宿主日志只出现在runtime镜像、生产目录缺失——计划任务Action根路径漂移;把%s任务重绑到D:\\股票数据\\市场数据后重跑'%(_label,_label))
 
 # ---------- C13 盘中流水完整性(阶段②,#032;盘中/{d}/playbook.json在=盘中通道活跃日,缺=未上线跳过) ----------
 _pb=os.path.join(R,'盘中',d,'playbook.json')
@@ -286,6 +350,146 @@ if _decs:
                     FAIL.append('C14 %s fills缺px_exec(决断接口铁律#031): %s'%(os.path.basename(_df),_c))
                 if _c not in _seen:
                     FAIL.append('C14 决断成交未入第七账账本: %s(%s)——结算漏读或决断写在settle之后,按数据补齐SOP处理后重跑哨兵'%(_c,os.path.basename(_df)))
+
+# ---------- C18 全系统输出合同(2026-07-26:浅页反复回退事故) ----------
+_contract_paths=[os.path.join(R,'_情绪复盘输出合同.json'),
+                 os.path.join(os.path.dirname(os.path.abspath(__file__)),'_情绪复盘输出合同.json')]
+_contract_path=next((p for p in _contract_paths if os.path.isfile(p)),None)
+if not _contract_path:
+    FAIL.append('C18 缺 _情绪复盘输出合同.json——无合同不允许出页')
+else:
+    try:
+        _contract=json.load(open(_contract_path,encoding='utf-8'))
+        _universal=_contract.get('universal',{}).get('required_reasoning') or []
+        for _page,_rule in (_contract.get('pages') or {}).items():
+            _fp=os.path.join(SITE,_page+'.html')
+            if not os.path.isfile(_fp): FAIL.append('C18 %s.html 不存在'%_page);continue
+            _html=open(_fp,encoding='utf-8').read()
+            _main=_html[_html.find('<h2'):_html.rfind('<script') if '<script' in _html else len(_html)]
+            _plain=re.sub(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>',' ',_main,flags=re.I)
+            _plain=re.sub(r'<[^>]+>',' ',_plain);_plain=re.sub(r'&nbsp;|\s+','',_plain)
+            _heads=[re.sub(r'<[^>]+>','',m).strip() for m in re.findall(r'<h2[^>]*>([\s\S]*?)</h2>',_main,re.I)]
+            _expected=_rule.get('headings') or []
+            if len(_heads)!=int(_rule.get('h2',len(_expected))): FAIL.append('C18 %s 段数=%d,合同=%s'%(_page,len(_heads),_rule.get('h2')))
+            for _i,_prefix in enumerate(_expected):
+                if _i>=len(_heads) or not _heads[_i].startswith(_prefix):
+                    _got=_heads[_i] if _i<len(_heads) else '缺段'
+                    FAIL.append('C18 %s 第%d段应以“%s”开头,实际“%s”'%(_page,_i+1,_prefix,_got[:36]))
+            _min=int(_rule.get('min_chars',0))
+            if len(_plain)<_min: FAIL.append('C18 %s 可见正文%d字<合同%d字(脚本/样式不计)'%(_page,len(_plain),_min))
+            for _term in (_rule.get('required') or []):
+                if _term not in _plain: FAIL.append('C18 %s 缺职责字段“%s”'%(_page,_term))
+            for _term in _universal:
+                if _term not in _plain: FAIL.append('C18 %s 缺通用推理字段“%s”'%(_page,_term))
+            for _ymd in re.findall(r'20\d{2}(?:[-/]\d{2}[-/]\d{2}|\d{4})',_plain):
+                _norm=re.sub(r'\D','',_ymd)
+                try: datetime.datetime.strptime(_norm,'%Y%m%d')
+                except ValueError: continue
+                if _norm>d: FAIL.append('C18 %s 含未来日期%s>复盘日%s'%(_page,_ymd,d));break
+    except Exception as _e: FAIL.append('C18 输出合同读取/检查异常:%s'%str(_e)[:100])
+
+# ---------- C19 结构化输出合同(judgment/归档/总审/盘中作战) ----------
+if _contract_path:
+    try:
+        _structured=(_contract.get('structured_outputs') or {})
+        def _plain_text(_value):
+            _s=json.dumps(_value,ensure_ascii=False) if not isinstance(_value,str) else _value
+            _s=re.sub(r'<script[\s\S]*?</script>|<style[\s\S]*?</style>',' ',_s,flags=re.I)
+            _s=re.sub(r'<[^>]+>',' ',_s)
+            return re.sub(r'&nbsp;|\s+','',_s)
+        def _has_any_key(_value,_keys):
+            if isinstance(_value,dict):
+                return any(_k in _value and _value.get(_k) not in (None,'',[],{}) for _k in _keys) or any(_has_any_key(_v,_keys) for _v in _value.values())
+            if isinstance(_value,list): return any(_has_any_key(_v,_keys) for _v in _value)
+            return False
+
+        _jr=_structured.get('judgment') or {};_jp=os.path.join(L,'judgment_%s.json'%d)
+        if not os.path.isfile(_jp): FAIL.append('C19 缺 judgment_%s.json'%d)
+        else:
+            _jo=json.load(open(_jp,encoding='utf-8'))
+            for _k in (_jr.get('required_top') or []):
+                if _k not in _jo: FAIL.append('C19 judgment缺顶层字段“%s”'%_k)
+            _bodies=_jo.get('bodies') or {}
+            for _page in (_jr.get('body_pages') or []):
+                _body=_bodies.get(_page)
+                if not _body: FAIL.append('C19 judgment.bodies缺%s'%_page);continue
+                if _jr.get('reasoning_in_each_body'):
+                    _txt=_plain_text(_body)
+                    for _term in _universal:
+                        if _term not in _txt: FAIL.append('C19 judgment.%s缺“%s”'%(_page,_term))
+            _archive=_plain_text(_jo.get('archive_body',''))
+            _amin=int(_jr.get('archive_min_chars',0))
+            if len(_archive)<_amin: FAIL.append('C19 archive_body正文%d字<合同%d字'%(len(_archive),_amin))
+            if _jr.get('archive_required_reasoning'):
+                for _term in _universal:
+                    if _term not in _archive: FAIL.append('C19 archive_body缺“%s”'%_term)
+
+        _ar=_structured.get('audit') or {};_ap=os.path.join(L,'总审_%s.json'%d)
+        if not os.path.isfile(_ap): FAIL.append('C19 缺 总审_%s.json'%d)
+        else:
+            _ao=json.load(open(_ap,encoding='utf-8'))
+            for _k in (_ar.get('required_top') or []):
+                if _k not in _ao: FAIL.append('C19 总审缺顶层字段“%s”'%_k)
+            _checks=_ao.get('检查') or {}
+            for _k in (_ar.get('required_checks') or []):
+                if _k not in _checks: FAIL.append('C19 总审.检查缺“%s”'%_k)
+
+        _pr=_structured.get('playbook') or {};_pb=os.path.join(R,'盘中',d,'playbook.json')
+        if os.path.isfile(_pb):
+            _po=json.load(open(_pb,encoding='utf-8'))
+            for _k in (_pr.get('required_top') or []):
+                if _k not in _po: FAIL.append('C19 playbook缺顶层字段“%s”'%_k)
+            for _group in ('buys','sells','watch'):
+                for _i,_item in enumerate(_po.get(_group) or []):
+                    for _label,_keys in (('标识',_pr.get('item_identity_any') or []),('来源',_pr.get('item_source_any') or []),('确认',_pr.get('item_confirm_any') or []),('证伪',_pr.get('item_falsify_any') or [])):
+                        if not _has_any_key(_item,_keys): FAIL.append('C19 playbook.%s[%d]缺%s字段'%(_group,_i,_label))
+
+        _dr=_structured.get('decision') or {}
+        for _df in glob.glob(os.path.join(R,'盘中',d,'临盘决断_%s_*.json'%d)):
+            _do=json.load(open(_df,encoding='utf-8'));_dn=os.path.basename(_df)
+            for _k in (_dr.get('required_top') or []):
+                if _k not in _do: FAIL.append('C19 %s缺顶层字段“%s”'%(_dn,_k))
+            if not _has_any_key(_do,_dr.get('timestamp_any') or []): FAIL.append('C19 %s缺决策时间'%_dn)
+            for _label,_keys in (_dr.get('reasoning_anywhere') or {}).items():
+                if not _has_any_key(_do,_keys): FAIL.append('C19 %s缺%s字段'%(_dn,_label))
+            if _dr.get('fill_px_exec_required'):
+                for _i,_fill in enumerate(_do.get('fills') or []):
+                    if not isinstance(_fill,dict) or not _fill.get('px_exec'): FAIL.append('C19 %s fills[%d]缺px_exec'%(_dn,_i))
+    except Exception as _e: FAIL.append('C19 结构化输出合同读取/检查异常:%s'%str(_e)[:100])
+
+# ---------- C15 六账本跨日计划→执行→页面回执连续性(2026-07-21页面漏拒单事故) ----------
+_routes=['auction','lhb','theme','logic','limitup','master']
+_pages={'auction':'auction','lhb':'lhb','theme':'theme','logic':'logic','limitup':'limitup','master':'index'}
+if dprev:
+    for _route in _routes:
+        _pp=os.path.join(L,'交易计划_%s_%s.json'%(_route,dprev))
+        if not os.path.isfile(_pp): continue
+        try: _plan=json.load(open(_pp,encoding='utf-8'))
+        except Exception:
+            FAIL.append('C15 %s上一交易日计划解析失败: %s'%(_route,os.path.basename(_pp)));continue
+        _expected=[]
+        for _o in (_plan.get('buys') or _plan.get('positions') or []): _expected.append(('buy',str(_o.get('code','')).zfill(6)))
+        for _o in (_plan.get('sells') or []): _expected.append(('sell',str(_o.get('code','')).zfill(6)))
+        _events=[];_lp=os.path.join(L,'_模拟盘',_route,'账本.jsonl')
+        if os.path.isfile(_lp):
+            for _ln in open(_lp,encoding='utf-8'):
+                try:
+                    _ev=json.loads(_ln)
+                    if _ev.get('d')==d: _events.append(_ev)
+                except Exception: pass
+        _missing=[]
+        for _act,_code in _expected:
+            _valid=('buy','reject') if _act=='buy' else ('sell','defer')
+            if not any(str(_e.get('code','')).zfill(6)==_code and _e.get('ev') in _valid for _e in _events): _missing.append('%s:%s'%(_act,_code))
+        if _missing: FAIL.append('C15 %s %s计划→%s账本缺执行事件: %s'%(_route,dprev,d,','.join(_missing)))
+        _pg=os.path.join(SITE,_pages[_route]+'.html')
+        _html=open(_pg,encoding='utf-8').read() if os.path.isfile(_pg) else ''
+        _a=_html.find('<!--EXECRECEIPT-->');_b=_html.find('<!--/EXECRECEIPT-->')
+        if _a<0 or _b<_a:
+            FAIL.append('C15 %s页面缺上一交易日指令执行回执'%_pages[_route]);continue
+        _block=_html[_a:_b]
+        _hidden=[_code for _,_code in _expected if _code not in _block]
+        if _hidden: FAIL.append('C15 %s页面执行回执漏股票: %s'%(_pages[_route],','.join(_hidden)))
 
 print(f'== 复盘一致性哨兵 {d} ==')
 for w in WARN: print('  WARN',w)

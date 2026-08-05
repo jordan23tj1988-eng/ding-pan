@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>情绪盯盘台 · 历史</title><style>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>复盘存档 20260727</title><style>
 :root{color-scheme:dark;
 --bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
 --ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
@@ -34,7 +34,6 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",
 .hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
 /* ── strips/cards ── */
 .strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.rowA > .kpi{min-width:0}
 .kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
 .kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
 .dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
@@ -245,7 +244,7 @@ h2.hot::before{background:var(--up)}
 .ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
 .ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
 .ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
-.ticker .in{display:flex;width:max-content;animation:tick 45s linear infinite}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
 .ticker:hover .in{animation-play-state:paused}
 .ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
 .ticker b{font-weight:700;color:var(--ink)}
@@ -273,10 +272,8 @@ h2.hot::before{background:var(--up)}
 .c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
 .c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
 /* index bento网格 */
-.wrap:has(.rowA){max-width:960px}
-@media(min-width:1440px){.wrap:has(.rowA){max-width:1440px}}
+.wrap:has(.rowA){max-width:1440px}
 .rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
-@media(max-width:1439px){.rowA{grid-template-columns:1fr 1fr 1fr 1fr}.rowA .hero{grid-column:1/-1}}
 @media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
 @media(max-width:560px){.rowA{grid-template-columns:1fr}}
 .rowA .hero{margin:0}
@@ -311,7 +308,37 @@ h2.hot::before{background:var(--up)}
 [style*="color:#8892a0"]{color:var(--dim)!important}
 [style*="color:#d8dee9"]{color:var(--ink)!important}
 [style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
-</style></head><body><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="index.html">复盘概览</a><a class="" href="intraday.html">盯盘台</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="on" href="history.html">历史</a></div><span class="upd"><i class="live"></i><span class="txt">更新 2026-08-05 收盘 · B·震荡混沌:AI算力/半导体60只主线确认+炸板潮分化,高潮筑顶控仓等确认</span></span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp"><span>量能 <b class="a">2.66T</b></span><span>涨停 <b class="u">103</b> / 跌停 <b class="d">1</b></span><span>炸板率 <b>30%</b></span><span>最高 <b>8板</b></span><span>温度 <b>68</b></span><span>2进3率 <b class="u">20.0%</b></span><span>1进2率 <b class="d">21.4%</b></span><span>午后首封 <b>17只</b></span><span>主线候选 <b class="a">通信5家/电网4家</b></span><span>评分 <b>3分·B·震荡混沌</b></span></div></div></div><div class="hero"><div class="kick">Archive · 历史记录</div><h1>历史复盘存档</h1><p>每天18:00收盘后当日完整复盘冻结存档,永久可回看;首页只显示最新一天。</p></div><h2>存档列表</h2><ul class="hlist"><li><span class="dt">08-05</span><span class="st">B·震荡混沌|温度68高潮筑顶|三窗全灭|攻防=2-4成·防守型试探|方向Gate=AI算力/半导体60只(57.7%)/金属资源14只(钨锗钽)|1进2率21.4%回升/2进3率20.0%|质量TOP3=星网锐捷/正帆科技/浩通科技|弱票池0规则命中|炸板率29.5%极值|数据缺口:竞价快照/资金温度/席位明细</span><a class="go" href="archive/20260805.html">看完整存档 →</a></li><li><span class="dt">08-04</span><span class="st">B·震荡混沌|温度81高潮筑顶|三窗全灭|攻防=2-4成·防守型试探|方向Gate=通信设备9家(2板2家)/电网设备6家(2板2家)|二进三率30.8%回升/一进二率15.5%仍弱|质量TOP3=风语筑/明新旭腾/魅视科技|弱票池0规则命中|午后封板46只偏多|数据缺口:竞价快照/资金温度/席位明细</span><a class="go" href="archive/20260804.html">看完整存档 →</a></li><li><span class="dt">08-03</span><span class="st">B·震荡混沌|温度63分歧衰竭|三窗全灭|攻防=2-4成·防守型试探|方向Gate=电网设备8家候选主线(全1板待确认)/通用设备6家|2进3率7.7%偏冷|质量TOP3=美利云/利欧股份/百合花|弱票池0规则命中|午后封板15只偏多|数据缺口:量能/LHB/竞价/资金温度</span><a class="go" href="archive/20260803.html">看完整存档 →</a></li><li><span class="dt">07-27</span><span class="st">修复扩散，宽度已回、高度待验</span><a class="go" href="archive/20260727.html">看完整存档 →</a></li><li><span class="dt">07-24</span><span class="st">兑现回落：军工晋级与存储扩散对冲旧主线急缩</span><a class="go" href="archive/20260724.html">看完整存档 →</a></li><li><span class="dt">07-21</span><span class="st">启动试探：宽度修复，接力与大钱未确认</span><a class="go" href="archive/20260721.html">看完整存档 →</a></li><li><span class="dt">07-20</span><span class="st">退潮/冰点：电力宽度修复，市场反转未证</span><a class="go" href="archive/20260720.html">看完整存档 →</a></li><li><span class="dt">07-17</span><span class="st">占位(通知另出)</span><a class="go" href="archive/20260717.html">看完整存档 →</a></li><li><span class="dt">07-16</span><span class="st">占位(通知另出)</span><a class="go" href="archive/20260716.html">看完整存档 →</a></li><li><span class="dt">07-15</span><span class="st">占位(通知另出)</span><a class="go" href="archive/20260715.html">看完整存档 →</a></li><li><span class="dt">07-14</span><span class="st">启动未证·反抽|温度35.3偏冷=档位成绩单五档最差"诱多带"|三窗全灭(冰点窗昨触发今兑现+1.81%后关闭)|攻防=混沌档执行≤3成·买新不买旧|方向gate=AI算力5/6主流候选未证(26只0晋级),资源新线(电解铝/油气)=头号观察|1进2率2.5%(250日分位2%极值)|资金温度65分位(30→65)×情绪偏冷=背离|质量Top5首名东山精密(弱票池:79/80命中0规则)·席位Top1星网锐捷(S档国泰长宁62.2%)·竞价评分Top1淳中科技52.6(高开≥5弃)|昨日结算:席位+5.82%(3/5)·题材+2.04%(2/3)·产逻+0.7%(2/3)·质量-0.43%(3/5)·竞价-3.52%(2/8)|六账本(引擎):lhb 1.0131/theme 1.0036/master 1.0016/limitup 1.0000(空仓)/auction 0.9881/logic 0.9806,基准0.9986|孵化:毕业1(线名归一表)·证伪结案1(医药形跟踪)·新立项3·audit打脸0·复议1(维持启动未证)·miss入账1(恒尚二次打脸→触发器落地)|明日最高共振观察点:宏桥控股(电解铝3路交叉,晋3板=启动确证信号,高开≥5弃)</span><a class="go" href="archive/20260714.html">看完整存档 →</a></li><li><span class="dt">07-13</span><span class="st">冰点8.7|涨停27/跌停172/炸板32.5%/量2.82万亿(跌破3.0弱修档)——流动性踩踏型冰点,无主线;❄冰点进攻窗首触发(A档n=15次日接力+0.30%/60%),攻防=退潮档0-2成、窗内只试医药独线;方向gate=无主流(聚类最高3/6),1进2率7.6%,资金温度30分位(93→30,机构29买1卖净买27.7亿逆势捡筹)=情绪极冷×大钱托底背离;质量Top5首名九丰能源(分10)/席位首荐中信重工(桑田路A档)/竞价评分Top1晋亿实业52.5(高开≥5弃);昨日结算:竞价池+3.74pp首转正·质量+1.24pp·题材+0.41pp·席位2/5·产逻-1.50pp;模拟盘六账(引擎):auction0.9906/lhb1.0041/theme0.9991/logic0.9830/limitup1.0000(空仓最优)/master0.9905,基准0.9639全数跑赢;孵化:外资共现"中信上海×高盛"+12.1pp提请拍板/医药形升格大分支/高低切接棒库+master裁决对照账立项/线名归一表明晚验收;明日最高共振观察点=哈药股份(3路交叉·医药宽度≥8存续判据,断承接整组认错)。</span><a class="go" href="archive/20260713.html">看完整存档 →</a></li><li><span class="dt">07-10</span><span class="st">换线混沌·事件点火|量33885亿(+4748三连放)涨停92跌停4=赚钱面扩张,但炸板率49.7%+最高板仅2=高度崩塌;旧主线半导体断头(恒尚9板炸22/华天一字炸),长十乙回收成功(A档)午后点燃商业航天28只全链低位;资金温度93分位过热+席位路昨0/5=热天禁追;明日商业航天竞价定"主流确立or一日游"。</span><a class="go" href="archive/20260710.html">看完整存档 →</a></li><li><span class="dt">07-09</span><span class="st">混沌反抽·放量普涨|量29137亿(+3500)涨停75跌停骤降12=赚钱效应回暖,但真实梯队仅3板(视源炸69)、聚类6有最高4/6=无主流无高标;半导体全链条扩散32只打的是先进封装(+98%涨到位)/HBM(透支)高位补涨;恒尚8板存储孤峰(异动红线);席位暖(浪潮23.5亿)vs题材竞价冷=背离拐点预警。</span><a class="go" href="archive/20260709.html">看完整存档 →</a></li><li><span class="dt">07-08</span><span class="st">退潮末期·结构分化 | 题材归位:AI算力6/6唯一主流(27只跨6环节,行业口径误判无主流),但最高仅3板=方向真高度弱;恒尚存储7板孤峰、跌停仍41、散票13只=分歧退潮</span><a class="go" href="archive/20260708.html">看完整存档 →</a></li><li><span class="dt">07-07</span><span class="st">退潮实锤 · 量能跌破3万亿、涨停腰斩、资金转半导体、恒尚6板孤悬(梯队断层)</span><a class="go" href="archive/20260707.html">看完整存档 →</a></li></ul><div class="foot">存档只加不删,对应每日18:00傍晚链路产物。</div><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+</style></head><body><div class="nav"><span class="brand">情绪盯盘台 · 存档</span><a href="../index.html">← 返回概览</a><a href="../history.html">历史列表</a><span class="upd">冻结于 2026-07-27 收盘 · 傍晚全链路</span></div><div class="wrap"><div class="ticker"><div class="in"><div class="grp"><span>量能 <b>2.08万亿</b> · 涨停 <b>111</b> / 跌停 <b>6</b> · 炸板率 <b>10.5%</b> · 最高 <b>5板</b></span></div><div class="grp"><span>温度 <b>51.5</b> · 1进2 <b>14.3%</b> · 资金温度 <b>缺口</b> · 三窗 <b>全关</b></span></div></div></div>
+<!--PAPERTRADE-->
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 总·情绪总裁决</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+1.56%</b></span> <span>本周 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+0.44%</b></span> <span>基准本周 <b style="color:#8d93a8;font-family:ui-monospace,monospace">+0.00%</b></span> <span>平仓胜率 <b style="font-family:monospace">42.9%</b>(n=7)</span> <span>周均仓位 <b style="font-family:monospace">5%</b></span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<!--EXECRECEIPT--><div style="margin:12px 0;background:rgba(0,0,0,.22);border:1px solid rgba(232,163,61,.18);border-radius:10px;padding:10px 12px"><div style="color:#e8a33d;font-size:12px;font-weight:700">上一交易日指令 · 今日执行回执</div><div style="color:#8d93a8;font-size:11px;margin:2px 0 6px">20260724发出 → 20260727执行；每笔买、卖、拒单、顺延必须有去向</div><table style="width:100%;border-collapse:collapse;font-size:12px"><tr style="color:#8d93a8"><td>原指令</td><td>股票</td><td>执行结果</td></tr><tr style="border-top:1px solid rgba(255,255,255,.07)"><td>买</td><td style="white-space:nowrap">600698 湖南天雁</td><td style="color:#ff5f56">已成交 · 7700股 @ 6.50</td></tr></table></div><!--/EXECRECEIPT-->
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="47.2" x2="620" y2="47.2" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,77.5 80.0,48.4 140.0,55.7 200.0,71.5 260.0,72.6 320.0,118.8 380.0,93.7 440.0,107.7 500.0,100.7 560.0,101.3 620.0,101.3" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,55.2 80.0,45.8 140.0,35.0 200.0,31.2 260.0,33.6 320.0,37.9 380.0,37.8 440.0,37.8 500.0,37.8 560.0,37.8 620.0,34.1" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="34.1" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20260727  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="29.1" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">1.0156</text></svg></div>
+<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · 总账仅保留顺钠5%验证，最高共振不等于确定性；高开≥5弃。</div>
+</div><div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">600698 湖南天雁</td><td style="font-family:monospace">7700</td><td style="font-family:monospace">6.50</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+8.87%</b></td><td style="font-family:monospace">1</td><td>继续持有</td></tr>
+</table>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20260727发出,明日固定价执行)</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8d93a8"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">000533 顺钠股份</td><td style="font-family:monospace">5%·闸门高开≥5弃</td><td style="color:#a8adbd">题材高度×质量Top3×竞价评分41.4三路共振；无主流确认故只给5%</td></tr>
+</table>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(5)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>000676 智度股份</td><td style="font-family:monospace">20260720@6.55</td><td style="font-family:monospace">20260721@6.36</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-3.05%</b></td><td>开·持1日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>688192 迪哲医药-U</td><td style="font-family:monospace">20260716@66.00</td><td style="font-family:monospace">20260720@58.01</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-12.24%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>002379 宏桥控股</td><td style="font-family:monospace">20260715@18.10</td><td style="font-family:monospace">20260717@18.37</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+1.34%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>300534 陇神戎发</td><td style="font-family:monospace">20260714@8.84</td><td style="font-family:monospace">20260716@10.49</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+18.49%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600664 哈药股份</td><td style="font-family:monospace">20260714@3.80</td><td style="font-family:monospace">20260716@4.94</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+29.81%</b></td><td>收·持2日</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<div class="card"><h3>20260727完整复盘归档</h3><p>环境：成交额20766亿元，市场温度51.5，涨停111、跌停6、炸板13，炸板率10.5%，修复成立。周期：昨停溢价+3.18%处99%分位、炸板率处1%分位，但1进2仅14.3%，阶段定为修复/分支轮动，方向升，仓位0-3成。</p><p>题材：无6有主流，AI算力/半导体与重组/跨界均4/6大分支。情绪：三窗全关，宽度与高度背离。席位：当日标准化席位动向未形成，资金温度与Top5保持未形成。</p><p>执行：竞价发华天酒店5%且高开≥5弃；题材与总账各以顺钠股份小仓验证；席位、逻辑、质量不新开。六账本净值来自引擎，第七账净值0.9980、影子0.9928、临盘增益+0.52pp。</p><p>来源为当日summary、题材归位、质量荐票、竞价评分、市场温度和先行指标。支持是宽度、低跌停、低炸板；反证是低接力、无主流、质量Top5执1均涨全负。确认=下一交易日1进2≥20%且温度不低于46.5；证伪=温度回落≥5或净涨停跌破60。下一交易日结算按冻结发出版与引擎账本，不回写名单。</p></div><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
 (function(){
 var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* 旧机制:IO进场(全站沿用,无依赖) */
@@ -319,20 +346,8 @@ function legacy(){
   if(RM)return;
   var els=document.querySelectorAll('.card,.obs,.routes .rt,.kv,.hero,details.chain,.tli,.cols,.gauge,.trow,.kpi,.ticker,.steps .step');
   els.forEach(function(e){e.classList.add('rv')});
-  var force=function(){els.forEach(function(e){e.classList.add('on');e.style.transition='none';e.style.opacity='1';e.style.transform='none'})};
-  if(!('IntersectionObserver' in window)){force();return;}
-  var io;
-  try{
-    io=new IntersectionObserver(function(es){es.forEach(function(en){
-      if(en.isIntersecting){en.target.classList.add('on');en.target.style.transition='none';en.target.style.opacity='1';en.target.style.transform='none';io.unobserve(en.target)}
-    })},{threshold:.12});
-  }catch(err){force();return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{threshold:.12});
   els.forEach(function(e){io.observe(e)});
-  /* 兜底:1.2秒后强制全部可见(防IO在窄视口/预览环境不触发导致内容透明;内联样式不依赖CSS transition) */
-  setTimeout(function(){
-    var left=document.querySelectorAll('.rv:not(.on)');
-    if(left.length){left.forEach(function(e){e.classList.add('on');e.style.transition='none';e.style.opacity='1';e.style.transform='none'});}
-  },1200);
 }
 /* v4增强:GSAP计数器/sparkline画入(渐进增强;无gsap/RM=静态终态,数字已内联写死) */
 function v4(){
@@ -351,19 +366,6 @@ function v4(){
   if(chips.length)gsap.from(chips,{y:6,opacity:0,duration:.38,ease:'power3.out',stagger:.04,delay:.25});
 }
 legacy();
-/* v4.2 ticker修复:克隆铺满2倍容器宽 + 按内容宽度定速(固定40px/s,用户可感知的慢速) */
-(function(){
-  if(RM)return;
-  var tk=document.querySelector('.ticker');
-  if(!tk)return;
-  var inn=tk.querySelector('.in');
-  if(!inn||!inn.children.length)return;
-  var guard=0;
-  while(inn.scrollWidth<tk.clientWidth*2&&guard++<8){inn.innerHTML+=inn.innerHTML;}
-  /* 动画 translateX(-50%) 移动元素半宽=一组内容宽; 目标速度40px/s */
-  var half=inn.scrollWidth/2;
-  if(half>0)inn.style.animationDuration=(half/40).toFixed(2)+'s';
-})();
 var s=document.createElement('script');
 s.src=(location.pathname.indexOf('/archive/')>-1?'../':'')+'lib/gsap.min.js';
 s.onload=v4;s.onerror=function(){};

@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "date": "2026-07-26",
+  "scope": "情绪复盘系统全部正式输出：七页盯盘台、归档、judgment/总审、盘中作战页",
+  "universal": {
+    "required_reasoning": ["支持", "反证", "确认", "证伪", "来源", "结算"],
+    "rules": [
+      "零编造、零后视镜，未来日期与未来结果不得进入当日复盘",
+      "A/B/C来源分级与覆盖率分开表达",
+      "结论必须同时展示支持证据和反证",
+      "观察项必须给确认、证伪和下一交易日结算口径",
+      "负成绩必须改变路线话语权，不能只展示命中样本",
+      "认知迭代永远最后且写明规则如何在下一交易日结算",
+      "脚本台账、图表和PAPERTRADE不计为agent分析深度的替代品"
+    ]
+  },
+  "pages": {
+    "index": {"h2": 5, "min_chars": 4800, "headings": ["一 明日核心观察点", "二 四层联立", "三 五路看牌", "四 总裁决", "五 我的认知迭代"], "required": ["环境", "周期", "题材", "情绪", "三窗", "背离", "六账本", "错过机会"]},
+    "cycle": {"h2": 7, "min_chars": 3800, "headings": ["一 量能台阶", "二 先行指标", "三 五路周期投票", "四 梯队与背离", "五 攻防", "六 自主深挖", "七 我的认知迭代"], "required": ["1进2", "炸板率", "分位", "冰点", "修复", "弱反抽", "继续退潮"]},
+    "auction": {"h2": 6, "min_chars": 5000, "headings": ["一 当日评分卡", "二 今日竞价温度", "三 昨日池", "四 竞价信号胜率", "五 自主深挖", "六 我的认知迭代"], "required": ["高开", "闸门", "评分", "结算", "样本"]},
+    "lhb": {"h2": 6, "min_chars": 5000, "headings": ["一 席位综合判断", "二 资金温度", "三 龙虎榜台账", "四 席位分档库", "五 自主深挖", "六 我的认知迭代"], "required": ["资金温度", "席位", "分档", "结算", "样本"]},
+    "theme": {"h2": 6, "min_chars": 4800, "headings": ["一 题材荐票", "二 三级判定", "三 主流生命周期", "四 龙头识别", "五 自主深挖", "六 我的认知迭代"], "required": ["宽度", "高度", "开板率", "承载环节", "生命周期", "来源"]},
+    "logic": {"h2": 7, "min_chars": 10000, "headings": ["一 逻辑荐票", "二 链条纵深库", "三 逻辑硬度", "四 前置预期雷达", "五 中报预增", "六 自主深挖", "七 我的认知迭代"], "required": ["同源", "消息溯源", "A档", "B档", "C档", "预期", "成色"]},
+    "limitup": {"h2": 6, "min_chars": 5000, "headings": ["一 质量Top5", "二 市场温度", "三 归位台账", "四 训练库", "五 自主深挖", "六 我的认知迭代"], "required": ["净涨停", "来源档", "开板", "预测", "规则", "结算"]}
+  },
+  "structured_outputs": {
+    "judgment": {
+      "required_top": ["date", "ticker", "bodies", "archive_body"],
+      "body_pages": ["index", "cycle", "auction", "lhb", "theme", "logic", "limitup"],
+      "reasoning_in_each_body": true,
+      "archive_min_chars": 1200,
+      "archive_required_reasoning": true
+    },
+    "audit": {
+      "required_top": ["date", "结论", "检查"],
+      "required_checks": ["口径一致", "无后视镜", "来源分级", "结算诚实", "页面合同"]
+    },
+    "playbook": {
+      "required_top": ["date", "route", "version", "buys", "sells", "watch"],
+      "item_identity_any": ["code", "name"],
+      "item_source_any": ["source", "来源", "reason"],
+      "item_confirm_any": ["confirm", "确认", "trigger", "if"],
+      "item_falsify_any": ["falsify", "证伪", "invalid_if", "no_trade_if"]
+    },
+    "decision": {
+      "required_top": ["date", "session", "evidence_cutoff", "fills"],
+      "timestamp_any": ["decision_timestamp", "ts"],
+      "reasoning_anywhere": {
+        "confirm": ["confirm", "确认"],
+        "falsify": ["falsify", "证伪"],
+        "settlement": ["settlement", "结算"]
+      },
+      "fill_px_exec_required": true
+    }
+  }
+}

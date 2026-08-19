@@ -4,7 +4,6 @@
 产出: _学习/链条位置_{板块}_{d}.json"""
 import os,sys,json,datetime
 import pandas as pd
-from concurrent.futures import ThreadPoolExecutor
 import akshare as ak
 BASE=os.path.dirname(os.path.abspath(__file__))
 def one(cn):
@@ -35,9 +34,9 @@ def main(sector,d):
     cfg=tpl[sector]
     codes=[(c,n) for seg in cfg["环节"].values() for c,n in seg]
     res={}
-    with ThreadPoolExecutor(max_workers=8) as ex:
-        for c,v in ex.map(one,codes):
-            if v: res[c]=v
+    for cn in codes:
+        c,v=one(cn)
+        if v: res[c]=v
     out={"板块":sector,"日期":d,"环节":{}}
     for seg,ss in cfg["环节"].items():
         rows=[res[c] for c,_ in ss if c in res]

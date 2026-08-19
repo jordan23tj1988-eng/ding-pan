@@ -1,0 +1,209 @@
+# -*- coding: utf-8 -*-
+"""
+五路判断结算.py — 五路战绩画像聚合器（补 #040/#049 数据债）。
+
+职责：读五路荐票结算 jsonl（题材/席位/质量/逻辑/竞价），按「零编造」原则聚合，
+产出每路战绩画像 {route} + 五路汇总，供各路判断「独立盲区声明」改引真实画像、
+供「什么环境听谁的路」环境加权与身位归因。
+
+口径（忠实既有结算 jsonl，不发明新字段）：
+- 聚合格式(题材/逻辑/质量/竞价)：按「荐票日|池日」分组取最后一行=该日最终结算
+  （结算脚本历史 append 致同日多行，最后一行即最新完整态）。
+- 逐票格式(席位)：按 (荐票日,代码) 去重后按日统计 ——
+  胜率=✓赚/(✓赚+✗套)，「—」(待结算)与 null 收益一律排除，绝不补造。
+- 合计胜率=Σ分子/Σ分母；合计均收=简单平均各日均收（与 theme 判断内 5/9=55.6%/1.25% 口径一致）。
+- 缺失文件/缺失字段如实标 null 或 n=0，不伪造。
+
+用法：python 五路战绩画像.py [生成日，默认 20260813]
+输出：_学习/子agent增强/战绩画像_{route}_{生成日}.json  +  _学习/子agent增强/_战绩画像汇总_{生成日}.json
+（对齐五路判断「必读五件套」规格：子agent读 战绩画像_{route}_{d}.json，总审读 _战绩画像汇总_{d}.json）
+"""
+import json
+import os
+import sys
+
+BASE = os.path.dirname(os.path.abspath(__file__))
+XUEXI = os.path.join(BASE, "_学习")
+ZENG = os.path.join(XUEXI, "子agent增强")
+GEN = sys.argv[1] if len(sys.argv) > 1 else "20260813"
+
+# 五路定义：route key(与判断文件一致) -> 中文名/来源/格式/归因字段
+ROUTES = [
+    {"key": "theme",   "名": "题材", "file": "_题材荐票结算.jsonl", "type": "聚合", "day": "荐票日", "归因": "按身位"},
+    {"key": "lhb",     "名": "席位", "file": "_龙虎榜荐票结算.jsonl", "type": "逐票", "day": "荐票日"},
+    {"key": "limitup", "名": "质量", "file": "_质量荐票结算.jsonl", "type": "聚合", "day": "荐票日"},
+    {"key": "logic",   "名": "逻辑", "file": "_逻辑荐票结算.jsonl", "type": "聚合", "day": "荐票日", "归因": "按类型"},
+    {"key": "auction", "名": "竞价", "file": "_竞价池结算.jsonl", "type": "聚合", "day": "池日"},
+]
+
+
+def load_jsonl(name):
+    p = os.path.join(XUEXI, name)
+    if not os.path.exists(p):
+        return None
+    rows = []
+    with open(p, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return rows
+
+
+def split_fraction(s):
+    """'x/y' -> (x, y)；非标准返回 (None, None)。"""
+    if not isinstance(s, str) or "/" not in s:
+        return (None, None)
+    a, _, b = s.partition("/")
+    try:
+        return (int(a), int(b))
+    except ValueError:
+        return (None, None)
+
+
+def agg_poly(rows, day_key, attr_key):
+    """聚合格式 -> 按日取最后一行 + 归因聚合。返回 (按日列表, 合计, 归因)。"""
+    byday = {}
+    order = []
+    for r in rows:
+        d = r.get(day_key)
+        if not d:
+            continue
+        if d not in byday:
+            byday[d] = []
+            order.append(d)
+        byday[d].append(r)
+    daily = []
+    wnum = wden = 0
+    mean_sum = 0.0
+    mean_n = 0
+    attr_map = {}
+    for d in order:
+        r = byday[d][-1]  # 最后一行=最终态
+        num, den = split_fraction(r.get("执行胜率"))
+        if num is not None and den is not None and den > 0:
+            wnum += num
+            wden += den
+        m = r.get("执行均收")
+        if isinstance(m, (int, float)):
+            mean_sum += m
+            mean_n += 1
+        rec = {"荐票日": d}
+        for k in ("执行胜率", "执行均收", "全场涨停均收", "全场均收", "增益pp", "选股增益pp",
+                  "次日封板", "池家数", "池日"):
+            if k in r:
+                rec[k] = r[k]
+        if attr_key and attr_key in r and isinstance(r[attr_key], dict):
+            rec[attr_key] = r[attr_key]
+            for kk, vv in r[attr_key].items():
+                if isinstance(vv, (int, float)):
+                    attr_map.setdefault(kk, []).append(vv)
+        daily.append(rec)
+    total = {"胜率": f"{wnum}/{wden}" if wden else "0/0",
+             "均收": round(mean_sum / mean_n, 2) if mean_n else None,
+             "交易日数": len(daily)}
+    attr_out = {k: {"n": len(v), "均收": round(sum(v) / len(v), 2)} for k, v in sorted(attr_map.items())}
+    return daily, total, attr_out
+
+
+def agg_tick(rows, day_key):
+    """逐票格式 -> 按(日,代码)去重后按日统计胜率/均收。"""
+    seen = set()
+    uniq = []
+    for r in rows:
+        key = (r.get(day_key), r.get("代码"))
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append(r)
+    byday = {}
+    order = []
+    for r in uniq:
+        d = r.get(day_key)
+        if not d:
+            continue
+        if d not in byday:
+            byday[d] = []
+            order.append(d)
+        byday[d].append(r)
+    daily = []
+    wnum = wden = 0
+    mean_sum = 0.0
+    mean_n = 0
+    for d in order:
+        win = lose = 0
+        gains = []
+        for r in byday[d]:
+            j = r.get("判定")
+            if j == "✓赚":
+                win += 1
+            elif j == "✗套":
+                lose += 1
+            g = r.get("执行收益")
+            if isinstance(g, (int, float)):
+                gains.append(g)
+        den = win + lose
+        wnum += win
+        wden += den
+        m = (sum(gains) / len(gains)) if gains else None
+        if m is not None:
+            mean_sum += m
+            mean_n += 1
+        daily.append({"荐票日": d,
+                      "胜率": f"{win}/{den}" if den else "0/0",
+                      "均收": round(m, 2) if m is not None else None,
+                      "待结算": len(byday[d]) - den})
+    total = {"胜率": f"{wnum}/{wden}" if wden else "0/0",
+             "均收": round(mean_sum / mean_n, 2) if mean_n else None,
+             "交易日数": len(daily)}
+    return daily, total, {}
+
+
+def main():
+    summary = {"生成日": GEN, "五路": {}, "合计": {}}
+    all_num = all_den = 0
+    all_mean_sum = 0.0
+    all_mean_n = 0
+    for rt in ROUTES:
+        rows = load_jsonl(rt["file"])
+        key = rt["key"]
+        if rows is None:
+            out = {"路": rt["名"], "key": key, "生成日": GEN,
+                   "来源": rt["file"], "状态": "来源文件缺失",
+                   "n": 0, "按日": [], "合计": None, "归因": {}}
+        else:
+            if rt["type"] == "逐票":
+                daily, total, attr = agg_tick(rows, rt["day"])
+            else:
+                daily, total, attr = agg_poly(rows, rt["day"], rt.get("归因"))
+            out = {"路": rt["名"], "key": key, "生成日": GEN,
+                   "来源": rt["file"], "格式": rt["type"],
+                   "按日": daily, "合计": total, "归因": attr}
+            num, den = split_fraction(total["胜率"])
+            if den:
+                all_num += num
+                all_den += den
+            if total["均收"] is not None:
+                all_mean_sum += total["均收"]
+                all_mean_n += 1
+        summary["五路"][key] = out
+        # 写每路画像
+        p = os.path.join(ZENG, f"战绩画像_{key}_{GEN}.json")
+        with open(p, "w", encoding="utf-8") as f:
+            json.dump(out, f, ensure_ascii=False, indent=2)
+        print(f"[写] 战绩画像_{key}_{GEN}.json  n={out.get('按日') and len(out['按日'])}")
+
+    summary["合计"] = {"胜率": f"{all_num}/{all_den}" if all_den else "0/0",
+                       "均收": round(all_mean_sum / all_mean_n, 2) if all_mean_n else None}
+    p = os.path.join(ZENG, f"_战绩画像汇总_{GEN}.json")
+    with open(p, "w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
+    print(f"[写] 战绩画像汇总_{GEN}.json  合计胜率={summary['合计']['胜率']} 均收={summary['合计']['均收']}")
+
+
+if __name__ == "__main__":
+    main()

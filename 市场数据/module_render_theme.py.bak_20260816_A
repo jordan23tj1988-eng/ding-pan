@@ -1,0 +1,453 @@
+# -*- coding: utf-8 -*-
+"""module_render_theme.py —— theme 页组件化渲染(2026-08-12, 模板=module_render_lhb.py, 修复题材路)
+读数据源 → 头部机器组件区(战场全貌/6有评分/四维走势, 数字可回源) + 黄金版六板块 LLM 原文 → 输出页面 body 片段
+用法: python module_render_theme.py 20260716 [--out 路径] [--shell]
+铁律: 机器组件数字只来自数据源文件(题材归位/涨停对链条/主流题材6有/_题材四维);
+      LLM 组件只从 judgment bodies 按边界提取原文, 不重写;
+      数据缺失=显示"—", 零编造(不补造数字)。
+六板块: 一荐票判断(LLM) 二三级判定(LLM) 三主流生命周期(LLM) 四龙头识别(LLM) 五自主深挖(LLM) 六认知迭代(LLM+折叠)
+机器区三卡(锚点成对, 哨兵核对): <!--THEMEBATTLE--> 战场全貌 / <!--6YOU--> 6有评分 / <!--FOURDIM--> 四维走势
+"""
+import re, os, sys, json
+from collections import Counter
+from _认知库渲染 import r_cog_lib
+
+BASE = r'D:\股票数据\市场数据'
+if not os.path.isdir(BASE):
+    BASE = [p for p in ('/sessions/*/mnt/股票数据/市场数据',) if os.path.isdir(p)][0] if os.path.isdir('/sessions') else BASE
+L = os.path.join(BASE, '_学习')
+CD = BASE
+
+# ============ 数据契约加载 ============
+def load_body(d):
+    """LLM 组件提取源: judgment_{d}.json bodies['theme']"""
+    p = os.path.join(L, 'judgment_%s.json' % d)
+    if not os.path.exists(p): return ''
+    try:
+        return json.load(open(p, encoding='utf-8'))['bodies']['theme']
+    except Exception:
+        return ''
+
+def load_json(name, d=None):
+    """按文件名+日期加载 JSON, 缺=返回 None(零编造: 渲染侧显示 —)"""
+    fn = name if d is None else name % d
+    p = os.path.join(L, fn)
+    if not os.path.exists(p): return None
+    try:
+        return json.load(open(p, encoding='utf-8'))
+    except Exception:
+        return None
+
+# ============ 通用 HTML 工具 ============
+def _esc(s):
+    return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+def _match_div(s, start):
+    """返回从 start 处 <div 开始的配平 </div> 结束位置(容错)"""
+    depth = 0
+    for m in re.finditer(r'<div\b|</div>', s[start:]):
+        if m.group() == '</div>':
+            depth -= 1
+            if depth == 0: return start + m.end()
+        else:
+            depth += 1
+    return len(s)
+
+def _h2_seg(body, start_kw, end_kw=None):
+    """提取 h2 板块原文(含 h2 标题行), 逐字节保真; end_kw 缺=取到尾部"""
+    i = body.find(start_kw)
+    if i < 0: return ''
+    j = body.find(end_kw, i) if end_kw else -1
+    return body[i:j if j > 0 else len(body)]
+
+def _pct(x, digits=0):
+    """小数→百分数字符串; None→'—'"""
+    if x is None: return '—'
+    return ('%+.' + str(digits) + 'f%%') % (x * 100)
+
+def _yn(b):
+    """bool → ✓/✗ 徽章"""
+    if b is None: return '<span class="mut">—</span>'
+    return ('<b style="color:#e8c86a">✓</b>' if b else '<span class="mut">✗</span>')
+
+def _tli_date(tli):
+    m = re.search(r'<b>(\d\d-\d\d)</b>', tli)
+    if m: return m.group(1)
+    m = re.search(r'<b>(\d{4})(\d{2})(\d{2})</b>', tli)
+    return ('%s-%s' % (m.group(2), m.group(3))) if m else ''
+
+# ============ 机器区: 题材战场全貌(归位分布 + 对链条强度) ============
+def r_mach_battle(d):
+    """THEMEBATTLE 卡: 归位大方向分布(家数/最高连板/来源档) + 对链条强度画像 Top6
+    唯一真源互证: 归位 Counter 家数 == 对链条题材线家数(哨兵核对项)"""
+    gui = load_json('题材归位_%s.json', d)
+    chain = load_json('涨停对链条_%s.json', d)
+    if gui is None and chain is None:
+        return ''
+    rows = ''
+    # --- 归位分布 ---
+    mp = (gui or {}).get('映射') or {}
+    cnt = Counter((v or {}).get('大方向', '未归位') for v in mp.values())
+    src = Counter((v or {}).get('来源档', '?') for v in mp.values())
+    # 对链条: 线→最高连板/早封占比/开板占比/强度画像
+    lines = {}
+    for ln in (chain or {}).get('题材线') or []:
+        lines[ln.get('大方向')] = ln
+    gui_rows = ''
+    for name, n in cnt.most_common():
+        ln = lines.get(name) or {}
+        hi = ln.get('最高连板')
+        hi_txt = ('%d板' % hi) if hi else '—'
+        ratio_txt = ('早封%.0f%%' % (ln.get('早封占比', 0) * 100)) if ln.get('早封占比') is not None else ''
+        gui_rows += ('<div class="trow"><div class="tr1"><span class="tnm">%s</span>'
+                     '<span class="tct">%d只</span><span class="mut">最高%s</span>'
+                     '<span class="mut">%s</span><div class="tbar"><i style="width:%d%%"></i></div>'
+                     '</div></div>\n'
+                     % (_esc(name), n, hi_txt, ratio_txt,
+                        int(100.0 * n / max(max(cnt.values()), 1))))
+    # --- 对链条强度画像 Top6 ---
+    top = sorted((chain or {}).get('题材线') or [], key=lambda x: -(x.get('家数') or 0))[:6]
+    img_rows = ''
+    for ln in top:
+        nm = ln.get('大方向', '—')
+        zb = ln.get('开板占比')
+        zb_txt = ('开板%.0f%%' % (zb * 100)) if zb is not None else '—'
+        img = ln.get('强度画像') or ''
+        img_txt = img[:120] + ('…' if len(img) > 120 else '')
+        img_rows += ('<div class="trow"><div class="tr1"><span class="tnm">%s</span>'
+                     '<span class="tct">%d只</span><span class="mut">高%s</span>'
+                     '<span class="mut">%s</span><div class="tbar"><i style="width:%d%%"></i></div>'
+                     '</div><div class="tds"><span class="mut">%s</span></div></div>\n'
+                     % (_esc(nm), ln.get('家数') or 0, ('%d板' % (ln.get('最高连板') or 0)),
+                        zb_txt, int(100.0 * (ln.get('家数') or 0) / max(top[0].get('家数') or 1, 1)),
+                        _esc(img_txt)))
+    ttl = (chain or {}).get('涨停总数')
+    nline = (chain or {}).get('题材线数')
+    head = ('<div class="card"><h3 style="margin:0 0 8px">题材战场全貌 <span class="hint">机器核对 · 归位唯一真源 vs 对链条互证</span></h3>'
+            '<p style="margin:4px 0 8px" class="mut">归位映射 %d 只 · 来源档 A公告/B THS/C搭车: %s · 对链条: 涨停%d / 题材线%d</p>'
+            '<div class="tl">%s</div>'
+            '<p style="margin:8px 0 4px"><b>对链条强度画像 Top6</b> <span class="hint">强度画像原文=子agent可引证据</span></p>'
+            '<div class="tl">%s</div></div>\n'
+            % (len(mp), '/'.join('%s%d' % (k, v) for k, v in sorted(src.items())),
+               ttl or 0, nline or 0, gui_rows, img_rows))
+    return '<!--THEMEBATTLE-->\n%s<!--/THEMEBATTLE-->\n' % head
+
+# ============ 机器区: 6有评分卡 ============
+def r_mach_6you(d):
+    """6YOU 卡: 主流题材6有 六维打分表(行业口径, 与归位聚类口径并存)"""
+    s6 = load_json('主流题材6有_%s.json', d)
+    if s6 is None:
+        return ''
+    th = (s6.get('阈值') or {})
+    rows = ''
+    for x in (s6.get('题材') or []):
+        nm = x.get('题材(行业口径)') or x.get('题材') or '—'
+        rows += ('<tr><td class="l">%s</td><td>%d</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>'
+                 '<td>%s</td><td>%s</td><td><b>%d/6</b></td><td>%s</td></tr>\n'
+                 % (_esc(nm), x.get('涨停数') or 0, _yn(x.get('宽度')), _yn(x.get('强度')),
+                    _yn(x.get('容量')), _yn(x.get('弹性_20cm')), _yn(x.get('高度')),
+                    _yn(x.get('换手')), x.get('得分') or 0, _esc(x.get('判定') or '—')))
+    head = ('<div class="card"><h3 style="margin:0 0 8px">6有评分卡 <span class="hint">行业口径(6有) · 阈值 宽≥%s / 容量≥%s亿 · 与归位聚类口径并存不互斥</span></h3>'
+            '<p style="margin:4px 0 8px" class="mut">量能档 %s · 两市成交 %s 亿</p>'
+            '<table class="p2"><tr><th class="l">题材(行业口径)</th><th>涨停数</th><th>宽度</th><th>强度</th><th>容量</th>'
+            '<th>弹性20cm</th><th>高度</th><th>换手</th><th>得分</th><th>判定</th></tr>%s</table>'
+            '<p style="margin:6px 0 0"><b>全场判定:</b> %s</p></div>\n'
+            % (th.get('宽度', '—'), th.get('容量_亿', '—'), _esc(s6.get('量能档') or '—'),
+               s6.get('两市成交额_亿') if s6.get('两市成交额_亿') is not None else '—',
+               rows, _esc(s6.get('全场判定') or '—')))
+    return '<!--6YOU-->\n%s<!--/6YOU-->\n' % head
+
+# ============ 机器区: 四维走势卡 ============
+def r_mach_fourdim(d):
+    """FOURDIM 卡: 四维日序列近3日表 + 缩圈/放宽警报
+    坑: 主题命名漂移/断档 → 环比/晋级率 null(如实显示 —, 不推断)"""
+    t = load_json('_题材四维.json')
+    if not t or d not in t:
+        return ''
+    days = sorted(x for x in t if re.fullmatch(r'\d{8}', str(x)) and x <= d)
+    if not days:
+        return ''
+    cur = t[d]
+    prev_days = days[-4:-1]  # 近3日(含当日)
+    # 当日线按宽度降序
+    lines = sorted(((k, v) for k, v in cur.items() if k != '_警报'),
+                   key=lambda kv: -(kv[1].get('宽度') or 0))
+    cols = ''
+    for dd in prev_days:
+        cols += '<th>%s</th>' % dd[4:6] + '-' + dd[6:8]
+    cols += '<th>环比</th><th>晋级率</th>'
+    rows = ''
+    for nm, e in lines:
+        cells = ''
+        for dd in prev_days:
+            e2 = t[dd].get(nm)
+            if e2 is None:
+                cells += '<td class="mut">—</td>'
+            else:
+                chg = e2.get('宽度环比')
+                mark = ''
+                if chg is not None:
+                    mark = ('<span style="color:#b8860b">▼</span>' if chg < 0 else '<span style="color:#e8c86a">▲</span>')
+                cells += '<td>%d板%s</td>' % (e2.get('高度') or 0, mark)
+        chg = e.get('宽度环比')
+        chg_txt = ('<span class="%s">%s</span>' % ('warn' if (chg or 0) < 0 else 'ok', _pct(chg))) if chg is not None else '<span class="mut">—</span>'
+        jl = e.get('题材晋级率')
+        jl_txt = _pct(jl, 1) if jl is not None else '<span class="mut">—(断档/漂移)</span>'
+        rows += ('<tr><td class="l">%s</td><td>%d</td>%s%s%s</tr>\n'
+                 % (_esc(nm), e.get('宽度') or 0, cells, chg_txt, jl_txt))
+    al = cur.get('_警报') or []
+    al_txt = ('<p style="margin:6px 0 0" class="warn"><b>警报:</b> %s</p>' % '；'.join(al)) if al else ''
+    head = ('<div class="card"><h3 style="margin:0 0 8px">四维走势 <span class="hint">宽度/高度日序列 · 环比=今日/昨日-1 · 晋级率=今二连板/昨首板 · 8/10断档→null如实</span></h3>'
+            '<table class="p2"><tr><th class="l">题材线</th><th>今日宽度</th>%s</tr>%s</table>%s</div>\n'
+            % (cols, rows, al_txt))
+    return '<!--FOURDIM-->\n%s<!--/FOURDIM-->\n' % head
+
+# ============ 机器区: 七段生命周期状态机卡 ============
+def r_mach_lifecycle(d):
+    """LIFECYCLE 卡: 主线题材七段生命周期状态机(阶段+陷阱+明日预判+仓位)
+    数据源=题材生命周期_{d}.json(题材生命周期.py 产出, 零后视镜, 概率=历史转移频率样本N<3标?)
+    七段: 萌发→启动→发酵→高潮→退坡→退潮→消亡; 陷阱(宽度陷阱/反抽)=标记不占段。"""
+    lc = load_json('题材生命周期_%s.json', d)
+    if lc is None:
+        return ''
+    table = lc.get('阶段表') or []
+    if not table:
+        return ''
+    rows = ''
+    for r in table:
+        nm = _esc(r['线'])
+        st = r['阶段']
+        trap = r['陷阱']
+        trap_txt = ('<span class="chip" style="background:rgba(255,95,86,.15);color:#ff5f56">⚠%s</span>' % _esc(trap)) if trap else ''
+        d0 = r.get('当日') or {}
+        preds = sorted(r.get('预判') or [], key=lambda p: -(p.get('概率') if p.get('概率') is not None else -1))
+        pred_html = ''
+        for p in preds[:2]:
+            prob = ('%.0f%%' % (p['概率'] * 100)) if p.get('概率') is not None else '?'
+            cond = '且'.join('%s%s%s' % (c['字段'], c['op'], c['值']) for c in p['确认条件'])
+            pred_html += ('<div class="tds"><b>→%s</b> <span class="mut">%s·%s</span> '
+                          '<span class="mut">确认:%s</span></div>' % (_esc(p['转移']), _esc(p['仓位']), prob, _esc(cond)))
+        if not pred_html:
+            pred_html = '<div class="tds"><span class="mut">—</span></div>'
+        rows += ('<div class="trow"><div class="tr1"><span class="tnm">%s</span>'
+                 '<span class="chip">%s</span>%s'
+                 '<span class="mut">宽%d·高%d板</span></div>%s</div>\n'
+                 % (nm, st, trap_txt, d0.get('w') or 0, d0.get('h') or 0, pred_html))
+    head = ('<div class="card"><h3 style="margin:0 0 8px">七段生命周期状态机 '
+            '<span class="hint">萌发→启动→发酵→高潮→退坡→退潮→消亡 · 陷阱=标记不占段 · 概率=历史转移频率(N&lt;3标?) · 次日可机械化结算</span></h3>'
+            '<div class="tl">%s</div>'
+            '<p style="margin:6px 0 0" class="mut">机械底座(题材生命周期.py); 强度(一字/封单/炸板)四维不含, 由题材命门判断层补; 预判=方向+可结算条件, 非买卖指令。</p></div>\n'
+            % rows)
+    return '<!--LIFECYCLE-->\n%s<!--/LIFECYCLE-->\n' % head
+
+# ============ 板块一~六 ============
+def _strip_obs(seg):
+    """逐卡剔除 <div class="obs">...</div>(配平嵌套div)"""
+    while True:
+        s = seg.find('<div class="obs">')
+        if s < 0:
+            break
+        e = _match_div(seg, s)
+        seg = seg[:s] + seg[e:]
+    return seg
+
+def _strip_card(seg, kw):
+    """剔除含 kw 的 card(洞察卡搬移防重复用)"""
+    out = seg
+    while True:
+        i = out.find(kw)
+        if i < 0:
+            break
+        cs = out.rfind('<div class="card', 0, i)
+        if cs < 0:
+            break
+        ce = _match_div(out, cs)
+        out = out[:cs] + out[ce:]
+    return out
+
+def r_reco_table(d):
+    """板块一荐票表(统一表格样式, 2026-08-13用户拍板): 数据源=题材荐票_{d}.json发出版
+    荐票+观察全入表(类型列区分); 理由/历史对照=发出版原文; 缺失=如实断档卡"""
+    reco = load_json('题材荐票_%s.json', d)
+    if not reco:
+        return ('<div class="card" style="border-color:rgba(255,95,86,.35)"><b>⚠ 荐票发出版缺失</b>'
+                '<p style="margin:6px 0 0">题材荐票_%s.json 不存在——当晚题材路发出版未落盘, 荐票表如实空缺(零编造, 不补造)。</p></div>' % d)
+    recs = reco.get('荐票') or []
+    obss = reco.get('观察') or []
+
+    def _row(i, x, is_rec):
+        nm = _esc(str(x.get('名称', '')))
+        code = _esc(str(x.get('代码', '')))
+        typ = x.get('类型') or ('荐票' if is_rec else '观察')
+        typ_cell = '<b>%s</b>' % _esc(str(typ)) if is_rec else '<span class="mut">%s</span>' % _esc(str(typ))
+        reason = _esc(str(x.get('理由', '')))
+        hist = _esc(str(x.get('历史对照', '')))
+        return ('<tr><td>%d</td>'
+                '<td style="white-space:nowrap"><b>%s</b><br><span class="mut">%s</span></td>'
+                '<td style="white-space:nowrap">%s</td>'
+                '<td style="word-break:break-word">%s</td>'
+                '<td style="word-break:break-word"><span class="mut" style="font-size:11px">%s</span></td></tr>'
+                % (i, nm, code, typ_cell, reason, hist))
+
+    rows = ''.join(_row(i, x, True) for i, x in enumerate(recs, 1))
+    n = len(recs)
+    rows += ''.join(_row(i, x, False) for i, x in enumerate(obss, n + 1))
+    body = ('<div class="card"><table style="table-layout:fixed;width:100%%"><colgroup>'
+            '<col style="width:24px"><col style="width:104px"><col style="width:52px"><col><col style="width:170px"></colgroup>'
+            '<tr><th>#</th><th>标的</th><th>类型</th><th>荐票理由(身位·逻辑·执行口径)</th><th>历史对照</th></tr>%s</table></div>' % rows)
+    hint = ('<div class="hint">发出版不可覆盖(题材荐票_%s.json); 荐票=龙头候选可结算化≠确认; '
+            '结算=执行口径; 历史对照n=本路同类身位样本; 桶均值非个股预言</div>' % d)
+    return body + chr(10) + hint
+
+def r_insight(body):
+    """提取"洞察(agent)"卡原文(bodies 任意位置→搬至荐票卡下方)"""
+    for kw in ('洞察(agent)',):
+        i = body.find(kw)
+        if i < 0:
+            return ''
+        cs = body.rfind('<div class="card', 0, i)
+        if cs < 0:
+            return ''
+        ce = _match_div(body, cs)
+        return body[cs:ce] + (chr(10) if body[ce:ce + 1] == chr(10) else '')
+
+def r_judge(body, d):
+    """板块一 荐票卡: h2一 + 荐票表(发出版) + 洞察(agent) + 剩余卡(诚实标注/昨日对账, obs卡已表化剔除)"""
+    i = body.find('<h2>一')
+    if i < 0:
+        return ''
+    e = body.find('</h2>', i)
+    if e < 0:
+        return body[i:]
+    h = body[i:e + 5]
+    j = body.find('<h2>二', i)
+    seg = body[e + 5:j if j > 0 else len(body)]
+    seg = _strip_obs(seg)  # obs卡已被荐票表替代
+    seg = _strip_card(seg, '洞察(agent)')  # 洞察卡移到荐票表后(防重复)
+    return h + chr(10) + r_reco_table(d) + r_insight(body) + seg
+
+def r_rank(body):
+    """板块二 三级判定: h2二 → h2三"""
+    return _h2_seg(body, '<h2>二', '<h2>三')
+
+def r_life(body):
+    """板块三 主流生命周期: h2三 → h2四"""
+    return _h2_seg(body, '<h2>三', '<h2>四')
+
+def r_leader(body):
+    """板块四 龙头识别: h2四 → h2五"""
+    return _h2_seg(body, '<h2>四', '<h2>五')
+
+def r_scan(body):
+    """板块五 自主深挖: h2五 → h2六"""
+    return _h2_seg(body, '<h2>五', '<h2>六')
+
+def r_cog(body, d=None):
+    """板块六 认知迭代: h2六 → 尾; 模拟 _fold_tl(最新1条外露+其余折叠)
+    ★2026-08-16: d 给定时丢弃 body 手写历史 tli(日期<d), 历史统一由 r_cog_lib 从认知库提供"""
+    h6 = body.find('<h2>六')
+    if h6 < 0: return ''
+    head = body[h6:body.find('</h2>', h6) + 5] if body.find('</h2>', h6) > 0 else body[h6:]
+    ts = body.find('<div class="tl">', h6)
+    if ts < 0: return head
+    te = _match_div(body, ts)
+    seg = body[ts:te]
+    items = []
+    for m in re.finditer(r'<div class="tli(?:\s[^>]*)?">', seg):
+        en = _match_div(seg, m.start())
+        if en >= len(seg): break
+        items.append(seg[m.start():en])
+    if not items: return head
+    newest = items[0]
+    rest = items[1:]
+    if d:
+        today = '%s-%s' % (d[4:6], d[6:8])
+        rest = [t for t in rest if _tli_date(t) >= today]
+    out = head + '\n<div class="tl">%s</div>' % newest
+    if rest:
+        out += ('<details class="chain tlfold"><summary><b>当日更多认知</b> '
+                '<span class="chip">%d条</span> <span class="mut">%s ~ %s</span></summary>'
+                '<div class="inner"><div class="tl">%s</div></div></details>\n'
+                % (len(rest), _tli_date(rest[-1]), _tli_date(rest[0]), ''.join(rest)))
+    return out
+
+# ============ 拼装器 ============
+def build_page(d):
+    """六板块 LLM 原文(黄金版保真; 板块一=荐票表+洞察+剩余卡)"""
+    body = load_body(d)
+    return ''.join([r_judge(body, d), r_rank(body), r_life(body),
+                    r_leader(body), r_scan(body), r_cog(body, d) + r_cog_lib('theme', d)])
+
+def build_page_full(d, paper_block=''):
+    """完整页 body(头部区 + 机器数据折叠区 + 模拟盘看板 + 六板块) → S2 接线用
+    头部区(bodies 开头 hero/kpi/stance)LLM 手写逐字节保真;
+    机器区三卡收进 details.chain 折叠(默认收起) — ★2026-08-12 用户否"乱套":
+      黄金版首屏=头部→荐票卡叙事流, 机器表卡不能抢占叙事位置(此前三卡+看板占首屏42KB,
+      六板块被挤到页面底部仅18%) → 折叠后首屏恢复叙事, 机器数字作核对层展开可见
+    模拟盘看板(paper_block)折叠外、h2一 前直接可见(内容非核对层, 对齐 lhb 验收基准)
+    锚点(THEMEBATTLE/6YOU/FOURDIM/PAPERTRADE)成对保留供哨兵核对"""
+    body = load_body(d)
+    head = ''
+    i2 = body.find('<h2>一')
+    if i2 > 0:
+        head = body[:i2] + '\n'
+    head = _strip_card(head, '洞察(agent)')  # 洞察卡已移至板块一荐票表下方(防重复)
+    mach = ''.join([r_mach_battle(d), r_mach_6you(d), r_mach_fourdim(d), r_mach_lifecycle(d)])
+    if mach.strip():
+        chips = '<span class="chip">%d卡</span>' % mach.count('class="card"')
+        mach = ('<details class="chain"><summary><b>机器数据源</b> %s '
+                '<span class="mut">归位/6有/四维数字核对层 · 展开查看 · 判断以六板块为准</span></summary>'
+                '<div class="inner">\n%s</div></details>\n' % (chips, mach))
+    # 模拟盘看板: 折叠外、h2一 前、直接可见 — ★2026-08-12 用户否"模拟实盘板块都丢了":
+    # 看板是内容非核对层, 不能收进机器折叠(对齐 lhb 验收基准: hero→机器卡→看板展开→h2一)
+    paper = ''
+    if paper_block:
+        paper = '<!--PAPERTRADE-->\n' + paper_block + '<!--/PAPERTRADE-->\n'
+    return head + mach + paper + build_page(d)
+
+if __name__ == '__main__':
+    d = sys.argv[1] if len(sys.argv) > 1 else '20260716'
+    page = build_page_full(d)
+    print('=== theme 模块化渲染 @%s ===' % d)
+    print('整页 body: %d KB | 卡%d 表%d 折叠%d h2:%d' % (
+        len(page) // 1024, page.count('class="card"'), page.count('<table'),
+        page.count('<details'), len(re.findall(r'<h2>', page))))
+    print('机器锚: THEMEBATTLE=%s 6YOU=%s FOURDIM=%s LIFECYCLE=%s | LLM 板块: 一二三四五六=%s' % (
+        page.count('<!--THEMEBATTLE-->') >= 1 and page.count('<!--/THEMEBATTLE-->') >= 1,
+        page.count('<!--6YOU-->') >= 1 and page.count('<!--/6YOU-->') >= 1,
+        page.count('<!--FOURDIM-->') >= 1 and page.count('<!--/FOURDIM-->') >= 1,
+        page.count('<!--LIFECYCLE-->') >= 1 and page.count('<!--/LIFECYCLE-->') >= 1,
+        ''.join('1' if k in page else '0' for k in
+                ('<h2>一', '<h2>二', '<h2>三', '<h2>四', '<h2>五', '<h2>六'))))
+    if '--shell' in sys.argv:
+        # 独立页面完整套壳: 从 SITE 全站页解析提取 shell(防编码乱码+组件缺失)
+        site = os.path.join(os.path.dirname(os.path.abspath(__file__)), '复盘', '盯盘台')
+        shell_src = os.path.join(site, 'theme.html')
+        if not os.path.isfile(shell_src):
+            shell_src = os.path.join(site, 'lhb.html')
+        shell = open(shell_src, encoding='utf-8').read()
+        # PAPERTRADE 模拟盘看板: 有看板_{d}.html 则嵌入(进机器数据折叠区), 无则空锚
+        paper = os.path.join(L, '_模拟盘', 'theme', '看板_%s.html' % d)
+        paper_block = ''
+        if os.path.isfile(paper):
+            paper_block = open(paper, encoding='utf-8').read()
+            print('PAPERTRADE看板已嵌入:', os.path.basename(paper))
+        else:
+            print('⚠ 无看板_%s.html, PAPERTRADE留空锚' % d)
+        page = build_page_full(d, paper_block)
+        ib = shell.find('<body'); jb = shell.find('>', ib) + 1 if ib > 0 else len(shell)
+        iw = shell.find('<div class="wrap">') if '<div class="wrap">' in shell else -1
+        if iw > 0:
+            # 显式 wrap 闭合(不依赖 rfind 猜测—★2026-08-12 修复: 递归套壳时旧页尾部结构漂移,
+            # rfind('</div>') 会找错→页面缺 wrap 闭合 div 配平差1)
+            body_end = shell.find('</body>')
+            tail = shell[shell.rfind('<script', 0, body_end):body_end] if shell.rfind('<script', 0, body_end) > 0 else ''
+            page = shell[:jb] + '\n' + shell[jb:iw] + '<div class="wrap">\n' + page + '\n</div>\n' + tail + '</body></html>'
+        else:
+            page = shell[:jb] + '\n' + page + '</body></html>'
+        print('已套壳: navbar=%s wrap=%s tail_script=%s' % (
+            'class="navbar"' in page, '<div class="wrap">' in page, 'gsap' in page))
+    out = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv else None
+    if out:
+        open(out, 'w', encoding='utf-8').write(page)
+        print('已写出:', out)

@@ -1,0 +1,22 @@
+{
+  "date": "20260817",
+  "session": "hb-e_1430",
+  "ts": "14:30",
+  "write_ts": "2026-08-17 14:36",
+  "条件决断": [],
+  "data_freshness": {
+    "pulse": {"path": "盘中/20260817/pulse.json", "exists": false, "note": "今日全天未生成"},
+    "warboard": {"path": "盘中/20260814/warboard.json", "mtime": "2026-08-17 10:00:20", "note": "引擎今日仍写昨目录(同8-14先例硬编码错位); 内容date=20260814晚间复盘重建 账户0持仓/现金100% n_pos=0, 非今日预案, 不作决断输入"},
+    "playbook": {"path": "盘中/20260817/playbook.json", "exists": false, "note": "全盘搜索0命中(同09:21/10:30/13:30场), 无预案单"},
+    "执行流水": {"path": "盘中/20260817/执行流水.jsonl", "exists": false},
+    "pipeline_alarm": {"ts": "2026-08-17 10:00:19", "level": "ALARM", "type": "all_source_dead", "detail": "盘中管道连续30分钟全源失败(iFinD errorcode=-1010, 腾讯实时NoneType, streak=30), 报警退出; 此后至本场无任何新数据文件, pipeline.lock仍=20260817 09:14:16 管道未重启"},
+    "stale_min": ">260(自10:00:19全源失败报警起约4.5小时, 远超10分钟红线)",
+    "verdict": "只报警禁决策: 数据断更>10分钟, 无pulse/无预案单/无当日warboard → 一切判断无据, 写任何预判即编造(铁律①)"
+  },
+  "decision": {
+    "level": "ALARM_ONLY",
+    "fills": [],
+    "reason": "数据断更约4.5小时(10:00:19 all_source_dead 后无恢复) → ①warboard账户0持仓/无实时数据, B级防守无对象(无持仓可炸板/回撤, 批量跳水无从核验) ②playbook 0命中无A级trigger ③断更+无tick核验, C级预案外进攻禁止 ④14:45深场B备料: 无当日行情/持仓/预案数据, 尾盘卖预案候选与明日预案要点均无从起草, 如实标注; 依铁律只报警禁决策, 不写任何触发证据与预判",
+    "note": "与09:21预读/10:30/13:30报警场同源(8-11~8-14链路报警族延续); 取数链恢复并补 pulse.json+playbook.json 后, 下一心跳场(14:57收盘竞价)方可恢复实质决策; 14:45深场B建议以报警备料口径处理"
+  }
+}

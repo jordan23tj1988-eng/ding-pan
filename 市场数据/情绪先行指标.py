@@ -14,6 +14,11 @@
 """
 import os, sys, json, re
 import pandas as pd
+try:
+    from trading_calendar import load_trading_calendar
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from trading_calendar import load_trading_calendar
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 L = os.path.join(BASE, "_学习")
@@ -161,10 +166,13 @@ def save_out(t):
     json.dump(t, open(OUT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 def settle_premium_backfill(t):
-    """溢价回填:只搬 _竞价池结算.jsonl 里已算好的全场涨停均收(执行口径),零编造。"""
+    """溢价回填:只搬 _竞价池结算.jsonl 里已算好的全场涨停均收(执行口径),零编造。
+    ★A(2026-08-16):池日=T,均收=T+1执行→记到紧邻下一交易日(交易日历)。T+1不在序列(复盘缺日/停机)则丢弃,防跨断档错配(7/16的-2.53曾错配到8/11)。"""
     p = os.path.join(L, "_竞价池结算.jsonl")
     if not os.path.isfile(p):
         return
+    cal = load_trading_calendar()
+    idx = {d: i for i, d in enumerate(cal)}
     for ln in open(p, encoding="utf-8"):
         try:
             r = json.loads(ln)
@@ -174,10 +182,11 @@ def settle_premium_backfill(t):
         v = r.get("全场涨停均收")
         if not dpool or v is None:
             continue
-        # 池日=T,均收是T+1的执行——记到T+1那天的"昨日涨停溢价"
-        days = sorted(t.keys())
-        nxt = next((x for x in days if x > dpool), None)
-        if nxt and t[nxt].get("昨日涨停溢价") is None:
+        i = idx.get(dpool)
+        if i is None or i + 1 >= len(cal):
+            continue
+        nxt = cal[i + 1]
+        if nxt in t and t[nxt].get("昨日涨停溢价") is None:
             t[nxt]["昨日涨停溢价"] = {"执行均收": v, "来源": "竞价池结算jsonl"}
 
 def run_day(d, ths, t, with_spot=True):

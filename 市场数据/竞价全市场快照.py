@@ -17,8 +17,53 @@ def wait_926():
         if now.hour>9 or (now.hour==9 and now.minute>=26): return
         time.sleep(10)
 
+def fetch_ifind_spot():
+    """iFinD兜底(2026-08-14修正): 代码表改用量价因子库全A清单(原iwencai\"全部A股\"只返回84只ST,已弃)；
+    RealtimeQuotes分批500取open/preClose/latest/amount。约25s,IPC零风控。"""
+    import pandas as pd
+    import iFinDPy, json as _j
+    try:
+        a = _j.load(open(r"D:\股票数据\_ifind_auth.json", encoding="utf-8"))
+        iFinDPy.THS_iFinDLogin(a["account"], a["password"])
+        codes, names = None, {}
+        lst = os.path.join(r"D:\股票数据\量价因子库\data\meta", "stock_list.csv")
+        if os.path.isfile(lst):
+            codes = [str(c).strip() for c in pd.read_csv(lst)["code"].tolist()]
+        else:
+            r = iFinDPy.THS_iwencai("全部A股", "stock")
+            tbl = (r.get("tables") or [{}])[0].get("table")
+            if not isinstance(tbl, dict) or not tbl.get("股票代码"):
+                print("iFinD代码表失败"); return None, None
+            codes = [str(c) for c in tbl["股票代码"]]
+            names = dict(zip([str(c) for c in tbl["股票代码"]],
+                             [str(n) for n in tbl.get("股票简称", [])]))
+        rows = []
+        for i in range(0, len(codes), 500):
+            batch = codes[i:i+500]
+            rt = iFinDPy.THS_RealtimeQuotes(",".join(batch), "open;preClose;latest;amount")
+            if not isinstance(rt, dict) or rt.get("errorcode") != 0:
+                print("iFinD分批失败 i=%d" % i); continue
+            for t in rt.get("tables") or []:
+                code = t.get("thscode")
+                nt = t.get("table")
+                if not code or not isinstance(nt, dict):
+                    continue
+                def _last(k):
+                    v = nt.get(k)
+                    return v[-1] if isinstance(v, list) and v else None
+                rows.append({"代码": code.split(".")[0], "名称": names.get(code, ""),
+                             "今开": _last("open"), "昨收": _last("preClose"),
+                             "最新价": _last("latest"), "成交额": _last("amount"),
+                             "流通市值": None})
+        if not rows:
+            print("iFinD无数据"); return None, None
+        return pd.DataFrame(rows), "ifind_rt"
+    except Exception as e:
+        print("iFinD兜底失败:", e)
+        return None, None
+
 def fetch():
-    """全A实时spot:东财em优先,sina兜底。返回(df,来源) df列=代码,名称,今开,昨收,最新价,成交额"""
+    """全A实时spot:东财em优先,iFinD次之,sina末位。返回(df,来源) df列=代码,名称,今开,昨收,最新价,成交额"""
     import pandas as pd
     try:
         import akshare as ak
@@ -31,6 +76,8 @@ def fetch():
         return df,"eastmoney_em"
     except Exception as e:
         print("em失败:",e)
+    df,src=fetch_ifind_spot()
+    if df is not None: return df,src
     try:
         import akshare as ak
         df=ak.stock_zh_a_spot()  # sina,较慢
@@ -62,6 +109,22 @@ def main(wait=False,force=False):
     df["竞价额排名"]=df["成交额"].rank(ascending=False,method="min").astype("Int64")
     mv=pd.to_numeric(df["流通市值"],errors="coerce")
     df["竞价换手代理"]=(df["成交额"]/mv*100).round(4)  # %(9:26口径≈竞价换手)
+    # 名称补齐(2026-08-14加): iFinD RealtimeQuotes不返回name字段→用akshare代码名称表(缓存兜底)
+    if "名称" in df.columns and df["名称"].fillna("").astype(str).str.strip().eq("").mean()>0.3:
+        try:
+            nmf=os.path.join(ARC,"代码名称映射.csv")
+            if os.path.isfile(nmf):
+                nm=pd.read_csv(nmf,dtype={"code":str}); nm["code"]=nm["code"].str.zfill(6)
+            else:
+                import akshare as ak
+                nm=ak.stock_info_a_code_name(); nm["code"]=nm["code"].astype(str).str.zfill(6)
+                nm.to_csv(nmf,index=False,encoding="utf-8-sig")
+            nm=nm.drop_duplicates("code").rename(columns={"code":"代码","name":"_名称"})
+            df=df.merge(nm,on="代码",how="left")
+            df["名称"]=df["_名称"].fillna(df["名称"]).fillna("")
+            df=df.drop(columns="_名称")
+        except Exception as e:
+            print("名称补齐失败(不影响存档):",e)
     df=df.sort_values("成交额",ascending=False)
     df.to_csv(fp,index=False,compression="gzip",encoding="utf-8")
     hhmm=t0[:5]

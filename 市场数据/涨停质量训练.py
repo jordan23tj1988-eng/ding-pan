@@ -139,6 +139,14 @@ def _cache_meta(c):
         return {d:(t,m,cl) for d,t,m,cl in zip(b['date'],b['turnover'],b['circ_mv亿'],b['close'])}
     except Exception: return {}
 
+def _num(v, default=None):
+    """NaN安全的数值转换(pandas to_numeric 空值返回 NaN, NaN 是 truthy 不能 or 兜底)。"""
+    try:
+        x = pd.to_numeric(v, errors='coerce')
+        return x if x == x else default
+    except Exception:
+        return default
+
 def _factor_table():
     """全历史涨停样本的因子表(不含前向),全部T日收盘可知。"""
     days=_tradedays(); rows=[]
@@ -147,17 +155,17 @@ def _factor_table():
         df['代码']=df['代码'].str.zfill(6)
         df=df[~df['名称'].astype(str).str.contains('退')]   # 剔退市整理股:涨跌幅规则不同,污染样本(2026-07-10国华退+25%教训)
         for _,r in df.iterrows():
-            mv=pd.to_numeric(r.get('流通市值'),errors='coerce'); fj=pd.to_numeric(r.get('封板资金'),errors='coerce')
+            mv=_num(r.get('流通市值')); fj=_num(r.get('封板资金'))
             fb=str(r['首次封板时间']).split('.')[0].zfill(6)
             rows.append(dict(日=d,代码=r['代码'],名称=r.get('名称'),
-                封额亿=round(float(fj)/1e8,2) if fj==fj else None,
-                封单比=round(float(fj)/float(mv)*100,3) if (mv and mv>0 and fj==fj) else None,
+                封额亿=round(float(fj)/1e8,2) if fj is not None and fj==fj else None,
+                封单比=round(float(fj)/float(mv)*100,3) if (mv and mv>0 and fj is not None and fj==fj) else None,
                 首封=fb[:2]+':'+fb[2:4],
-                连板=int(pd.to_numeric(r.get('连板数',1),errors='coerce') or 1),
-                开板=int(pd.to_numeric(r.get('炸板次数',0),errors='coerce') or 0),
-                换手=float(pd.to_numeric(r.get('换手率'),errors='coerce')),
-                市值亿=float(mv)/1e8 if mv==mv else None,
-                股价=float(pd.to_numeric(r.get('最新价'),errors='coerce')),
+                连板=int(_num(r.get('连板数',1),1)),
+                开板=int(_num(r.get('炸板次数',0),0)),
+                换手=float(_num(r.get('换手率')) or 0.0),
+                市值亿=float(mv)/1e8 if mv is not None and mv==mv else None,
+                股价=float(_num(r.get('最新价')) or 0.0),
                 行业=str(r.get('所属行业'))))
     # ★v5 THS历史池样本(2025-07起,一年):EM缺字段用网盘导出缓存补(换手/流通市值→封单比),零编造缺则null
     tp=os.path.join(L,'_ths_zt_pool.json')
@@ -254,7 +262,6 @@ def _enrich(P,forward=True):
 
 def _fetch(codes,last_map=None):
     import akshare as ak
-    from concurrent.futures import ThreadPoolExecutor
     def needs(c):
         f=os.path.join(CDIR,c+".csv")
         if not os.path.isfile(f): return True
@@ -286,7 +293,9 @@ def _fetch(codes,last_map=None):
                 except Exception: pass
             b.to_csv(f,index=False)
         except Exception as e: open(os.path.join(CDIR,c+".err"),"w").write(str(e)[:80])
-    with ThreadPoolExecutor(max_workers=16) as ex: list(ex.map(one,todo))
+    for i,c in enumerate(todo,1):
+        one(c)
+        if i%20==0 or i==len(todo): print(f"fetch进度: {i}/{len(todo)}",flush=True)
 
 def _agg(g):
     def wr(col):

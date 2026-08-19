@@ -50,7 +50,10 @@ def boards_map(d):
             st = str(r.get("涨停统计", "") or "")
             m = re.match(r'(\d+)/(\d+)', st)
             n = int(m.group(1)) if m else lb
-            out[str(r["代码"]).zfill(6)] = (lb, n == lb)
+            # ★修复(2026-08-13): 涨停统计"N/M"的N是"近N天"非连板数, 与lb(连板数)不可比,
+            #   原 n==lb 会把 德龙汇能(10天6板,连板数2)误判为"非连续"跳过→高度漏算。
+            #   连板数(lb)本就是当前连续涨停天数, cons恒True。
+            out[str(r["代码"]).zfill(6)] = (lb, True)
         return out
     return {}
 
@@ -88,6 +91,9 @@ def alerts(t, d):
             continue
         p = prev.get(theme)
         if not p:
+            # ★2026-08-12: 昨日无此线(断档/主题命名漂移)→ 字段显式 null, 不省略(零编造)
+            e["宽度环比"] = None
+            e["题材晋级率"] = None
             if e["宽度"] >= 10:
                 out.append(f"【新线】{theme} 宽度{e['宽度']}·高度{e['高度']}板(序列首日)")
             continue

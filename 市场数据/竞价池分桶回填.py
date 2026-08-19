@@ -62,7 +62,7 @@ def settle(c,dprev,dnext):
     Tc=float(b.loc[i,'close']); o1=float(b.loc[i+1,'open']); c1=float(b.loc[i+1,'close'])
     mv=b.loc[i,'circ_mv亿'] if 'circ_mv亿' in b.columns else None
     return (round((o1/Tc-1)*100,2),round((c1/o1-1)*100,2),round((c1/Tc-1)*100,2),
-            (float(mv) if mv==mv else None))
+            (float(mv) if (mv is not None and mv==mv) else None))
 
 def gk_bucket(g): return "低开≤0" if g<=0 else ("高开0~5" if g<5 else "高开≥5")
 def wd_bucket(w): return None if w is None else ("冷<40" if w<40 else ("中40~65" if w<65 else "热≥65"))

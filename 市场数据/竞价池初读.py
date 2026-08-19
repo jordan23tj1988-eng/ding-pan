@@ -2,7 +2,7 @@
 """竞价池初读.py {昨日d} —— 早盘固化步骤:对昨日竞价选股池(zt_pool首封≤9:31)做今晨T+1竞价初读。
 零编造:昨日池由 {昨日d}/zt_pool.csv 首封≤09:31 确定性重建;今晨行情走sina实时(hq.sinajs.cn)。
 规则初读判定(A档):盘中封板=✓兑现/高开≥4未封=◐/平开=未兑现/低开≤-2=✗打脸/现涨≤-8=✗✗近跌停。
-产出 _学习/竞价池初读_{昨日d}.json,并幂等注入最新judgment的auction页「二·今晨初读」段。完整封板收益终结算由18:00傍晚场做。"""
+产出 _学习/竞价池初读_{昨日d}.json(含初读判定/解读)。2026-08-16起不再注入judgment auction(竞价路改六段,盘中竞价强势归盘中作战页)。完整封板收益终结算由18:00傍晚场做。"""
 import os,sys,re,json,glob,datetime,urllib.request
 import pandas as pd
 BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
@@ -44,39 +44,25 @@ def verdict(c,d):
 def main(dprev):
     pool=build_pool(dprev)
     q=sina([p["代码"] for p in pool])
-    seal=0; rows=""
+    seal=0
     for p in pool:
         s=q.get(p["代码"]); d=None
         if s:
             d=dict(高开=round((s["今开"]/s["昨收"]-1)*100,2),现涨=round((s["现价"]/s["昨收"]-1)*100,2),
                    盘中高=round((s["高"]/s["昨收"]-1)*100,2),封板=(s["现价"]/s["昨收"]-1)*100>=lim(p["代码"])-0.1)
             if d["封板"]: seal+=1
-        p["今晨"]=d; cl,tag,why=verdict(p["代码"],d)
-        cell=(f'高开{d["高开"]:+.1f}% · 现{d["现涨"]:+.1f}% · {"封板" if d["封板"] else "未封"}') if d else "—"
-        fdb=f'{p["封单比"]}%' if p["封单比"] is not None else "—"
-        rows+=f'<tr><td><b>{p["名称"]}</b><br><span class="mut">{p["代码"]}</span></td><td>{p["信号"]} · 封{fdb}</td><td>{cell}</td><td class="{cl}">{tag}<br><span class="mut" style="font-weight:400">{why}</span></td></tr>'
+        p["今晨"]=d
+        if d:
+            _, tag, why = verdict(p["代码"], d)
+            p["初读判定"]=tag; p["初读解读"]=why
+        else:
+            p["初读判定"]="—未取到"; p["初读解读"]=""
     n=len(pool); rate=round(seal/n*100) if n else 0
     out=dict(池日=dprev,初读日=datetime.date.today().strftime("%Y%m%d"),初读时间=datetime.datetime.now().strftime("%H:%M"),
              池家数=n,盘中封板=seal,封板率=rate,明细=pool)
     json.dump(out,open(os.path.join(L,f"竞价池初读_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
-    disp=dprev[4:6]+"-"+dprev[6:8]
-    block=(f'<h2 class="hot">★今晨初读 · {disp}池 T+1竞价初读({datetime.datetime.now().strftime("%H:%M")}实时)</h2>'
-     f'<div class="hint">昨日({disp})竞价池={disp} zt_pool首封≤9:31(确定性重建),用今晨集合竞价+早盘实时做T+1初读。★成交额盘中为累计非竞价额,故只用高开/现价定强弱。完整封板/收益终结算今晚18:00补。</div>'
-     f'<div class="card"><table><tr><th>标的</th><th>{disp}竞价信号</th><th>今晨实况</th><th>初读判定</th></tr>{rows}</table>'
-     f'<p class="base" style="margin-top:10px"><b>★初读封板率 {seal}/{n}≈{rate}%</b>(对照一字42.1%/秒板25.9%历史)。业绩硬/高度真的扛住,缺业绩缺高度的扩散票T+1走弱——竞价强身位须与产业逻辑+题材身位共振。agent可在此基础上补深评。</p></div>')
-    # 幂等注入最新judgment auction
-    js=sorted(glob.glob(os.path.join(L,"judgment_*.json"))); jp=js[-1]
-    J=json.load(open(jp,encoding="utf-8")); a=J["bodies"]["auction"]
-    a=re.sub(r'<h2 class="hot">(?:二·今晨初读、|★今晨初读 · ).*?(?=<h2)','',a,flags=re.S)  # 删旧初读段(兼容旧编号版)
-    anchor=next((m for m in ['<h2>二 今日竞价温度','<h2 class="hot">二 今日竞价温度','<h2>三 昨日','<h2 class="hot">三 昨日','<h2>二 昨日','<h2 class="hot">二 昨日','<h2>三 今日竞价温度','<h2>附·','<h2>二、昨日选股池结算','<h2 class="hot">二、昨日选股池结算','<h2>三、竞价信号','<h2 class="hot">三、竞价信号'] if m in a),None)
-    if anchor:
-        a=a.replace('<h2>二、昨日选股池结算','<h2>附·历史池结算',1).replace('<h2 class="hot">二、昨日选股池结算','<h2>附·历史池结算',1)
-        anchor=next((m for m in ['<h2>二 今日竞价温度','<h2 class="hot">二 今日竞价温度','<h2>三 昨日','<h2 class="hot">三 昨日','<h2>二 昨日','<h2 class="hot">二 昨日','<h2>三 今日竞价温度','<h2>附·','<h2>三、竞价信号','<h2 class="hot">三、竞价信号'] if m in a),None)
-        i=a.find(anchor); a=a[:i]+block+"\n"+a[i:]
-    else: a=a+block
-    J["bodies"]["auction"]=a
-    json.dump(J,open(jp,"w",encoding="utf-8"),ensure_ascii=False,indent=1)
-    print(f"{disp}池初读: {n}只 盘中封板{seal}/{n}={rate}% | 已注入{os.path.basename(jp)} auction")
+    # 2026-08-16 起不再注入 judgment auction: 竞价路改六段, 盘中竞价强势(初读)移出竞价页→盘中作战页
+    print(f"{dprev[4:6]}-{dprev[6:8]}池初读: {n}只 盘中封板{seal}/{n}={rate}% → _学习/竞价池初读_{dprev}.json (盘中判定归盘中作战页)")
     for p in pool:
         d=p["今晨"]; print(f'  {p["名称"]}({p["代码"]}) {p["信号"]:8} '+(f'高开{d["高开"]:+.1f}% 现{d["现涨"]:+.1f}% {"封" if d["封板"] else "未"}' if d else "未取到"))
 if __name__=="__main__":

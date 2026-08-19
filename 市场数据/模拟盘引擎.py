@@ -15,7 +15,9 @@
  weekly增: 路内池基准(该路当周荐票发出版全体票同规则均收,对照全场涨停基准)+卖腿反事实对照(仅归因非战绩)+票一致率
 零编造:缺数据标注跳过;所有战绩数字只出自本引擎。
 """
-import os, sys, json, csv, math, time, glob, hashlib
+import os, sys, json, csv, math, time, glob, hashlib, re
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from logic_pool import load_logic_picks
 
 def find_root():
     for p in glob.glob('/sessions/*/mnt/股票数据/市场数据'):
@@ -443,7 +445,7 @@ def dashboard(d):
         h.append('<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>')
         h.append('</div>')
         out = os.path.join(simdir(route),'看板_%s.html'%d)
-        with open(out,'w',encoding='utf-8') as f: f.write('\n'.join(h))
+        with open(out,'w',encoding='utf-8',newline='\n') as f: f.write('\n'.join(h))
         print('dashboard',route,'->',out)
 
 def inject(d):
@@ -461,10 +463,20 @@ def inject(d):
                 h = h[:a]+h[b:]
             i = h.find('class="hero"')
             j = h.find('<h2', i) if i>=0 else -1
+            if j<0 and i>=0:
+                # ★2026-08-12 断档页兼容: 模块化断档页(如 index 无 body 日)无 h2 锚
+                # → 回退注入到 hero div 配平闭合处(hero 之后), 保证 PAPERTRADE 看板不丢
+                _depth=0
+                for _m in re.finditer(r'<div\b|</div>', h[i:]):
+                    if _m.group()=='</div>':
+                        _depth-=1
+                        if _depth==0: j=i+_m.end(); break
+                    else:
+                        _depth+=1
             if j<0:
                 print('!未找到锚点',pg); continue
             h = h[:j]+block+'\n'+h[j:]
-            with open(pg,'w',encoding='utf-8') as f: f.write(h)
+            with open(pg,'w',encoding='utf-8',newline='\n') as f: f.write(h)
             chk = open(pg,encoding='utf-8').read()
             print('inject',route,'->',os.path.basename(pg),'OK' if '<!--PAPERTRADE-->' in chk else 'FAIL')
 
@@ -519,9 +531,13 @@ def weekly(d):
     for route,pat in POOLFILES.items():
         nav_p = 1.0; used = 0; cov = []
         for t in wk_tds:
-            f = os.path.join(learn(),pat%t)
-            if not os.path.exists(f): continue
-            acc = set(); extract_codes(jload(f,{}),acc)
+            if route == 'logic':
+                acc = set(str(x.get('代码','')).zfill(6) for x in load_logic_picks(t, learn())[0] if x.get('代码'))
+                if not acc: continue
+            else:
+                f = os.path.join(learn(),pat%t)
+                if not os.path.exists(f): continue
+                acc = set(); extract_codes(jload(f,{}),acc)
             r,nn,tot = cohort_ret(sorted(acc),t,cal)
             if r is not None:
                 nav_p *= (1+r); used += 1; cov.append('%s:%d/%d'%(t,nn,tot))

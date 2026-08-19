@@ -95,6 +95,10 @@ body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",
 .kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
 .kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
 .dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
 .card p{font-size:13.6px;color:#b9c1d0}
 .card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
@@ -221,6 +225,16 @@ details.chain .inner{padding:2px 0 16px}
 .d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
 .d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
 .d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
 /* 题材行 */
 .trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
 .trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -317,6 +331,12 @@ h2.hot::before{background:var(--up)}
 .c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
 .c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
 .c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
 /* index bento网格 */
 .wrap:has(.rowA){max-width:1440px}
 .rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
@@ -359,12 +379,18 @@ h2.hot::before{background:var(--up)}
 JS='''<script>
 (function(){
 var RM=false; /*2026-07-15用户拍板:私用盯盘台动画常开,不跟随系统'减少动态效果';要恢复无障碍降级,把false改回 matchMedia('(prefers-reduced-motion: reduce)').matches */
+/* ★2026-08-17修复(防复发): 进场动画可见性兜底——IO未触发/报错时内容必须最终可见。
+   事故: 涨停106只→归位台账明细卡高~3000px,IO threshold:.12需360px+入视口才触发,
+   用户矮窗口(788px)滚动位置未达标→.rv保持opacity:0→明细表永久透明"只显示推荐标的"。
+   三重保障: ①3.5s定时强制全显(即使IO报错/未触发,内容必现) ②无IntersectionObserver环境直接全显 ③threshold:0+12%提前量(大元素早触发)。 */
+setTimeout(function(){document.querySelectorAll('.rv:not(.on)').forEach(function(e){e.classList.add('on')})},3500);
 /* 旧机制:IO进场(全站沿用,无依赖) */
 function legacy(){
   if(RM)return;
   var els=document.querySelectorAll('.card,.obs,.routes .rt,.kv,.hero,details.chain,.tli,.cols,.gauge,.trow,.kpi,.ticker,.steps .step');
   els.forEach(function(e){e.classList.add('rv')});
-  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{threshold:.12});
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{threshold:0,rootMargin:'0px 0px 12% 0px'});
   els.forEach(function(e){io.observe(e)});
 }
 /* v4增强:GSAP计数器/sparkline画入(渐进增强;无gsap/RM=静态终态,数字已内联写死) */
@@ -390,7 +416,7 @@ document.head.appendChild(s);
 })();
 </script>'''
 
-NAV=[('index.html','概览'),('cycle.html','周期情绪'),('auction.html','①竞价'),('lhb.html','②龙虎榜'),('theme.html','③主线题材'),('logic.html','④产业逻辑'),('limitup.html','⑤涨停复盘'),('history.html','历史')]
+NAV=[('intraday.html','盘中作战'),('index.html','概览'),('cycle.html','周期情绪'),('auction.html','①竞价'),('lhb.html','②龙虎榜'),('theme.html','③主线题材'),('logic.html','④产业逻辑'),('limitup.html','⑤涨停复盘'),('history.html','历史')]
 def nav(active,upd):
     s='<nav class="navbar"><span class="brand"><span class="logo">\u76ef</span>\u60c5\u7eea\u76ef\u76d8\u53f0</span><div class="pills">'
     for h,l in NAV:
@@ -475,17 +501,126 @@ FOOT='<div class="foot"><b>\u60c5\u7eea\u76ef\u76d8\u53f0 v4</b> \u00b7 \u6bcf\u
 def shell(title,navbar,body,tick=''):
     return ('<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>'+title
         +'</title><style>'+CSS+'</style></head><body>'+navbar+'<div class="wrap">'+tick+body+FOOT+'</div>'+JS+'</body></html>')
+def _ab_fallback(j, date):
+    """archive_body 空时 fallback: 用 bodies 当日 open 块 + 一句话 组装存档(2026-08-12小项7)"""
+    bd = (j.get('bodies') or {}).get('limitup') or ''
+    i = bd.find('<details class="chain" open>')
+    j2 = bd.find('<details class="chain">', i + 10)
+    seg = bd[i:j2] if i >= 0 else ''
+    one = j.get('一句话', '')
+    if not seg:
+        return ''
+    return ('<div class="card"><b>%s 涨停复盘存档 · 完整档案</b>'
+            '<p style="margin:6px 0 0">%s</p></div>%s' % (date, one, seg))
+
+
 def build(date):
     os.makedirs(ARC,exist_ok=True); os.makedirs(L,exist_ok=True)
     j=json.load(open(os.path.join(L,'judgment_'+date+'.json'),encoding='utf-8'))
     upd=j.get('更新label',date); b=j['bodies']; tick=j.get('ticker','')
     titles=[('index','概览'),('cycle','周期情绪'),('auction','竞价·第一路'),('lhb','龙虎榜·第二路'),('theme','主线题材·第三路'),('logic','产业逻辑·第四路'),('limitup','涨停复盘·第五路')]
     for k,t in titles:
-        if k not in b: continue
+        if k not in b and k not in ('index','cycle', 'auction', 'logic'): continue
         fn=k+'.html'
-        open(os.path.join(SITE,fn),'w',encoding='utf-8').write(shell('情绪盯盘台 · '+t,nav(fn,upd),_fold_ledger(_fold_tl(_rt(b[k]))),tick))
+        if k=='limitup':
+            # ★S2(2026-08-11): limitup 走模块化渲染(module_render_limitup.build_page_full)
+            # 组件化: 机器组件从数据源渲染 + LLM 组件从 bodies 提取; 已模拟 _fold_tl/_fold_ledger
+            # 失败回退原路径(不阻塞生产出页); 其他 6 页原路径不动
+            try:
+                import module_render_limitup as _mrl
+                _pb=_mrl.build_page_full(date)
+                if not _pb or '<h2>一' not in _pb:
+                    raise RuntimeError('build_page_full 输出异常(len=%d)'%len(_pb))
+            except Exception as _e:
+                print('!!!limitup 模块化渲染失败,回退原路径:',str(_e)[-200:])
+                _pb=_fold_ledger(_fold_tl(_rt(b[k])))
+        elif k=='lhb':
+            # ★S2(2026-08-12): lhb 走模块化渲染(module_render_lhb.build_page_full)
+            # 六板块: 一席位综合判断(LLM) 二资金温度FUNDTEMP(资金温度.py --card权威) 三台账LHBLEDGER(bodies注入段+foldarchive)
+            #          四分档库(lhb席位区.py权威) 五自主深挖(LLM) 六认知迭代(LLM+tlfold); 已模拟 _fold_tl/_fold_ledger
+            # 失败回退原路径(不阻塞生产出页)
+            try:
+                import module_render_lhb as _mrl2
+                _pb=_mrl2.build_page_full(date)
+                if not _pb or '<h2>一' not in _pb:
+                    raise RuntimeError('build_page_full 输出异常(len=%d)'%len(_pb))
+            except Exception as _e:
+                print('!!!lhb 模块化渲染失败,回退原路径:',str(_e)[-200:])
+                _pb=_fold_ledger(_fold_tl(_rt(b[k])))
+        elif k=='theme':
+            # ★S2(2026-08-12): theme 走模块化渲染(module_render_theme.build_page_full)
+            # 机器区三卡(战场全貌/6有/四维, 锚点成对可回源) + 黄金版六板块 LLM 原文逐字节保真
+            # 失败回退原路径(不阻塞生产出页)
+            try:
+                import module_render_theme as _mrt
+                _pb=_mrt.build_page_full(date)
+                if not _pb or '<h2>一' not in _pb:
+                    raise RuntimeError('build_page_full 输出异常(len=%d)'%len(_pb))
+            except Exception as _e:
+                print('!!!theme 模块化渲染失败,回退原路径:',str(_e)[-200:])
+                _pb=_fold_ledger(_fold_tl(_rt(b[k])))
+        elif k=='cycle':
+            # ★S2(2026-08-12): cycle 走模块化渲染(module_render_cycle.build_page_full)
+            # 机器区四卡(量能台阶/先行指标/连板梯队/五路投票, 锚点成对可回源) + 黄金版七板块 LLM 原文逐字节保真
+            # 8/11 起晚间管道未产 cycle body → 渲染器自产断档卡(零编造); 失败回退原路径(不阻塞生产出页)
+            try:
+                import module_render_cycle as _mrc
+                _pb=_mrc.build_page_full(date)
+                if not _pb:
+                    raise RuntimeError('build_page_full 输出异常(len=%d)'%len(_pb))
+            except Exception as _e:
+                print('!!!cycle 模块化渲染失败,回退原路径:',str(_e)[-200:])
+                _pb=_fold_ledger(_fold_tl(_rt(b.get('cycle',''))))
+        elif k=='auction':
+            # ★S2(2026-08-12): auction 走模块化渲染(module_render_auction.build_page_full)
+            # 机器区三卡(竞价选股池/昨池结算/信号胜率库, 锚点成对可回源, MACHSCORE/MACHPOOL/MACHSIG)
+            # + LLM body 整段逐字节保真(7/16旧八段与8/12新六段两种格式都保真)
+            # 无 body 日(如8/11) → 自产事实性 hero + 机器折叠区三卡(当日真实数据) + 断档卡
+            # 失败回退原路径(不阻塞生产出页)
+            try:
+                import module_render_auction as _mra
+                _pb=_mra.build_page_full(date)
+                if not _pb or '<h2>' not in _pb:
+                    raise RuntimeError('build_page_full 输出异常(len=%d)'%len(_pb))
+            except Exception as _e:
+                print('!!!auction 模块化渲染失败,回退原路径:',str(_e)[-200:])
+                _pb=_fold_ledger(_fold_tl(_rt(b.get('auction',''))))
+        elif k=='logic':
+            # ★S2(2026-08-12): logic 走模块化渲染(module_render_logic.build_page_full)
+            # 机器折叠区三卡(链条深度地图库/中报预增雷达漏斗/荐票历史结算, 锚点成对可回源,
+            #   MACHCHAIN/MACHRADAR/MACHHIST) + LLM body 整段逐字节保真(7/16旧七段与8/12新六段都保真)
+            # 无 body 日(如8/11) → 自产事实性 hero + 机器折叠区三卡(当日真实数据) + 断档卡
+            # 失败回退原路径(不阻塞生产出页)
+            try:
+                import module_render_logic as _mrl
+                _pb=_mrl.build_page_full(date)
+                if not _pb or '<h2>' not in _pb:
+                    raise RuntimeError('build_page_full 输出异常(len=%d)'%len(_pb))
+            except Exception as _e:
+                print('!!!logic 模块化渲染失败,回退原路径:',str(_e)[-200:])
+                _pb=_fold_ledger(_fold_tl(_rt(b.get('logic',''))))
+        elif k=='index':
+            # ★S2(2026-08-12): index 走模块化渲染(module_render_index.build_page_full), 六页模块化收官
+            # 有 body 日: 头部(hero/kpi/stance+竞价兑现卡)原文保真 + 五板块物理h2切块逐字节保真
+            #   + 认知迭代折叠(_fold_tl同语义) —— 与旧路径输出逐字节一致(已验证7/16/8/12)
+            # 无 body 日(如8/11): 自产事实性 hero + 机器折叠区三卡(IDXTEMP温度/IDXLEAD先行指标/
+            #   IDXVOTE五路投票, 当日真实数据可回源) + 断档卡 —— 根治"无body残留旧日期页"
+            # 失败回退原路径(不阻塞生产出页)
+            try:
+                import module_render_index as _mri
+                _pb=_mri.build_page_full(date)
+                if not _pb:
+                    raise RuntimeError('build_page_full 输出异常(len=%d)'%len(_pb))
+            except Exception as _e:
+                print('!!!index 模块化渲染失败,回退原路径:',str(_e)[-200:])
+                _pb=_fold_ledger(_fold_tl(_rt(b.get('index',''))))
+        else:
+            _pb=_fold_ledger(_fold_tl(_rt(b[k])))
+        open(os.path.join(SITE,fn),'w',encoding='utf-8',newline='\n').write(shell('情绪盯盘台 · '+t,nav(fn,upd),_pb,tick))
     topbar='<div class="nav"><span class="brand">情绪盯盘台 · 存档</span><a href="../index.html">← 返回概览</a><a href="../history.html">历史列表</a><span class="upd">冻结于 '+upd+'</span></div>'
-    open(os.path.join(ARC,date+'.html'),'w',encoding='utf-8').write(shell('复盘存档 '+date,topbar,_rt(j['archive_body']),tick))
+    # ★2026-08-12小项7根治: archive_body 空(LLM漏写)→fallback 当日bodies当日块, 存档页禁止空壳
+    ab8 = j.get('archive_body') or _ab_fallback(j, date)
+    open(os.path.join(ARC,date+'.html'),'w',encoding='utf-8',newline='\n').write(shell('复盘存档 '+date,topbar,_rt(ab8),tick))
     idxp=os.path.join(L,'history_index.json')
     idx=json.load(open(idxp,encoding='utf-8')) if os.path.exists(idxp) else {}
     idx[date]=j.get('一句话','')
@@ -498,7 +633,7 @@ def build(date):
               +'</span><a class="go" href="archive/'+dt+'.html">看完整存档 →</a></li>')
     hb=('<div class="hero"><div class="kick">Archive · 历史记录</div><h1>历史复盘存档</h1><p>每天18:00收盘后当日完整复盘冻结存档,永久可回看;首页只显示最新一天。</p></div><h2>存档列表</h2><ul class="hlist">'
         +lis+'</ul><div class="foot">存档只加不删,对应每日18:00傍晚链路产物。</div>')
-    open(os.path.join(SITE,'history.html'),'w',encoding='utf-8').write(shell('情绪盯盘台 · 历史',nav('history.html',upd),hb,tick))
+    open(os.path.join(SITE,'history.html'),'w',encoding='utf-8',newline='\n').write(shell('情绪盯盘台 · 历史',nav('history.html',upd),hb,tick))
     print('盯盘台已生成:',date,'| 存档天数',len(dates))
     # ★2026-07-13封堵:每次重建都会冲掉PAPERTRADE看板→自动补跑模拟盘inject+六页锚点自检(保证下沉到代码,不依赖prompt纪律)
     import subprocess
@@ -515,6 +650,20 @@ def build(date):
         and '<!--PAPERTRADE-->' not in open(os.path.join(SITE,k+'.html'),encoding='utf-8').read()]
     if _miss: print('!!!出页自检失败:以下页面缺PAPERTRADE锚 →',','.join(_miss))
     else: print('出页自检通过:六页PAPERTRADE看板在位')
+    # ★2026-08-12(用户指示补上): 交易计划存在性校验(六路) — 复盘断供→荐票→交易计划静默缺失的告警
+    # 交易计划_{route}_{date}.json 由晚间管道(复盘→荐票→agent决策)生成; 缺失=上游断供,当晚即应告警而非静默
+    _plans_miss = [_r for _r in ('lhb', 'auction', 'theme', 'logic', 'limitup', 'master')
+                   if not os.path.exists(os.path.join(L, '交易计划_%s_%s.json' % (_r, date)))]
+    if _plans_miss: print('!!!交易计划缺失(晚间管道应生成,缺失=上游复盘断供):', ','.join(_plans_miss))
+    else: print('交易计划自检通过:六路计划在位')
+    # ★2026-08-12 P2阶段2: 每晚出版时跑五路认知库蒸馏(次日复盘读子agent增强/最新日期文件)
+    _kb = os.path.join(BASE, '_认知库蒸馏_五路.py')
+    if os.path.exists(_kb):
+        _r = subprocess.run([sys.executable, _kb], capture_output=True, text=True)
+        if _r.returncode != 0: print('!!!认知库蒸馏失败:', ((_r.stderr or _r.stdout) or '')[-300:])
+        elif _r.stdout: print(_r.stdout.strip())
+    else:
+        print('!!!未找到 _认知库蒸馏_五路.py,认知库未更新')
     # ★重复段标题自检(2026-07-13加:抓"agent手写h2+脚本块自带h2"类重复,lhb资金温度双标题事故)
     import re as _re2
     for _k in ('index','cycle','auction','lhb','theme','logic','limitup'):
@@ -523,6 +672,66 @@ def build(date):
         _hs=[_m.group(1).strip() for _m in _re2.finditer(r'<h2[^>]*>([^<]+)</h2>',open(_fp,encoding='utf-8').read())]
         _dup=sorted({h for h in _hs if _hs.count(h)>1})
         if _dup: print('!!!出页自检失败:'+_k+'页重复段标题 →','; '.join(_dup))
+    # ★index 组件类名断言(2026-08-12加: 用户"完全复刻黄金版组件"拍板后; 防 LLM body 自造裸奔类 .b/.h/.st)
+    #   黄金版 index 核心组件必须全部在位; 缺失/自造 = 样式裸奔, 禁止发布
+    _ifp=os.path.join(SITE,'index.html')
+    if os.path.exists(_ifp):
+        _ih=open(_ifp,encoding='utf-8').read()
+        _ib=_ih[_ih.find('<body'):_ih.rfind('</body>')]
+        _need=('class="obs"','class="obs-head"','class="gauge"','class="hb"',
+               'class="routes"','class="rtn"','class="tli"','class="kpi"',
+               'class="rowC"','class="rowE"','class="hero"','class="stance"')
+        _miss_comp=[c for c in _need if c not in _ib]
+        if _miss_comp: print('!!!出页自检失败:index缺黄金版组件 → '+','.join(_miss_comp))
+        # 自造裸奔类: CSS 无定义的 class 出现在 body(白名单: 动画/复合类)
+        # ★2026-08-12 v2: 遍历多类名每个类(原 .split()[0] 只查首个类, class="hero xyzzy" 会漏检 xyzzy)
+        _cssm=_re2.search(r'<style[^>]*>(.*?)</style>',_ih,_re2.S)
+        _css=_cssm.group(1) if _cssm else ''
+        _bare=sorted({_c for _m in _re2.finditer(r'class="([a-z][^"]*)"',_ib) for _c in _m.group(1).split()
+            if not _re2.search(r'\.%s\b'%_re2.escape(_c),_css)
+            and _c not in ('up','dn','mut','pos','neg','tag','inner','drawin','on','hot','warn','cold','a','u','d','rv','live','txt','st','dayc','now','cur','dim','bar','fines','tlfold','chain')})
+        if _bare: print('!!!出页自检失败:index自造裸奔类(CSS无定义) → '+','.join(_bare))
+        if not _miss_comp and not _bare: print('index组件自检通过:黄金版组件在位,无裸奔类')
+    # ★limitup 数字核对哨兵(2026-08-11加: bodies手写数字 vs 数据源 内容级核对;
+    #   历史事故: 高标张冠李戴/抄昨日板数/温度抄错 全靠用户逐卡验收才显形)
+    #   FAIL 不阻断出页(页面已生成), 但打印醒目错误, 强制人工复核后才能发布
+    _lf=os.path.join(BASE,'limitup数据核对.py')
+    if os.path.exists(_lf):
+        _lr=subprocess.run([sys.executable,_lf,date],capture_output=True,text=True)
+        if _lr.returncode!=0:
+            print('!!!limitup数据核对 FAIL — 页面数字与数据源不一致, 禁止发布!')
+            for _ln in (_lr.stdout or '').strip().split('\n'):
+                if '✗' in _ln or 'FAIL' in _ln: print('    '+_ln.strip())
+        elif _lr.stdout:
+            print(_lr.stdout.strip().split('\n')[-1])
+    else:
+        print('!!!未找到 limitup数据核对.py, 数字核对跳过')
+    # ★lhb 数字核对哨兵(2026-08-12加: 台账三数/分档库窗口档数/FUNDTEMP表/锚点/负面验证 内容级核对)
+    #   FAIL 不阻断出页(页面已生成), 但打印醒目错误, 强制人工复核后才能发布
+    _lf2=os.path.join(BASE,'lhb数据核对.py')
+    if os.path.exists(_lf2):
+        _lr2=subprocess.run([sys.executable,_lf2,date],capture_output=True,text=True)
+        if _lr2.returncode!=0:
+            print('!!!lhb数据核对 FAIL — 页面数字与数据源不一致, 禁止发布!')
+            for _ln in (_lr2.stdout or '').strip().split('\n'):
+                if '✗' in _ln or 'FAIL' in _ln: print('    '+_ln.strip())
+        elif _lr2.stdout:
+            print(_lr2.stdout.strip().split('\n')[-1])
+    else:
+        print('!!!未找到 lhb数据核对.py, 数字核对跳过')
+    # ★cycle 数字核对哨兵(2026-08-13接线: 脚本8/12已存在但生成器漏接=哨兵不跑形同虚设)
+    #   FAIL 不阻断出页(页面已生成), 但打印醒目错误, 强制人工复核后才能发布
+    _lf3=os.path.join(BASE,'cycle数据核对.py')
+    if os.path.exists(_lf3):
+        _lr3=subprocess.run([sys.executable,_lf3,date],capture_output=True,text=True)
+        if _lr3.returncode!=0:
+            print('!!!cycle数据核对 FAIL — 页面数字与数据源不一致, 禁止发布!')
+            for _ln in (_lr3.stdout or '').strip().split('\n'):
+                if '✗' in _ln or 'FAIL' in _ln: print('    '+_ln.strip())
+        elif _lr3.stdout:
+            print(_lr3.stdout.strip().split('\n')[-1])
+    else:
+        print('!!!未找到 cycle数据核对.py, 数字核对跳过')
 
 
 if __name__=='__main__':

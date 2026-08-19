@@ -1,0 +1,21 @@
+{
+  "date": "20260814",
+  "session": "preread",
+  "ts": "09:21",
+  "条件决断": [],
+  "data_freshness": {
+    "auction_traj": {"path": "盘中/20260814/auction_traj.jsonl", "exists": false, "note": "竞价轨迹文件从未生成: launcher.log 09:14:24 iFinD login rc=-340 仅腾讯降级, 09:31:05起腾讯实时异常(NoneType) 取数失败 streak持续增长; 盘中/20260814/ 目录自09:14建后为空(仅有10:00:09 pipeline_alarm.jsonl all_source_dead=30分钟无数据源)"},
+    "playbook": {"path": "盘中/20260814/playbook.json", "exists": false, "note": "全盘搜索 playbook/预案 0命中(同8-13先例), 无预案单可写条件决断"},
+    "warboard": {"path": "盘中/20260813/warboard.json", "last_ts": "2026-08-14 09:25(seq1竞价回应)/10:00(seq2)", "note": "引擎硬编码写入20260813目录; 09:25回应=触发0/闸门弃0/清仓0, 防守确认; 10:00回应=涨停31只(-61)<92锚, 分化防守确认, 账户0持仓/现金100%; 晚于本场决断时点, 仅作事后佐证"},
+    "pipeline_lock": "20260814 09:14:03",
+    "stale_min": ">35(自09:25竞价回应后无新数据; 远超10分钟红线)",
+    "verdict": "只报警禁决策: 竞价轨迹缺失+无预案单 → 无票可写条件决断; 写任何预判即编造, 违反铁律①零编造"
+  },
+  "trading_day_note": "sentiment.core.calendar 模块缺失致标准交易日校验不可执行(同8-13先例); 依 pipeline.lock=20260814 09:14:03 + 周五历法 + 管道实际启动(观察池=昨日涨停池59只) + 竞价快照存档20260814.csv.gz成功(09:28:14, 5453条, ifind_rt_full) 按正常交易日处理",
+  "decision": {
+    "level": "NONE",
+    "fills": [],
+    "reason": "无预案单(playbook全盘0命中) + 竞价轨迹缺失(链路停摆) → 无A级trigger可预判; 账户0持仓 → 无防守对象; 涨停萎缩分化防守确认(09:25回应事后佐证) → 不启动任何进攻",
+    "note": "本场=预读报警场; 若取数链未恢复, 后续心跳(10:00/14:30/14:57)按hb-a同源报警处理; 恢复后需补 auction_traj.jsonl+playbook.json 方可执行实质预读"
+  }
+}

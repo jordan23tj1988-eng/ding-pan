@@ -1,0 +1,21 @@
+{
+  "date": "20260817",
+  "session": "preread",
+  "ts": "09:21",
+  "条件决断": [],
+  "data_freshness": {
+    "auction_traj": {"path": "盘中/20260817/auction_traj.jsonl", "exists": false, "note": "盘中/20260817/ 目录 09:14 创建后至今为空, 竞价轨迹从未写入; launcher.log 今日段 09:14:16 启动(观察池=昨日涨停池20260814 64只, iFinD login rc=0, 连续段启动), 但 09:41:13 起 取数失败 streak=11→12, iFinD实时 errorcode=-1010, 腾讯实时 NoneType → 竞价段实时链已断"},
+    "playbook": {"path": "盘中/20260817/playbook.json", "exists": false, "note": "全盘搜索 playbook.json 0命中(20260817/20260814/盘中根目录均无; 同8-14先例), 无预案单可写条件决断"},
+    "warboard": {"path": "盘中/20260814/warboard.json", "last_ts": "mtime=2026-08-17 09:25", "note": "今日引擎09:25写入昨目录(疑似硬编码目录错位, 同8-14先例引擎写20260813); 内容date=20260814晚间复盘重建(五路+席位/质量荐票), stage=C防守 pos≤2成; 晚于本场决断时点09:21, 仅作事后佐证, 不作决断输入"},
+    "pipeline_lock": "20260817 09:14:16",
+    "stale_min": ">20(09:14建目录后无任何数据文件; 实时取数失败 streak=12 持续, 远超10分钟红线)",
+    "verdict": "只报警禁决策: 竞价轨迹缺失+无预案单 → 无票可写条件决断; 写任何预判即编造, 违反铁律①零编造"
+  },
+  "trading_day_note": "sentiment.core.calendar 模块缺失致标准交易日校验不可执行(同8-13/8-14先例); 依 pipeline.lock=20260817 09:14:16 + 周一历法 + 管道实际启动(观察池=昨日涨停池20260814 64只) 按正常交易日处理",
+  "decision": {
+    "level": "NONE",
+    "fills": [],
+    "reason": "无预案单(playbook 0命中) + 竞价轨迹缺失(实时链断 streak=12) → 无A级trigger可预判; 08-14晚间预案 C防守 ≤2成(空仓为主) 无进攻抓手 → 不启动任何进攻",
+    "note": "本场=预读报警场(同8-14先例); 若取数链未恢复, 后续心跳按同源报警处理; 恢复后需补 auction_traj.jsonl+playbook.json 方可执行实质预读"
+  }
+}

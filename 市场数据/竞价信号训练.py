@@ -18,7 +18,6 @@ def bars(code):
     return None
 def fetch(codes,limit=400):
     import akshare as ak
-    from concurrent.futures import ThreadPoolExecutor
     todo=[c for c in codes if not os.path.isfile(os.path.join(CDIR,c+".csv"))][:limit]
     def one(c):
         f=os.path.join(CDIR,c+".csv")
@@ -29,7 +28,7 @@ def fetch(codes,limit=400):
             b.to_csv(f,index=False)
         except Exception:
             pd.DataFrame().to_csv(f,index=False)
-    with ThreadPoolExecutor(max_workers=8) as ex: list(ex.map(one,todo))
+    for c in todo: one(c)
     left=[c for c in codes if not os.path.isfile(os.path.join(CDIR,c+".csv"))]
     return len(left)==0
 def seal_bucket(x):

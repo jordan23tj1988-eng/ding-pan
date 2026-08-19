@@ -8,7 +8,14 @@ v4(2026-07-10,用户拍板"结算要折叠+要有反思"):
 import os,sys,re,json,glob,subprocess
 from collections import Counter
 import pandas as pd
+try:
+    from trading_calendar import next_trading_day
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from trading_calendar import next_trading_day
 BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
+sys.path.insert(0, BASE)
+from _jsonl_append import append_dedup
 CDIR=os.path.join(L,"_bars_cache")
 def bars(c):
     f=os.path.join(CDIR,c+".csv")
@@ -29,8 +36,7 @@ def main(dprev):
     jp=os.path.join(L,f"涨停质量荐票_{dprev}.json")
     if not os.path.isfile(jp): print("无荐票文件,跳过"); return
     j=json.load(open(jp,encoding="utf-8")); top5=j["top5"][:5]; allrows=j.get("明细",[])
-    days=sorted([os.path.basename(x) for x in glob.glob(os.path.join(BASE,"2026*")) if os.path.isdir(x)])
-    dnext=next((x for x in days if x>dprev),None)
+    dnext=next_trading_day(dprev)  # ★A(2026-08-16):交易日历求下一交易日,防跨断档错配
     ztset=set()
     if dnext and os.path.isfile(os.path.join(BASE,dnext,"zt_pool.csv")):
         zp=pd.read_csv(os.path.join(BASE,dnext,"zt_pool.csv"),dtype={"代码":str}); ztset=set(zp["代码"].str.zfill(6))
@@ -41,10 +47,10 @@ def main(dprev):
         verdict=("—" if exe is None else ("✓赚" if exe>0 else "✗套"))
         row.update(T1高开=ope,执行收益=exe,信号收益=sig,次日封板=feng,判定=verdict)
         res.append(row)
-        open(os.path.join(L,"_荐票逐票结算.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(
+        append_dedup(os.path.join(L,"_荐票逐票结算.jsonl"), dict(
             荐票日=dprev,代码=c,名称=t.get("名称"),质量分=t.get("质量分"),预测执1胜率=t.get("预测执1胜率"),
             预测执1均涨=t.get("预测执1均涨"),主导因子=t.get("主导因子") or t.get("匹配桶"),
-            T1高开=ope,执行收益=exe,判定=verdict,次日封板=feng),ensure_ascii=False)+"\n")
+            T1高开=ope,执行收益=exe,判定=verdict,次日封板=feng), ("荐票日","代码"))
     n=len(exes); win=sum(1 for e in exes if e>0)
     # ── 归因(A档全事实) ──
     mkt=[]
@@ -67,15 +73,15 @@ def main(dprev):
       +(f";套票共同加分因子:{'、'.join(f'{k}×{v}' for k,v in lose.most_common(3))}" if lose else "")
       +(f";赚票因子:{'、'.join(f'{k}×{v}' for k,v in winf.most_common(3))}" if winf else "")
       +"。样本进库→今晚重训权重自适应;连续打脸因子由04提炼降权复核。")
-    open(os.path.join(L,"_涨停质量反思.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(
+    append_dedup(os.path.join(L,"_涨停质量反思.jsonl"), dict(
         荐票日=dprev,结算日=dnext,执行胜率=f"{win}/{n}",Top5均收=top_avg,全场均收=mkt_avg,选股增益pp=edge,
-        套票因子=dict(lose),赚票因子=dict(winf),打脸明细=miss,反思=refl),ensure_ascii=False)+"\n")
+        套票因子=dict(lose),赚票因子=dict(winf),打脸明细=miss,反思=refl), "荐票日")
     out=dict(荐票日=dprev,结算日=dnext,Top5=res,
              汇总=dict(执行胜率=f"{win}/{n}" if n else "0/0",执行均收=top_avg,全场均收=mkt_avg,选股增益pp=edge,
                      次日封板=f'{sum(1 for r in res if r["次日封板"])}/{len(res)}'),
              口径="★执行口径=T+1开盘买入→T+1收盘;信号收益=收对收仅参考;封死一字开盘可能仍买不进=上界近似")
     json.dump(out,open(os.path.join(L,f"质量荐票结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
-    open(os.path.join(L,"_质量荐票结算.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(荐票日=dprev,**out["汇总"]),ensure_ascii=False)+"\n")
+    append_dedup(os.path.join(L,"_质量荐票结算.jsonl"), dict(荐票日=dprev,**out["汇总"]), "荐票日")
     # ── html:注入荐票日日块开头(随日块折叠) ──
     disp=dprev[4:6]+"-"+dprev[6:8]
     def pred(r):

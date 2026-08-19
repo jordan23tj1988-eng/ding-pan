@@ -1,0 +1,857 @@
+# -*- coding: utf-8 -*-
+"""盘中回应引擎.py — 盘中作战页的盘中回应机制引擎(生产脚本)。
+触发时点: 09:25竞价 / 10:00开盘半小时 / 14:30尾盘前 / 14:57收盘竞价 (用户20260813拍板)。
+用法: python 盘中回应引擎.py <trigger>    trigger ∈ {0925, 1000, 1430, 1457}
+五维综合判断: ①闸门(触没触发) ②题材温度(THS概念榜Δ) ③新冒出题材(涨停原因词-已知主线)
+④池内共振(触发票分组vs概念) ⑤可证伪结算+综合结论。追加式时间线,不覆盖。
+账本: _学习/_模拟盘/盘中作战/账本.jsonl(流水)+state.json(cash/positions)+净值.json。
+数据源: 腾讯个股+THS涨停池/概念快照(管道停摆兜底)。"""
+import sys, io, os, json, re, urllib.request, datetime, importlib
+
+sys.path.insert(0, r"D:\盯盘台作战台_806")
+gen = importlib.import_module("生成作战台")
+gen.OPEN_ST = set()
+gen.ST["已触发"] = ("已触发", "pend")
+def _na(c):
+    if c.get("status") == "已触发":
+        d = (c.get("dim") or {}).get("综合", "✓已触发")
+        ev = (c.get("auction") or {}).get("ev", "")
+        return d + ((" · " + ev) if ev else "")
+    return gen._orig_na(c)
+gen._orig_na = gen.next_action
+gen.next_action = _na
+
+BASE = r"D:\股票数据\市场数据"
+LEDGER_DIR = os.path.join(BASE, "_学习", "_模拟盘", "盘中作战")
+TRIGGERS = {"0925": "09:25竞价结束", "1000": "10:00开盘半小时", "1430": "14:30尾盘前", "1457": "14:57收盘竞价"}
+
+def rd(p):
+    return io.open(os.path.join(BASE, p), encoding="utf-8").read()
+
+# ── 取数: 腾讯个股 + THS ──
+def fetch_tencent(codes):
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    url = "https://qt.gtimg.cn/q=" + ",".join(codes)
+    for att in range(3):
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://gu.qq.com/"})
+            raw = opener.open(req, timeout=10).read().decode("gbk", "replace")
+            out = {}
+            for line in raw.split(";"):
+                line = line.strip()
+                if not line or "=" not in line:
+                    continue
+                key = line.split("=")[0].replace("v_", "")
+                f = line.split('"')[1].split("~")
+                out[key] = {"name": f[1], "px": float(f[3]), "preclose": float(f[4]),
+                            "open": float(f[5]), "chg": float(f[32]), "high": float(f[33]),
+                            "low": float(f[34]), "limitup": float(f[47]), "ts": f[30]}
+            return out
+        except Exception:
+            pass
+    return {}
+
+def ths_get(path, key):
+    opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    for att in range(3):
+        try:
+            req = urllib.request.Request("https://fuyao.aicubes.cn" + path, headers={"X-api-key": key})
+            d = json.loads(opener.open(req, timeout=20).read().decode("utf-8"))
+            if d.get("code") == 0:
+                return d["data"]
+        except Exception:
+            pass
+    return None
+
+def ths_key():
+    cred = os.path.join(os.environ.get("APPDATA", r"C:\Users\66353\AppData\Roaming"), "hithink-finance", "credentials.env")
+    for line in io.open(cred, encoding="utf-8"):
+        if line.startswith("HITHINK_FINANCE_API_KEY="):
+            return line.strip().split("=", 1)[1]
+    return None
+
+def mkt(code):
+    return "sh" + code if code.startswith(("6", "9")) else ("bj" + code if code.startswith(("4", "8")) else "sz" + code)
+
+THEME_CONC = {
+    "医药": ["创新药", "医药", "减肥药", "中药", "CRO"],
+    "地产": ["房地产", "装修", "建筑", "建材", "房屋"],
+    "机器人": ["机器人", "人形", "减速"],
+    "AI": ["算力", "液冷", "CPO", "光模块", "人工智能"],
+    "消费": ["消费", "食品", "乳业", "零售", "饮料"],
+    "影视": ["影视", "传媒", "文化", "院线"],
+    "通信": ["通信", "6G", "光通信", "卫星"],
+    "半导体": ["半导体", "光刻", "芯片"],
+    "黄金": ["黄金", "有色", "贵金属"],
+    "有色": ["有色", "稀土", "黄金", "贵金属"],
+    "环保": ["环保", "公用", "固废", "水务", "环境"],
+    "重组": ["国企改革", "重组", "股权", "央企"],
+    "专用设备": ["工程机械", "专用设备"],
+    "物流": ["物流", "航运", "快递"],
+    "软件": ["软件", "游戏", "计算机"],
+}
+
+def _conc_hit(th, conc_pct):
+    """theme→概念涨幅匹配(显式映射); 返回(概念名, 涨幅)或None。"""
+    if not th or not conc_pct:
+        return None
+    cands = []
+    for k, kws in THEME_CONC.items():
+        if k in th:
+            cands.extend(kws)
+    if not cands:
+        cands = [th[:2]]
+    for n, p in sorted(conc_pct.items(), key=lambda x: -abs(x[1])):
+        if any(kw in n for kw in cands):
+            return n, p
+    return None
+
+def dim_eval(c, v, conc_pct):
+    """成交条件多维评估(用户20260813: 成交条件从竞价闸门单维→四维综合)。
+    ①竞价闸门 ②题材温度 ③个股强度 ④纪律; 机械规则,零手编。返回 dict。"""
+    d = {}
+    gap = (c.get("auction") or {}).get("gap_pct")
+    # ① 竞价闸门
+    if c["status"] == "已放弃":
+        d["闸门"] = "✕高开≥5%%弃" if gap is None or gap >= 5 else "✕弃"
+    elif c["status"] == "已触发":
+        g = gap or 0
+        d["闸门"] = "✓%s%+.2f%%<5%%" % ("高开" if g >= 0 else "低开", g)
+    elif c["status"] == "已卖出":
+        d["闸门"] = "已清仓"
+    else:
+        d["闸门"] = "待判定"
+    # ② 题材温度(theme→概念显式映射; 题材名带/, 不截断, 让"/"两边键都能命中)
+    th = c.get("theme") or ""
+    hit = _conc_hit(th, conc_pct)
+    if hit is None:
+        d["题材"] = "无概念数据"
+    else:
+        nm, p = hit
+        if p >= 0.5:
+            d["题材"] = "✓%s加强%+.1f%%" % (nm, p)
+        elif p <= -0.5:
+            d["题材"] = "✕%s减弱%+.1f%%" % (nm, p)
+        else:
+            d["题材"] = "平%+.1f%%" % p
+    # ③ 个股强度
+    if v:
+        chg = v.get("chg") or 0
+        high, lu = v.get("high"), v.get("limitup")
+        zt = chg >= 19.9 if c["code"].startswith(("30", "68")) else chg >= 9.9
+        zb = bool(high and lu and high >= lu * 0.999 and not zt)
+        if zt:
+            d["个股"] = "✓涨停%+.1f%%" % chg
+        elif chg >= 7:
+            d["个股"] = "✓大涨%+.1f%%" % chg
+        elif chg > 0:
+            d["个股"] = "平%+.1f%%" % chg
+        elif chg > -5:
+            d["个股"] = "弱%+.1f%%" % chg
+        else:
+            d["个股"] = "✕大跌%+.1f%%" % chg
+        if zb:
+            d["个股"] += "⚠触板未封"
+    else:
+        d["个股"] = "无数据"
+    # ④ 纪律
+    d["纪律"] = c.get("sell") or c.get("abort") or "—"
+    # ⑤ 甜点(仅2板票: M28第3板一字开炸板<3%回封)。用户20260816: 2板票的甜点=T+1一字开→炸板<3%→回封成交
+    if c.get("board") == 2 and v:
+        op, lo, lu, pxx = v.get("open"), v.get("low"), v.get("limitup"), v.get("px")
+        if op and lu and lo and pxx:
+            EPS = 0.011
+            if abs(op - lu) < EPS * lu:          # 一字开
+                if lo < lu - EPS * lu:           # 盘中炸板
+                    if lo / lu > 0.97:           # 炸开<3%(浅炸)
+                        d["甜点"] = ("✓炸<3%回封·成交" if abs(pxx - lu) < EPS * lu else "炸<3%未回封·等")
+                    else:                        # 深炸>3%
+                        d["甜点"] = "✕深炸>3%观望"
+                else:                            # 一字封死
+                    d["甜点"] = "一字封死·无口"
+            else:                                # 非一字开
+                d["甜点"] = "换手板·非甜点"
+        else:
+            d["甜点"] = "无数据"
+    # 综合判定(机械规则)
+    if c["status"] == "已放弃":
+        d["综合"] = "✕闸门弃"
+        d["等"] = "无(不成交)"
+    elif c["status"] == "已卖出":
+        d["综合"] = "已清仓"
+        d["等"] = "无(已清仓)"
+    elif c["status"] == "已触发":
+        # 甜点优先(2板票: M28一字开炸板<3%回封=成交, 用户20260816拍板)
+        if d.get("甜点") == "✓炸<3%回封·成交":
+            d["综合"] = "✓甜点·可成交"
+            d["等"] = "无(炸板<3%回封即成交)"
+        elif d.get("甜点") == "炸<3%未回封·等":
+            d["综合"] = "✓触发·等回封"
+            d["等"] = "一字已炸<3%,等回封涨停价成交"
+        elif d.get("甜点") == "✕深炸>3%观望":
+            d["综合"] = "⚠甜点·深炸观望"
+            d["等"] = "炸开>3%放弃(失败率53%/期望-4.89%)"
+        else:
+            t_ok = d["题材"].startswith("✓")
+            t_none = d["题材"].startswith("无概念")
+            g_ok = d["个股"].startswith(("✓", "平"))
+            g_bad = d["个股"].startswith("✕")
+            g_strong = d["个股"].startswith("✓")
+            if t_ok and g_strong:
+                d["综合"] = "✓共振·可成交"
+                d["等"] = "无(三维齐)"
+            elif g_strong:
+                d["综合"] = "✓个股独强"
+                d["等"] = "题材概念指数修复转强"
+            elif t_ok and g_ok:
+                d["综合"] = "✓触发·题材共振"
+                d["等"] = "个股开盘承接走强"
+            elif t_none and not g_bad:
+                d["综合"] = "✓触发·题材数据缺"
+                d["等"] = "该题材概念数据(缺数据如实标)"
+            elif not t_ok and not g_bad:
+                d["综合"] = "✓触发·等题材确认"
+                d["等"] = "题材概念指数转强;个股先破纪律线则弃"
+            else:
+                d["综合"] = "⚠触发·背离谨慎"
+                d["等"] = "纪律线止盈/止损(断板即止/T+1)"
+    else:
+        d["综合"] = "待判定"
+        d["等"] = "竞价未判定"
+    return d
+
+# ── 认知库接入(用户20260813: 引擎读五路专项库,零LLM token纯规则匹配) ──
+_COG = None
+
+def load_cog():
+    global _COG
+    if _COG is not None:
+        return _COG
+    _COG = []
+    for route, fn in [("竞价", "_认知库_auction.json"), ("题材", "_认知库_theme.json"),
+                      ("席位", "_认知库_lhb.json"), ("质量", "_认知库_limitup.json"),
+                      ("逻辑", "_认知库_logic.json")]:
+        p = os.path.join(BASE, "_学习", fn)
+        try:
+            d = json.loads(rd(p))
+            for e in d.get("条目", []):
+                for k, tip in (e.get("锚") or {}).items():
+                    _COG.append({"route": route, "键": k, "提示": tip})
+        except Exception:
+            pass
+    return _COG
+
+def cog_match(ctx):
+    hits = []
+    for a in load_cog():
+        if a["键"] in ctx:
+            hits.append("[%s路] %s" % (a["route"], a["提示"]))
+    return hits
+
+# ── 成交执行(用户20260813: 买卖逻辑完全自主,机械规则可复现可结算) ──
+LJ = os.path.join(BASE, "_学习", "_模拟盘")
+def rd_lj(fn, default):
+    p = os.path.join(LJ, fn)
+    if os.path.exists(p):
+        try:
+            return json.loads(rd(p))
+        except Exception:
+            pass
+    return default
+
+def execute_trades(cards, q, trig, dry):
+    """机械成交执行: 1457场生成次日卖出指令; 0925场执行指令+共振档买入。零人工确认。
+    正源=LEDGER_DIR(盘中作战/): 账本.jsonl流水+state.json状态+净值.json; 同步盘中作战账本.json概要。"""
+    os.makedirs(LEDGER_DIR, exist_ok=True)
+    stp = os.path.join(LEDGER_DIR, "state.json")
+    st = rd_lj(stp, None)
+    if not st or "cash" not in st:
+        st = {"本金": 1000000, "cash": 1000000, "positions": [], "起算": "20260813",
+              "口径": "盘中作战独立账本,不共用master;成交=开盘价±0.10%滑点;防守总仓≤30%单票≤6%"}
+    positions = st.get("positions") or []
+    cash = float(st.get("cash", 1000000))
+    capital = float(st.get("本金", 1000000))
+    txs = []
+
+    def log(ev, c, px, shares, reason):
+        txs.append({"ev": ev, "d": datetime.datetime.now().strftime("%Y%m%d"),
+                    "code": c["code"], "name": c["name"], "shares": shares, "px": round(px, 3),
+                    "cost": round(px * shares, 2), "reason": reason,
+                    "ts": datetime.datetime.now().strftime("%Y-%m-%d %H:%M")})
+
+    def _sync(plan):
+        if dry:
+            return
+        st["positions"] = positions
+        st["cash"] = round(cash, 2)
+        json.dump(st, io.open(stp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        nav = cash + sum(p["shares"] * p["buy_px"] for p in positions)
+        json.dump({"date": datetime.datetime.now().strftime("%Y%m%d"), "nav": round(nav, 2),
+                   "cash": round(cash, 2), "pos_val": round(nav - cash, 2), "n_pos": len(positions)},
+                  io.open(os.path.join(LEDGER_DIR, "净值.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        # 同步盘中作战账本.json概要(页面账本栏)
+        bp = os.path.join(LJ, "盘中作战账本.json")
+        book = rd_lj(bp, {})
+        book["现金"] = round(cash, 2)
+        book["持仓"] = positions
+        book["nav"] = round(nav, 2)
+        book["pos_pct"] = round((nav - cash) / nav * 100, 1) if nav else 0
+        book["cash_pct"] = round(cash / nav * 100, 1) if nav else 100
+        book["n_pos"] = len(positions)
+        json.dump(book, io.open(bp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        if txs:
+            with io.open(os.path.join(LEDGER_DIR, "账本.jsonl"), "a", encoding="utf-8") as fp:
+                for t in txs:
+                    fp.write(json.dumps(t, ensure_ascii=False) + "\n")
+        json.dump(plan, io.open(os.path.join(LEDGER_DIR, "次日卖出指令.json"), "w", encoding="utf-8"),
+                  ensure_ascii=False, indent=1)
+
+    # 1457 场: 持仓断板/跌停检查 → 次日卖出指令
+    if trig == "1457":
+        plan = rd_lj(os.path.join(LEDGER_DIR, "次日卖出指令.json"), [])
+        for p in list(positions):
+            v = q.get(mkt(p["code"]))
+            if not v:
+                continue
+            is_zt20 = p["code"].startswith(("688", "300"))
+            limit_pct = 20.0 if is_zt20 else 10.0
+            touched = v["high"] >= v["limitup"] * 0.999
+            not_sealed = v["px"] < v["limitup"] * 0.999
+            limit_down = v["px"] <= v["preclose"] * (1 - (limit_pct + 0.01) / 100)
+            if (touched and not_sealed) or limit_down:
+                reason = "尾盘断板未回封" if (touched and not_sealed) else "跌停"
+                if not any(x["code"] == p["code"] for x in plan):
+                    plan.append({"code": p["code"], "name": p["name"], "指令": "次日开盘卖出", "依据": reason,
+                                 "生成": datetime.datetime.now().strftime("%m-%d %H:%M")})
+        _sync(plan)
+        return txs, plan
+
+    # 0925/1000 场: 执行前日卖出指令(开盘价-0.10%滑点; 1000为0925失败时的补执行,价格同为当日开盘价)
+    plan = rd_lj(os.path.join(LEDGER_DIR, "次日卖出指令.json"), [])
+    if trig in ("0925", "1000"):
+        for s in list(plan):
+            for p in list(positions):
+                if p["code"] == s["code"]:
+                    v = q.get(mkt(p["code"]))
+                    if not v:
+                        continue
+                    sell_px = v["open"] * 0.999
+                    cash += sell_px * p["shares"]
+                    log("sell", p, sell_px, p["shares"], s.get("依据", "前日指令"))
+                    if not dry:
+                        positions.remove(p)
+                    plan.remove(s)
+
+    # 0925 场: 买入判定(共振档+优先序前列, 单票≤6%, 总仓≤30%, 最多3只)
+    if trig == "0925":
+        cand = [c for c in cards if c.get("status") == "已触发"
+                and (c.get("dim") or {}).get("综合") == "✓共振·可成交"]
+        cand.sort(key=lambda c: -((c.get("chg_pct") or 0) * 0.7 + c.get("_cs", 0) * 0.3))
+        hold_codes = {p["code"] for p in positions}
+        for c in cand:
+            if len(positions) >= 3:
+                break
+            if c["code"] in hold_codes:
+                continue
+            v = q.get(mkt(c["code"]))
+            if not v or v.get("open", 0) <= 0:
+                continue
+            pos_val = sum(p["shares"] * p["buy_px"] for p in positions)
+            budget = min(capital * 0.06, capital * 0.30 - pos_val)
+            if budget < capital * 0.01 or cash < budget:
+                continue
+            buy_px = v["open"] * 1.001
+            shares = int(budget / buy_px / 100) * 100
+            if shares <= 0:
+                continue
+            cost = shares * buy_px
+            cash -= cost
+            log("buy", c, buy_px, shares, "共振·可成交+优先序前列")
+            if not dry:
+                positions.append({"code": c["code"], "name": c["name"], "shares": shares, "buy_px": round(buy_px, 3),
+                                  "cost": round(cost, 2), "buy_date": datetime.datetime.now().strftime("%Y%m%d"),
+                                  "reason": "共振·可成交+优先序前列"})
+
+    _sync(plan)
+    return txs, plan
+
+
+def main():
+    verbose = "-v" in sys.argv
+    dry = "--dry" in sys.argv
+    args = [a for a in sys.argv[1:] if not a.startswith("-")]
+    trig = args[0] if args else None
+    if not trig:
+        # cron 调用: 从当前时间推断触发时点
+        hm = datetime.datetime.now().strftime("%H%M")
+        trig = "0925" if hm <= "0935" else ("1000" if hm <= "1015" else ("1430" if hm <= "1440" else "1457"))
+    now = datetime.datetime.now()
+    now_lbl = now.strftime("%m-%d %H:%M")
+    # warboard 目录参数化: 读最新存在 warboard.json 的日期目录(20260813起,晚间重建产出)
+    import glob as _glob
+    _dirs = sorted(_glob.glob(os.path.join(BASE, "盘中", "20*")))
+    wb_dir = None
+    for _d in reversed(_dirs):
+        if os.path.isfile(os.path.join(_d, "warboard.json")):
+            wb_dir = _d
+            break
+    if not wb_dir:
+        print("缺 warboard.json(盘中/20*)"); sys.exit(1)
+    w = json.loads(rd(os.path.join("盘中", os.path.basename(wb_dir), "warboard.json")))
+    cards = w["cards"]
+    key = ths_key()
+
+    # 1) 腾讯 27 只 + 连板观察票(现价/涨跌幅盘中同步更新)
+    lb_cards = w.get("连板票") or []
+    _codes = [mkt(c["code"]) for c in cards] + [mkt(x["代码"]) for x in lb_cards]
+    q = fetch_tencent(list(dict.fromkeys(_codes)))  # 去重保序
+    t0 = next(iter(q.values()))["ts"] if q else ""
+    ts_lbl = "08-%s %s:%s" % (t0[6:8], t0[8:10], t0[10:12]) if t0 else now_lbl
+    for c in cards:
+        v = q.get(mkt(c["code"]))
+        if v:
+            c["px"] = v["px"]
+            c["chg_pct"] = v["chg"]
+    for x in lb_cards:
+        v = q.get(mkt(x["代码"]))
+        if v:
+            x["现价"] = v["px"]
+            x["涨跌幅"] = v["chg"]
+
+    # 2) THS 涨停池
+    zt_data = ths_get("/api/a-share/special-data/limit-up-pool?size=200", key)
+    zt_items = zt_data["item"] if zt_data else []
+    zt_total = zt_data["pagination"]["total"] if zt_data else None
+
+    # 3) THS 概念快照(作战相关61概念,目录缓存)
+    conc_codes = None
+    if os.path.exists(os.path.join(BASE, "盘中", "ths_concepts_cache.json")):
+        conc_codes = json.loads(io.open(os.path.join(BASE, "盘中", "ths_concepts_cache.json"), encoding="utf-8").read())
+    else:
+        cat = ths_get("/api/a-share-index/catalog/ths-index-list?tag=cn_concept", key)
+        if cat:
+            KW = ["机器人", "人形", "减速", "算力", "液冷", "CPO", "光模块", "光通信", "房地产", "地产", "装修",
+                  "医药", "创新药", "影视", "传媒", "食品", "乳业", "消费", "零售", "通信", "6G", "半导体",
+                  "光刻", "黄金", "有色", "物流", "工程机械", "专用设备", "软件", "游戏", "核电", "储能", "光伏",
+                  "汽车", "军工", "AI", "人工智能", "数据", "东数西算", "低空", "量子", "环保", "农业"]
+            conc_codes = [{"thscode": c["thscode"], "name": c["name"]}
+                          for c in cat["item"] if any(k in c.get("name", "") for k in KW)]
+            json.dump(conc_codes, io.open(os.path.join(BASE, "盘中", "ths_concepts_cache.json"), "w", encoding="utf-8"), ensure_ascii=False)
+    conc_pct = {}
+    if conc_codes:
+        codes = [c["thscode"] for c in conc_codes]
+        for i in range(0, len(codes), 40):
+            chunk = codes[i:i + 40]
+            snap = ths_get("/api/a-share-index/prices/snapshot?thscodes=" + ",".join(chunk), key)
+            if snap:
+                for it in snap["item"]:
+                    name = next((x["name"] for x in conc_codes if x["thscode"] == it["thscode"]), it["thscode"])
+                    if it.get("price_change_ratio_pct") is not None:
+                        conc_pct[name] = it["price_change_ratio_pct"]
+    # 3b) 行业快照补充: 概念体系无地产/装修, 补行业目录(房地产/建筑/装饰)
+    ind_path = os.path.join(BASE, "盘中", "ths_industry_cache.json")
+    ind_codes = None
+    if os.path.exists(ind_path):
+        ind_codes = json.loads(io.open(ind_path, encoding="utf-8").read())
+    else:
+        cat = ths_get("/api/a-share-index/catalog/ths-index-list?tag=industry", key)
+        if cat:
+            ind_codes = [{"thscode": c["thscode"], "name": c["name"]}
+                         for c in cat["item"] if any(k in c.get("name", "") for k in ["房地产", "建筑", "装饰", "装修", "建材", "房屋"])]
+            json.dump(ind_codes, io.open(ind_path, "w", encoding="utf-8"), ensure_ascii=False)
+    if ind_codes:
+        icodes = [c["thscode"] for c in ind_codes]
+        snap = ths_get("/api/a-share-index/prices/snapshot?thscodes=" + ",".join(icodes), key)
+        if snap:
+            for it in snap["item"]:
+                name = next((x["name"] for x in ind_codes if x["thscode"] == it["thscode"]), it["thscode"])
+                if it.get("price_change_ratio_pct") is not None:
+                    conc_pct[name] = it["price_change_ratio_pct"]
+
+    # ── 竞价判定状态机(#032恢复,2026-08-14): 待触发/观察按9:25 gap判定已触发/已放弃 ──
+    for c in cards:
+        if c["status"] in ("已触发", "已放弃", "已卖出", "已成交", "持有中"):
+            continue
+        v = q.get(mkt(c["code"]))
+        if not v or not v.get("preclose") or not v.get("open"):
+            continue
+        gap = (v["open"] - v["preclose"]) / v["preclose"] * 100
+        au = c.get("auction") or {}
+        au["gap_pct"] = round(gap, 2)
+        band = "高开≥5%闸门弃" if gap >= 5 else ("高开承接带" if gap >= 0 else "低开带(低开有肉)")
+        am = (v["px"] - v["open"]) / v["open"] * 100 if v["open"] else 0
+        touched = v.get("high", 0) >= v.get("limitup", 0) * 0.999 and v["px"] < v["limitup"] * 0.999
+        au["ev"] = "gap%+.2f%%·%s·上午%+.1f%%走%s%s" % (gap, band, am, "强" if am >= 0 else "弱", "·盘中触板未封(炸)" if touched else "")
+        c["auction"] = au
+        if gap >= 5:
+            c["status"] = "已放弃"
+            c["auction"]["verdict"] = "恶化"
+            c["fill"] = {"time": "09:25", "rule": "高开≥5%闸门弃"}
+        else:
+            c["status"] = "已触发"
+            c["auction"]["verdict"] = "符合预案"
+        c["timeline"] = (c.get("timeline") or []) + [["09:25", "竞价判定: gap%+.2f%% → %s" % (gap, c["status"])]]
+    # ── 概念涨幅_cs(供已触发内部排序: 个股0.7+概念0.3) ──
+    for c in cards:
+        th = c.get("theme") or ""
+        hit = _conc_hit(th, conc_pct)
+        c["_cs"] = hit[1] if hit else 0
+
+    # ── 五维判断 ──
+    # ①闸门(不变,从cards读)
+    n_trig = sum(1 for c in cards if c["status"] == "已触发")
+    n_drop = sum(1 for c in cards if c["status"] == "已放弃")
+    n_sold = sum(1 for c in cards if c["status"] == "已卖出")
+
+    # ②题材温度: 概念榜 vs 前次回应快照(Δ)
+    # 成交条件多维评估(用户20260813: 竞价闸门单维→四维综合); 彻底覆盖,幂等无累积
+    for c in cards:
+        c["dim"] = dim_eval(c, q.get(mkt(c["code"])), conc_pct)
+        dim_txt = "成交条件: " + " ".join("%s:%s" % (k, v) for k, v in c["dim"].items() if k != "综合")
+        if not isinstance(c.get("auction"), dict):
+            c["auction"] = {}
+        c["auction"]["note"] = dim_txt
+
+    prev = (w.get("responses") or [{}])[-1] if w.get("responses") else {}
+    prev_conc = prev.get("conc_pct") or {}
+    up_th, dn_th, new_th = [], [], []
+    if prev_conc and conc_pct:
+        for nm, p in sorted(conc_pct.items(), key=lambda x: -x[1]):
+            p0 = prev_conc.get(nm)
+            if p0 is None:
+                new_th.append(nm)          # 新上榜
+            elif p - p0 >= 0.8:
+                up_th.append((nm, p - p0))
+            elif p0 - p >= 0.8:
+                dn_th.append((nm, p - p0))
+    top_conc = sorted(conc_pct.items(), key=lambda x: -x[1])[:6]
+    bot_conc = sorted(conc_pct.items(), key=lambda x: x[1])[:3]
+
+    # ③新冒出题材: 涨停原因词 - 8/12已知主线词库
+    KNOWN = ["机器人", "人形", "AI", "算力", "CPO", "液冷", "光模块", "地产", "房", "医药", "创新药", "CRO",
+             "影视", "传媒", "消费", "食品", "乳业", "黄金", "有色", "通信", "6G", "半导体", "光刻", "物流",
+             "机械", "软件", "游戏", "核电", "储能", "光伏", "汽车", "军工", "数据", "低空", "量子", "环保",
+             "农业", "固态电池", "机器人"]
+    from collections import Counter
+    rw = Counter()
+    for x in zt_items:
+        for wd in re.split(r"[+、/ ]", x.get("limit_up_reason") or ""):
+            if len(wd) >= 2:
+                rw[wd] += 1
+    top_reasons = rw.most_common(10)
+    new_reasons = [(w_, n) for w_, n in top_reasons if not any(k in w_ for k in KNOWN)][:3]
+
+    # ④池内共振: 已触发票分组平均涨跌
+    groups = {}
+    for c in cards:
+        if c["status"] != "已触发":
+            continue
+        g = (c.get("theme") or "其他").replace("影视院线", "影视").replace("创新药/医药", "医药").replace("医药/创新药", "医药").replace("半导体材料/光刻胶", "半导体")
+        groups.setdefault(g, []).append(c.get("chg_pct"))
+    grp_avg = {g: sum(v) / len(v) for g, v in groups.items() if v}
+    grp_avg_sorted = sorted(grp_avg.items(), key=lambda x: -x[1])
+    reso = []
+    for g, a in grp_avg_sorted[:4]:
+        hit = _conc_hit(g, conc_pct)
+        if hit is None:
+            tag = "(无概念)"
+        else:
+            _, p = hit
+            tag = "(概念%s)" % ("共振" if (a > 0) == (p > 0) else "背离")
+        reso.append("%s%+.1f%s" % (g, a, tag))
+
+    # ⑤可证伪结算
+    ty = json.loads(rd(r"_学习\推演_20260812.json"))
+    checks = []
+    baihua = q.get(mkt("600721"), {})
+    bh_chg = baihua.get("chg")
+    bh_zt = bh_chg is not None and bh_chg >= 9.9
+    for p in ty.get("次日可证伪预测", [])[:4]:
+        jc = p.get("判定条件", {})
+        zhib = jc.get("指标", ""); fx = jc.get("方向", "")
+        thr = next((str(jc[k]) for k in jc if k not in ("指标", "方向", "代码")), "")
+        code = jc.get("代码", "")
+        expect = ("代码%s %s(锚%s)" % (code, fx, thr)) if code else ("%s %s(锚%s)" % (zhib, fx, thr))
+        now_v = None; ok = None
+        if code == "600721":
+            if bh_chg is not None:
+                now_v = "继续涨停" if bh_zt else ("断板(%+.2f%%)" % bh_chg)
+                ok = not bh_zt
+        elif zhib == "涨停数" and zt_total is not None:
+            now_v = "%d只" % zt_total
+            ok = zt_total < 92
+        checks.append({"name": p.get("项", ""), "now": now_v, "expect": expect, "ok": ok})
+
+    # 综合结论(模板,数据驱动)
+    strong_txt = "·".join("%s%+.1f" % (n, p) for n, p in top_conc[:3])
+    weak_txt = "·".join("%s%+.1f" % (n, p) for n, p in bot_conc)
+    reso_txt = "·".join(reso[:4]) or "—"
+    new_txt = "·".join("%s(%d)" % (w_, n) for w_, n in new_reasons) or "无"
+    zt_diff = (zt_total - 92) if zt_total is not None else None
+    zt_txt = "%d只(%s)" % (zt_total, "%+d" % zt_diff) if zt_total is not None else "取不到"
+    # 优先成交序(个股0.7+概念0.3)
+    kw_map = {"AI算力": ["算力", "液冷", "CPO", "光模块", "人工智能", "AI", "数据"], "医药": ["创新药", "医药", "药"],
+              "机器人": ["机器人", "人形", "减速"], "地产链": ["房地产", "地产", "装修"],
+              "消费": ["乳业", "食品", "消费", "零售"], "影视": ["影视", "传媒", "电影"],
+              "通信": ["通信", "6G"], "半导体": ["半导体", "光刻"], "黄金": ["黄金", "有色"],
+              "稀土": ["稀土", "有色", "黄金"], "环保": ["环保", "公用", "固废", "水务"],
+              "物流": ["物流"], "专用设备": ["工程机械", "专用设备"], "软件": ["软件", "游戏"]}
+    trig_cards = [c for c in cards if c["status"] == "已触发"]
+    for c in trig_cards:
+        th = c.get("theme") or ""
+        kws = kw_map.get(th) or []
+        if not kws:
+            # 题材名带"/"(如"AI算力/液冷存储"), 键子串匹配兜底
+            for k, v in kw_map.items():
+                if k in th:
+                    kws = v
+                    break
+        vals = [v for k, v in conc_pct.items() if any(kw in k for kw in kws)]
+        c["_cs"] = max(vals) if vals else 0.0
+    # 优先成交: 先按综合档位(共振>题材共振>待确认>背离), 档内按个股强度+概念
+    rank = {"✓共振·可成交": 5, "✓个股独强": 4, "✓触发·题材共振": 3, "✓触发·等题材确认": 2,
+            "✓触发·题材数据缺": 1.5, "⚠触发·背离谨慎": 1}
+    trig_cards.sort(key=lambda c: (-rank.get((c.get("dim") or {}).get("综合"), 0),
+                                   -((c.get("chg_pct") or 0) * 0.7 + c["_cs"] * 0.3)))
+    prior = " > ".join("%s[%s](%s%+.1f)" % (c["name"], (c.get("dim") or {}).get("综合", "?"),
+                                           c.get("theme") or "?", c.get("chg_pct") or 0) for c in trig_cards[:6])
+
+    # ── 认知库匹配(每触发票, 零LLM token纯规则) ──
+    for c in trig_cards:
+        dim = c.get("dim") or {}
+        ctx = " ".join([c.get("theme") or "", dim.get("闸门", ""), dim.get("个股", ""),
+                        dim.get("题材", ""), dim.get("综合", "")])
+        c["_cog"] = cog_match(ctx)
+    # ── 判断流水(每次触发每票一行, JSONL连续追加, 不覆盖; dry模式不写) ──
+    jp = os.path.join(LEDGER_DIR, "判断流水.jsonl")
+    if not dry:
+        with io.open(jp, "a", encoding="utf-8") as fp:
+            for c in trig_cards:
+                dim = c.get("dim") or {}
+                fp.write(json.dumps({"ts": ts_lbl, "场": trig, "code": c["code"], "name": c["name"],
+                                     "档位": dim.get("综合"), "闸门": dim.get("闸门"), "题材": dim.get("题材"),
+                                     "个股": dim.get("个股"), "等": dim.get("等"), "经验": c.get("_cog") or []},
+                                    ensure_ascii=False) + "\n")
+    # ── 成交执行(完全自主, 零人工确认) ──
+    txs, sell_plan = execute_trades(cards, q, trig, dry)
+    txn_txt = ""
+    if dry:
+        txn_txt = "dry模式(计划): "
+    if txs:
+        txn_txt += "; ".join("%s %s×%d股@%.3f" % ("买入" if t["ev"] == "buy" else "卖出", t["name"], t["shares"], t["px"]) for t in txs)
+    elif sell_plan and trig == "1457":
+        txn_txt += "次日卖出指令%d条: %s" % (len(sell_plan), "; ".join("%s(%s)" % (s["name"], s["依据"]) for s in sell_plan))
+    elif trig == "0925":
+        txn_txt += "无触发成交(共振档无候选或仓位已满)"
+    else:
+        txn_txt += "非成交场次(买卖仅在09:25/14:57执行)"
+    cog_txt = ""
+    all_hits = []
+    for c in trig_cards:
+        for h in (c.get("_cog") or []):
+            if h not in all_hits and len(all_hits) < 3:
+                all_hits.append(h)
+    if all_hits:
+        cog_txt = "命中经验: %s" % " · ".join(all_hits)
+
+    # 结论定性
+    if zt_total is not None and zt_total < 80:
+        zc = "涨停萎缩,分化加剧——防守确认"
+        conf = "高"
+    elif grp_avg_sorted and grp_avg_sorted[0][1] >= 5:
+        zc = "池内共振走强,进攻方向确认"
+        conf = "高" if len(reso) >= 2 else "中"
+    else:
+        zc = "结构分化,方向待确认"
+        conf = "中"
+
+    note_lines = [
+        "①闸门: 触发%d/闸门弃%d/清仓%d" % (n_trig, n_drop, n_sold),
+        "②题材加强(概念榜): %s" % strong_txt,
+        "③题材减弱: %s" % weak_txt,
+        "④新冒出题材(涨停原因): %s" % new_txt,
+        "⑤池内共振: %s" % reso_txt,
+        "⑥涨停%s<92锚→分化; 优先成交: %s" % (zt_txt, prior),
+        "⑦综合结论: %s (置信度%s)" % (zc, conf),
+    ]
+    if cog_txt:
+        note_lines.append("⑧经验引用(五路认知库): %s" % cog_txt)
+    note_lines.append("⑨成交执行: %s" % txn_txt)
+    resp = {"seq": len(w.get("responses") or []) + 1, "trigger": TRIGGERS.get(trig, trig),
+            "ts": ts_lbl, "note": "\n".join(note_lines), "conc_pct": conc_pct,
+            "checks": checks, "prior": prior, "zt_total": zt_total, "top_conc": top_conc}
+
+    if dry:
+        print("[dry] 回应计划:", " | ".join(note_lines[-2:]))
+        print("[dry] 成交计划:", txn_txt)
+        print("[dry] 未写warboard/页面/流水/账本")
+        return
+
+    # 去重: 同日同trigger且<15分钟的,覆盖末次而非追加(cron重试/手动+自动撞车保护)
+    replaced = False
+    if w.get("responses"):
+        last_r = w["responses"][-1]
+        try:
+            t_last = datetime.datetime.strptime("2026-" + last_r["ts"], "%Y-%m-%d %H:%M")
+            t_now = datetime.datetime.strptime("2026-" + ts_lbl, "%Y-%m-%d %H:%M")
+            if last_r.get("trigger") == resp["trigger"] and abs((t_now - t_last).total_seconds()) < 900:
+                resp["seq"] = last_r["seq"]
+                w["responses"][-1] = resp
+                replaced = True
+        except Exception:
+            pass
+    if not replaced:
+        w["responses"] = (w.get("responses") or []) + [resp]
+    w["last_ts"] = "2026-08-13 " + ts_lbl
+    if verbose:
+        print("第%d次回应 [%s] %s" % (resp["seq"], resp["trigger"], ts_lbl))
+        print("结论:", zc, "| 涨停", zt_total, "| 新冒出:", new_txt)
+        print("优先成交:", prior)
+
+    # ── 账本流水(追加; 今日无新成交动作则不变) ──
+    os.makedirs(LEDGER_DIR, exist_ok=True)
+    lj = os.path.join(LEDGER_DIR, "账本.jsonl")
+    if not os.path.exists(lj):
+        # 初始化: 本金100万, 清仓2笔
+        for line in ["{\"ev\": \"sell\", \"d\": \"20260813\", \"code\": \"688192\", \"name\": \"迪哲医药-U\", \"shares\": 900, \"px\": 0, \"cost\": 0, \"reason\": \"独立账本起算·历史持仓直接清仓(用户20260813指令)\", \"ts\": \"2026-08-13 09:30\"}",
+                     "{\"ev\": \"sell\", \"d\": \"20260813\", \"code\": \"002739\", \"name\": \"儒意电影\", \"shares\": 5900, \"px\": 0, \"cost\": 0, \"reason\": \"独立账本起算·历史持仓直接清仓(用户20260813指令)\", \"ts\": \"2026-08-13 09:30\"}"]:
+            io.open(lj, "a", encoding="utf-8").write(line + "\n")
+    stj = os.path.join(LEDGER_DIR, "state.json")
+    if not os.path.exists(stj):
+        json.dump({"本金": 1000000, "cash": 1000000, "positions": [], "起算": "20260813",
+                   "口径": "盘中作战独立账本,不共用master;成交=闸门内承接开盘价+滑点0.10%;防守总仓≤30%"},
+                  io.open(stj, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    # 净值.json: 只在首跑初始化时写(避免每场覆盖账本净值)
+    if not os.path.exists(os.path.join(LEDGER_DIR, "净值.json")):
+        json.dump({"date": "20260813", "nav": 1.0, "cash": 1000000, "pos_val": 0, "n_pos": 0},
+                  io.open(os.path.join(LEDGER_DIR, "净值.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+    # ── 渲染页面 ──
+    render_page(w, ts_lbl, trig)
+    with io.open(os.path.join(wb_dir, "warboard.json"), "w", encoding="utf-8") as f:
+        json.dump(w, f, ensure_ascii=False, indent=1)
+    if verbose:
+        print("OK 引擎完成: warboard+页面已更新")
+
+def render_page(w, ts_lbl, trig):
+    cards = w["cards"]
+    n_trig = sum(1 for c in cards if c["status"] == "已触发")
+    n_drop = sum(1 for c in cards if c["status"] == "已放弃")
+    n_sold = sum(1 for c in cards if c["status"] == "已卖出")
+    responses = w.get("responses") or []
+    resp = responses[-1]
+
+    # hero: 最新回应+历史(历史合并进note尾部,纯文本稳定渲染)
+    _zs_path = os.path.join(BASE, "_学习", "总审_%s.json" % w["date"])
+    zs = json.loads(rd(_zs_path)) if os.path.isfile(_zs_path) else {}
+    zjc = zs.get("总裁决", {})
+    zj_line = zjc if isinstance(zjc, str) else zjc.get("结论", "")
+    note_disp = resp["note"]
+    if len(responses) > 1:
+        hist_lines = ["", "──历史──"]
+        for r in responses[:-1]:
+            last_line = (r["note"].split("\n")[-1] if r["note"] else "")[:60]
+            hist_lines.append("第%d次·%s·%s: %s" % (r["seq"], r["trigger"], r["ts"], last_line))
+        note_disp = resp["note"] + "\n".join(hist_lines)
+    judgment = {"date": "20260812", "stage": "防守", "pos_band": "≤2-3成",
+                "line": zj_line[:200], "checks": resp["checks"],
+                "response": {"ts": resp["ts"], "verdict": "第%d次·%s" % (resp["seq"], resp["trigger"]),
+                             "note": note_disp}}
+    hero = gen.hero_html(judgment)
+    for c_ in resp["checks"]:
+        if c_.get("now") and c_.get("ok") is True:
+            hero = hero.replace(">%s<" % c_["now"], ">✓%s<" % c_["now"])
+        elif c_.get("now") and c_.get("ok") is False:
+            hero = hero.replace(">%s<" % c_["now"], ">✕%s<" % c_["now"])
+    hero = hero.replace(note_disp, note_disp.replace("\n", "<br>"))
+
+    _order = {"已触发": 0, "已成交": 1, "持有中": 2, "卖出顺延": 3, "观察": 4, "待触发": 5, "已卖出": 6, "已放弃": 7}
+    def _sk(c):
+        st = _order.get(c.get("status"), 9)
+        if c.get("status") == "已触发":
+            return (st, -((c.get("chg_pct") or 0) * 0.7 + (c.get("_cs") or 0) * 0.3))
+        return (st, 0)
+    cards.sort(key=_sk)
+    rows = "".join(gen.row_html(c) for c in cards)
+    thead = ('<div class="thead"><span></span><span>股票</span><span>题材</span><span>来源</span>'
+             '<span style="text-align:right">现价</span><span style="text-align:right">涨跌</span>'
+             '<span>竞价判定</span><span style="text-align:right">浮盈/日龄</span>'
+             '<span>状态</span><span>下一动作 / 成交记录</span></div>')
+
+    # 成交明细卡(侧栏): 账本.jsonl 今日流水
+    lj = os.path.join(LEDGER_DIR, "账本.jsonl")
+    txn_html = ""
+    if os.path.exists(lj):
+        lines = [json.loads(x) for x in io.open(lj, encoding="utf-8") if x.strip()]
+        for t in lines[-8:]:
+            side = "买入" if t.get("ev") == "buy" else "清仓"
+            px = t.get("px") or 0
+            txn_html += ('<div class="crow"><span>%s %s %s×%d</span><b class="mono %s">%s</b></div>' % (
+                t.get("d", "")[4:], side, t.get("name"), t.get("shares", 0),
+                "up" if t.get("ev") == "buy" else "mut", ("@%.2f" % px) if px else "起算清仓"))
+        if not lines:
+            txn_html = '<div class="mut" style="font-size:11px">暂无成交</div>'
+    else:
+        txn_html = '<div class="mut" style="font-size:11px">暂无成交</div>'
+    txn_card = ('<div class="side-h" style="margin-top:14px">成交明细 <span class="mut" style="font-size:11px">第七账·独立</span></div>'
+                '<div class="pks">%s</div>'
+                '<div class="mut" style="font-size:11px;padding:2px 0 6px">起算08-13·现金100万·防守总仓≤30%%·单票≤6%%·闸门内承接=开盘价+滑点0.10%%</div>') % txn_html
+
+    pulse = w.get("pulse", {})
+    pl = {"fresh_sec": None, "last_tick": ("08-13 %s 腾讯+THS" % ts_lbl) if ts_lbl else "08-12收盘定格",
+          "quota": {"实时行情": {"used": 0, "cap": 100}, "日内快照": {"used": 0, "cap": 50},
+                    "高频序列": {"used": 0, "cap": 20}}}
+    pu = gen.pulse_html(pulse, pl)
+    pu = pu.replace('iFind配额水位</div>',
+                    'iFind配额水位</div><div class="mut" style="font-size:11px;padding:0 0 4px">8/13未调用(盘中管道停摆)·腾讯+THS兜底</div>')
+
+    acct_disp = {"nav": 1.0, "week_pct": 0.0, "bench_week_pct": 0.0, "curve": [],
+                 "pos_pct": 0.0, "cash_pct": 100.0, "n_pos": 0}
+    acc = gen.account_html(acct_disp).replace("账户 · 总agent共用", "第七账 · 盘中作战独立")
+
+    s = rd(r"复盘\盯盘台\intraday.html")
+    head = s[:s.find('<div class="hd">')]
+    lb = w.get("连板票") or []
+    lb_rows = gen.lb_rows_html(lb)
+    main_html = ('<main class="app-shell"><div class="hd"><h1>盘中作战台 <span class="amber">WAR BOARD</span></h1>'
+                 '<span class="mono mut">%s · 取数 %s</span><span class="tag">60s自刷新</span></div>'
+                 '<div class="layout"><div>'
+                 '<div class="wbtab"><a class="on" data-p="0">作战总表</a><a data-p="1">连板观察 · %d只</a></div>'
+                 '<div class="wbpage on" id="p0">%s'
+                 '<div class="aucsum">竞价盘点 <b>09:25</b> · 已判定%d只: 触发<b>%d</b> / 闸门弃<b>%d</b> / 清仓<b>%d</b> · 竞价新增<b>0</b>只</div>'
+                 '<div class="sec-h">作战总表 · %d只(已触发%d · 闸门弃%d · 已卖出%d) — 已触发排上,已放弃排下</div>%s%s'
+                 '</div>'
+                 '<div class="wbpage" id="p1"><div class="sec-h">连板观察 · %d只 — 标记几板,只观察(2板=甜点区:T+1一字开→炸板&lt;3%%回封成交)</div>'
+                 '<div class="lbrow hd"><span></span><span>股票</span><span>连板</span><span>现价</span><span>涨跌</span><span>题材</span><span>总表</span></div>%s'
+                 '</div>'
+                 '</div><div class="side">%s%s%s</div></div>'
+                 '<div class="ft">口径:成交=闸门内承接·开盘价+滑点0.10%%·流动性帽20%%·单票≤6%%·防守总仓≤30%%(v1.8§3.3.1/§3.3);无reason禁入册;行序=已触发>已卖出>已放弃(用户20260813指令)。盘中回应机制=4时点触发(09:25/10:00/14:30/14:57)+追加式时间线;数据=腾讯+THS兜底(管道停摆中);账本=第七账盘中作战独立(08-13起算);连板观察=2板甜点区(T+1一字开炸板<3%%回封成交,M28:26年471次/胜68%%/单笔+4.18%%)。</div>'
+                 '<script>(function(){var k="wb_fold_"+document.title.slice(-8);var st={};'
+                 'try{st=JSON.parse(localStorage.getItem(k)||"{}")}catch(e){}'
+                 'document.querySelectorAll("details.trw[data-k]").forEach(function(d){var id=d.getAttribute("data-k");'
+                 'if(id in st){if(st[id]){d.setAttribute("open","")}else{d.removeAttribute("open")}}'
+                 'd.addEventListener("toggle",function(){st[id]=d.open;try{localStorage.setItem(k,JSON.stringify(st))}catch(e){}})});'
+                 'var tb=document.querySelector(".wbtab");if(tb){tb.querySelectorAll("a").forEach(function(a){'
+                 'a.addEventListener("click",function(){var p=a.getAttribute("data-p");'
+                 'tb.querySelectorAll("a").forEach(function(x){x.classList.remove("on")});a.classList.add("on");'
+                 'document.querySelectorAll(".wbpage").forEach(function(pg){pg.classList.remove("on")});'
+                 'var t=document.getElementById("p"+p);if(t){t.classList.add("on")}})});}'
+                 '})()</script></main></body></html>') % (
+        (w.get("ts") or w.get("date") or ""), ts_lbl, len(lb), hero, len(cards), n_trig, n_drop, n_sold,
+        len(cards), n_trig, n_drop, n_sold, thead, rows, len(lb), lb_rows, acc, pu, txn_card)
+
+    doc = head + main_html
+    doc = doc.replace('<span class="pnlc"><span class="mut">—</span></span>',
+                      '<span class="pnlc"><span class="mut">未持</span></span>')
+    with io.open(os.path.join(BASE, "复盘", "盯盘台", "intraday.html"), "w", encoding="utf-8") as f:
+        f.write(doc)
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        import traceback
+        err = io.open(os.path.join(BASE, "_学习", "盘中引擎错误.log"), "a", encoding="utf-8")
+        err.write("\n[%s] %s\n%s\n" % (datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"), e, traceback.format_exc()))
+        err.close()
+        sys.exit(1)

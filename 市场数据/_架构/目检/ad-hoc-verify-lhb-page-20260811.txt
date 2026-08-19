@@ -1,0 +1,21 @@
+=== hermes-verify lhb数据核对 fresh @ 2026-08-12 14:50:56 ===
+
+[1] 语法编译 lhb数据核对.py
+  OK
+
+[2] 20260811 --page lhb_20260811.html (期望 PASS 22项)
+  rc=0 OK
+
+[3] 20260716 默认路径 SITE (期望 PASS 22项, PAPERTRADE 1/1)
+  rc=0 OK
+
+[4] --page 缺失文件 (期望 rc=1 + 提示不存在)
+  rc=1 OK
+
+[5] lhb_20260811.html 结构 (6 h2 / 台账 / 分档窗口 / 锚)
+  OK
+
+[6] judgment_20260811.json (limitup 257347 未动 / lhb 在位)
+  limitup=257347 lhb=61715 OK
+
+=== 汇总: ALL PASS (0 FAIL) ===

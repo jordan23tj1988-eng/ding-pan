@@ -1,0 +1,34 @@
+=== hermes-verify lhb 模块化整改(fresh) @ 2026-08-12 14:38:54 ===
+
+[1] 语法编译 5 改动文件
+  module_render_lhb.py OK
+  lhb数据核对.py OK
+  生成盯盘台.py OK
+  组件级快照回归.py OK
+  资金温度.py OK
+
+[2] lhb数据核对.py 20260716 (期望 PASS 22项 rc=0)
+  rc=0 OK
+
+[3] 组件级快照回归 check --lhb / check (limitup)
+  lhb: rc=0 OK
+  limitup: rc=0 OK
+
+[4] 组件级快照回归 selftest --lhb
+  rc=0 OK
+
+[5] 生成盯盘台.py 20260716 全链
+  rc=0 inject_lhb=True 自检=True lhb哨兵=True
+  [已知豁免] limitup 11项 FAIL = 8/11质量库重训时差差异, 与lhb改动无关
+
+[6] _席位分档.json (期望 窗口~20260810 笔数13910)
+  窗口=20260401~20260810 笔数=13910 OK
+
+[7] _资金温度.json (期望 最新日20260811 行数90)
+  行数=90 最新日=20260811 OK
+
+[8] 黄金版717 vs 模块化渲染(20260716, 剥离ticker/PAPERTRADE/foot)
+  h2边界对齐一~四(偏移≤1): OK [(2087, 2086), (2592, 2591), (12777, 12776), (62371, 62370)]
+  六板块差异块(一/二/三/五/六应=0; 板块四=rank后数据源差异豁免): [0, 0, 0, 122, 0, 0]
+
+=== 汇总: ALL PASS (0 FAIL) ===

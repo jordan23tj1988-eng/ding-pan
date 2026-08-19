@@ -4,7 +4,7 @@
   已封板(现价触及涨停) → ⊘追不进只观察; 其余 → ✓可吃候选(按竞价分排序,标该信号×高开档历史预期)。
 ★零后视镜:池=昨日冻结发出版;分=昨晚竞价评分_{d}.json;今晨开盘价=9:25后执行时点已知,100%因果。
 ★诚实边界:可吃≠荐票;闸门内半池一年+0.36%/50.4%,是环境统计非个股预言;不给买卖指令。
-产出: _学习/竞价闸门_{执行日}.json + 竞价闸门卡_{执行日}.html;live模式幂等注入judgment auction「★今晨闸门」段。
+产出: _学习/竞价闸门_{执行日}.json + 竞价闸门卡_{执行日}.html。2026-08-16起不再注入judgment auction(竞价路改六段,盘中竞价强势归盘中作战页)。
 用法: python3 竞价闸门.py {昨日d}            (live,9:25后跑,sina实时)
       python3 竞价闸门.py {昨日d} --backtest  (历史演示,用bars次日开盘,不注入)"""
 import os,sys,re,json,glob,datetime,urllib.request
@@ -104,18 +104,7 @@ def main(dprev,backtest=False):
     open(cp,"w",encoding="utf-8").write(card)
     print(f"{dp}池闸门({out['模式']}): 可吃{len(eat)} 放弃{len(ban)} 未取到{sum(1 for r in res if r['高开'] is None)} → {ep}")
     for r in res: print(f'  {r["判定"]:14} {r["名称"]}({r["代码"]}) 分{r["竞价分"]} 高开{r["高开"]}')
-    # ---- live幂等注入judgment auction(锚在「一 竞价选股池」段后/初读段前) ----
-    if not backtest:
-        js=sorted(glob.glob(os.path.join(L,"judgment_*.json")))
-        if js:
-            jp=js[-1]; J=json.load(open(jp,encoding="utf-8")); a=J["bodies"]["auction"]
-            a=re.sub(r'<h2 class="hot">★今晨闸门.*?(?=<h2)','',a,flags=re.S)
-            block=f'<h2 class="hot">★今晨闸门 · {dp}池按9:25实开过滤(终审18:00)</h2>{card}'
-            anchor=next((m for m in ['<h2 class="hot">★今晨初读','<h2>二 今日竞价温度','<h2 class="hot">二 今日竞价温度','<h2>三 昨日','<h2 class="hot">三 昨日','<h2>二 昨日','<h2 class="hot">二 昨日','<h2>三 今日竞价温度'] if m in a),None)
-            if anchor: i=a.find(anchor); a=a[:i]+block+"\n"+a[i:]
-            else: a=a+block
-            J["bodies"]["auction"]=a
-            json.dump(J,open(jp,"w",encoding="utf-8"),ensure_ascii=False,indent=1)
-            print("已注入",os.path.basename(jp),"auction(记得重跑生成盯盘台.py)")
+    # 2026-08-16 起不再注入 judgment auction: 竞价路改六段, 盘中竞价强势(闸门)移出竞价页→盘中作战页
+    #   独立产出(竞价闸门_{ed}.json + 竞价闸门卡_{ed}.html)保留存档, 供盘中作战页/复盘引用。
 if __name__=="__main__":
     main(sys.argv[1],backtest="--backtest" in sys.argv)

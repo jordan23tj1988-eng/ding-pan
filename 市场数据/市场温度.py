@@ -361,7 +361,9 @@ def card(d):
                 '<span class="mut" style="font-weight:400">(该温度档历史上T+1开盘接力全场涨停的均收/胜率;金框=今日档)</span></p>'
                 f'<div style="display:flex;gap:8px;flex-wrap:wrap">{cells}</div>'
                 '<div style="font-size:11px;color:#6b7683;margin-top:6px">读法:可交易信号在两端(冰点进攻/过热禁追),偏冷档=胜率最低的诱多带;单牛市周期样本,⚠=n<25小样本。</div></div>')
-    html+=win
+    # 两折叠(龙票规则榜+分板×质量×温度胜率库)拆出单独落盘,供四段涨停质量库注入(2026-08-15移动,不再并入二段温度卡)
+    p2=os.path.join(L,f'质量库折叠_{d}.html')
+    open(p2,'w',encoding='utf-8').write(win)
     p=os.path.join(L,f'市场温度卡_{d}.html')
     open(p,'w',encoding='utf-8').write(html)
     print("温度卡:",p); return p

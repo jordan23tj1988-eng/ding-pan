@@ -11,14 +11,16 @@ from 席位动向库 import clean
 BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
 DIR=os.path.join(L,"_席位动向")
 STYLES=["机构","量化","知名游资","北向","营业部"]
-def build_series():
+def build_series(until=None):
     """游资口径升级(2026-07-10用户抓出"游资1席假象"):知名游资名单挂一漏万,
-    改【活跃游资】=截至前一日累计上榜≥8次的营业部席位(数据驱动,滚动判定零后视镜)∪知名名单。"""
+    改【活跃游资】=截至前一日累计上榜≥8次的营业部席位(数据驱动,滚动判定零后视镜)∪知名名单。
+    until: 只统计 <=until 的动向(历史重放/模块化渲染按日截断,零后视镜;None=全部)"""
     from collections import Counter
     seen=Counter()
     rows=[]
     for f in sorted(glob.glob(os.path.join(DIR,"20*.csv"))):
         d=os.path.basename(f)[:-4]
+        if until and d>until: break
         df=pd.read_csv(f,dtype={"代码":str}); df["代码"]=df["代码"].str.zfill(6)
         df=clean(df)
         df["风格"]=df["席位"].map(style)
@@ -78,12 +80,10 @@ def svg_chart(s,n=20):
         parts.append(f'<text x="{W-8}" y="{y+4:.0f}" text-anchor="end" font-size="10" fill="#1f2430">{v}亿</text>')
     parts.append('</svg>')
     return "".join(parts)
-def main(d=None):
-    s=build_series()
-    json.dump(s.to_dict("records"),open(os.path.join(L,"_资金温度.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+def card_html(s):
+    """FUNDTEMP 段 HTML(h2二+hint+SVG+表) — 模块化渲染 --card 与 main 注入共用,保证同源"""
     last=s.iloc[-1]
     tw="热" if last["温度分位"]>=67 else "温" if last["温度分位"]>=34 else "冷"
-    # 最近5日数值表
     t5=s.tail(5).iloc[::-1]
     rows=''.join(f'<tr><td style="white-space:nowrap">{r["日"][4:6]}-{r["日"][6:]}</td>'
       f'<td>{r["机构席次"]}<span class="mut">/{r["机构金额亿"]}亿</span></td>'
@@ -91,13 +91,19 @@ def main(d=None):
       f'<td>{r["知名游资席次"]}<span class="mut">/{r["知名游资金额亿"]}亿</span></td>'
       f'<td>{r["北向席次"]}<span class="mut">/{r["北向金额亿"]}亿</span></td>'
       f'<td><b>{r["总金额亿"]}亿</b></td><td><b>{r["温度分位"]}</b></td></tr>' for _,r in t5.iterrows())
-    sec=(f'<h2>二 资金温度 · 日度统计(买侧席位明细)</h2>'
+    return (f'<h2>二 资金温度 · 日度统计(买侧席位明细)</h2>'
      f'<div class="hint">柱=当日出手席次(<span style="color:#2e6f5e">■机构</span> <span style="color:#7c5cbf">■量化</span> <span style="color:#c0392b">■游资=活跃(截至昨日累计上榜≥8次,数据驱动)∪知名名单</span>),'
      f'虚线=买侧总金额(右轴);底部圆点=温度(红热≥67/黄温/蓝冷<34,当日总额在截至当日近60日的分位,零后视镜)。'
      f'滚动窗口只显示最近20个交易日,日期增加不影响展示。★库实证(清洗后,区分度15.9pp,倒U型):<b>温和放量日(34-66分位)跟买61.6%最好,过热(≥67)仅45.7%,冷48.7%居中</b>=有钱进但不拥挤才有肉。<b>今日温度:{last["温度分位"]}分位({tw})</b></div>'
      f'<div class="card">{svg_chart(s)}</div>'
      f'<div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:52px"><col><col><col><col><col style="width:70px"><col style="width:46px"></colgroup>'
      f'<tr><th>日</th><th>机构</th><th>量化</th><th>游资(活跃+知名)</th><th>北向</th><th>总额</th><th>温度</th></tr>{rows}</table></div>')
+def main(d=None):
+    s=build_series(until=d)
+    json.dump(s.to_dict("records"),open(os.path.join(L,"_资金温度.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+    last=s.iloc[-1]
+    tw="热" if last["温度分位"]>=67 else "温" if last["温度分位"]>=34 else "冷"
+    sec=card_html(s)
     # 注入judgment lhb页 FUNDTEMP标记段(幂等;无标记则报错提示先加锚)
     js=sorted(glob.glob(os.path.join(L,"judgment_*.json"))); jp=js[-1]
     J=json.load(open(jp,encoding="utf-8")); b=J["bodies"].get("lhb","")
@@ -107,4 +113,17 @@ def main(d=None):
         inj="已注入"+os.path.basename(jp)
     else: inj="⚠lhb页无FUNDTEMP锚,未注入"
     print(f'资金温度: {len(s)}日 今日{last["温度分位"]}分位({tw}) 机构{last["机构席次"]}席/{last["机构金额亿"]}亿 量化{last["量化席次"]}席 游资{last["知名游资席次"]}席 | {inj}')
-if __name__=="__main__": main()
+def card_mode(d=""):
+    """--card {d}: 产 _学习/资金温度卡_{d}.html(含FUNDTEMP锚,黄金版逐字节) 不注入judgment、不碰_资金温度.json
+    供 module_render_lhb 权威调用; 主表由 main() 维护(晚间管道) — 快照/渲染历史日不得覆盖主表(2026-08-12修)"""
+    s=build_series(until=d or None)
+    last=s.iloc[-1]
+    tw="热" if last["温度分位"]>=67 else "温" if last["温度分位"]>=34 else "冷"
+    open(os.path.join(L,f"资金温度卡_{d or last['日']}.html"),"w",encoding="utf-8").write("<!--FUNDTEMP-->"+card_html(s)+"<!--/FUNDTEMP-->\n")
+    print(f'资金温度卡: {len(s)}日(截至{d or last["日"]}) 今日{last["温度分位"]}分位({tw})')
+if __name__=="__main__":
+    a=sys.argv[1:]
+    if "--card" in a:
+        card_mode(next((x for x in a if x.isdigit()),""))
+    else:
+        main(next((x for x in a if x.isdigit()),None))

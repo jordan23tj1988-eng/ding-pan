@@ -28,7 +28,8 @@ def build_pool(d):
         lb=int(pd.to_numeric(r.get("连板数",1),errors="coerce") or 1)
         mv=pd.to_numeric(r.get("流通市值"),errors="coerce"); fj=pd.to_numeric(r.get("封板资金"),errors="coerce")
         fdb=round(float(fj)/float(mv)*100,2) if (mv and mv>0 and fj==fj) else None
-        zha=int(pd.to_numeric(r.get("炸板次数",0),errors="coerce") or 0)
+        _zha=pd.to_numeric(r.get("炸板次数",0),errors="coerce")
+        zha=int(_zha) if _zha==_zha else 0
         sig=("一字" if fb<="09:25" else "秒板")+(f"·{lb}板" if lb>1 else "·首板")
         pool.append(dict(代码=r["代码"],名称=str(r["名称"]),首封=fb,连板=lb,信号=sig,封单比=fdb,炸板=zha,
                          行业=str(r.get("所属行业",""))))

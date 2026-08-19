@@ -111,7 +111,16 @@ def main():
         if z is not None and len(z) > 0:
             d, zt = cand, z; break
     if d is None:
-        print("[失败] 8天内未探到涨停数据"); return
+        print("[降级] akshare 8天未探到涨停数据, 切 iFinD iwencai 降级收集器")
+        _env = dict(os.environ)
+        _env["PYTHONPATH"] = ""
+        for _k in ("HTTP_PROXY", "HTTPS_PROXY", "http_proxy", "https_proxy", "ALL_PROXY", "all_proxy"):
+            _env.pop(_k, None)
+        import subprocess as _sp
+        _rc = _sp.run([sys.executable, os.path.join(BASE, "iFinD五件套_降级.py"),
+                       guess.strftime("%Y%m%d")], env=_env)
+        print("[降级] exit=%d" % _rc.returncode)
+        return
 
     # 盘前脏数据护栏:收盘前若"当日"与前一交易日雷同,顺延
     if is_before_close and d == guess.strftime("%Y%m%d"):

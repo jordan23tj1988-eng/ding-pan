@@ -32,23 +32,40 @@ def qcell(g,qmap):
     return f'<b>抓{zl if zl is not None else "—"}%</b>{hit} <span class="mut">分{q["质量分"]} 执1 {q.get("预测执1胜率","—")}%/{q.get("预测执1均涨","—")}%</span>'
 def srcbadge(s):
     return {'A':'<span class="badge bA">A</span>','C':'<span class="badge bC">C</span>'}.get(s,'<span class="mut" style="font-size:11px">B</span>') if s not in('模板','模板匹配') else '<span class="tag2 t-watch">模板</span>'
-def row(g,qmap,catalyst=None):
+def _sweetmap(d):
+    """代码→甜点标签(读涨停甜点_{d}.json)。甜点/深炸观望/一字买不进;换手板不标。"""
+    p=os.path.join(L,f"涨停甜点_{d}.json")
+    if not os.path.isfile(p): return {}
+    try:
+        j=json.load(open(p,encoding="utf-8")); m={}
+        for key in ("甜点","深炸观望","一字买不进"):
+            for x in j.get(key,[]): m[x["代码"]]=key
+        return m
+    except Exception: return {}
+def sweetbadge(label):
+    if label=="甜点": return '<span class="tag2 t-attack" title="第3板一字开炸板<3%回封(研究:26年17/17年正期望+4.18%)">甜点</span>'
+    if label=="深炸观望": return '<span class="tag2 t-avoid" title="一字开炸板>3%:封住率47%,研究禁区">深炸</span>'
+    if label=="一字买不进": return '<span class="tag2 t-watch" title="纯一字封死无回封机会">一字封死</span>'
+    return ''
+def row(g,qmap,catalyst=None,sweet=None):
     fdb=f'{g["封单比"]}%' if g.get("封单比") is not None else '—'
     kb='<span class="tag2 t-avoid">开</span>' if g.get("开板次数",0)>0 else ''
     lb=f'<span class="tag2 t-attack">{g["连板"]}板</span>' if g["连板"]>1 else ''
     cat=catalyst if catalyst is not None else (esc(g.get("催化") or "(模板卡位)")+" "+srcbadge(g.get("来源档","")))
-    return f'<tr><td>{esc(g["首封"])}</td><td><b>{esc(g["名称"])}</b> <span class="mut">{esc(g["代码"])}</span></td><td>封{fdb} {kb}{lb}</td><td>{cat}</td><td>{qcell(g,qmap)}</td></tr>'
-def day_table(zt,qmap):
+    sw=sweetbadge(sweet) if sweet else ''
+    return f'<tr><td>{esc(g["首封"])}</td><td><b>{esc(g["名称"])}</b> <span class="mut">{esc(g["代码"])}</span> {sw}</td><td>封{fdb} {kb}{lb}</td><td>{cat}</td><td>{qcell(g,qmap)}</td></tr>'
+def day_table(zt,qmap,d):
+    sweetmap=_sweetmap(d)
     r=['<div class="card"><table><tr><th>首封</th><th>标的</th><th>封单·身位</th><th>催化 · 来源档</th><th>抓龙率·命中规则·质量分v5 · 执行预测(T+1开买→收)</th></tr>']
     for t in zt['题材线']:
         r.append(f'<tr style="background:#f3eee1"><td colspan="5"><b>【{esc(t["大方向"])}】</b>{t["家数"]}只 · 最高{t["最高连板"]}板 · 承载{esc(t.get("承载环节") or "-")}</td></tr>')
         for s in t['环节']:
             r.append(f'<tr><td colspan="5" style="background:#faf7f0"><b>── {esc(s["环节"])}</b> <span class="mut">({s["家数"]}只·开板{s["开板占比"]})</span> <span class="{vcls(s["快判"])}">{esc(s["快判"])}</span></td></tr>')
-            for g in s['个股']: r.append(row(g,qmap))
+            for g in s['个股']: r.append(row(g,qmap,sweet=sweetmap.get(g["代码"])))
     dg=zt.get('待归位_行业兜底') or []
     if dg:
         r.append(f'<tr style="background:#f3eee1"><td colspan="5"><b>【待归位 · 行业兜底】</b>{len(dg)}只 <span class="mut">(agent当日补催化归位;行业只兜底不作题材)</span></td></tr>')
-        for g in dg: r.append(row(g,qmap,catalyst='<span class="mut">行业:'+esc(g.get("行业",""))+'</span>'))
+        for g in dg: r.append(row(g,qmap,catalyst='<span class="mut">行业:'+esc(g.get("行业",""))+'</span>',sweet=sweetmap.get(g["代码"])))
     r.append('</table></div>')
     return ''.join(r)
 def build_from_data(d):
@@ -64,7 +81,9 @@ def build_from_data(d):
            f'<div class="kv"><div class="l">全场判定</div><div class="v" style="font-size:12.5px">{esc(six.get("全场判定",""))}</div></div></div>')
     cardp=os.path.join(L,f"涨停质量荐票卡_{d}.html")
     card=('<p style="font-weight:700;margin:4px 0 4px;border-left:3px solid var(--accent);padding-left:8px">当日涨停质量Top5荐票(v5规则榜+抓龙率·第5路)</p>'+open(cardp,encoding="utf-8").read()) if os.path.isfile(cardp) else ""
-    inner=speed+card+day_table(zt,qmap)
+    poolp=os.path.join(L,f"池外候选卡_{d}.html")
+    pool=('<p style="font-weight:700;margin:4px 0 4px;border-left:3px solid var(--accent);padding-left:8px">池外候选·量价甜点观察池(量价因子库A2扫描)</p>'+open(poolp,encoding="utf-8").read()) if os.path.isfile(poolp) else ""
+    inner=speed+card+pool+day_table(zt,qmap,d)
     return summary,inner
 def save(d,summary,inner):
     os.makedirs(STORE,exist_ok=True)

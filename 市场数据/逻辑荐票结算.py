@@ -7,6 +7,9 @@ bars: _bars_cache 优先,缺票akshare stock_zh_a_daily(sina)兜底;拿不到标
 import os,sys,json,glob
 import pandas as pd
 BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
+sys.path.insert(0, BASE)
+from logic_pool import load_logic_picks
+from _jsonl_append import append_dedup
 CDIR=os.path.join(L,"_bars_cache")
 def _sina_sym(c): return ('bj' if c.startswith(('4','8','92')) else 'sh' if c.startswith(('6','5','9')) else 'sz')+c
 def bars(c):
@@ -29,9 +32,15 @@ def exe_ret(c,dprev):
     i=idx[0]; Tc=float(b.loc[i,'close']); o1=float(b.loc[i+1,'open']); c1=float(b.loc[i+1,'close'])
     return round((o1/Tc-1)*100,2),round((c1/o1-1)*100,2),round((c1/Tc-1)*100,2)
 def main(dprev):
-    jp=os.path.join(L,f"逻辑荐票_{dprev}.json")
-    if not os.path.isfile(jp): print("无逻辑荐票发出版,跳过"); return
-    j=json.load(open(jp,encoding="utf-8")); picks=j.get("荐票",[])
+    picks,_src=load_logic_picks(dprev, L)
+    if not picks:
+        days=sorted([os.path.basename(x) for x in glob.glob(os.path.join(BASE,"2026*")) if os.path.isdir(x)])
+        dnext=next((x for x in days if x>dprev),None)
+        out=dict(荐票日=dprev,结算日=dnext,明细=[],
+            汇总=dict(执行胜率="0/0",执行均收=None,全场涨停均收=None,增益pp=None,按类型={}),
+            口径="空仓(无逻辑荐票发出版,逻辑路非荐票路)")
+        json.dump(out,open(os.path.join(L,f"逻辑荐票结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+        print(f"无逻辑荐票发出版,写空仓结算文件 {dprev}"); return
     days=sorted([os.path.basename(x) for x in glob.glob(os.path.join(BASE,"2026*")) if os.path.isdir(x)])
     dnext=next((x for x in days if x>dprev),None)
     ztset=set()
@@ -63,8 +72,8 @@ def main(dprev):
         汇总=dict(执行胜率=f"{win}/{n}" if n else "0/0",执行均收=top_avg,全场涨停均收=mkt_avg,增益pp=edge,按类型=bytype),
         口径="★执行口径=T+1开盘买入→T+1收盘;发出版名单结算,不可事后增删")
     json.dump(out,open(os.path.join(L,f"逻辑荐票结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
-    open(os.path.join(L,"_逻辑荐票结算.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(荐票日=dprev,**out["汇总"]),ensure_ascii=False)+"\n")
-    open(os.path.join(L,"_逻辑荐票反思.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(荐票日=dprev,结算日=dnext,反思=refl,明细=[dict(代码=r["代码"],名称=r["名称"],类型=r.get("类型"),执行收益=r["执行收益"],判定=r["判定"]) for r in res]),ensure_ascii=False)+"\n")
+    append_dedup(os.path.join(L,"_逻辑荐票结算.jsonl"), dict(荐票日=dprev,**out["汇总"]), "荐票日")
+    append_dedup(os.path.join(L,"_逻辑荐票反思.jsonl"), dict(荐票日=dprev,结算日=dnext,反思=refl,明细=[dict(代码=r["代码"],名称=r["名称"],类型=r.get("类型"),执行收益=r["执行收益"],判定=r["判定"]) for r in res]), "荐票日")
     # 对账卡html(嵌logic页荐票卡下方)
     disp=dprev[4:6]+"-"+dprev[6:8]
     rows="".join(f'<tr><td><b>{r["名称"]}</b> <span class="mut">{r["代码"]}</span></td><td>{r.get("类型","")}</td>'

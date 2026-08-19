@@ -6,6 +6,12 @@
 2026-07-12评分体系联动:join昨晚竞价评分_{d}.json(分数唯一源)→结算表加竞价分列+高分半/低分半战绩+闸门对账。"""
 import os,sys,json,glob
 import pandas as pd
+from _jsonl_append import append_dedup
+try:
+    from trading_calendar import next_trading_day
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from trading_calendar import next_trading_day
 BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
 CDIR=os.path.join(L,"_bars_cache")
 def _sina_sym(c): return ('bj' if c.startswith(('4','8','92')) else 'sh' if c.startswith(('6','5','9')) else 'sz')+c
@@ -65,8 +71,7 @@ def load_scores(dprev):
 def main(dprev):
     pool,frozen=freeze_pool(dprev)
     scores=load_scores(dprev)
-    days=sorted([os.path.basename(x) for x in glob.glob(os.path.join(BASE,"2026*")) if os.path.isdir(x)])
-    dnext=next((x for x in days if x>dprev),None)
+    dnext=next_trading_day(dprev)  # ★A(2026-08-16):交易日历求下一交易日,防跨断档错配(停机期7/16曾错算成8/11)
     ztset=set()
     if dnext and os.path.isfile(os.path.join(BASE,dnext,"zt_pool.csv")):
         zp=pd.read_csv(os.path.join(BASE,dnext,"zt_pool.csv"),dtype={"代码":str}); ztset=set(zp["代码"].str.zfill(6))
@@ -111,8 +116,8 @@ def main(dprev):
                 按评分半区=byscore,闸门对账=bygate),
         口径="★执行口径=T+1开盘买入→T+1收盘;池=发出版冻结名单,不可事后增删;竞价分=昨晚竞价评分json(分数唯一源)")
     json.dump(out,open(os.path.join(L,f"竞价池结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
-    open(os.path.join(L,"_竞价池结算.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(池日=dprev,**{k:v for k,v in out["汇总"].items() if k not in("按信号","按连板","按高开档","按评分半区","闸门对账")}),ensure_ascii=False)+"\n")
-    open(os.path.join(L,"_竞价池反思.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(池日=dprev,结算日=dnext,反思=refl,按信号=bysig,按连板=bylb,按高开档=bygk,按评分半区=byscore,闸门对账=bygate),ensure_ascii=False)+"\n")
+    append_dedup(os.path.join(L,"_竞价池结算.jsonl"), dict(池日=dprev,**{k:v for k,v in out["汇总"].items() if k not in("按信号","按连板","按高开档","按评分半区","闸门对账")}), "池日")
+    append_dedup(os.path.join(L,"_竞价池反思.jsonl"), dict(池日=dprev,结算日=dnext,反思=refl,按信号=bysig,按连板=bylb,按高开档=bygk,按评分半区=byscore,闸门对账=bygate), "池日")
     disp=dprev[4:6]+"-"+dprev[6:8]
     has_sc=any(r.get("竞价分") is not None for r in res)
     rows="".join(f'<tr><td style="white-space:nowrap"><b>{r["名称"]}</b> <span class="mut">{r["代码"]}</span></td><td>{r["信号"]}{("·炸"+str(r["炸板"])) if r.get("炸板") else ""}</td>'
@@ -127,6 +132,55 @@ def main(dprev):
       +(f';评分半区 高分半{byscore["高分半"]}% / 低分半{byscore["低分半"]}%' if byscore else '')
       +f';闸门内(高开&lt;5){bygate["闸门内均收"]}%×{bygate["闸门内只数"]}只 vs 全池{top_avg}%。</p></div>')
     open(os.path.join(L,f"竞价池结算卡_{dprev}.html"),"w",encoding="utf-8").write(card)
+    backfill_missing_mkt_avg()  # ★B(2026-08-16):当日复盘补缺(回补历史 null 的 全场涨停均收)
     print(refl)
+
+def backfill_missing_mkt_avg():
+    """★B(2026-08-16)当日复盘补缺: _竞价池结算.jsonl 里 全场涨停均收=null 的池日,若 质量荐票结算_{池日}.json 现已产出全场均收,原地回补。
+    解决"竞价池结算先于质量荐票结算跑→读不到全场均收→null"的依赖时序缺口;幂等(已有值不动,补不到仍null),零编造。
+    同步回写 竞价池结算_{池日}.json 的 汇总.全场涨停均收/增益pp。"""
+    jl = os.path.join(L, "_竞价池结算.jsonl")
+    if not os.path.isfile(jl):
+        return 0
+    lines = []
+    changed = 0
+    for ln in open(jl, encoding="utf-8"):
+        s = ln.rstrip("\n")
+        if not s.strip():
+            lines.append(s + "\n")
+            continue
+        try:
+            r = json.loads(s)
+        except Exception:
+            lines.append(s + "\n")
+            continue
+        d = str(r.get("池日", ""))
+        if d and r.get("全场涨停均收") is None:
+            qp = os.path.join(L, f"质量荐票结算_{d}.json")
+            if os.path.isfile(qp):
+                try:
+                    mkt = json.load(open(qp, encoding="utf-8")).get("汇总", {}).get("全场均收")
+                except Exception:
+                    mkt = None
+                if mkt is not None:
+                    r["全场涨停均收"] = mkt
+                    top = r.get("执行均收")
+                    r["增益pp"] = round(top - mkt, 2) if top is not None else None
+                    changed += 1
+                    sp = os.path.join(L, f"竞价池结算_{d}.json")
+                    if os.path.isfile(sp):
+                        try:
+                            sj = json.load(open(sp, encoding="utf-8"))
+                            sj["汇总"]["全场涨停均收"] = mkt
+                            sj["汇总"]["增益pp"] = r["增益pp"]
+                            json.dump(sj, open(sp, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+                        except Exception:
+                            pass
+        lines.append(json.dumps(r, ensure_ascii=False) + "\n")
+    if changed:
+        open(jl, "w", encoding="utf-8").write("".join(lines))
+        print(f"[补缺B] 已回补 {changed} 条 全场涨停均收")
+    return changed
+
 if __name__=="__main__":
     main(sys.argv[1])

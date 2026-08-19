@@ -10,6 +10,8 @@
   C6 HTML结构完好+时间线折叠  C7 脚本产出卡陈旧嵌入
   C8 改动登记核对(正式.py/规格/规范mtime晚于_变更总账.md=改了没登记;2026-07-16改动三合一)
   C9 台账最新日块日期对账(涨停/龙虎榜=d,竞价=dprev;台账脚本--from-data漏日期会静默跳过当日日块=2026-07-16龙虎榜事故)
+  C10 池外候选链核对(2026-08-13 上线)
+  C11 交易计划六路文件当日存在性(2026-08-17 上线: 契约⑪硬要求, 引擎静默空仓无告警=8/13起断供5日事故)
 退出码: 0=全过 1=有FAIL(打印明细,流水线应停下重看)
 """
 import os,sys,glob,json,re,datetime
@@ -22,6 +24,16 @@ L=os.path.join(R,'_学习');SITE=os.path.join(R,'复盘','盯盘台')
 d=sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d')
 dprev_dirs=sorted([x for x in os.listdir(R) if x.isdigit() and len(x)==8 and x<d])
 dprev=dprev_dirs[-1] if dprev_dirs else None
+# ★2026-08-16 周末口径: C4/C5 期望日期用最后交易日(bars最多到最近交易日), 非"今天"(周末/盘前 d 无交易数据)
+_LAST_TD=None; _CAL=None
+try:
+    sys.path.insert(0, R)
+    from trading_calendar import load_trading_calendar, next_trading_day
+    _CAL=load_trading_calendar()
+    if _CAL: _LAST_TD=_CAL[-1]
+except Exception:
+    _CAL=None; _LAST_TD=None
+_EXPECT_D = d if (_CAL and d in _CAL) else (_LAST_TD or d)
 FAIL=[];WARN=[]
 
 # ---------- C1 页面残留缺口叙述 ----------
@@ -34,6 +46,7 @@ for p in pages:
     f=os.path.join(SITE,p+'.html')
     if not os.path.isfile(f): FAIL.append(f'C1 {p}.html 不存在');continue
     h=open(f,encoding='utf-8').read()
+    h=re.sub(r'<details class="chain tlfold">.*?</details>','',h,flags=re.DOTALL)  # ★2026-08-16 方案A: C1只扫当日缺口,先剔除认知迭代历史折叠区(历史原文"当时不可达"是真实记录,非当日缺口残留)
     text=re.sub(r'<[^>]+>',' ',h)   # 去标签再查
     for pat in pats:
         m=re.search(pat,text)
@@ -91,7 +104,7 @@ for route in PAGE:
         try:
             for pos in json.load(open(sp,encoding='utf-8')).get('positions',[]): need.add(pos['code'])
         except Exception: pass
-dd=f'{d[:4]}-{d[4:6]}-{d[6:]}';miss=[]
+_e=_EXPECT_D; dd=f'{_e[:4]}-{_e[4:6]}-{_e[6:]}';miss=[]
 for c in sorted(need):
     f=os.path.join(bc,c+'.csv')
     ok=False
@@ -100,21 +113,28 @@ for c in sorted(need):
             with open(f,'rb') as fh:
                 fh.seek(max(0,os.path.getsize(f)-200));t=fh.read().decode('utf-8','ignore')
             last=[l for l in t.strip().split('\n') if l][-1]
-            ok=last.split(',')[0] in (dd,d)
+            ok=last.split(',')[0] in (dd,_e)
         except Exception: pass
     if not ok: miss.append(c)
 if miss:
     lvl=FAIL if len(miss)>max(3,len(need)*0.05) else WARN
-    lvl.append(f'C4 关键股{len(need)}只中{len(miss)}只bars未到{d}: {miss[:8]}{"…" if len(miss)>8 else ""}')
+    lvl.append(f'C4 关键股{len(need)}只中{len(miss)}只bars未到{_e}: {miss[:8]}{"…" if len(miss)>8 else ""}')
 
 # ---------- C5 昨日结算有效性 ----------
-if dprev:
+_c5_expired=True
+if dprev and _CAL and _LAST_TD:
+    _dn=next_trading_day(dprev,_CAL)
+    if _dn is None or _dn>_LAST_TD: _c5_expired=False  # ★2026-08-16: T+1未发生或尚未到期(如8/14荐票需8/17数据), 结算未到期, 跳过C5
+if dprev and _c5_expired:
     empty=[]
     for name in ['质量荐票结算','题材荐票结算','逻辑荐票结算','席位荐票结算']:
         f=os.path.join(L,f'{name}_{dprev}.json')
         if not os.path.isfile(f): empty.append(name+':缺文件');continue
         try:
             j=json.load(open(f,encoding='utf-8'));s=json.dumps(j.get('汇总',{}),ensure_ascii=False)
+            detail=j.get('明细')
+            if isinstance(detail,list) and len(detail)==0:
+                continue  # 空仓(0荐票), 0/0 是合法结果非"bars没补齐"
             if re.search(r'\"执行均收\":\s*null',s) and '0/0' in s: empty.append(name+':0/0全None')
         except Exception as e: empty.append(name+':读失败')
     if empty: FAIL.append(f'C5 {dprev}结算无效: {empty}(bars_cache没补齐就跑了结算?)')
@@ -133,15 +153,40 @@ for p in pages:
         if nitems>=2 and 'tlfold' not in h[max(0,m.start()-300):m.start()+6000]:
             FAIL.append(f'C6 {p}.html 时间线{nitems}条未折叠(应最新1条外露+其余进tlfold)')
         break
+    # ★2026-08-14 补三查: (1)div开闭配对平衡 (2)游离>字符 (3)rowA直接子元素=黄金契约
+    #   动机: lhb四组件没并排连续被用户抓3-4次, 根因=强档KPI卡</div>错位(div差1)+游离'>'在grid成匿名item,
+    #   C6旧查(孤立<)两样都漏。这三查覆盖"LLM手写HTML结构写坏"这一类。
+    o=h.count('<div'); c=h.count('</div>')
+    if o!=c:
+        FAIL.append(f'C6 {p}.html div开{o}闭{c}差{o-c}(有未闭合或多余闭合,查bodies.{p}的KPI卡</div>错位)')
+    if re.search(r'</(div|span|p|h[1-6]|li|td|th)>[ \t]*>', h):
+        FAIL.append(f'C6 {p}.html 存在游离>字符(闭合标签后跟裸>,在grid成匿名item会挤坏并排,查bodies.{p})')
+    _ri=h.find('class="rowA"')
+    if _ri>0:
+        _rj=h.find('<h2',_ri)
+        _seg=h[_ri:(_rj if _rj>0 else _ri+3000)]
+        _items=[m.group(1) for m in re.finditer(r'<div class="(hero|kpi)"',_seg)]
+        if _items!=['hero','kpi','kpi','kpi','kpi']:
+            FAIL.append(f'C6 {p}.html rowA直接子元素={_items}(应[hero,kpi,kpi,kpi,kpi],有KPI卡结构散落/游离grid item)')
 
 # ---------- C7 脚本产出卡陈旧嵌入(07-15晚: 先行指标卡重生成但页面嵌旧版,溢价柱显∅) ----------
+# ★2026-08-12 口径更新: cycle 已模块化渲染(module_render_cycle, LEADIND区自渲染自数据源),
+#   不再嵌 先行指标卡_*.html 全文 → C7 改查 LEADIND 锚存在 + 当日涨停数_净 数字出现(数据源一致性)
 _card=os.path.join(L,f'先行指标卡_{d}.html')
 _cyc=os.path.join(SITE,'cycle.html')
 if os.path.isfile(_card) and os.path.isfile(_cyc):
     _cc=open(_card,encoding='utf-8').read()
     _ph=open(_cyc,encoding='utf-8').read()
-    if _cc not in _ph:
-        FAIL.append('C7 cycle.html 嵌的先行指标卡≠最新卡文件(重跑过 情绪先行指标.py 后须把新卡整块替换回judgment cycle body)')
+    _has_leadind = ('<!--LEADIND-->' in _ph)
+    _net_ok = False
+    try:
+        _lj=json.load(open(os.path.join(L,'_情绪先行指标.json'),encoding='utf-8'))
+        _net=str(((_lj.get(d) or {}).get('晋级') or {}).get('涨停数_净',''))
+        if _net: _net_ok = _net in _ph
+    except Exception:
+        pass
+    if not _net_ok:
+        FAIL.append('C7 cycle.html 当日涨停数_净(%s)未现(模块化渲染异常或先行指标卡陈旧)' % (_net or '?'))
 
 # ---------- C8 改动登记核对(2026-07-16 改动三合一: 改了不登记=FAIL) ----------
 # 规则见 _链路地图.md 〇节: 正式.py/agent规格/四份规范 的mtime 不得晚于 _变更总账.md
@@ -151,11 +196,15 @@ if not os.path.isfile(_ledger):
 else:
     _lm=os.path.getmtime(_ledger)+60  # 60s宽限
     _watch=[]
+    _PROD_UNDERSCORE={'_认知库渲染.py','_认知库蒸馏_五路.py','_jsonl_append.py'}  # ★2026-08-16 生产脚本白名单: 下划线开头但非一次性脚本(r_cog_lib来源/每晚蒸馏器/四结算脚本共享去重模块), 纳入登记核对不判残留
     for _f in os.listdir(R):
         _fp=os.path.join(R,_f)
         if _f.endswith('.py') and os.path.isfile(_fp) and not _f.endswith('.bak'):
             if _f.startswith('_'):
-                WARN.append(f'C8 R根目录临时脚本残留 {_f}(规矩: 一次性脚本进 _tmp/,用完即弃)')
+                if _f in _PROD_UNDERSCORE:
+                    _watch.append(_fp)  # 生产脚本: 不判残留, 纳入"改了没登记"核对
+                else:
+                    WARN.append(f'C8 R根目录临时脚本残留 {_f}(规矩: 一次性脚本进 _tmp/,用完即弃)')
             else:
                 _watch.append(_fp)
     for _pat in ('_agent规格/*.md',):
@@ -182,6 +231,44 @@ else:
         _ds=re.findall(r'<summary><b>(\d\d-\d\d)',_s); _new=_ds[0] if _ds else None
         if _new!=_exp:
             FAIL.append('C9 %s %s 最新日块=%s 应=%s(%s)——台账脚本 --from-data 可能漏了日期参数,当日日块没建;补跑"台账脚本 %s --from-data"+dashboard+生成盯盘台+inject'%(_pg,_an,_new,_exp,_ku,d))
+
+# ---------- C10 池外候选链核对(2026-08-13 上线) ----------
+# 口径: candidates json 非空→池外候选卡必须已生成; json 缺/空→卡不应存在(生成函数空候选不落盘)
+_poolj=os.path.join(r'D:/股票数据/量价因子库/data/daily','candidates_%s.json'%d)
+_poolcard=os.path.join(L,'池外候选卡_%s.html'%d)
+if os.path.isfile(_poolj):
+    _n=json.load(open(_poolj,encoding='utf-8')).get('候选数') or 0
+    if _n>0 and not os.path.isfile(_poolcard):
+        FAIL.append('C10 池外候选%d个但池外候选卡_%s.html缺失——涨停质量荐票.py池外段没跑;补跑后重渲染limitup页'%(_n,d))
+elif os.path.isfile(_poolcard):
+    WARN.append('C10 candidates json缺但池外候选卡存在(昨日残留?)——确认A2扫描与卡生成链一致性')
+
+# ---------- C11 交易计划六路文件当日存在性(2026-08-17 上线) ----------
+# 根因: 8/12契约修正把旧v3"★写第N路模拟盘计划"硬步骤压缩成模糊的"荐票/交易计划文件"→
+# 8/13起六路交易计划全断供, 引擎读不到时静默{}空仓无任何告警, 断供5日才被用户发现。
+# 修复: 契约⑪补硬要求(路径/schema/在持票逐票表态) + 本哨兵检查六路文件当日存在。
+_PLAN_ROUTES=['auction','lhb','theme','logic','limitup','master']
+_missing_plans=[]
+for _r in _PLAN_ROUTES:
+    _pf=os.path.join(L,'交易计划_%s_%s.json'%(_r,d))
+    if not os.path.isfile(_pf):
+        _missing_plans.append(_r)
+        continue
+    try:
+        _pj=json.load(open(_pf,encoding='utf-8'))
+        _pd=_pj.get('日期') if isinstance(_pj,dict) else None
+        if _pd!=d:
+            WARN.append('C11 %s交易计划 日期字段=%s 应=%s(发出版日期错位?)'%(_r,_pd,d))
+        # ★2026-08-17 schema契约校验: 引擎只读 buys/sells/notes(买卖指令), 8/11-12 limitup曾写"荐票/观察"格式
+        # → 文件在但引擎读不到任何指令=静默空仓, 存在性检查不够。合法形态=buys或sells存在(可为空列表)+notes, 或显式空仓理由。
+        if isinstance(_pj,dict) and not any(k in _pj for k in ('buys','sells','notes','持仓表态','空仓理由')):
+            FAIL.append('C11 %s交易计划 schema不符引擎契约(无 buys/sells/notes 键, 疑似误写荐票格式)——引擎读缺=静默空仓; 重写为 {日期,路,buys:[{代码,名称,权重,理由}],sells:[{代码,腿,理由}],notes} 后重跑哨兵'%_r)
+    except Exception as _e:
+        FAIL.append('C11 %s交易计划 json解析失败: %s'%(_r,_e))
+if _missing_plans:
+    FAIL.append('C11 交易计划断供: %s 缺 交易计划_{route}_%s.json(契约⑪每路必写,buys 0~5只空仓须写理由,在持票逐票表态;引擎读缺=静默空仓)——补写后重跑哨兵'%(','.join(_missing_plans),d))
+elif len(_missing_plans)==0:
+    pass
 
 print(f'== 复盘一致性哨兵 {d} ==')
 for w in WARN: print('  WARN',w)

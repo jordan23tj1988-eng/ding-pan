@@ -6,6 +6,8 @@ import os,sys,re,json,glob,subprocess
 from collections import defaultdict
 import pandas as pd
 BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
+sys.path.insert(0, BASE)
+from _jsonl_append import append_dedup
 CDIR=os.path.join(L,"_bars_cache")
 def exe_ret(c,dprev):
     f=os.path.join(CDIR,c+".csv")
@@ -34,8 +36,8 @@ def main(dprev):
       +(f";立功席位:{'、'.join(x[:24] for x in hero[:3])}" if hero else "")
       +(f";打脸席位:{'、'.join(x[:24] for x in flop[:3])}" if flop else "")
       +"。打脸笔已在事实表,今晚rank重算自动压档=净化;连续打脸席位由08提炼在五路裁决降权。") if n else f"{dprev}席位路Top5待T+1收盘结算(首期)。"
-    open(os.path.join(L,"_席位荐票反思.jsonl"),"a",encoding="utf-8").write(json.dumps(dict(
-        荐票日=dprev,执行胜率=f"{win}/{n}",均收=avg,立功=hero,打脸=flop,反思=refl),ensure_ascii=False)+"\n")
+    append_dedup(os.path.join(L,"_席位荐票反思.jsonl"), dict(
+        荐票日=dprev,执行胜率=f"{win}/{n}",均收=avg,立功=hero,打脸=flop,反思=refl), "荐票日")
     json.dump(dict(荐票日=dprev,Top5=res,汇总=dict(执行胜率=f"{win}/{n}",均收=avg),反思=refl),
         open(os.path.join(L,f"席位荐票结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
     disp=dprev[4:6]+"-"+dprev[6:8]

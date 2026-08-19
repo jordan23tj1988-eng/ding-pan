@@ -6,6 +6,7 @@
   _学习/_席位分档.json + 快照jsonl。★零后视镜:分档只用已有T+2前向的笔;当日笔无前向不参与。
   ★自我净化:每晚重算,掉档自动降级;一笔=席位净买>0且买额≥1000万(过滤尾单)。"""
 import os,sys,json,glob,time,datetime
+import urllib.request, urllib.parse, ssl
 from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
@@ -23,7 +24,77 @@ def clean(df):
     df=df[~df["代码"].str.startswith(("11","12","90","20"))]
     return df.drop_duplicates(subset=[c for c in ["日","代码","席位"] if c in df.columns])
 
+def _em_opener():
+    """东财datacenter直连opener: 清代理(本机7897代理拒连)+Referer+verify=False(2026-08-12实测必需)"""
+    ctx = ssl.create_default_context(); ctx.check_hostname = False; ctx.verify_mode = ssl.CERT_NONE
+    op = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    op.addheaders = [("User-Agent", "Mozilla/5.0"), ("Referer", "https://data.eastmoney.com/")]
+    return op
+
+def _em_get(op, params, timeout=15):
+    """调东财datacenter api/data/v1/get, 返回json dict"""
+    q = urllib.parse.urlencode(params)
+    with op.open("https://datacenter-web.eastmoney.com/api/data/v1/get?" + q, timeout=timeout) as resp:
+        return json.loads(resp.read().decode("utf-8"))
+
+def fetch_direct(d):
+    """直连东财datacenter拉席位明细(2026-08-12新增,不依赖akshare/numpy/PYTHONPATH)。
+    榜单清单优先本地{d}/lhb.csv, 无则RPT_DAILYBILLBOARD_DETAILSNEW回拉;
+    个股买入前五=RPT_BILLBOARD_DAILYDETAILSBUY(filter: SECURITY_CODE双引号!单引号会success=False)。
+    输出列结构与原akshare版完全一致(日,代码,名称,席位,买入金额,买占比,卖出金额,净额,类型)。
+    返回True=成功(文件已写,含0行); False=榜单都拿不到(调用方回退akshare)。"""
+    op = _em_opener()
+    lp = os.path.join(BASE, d, "lhb.csv")
+    if os.path.isfile(lp):
+        lh = pd.read_csv(lp, dtype={"代码": str})
+    else:
+        ds = f"{d[:4]}-{d[4:6]}-{d[6:]}"
+        try:
+            j = _em_get(op, {"reportName": "RPT_DAILYBILLBOARD_DETAILSNEW",
+                             "columns": "SECURITY_CODE,SECURITY_NAME_ABBR",
+                             "filter": f"(TRADE_DATE='{ds}')", "pageNumber": "1", "pageSize": "500",
+                             "source": "WEB", "client": "WEB"})
+            rows = (j.get("result") or {}).get("data") or []
+        except Exception as e:
+            print(d, "榜单直连失败:", str(e)[:100]); return False
+        if not rows:
+            print(d, "无榜单数据"); return False
+        lh = pd.DataFrame(rows).rename(columns={"SECURITY_CODE": "代码", "SECURITY_NAME_ABBR": "名称"})
+    lh["代码"] = lh["代码"].astype(str).str.zfill(6)
+    codes = sorted(set(lh["代码"])); nm = dict(zip(lh["代码"], lh["名称"]))
+    ds = f"{d[:4]}-{d[4:6]}-{d[6:]}"
+    def one(c):
+        for _ in range(3):
+            try:
+                j = _em_get(op, {"reportName": "RPT_BILLBOARD_DAILYDETAILSBUY", "columns": "ALL",
+                                 "filter": f"(TRADE_DATE='{ds}')(SECURITY_CODE=\"{c}\")",
+                                 "pageNumber": "1", "pageSize": "500"})
+                rows = (j.get("result") or {}).get("data") or []
+                return [dict(日=d, 代码=c, 名称=nm.get(c), 席位=str(r.get("OPERATEDEPT_NAME", "")).strip(),
+                             买入金额=float(r.get("BUY") or 0), 买占比=float(r.get("TOTAL_BUYRIO") or 0),
+                             卖出金额=float(r.get("SELL") or 0), 净额=float(r.get("NET") or 0),
+                             类型=str(r.get("EXPLANATION", ""))[:40]) for r in rows]
+            except Exception:
+                time.sleep(1.2)
+        return []
+    rows_all = []
+    with ThreadPoolExecutor(16) as ex:
+        for out in ex.map(one, codes):
+            rows_all += out
+    df = pd.DataFrame(rows_all)
+    if len(df):
+        df = df.drop_duplicates(subset=["代码", "席位", "类型"])
+    df.to_csv(os.path.join(DIR, f"{d}.csv"), index=False)
+    print(f"{d} 席位动向(直连): 上榜{len(codes)}只 → 席位行{len(df)}")
+    return True
+
 def fetch(d):
+    # ★2026-08-12 直连优先(不依赖akshare); 失败才回退akshare旧路径
+    try:
+        if fetch_direct(d):
+            return
+    except Exception as e:
+        print(d, "席位直连失败,回退akshare:", str(e)[:120])
     import akshare as ak
     lp=os.path.join(BASE,d,"lhb.csv")
     if os.path.isfile(lp):
@@ -138,7 +209,6 @@ def rank():
 def fetch_bars(codes):
     """补拉缺失K线进 _bars_cache(sina,与涨停质量训练同缓存)"""
     import akshare as ak, time
-    from concurrent.futures import ThreadPoolExecutor
     def one(c):
         f=os.path.join(CDIR,c+".csv")
         if os.path.isfile(f): return 0
@@ -150,7 +220,7 @@ def fetch_bars(codes):
                 b.to_csv(f,index=False); return 1
             except Exception: time.sleep(1)
         return 0
-    with ThreadPoolExecutor(4) as ex: n=sum(ex.map(one,codes))
+    n=sum(one(c) for c in codes)
     print(f"补K线 {n}/{len(codes)}")
 if __name__=="__main__":
     a=sys.argv[1:]

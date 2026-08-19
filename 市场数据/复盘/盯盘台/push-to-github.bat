@@ -4,8 +4,8 @@ echo [盯盘台] 正在同步到 GitHub Pages...
 echo.
 
 REM 设置代理（根据你的系统代理自动配置）
-set HTTP_PROXY=http://127.0.0.1:15236
-set HTTPS_PROXY=http://127.0.0.1:15236
+set HTTP_PROXY=http://127.0.0.1:7897
+set HTTPS_PROXY=http://127.0.0.1:7897
 
 REM 进入盯盘台目录
 cd /d "D:\股票数据\市场数据\复盘\盯盘台"

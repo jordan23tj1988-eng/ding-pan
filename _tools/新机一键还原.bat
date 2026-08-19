@@ -4,8 +4,8 @@ setlocal
 
 REM ===== 情绪复盘系统 · 新机一键还原 (方向:仓库 -> 本地) =====
 REM 前提: 已装git。若GitHub连不上,去掉下面两行开头的REM并改成你的代理端口
-REM set HTTP_PROXY=http://127.0.0.1:15236
-REM set HTTPS_PROXY=http://127.0.0.1:15236
+REM set HTTP_PROXY=http://127.0.0.1:7897
+REM set HTTPS_PROXY=http://127.0.0.1:7897
 
 set REPO=D:\股票数据\ding-pan仓库
 

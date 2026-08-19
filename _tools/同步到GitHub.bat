@@ -3,8 +3,8 @@ chcp 65001 >nul
 setlocal
 
 REM ===== 配置 =====
-set HTTP_PROXY=http://127.0.0.1:15236
-set HTTPS_PROXY=http://127.0.0.1:15236
+set HTTP_PROXY=http://127.0.0.1:7897
+set HTTPS_PROXY=http://127.0.0.1:7897
 set SRC=D:\股票数据\市场数据
 set EXTRAS=D:\股票数据\同步GitHub\_extras
 set REPO=D:\股票数据\ding-pan仓库

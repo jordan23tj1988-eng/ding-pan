@@ -1,0 +1,25 @@
+{
+  "date": "20260819",
+  "session": "hb-e_1430",
+  "ts": "14:30",
+  "write_ts": "2026-08-19 14:31",
+  "条件决断": [],
+  "data_freshness": {
+    "pulse": {"path": "盘中/20260819/pulse.json", "exists": false, "note": "今日全天未生成(14:30 复查, 同 09:21/10:30/13:30 场)"},
+    "warboard": {"path": "盘中/20260818/warboard.json", "mtime": "2026-08-19 14:30:50", "note": "引擎兜底流 14:30 仍写昨目录(硬编码错位先例); 内容 date=20260818 晚间复盘 stage=B中性偏防守 pos_band≤2成 account.n_pos=0 cash=100% checks.now全null; 非今日实时数据, 不作触发依据"},
+    "playbook": {"path": "盘中/20260819/playbook.json", "exists": false, "note": "全盘搜索 0 命中 → 无结构化预案单, 无 A 级 trigger 可判"},
+    "执行流水": {"path": "盘中/20260819/执行流水.jsonl", "exists": false, "note": "引擎今日零成交"},
+    "报警_20260819": {"path": "盘中/报警_20260819.jsonl", "exists": false, "note": "今日报警走 pipeline_alarm.jsonl"},
+    "pipeline_alarm": {"ts": "2026-08-19 10:00:12", "level": "ALARM", "type": "all_source_dead", "detail": "盘中管道连续30分钟全源失败(iFinD errorcode=-1010, 腾讯实时 NoneType, streak=30), 报警退出"},
+    "launcher_log_tail": "10:00:12 '连续30分钟全源失败, 报警退出' 后无任何恢复/重启记录; 无管道进程存活; pipeline.lock=20260819 09:14:37 未更新",
+    "次日卖出指令": {"path": "盘中/*/次日卖出指令.json", "exists": false, "note": "尾盘卖预案无对象"},
+    "realtime": "09:31 起腾讯实时 NoneType + iFinD -1010 持续; 管道 10:00:12 报警退出后全天无恢复迹象(14:30 复查)",
+    "stale_min": "≈300+ (自 09:14:37 启动起, 远超 10 分钟红线)"
+  },
+  "decision": {
+    "level": "ALARM_ONLY",
+    "fills": [],
+    "reason": "数据断更>10分钟红线(全源失败 10:00:12 报警退出后 4.5h 无恢复, 全天实时链断) → 只报警禁决策。0818 晚间预案 account.n_pos=0 空仓 cash=100%, 无持仓需防守; playbook 0 命中无 A 级 trigger; 无实时数据无从评估 B 级防守触发或 C 级预案外机会; 写任何预判即编造(铁律①零编造)",
+    "note": "与 09:21/10:30/13:30 场同源持续态, 报警已由管道 10:00:12 pipeline_alarm.jsonl 留档 + 三场决断文件确认, 本场不重复追加报警行, 仅留档 14:30 复查结论: 全天数据缺失坐实(第7日: 8-13/8-14/8-17/8-18/8-19 同源族)。供 14:45 深场B: 尾盘卖预案候选(次日卖出指令空)与明日预案要点草稿均需当日数据支撑, 无数据备料即编造 → 深场B 仅可做同款只报警留档, 禁产出备料; 0818 warboard checks(涨停降/温度降/炸板率升/一进二率降/量能2万亿)今日无法回应, 顺延。取数链恢复后下个心跳场次方可恢复实质决策"
+  }
+}

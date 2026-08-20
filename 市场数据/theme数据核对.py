@@ -49,6 +49,19 @@ def main():
     if err:
         print('FAIL', err); return 1
 
+    # ===== 0a. 结构化产物存在性闸门(2026-08-19 三连复发根治: prompt 漏要求也硬拦, 不静默出页) =====
+    for fn, must_keys in (('题材生命周期判断_%s.json' % d, ('逐线判断', '高低切')),
+                          ('题材龙头判断_%s.json' % d, ('龙头标的', '判断'))):
+        jd, je = load_json(fn)
+        if jd is None:
+            chk(issues, False, f'结构化产物 {fn} 必须存在', je)
+            continue
+        miss = [k for k in must_keys if k not in jd]
+        chk(issues, not miss, f'结构化产物 {fn} 键齐全', ('缺 ' + ','.join(miss)) if miss else 'OK')
+        if not miss and fn.startswith('题材生命周期判断'):
+            n = len(jd.get('逐线判断') or {})
+            chk(issues, n >= 3, f'结构化产物 {fn} 逐线判断≥3条', f'实际{n}条')
+
     # ===== 0. 结构基线: 机器锚成对 + h2 五板块 =====
     for anchor in ('THEMEBATTLE', '6YOU', 'FOURDIM', 'LIFECYCLE'):
         a = h.count(f'<!--{anchor}-->'); b = h.count(f'<!--/{anchor}-->')
@@ -155,6 +168,19 @@ def main():
         bad = rec_codes - codes
         # ★2026-08-12: \d{6} 会误抓日期前缀(20260811→'202608', 20260716→'202607')——排除 20xx 开头的日期串
         bad = {c for c in bad if not re.match(r'20\d{4}', c)}
+        # ★2026-08-19: 反事实引用豁免——题材body合法引用非涨停池代码作"缺席/断板/掉队/退位/未涨停/反包/晋级/不在"等反事实语境(纯正种业龙头缺席/医药产业龙断板/高低切承接线断),非荐票标的,不应判荐票铁律违规
+        _cf_kw = ('缺席', '断板', '掉队', '退位', '未涨停', '反包', '晋级', '不在', '坍塌', '虚胖', '退坡', '腰斩')
+        _bad2 = set()
+        for _c in bad:
+            _in_cf = False
+            for _m in re.finditer(_c, bt):
+                _ctx = bt[max(0, _m.start() - 25):_m.start() + 30]
+                if any(_kw in _ctx for _kw in _cf_kw):
+                    _in_cf = True
+                    break
+            if not _in_cf:
+                _bad2.add(_c)
+        bad = _bad2
         chk(issues, not bad, 'bodies.theme 内代码∈zt_pool', ';'.join(sorted(bad)[:5]) or '全在池内')
 
     # ===== 7. 机器组件回源(页面 vs 数据源, 抽查) =====

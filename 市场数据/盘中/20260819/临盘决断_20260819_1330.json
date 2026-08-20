@@ -1,0 +1,24 @@
+{
+  "date": "20260819",
+  "session": "hb-d_1330",
+  "ts": "13:30",
+  "write_ts": "2026-08-19 13:34",
+  "条件决断": [],
+  "data_freshness": {
+    "pulse": {"path": "盘中/20260819/pulse.json", "exists": false, "note": "今日全天未生成(13:33 复查全盘 0 命中, 同 09:21/10:30 场)"},
+    "warboard": {"path": "盘中/20260818/warboard.json", "mtime": "2026-08-19 10:00", "note": "引擎今日仍写昨目录(硬编码错位先例); 内容 date=20260818 晚间复盘 stage=B中性偏防守 pos_band≤2成 account.n_pos=0 cash=100%; 非今日实时数据, 不作触发依据"},
+    "playbook": {"path": "盘中/20260819/playbook.json", "exists": false, "note": "全盘搜索 0 命中 → 无结构化预案单, 无 A 级 trigger 可判"},
+    "执行流水": {"path": "盘中/20260819/执行流水.jsonl", "exists": false},
+    "报警_20260819": {"path": "盘中/报警_20260819.jsonl", "exists": false, "note": "今日报警走 pipeline_alarm.jsonl"},
+    "pipeline_alarm": {"ts": "2026-08-19 10:00:12", "level": "ALARM", "type": "all_source_dead", "detail": "盘中管道连续30分钟全源失败(iFinD errorcode=-1010, 腾讯实时 NoneType, 取数失败 streak=30), 报警退出"},
+    "launcher_log_tail": "10:00:12 '连续30分钟全源失败, 报警退出' 后无任何恢复/重启记录",
+    "realtime": "09:31 起腾讯实时 NoneType 异常 + iFinD -1010 持续; 管道 10:00:12 报警退出后全天无恢复迹象(13:33 复查)",
+    "stale_min": "≈213 (自 10:00:12 all_source_dead 起, 远超 10 分钟红线)"
+  },
+  "decision": {
+    "level": "ALARM_ONLY",
+    "fills": [],
+    "reason": "数据断更>10分钟红线(10:00:12 all_source_dead 起 3.5h 无恢复, 全天实时链断) → 只报警禁决策。0818 晚间预案 account.n_pos=0 空仓 cash=100%, 无持仓需防守; playbook 0 命中无 A 级 trigger; 无实时数据无从评估 B 级防守触发或 C 级预案外机会; 写任何预判即编造(铁律①零编造)",
+    "note": "与 09:21/10:30 场同源持续态, 报警已由管道 10:00:12 pipeline_alarm.jsonl 留档 + 10:30 场决断文件确认, 本场不重复追加报警行, 仅留档 13:30 复查结论: 全天数据缺失坐实。供晚间复盘: 今日盘中数据(涨停/温度/炸板等)全部缺失, 禁止以任何方式用今日盘中数据回填或做验证; 0818 warboard checks(涨停降/温度降/炸板率升/一进二率降/量能2万亿)今日无法回应, 顺延。取数链恢复后下个心跳场次方可恢复实质决策"
+  }
+}

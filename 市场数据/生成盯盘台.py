@@ -732,6 +732,21 @@ def build(date):
             print(_lr3.stdout.strip().split('\n')[-1])
     else:
         print('!!!未找到 cycle数据核对.py, 数字核对跳过')
+    # ★theme 数字核对哨兵(2026-08-19接线: 脚本8/12已存在但生成器漏接=哨兵不跑形同虚设;
+    #   8/17-8/19三连"三 主流生命周期 LLM定性判断/判据缺失"根因之一=结构化json漏产无人拦;
+    #   0a闸门: 题材生命周期判断/龙头判断 json 必须存在+键齐全, 缺=FAIL 禁止发布)
+    #   FAIL 不阻断出页(页面已生成), 但打印醒目错误, 强制人工复核后才能发布
+    _lf4=os.path.join(BASE,'theme数据核对.py')
+    if os.path.exists(_lf4):
+        _lr4=subprocess.run([sys.executable,_lf4,date],capture_output=True,text=True)
+        if _lr4.returncode!=0:
+            print('!!!theme数据核对 FAIL — 页面数字与数据源不一致, 禁止发布!')
+            for _ln in (_lr4.stdout or '').strip().split('\n'):
+                if '✗' in _ln or 'FAIL' in _ln: print('    '+_ln.strip())
+        elif _lr4.stdout:
+            print(_lr4.stdout.strip().split('\n')[-1])
+    else:
+        print('!!!未找到 theme数据核对.py, 数字核对跳过')
 
 
 if __name__=='__main__':

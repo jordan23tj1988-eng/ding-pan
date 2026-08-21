@@ -198,6 +198,9 @@ def main():
     # ===== 6. 负面验证(限 LLM 手写文本区: 头部+板块一/五/六; 不扫 CSS/JS/SVG 合法内容) =====
     htxt = re.sub(r'<script.*?</script>', '', h, flags=re.S)
     htxt = re.sub(r'<style.*?</style>', '', htxt, flags=re.S)
+    # ★2026-08-21: 台账/存档折叠区(含已冻结历史发出版的"待结算None"占位)属机器区, 非LLM手写区
+    #   与注释本意对齐: 折叠区剔除后再扫, 防历史存档占位误报阻断发布
+    htxt = re.sub(r'<details class="chain".*?</details>', '', htxt, flags=re.S)
     htxt = re.sub(r'<[^>]+>', '', htxt)
     for kw in ('NaN', 'None', '{{', 'TODO', 'undefined', 'null</'):
         if kw in htxt:

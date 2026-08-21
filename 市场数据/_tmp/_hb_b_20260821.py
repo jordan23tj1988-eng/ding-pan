@@ -1,0 +1,89 @@
+# -*- coding: utf-8 -*-
+"""hb-b 心跳 10:30趋势确认段 2026-08-21: 只报警禁决策(数据全天断更, 同族第8日)"""
+import json, os, sys, datetime
+
+BASE = r"D:\股票数据\市场数据"
+sys.path.insert(0, BASE)
+from _jsonl_append import append_dedup
+
+TDAY = "20260821"
+now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+# ---- 临盘决断留证(同今日hb-d先例: ALARM_ONLY, 无fills) ----
+decision = {
+    "date": TDAY,
+    "session": "hb-b_1030",
+    "ts": "10:30",
+    "write_ts": now,
+    "条件决断": [],
+    "data_freshness": {
+        "pulse": {"path": f"盘中/{TDAY}/pulse.json", "exists": False,
+                  "note": "今日全天未生成(全盘搜索pulse.json 0命中, 同族断更第8日: 8-13/8-14/8-17/8-18/8-19/8-20/今日)"},
+        "warboard": {"path": f"盘中/{TDAY}/warboard.json", "exists": False,
+                     "note": "今日无当日warboard; 最近留档=盘中/20260820/warboard.json(08-20 21:00) date=20260820 stage=B pos_band≥5成 account起算20260813 nav1.0 pos0% cash100% n_pos=0 checks.now全null, 非今日预案不作决断输入"},
+        "playbook": {"path": f"盘中/{TDAY}/playbook.json", "exists": True,
+                     "note": "晚间预案存在(mtime 08-20 19:42): buys仅神奇制药600613 weight3% trigger open_range gap∈[-3,+5]% + abort_if4条, sells=[], 现金100%空仓"},
+        "执行流水": {"path": f"盘中/{TDAY}/执行流水.jsonl", "exists": False},
+        "报警": {"path": f"盘中/报警_{TDAY}.jsonl",
+                "note": "hb-a(18:36:28)/hb-d(18:37:59)已报同源data_stale(本心跳前已存在), 本心跳将去重追加hb-b条"},
+        "launcher": {"path": "盘中/launcher.log",
+                     "note": "今日盘中时段实时取数管道未运行: 早段09:58-10:00全源失败streak=30于10:00:19报警退出; 18:34:32重启观察池=昨日涨停池20260820\\\\zt_pool.csv(79只)→18:34:36 iFinD login rc=0→连续段启动→收盘退出(已过收盘)"},
+        "pipeline_lock": "20260821 18:34:27(非盘中时间戳, 18:34收盘段launcher写入)",
+        "stale_min": "全天(执行时刻18:39已过收盘, 盘中时段零留档, 远超10分钟红线)",
+        "verdict": "只报警禁决策: 数据断更>10分钟, 无pulse/无当日warboard/无实时tick → 一切判断无据, 写任何预判即编造(铁律①)"
+    },
+    "decision": {
+        "level": "ALARM_ONLY",
+        "fills": [],
+        "reason": ("数据全天断更(同族第8日: 8-13~8-20+今日; 今日盘中实时管道未运行, 早段10:00:19全源失败报警退出后无恢复, "
+                   "18:34重启即收盘退出; 本心跳执行时刻18:39已过收盘) → "
+                   "①B级防守无对象(account持仓0/现金100%[8-20 warboard+playbook notes双留档], 无炸板/回撤可守, 题材批量跳水无从核验) "
+                   "②A级trigger(神奇制药600613 weight3% open_range gap∈[-3,+5]% + abort_if竞价高开≥5%必弃等4条)需实时tick核验承接+开盘价滑点, 全天断更+已收盘禁执行; sells=[]无卖预案 "
+                   "③C级预案外进攻禁止(无数据无从核验, 写即编造违反铁律①零编造, 同今日hb-a/hb-d先例); "
+                   "依铁律只报警禁决策, 不写任何触发证据与预判"),
+        "note": ("与今日hb-a(09:40开盘博弈段)/hb-d(13:30午后延续段)同源报警; 取数链恢复并补pulse.json+当日warboard后, "
+                 "下一心跳场(14:30/14:57)方可恢复实质决策; 交易日校验: sentiment.core.calendar模块仍缺失(同8-13~8-20先例), "
+                 "依pipeline.lock=20260821+周五历法+playbook已建按正常交易日处理")
+    }
+}
+
+dpath = os.path.join(BASE, "盘中", TDAY, f"临盘决断_{TDAY}_1030.json")
+if os.path.isfile(dpath):
+    print("DECISION_SKIP_EXISTS:", dpath)
+else:
+    with open(dpath, "w", encoding="utf-8") as f:
+        json.dump(decision, f, ensure_ascii=False, indent=2)
+    print("DECISION_WRITTEN:", dpath)
+
+# ---- 报警jsonl追加(去重 session=hb-b) ----
+rec = {
+    "ts": now,
+    "session": "hb-b",
+    "level": "ALARM",
+    "type": "data_stale",
+    "scope": "intraday_chain",
+    "detail": (
+        "心跳hb-b(1030趋势确认段)链路全天断更(同族第8日延续: 8-13/8-14/8-17/8-18/8-19/8-20/今日): "
+        "盘中/20260821/ 仅playbook.json(08-20 19:42晚间预案)+hb-d留证的临盘决断_1330.json, pulse.json/warboard.json/执行流水.jsonl 全MISSING; "
+        "本心跳执行时刻=08-21 18:39(已过收盘, 盘中时段零留档), 10:30决断时间戳之前无任何当日行情数据可引; "
+        "launcher.log: 早段09:58-10:00全源失败streak=30于10:00:19'连续30分钟全源失败,报警退出'后无恢复; "
+        "18:34:32重启观察池=昨日涨停池20260820\\\\zt_pool.csv(79只)→18:34:36 iFinD login rc=0→连续段启动→收盘退出(盘中管道今日未运行); "
+        "pipeline.lock=20260821 18:34:27(非盘中时间戳); "
+        "盘中/报警_20260821.jsonl 已有hb-a(18:36:28)/hb-d(18:37:59)同源条(本心跳前存在); "
+        "交易日校验: sentiment.core.calendar模块仍缺失(同8-13~8-20先例), 依pipeline.lock=20260821+周五历法+playbook已建按正常交易日处理"
+    ),
+    "disposition": (
+        "只报警禁决策: 无pulse新鲜度(文件不存在, 全天断更远超10分钟红线)、无当日实时行情 → "
+        "①B级防守无对象(account持仓0/现金100%[8-20 warboard留档], 无炸板/回撤可守, 关注池题材批量跳水无从核验); "
+        "②A级预案trigger(playbook buys仅神奇制药600613 weight3% trigger open_range gap∈[-3,+5]% + abort_if4条)需实时tick核验承接+滑点, 全天断更+已收盘禁执行; sells=[]无卖预案; "
+        "③C级预案外进攻禁止(无数据无从核验, 写即编造违反铁律①零编造, 同今日hb-a/hb-d先例); "
+        "已写临盘决断_20260821_1030.json(ALARM_ONLY留证, 无fills); 无A/B/C级动作, 心跳hb-b无动作"
+    ),
+    "suggest": (
+        "人工排查: 今日盘中时段实时取数管道未运行(launcher.log仅18:34收盘段'连续段启动→收盘退出'), 需确认launcher定时/常驻机制为何盘中未跑(同族断更第8日: 8-13~8-20); "
+        "恢复后补pulse.json+realtime_ticks.jsonl方可执行10:30趋势确认段复核补跑及14:30/14:57心跳; "
+        "修复sentiment.core.calendar模块缺失(连续8日)或改用留档日历trading_calendar.py"
+    ),
+}
+ok = append_dedup(os.path.join(BASE, "盘中", f"报警_{TDAY}.jsonl"), rec, keys="session")
+print("APPEND_RESULT:", "written" if ok else "dup_skipped")

@@ -1,0 +1,46 @@
+{
+  "date": "20260821",
+  "session": "deepb-1445",
+  "ts": "14:45",
+  "write_ts": "2026-08-21 18:40:27",
+  "条件决断": [],
+  "data_freshness": {
+    "pulse": {
+      "path": "盘中/20260821/pulse.json",
+      "exists": false,
+      "note": "今日全天未生成(全盘搜索pulse.json 0命中, 同族断更第8日: 8-13/8-14/8-17/8-18/8-19/8-20/今日)"
+    },
+    "warboard": {
+      "path": "盘中/20260821/warboard.json",
+      "exists": false,
+      "note": "今日无当日warboard; 最近留档=盘中/20260820/warboard.json(08-20 21:00, 晚间复盘重建) date=20260820 stage=B pos_band≥5成 account起算20260813 nav=1.0 pos0% cash100% n_pos=0 checks.now全null, 为0820晚预案非今日预案, 不作决断输入"
+    },
+    "playbook": {
+      "path": "盘中/20260821/playbook.json",
+      "exists": true,
+      "note": "晚间预案存在(mtime 08-20 19:42): buys仅神奇制药600613 weight3% trigger open_range gap∈[-3,+5]% + abort_if4条(竞价高开≥5%必弃/深低开≤-3%弃/盘中炸板不回封弃/医药线无新出2板弃); sells=[]; 现金100%空仓; 验证点(收红≥+2%/医药涨停≥15只/晋级2板)为0821当日作用域"
+    },
+    "执行流水": {
+      "path": "盘中/20260821/执行流水.jsonl",
+      "exists": false,
+      "note": "全盘搜索执行流水*.jsonl 0命中(历史亦无此文件, 引擎成交留档走_学习/_模拟盘/盘中作战/账本.jsonl)"
+    },
+    "报警": {
+      "path": "盘中/报警_20260821.jsonl",
+      "note": "本场前已有 hb-a(18:36:28)+hb-d(18:37:59)同源data_stale条, 本场追加deepb-1445条(第3条, 与8-20六场报警惯例一致)"
+    },
+    "launcher": {
+      "path": "盘中/launcher.log",
+      "note": "今日盘中时段实时取数管道未运行: log今日段仅 [18:34:32]观察池=昨日涨停池20260820\\zt_pool.csv(79只)→[18:34:36]iFinD login rc=0→连续段启动→收盘退出; log中09:54-10:00全源失败streak=30块属8-20(8-20 14:46各场报警引'launcher.log 10:00:19末行'即该块末尾, 8-21盘中段零写入)"
+    },
+    "pipeline_lock": "20260821 18:34:27(收盘段launcher写入, 非盘中时间戳)",
+    "stale_min": "全天(执行时刻18:40已过收盘, 盘中时段零留档, 远超10分钟红线)",
+    "verdict": "只报警禁决策: 数据断更>10分钟红线(今日盘中零留档), 无pulse/无当日warboard/无实时tick → 一切判断无据, 写任何预判即编造(铁律①零编造)"
+  },
+  "decision": {
+    "level": "ALARM_ONLY",
+    "fills": [],
+    "reason": "数据全天断更(同族第8日: 8-13~8-20+今日; 今日盘中实时管道未运行, launcher盘中段零写入, 18:34重启即收盘退出; 本场执行时刻18:40已过收盘, 14:45决断时点之前无任何当日行情数据可引) → ①持仓逐票表态无对象: 盘中作战账本 state.json positions=[] cash=1000000 nav=1.0 空仓(playbook notes③+8-20 warboard account双留档), 无炸板/回撤/尾盘卖可守; ②对账一致: 执行流水.jsonl MISSING + 盘中作战账本.jsonl仅20260813起算清仓2笔 = 引擎今日零成交, 与空仓预案吻合; ③尾盘卖预案无执行对象: playbook sells=[] + 盘中作战/次日卖出指令.json=[] → 无 leg=close/take_zt 可触发; 止损类规则只认预案单显式声明, 预案单为空 → 不适用; ④A级buy trigger(神奇制药600613 weight3% open_range gap∈[-3,+5]% + abort_if4条)为0821当日竞价执行且需实时tick核验承接+滑点, 全天断更禁执行, 0821验证点(收红≥+2%/医药涨停≥15只/晋级2板)无法回应; ⑤C级预案外进攻禁止(无数据无从核验, 写即编造违反铁律①, 同今日hb-a/hb-d先例); 依铁律只报警禁决策, 不写任何触发证据与预判",
+    "note": "与今日hb-a(09:40开盘博弈段)/hb-d(13:30午后延续段)同源报警; 取数链恢复并补pulse.json+当日warboard+realtime_ticks.jsonl后, 下一场(14:57收盘竞价场/明日竞价场)方可恢复实质决策; 交易日校验: sentiment.core.calendar模块仍缺失(同8-13~8-20先例), 依playbook已建(20260821)+周五历法按正常交易日处理, 留档日历_交易日历.json尾=20260820(今日未入bars与全天断更一致)"
+  }
+}

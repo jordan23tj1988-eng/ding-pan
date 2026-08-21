@@ -1,0 +1,45 @@
+{
+  "date": "20260821",
+  "session": "hb-e_1430",
+  "ts": "14:30",
+  "write_ts": "2026-08-21 18:39:00",
+  "条件决断": [],
+  "data_freshness": {
+    "pulse": {
+      "path": "盘中/20260821/pulse.json",
+      "exists": false,
+      "note": "今日全天未生成(全盘搜索pulse.json 0命中, 同族断更第8日: 8-13/8-14/8-17/8-18/8-19/8-20/今日)"
+    },
+    "warboard": {
+      "path": "盘中/20260821/warboard.json",
+      "exists": false,
+      "note": "今日无当日warboard; 最近留档=盘中/20260820/warboard.json(08-20 21:00) date=20260820 stage=B pos_band≥5成 account起算20260813 nav1.0 pos0% cash100% n_pos=0 checks.now全null, 非今日预案不作决断输入"
+    },
+    "playbook": {
+      "path": "盘中/20260821/playbook.json",
+      "exists": true,
+      "note": "晚间预案存在(mtime 08-20 19:42): buys仅神奇制药600613 weight3% trigger open_range gap∈[-3,+5]% + abort_if4条, sells=[], 现金100%空仓"
+    },
+    "执行流水": {
+      "path": "盘中/20260821/执行流水.jsonl",
+      "exists": false
+    },
+    "报警": {
+      "path": "盘中/报警_20260821.jsonl",
+      "note": "hb-a 18:36:28 + hb-d 18:37:59已报同源data_stale(本心跳前已存在), 本心跳去重追加hb-e条"
+    },
+    "launcher": {
+      "path": "盘中/launcher.log",
+      "note": "今日盘中时段实时取数管道未运行: 早段09:58-10:00全源失败streak=30于10:00:19报警退出; 18:34:32重启观察池=昨日涨停池20260820\\zt_pool.csv(79只)→18:34:36 iFinD login rc=0→连续段启动→收盘退出(已过收盘)"
+    },
+    "pipeline_lock": "20260821 18:34:27(非盘中时间戳, 18:34收盘段launcher写入)",
+    "stale_min": "全天(执行时刻18:39已过收盘, 盘中时段零留档, 远超10分钟红线)",
+    "verdict": "只报警禁决策: 数据断更>10分钟, 无pulse/无当日warboard/无实时tick → 一切判断无据, 写任何预判即编造(铁律①)"
+  },
+  "decision": {
+    "level": "ALARM_ONLY",
+    "fills": [],
+    "reason": "数据全天断更(同族第8日: 8-13~8-20+今日; 今日盘中实时管道未运行, 早段10:00:19全源失败报警退出后无恢复, 18:34重启即收盘退出; 本心跳执行时刻18:39已过收盘) → ①B级防守无对象(account持仓0/现金100%[8-20 warboard+playbook notes双留档], 无炸板/回撤可守, 题材批量跳水无从核验) ②A级trigger(神奇制药600613 weight3% open_range gap∈[-3,+5]% + abort_if竞价高开≥5%必弃等4条)需实时tick核验承接+开盘价滑点, 全天断更+已收盘禁执行; sells=[]无卖预案 ③C级预案外进攻禁止(无数据无从核验, 写即编造违反铁律①零编造, 同hb-a/hb-d今日先例) ④14:45深场B备料(尾盘卖预案候选/明日预案要点草稿)无当日行情无从做起, 写即编造; 依铁律只报警禁决策, 不写任何触发证据与预判",
+    "note": "与今日hb-a(09:40)/hb-d(13:30)同源报警(本心跳为去重追加); 取数链恢复并补pulse.json+当日warboard后, 下一心跳场(14:57)方可恢复实质决策; 交易日校验: sentiment.core.calendar模块仍缺失(同8-13~8-20先例), 依pipeline.lock=20260821+周五历法+playbook已建按正常交易日处理"
+  }
+}

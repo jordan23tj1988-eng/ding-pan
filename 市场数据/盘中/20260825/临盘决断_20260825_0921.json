@@ -1,0 +1,55 @@
+{
+  "date": "20260825",
+  "session": "preread_0921",
+  "ts": "09:21",
+  "write_ts": "2026-08-25 09:37:09",
+  "条件决断": [],
+  "data_freshness": {
+    "auction_traj": {
+      "path": "盘中/20260825/auction_traj.jsonl",
+      "exists": false,
+      "note": "今日9:15-9:25竞价轨迹零留档: 盘中/20260825/ 目录空; 根因=盘中实时管道.py main()以启动时刻一次性判断 now.strftime(%H:%M)>='09:15' 才调用竞价段, launcher今日09:14:38启动→09:14:42 iFinD login rc=0后直接'连续段启动'(日志无'竞价段启动'/无'竞价tick'行), 竞价段整体跳过"
+    },
+    "playbook": {
+      "path": "盘中/20260825/playbook.json",
+      "exists": false,
+      "note": "今日无playbook(全盘搜索无今日预案); 最近=盘中/20260821/playbook.json(8/21预案, 禁跨日引用不作今日输入); 无预案buys → 条件决断无可写票"
+    },
+    "pulse": {
+      "path": "盘中/20260825/pulse.json",
+      "exists": false,
+      "note": "今日未生成"
+    },
+    "warboard": {
+      "path": "盘中/20260825/warboard.json",
+      "exists": false,
+      "note": "今日无当日warboard; 盘中/20260824/warboard.json(ts=2026-08-24晚间复盘重建, date=20260824, 今日09:25被重渲染但属昨日数据)非今日预案不作决断输入; 模拟盘state: 起算20260813 cash100% positions=[] nav1.0 n_pos=0"
+    },
+    "执行流水": {
+      "path": "盘中/20260825/执行流水.jsonl",
+      "exists": false
+    },
+    "报警": {
+      "path": "盘中/报警_20260825.jsonl",
+      "note": "今日此前不存在, 本场为今日首条报警(已写入)"
+    },
+    "launcher": {
+      "path": "盘中/launcher.log",
+      "note": "今日: 09:14:38启动(观察池=20260824/zt_pool.csv 46只)→09:14:42 iFinD login rc=0→连续段启动(竞价段被跳过); 09:31:02 iFinD实时errorcode=-1010+腾讯实时NoneType, 取数失败streak=1(同族故障延续第10日: 8-13~8-24+今日); 09:31:02条目为执行时刻观察所得, 仅作管道状态佐证, 不作09:21决策输入"
+    },
+    "竞价快照存档": {
+      "path": "_学习/竞价快照存档/20260825.csv.gz",
+      "exists": true,
+      "note": "09:25:02采集5425条(ifind_rt)证明今日为交易日; 但采集时刻>决断时间戳09:21, 零后视镜不得用作预读输入; 且为全市场快照非观察池逐票轨迹"
+    },
+    "pipeline_lock": "20260825 09:14:38(盘中launcher写入)",
+    "stale_min": "竞价段全程(9:15-9:25零留档, 远超10分钟红线)",
+    "verdict": "只报警禁决策: 数据断更>10分钟, 无auction_traj/无playbook/无pulse → 一切预判无据, 写任何预判即编造(铁律①); 交易日校验: sentiment.core.calendar模块缺失(同8-13起先例), trading_calendar.py未收录今日仅因当日bar未完成(缓存mtime=8/24 19:53), 依周二历法+launcher 09:14活跃+全市场竞价快照5425条按正常交易日处理"
+  },
+  "decision": {
+    "level": "ALARM_ONLY",
+    "fills": [],
+    "reason": "竞价预读场(09:21)数据全断(同族第10日延续: 8-13~8-24+今日): ①auction_traj.jsonl缺失(管道09:14:42启动晚于09:15判断窗口导致竞价段整体跳过, 9:15-9:21撤单量/真实承接/抢筹速率全null)→9:25终值落点无从推演, 每票预判写即编造; ②playbook.json缺失→无预案buys trigger, 条件决断无票可写(0条); ③B级防守无对象(模拟盘持仓0/现金100%/n_pos=0); ④C级预案外进攻禁止(无数据无从核验)。依铁律只报警禁决策, 不写任何触发证据与预判, 条件决断=[]",
+    "note": "今日首条报警(盘中/报警_20260825.jsonl 此前不存在); 需修复盘中实时管道.py竞价段入口(启动时刻<09:15应等待进入而非跳过)+取数源恢复并补auction_traj.jsonl/playbook.json后, 下一场心跳方可恢复实质预读"
+  }
+}

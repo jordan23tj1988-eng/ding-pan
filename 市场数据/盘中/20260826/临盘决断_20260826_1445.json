@@ -1,0 +1,15 @@
+{
+  "date": "20260826",
+  "session": "deepb-1445",
+  "ts": "14:45",
+  "write_ts": "2026-08-26 14:47:00",
+  "level": "ALARM_ONLY",
+  "fills": [],
+  "no_action": null,
+  "reason": "数据断更远超10分钟红线(全天零留档, 断更>5.5小时至14:45, 无复苏): 今日pulse.json/warboard.json/执行流水.jsonl/auction_traj.jsonl/playbook.json 全MISSING; pipeline_alarm.jsonl(10:00:19)all_source_dead; launcher.log尾: [10:00:19]连续30分钟全源失败报警退出(腾讯实时NoneType+iFinD -1010, 取数失败streak=30), 盘中实时管道进程10:00已退出, 盘中目录13:35后零新文件; 同族故障延续第11日(8-13~8-26)。→ ①A级尾盘卖预案无trigger可依(今日无playbook, 8/21预案禁跨日引用, sells=[] 无 leg=close/take_zt 触发对象); ②B级防守无对象(模拟盘_学习/_模拟盘/盘中作战/state.json 14:45复核: cash=1000000.0 positions=[] n_pos=0 空仓, 无炸板/回撤可守); ③C级预案外进攻禁止(实时取数链全断, 无数据无从核验, 写即编造违反铁律①); ④持仓表态无对象(当日warboard MISSING, 引擎今日零成交)。依铁律只报警禁决策, fills=[], 不写任何预判/触发证据。",
+  "for_next": {
+    "tail_sell_candidates": [],
+    "tomorrow_plan_draft": null,
+    "note": "数据全断(全天零留档>5.5h), 尾盘卖预案候选=无; 明日(0827)竞价场需先核验链路是否恢复, 恢复前延续只报警禁决策; 未恢复前不编造任何候选。已留档基线=0825晚间复盘(18:02, judgment_20260825.json): 总裁决C档防守空仓/温度37.1偏冷反弹第1日/涨停65/量能18318亿缩量/汉森5板孤高/全池负期望第7日/一进二8.2%破冰点/升B需三信号齐(一进二率>10%+全池执1max≥50%+主线宽≥13); 建票观察=英维克002837+金健米业600127(0825荐出), 恢复日按0825晚预案承接核验, 0826当日全部状态不可核验(同族断更第11日)"
+  }
+}

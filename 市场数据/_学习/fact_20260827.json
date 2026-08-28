@@ -1,0 +1,155 @@
+{
+ "schema": "fact-v1",
+ "date": "20260827",
+ "route": "limitup",
+ "build_time": "2026-08-27 18:41:40",
+ "权威值口径": "涨停/炸板/跌停/炸板率/温度/最高板/回封/二板加/成交额/封板总额=温度表(剔ST对齐THS); 题材线数=涨停对链条; 归位A/B/C=题材归位(题材唯一真源, 来源档即质量枚举)",
+ "facts": {
+  "涨停数": {
+   "value": 77,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 77,
+    "summary": 77,
+    "对链条": 77,
+    "归位": 77,
+    "zt_pool原始行数": 77
+   }
+  },
+  "炸板数": {
+   "value": 17,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 17,
+    "summary": 17
+   }
+  },
+  "跌停数": {
+   "value": 3,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 3,
+    "summary": 3
+   }
+  },
+  "炸板率": {
+   "value": 0.181,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 0.181,
+    "summary": 0.181
+   }
+  },
+  "封板率": {
+   "value": 0.8191,
+   "source": "温度表自算(涨停/(涨停+炸板))",
+   "quality": "ok",
+   "sources": {
+    "温度表自算(涨停/(涨停+炸板))": 0.8191
+   }
+  },
+  "温度": {
+   "value": 59.0,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 59.0
+   }
+  },
+  "温度档": {
+   "value": "中性",
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": "中性"
+   }
+  },
+  "最高连板": {
+   "value": 6,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 6,
+    "summary": 6
+   }
+  },
+  "题材线数": {
+   "value": 44,
+   "source": "涨停对链条",
+   "quality": "ok",
+   "sources": {
+    "涨停对链条": 44
+   }
+  },
+  "归位数量": {
+   "value": 77,
+   "source": "题材归位",
+   "quality": "ok",
+   "sources": {
+    "题材归位": 77,
+    "涨停数": 77
+   }
+  },
+  "归位A档数": {
+   "value": 3,
+   "source": "题材归位(来源档计数)",
+   "quality": "ok",
+   "sources": {
+    "题材归位(来源档计数)": 3
+   }
+  },
+  "归位B档数": {
+   "value": 74,
+   "source": "题材归位(来源档计数)",
+   "quality": "ok",
+   "sources": {
+    "题材归位(来源档计数)": 74
+   }
+  },
+  "归位C档数": {
+   "value": 0,
+   "source": "题材归位(来源档计数)",
+   "quality": "ok",
+   "sources": {
+    "题材归位(来源档计数)": 0
+   }
+  },
+  "回封数": {
+   "value": 44,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 44
+   }
+  },
+  "二板加": {
+   "value": 16,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 16
+   }
+  },
+  "成交额亿": {
+   "value": 21259.0,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 21259.0,
+    "summary": 21259.0
+   }
+  },
+  "封板总额亿": {
+   "value": 85.4,
+   "source": "温度表",
+   "quality": "ok",
+   "sources": {
+    "温度表": 85.4
+   }
+  }
+ }
+}

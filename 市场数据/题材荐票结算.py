@@ -33,7 +33,8 @@ def exe_ret(c,dprev):
 def main(dprev):
     jp=os.path.join(L,f"题材荐票_{dprev}.json")
     if not os.path.isfile(jp): print("无题材荐票发出版,跳过"); return
-    j=json.load(open(jp,encoding="utf-8")); picks=j.get("荐票",[])
+    j=json.load(open(jp,encoding="utf-8")); picks=j.get("荐票")
+    if picks is None: picks=[t for t in j.get("标的",[]) if t.get("类型")=="荐票"]
     days=sorted([os.path.basename(x) for x in glob.glob(os.path.join(BASE,"2026*")) if os.path.isdir(x)])
     dnext=next((x for x in days if x>dprev),None)
     ztset=set()

@@ -1,0 +1,15 @@
+{
+  "date": "20260825",
+  "session": "deepb-1445",
+  "ts": "14:45",
+  "write_ts": "2026-08-25 14:47:00",
+  "level": "ALARM_ONLY",
+  "fills": [],
+  "no_action": null,
+  "reason": "数据断更远超10分钟红线(全天断更>4.5小时, 无复苏): 今日pulse.json/warboard.json/执行流水.jsonl/playbook.json 全MISSING; launcher.log 末行 10:00:11 连续30分钟全源失败报警退出(腾讯实时NoneType+iFinD -1010, 取数失败streak=30), 盘中管道已退出, 午后无复苏迹象; 同族故障延续第11日(8-13~8-25)。→ ①B级防守无对象(模拟盘持仓0/cash100%/n_pos=0, 无炸板无回撤可触发, 触发证据无从引用); ②A级尾盘卖预案无trigger可依(今日无playbook, 8/21预案禁跨日引用, sells=[] 无 leg=close/take_zt 触发对象); ③C级预案外进攻禁止(无实时数据无从核验, 写即编造违反铁律①); ④题材批量跳水无从观测(pulse缺失)。依铁律只报警禁决策, fills=[]。1430场for_deep_b_1445备料=无候选(数据全断), 本场延续。",
+  "for_next": {
+    "tail_sell_candidates": [],
+    "tomorrow_plan_draft": null,
+    "note": "数据全断(>4.5h, 全天零留档), 尾盘卖预案候选=无; 明日(0826)竞价场需先核验链路是否恢复, 恢复前延续只报警禁决策; 未恢复前不编造任何候选"
+  }
+}

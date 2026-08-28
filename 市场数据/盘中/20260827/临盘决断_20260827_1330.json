@@ -1,0 +1,48 @@
+{
+  "date": "20260827",
+  "session": "hb_d_1330",
+  "ts": "13:30",
+  "write_ts": "2026-08-27 13:36:00",
+  "data_freshness": {
+    "pulse": {
+      "path": "盘中/20260827/pulse.json",
+      "exists": false,
+      "note": "今日未生成(同族故障第12日)"
+    },
+    "warboard": {
+      "path": "盘中/20260827/warboard.json",
+      "exists": false,
+      "note": "今日无当日warboard; 盘中/20260826/warboard.json=引擎错位写旧目录, 属昨日预案非今日实时, 不作决断输入"
+    },
+    "执行流水": {
+      "path": "盘中/20260827/执行流水.jsonl",
+      "exists": false,
+      "note": "今日未生成, 无持仓变化佐证"
+    },
+    "pipeline_alarm": {
+      "path": "盘中/20260827/pipeline_alarm.jsonl",
+      "note": "10:00:12 all_source_dead(盘中管道30分钟无数据源, 连续30分钟全源失败报警退出), 此后零留档"
+    },
+    "报警": {
+      "path": "盘中/报警_20260827.jsonl",
+      "note": "已有09:34:20(data_stale)+11:06:20(data_stale延续)两条, 本场13:36追加延续性报警"
+    },
+    "playbook": {
+      "path": "盘中/20260827/playbook.json",
+      "exists": true,
+      "note": "8/26 21:03晚间复盘产物(date=20260827), 预案trigger已留档, 仅作条件转写依据非实时"
+    },
+    "launcher": {
+      "path": "盘中/launcher.log",
+      "note": "10:00:12 [10:00:12] iFinD 实时 errorcode=-1010 + 腾讯实时异常(NoneType) + 连续30分钟全源失败, 报警退出; 此后launcher无任何新行"
+    },
+    "stale_min": ">200分钟(10:00:12起零留档, 远超10分钟红线)",
+    "verdict": "数据断更>10分钟→只报警禁决策: 无pulse/warboard/执行流水, 持仓与题材状态无从核验, 实时判断写即编造(铁律①)"
+  },
+  "decision": {
+    "level": "ALARM_ONLY(数据断更禁决策, 同09:21/11:00两场延续)",
+    "fills": [],
+    "reason": "心跳hb-d(13:30午后延续段): ①数据断更>200分钟(pipeline_alarm 10:00:12 all_source_dead, launcher 10:00:12全源失败报警退出, 同族故障第12日)→A级预案trigger(002084海鸥住工/002418康盛股份 open_range -3~+5 各5%)午后触发与否无从核验, 不执行不结算; ②B级防守无对象(09:21留档第七账空仓cash=1000000 positions=[], 今日无执行流水佐证持仓变化, 无炸板/回撤/题材跳水标的); ③C级预案外进攻禁止(实时取数链断); ④warboard错位写旧目录不作输入。依铁律只报警(已追加盘中/报警_20260827.jsonl), 不写任何实时预判/触发证据, fills=[]",
+    "note": "数据源恢复前后续心跳继续只报警禁决策; 需修复盘中实时管道.py竞价段入口(连续第12日同根因)+launcher取数链健康(iFinD -1010+腾讯NoneType)"
+  }
+}

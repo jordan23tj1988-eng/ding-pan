@@ -292,9 +292,10 @@ def main():
 
     # ── 4. judgment(总裁决 hero 结构) ──
     zong = rj(zp).get("总裁决", {}) if os.path.isfile(zp) else {}
-    zconcl = zong.get("结论", "") if isinstance(zong, dict) else str(zong)
+    zconcl = (zong.get("依据") or zong.get("结论") or "") if isinstance(zong, dict) else str(zong)
     zstage = (zong.get("档位") or "B防守") if isinstance(zong, dict) else "B防守"
-    pos = "≤2成" if "防守" in zstage else "≥5成"
+    _band = str(zstage).strip().upper()[:1]
+    pos = "≤2成" if (_band in ("C", "D") or "防守" in str(zstage) or "空仓" in zconcl[:80]) else "≥5成"
     jdate = "%s%s晚" % (d[4:6], d[6:])
 
     # ── 5. checks(推演可证伪前5) ──

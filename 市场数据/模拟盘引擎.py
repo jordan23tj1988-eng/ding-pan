@@ -48,6 +48,17 @@ def jsave(p,obj):
     tmp = p+'.tmp'
     with open(tmp,'w',encoding='utf-8') as f: json.dump(obj,f,ensure_ascii=False,indent=1)
     os.replace(tmp,p)
+def _g(o, *keys, default=None):
+    """键名归一化: 返回第一个非None存在的键值(兼容中英文键/字段名漂移)"""
+    if isinstance(o, dict):
+        for k in keys:
+            if k in o and o[k] is not None:
+                return o[k]
+    return default
+def _norm_leg(v):
+    """腿值归一化: open/T_open/T2_open→open; close/T_close/T2_close→close"""
+    s = str(v or '').lower()
+    return 'close' if s.endswith('close') else 'open'
 def ledger(route,ev):
     ev['ts'] = time.strftime('%Y-%m-%d %H:%M:%S')
     with open(os.path.join(simdir(route),'账本.jsonl'),'a',encoding='utf-8') as f:
@@ -152,7 +163,7 @@ def settle(d):
         plan_prev = jload(os.path.join(learn(),'交易计划_%s_%s.json'%(route,pd_)),{}) if pd_ else {}
         sells_map = {}
         for o in (plan_prev.get('sells') or []):
-            sells_map[str(o.get('code','')).zfill(6)] = o
+            sells_map[str(_g(o,'code','代码',default='')).zfill(6)] = o
         keep = []
         for pos in st['positions']:
             code = pos['code']; order = sells_map.get(code)
@@ -160,7 +171,7 @@ def settle(d):
                 ledger(route,{'ev':'warn','d':d,'code':code,'why':'卖单指向今日才买入的票,T+1制度不可卖,忽略'}); order = None
             if not pos.get('defer_sell') and order is None:
                 keep.append(pos); continue
-            leg = 'open' if pos.get('defer_sell') else ('close' if order.get('leg')=='close' else 'open')
+            leg = 'open' if pos.get('defer_sell') else ('close' if _norm_leg(_g(order,'leg','腿'))=='close' else 'open')
             sw = None if pos.get('defer_sell') else (order or {}).get('sell_switch')
             bar,b = get_bar(code, d, deadline)
             pvc = b.get(prev_td(d,cal),(None,)*5)[3] if prev_td(d,cal) else None
@@ -204,13 +215,13 @@ def settle(d):
                 else:
                     reg[key]=sha; jsave(os.path.join(simdir(),'发出登记.json'),reg)
                 poss = (plan.get('buys') or plan.get('positions') or [])[:5]
-                wsum = sum(float(p.get('weight_pct',0)) for p in poss)
+                wsum = sum(float(_g(p,'weight_pct','权重%','权重',default=0) or 0) for p in poss)
                 scale = 100.0/wsum if wsum>100 else 1.0
                 if scale<1.0: ledger(route,{'ev':'warn','d':d,'why':'仓位合计%s>100,按比例压缩'%wsum})
                 eq0,_ = last_nav(route, before=d); equity = eq0*CAP
                 held_codes = set(p2['code'] for p2 in st['positions'])
                 for p in poss:
-                    code = str(p.get('code','')).zfill(6); name = p.get('name','')
+                    code = str(_g(p,'code','代码',default='')).zfill(6); name = _g(p,'name','名称',default='')
                     rej = None
                     if bad_name(name): rej = '禁ST/退/N/C'
                     bar,b = get_bar(code, d, deadline) if not rej else (None,{})
@@ -222,14 +233,14 @@ def settle(d):
                     if not rej:
                         up = r2(pvc*(1+ratio(code)))
                         if bar[0] >= up - 1e-9: rej = '一字涨停买不进(开=%s=涨停价%s)'%(bar[0],up)
-                    if not rej and p.get('buy_gate'):
-                        bg = p['buy_gate']; gap = (bar[0]/pvc-1)*100
+                    if not rej and _g(p,'buy_gate','买入闸门'):
+                        bg = _g(p,'buy_gate','买入闸门'); gap = (bar[0]/pvc-1)*100
                         if 'max_gap_pct' in bg and gap >= float(bg['max_gap_pct']):
                             rej = '闸门弃单:高开%+.1f%%≥%s(预declare)'%(gap,bg['max_gap_pct'])
                         elif 'min_gap_pct' in bg and gap <= float(bg['min_gap_pct']):
                             rej = '闸门弃单:低开%+.1f%%≤%s(预declare)'%(gap,bg['min_gap_pct'])
                     if not rej:
-                        w = float(p.get('weight_pct',0))*scale
+                        w = float(_g(p,'weight_pct','权重%','权重',default=0) or 0)*scale
                         budget = equity*w/100.0
                         shares = int(budget/(bar[0]*100))*100
                         cost_full = shares*bar[0]*(1+BUY_C)
@@ -246,7 +257,7 @@ def settle(d):
                     held_codes.add(code)
                     st['positions'].append({'code':code,'name':name,'shares':shares,'buy_px':bar[0],
                         'cost':round(cost_full,2),'buy_date':d,'plan_date':pd_,'weight':round(w,1),
-                        'reason':p.get('reason',''),'vol_pct':vol_pct})
+                        'reason':_g(p,'reason','理由',default=''),'vol_pct':vol_pct})
                     ledger(route,{'ev':'buy','d':d,'code':code,'name':name,'shares':shares,
                                   'px':bar[0],'cost':round(cost_full,2),'vol_pct':vol_pct,
                                   'liq_warn':('流动性警示:占当日成交量%.2f%%,滑点0.15%%属低估'%vol_pct) if (vol_pct and vol_pct>=1.0) else None})
@@ -401,7 +412,7 @@ def dashboard(d):
                 if p.get('defer_sell'): ins = '<span style="color:#ff5f56">顺延卖出中(%d次)</span>'%p.get('defers',0)
                 elif p['code'] in sells_tonight:
                     o = sells_tonight[p['code']]
-                    ins = '<b style="color:#e8a33d">明日卖·%s</b>%s'%('收盘' if o.get('leg')=='close' else '开盘',
+                    ins = '<b style="color:#e8a33d">明日卖·%s</b>%s'%('收盘' if _norm_leg(_g(o,'leg','腿'))=='close' else '开盘',
                           '(高开≥%s%%改收)'%o['sell_switch']['if_gap_ge_pct'] if o.get('sell_switch') else '')
                 else: ins = '继续持有'
                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%d</td><td style="font-family:monospace">%.2f</td><td>%s</td><td style="font-family:monospace">%d</td><td>%s</td></tr>'%(
@@ -416,15 +427,15 @@ def dashboard(d):
         if plan and (buys or sells):
             h.append('<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8d93a8"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>')
             for p in buys[:5]:
-                gate = p.get('buy_gate') or {}
+                gate = _g(p,'buy_gate','买入闸门') or {}
                 gtxt = '·闸门高开≥%s弃'%gate['max_gap_pct'] if 'max_gap_pct' in gate else ('·闸门低开≤%s弃'%gate['min_gap_pct'] if 'min_gap_pct' in gate else '')
                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%s%%%s</td><td style="color:#a8adbd">%s</td></tr>'%(
-                    p.get('code'),p.get('name'),p.get('weight_pct'),gtxt,p.get('reason','')))
+                    _g(p,'code','代码'),_g(p,'name','名称'),_g(p,'weight_pct','权重%','权重'),gtxt,_g(p,'reason','理由',default='')))
             for o in sells:
-                stxt = '开盘' if o.get('leg')!='close' else '收盘'
+                stxt = '开盘' if _norm_leg(_g(o,'leg','腿'))!='close' else '收盘'
                 if o.get('sell_switch'): stxt += '(高开≥%s%%改收)'%o['sell_switch'].get('if_gap_ge_pct')
                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">%s %s</td><td>%s</td><td style="color:#a8adbd">%s</td></tr>'%(
-                    o.get('code'),o.get('name',''),stxt,o.get('reason','')))
+                    _g(o,'code','代码'),_g(o,'name','名称',default=''),stxt,_g(o,'reason','理由',default='')))
             h.append('</table>')
         elif plan:
             h.append('<div style="color:#8d93a8;margin-top:4px">★今晚无买卖指令(在持票默认继续持有/或空仓)</div>')

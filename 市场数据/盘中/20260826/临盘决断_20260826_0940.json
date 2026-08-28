@@ -1,0 +1,22 @@
+{
+ "date": "20260826",
+ "session": "hb-a",
+ "ts": "09:40",
+ "write_ts": "2026-08-26 09:42:45",
+ "fills": [],
+ "no_action": null,
+ "reason": {
+  "level": "ALARM_ONLY",
+  "触发证据": [
+   "pulse.json MISSING(今日未生成; 09:21场次留档时亦缺失)",
+   "warboard.json MISSING(今日无; 盘中/20260825/warboard.json为昨日数据不作今日输入)",
+   "执行流水.jsonl MISSING(引擎今日零执行)",
+   "auction_traj.jsonl MISSING(竞价段被跳过: launcher 09:14:24启动, 盘中实时管道.py以启动时刻一次性判断>=09:15才进竞价段→跳过, 9:15-9:25零留档)",
+   "playbook.json MISSING(今日无预案, 8/21预案禁跨日引用)",
+   "launcher.log尾: [09:40:12]取数失败streak=10, [09:41:12]iFinD errorcode=-1010+腾讯实时NoneType, streak=11(09:21留档时streak=1)",
+   "模拟盘state.json(08-13起算): cash=1000000 positions=[] n_pos=0 → B级防守无对象"
+  ],
+  "判断": "①B级防守: 空仓无持仓, 无炸板/回撤可守 → 不触发; ②A级执行: 无今日playbook预案 → trigger无票可写; ③C级预案外进攻: 实时取数链全断无数据核验 → 禁止。数据自09:15起零留档断更27分钟>10分钟红线 → 只报警禁决策, 不写任何预判/触发证据(铁律①零编造)",
+  "note": "今日第2条报警(09:21场次首条+本场追加); 本文件不覆盖临盘决断_20260826_0921.json"
+ }
+}

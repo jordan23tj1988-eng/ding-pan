@@ -436,6 +436,9 @@ def _fold_tl(body):
         ds=_re.findall(r'<div class="d">([0-9][0-9-]+)',tl)
         if len(ds)<2:
             ds=_re.findall(r'<div class="tli[^"]*">\s*<b>([0-9-]{4,5})',tl)   # ★fallback <b>07-15</b>
+        if len(ds)<2:
+            ds=_re.findall(r'<div class="h">([0-9]{4}-[0-9]{2}-[0-9]{2})',tl)   # ★fallback <div class="h">2026-08-31 · 标题
+            if len(ds)>=2: ds=[x[5:] for x in ds]   # 2026-08-31 → 08-31
         if len(ds)<2 or 'tlfold' in body[max(0,p-160):p]:
             res+=body[idx:j2]; idx=j2; continue
         inner=tl[len('<div class="tl">'):-len('</div>')]

@@ -1,0 +1,45 @@
+{
+  "date": "20260828",
+  "session": "hb-b_1030",
+  "ts": "10:30",
+  "write_ts": "2026-08-28 10:31:40",
+  "data_freshness": {
+    "pulse": {
+      "path": "盘中/20260828/pulse.json",
+      "exists": false,
+      "note": "全盘无 pulse.json 文件(今日无任何 pulse 留档)"
+    },
+    "pipeline_alarm": {
+      "path": "盘中/20260828/pipeline_alarm.jsonl",
+      "exists": true,
+      "note": "10:00:19 ALARM all_source_dead '盘中管道30分钟无数据源'"
+    },
+    "launcher_log": {
+      "path": "盘中/launcher.log",
+      "note": "09:58-10:00 取数失败 streak=28→30, iFinD -1010 + 腾讯 NoneType; 10:00:19 '连续30分钟全源失败, 报警退出'——管道已退出, 之后无新取数行"
+    },
+    "warboard": {
+      "path": "盘中/20260827/warboard.json",
+      "exists": true,
+      "note": "8/27晚重建载体, 荐票级10只(002636/002396/600479/600127/003040/002536/600378/301666/002155/000712); 其中09:25判定字段为后视镜不作本场输入(0921场次已剥离确认)"
+    },
+    "playbook": {
+      "path": "盘中/20260828/playbook.json",
+      "exists": false,
+      "note": "今日预案单缺失(同0921场次结论, 8/27晚复盘未产出今日playbook)"
+    },
+    "执行流水": {
+      "path": "盘中/*/执行流水*.jsonl",
+      "exists": false,
+      "note": "全盘无执行流水文件"
+    },
+    "stale_min": "数据断更 ≥60分钟(09:30起无有效实时数据, 10:00:19管道退出), 远超10分钟红线",
+    "verdict": "数据断更>10分钟→只报警禁决策(铁律)"
+  },
+  "decision": {
+    "level": "ALARM_ONLY(数据断更禁决策)",
+    "fills": [],
+    "reason": "10:30趋势确认段: ①pulse.json不存在+管道10:00:19全源失败退出(streak=30)→断更≥60分钟, 实时行情/题材温度/持仓状态全部无源, 任何A级trigger结算或C级进攻判断都无数据支撑(写即编造, 铁律①); ②B级防守无对象——第七账空仓(cash=1000000 positions=[], 0921场次留档), 无持仓可炸板/回撤防守; ③A级执行不可行——warboard荐票级10只trigger需实时数据机械结算, 无源禁结算; ④C级预案外进攻禁止——实时取数链断。依铁律只报警, 不写触发证据、不下任何决断",
+    "note": "本场无动作(fills=[]), 仅报警。同族故障延续: ①盘中实时管道全源死(09:30起, 10:00退出)——需排查iFinD -1010/腾讯NoneType根因及源切换; ②今日playbook.json仍缺失; ③auction_traj缺失第13日(8-13~8-28)。下一场心跳(如11:00)若数据源未恢复, 继续只报警禁决策"
+  }
+}

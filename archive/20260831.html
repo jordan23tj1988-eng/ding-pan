@@ -1,0 +1,357 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>复盘存档 20260831</title><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+</style></head><body><div class="nav"><span class="brand">情绪盯盘台 · 存档</span><a href="../index.html">← 返回概览</a><a href="../history.html">历史列表</a><span class="upd">冻结于 20260831 复盘</span></div><div class="wrap"><div class="ticker"><div class="in"><div class="grp"><span>量能 <b class="a">2.13万亿</b></span><span>涨停 <b class="u">88</b> / 跌停 <b class="d">11</b></span><span>炸板 <b>30</b>·炸板率 <b>25.4%</b></span><span>最高 <b class="u">6板</b>·海鸥住工</span><span>梯队 6板1·5板2·4板1·3板4·2板10·1板70</span><span>情绪温度 <b>52.6</b>(中性)</span><span>一进二 <b>12.5%</b>·二进三 <b>25.0%</b></span></div><div class="grp" aria-hidden="true"><span>量能 <b class="a">2.13万亿</b></span><span>涨停 <b class="u">88</b> / 跌停 <b class="d">11</b></span><span>炸板 <b>30</b>·炸板率 <b>25.4%</b></span><span>最高 <b class="u">6板</b>·海鸥住工</span><span>梯队 6板1·5板2·4板1·3板4·2板10·1板70</span><span>情绪温度 <b>52.6</b>(中性)</span><span>一进二 <b>12.5%</b>·二进三 <b>25.0%</b></span></div></div></div><div class="card"><b>20260831 涨停复盘存档 · 完整档案</b><p style="margin:6px 0 0">降温坐实：温度52.6(昨63.6)高位回落-11,炸板率16.3%→25.4%(+9.1pp)封板率83.7%→74.6%跌破80,最高板7→6(深中华A断板)跌停1→11,资金温度5→42分位破34但全池负期望第11日+主线零达标第5日,总裁决C档防守</p></div><details class="chain" open><summary><b>08-31</b> <span class="chip cold">最新</span> 涨停88 · 无主流·分支轮动</summary><div class="inner"><div class="strip"><div class="kv"><div class="l">涨停</div><div class="v">88</div></div><div class="kv"><div class="l">题材线</div><div class="v">43</div></div><div class="kv"><div class="l">全场判定</div><div class="v" style="font-size:12.5px">行业口径无题材过6有,分支轮动;聚类口径最高=机械/通用设备3/6</div></div></div><p style="font-weight:700;margin:4px 0 4px;border-left:3px solid var(--accent);padding-left:8px">当日涨停质量Top5荐票(v5规则榜+抓龙率·第5路)</p><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:26px"><col style="width:106px"><col style="width:62px"><col><col style="width:150px"><col style="width:96px"></colgroup><tr><th>#</th><th>标的</th><th>抓龙率</th><th>命中规则(规则榜) / 主导因子(评分卡)</th><th>预测执行(T+1开买→收)</th><th>题材</th></tr><tr><td>1</td><td style="white-space:nowrap"><b>我爱我家</b><br><span class="mut">000560</span></td><td style="white-space:nowrap"><b>26.0%</b><br><span class="mut">分2</span></td><td style="word-break:break-word">封单额≥4亿 × 封单比≥2% × 一字≤9:25; 未开板 × 封单额≥4亿 × 一字≤9:25; 未开板 × 封单额≥4亿 × 封单比≥2%; 封单额≥4亿 × 一字≤9:25 × 温度中性45-65; 封单额≥4亿 × 一字≤9:25<br><span class="mut" style="font-size:11px">主导: 首封时间:一字≤9:25(+0.1) | 拖累 开板次数:未开板(-0.8); 换手率:&lt;3%(-0.8)</span></td><td style="white-space:nowrap">执1 34.5%/-0.72%<br><span class="mut">执2 47.4%/+0.17%</span></td><td>地产/中介</td></tr><tr><td>2</td><td style="white-space:nowrap"><b>竞业达</b><br><span class="mut">003005</span></td><td style="white-space:nowrap"><b>21.4%</b><br><span class="mut">分5</span></td><td style="word-break:break-word"><span class="mut">规则未命中</span><br><span class="mut" style="font-size:11px">主导: 换手率:10-20%(+0.6); 首封时间:盘中10-14(+0.3); 股价档:15-40元(+0.1) | 拖累 开板次数:未开板(-0.8); 封单比:超强≥4%(-0.2)</span></td><td style="white-space:nowrap">执1 39.0%/-0.45%<br><span class="mut">执2 46.4%/+0.07%</span></td><td>计算机/AI教育</td></tr><tr><td>3</td><td style="white-space:nowrap"><b>宇环数控</b><br><span class="mut">002903</span></td><td style="white-space:nowrap"><b>21.0%</b><br><span class="mut">分5</span></td><td style="word-break:break-word"><span class="mut">规则未命中</span><br><span class="mut" style="font-size:11px">主导: 换手率:10-20%(+0.6); 板前5日动能:回调&lt;-3%(+0.3); 首封时间:早盘≤10:00(+0.1) | 拖累 开板次数:未开板(-0.8); 量比:缩量&lt;1(-0.3)</span></td><td style="white-space:nowrap">执1 38.8%/-0.52%<br><span class="mut">执2 46.3%/-0.02%</span></td><td>机械/通用设备</td></tr><tr><td>4</td><td style="white-space:nowrap"><b>天保基建</b><br><span class="mut">000965</span></td><td style="white-space:nowrap"><b>18.0%</b><br><span class="mut">分9</span></td><td style="word-break:break-word"><span class="mut">规则未命中</span><br><span class="mut" style="font-size:11px">主导: 开板次数:开2次+(+2.5); 封单比:弱&lt;0.5%(+1.4); 换手率:10-20%(+0.6) | 拖累 股价档:&lt;5元(-0.2); 板前5日动能:抬升3-12%(-0.2)</span></td><td style="white-space:nowrap">执1 43.7%/-0.14%<br><span class="mut">执2 46.4%/+0.06%</span></td><td>地产/房地产</td></tr><tr><td>5</td><td style="white-space:nowrap"><b>华是科技</b><br><span class="mut">301218</span></td><td style="white-space:nowrap"><b>17.9%</b><br><span class="mut">分7</span></td><td style="word-break:break-word"><span class="mut">规则未命中</span><br><span class="mut" style="font-size:11px">主导: 开板次数:开2次+(+2.5); 换手率:≥20%(+0.8); 股价档:≥40元(+0.6) | 拖累 封单比:强2-4%(-1.5); 量比:缩量&lt;1(-0.3)</span></td><td style="white-space:nowrap">执1 43.0%/-0.27%<br><span class="mut">执2 45.6%/-0.06%</span></td><td>计算机/AI算力</td></tr></table></div><div class="hint">v5.1排序=命中规则数→抓龙率(P(执2≥+8%)),质量分仅负筛(只作用于0命中票,规则命中票全保);库17833样本(一年窗口)/活跃因子8;规则榜多为扛出型(执1弱执2强=开盘买进当天套、次日兑现),桶均值非个股预言。明日T+1结算自动注入本日台账日块对账。</div><div class="card"><table><tr><th>首封</th><th>标的</th><th>封单·身位</th><th>催化 · 来源档</th><th>抓龙率·命中规则·质量分v5 · 执行预测(T+1开买→收)</th></tr><tr style="background:#f3eee1"><td colspan="5"><b>【机械/通用设备】</b>7只 · 最高3板 · 承载通用设备</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 通用设备</b> <span class="mut">(6只·开板0.5)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:33</td><td><b>海天精工</b> <span class="mut">601882</span> </td><td>封0.27% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.8%</b> <span class="mut">分6 执1 43.4%/-0.28%</span></td></tr><tr><td>09:34</td><td><b>金帝股份</b> <span class="mut">603270</span> </td><td>封2.16% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.1%</b> <span class="mut">分7 执1 43.2%/-0.3%</span></td></tr><tr><td>09:41</td><td><b>冠龙节能</b> <span class="mut">301151</span> </td><td>封2.07% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.4%</b> <span class="mut">分3 执1 41.1%/-0.52%</span></td></tr><tr><td>09:47</td><td><b>宇环数控</b> <span class="mut">002903</span> </td><td>封4.83% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓21.0%</b> <span class="mut">分5 执1 38.8%/-0.52%</span></td></tr><tr><td>10:17</td><td><b>荣亿精密</b> <span class="mut">920223</span> </td><td>封0.82% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.6%</b> <span class="mut">分9 执1 45.3%/-0.07%</span></td></tr><tr><td>13:31</td><td><b>宏盛股份</b> <span class="mut">603090</span> </td><td>封0.84% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓13.9%</b> <span class="mut">分6 执1 43.7%/-0.29%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 通用设备(3连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:35</td><td><b>海鸥股份</b> <span class="mut">603269</span> </td><td>封0.28% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">3板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.9%</b> <span class="mut">分10 执1 46.0%/-0.08%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【汽车/零部件】</b>6只 · 最高1板 · 承载汽车零部</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 汽车零部</b> <span class="mut">(6只·开板0.17)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:53</td><td><b>新朋股份</b> <span class="mut">002328</span> </td><td>封1.04% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.5%</b> <span class="mut">分3 执1 42.2%/-0.47%</span></td></tr><tr><td>10:03</td><td><b>联诚精密</b> <span class="mut">002921</span> </td><td>封2.89% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.0%</b> <span class="mut">分3 执1 41.6%/-0.47%</span></td></tr><tr><td>10:06</td><td><b>华达科技</b> <span class="mut">603358</span> </td><td>封0.59% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.5%</b> <span class="mut">分5 执1 42.5%/-0.38%</span></td></tr><tr><td>10:17</td><td><b>圣龙股份</b> <span class="mut">603178</span> </td><td>封0.33% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.4%</b> <span class="mut">分9 执1 45.6%/-0.1%</span></td></tr><tr><td>13:05</td><td><b>长源东谷</b> <span class="mut">603950</span> </td><td>封0.89% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓13.9%</b> <span class="mut">分6 执1 43.8%/-0.3%</span></td></tr><tr><td>13:09</td><td><b>常润股份</b> <span class="mut">603201</span> </td><td>封2.17% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.0%</b> <span class="mut">分3 执1 41.3%/-0.48%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【地产/房地产】</b>4只 · 最高2板 · 承载房地产开</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 房地产开</b> <span class="mut">(3只·开板0.67)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:25</td><td><b>天保基建</b> <span class="mut">000965</span> </td><td>封0.33% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓18.0%</b> <span class="mut">分9 执1 43.7%/-0.14%</span></td></tr><tr><td>09:25</td><td><b>广宇集团</b> <span class="mut">002133</span> </td><td>封1.31% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓17.2%</b> <span class="mut">分3 执1 40.4%/-0.5%</span></td></tr><tr><td>13:29</td><td><b>万通发展</b> <span class="mut">600246</span> </td><td>封0.59% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓13.7%</b> <span class="mut">分6 执1 44.3%/-0.25%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 房地产开发(2连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:25</td><td><b>深物业A</b> <span class="mut">000011</span> </td><td>封1.76% <span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓19.6%</b> <span class="mut">分3 执1 39.0%/-0.59%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【地产链/装修】</b>4只 · 最高1板 · 承载装修装饰</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 装修装饰</b> <span class="mut">(4只·开板0.5)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:30</td><td><b>亚厦股份</b> <span class="mut">002375</span> </td><td>封0.62% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.8%</b> <span class="mut">分7 执1 43.1%/-0.29%</span></td></tr><tr><td>09:36</td><td><b>德才股份</b> <span class="mut">605287</span> </td><td>封1.27% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.6%</b> <span class="mut">分8 执1 44.4%/-0.26%</span></td></tr><tr><td>09:42</td><td><b>金 螳 螂</b> <span class="mut">002081</span> </td><td>封1.49% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.3%</b> <span class="mut">分4 执1 42.4%/-0.46%</span></td></tr><tr><td>09:54</td><td><b>名雕股份</b> <span class="mut">002830</span> </td><td>封4.91% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓20.5%</b> <span class="mut">分4 执1 38.4%/-0.54%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【传媒/影视】</b>4只 · 最高1板 · 承载影视院线</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 影视院线</b> <span class="mut">(4只·开板0.5)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:34</td><td><b>欢瑞世纪</b> <span class="mut">000892</span> </td><td>封5.2% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓20.5%</b> <span class="mut">分4 执1 38.2%/-0.56%</span></td></tr><tr><td>09:35</td><td><b>中广天择</b> <span class="mut">603721</span> </td><td>封2.49% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.1%</b> <span class="mut">分4 执1 42.3%/-0.43%</span></td></tr><tr><td>10:25</td><td><b>博纳影业</b> <span class="mut">001330</span> </td><td>封2.62% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.2%</b> <span class="mut">分6 执1 43.0%/-0.3%</span></td></tr><tr><td>10:35</td><td><b>上海电影</b> <span class="mut">601595</span> </td><td>封1.06% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.1%</b> <span class="mut">分4 执1 42.7%/-0.41%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【通信/通信设备】</b>3只 · 最高3板 · 承载通信设备</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 通信设备</b> <span class="mut">(2只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>10:07</td><td><b>美格智能</b> <span class="mut">002881</span> </td><td>封0.71% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.6%</b> <span class="mut">分9 执1 45.2%/-0.15%</span></td></tr><tr><td>14:14</td><td><b>移远通信</b> <span class="mut">603236</span> </td><td>封0.31% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.0%</b> <span class="mut">分9 执1 45.7%/-0.1%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 通信设备(3连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>13:46</td><td><b>星网锐捷</b> <span class="mut">002396</span> </td><td>封0.8% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">3板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.0%</b> <span class="mut">分9 执1 45.7%/-0.11%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【传媒/出版】</b>3只 · 最高2板 · 承载出版</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 出版</b> <span class="mut">(2只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>10:35</td><td><b>荣信文化</b> <span class="mut">301231</span> </td><td>封2.65% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.4%</b> <span class="mut">分4 执1 42.0%/-0.43%</span></td></tr><tr><td>10:42</td><td><b>龙版传媒</b> <span class="mut">605577</span> </td><td>封0.7% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.6%</b> <span class="mut">分4 执1 41.8%/-0.4%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 出版(2连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>13:21</td><td><b>时代出版</b> <span class="mut">600551</span> </td><td>封1.31% <span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.4%</b> <span class="mut">分3 执1 42.2%/-0.43%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【消费/纺织】</b>3只 · 最高1板 · 承载服装家纺</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 纺织制造</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:31</td><td><b>浔兴股份</b> <span class="mut">002098</span> </td><td>封0.48% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓17.0%</b> <span class="mut">分4 执1 41.9%/-0.4%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 服装家纺</b> <span class="mut">(2只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>13:41</td><td><b>安奈儿</b> <span class="mut">002875</span> </td><td>封3.17% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.1%</b> <span class="mut">分3 执1 41.1%/-0.49%</span></td></tr><tr><td>14:08</td><td><b>奥康国际</b> <span class="mut">603001</span> </td><td>封1.49% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.3%</b> <span class="mut">分5 执1 42.8%/-0.37%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【地产链/家居】</b>3只 · 最高1板 · 承载家居用品</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 家居用品</b> <span class="mut">(3只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:33</td><td><b>悍高集团</b> <span class="mut">001221</span> </td><td>封1.05% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.6%</b> <span class="mut">分8 执1 44.4%/-0.26%</span></td></tr><tr><td>09:36</td><td><b>梦天家居</b> <span class="mut">603216</span> </td><td>封1.49% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.6%</b> <span class="mut">分7 执1 44.1%/-0.28%</span></td></tr><tr><td>13:56</td><td><b>梦百合</b> <span class="mut">603313</span> </td><td>封0.71% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.3%</b> <span class="mut">分8 执1 44.9%/-0.16%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【传媒/数字媒体】</b>3只 · 最高1板 · 承载数字媒体</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 数字媒体</b> <span class="mut">(3只·开板0.33)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:35</td><td><b>芒果超媒</b> <span class="mut">300413</span> </td><td>封2.24% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.1%</b> <span class="mut">分3 执1 41.5%/-0.48%</span></td></tr><tr><td>10:25</td><td><b>掌阅科技</b> <span class="mut">603533</span> </td><td>封1.19% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.0%</b> <span class="mut">分5 执1 43.6%/-0.33%</span></td></tr><tr><td>13:00</td><td><b>中文在线</b> <span class="mut">300364</span> </td><td>封2.03% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.1%</b> <span class="mut">分4 执1 41.8%/-0.39%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【电子/元件】</b>3只 · 最高1板 · 承载元件</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 元件</b> <span class="mut">(3只·开板0.67)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:42</td><td><b>艾华集团</b> <span class="mut">603989</span> </td><td>封0.41% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.0%</b> <span class="mut">分10 执1 46.0%/-0.07%</span></td></tr><tr><td>10:04</td><td><b>贤丰控股</b> <span class="mut">002141</span> </td><td>封1.97% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.6%</b> <span class="mut">分4 执1 42.9%/-0.39%</span></td></tr><tr><td>14:16</td><td><b>红板科技</b> <span class="mut">603459</span> </td><td>封0.63% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.5%</b> <span class="mut">分11 执1 45.9%/0.01%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【轻工/包装】</b>3只 · 最高1板 · 承载包装印刷</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 包装印刷</b> <span class="mut">(3只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:44</td><td><b>金富科技</b> <span class="mut">003018</span> </td><td>封0.66% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.1%</b> <span class="mut">分8 执1 44.8%/-0.21%</span></td></tr><tr><td>10:47</td><td><b>永吉股份</b> <span class="mut">603058</span> </td><td>封0.89% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.5%</b> <span class="mut">分8 执1 44.7%/-0.17%</span></td></tr><tr><td>13:22</td><td><b>美盈森</b> <span class="mut">002303</span> </td><td>封0.26% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.2%</b> <span class="mut">分7 执1 44.5%/-0.21%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【农业/种业】</b>2只 · 最高5板 · 承载种业(5连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 种业(5连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:25</td><td><b>万向德农</b> <span class="mut">600371</span> </td><td>封3.82% <span class="tag2 t-attack">5板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓19.3%</b> <span class="mut">分2 执1 38.8%/-0.61%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 种业(3连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:25</td><td><b>新赛股份</b> <span class="mut">600540</span> </td><td>封7.63% <span class="tag2 t-attack">3板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓26.0%</b> <span class="mut">分2 执1 34.6%/-0.72%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【消费电子】</b>2只 · 最高5板 · 承载消费电子(5连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 消费电子(5连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:31</td><td><b>捷荣技术</b> <span class="mut">002855</span> </td><td>封0.87% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">5板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.4%</b> <span class="mut">分9 执1 45.1%/-0.15%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 消费电子</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>10:19</td><td><b>茂硕电源</b> <span class="mut">002660</span> </td><td>封1.77% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.1%</b> <span class="mut">分5 执1 43.2%/-0.34%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【金融/证券】</b>2只 · 最高4板 · 承载券商(4连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 券商(4连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:31</td><td><b>锦龙股份</b> <span class="mut">000712</span> </td><td>封0.45% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">4板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓17.4%</b> <span class="mut">分9 执1 45.5%/-0.06%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 证券Ⅱ</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>14:24</td><td><b>首创证券</b> <span class="mut">601136</span> </td><td>封0.25% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.1%</b> <span class="mut">分6 执1 42.8%/-0.29%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【化工/农化】</b>2只 · 最高2板 · 承载农化制品(2连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 农化制品(2连板)</b> <span class="mut">(2只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:32</td><td><b>潞化科技</b> <span class="mut">600691</span> </td><td>封0.57% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.7%</b> <span class="mut">分6 执1 44.0%/-0.27%</span></td></tr><tr><td>09:35</td><td><b>赤天化</b> <span class="mut">600227</span> </td><td>封1.18% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.4%</b> <span class="mut">分7 执1 43.9%/-0.3%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【化工/化学原料】</b>2只 · 最高2板 · 承载化学原料(2连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 化学原料(2连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>10:10</td><td><b>金牛化工</b> <span class="mut">600722</span> </td><td>封0.87% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.1%</b> <span class="mut">分7 执1 44.7%/-0.17%</span></td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 化学原料</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>13:12</td><td><b>金能科技</b> <span class="mut">603113</span> </td><td>封0.74% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.1%</b> <span class="mut">分5 执1 43.2%/-0.34%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【半导体】</b>2只 · 最高1板 · 承载半导体</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 半导体</b> <span class="mut">(2只·开板0.5)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:37</td><td><b>瑞芯微</b> <span class="mut">603893</span> </td><td>封0.22% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.1%</b> <span class="mut">分7 执1 45.0%/-0.18%</span></td></tr><tr><td>13:25</td><td><b>博通集成</b> <span class="mut">603068</span> </td><td>封1.39% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.4%</b> <span class="mut">分5 执1 43.3%/-0.36%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【机械/专用设备】</b>2只 · 最高1板 · 承载专用设备</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 专用设备</b> <span class="mut">(2只·开板0.0)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:52</td><td><b>泰坦股份</b> <span class="mut">003036</span> </td><td>封1.37% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.4%</b> <span class="mut">分4 执1 42.8%/-0.42%</span></td></tr><tr><td>13:31</td><td><b>南兴股份</b> <span class="mut">002757</span> </td><td>封2.93% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.0%</b> <span class="mut">分3 执1 41.3%/-0.48%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【电子/光学】</b>2只 · 最高1板 · 承载光学光电</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 光学光电</b> <span class="mut">(2只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>10:20</td><td><b>晨丰科技</b> <span class="mut">603685</span> </td><td>封0.5% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.4%</b> <span class="mut">分5 执1 42.3%/-0.39%</span></td></tr><tr><td>14:35</td><td><b>永新光学</b> <span class="mut">603297</span> </td><td>封0.77% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.7%</b> <span class="mut">分6 执1 42.6%/-0.3%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【计算机/设备】</b>2只 · 最高1板 · 承载计算机设</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 计算机设</b> <span class="mut">(2只·开板0.5)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>11:25</td><td><b>力鼎光电</b> <span class="mut">605118</span> </td><td>封0.44% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.8%</b> <span class="mut">分5 执1 42.6%/-0.34%</span></td></tr><tr><td>13:51</td><td><b>浪潮信息</b> <span class="mut">000977</span> </td><td>封0.33% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.0%</b> <span class="mut">分8 执1 45.1%/-0.16%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【传媒/广电】</b>2只 · 最高1板 · 承载电视广播</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 电视广播</b> <span class="mut">(2只·开板0.5)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>13:09</td><td><b>流金科技</b> <span class="mut">920021</span> </td><td>封0.91% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.6%</b> <span class="mut">分9 执1 45.1%/-0.08%</span></td></tr><tr><td>13:14</td><td><b>吉视传媒</b> <span class="mut">601929</span> </td><td>封1.2% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.1%</b> <span class="mut">分4 执1 42.5%/-0.42%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【医药/中药】</b>2只 · 最高1板 · 承载中药Ⅱ</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 中药Ⅱ</b> <span class="mut">(2只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>13:20</td><td><b>康惠股份</b> <span class="mut">603139</span> </td><td>封0.41% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.5%</b> <span class="mut">分9 执1 45.5%/-0.09%</span></td></tr><tr><td>13:33</td><td><b>天目药业</b> <span class="mut">600671</span> </td><td>封1.25% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.5%</b> <span class="mut">分7 执1 44.1%/-0.24%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【重组/控制权变更】</b>1只 · 最高6板 · 承载控制权变更(6连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 控制权变更(6连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:25</td><td><b>海鸥住工</b> <span class="mut">002084</span> </td><td>封8.05% <span class="tag2 t-attack">6板</span></td><td>控制权拟变更+装配式厨卫+越南制造 <span class="badge bA">A</span></td><td><b>抓25.7%</b> <span class="mut">分3 执1 34.9%/-0.68%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【化工/塑料】</b>1只 · 最高3板 · 承载塑料(3连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 塑料(3连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:30</td><td><b>沃特股份</b> <span class="mut">002886</span> </td><td>封0.65% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">3板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓17.0%</b> <span class="mut">分9 执1 45.1%/-0.12%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【地产/中介】</b>1只 · 最高2板 · 承载房地产服务(2连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 房地产服务(2连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:25</td><td><b>我爱我家</b> <span class="mut">000560</span> </td><td>封6.75% <span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓26.0%</b> <span class="tag2 t-attack">中5规</span> <span class="mut">分2 执1 34.5%/-0.72%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【农业/林业】</b>1只 · 最高2板 · 承载林业(2连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 林业(2连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:25</td><td><b>福建金森</b> <span class="mut">002679</span> </td><td>封12.79% <span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓26.1%</b> <span class="mut">分3 执1 34.6%/-0.71%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【消费/零售】</b>1只 · 最高2板 · 承载一般零售(2连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 一般零售(2连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:25</td><td><b>国芳集团</b> <span class="mut">601086</span> </td><td>封1.38% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓17.1%</b> <span class="mut">分4 执1 41.2%/-0.43%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【通信/通信服务】</b>1只 · 最高2板 · 承载通信服务(2连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 通信服务(2连板)</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>10:15</td><td><b>中通国脉</b> <span class="mut">603559</span> </td><td>封0.64% <span class="tag2 t-avoid">开</span><span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.9%</b> <span class="mut">分9 执1 45.2%/-0.13%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【计算机/AI教育】</b>1只 · 最高2板 · 承载IT服务(2连板)</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── IT服务(2连板)</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>10:25</td><td><b>竞业达</b> <span class="mut">003005</span> </td><td>封4.43% <span class="tag2 t-attack">2板</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓21.4%</b> <span class="mut">分5 执1 39.0%/-0.45%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【电力/其他电源】</b>1只 · 最高1板 · 承载其他电源</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 其他电源</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:31</td><td><b>西子洁能</b> <span class="mut">002534</span> </td><td>封1.23% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓16.7%</b> <span class="mut">分4 执1 41.8%/-0.47%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【电力/电网】</b>1只 · 最高1板 · 承载电网设备</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 电网设备</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:31</td><td><b>智光电气</b> <span class="mut">002169</span> </td><td>封0.93% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.6%</b> <span class="mut">分6 执1 44.2%/-0.29%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【新能源/电池】</b>1只 · 最高1板 · 承载电池</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 电池</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:33</td><td><b>诺德股份</b> <span class="mut">600110</span> </td><td>封0.82% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.2%</b> <span class="mut">分6 执1 43.8%/-0.31%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【环保】</b>1只 · 最高1板 · 承载环境治理</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 环境治理</b> <span class="mut">(1只·开板0.0)</span> <span class="s-ok">主线承载核心:早封多家、封板扎实</span></td></tr><tr><td>09:36</td><td><b>绿色动力</b> <span class="mut">601330</span> </td><td>封0.61% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.7%</b> <span class="mut">分4 执1 41.7%/-0.42%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【有色/金属新材】</b>1只 · 最高1板 · 承载金属新材</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 金属新材</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>09:39</td><td><b>深圳新星</b> <span class="mut">603978</span> </td><td>封0.51% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.8%</b> <span class="mut">分9 执1 45.4%/-0.13%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【化工/化学制品】</b>1只 · 最高1板 · 承载化学制品</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 化学制品</b> <span class="mut">(1只·开板0.0)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:44</td><td><b>集泰股份</b> <span class="mut">002909</span> </td><td>封2.13% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.6%</b> <span class="mut">分2 执1 40.9%/-0.53%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【家电/零部件】</b>1只 · 最高1板 · 承载家电零部</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 家电零部</b> <span class="mut">(1只·开板0.0)</span> <span class="mut">中性:环节内甄别身位</span></td></tr><tr><td>09:55</td><td><b>康盛股份</b> <span class="mut">002418</span> </td><td>封2.2% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓17.2%</b> <span class="mut">分3 执1 41.4%/-0.45%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【能源/煤炭】</b>1只 · 最高1板 · 承载煤炭开采</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 煤炭开采</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>10:09</td><td><b>郑州煤电</b> <span class="mut">600121</span> </td><td>封0.67% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.1%</b> <span class="mut">分5 执1 43.7%/-0.29%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【计算机/AI算力】</b>1只 · 最高1板 · 承载IT服务Ⅱ</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── IT服务Ⅱ</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>11:06</td><td><b>华是科技</b> <span class="mut">301218</span> </td><td>封3.38% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓17.9%</b> <span class="mut">分7 执1 43.0%/-0.27%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【传媒/AI应用】</b>1只 · 最高1板 · 承载广告营销</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 广告营销</b> <span class="mut">(1只·开板1.0)</span> <span class="s-weak">分歧/末端:过半开板,封板质量差</span></td></tr><tr><td>13:16</td><td><b>海看股份</b> <span class="mut">301262</span> </td><td>封0.58% <span class="tag2 t-avoid">开</span></td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓15.3%</b> <span class="mut">分9 执1 45.4%/-0.06%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【传媒/游戏】</b>1只 · 最高1板 · 承载游戏Ⅱ</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 游戏Ⅱ</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>13:22</td><td><b>大晟文化</b> <span class="mut">600892</span> </td><td>封0.72% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.5%</b> <span class="mut">分5 执1 43.6%/-0.28%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【厨卫电器】</b>1只 · 最高1板 · 承载厨卫电器</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 厨卫电器</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>13:27</td><td><b>亿田智能</b> <span class="mut">300911</span> </td><td>封1.96% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.4%</b> <span class="mut">分5 执1 43.3%/-0.36%</span></td></tr><tr style="background:#f3eee1"><td colspan="5"><b>【自动化设】</b>1只 · 最高1板 · 承载自动化设</td></tr><tr><td colspan="5" style="background:#faf7f0"><b>── 自动化设</b> <span class="mut">(1只·开板0.0)</span> <span class="s-mid">末端扩散:普遍晚封、情绪外溢,可复制性差</span></td></tr><tr><td>14:14</td><td><b>大族激光</b> <span class="mut">002008</span> </td><td>封0.3% </td><td>行业兜底(THS原因停更20260814) <span class="mut" style="font-size:11px">B</span></td><td><b>抓14.1%</b> <span class="mut">分8 执1 44.9%/-0.18%</span></td></tr></table></div></div></details><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+var RM=false; /*2026-07-15用户拍板:私用盯盘台动画常开,不跟随系统'减少动态效果';要恢复无障碍降级,把false改回 matchMedia('(prefers-reduced-motion: reduce)').matches */
+/* ★2026-08-17修复(防复发): 进场动画可见性兜底——IO未触发/报错时内容必须最终可见。
+   事故: 涨停106只→归位台账明细卡高~3000px,IO threshold:.12需360px+入视口才触发,
+   用户矮窗口(788px)滚动位置未达标→.rv保持opacity:0→明细表永久透明"只显示推荐标的"。
+   三重保障: ①3.5s定时强制全显(即使IO报错/未触发,内容必现) ②无IntersectionObserver环境直接全显 ③threshold:0+12%提前量(大元素早触发)。 */
+setTimeout(function(){document.querySelectorAll('.rv:not(.on)').forEach(function(e){e.classList.add('on')})},3500);
+/* 旧机制:IO进场(全站沿用,无依赖) */
+function legacy(){
+  if(RM)return;
+  var els=document.querySelectorAll('.card,.obs,.routes .rt,.kv,.hero,details.chain,.tli,.cols,.gauge,.trow,.kpi,.ticker,.steps .step');
+  els.forEach(function(e){e.classList.add('rv')});
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('on')});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{threshold:0,rootMargin:'0px 0px 12% 0px'});
+  els.forEach(function(e){io.observe(e)});
+}
+/* v4增强:GSAP计数器/sparkline画入(渐进增强;无gsap/RM=静态终态,数字已内联写死) */
+function v4(){
+  if(RM||typeof gsap==='undefined')return;
+  document.querySelectorAll('[data-v]').forEach(function(el){
+    var v=parseFloat(el.dataset.v),d=parseInt(el.dataset.dec||'0',10);
+    var pre=el.dataset.pre||'',suf=el.dataset.suf||'';
+    gsap.to({n:0},{n:v,duration:1.3,ease:'power2.out',onUpdate:function(){
+      el.textContent=pre+this.targets()[0].n.toFixed(d)+suf;}});
+  });
+  document.querySelectorAll('polyline.drawin').forEach(function(p,i){
+    var len=p.getTotalLength();p.style.strokeDasharray=len;p.style.strokeDashoffset=len;
+    gsap.to(p,{strokeDashoffset:0,duration:1.4,ease:'power2.out',delay:.3+i*.15});
+  });
+  gsap.from('.kpi .chip2',{scale:.5,opacity:0,duration:.45,ease:'back.out(1.7)',stagger:.05,delay:.4});
+}
+legacy();
+var s=document.createElement('script');
+s.src=(location.pathname.indexOf('/archive/')>-1?'../':'')+'lib/gsap.min.js';
+s.onload=v4;s.onerror=function(){};
+document.head.appendChild(s);
+})();
+</script></body></html>

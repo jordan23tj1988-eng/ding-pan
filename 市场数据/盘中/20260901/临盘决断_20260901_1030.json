@@ -1,0 +1,25 @@
+{
+ "date": "20260901",
+ "session": "hb-b",
+ "ts": "10:30",
+ "write_ts": "2026-09-01 10:33:10",
+ "fills": [],
+ "no_action": true,
+ "reason": "数据断更>10分钟红线→只报警禁决策(10:30趋势确认段hb-b, 状态延续自hb-a): ①盘中/20260901/仍无pulse.json无realtime_ticks.jsonl(连续段09:31起零留档持续), launcher.log已于10:00:07记录'连续30分钟全源失败, 报警退出'streak=30(腾讯实时NoneType+GBK解码错未愈, 10:00后管道退出无新取数尝试), pipeline_alarm.jsonl 10:00:07 ALARM all_source_dead(盘中管道30分钟无数据源) → 实时取数链确认全死, 无任何10:25后盘中价格/承接/炸板可结算数据; ②盘中作战账本(mtime=2026-09-01 10:00留档): 现金=1000000.0 持仓=[] n_pos=0 空仓 → 持仓炸板/回撤/题材跳水防守无对象; ③warboard(盘中/20260831/, 8/31晚建cards 20只, 09:25竞价判定已写status=已触发多只)属09:25留档历史数据, trigger='竞价闸门+题材温度+个股强度+纪律, 共振才成交'需盘中实时共振确认, 实时链死→A级预案内trigger无可结算数据不执行; ④执行流水.jsonl不存在→无引擎成交需跟踪; ⑤C级预案外进攻禁止(实时链死)。不写任何fills/触发证据。",
+ "data_freshness": {
+  "pulse.json": {"path": "盘中/20260901/pulse.json", "exists": false},
+  "realtime_ticks.jsonl": {"path": "盘中/20260901/realtime_ticks.jsonl", "exists": false, "note": "连续段09:31起零留档持续至10:00管道退出"},
+  "报警_20260901.jsonl": {"path": "盘中/20260901/报警_20260901.jsonl", "exists": false},
+  "pipeline_alarm.jsonl": {"path": "盘中/20260901/pipeline_alarm.jsonl", "ts": "2026-09-01 10:00:07", "level": "ALARM", "type": "all_source_dead", "detail": "盘中管道30分钟无数据源"},
+  "执行流水.jsonl": {"path": "盘中/20260901/执行流水.jsonl", "exists": false},
+  "warboard": {"path": "盘中/20260831/warboard.json", "mtime": "2026-09-01 09:25:11", "note": "8/31晚重建cards 20只, 09:25竞价判定已写入status=已触发多只, 属10:30前留档可用; 需盘中共振确认"},
+  "account": {"path": "_学习/_模拟盘/盘中作战账本.json", "mtime": "2026-09-01 10:00", "note": "现金=1000000.0 持仓=[] n_pos=0 空仓"},
+  "launcher.log": {"last": "2026-09-01 10:00:07", "note": "取数失败streak=30, 连续30分钟全源失败报警退出, 10:00后无新记录"},
+  "trading_day_check": "sentiment.core.calendar本机缺失(同8/13~8/20先例), 用pipeline.lock今日09:14:07启动+盘中/20260901/目录+09:21/09:40场次已跑三重佐证20260901为交易日"
+ },
+ "decision": {
+  "level": "ALARM_ONLY(数据断更禁决策)",
+  "fills": [],
+  "note": "10:30趋势确认段hb-b: 实时链全死状态延续(streak 11→30, 10:00:07管道报警退出), 较hb-a新增事实=全源死已由pipeline_alarm.jsonl ALARM留档确认且管道进程已退出; 空仓无防守对象, A级trigger缺盘中共振数据禁执行, C级进攻禁止。建议(同hb-a): ①修复盘中实时管道.py竞价段入口(启动<09:15应循环等待, 同族第15日); ②排查腾讯实时NoneType+GBK解码错(疑接口返回GBK被utf-8硬解); ③连续段09:31起零留档需查管道连续段是否随竞价段短路一同未启动; ④管道10:00退出后无自动重启, 需保活/自愈机制"
+ }
+}

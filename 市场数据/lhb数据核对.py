@@ -5,7 +5,7 @@
         最新台账日 / 分档表新鲜度 / 负面验证
 数据源: _席位动向/{d}.csv + _席位分档.json + _资金温度.json + {d}/lhb.csv + 席位荐票卡_{d}.html
 """
-import re, os, sys, json, csv, glob
+import re, os, sys, json, csv, glob, datetime
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 L = os.path.join(BASE, '_学习')
@@ -193,7 +193,8 @@ def main():
     # ===== 5. 分档表新鲜度(窗口末日 vs d) =====
     if lib and lib.get('窗口'):
         we = lib['窗口'].split('~')[-1]
-        chk(issues, we >= str(int(d) - 5), '分档表新鲜度', f'窗口末日{we} vs 核对日{d}')
+        _cut = (datetime.datetime.strptime(d, '%Y%m%d') - datetime.timedelta(days=5)).strftime('%Y%m%d')
+        chk(issues, we >= _cut, '分档表新鲜度', f'窗口末日{we} vs 核对日{d}(容忍{d}-5日)')
 
     # ===== 6. 负面验证(限 LLM 手写文本区: 头部+板块一/五/六; 不扫 CSS/JS/SVG 合法内容) =====
     htxt = re.sub(r'<script.*?</script>', '', h, flags=re.S)

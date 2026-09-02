@@ -695,6 +695,46 @@ def build(date):
             and _c not in ('up','dn','mut','pos','neg','tag','inner','drawin','on','hot','warn','cold','a','u','d','rv','live','txt','st','dayc','now','cur','dim','bar','fines','tlfold','chain')})
         if _bare: print('!!!出页自检失败:index自造裸奔类(CSS无定义) → '+','.join(_bare))
         if not _miss_comp and not _bare: print('index组件自检通过:黄金版组件在位,无裸奔类')
+
+    # ★2026-09-01 机制根治(用户批准): body 契约自检三查——段名契约/head区存在/body大小
+    #   背景: 9/1 失控 cron 产出 limitup 缺 head 区(h2@0)+缺"二 市场温度"段+Top8错名、lhb 缺"二"段
+    #   ——旧自检只查段数/锚, 不查段名/head区/大小, 带病产物直接出页; 三查把这些拦在出页前
+    #   段名严格页(渲染器按 h2 提取, 段名漂移=提取错位): limitup 六段契约 / lhb 六段契约
+    _bc_tmpl = {
+        'limitup': ['一 涨停复盘', '二 市场温度', '三 归位台账', '四 涨停质量库', '五 自主深挖', '六 我的认知迭代'],
+        'lhb': ['一 席位综合判断', '二 资金温度', '三 龙虎榜台账', '四 席位分档库', '五 自主深挖', '六 认知'],
+    }
+    # 整段保真页(段名按日变体, 只查段数下限): index/auction/theme/logic/cycle
+    _bc_count = {'index': 5, 'auction': 6, 'theme': 6, 'logic': 6, 'cycle': 7}
+    for _k, _tmpl in _bc_tmpl.items():
+        _bp = os.path.join(L, 'judgment_%s.json' % date)
+        if not os.path.exists(_bp): continue
+        _bd = json.load(open(_bp, encoding='utf-8')).get('bodies', {}).get(_k, '')
+        if not _bd: continue
+        _h2s = [_m.group(1).strip() for _m in _re2.finditer(r'<h2[^>]*>(.*?)</h2>', _bd, _re2.S)]
+        _i1 = _bd.find('<h2>一')
+        if _i1 <= 0 or _i1 > 4000:
+            print('!!!出页自检失败:%s body缺head区(h2一@%d, 无hero/kpi 或 head区超4KB)' % (_k, _i1))
+        elif _bd[:_i1].count('class="kpi"') < 4:
+            print('!!!出页自检失败:%s head区kpi卡=%d张(应4张黄金版结构)' % (_k, _bd[:_i1].count('class="kpi"')))
+        for _t in _tmpl:
+            if not any(_h.startswith(_t) for _h in _h2s):
+                print('!!!出页自检失败:%s 缺契约段[%s] (段名漂移/跳号, 渲染器按h2提取会错位)' % (_k, _t))
+        _sz = len(_bd) / 1024
+        if _sz > 900:
+            print('!!!出页自检失败:%s body过大 %.0fKB(>900KB, 疑大表入body)' % (_k, _sz))
+    for _k, _n in _bc_count.items():
+        _bp = os.path.join(L, 'judgment_%s.json' % date)
+        if not os.path.exists(_bp): continue
+        _bd = json.load(open(_bp, encoding='utf-8')).get('bodies', {}).get(_k, '')
+        if not _bd: continue
+        _h2n = len(_re2.findall(r'<h2[^>]*>', _bd))
+        if _h2n < _n:
+            print('!!!出页自检失败:%s body段数=%d(应≥%d, 断档/缺段)' % (_k, _h2n, _n))
+        _sz = len(_bd) / 1024
+        if _sz > 900:
+            print('!!!出页自检失败:%s body过大 %.0fKB(>900KB, 疑大表入body)' % (_k, _sz))
+    print('body契约自检:段名/head区/大小 三查完成')
     # ★limitup 数字核对哨兵(2026-08-11加: bodies手写数字 vs 数据源 内容级核对;
     #   历史事故: 高标张冠李戴/抄昨日板数/温度抄错 全靠用户逐卡验收才显形)
     #   FAIL 不阻断出页(页面已生成), 但打印醒目错误, 强制人工复核后才能发布

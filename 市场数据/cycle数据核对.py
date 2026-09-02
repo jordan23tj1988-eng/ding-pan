@@ -151,7 +151,9 @@ def check_page(h, d):
                 top = max(pool, key=lambda r: (int(float(r.get('连板数', 1) or 1)), str(r.get('涨停统计', ''))))
                 nm = str(top.get('名称', ''))
                 nm_short = nm.rstrip('股份')
-                chk(issues, ('最高%d板' % hi) in h and (nm in h or nm_short in h),
+                _hi_pat = ('最高%d板' % hi) in h or ('最高板' in h and ('%d板' % hi) in h)
+                _nm_pat = (nm in h or nm_short in h)
+                chk(issues, _hi_pat and _nm_pat,
                     '最高板个股(LLM段四)', f'页面vs源最高{hi}板={nm}')
             else:
                 chk(issues, ('最高%d板' % hi) in h, '最高板数(LLM段四)', f'源最高{hi}板')

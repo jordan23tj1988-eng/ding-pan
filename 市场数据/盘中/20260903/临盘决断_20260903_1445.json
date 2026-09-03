@@ -1,0 +1,42 @@
+{
+  "date": "20260903",
+  "session": "deepb-1445",
+  "ts": "14:45",
+  "write_ts": "2026-09-03 19:29:55",
+  "条件决断": [],
+  "data_freshness": {
+    "pulse": {
+      "path": "盘中/20260903/pulse.json",
+      "exists": false,
+      "note": "今日未生成(实时管道10:00全源失败退出); warboard内嵌pulse为0902收盘值(zt=52/dt=8/zb_rate=22.4/top_lb=4)属昨日留档禁引用"
+    },
+    "执行流水": {
+      "path": "盘中/20260903/执行流水.jsonl",
+      "exists": false,
+      "note": "今日未生成, 全天零引擎执行(空仓+无数据)"
+    },
+    "auction_traj": {
+      "path": "盘中/20260903/auction_traj.jsonl",
+      "exists": false,
+      "note": "竞价段跳过同族缺陷(launcher 09:14:04<09:15), 9:15起零留档"
+    },
+    "warboard": {
+      "path": "盘中/20260903/warboard.json",
+      "exists": true,
+      "note": "date=20260902/ts=晚间复盘重建=今晨预案: stage=C档/pos_band≤2成/account空仓(n_pos=0, cash_pct=100%, nav=1.0)/建卡19只全status=观察零建票/预案buys=0/sells无持仓对象; 09:25盘中回应引擎无数据可填(judgment.checks全null); judgment.response.verdict='验证中'"
+    },
+    "模拟盘": {
+      "path": "_学习/_模拟盘/盘中作战/state.json",
+      "note": "≤09:25留档: cash=1000000, positions=[], n_pos=0空仓(独立账本起算20260813); 账本同日口径nav=1000000.0"
+    },
+    "stale_min": "实时链自09:26:48(竞价快照存档meta)后全源断更至执行时刻19:29>10小时, 远超10分钟红线; launcher 10:00:16'连续30分钟全源失败,报警退出'",
+    "out_of_window": "本场cron延迟至19:29触发, 14:45决断窗口已过+15:00已收盘; 同批次hb-c/hb-d/hb-e均出窗口留证",
+    "verdict": "只报警禁决策"
+  },
+  "decision": {
+    "level": "ALARM_ONLY",
+    "fills": [],
+    "reason": "尾盘场(14:45)执行时刻19:29(cron迟到出窗口, 决断时间戳=14:45, 仅用≤14:45留档): ①尾盘卖预案无对象——模拟盘/account空仓(n_pos=0, positions=[], cash=1000000), 预案sells的leg=close/take_zt触发前提=持仓不成立; ②实时链全天断更(09:31:05起iFinD -1010+腾讯NoneType, 10:00全源失败退出), pulse.json/执行流水.jsonl/auction_traj全缺失, 尾盘走弱防守/情绪判断零依据, 写即编造(铁律①); ③15:00已收盘无tick可留档, fills'决断后下一tick留档价'成交语义无法成立, 补做即后视镜(铁律②); ④盘中禁改参数, 未动warboard/未自造trigger。依铁律只报警禁决策, 条件决断=[], fills=[]",
+    "note": "已写盘中/报警_20260903.jsonl(deepb-1445条)与_学习/盘中尾盘复盘_20260903.md(链路审计式, 无盘面判断); 与hb-c/d/e出窗口留证同批次; 账本零成交零持仓无影响(空仓合法); 需修复: cron盘中调度出窗口处理+实时管道竞价段入口+双源取数恢复+calendar模块"
+  }
+}

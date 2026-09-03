@@ -80,6 +80,17 @@ def main():
         print("已存在,跳过:", wb_path, "(加 --force 重跑)")
         return 0
 
+    # ── 0. 输入完整性防护(20260903 #118): 全部输入缺失=日期错位/晚间复盘未跑, 拒绝写空卡 ──
+    _inputs = [os.path.join(LX, "%s判断_%s.json" % (_road, d))
+               for _road in ("auction", "lhb", "theme", "logic", "limitup")]
+    _inputs += [os.path.join(LX, _f) for _f in (
+        "judgment_%s.json" % d, "总审_%s.json" % d, "席位荐票_%s.json" % d,
+        "涨停质量荐票_%s.json" % d, "涨停对链条_%s.json" % d,
+        "竞价评分_%s.json" % d, "题材归位_%s.json" % d)]
+    if not any(os.path.isfile(_p) for _p in _inputs):
+        print("[warboard_build] %s: 全部 %d 个输入文件均不存在(疑似日期错位或晚间复盘未跑), 拒绝写空卡, rc=2" % (d, len(_inputs)))
+        return 2
+
     # ── 1. 五路标的合并去重 ──
     merged = {}
     for road in ("auction", "lhb", "theme", "logic", "limitup"):

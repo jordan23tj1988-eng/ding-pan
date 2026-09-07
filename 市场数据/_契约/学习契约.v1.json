@@ -1,0 +1,383 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "P2 学习审计产物 v1",
+  "schema_version": 1,
+  "type": "object",
+  "required": [
+    "schema_version",
+    "d",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "d": {
+      "type": "string",
+      "pattern": "^[0-9]{8}$",
+      "description": "另由datetime验证实际日期；未来值仅可用于due_d，不读未来事实。"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "predictions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/prediction"
+      }
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/cognition"
+      }
+    }
+  },
+  "$defs": {
+    "prediction": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "id",
+        "d",
+        "due_d",
+        "source",
+        "field",
+        "op",
+        "threshold",
+        "condition",
+        "event_type",
+        "status",
+        "actual",
+        "evidence"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "d": {
+          "type": "string",
+          "pattern": "^[0-9]{8}$",
+          "description": "另由datetime验证实际日期；未来值仅可用于due_d，不读未来事实。"
+        },
+        "due_d": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{8}$"
+        },
+        "source": {
+          "type": "string"
+        },
+        "field": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "op": {
+          "enum": [
+            "lt",
+            "le",
+            "gt",
+            "ge",
+            "eq",
+            "ne",
+            null
+          ]
+        },
+        "threshold": {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "condition": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "field": {
+              "type": "string"
+            },
+            "op": {
+              "enum": [
+                "lt",
+                "le",
+                "gt",
+                "ge",
+                "eq",
+                "ne"
+              ]
+            },
+            "threshold": {
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
+            },
+            "unit": {
+              "enum": [
+                null,
+                "number",
+                "ratio",
+                "pct",
+                "%",
+                "percent",
+                "亿",
+                "板",
+                "只"
+              ]
+            }
+          },
+          "required": [
+            "field",
+            "op",
+            "threshold"
+          ]
+        },
+        "unit": {
+          "enum": [
+            null,
+            "number",
+            "ratio",
+            "pct",
+            "%",
+            "percent",
+            "亿",
+            "板",
+            "只"
+          ]
+        },
+        "event_type": {
+          "enum": [
+            "direction",
+            "attack_defense",
+            "numeric",
+            "stock",
+            "conditional"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pending",
+            "true",
+            "false",
+            "not_triggered",
+            "unverifiable",
+            "ambiguous"
+          ]
+        },
+        "actual": {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          }
+        }
+      }
+    },
+    "predicate": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "field": {
+          "type": "string"
+        },
+        "op": {
+          "enum": [
+            "lt",
+            "le",
+            "gt",
+            "ge",
+            "eq",
+            "ne"
+          ]
+        },
+        "threshold": {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "unit": {
+          "enum": [
+            null,
+            "number",
+            "ratio",
+            "pct",
+            "%",
+            "percent",
+            "亿",
+            "板",
+            "只"
+          ]
+        }
+      },
+      "required": [
+        "field",
+        "op",
+        "threshold"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "path",
+        "d",
+        "field",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "d": {
+          "type": "string",
+          "pattern": "^[0-9]{8}$",
+          "description": "另由datetime验证实际日期；未来值仅可用于due_d，不读未来事实。"
+        },
+        "field": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "cognition": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "id",
+        "d",
+        "route",
+        "source",
+        "claim",
+        "evidence",
+        "falsifier",
+        "status"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "id": {
+          "type": "string"
+        },
+        "d": {
+          "type": "string",
+          "pattern": "^[0-9]{8}$",
+          "description": "另由datetime验证实际日期；未来值仅可用于due_d，不读未来事实。"
+        },
+        "route": {
+          "enum": [
+            "auction",
+            "lhb",
+            "theme",
+            "logic",
+            "limitup",
+            "master"
+          ]
+        },
+        "source": {
+          "type": "string"
+        },
+        "claim": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "evidence": {
+          "type": "array"
+        },
+        "falsifier": {
+          "type": [
+            "string",
+            "object",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "unverified",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "failure": {
+      "type": "object",
+      "required": [
+        "status",
+        "errors",
+        "d"
+      ],
+      "properties": {
+        "status": {
+          "const": "fail"
+        },
+        "errors": {
+          "type": "array",
+          "minItems": 1
+        },
+        "d": {
+          "description": "原始请求值，非法日期也原样回显"
+        }
+      }
+    }
+  },
+  "semantics": {
+    "root": "显式Path，只读输入；out必须在root之外。",
+    "new_run": "UUID独占新目录，禁止覆盖；不回填旧日出版，校准缺失产生本次审计结算。",
+    "response_shapes": [
+      "id->response",
+      "日期/应答",
+      "{d: id->response}"
+    ],
+    "normalization": "未知/缺失/重复/内嵌ID冲突显式ValueError；文件JSON重复键也失败。",
+    "deadline": "预测显式due_d优先；旧次日取原文唯一目标日期或真实归档后继日；清单默认后继第2交易日。日历无后继保留null，不猜工作日。",
+    "percentage": "pct/%/percent阈值除100，仅适用率字段；ratio保持原值，不按大小猜单位。",
+    "settlement": "只用due_d的事实，target_d仅控制可读上限；无股票完整行情则unverifiable。",
+    "legacy_direction": "降与>=冲突只有原文同一阈值明确低于/以下/跌破/击穿且无反向比较时映射lt，否则ambiguous。",
+    "evidence": "路径+日期+字段+SHA256提供来源；认知provenance不等于结论验证。",
+    "master": "ID出现只能acknowledged；原任务condition可机械计算且conclusion与对应可核验evidence齐备，才validated/refuted。",
+    "cognition": "五路判断和总审优先；同一out内旧body日期/路仅导入一次；raw/original/legacy_node/legacy_section保留源字段，不机械采纳候选认知。 旧结构化认知字符串整段作为一条保留；不按标点猜分项。",
+    "coverage": "分母包括所有清单项；34条具体预测与25段叙事分开；missing/ambiguous/unverifiable不计命中。",
+    "pass": "仅数据消费/审计结构通过，learning_closure独立表示未完成的研究结算，不代表预测成功。 learning_closure仅衡量截至d到期项；没有到期项为not_due，非完成。旧认知快照updated>d时其历史元数据置null。"
+  },
+  "interfaces": {
+    "normalize_responses": "(raw: dict, items: list, d: str) -> dict[id,response]",
+    "settle_predictions": "(root: Path, d: str, target_d: str, out: Path) -> dict",
+    "collect_cognition": "(root: Path, d: str, out: Path) -> dict",
+    "audit_learning": "(root: Path, d: str, out: Path) -> dict",
+    "settle_master": "(root: Path, d: str, out: Path) -> dict",
+    "CLI": "python -B review_learning.py audit|coverage|cognition|master|settle YYYYMMDD --root PATH --out PATH [--target-d YYYYMMDD]"
+  }
+}

@@ -1,0 +1,413 @@
+{
+  "schema_version": 1,
+  "title": "P3 评估契约 v1",
+  "status": "isolated_implementation_not_production_release",
+  "impact_analysis": {
+    "producer": "review_eval.py",
+    "consumers": [
+      "freeze",
+      "compare",
+      "run",
+      "calibrate",
+      "independent_blind_reviewer"
+    ],
+    "legacy_read_only": true,
+    "production_wiring_changed": false,
+    "new_outputs_only": true
+  },
+  "apis": {
+    "freeze_case": "(root:Path,d:str,out:Path)->dict",
+    "evaluate_outputs": "(case_path:Path,outputs:list[Path],out:Path)->dict",
+    "verify_case": "(case_path:Path)->dict",
+    "run_model": "(root:Path,d:str,case_path:Path,out:Path,command:list[str]|None,*,allow_execution=False,provider=None,model=None,timeout=60,run_id=None,kind=\"model_output\")->dict",
+    "append_observation": "(root:Path,d:str,record:dict)->dict",
+    "calibration_report": "(root:Path,d:str,registrations:list[dict],forecasts:list[dict],labels:list[dict],*,min_samples=30,min_bin_samples=10,bins=5)->dict"
+  },
+  "date": "strict ASCII YYYYMMDD valid calendar date; explicit root Path; no latest-file fallback",
+  "failure": {
+    "schema_version": 1,
+    "status": "fail",
+    "errors": [
+      "message"
+    ],
+    "d": "YYYYMMDD or null if unreadable"
+  },
+  "freeze": {
+    "files": [
+      "fact_{d}.json",
+      "auction判断_{d}.json",
+      "lhb判断_{d}.json",
+      "theme判断_{d}.json",
+      "logic判断_{d}.json",
+      "limitup判断_{d}.json"
+    ],
+    "judgment_projection": [
+      "结论",
+      "证据",
+      "档位",
+      "独立盲区声明"
+    ],
+    "excluded": [
+      "总审",
+      "推演",
+      "认知迭代",
+      "深挖",
+      "荐票",
+      "置信度",
+      "非当日档案"
+    ],
+    "as_of": "all six original as_of required; legacy build_time is not availability proof",
+    "missing_as_of": "engineering_only",
+    "complete_as_of": "requires_independent_provenance_review",
+    "hashes": [
+      "original raw SHA256",
+      "projected snapshot SHA256",
+      "case SHA256",
+      "prompt SHA256"
+    ],
+    "hash_trust_boundary": "retain hashes.json/case_hash with reviewer; simultaneous malicious rewriting of hashes and content needs external signed archive verification"
+  },
+  "output_schema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_version",
+      "d",
+      "case_hash",
+      "event"
+    ],
+    "properties": {
+      "schema_version": {
+        "const": 1
+      },
+      "d": {
+        "type": "string",
+        "pattern": "^[0-9]{8}$"
+      },
+      "case_hash": {
+        "type": "string"
+      },
+      "event": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "claim",
+          "evidence",
+          "counterevidence",
+          "limitations",
+          "prediction"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "claim": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "source_id",
+                "field",
+                "value",
+                "unit"
+              ],
+              "properties": {
+                "source_id": {
+                  "type": "string"
+                },
+                "field": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "unit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          "counterevidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "claim",
+                "references"
+              ],
+              "properties": {
+                "claim": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "references": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "source_id",
+                      "field",
+                      "value",
+                      "unit"
+                    ],
+                    "properties": {
+                      "source_id": {
+                        "type": "string"
+                      },
+                      "field": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      },
+                      "unit": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "prediction": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "source_id",
+              "field",
+              "op",
+              "threshold",
+              "unit",
+              "due",
+              "probability"
+            ],
+            "properties": {
+              "source_id": {
+                "type": "string"
+              },
+              "field": {
+                "type": "string"
+              },
+              "op": {
+                "enum": [
+                  "gt",
+                  "gte",
+                  "lt",
+                  "lte",
+                  "eq"
+                ]
+              },
+              "threshold": {
+                "type": "number"
+              },
+              "unit": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "due": {
+                "type": "string",
+                "pattern": "^[0-9]{8}$"
+              },
+              "probability": {
+                "type": [
+                  "number",
+                  "null"
+                ],
+                "minimum": 0,
+                "maximum": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "unit_adapter": {
+    "涨停数": "家",
+    "炸板数": "家",
+    "跌停数": "家",
+    "炸板率": "ratio",
+    "封板率": "ratio",
+    "温度": "分",
+    "温度档": null,
+    "最高连板": "板",
+    "题材线数": "条",
+    "归位数量": "家",
+    "归位A档数": "家",
+    "归位B档数": "家",
+    "归位C档数": "家",
+    "回封数": "家",
+    "二板加": "家",
+    "成交额亿": "亿元",
+    "封板总额亿": "亿元"
+  },
+  "structure_checks": [
+    "strict schema/no additional fields",
+    "fixed event id and d/case_hash",
+    "JSON Pointer resolution",
+    "literal values and units",
+    "numeric prediction op/threshold, future weekday due",
+    "binary event probability [0,1] or null",
+    "identity leak rejection"
+  ],
+  "semantic_score_default": null,
+  "cost_without_usage": null,
+  "blind_review": {
+    "public": [
+      "case.json",
+      "blind_review.json"
+    ],
+    "private": [
+      "private/mapping.json",
+      "observability.jsonl",
+      "runner raw stdout/stderr",
+      "original outputs"
+    ],
+    "assignment": "random permutation A/B/...; only private map has path/provider/model/usage",
+    "rubric": [
+      "判断和引用之间的蕴涵是否成立",
+      "是否提出真正能改变主判的相反证据",
+      "是否识别共源证据重复",
+      "是否明示材料缺失和不可判断项",
+      "预测是否与主判有关且可证伪"
+    ],
+    "machine_semantic_score": null,
+    "independent_review_required": true,
+    "identity_limit": "explicit metadata identities and common model identifiers checked; prose/stylometry still needs independent review"
+  },
+  "runner": {
+    "default": "offline",
+    "protocol": "explicit argv list, shell=False, stdin UTF-8 JSON {schema_version,d,case_hash,case,prompt}; stdout JSON {output,usage?}",
+    "response_usage": {
+      "input_tokens": null,
+      "output_tokens": null,
+      "cost": null,
+      "currency": null
+    },
+    "timing": "actual parent UTC timestamps including subprocess; never estimated",
+    "retries": "no automatic retries; 0; new out/run_id for explicit retry",
+    "idempotency": "same request in same out reuses hashed output; conflicts fail; no global ledger across different roots",
+    "timeout": "file-backed stdin avoids Windows blocking pipe write; timeout kills Windows process tree or POSIX group; plugins must not detach",
+    "credential_dependency": false
+  },
+  "observation_required": [
+    "schema_version",
+    "d",
+    "run_id",
+    "stage",
+    "started",
+    "ended",
+    "duration",
+    "status",
+    "input_hash",
+    "provider",
+    "model",
+    "tokens",
+    "cost",
+    "retries"
+  ],
+  "calibration": {
+    "min_samples": 30,
+    "min_bin_samples": 10,
+    "bins": 5,
+    "probability": "explicit binary event probability, not subjective confidence",
+    "registration_required": [
+      "schema_version",
+      "id",
+      "d",
+      "due",
+      "registered_at",
+      "mode",
+      "source_id",
+      "field",
+      "op",
+      "threshold",
+      "unit"
+    ],
+    "forecast_required": [
+      "schema_version",
+      "id",
+      "d",
+      "submitted_at",
+      "probability"
+    ],
+    "label_required": [
+      "schema_version",
+      "id",
+      "d",
+      "source_path",
+      "field",
+      "unit",
+      "sha256",
+      "observed_at"
+    ],
+    "label_value": "read exact root/_学习/fact_{due}.json; compute outcome from op/threshold; no caller-supplied boolean label trusted",
+    "mode": [
+      "prospective",
+      "controlled_test"
+    ],
+    "gates": [
+      "registration <= forecast submission <= forecast day cutoff < due",
+      "observed_at <= evaluation d cutoff",
+      "fact date/field/unit/hash match",
+      "null missing no settlement",
+      "unique id and predicate"
+    ],
+    "brier": "mean((p-y)^2) only if scored N >= min_samples",
+    "reliability": "[lower,upper), final bin includes p=1; rates null below min_bin_samples",
+    "denominators": [
+      "registered",
+      "forecasts",
+      "probability_available",
+      "due",
+      "scored"
+    ],
+    "exclusions": [
+      "missing_forecast",
+      "no_probability",
+      "pending",
+      "missing_label",
+      "missing_value"
+    ],
+    "improvement_conclusion": null,
+    "attestation": "caller archive timestamps not cryptographically independently attested; no capability promotion by this module"
+  },
+  "calendar_limit": "reject weekends, require independent exchange-calendar verification for holidays; never infer next trading day from old prose"
+}

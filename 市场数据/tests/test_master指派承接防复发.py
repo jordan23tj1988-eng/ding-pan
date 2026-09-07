@@ -39,12 +39,24 @@ def test_契约master结算接线(cron_jobs_path):
 
 # ---------- 脚本层: master结算.py 时序/正则/截止解析 ----------
 
-def test_master结算截止日查证(mkt):
-    """master结算必须按指派截止日查 judgment_{截止日}, 而非 dprev——#104根因2: 总审晚于五路, dprev当天不可能承接。"""
-    src = _read(os.path.join(mkt, "master结算.py"))
-    assert "judgment_%s.json' % cut" in src or "judgment_%s.json\" % cut" in src, \
-        "master结算仍查 dprev 当日 judgment——时序错位恒未承接"
-    assert "_cut_date" in src, "缺 _cut_date 截止日解析"
+def test_master结算截止日查证(mkt, tmp_path, monkeypatch):
+    """跨日查证必须实读截止日；不以旧函数名/字符串拼写判正确。"""
+    from pathlib import Path
+    import review_learning as learning
+    source = Path(__file__).resolve().parents[2] / 'evidence' / 'real_samples'
+    seen=[]
+    original=learning._load
+    def tracked(path):
+        seen.append(Path(path).name)
+        return original(path)
+    monkeypatch.setattr(learning, '_load', tracked)
+    result=learning.settle_master(source, '20260904', tmp_path / 'audit')
+    assert result['status'] == 'pass', result.get('errors')
+    assert 'judgment_20260904.json' in seen, '未读取9/3指派的9/4截止日正文'
+    assert 'judgment_20260907.json' not in seen, '提前读了未到期未来正文'
+    items=[x for x in result['assignments'] if x['d']=='20260903']
+    assert items and all(x['due_d']=='20260904' for x in items)
+    assert any(x['status']=='acknowledged' for x in items), '截至日真实ID未承接'
 
 
 def test_master结算承接正则放宽(mkt):

@@ -20,22 +20,38 @@ def _date(d: str) -> str:
 
 
 def normalize_responses(raw: dict, items: list, d: str) -> dict:
-    """归一三种旧应答；所有清单 ID 必须且只能应答一次。输入不变。"""
+    """归一历史应答包装；只重排已有记录，不生成应答。"""
     _date(d)
     if not isinstance(raw, dict) or not isinstance(items, list):
         raise ValueError("应答必须为对象，items 必须为列表")
     ids = [i.get("id") if isinstance(i, dict) else None for i in items]
     if any(not isinstance(i, str) or not i for i in ids) or len(ids) != len(set(ids)):
         raise ValueError("清单 ID 缺失或重复")
+    route_ids = {}
+    for item in items:
+        route_ids.setdefault(item.get("route"), []).append(item["id"])
+    metadata = {"d", "日期", "来源", "口径", "说明", "schema_version", "_总审注"}
     mapping = raw
     if "应答" in raw:
-        if raw.get("日期") != d or set(raw) - {"日期", "应答", "schema_version"}:
-            raise ValueError("应答日期错配或未知包装字段")
+        given_d = raw.get("日期", raw.get("d"))
+        if given_d is not None and given_d != d:
+            raise ValueError("应答日期错配")
         mapping = raw["应答"]
+    elif "items" in raw:
+        mapping = raw["items"]
     elif d in raw:
-        if set(raw) != {d}:
-            raise ValueError("日期包装含未知项")
         mapping = raw[d]
+    else:
+        # 旧版 route -> [response] 或 date + id -> response。
+        payload = {k: v for k, v in raw.items() if k not in metadata}
+        if payload and all(k in route_ids for k in payload):
+            mapping = {}
+            for route, responses in payload.items():
+                if not isinstance(responses, list) or len(responses) != len(route_ids[route]):
+                    raise ValueError(f"旧route应答数量不匹配: {route}")
+                mapping.update(dict(zip(route_ids[route], responses)))
+        else:
+            mapping = payload
     if isinstance(mapping, list):
         result = {}
         for response in mapping:

@@ -88,6 +88,17 @@ def _check_date(obj, d):
 
 
 def _calendar(root: Path) -> list:
+    """Read the real archived trading calendar before falling back to dated dirs."""
+    cached = root / "_学习" / "_交易日历.json"
+    if cached.is_file():
+        try:
+            values = json.loads(cached.read_text(encoding="utf-8"))
+            if isinstance(values, list):
+                valid = sorted({_date(str(x)) for x in values})
+                if valid:
+                    return valid
+        except (OSError, ValueError, TypeError):
+            pass
     dates = []
     for p in root.iterdir():
         if p.is_dir() and re.fullmatch(r"[0-9]{8}", p.name):

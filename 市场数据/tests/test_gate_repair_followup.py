@@ -1,5 +1,6 @@
 """Build-discovered regressions on current P1.2, plus future/missing source negatives."""
 import json
+import re
 from pathlib import Path
 import pytest
 import review_pages as pages
@@ -36,6 +37,23 @@ def test_cycle_missing_judgment_remains_honest(tmp_path, monkeypatch):
   return original(path,*args,**kwargs)
  monkeypatch.setattr(pub,'read_json',with_decision)
  assert pub._check_one(ROOT,tmp_path,'20260904','cycle')['status']=='fail'
+
+def test_cycle_body_day_omits_machine_components_and_anchors(tmp_path):
+ # Use the real dated judgment and data, then render through the production
+ # P1 builder.  Body days must keep the golden seven-section shape; machine
+ # cards belong only to the missing-body fallback track.
+ model=pages.build_page_model(ROOT,'20260907','cycle')
+ assert model['judgment_complete'] is True
+ assert {c['id'] for c in model.get('components',[])}.isdisjoint({'VOLSTEP','LEADIND','VOTEBOARD','LADDER'})
+ html=pages._render(model,pages._contract())
+ for anchor in ('VOLSTEP','LEADIND','MACHVOTE','LADDER'):
+  assert '<!--'+anchor+'-->' not in html
+ assert not re.search(r'<details[^>]*class="chain"[^>]*>\s*<summary>\s*<b>机器数据源',html)
+ (tmp_path/'models').mkdir()
+ (tmp_path/'models/cycle.json').write_text(json.dumps(model,ensure_ascii=False),encoding='utf-8')
+ (tmp_path/'cycle.html').write_text(html,encoding='utf-8')
+ result=pub.scoped_p12_check(ROOT,tmp_path,'20260907','cycle')
+ assert result['status']=='pass',result
 
 
 def test_renderer_rejects_future_or_absent_snapshot(tmp_path):

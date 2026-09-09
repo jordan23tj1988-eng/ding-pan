@@ -11,19 +11,20 @@ sys.path.insert(0,str(CODE))
 import review_publish as pub
 
 INTEGRATION=TASK.parent/'integration'/'root'
-P1=TASK/'evidence'/'r1'/'p1_code_snapshot'
-P1_PREVIEW=TASK/'evidence'/'r1'/'p1_preview_20260902'
+R1=TASK.parent/'integration'/'evidence'/'r1'
+P1=R1/'p1_code_snapshot'
+P1_PREVIEW=R1/'p1_preview_20260902'
 
 class R1Tests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory(prefix='r1-',dir=TASK/'evidence'/'r1')
+        self.tmp=tempfile.TemporaryDirectory(prefix='r1-',dir=R1)
         self.addCleanup(self.tmp.cleanup)
         self.root=Path(self.tmp.name)
         self.stage=self.root/'site';self.stage.mkdir()
 
     def test_cycle_current_p1_contract_and_anchor_negative(self):
-        root=TASK/'evidence'/'r1'/'real_20260902'/'root'
-        shutil.copytree(TASK/'evidence'/'r1'/'current_cycle',self.stage,dirs_exist_ok=True)
+        root=R1/'real_20260902'/'root'
+        shutil.copytree(R1/'current_cycle',self.stage,dirs_exist_ok=True)
         good=pub._check_one(root,self.stage,'20260902','cycle')
         self.assertEqual(good['status'],'pass',good)
         self.assertEqual(sum(bool(c.get('replacement_contract')) for c in good['observed_checks'] if not c['negative_injection']),5)
@@ -33,8 +34,8 @@ class R1Tests(unittest.TestCase):
         self.assertEqual(bad['status'],'fail',bad)
 
     def test_limitup_current_p1_recommendations_section_and_bad_rate(self):
-        root=TASK/'evidence'/'r1'/'real_20260902'/'root'
-        shutil.copytree(TASK/'evidence'/'r1'/'current_p1_routes',self.stage,dirs_exist_ok=True)
+        root=R1/'real_20260902'/'root'
+        shutil.copytree(R1/'current_p1_routes',self.stage,dirs_exist_ok=True)
         good=pub._check_one(root,self.stage,'20260902','limitup')
         self.assertEqual(good['status'],'pass',good)
         page=self.stage/'limitup.html'
@@ -42,8 +43,8 @@ class R1Tests(unittest.TestCase):
         self.assertEqual(pub._check_one(root,self.stage,'20260902','limitup')['status'],'fail')
 
     def test_lhb_source_card_is_compared_by_rendered_content(self):
-        root=TASK/'evidence'/'r1'/'real_20260902'/'root'
-        shutil.copytree(TASK/'evidence'/'r1'/'current_p1_routes',self.stage,dirs_exist_ok=True)
+        root=R1/'real_20260902'/'root'
+        shutil.copytree(R1/'current_p1_routes',self.stage,dirs_exist_ok=True)
         result=pub._check_one(root,self.stage,'20260902','lhb')
         row=next(r for r in result['observed_checks'] if r['label']=='Top5卡在页面')
         self.assertTrue(row['ok'],row)
@@ -55,8 +56,8 @@ class R1Tests(unittest.TestCase):
         self.assertFalse(next(r for r in bad['observed_checks'] if r['label']=='Top5卡在页面')['ok'])
 
     def test_auction_uses_previous_pool_settled_today_and_rejects_bad_ratio(self):
-        root=TASK/'evidence'/'r1'/'real_20260902'/'root'
-        shutil.copytree(TASK/'evidence'/'r1'/'current_p1_routes',self.stage,dirs_exist_ok=True)
+        root=R1/'real_20260902'/'root'
+        shutil.copytree(R1/'current_p1_routes',self.stage,dirs_exist_ok=True)
         good=pub._check_one(root,self.stage,'20260902','auction')
         self.assertEqual(good['settlement_validation']['status'],'pass',good)
         self.assertEqual(good['settlement_validation']['pool_date'],'20260901')
@@ -71,8 +72,8 @@ class R1Tests(unittest.TestCase):
         self.assertEqual(pub._check_one(root,self.stage,'20260902','auction')['status'],'fail')
 
     def test_machine_component_cannot_forge_model_and_dom_together(self):
-        root=TASK/'evidence'/'r1'/'real_20260902'/'root'
-        shutil.copytree(TASK/'evidence'/'r1'/'current_cycle',self.stage,dirs_exist_ok=True)
+        root=R1/'real_20260902'/'root'
+        shutil.copytree(R1/'current_cycle',self.stage,dirs_exist_ok=True)
         self.assertEqual(pub.view_check(root,self.stage,'20260902','cycle')['status'],'pass')
         mp=self.stage/'models'/'cycle.json';model=pub.read_json(mp)
         comp=next(c for c in model['components'] if c['id']=='LEADIND')

@@ -1,12 +1,14 @@
 """真实五日应答；异常场景均为明确的受控测试注入。"""
 import copy
 import json
+import os
 import sys
 import unittest
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import review_learning as learning
-SAMPLES = Path(__file__).resolve().parents[2] / "evidence" / "real_samples" / "_学习"
+P2_ROOT = Path(os.environ.get("SENTIMENT_P2_TASK", str(Path(__file__).resolve().parents[2]/"codex_workspace"/"stability-20260906"/"p2")))
+SAMPLES = P2_ROOT / "evidence" / "real_samples" / "_学习"
 
 class ResponsesTest(unittest.TestCase):
     def normalizer(self):

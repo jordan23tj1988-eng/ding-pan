@@ -1,12 +1,13 @@
 """真实档案复制 + 明确的受控元数据错误注入；不伪造行情。"""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import tempfile
 import pytest
 
-BASE = Path(__file__).resolve().parents[2]
+BASE = Path(os.environ.get("SENTIMENT_P3_TASK", str(Path(__file__).resolve().parents[2]/"codex_workspace"/"stability-20260906"/"p3")))
 
 @pytest.fixture
 def api():

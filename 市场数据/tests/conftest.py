@@ -6,8 +6,16 @@ MKT = 市场数据根目录(本文件父目录的父目录)，不硬编码盘符
 """
 import os
 import sys
+from pathlib import Path
 
 import pytest
+
+# P2 的真实隔离样本/源码工作区；可由环境变量覆盖，换机不改测试逻辑。
+P2_TASK = Path(os.environ.get(
+    "SENTIMENT_P2_TASK",
+    str(Path(__file__).resolve().parents[2] / "codex_workspace" / "stability-20260906" / "p2"),
+))
+(P2_TASK / "evidence" / "r1").mkdir(parents=True, exist_ok=True)
 
 # 市场数据根目录 = tests/ 的父目录
 MKT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

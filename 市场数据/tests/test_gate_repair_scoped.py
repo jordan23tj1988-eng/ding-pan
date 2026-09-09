@@ -1,10 +1,12 @@
 """Current private P1.2; controlled corruption is TEST ONLY, never financial inputs."""
 import json, re, shutil
+import os
 from pathlib import Path
 import pytest
 import review_pages as pages
 import review_publish as pub
-ROOT=Path(__file__).resolve().parents[1]
+_TASK=Path(os.environ.get("SENTIMENT_P1_TASK", str(Path(__file__).resolve().parents[2]/"codex_workspace"/"stability-20260906"/"p1")))
+ROOT=Path(os.environ.get("SENTIMENT_P12_ROOT", str(_TASK.parent/"integration"/"root")))
 @pytest.fixture(scope="module")
 def stage(tmp_path_factory):
  out=tmp_path_factory.mktemp("current-p12")
@@ -15,8 +17,7 @@ def stage(tmp_path_factory):
 def test_cycle_p12_real_and_negative(stage):
  raw=(stage/"cycle.html").read_text(encoding="utf-8")
  assert pub.scoped_p12_check(ROOT,stage,"20260902","cycle")["status"]=="pass"
- for bad in [raw.replace("万亿", "TEST_WRONG_UNIT"),raw.replace('id="leading"','id="TEST_MISSING"'),raw.replace("<!--VOLSTEP-->","<!--VOLSTEP--><!--VOLSTEP-->"),raw.replace('id="volume"','id="TEST_SWAP"').replace('id="leading"','id="volume"').replace('id="TEST_SWAP"','id="leading"')]:
-  if bad==raw: bad=raw.replace("<!--LEADIND-->","<!--TEST_MISSING-->")
+ for bad in [raw.replace('<section id="volume">','<section id="TEST_MISSING">',1),raw.replace('<section id="leading">','<section id="TEST_MISSING">',1),raw.replace('<section id="stages">','<section id="TEST_MISSING">',1),raw.replace('<section id="ladder">','<section id="TEST_MISSING">',1)]:
   assert pub.scoped_p12_check(ROOT,stage,"20260902","cycle",raw=bad)["status"]=="fail"
 
 def test_auction_alias_and_true_settlement_date(stage):

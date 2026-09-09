@@ -1,0 +1,878 @@
+{
+  "schema_version": 1,
+  "d": "20260908",
+  "route": "cycle",
+  "template_version": "p1.2",
+  "complete": true,
+  "status": "ok",
+  "errors": [],
+  "title": "周期情绪",
+  "hero": {
+    "text": "退潮·降",
+    "claim_refs": [],
+    "summary_of": "cycle-eb602570f2dfb7eb"
+  },
+  "kpis": [
+    {
+      "display": "19603.0",
+      "sparkline": {
+        "source": "_学习/_市场温度表.json",
+        "points": [
+          {
+            "d": "20260902",
+            "value": 17912.0
+          },
+          {
+            "d": "20260903",
+            "value": 17589.0
+          },
+          {
+            "d": "20260904",
+            "value": 20307.0
+          },
+          {
+            "d": "20260907",
+            "value": 19460.0
+          },
+          {
+            "d": "20260908",
+            "value": 19603.0
+          }
+        ],
+        "svg_points": "0.0,34.2 45.0,38.0 90.0,6.0 135.0,15.97 180.0,14.29"
+      },
+      "id": "slot-0",
+      "label": "两市量能 · 亿",
+      "value": 19603.0,
+      "evidence_refs": [
+        "kpi-source-0-0",
+        "kpi-source-0-1"
+      ],
+      "gauge": null,
+      "sub": "当日真源读数",
+      "chip": "09-08"
+    },
+    {
+      "display": "退潮",
+      "sparkline": null,
+      "id": "slot-1",
+      "label": "周期投票主判",
+      "value": "退潮",
+      "evidence_refs": [
+        "kpi-source-1-0",
+        "kpi-source-1-1"
+      ],
+      "gauge": null,
+      "sub": "当日真源读数",
+      "chip": "09-08"
+    },
+    {
+      "display": "42.3",
+      "sparkline": null,
+      "id": "slot-2",
+      "label": "市场温度 · 250日分位",
+      "value": 42.3,
+      "evidence_refs": [
+        "kpi-source-2-0",
+        "kpi-source-2-1"
+      ],
+      "gauge": 42.3,
+      "sub": "当日真源读数",
+      "chip": "09-08"
+    },
+    {
+      "display": "—",
+      "sparkline": null,
+      "id": "slot-3",
+      "label": "执行仓位上限",
+      "value": null,
+      "evidence_refs": [
+        "kpi-source-3-0",
+        "kpi-source-3-1"
+      ],
+      "gauge": null,
+      "sub": "当日该口径数据缺失，未填补",
+      "chip": "09-08"
+    }
+  ],
+  "sections": [
+    {
+      "id": "volume",
+      "title": "量能台阶 · 我站在哪一阶",
+      "claim_refs": [
+        "cycle-b2d8c4561268bb65",
+        "cycle-eb602570f2dfb7eb",
+        "cycle-c8d04616373450c4",
+        "cycle-08bd55ec555b9ad5",
+        "cycle-b8cadddd6b6dca7a",
+        "cycle-e3446fb7ee178741",
+        "cycle-97884f172160f1ea"
+      ]
+    },
+    {
+      "id": "leading",
+      "title": "先行指标 · 三窗触发器",
+      "claim_refs": [
+        "cycle-3597e2681ca1c1c9",
+        "cycle-bd2f6009f5baa727"
+      ]
+    },
+    {
+      "id": "stages",
+      "title": "情绪五阶段 · 五路周期投票",
+      "claim_refs": [
+        "cycle-1d4cae2d39adf4a1",
+        "cycle-230a44a591c29d53",
+        "cycle-eb9a2fdfd580539f",
+        "cycle-14cccac125e233cc"
+      ]
+    },
+    {
+      "id": "ladder",
+      "title": "连板梯队",
+      "claim_refs": [
+        "cycle-851777b8b103fd83",
+        "cycle-6a30d10192e028cc"
+      ]
+    },
+    {
+      "id": "position",
+      "title": "攻防 · 仓位总开关",
+      "claim_refs": [
+        "cycle-3d8ed4eae82591c9",
+        "cycle-b5936df6515daf89"
+      ]
+    },
+    {
+      "id": "research",
+      "title": "自主深挖 · 指标与阈值孵化",
+      "claim_refs": []
+    },
+    {
+      "id": "cognition",
+      "title": "我的认知迭代 · 最新",
+      "claim_refs": [
+        "cycle-b0cda3792475a301",
+        "cycle-7c79aba17d194d27"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "cycle-b2d8c4561268bb65",
+      "role": "evidence",
+      "text": "CYCLE / 20260908",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-b2d8c4561268bb65"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/text/1"
+    },
+    {
+      "id": "cycle-eb602570f2dfb7eb",
+      "role": "evidence",
+      "text": "退潮·降：偏冷周期，防守优先",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-eb602570f2dfb7eb"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/2",
+      "legacy_html": "<h3>退潮·降：偏冷周期，防守优先</h3>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "cycle-c8d04616373450c4",
+      "role": "evidence",
+      "text": "温度42.3，封板率66.4%，主线未确认；先等修复证据。",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-c8d04616373450c4"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/3",
+      "legacy_html": "<p>温度42.3，封板率66.4%，主线未确认；先等修复证据。</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "cycle-08bd55ec555b9ad5",
+      "role": "evidence",
+      "text": "退潮·降",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-08bd55ec555b9ad5"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/text/4"
+    },
+    {
+      "id": "cycle-b8cadddd6b6dca7a",
+      "role": "evidence",
+      "text": "42.3温度19603成交额·亿66.4%封板率0跌停",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-b8cadddd6b6dca7a"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/5",
+      "legacy_html": "<p>42.3温度19603成交额·亿66.4%封板率0跌停</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "cycle-e3446fb7ee178741",
+      "role": "evidence",
+      "text": "一 量能台阶 两市成交额",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-e3446fb7ee178741"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/heading/6"
+    },
+    {
+      "id": "cycle-97884f172160f1ea",
+      "role": "evidence",
+      "text": "两市成交额19603.0亿，量能数据真实可追溯；不以单日量能替代情绪修复。",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-97884f172160f1ea"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/7",
+      "legacy_html": "<p>两市成交额19603.0亿，量能数据真实可追溯；不以单日量能替代情绪修复。</p>",
+      "context": "一 量能台阶 两市成交额"
+    },
+    {
+      "id": "cycle-3597e2681ca1c1c9",
+      "role": "evidence",
+      "text": "二 情绪先行指标 晋级与溢价",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-3597e2681ca1c1c9"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/heading/8"
+    },
+    {
+      "id": "cycle-bd2f6009f5baa727",
+      "role": "evidence",
+      "text": "涨停73、首板55、二板12、一进二率0.15；二进三率、高度晋级率、昨停溢价为null/unavailable。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-bd2f6009f5baa727"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/9",
+      "legacy_html": "<p>涨停73、首板55、二板12、一进二率0.15；二进三率、高度晋级率、昨停溢价为null/unavailable。</p>",
+      "context": "二 情绪先行指标 晋级与溢价"
+    },
+    {
+      "id": "cycle-1d4cae2d39adf4a1",
+      "role": "evidence",
+      "text": "三 周期五阶段 主判",
+      "section": "stages",
+      "evidence_refs": [
+        "ev-cycle-1d4cae2d39adf4a1"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/heading/10"
+    },
+    {
+      "id": "cycle-230a44a591c29d53",
+      "role": "evidence",
+      "text": "主判：退潮。局部竞价一字9只与B档净买是结构强点，但炸板37、质量执1最高45.9%未过门槛。",
+      "section": "stages",
+      "evidence_refs": [
+        "ev-cycle-230a44a591c29d53"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/11",
+      "legacy_html": "<p>主判：退潮。局部竞价一字9只与B档净买是结构强点，但炸板37、质量执1最高45.9%未过门槛。</p>",
+      "context": "三 周期五阶段 主判"
+    },
+    {
+      "id": "cycle-3d8ed4eae82591c9",
+      "role": "evidence",
+      "text": "四 三态攻防 C档防守",
+      "section": "position",
+      "evidence_refs": [
+        "ev-cycle-3d8ed4eae82591c9"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/heading/12"
+    },
+    {
+      "id": "cycle-b5936df6515daf89",
+      "role": "observation",
+      "text": "空仓为主20260908C档防守环境温度42.3·偏冷；涨停73、炸板37、封板率66.4%、最高4板。触发/证伪仅当宽度、晋级、高度、封板质量同步改善，才复议升档；当前不构成买入或成交指令。",
+      "section": "position",
+      "evidence_refs": [
+        "ev-cycle-b5936df6515daf89"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/13",
+      "legacy_html": "<div class=\"obs\"><div class=\"obs-head\"><span class=\"obs-nm\">空仓为主</span><span class=\"mut\">20260908</span><span class=\"obs-pos\">C档防守</span></div><div class=\"obs-watch\"><span class=\"obs-lab\">环境</span>温度42.3·偏冷；涨停73、炸板37、封板率66.4%、最高4板。</div><div class=\"obs-rec\"><span class=\"obs-lab2\">触发/证伪</span>仅当宽度、晋级、高度、封板质量同步改善，才复议升档；当前不构成买入或成交指令。</div></div>",
+      "context": "四 三态攻防 C档防守"
+    },
+    {
+      "id": "cycle-851777b8b103fd83",
+      "role": "evidence",
+      "text": "五 梯队与高度 连板结构",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-851777b8b103fd83"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/heading/14"
+    },
+    {
+      "id": "cycle-6a30d10192e028cc",
+      "role": "evidence",
+      "text": "梯队：1板55、2板12、3板3、4板3；最高连板4，未出现可确认的高度突破。",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-6a30d10192e028cc"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/15",
+      "legacy_html": "<p>梯队：1板55、2板12、3板3、4板3；最高连板4，未出现可确认的高度突破。</p>",
+      "context": "五 梯队与高度 连板结构"
+    },
+    {
+      "id": "cycle-eb9a2fdfd580539f",
+      "role": "evidence",
+      "text": "六 五路周期投票 主判与投票台账",
+      "section": "stages",
+      "evidence_refs": [
+        "ev-cycle-eb9a2fdfd580539f"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/heading/16"
+    },
+    {
+      "id": "cycle-14cccac125e233cc",
+      "role": "evidence",
+      "text": "周期主判退潮·降；auction降、lhb平、theme降、logic降、limitup降，分歧未达当日复议阈值。",
+      "section": "stages",
+      "evidence_refs": [
+        "ev-cycle-14cccac125e233cc"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/17",
+      "legacy_html": "<p>周期主判退潮·降；auction降、lhb平、theme降、logic降、limitup降，分歧未达当日复议阈值。</p>",
+      "context": "六 五路周期投票 主判与投票台账"
+    },
+    {
+      "id": "cycle-b0cda3792475a301",
+      "role": "evidence",
+      "text": "七 我的认知迭代 最新在上",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-cycle-b0cda3792475a301"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/heading/18"
+    },
+    {
+      "id": "cycle-7c79aba17d194d27",
+      "role": "cognition",
+      "text": "周期判断优先看可执行质量：数量回升、局部强度和成交额不能单独构成升档依据。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-cycle-7c79aba17d194d27"
+      ],
+      "source": "judgment_20260908.json",
+      "source_pointer": "/bodies/cycle/block/19",
+      "legacy_html": "<p>周期判断优先看可执行质量：数量回升、局部强度和成交额不能单独构成升档依据。</p>",
+      "context": "七 我的认知迭代 最新在上"
+    }
+  ],
+  "limitations": [
+    "兼容导入旧判断；原文立场未重新验证。",
+    "旧 HTML 补充按原栏目职责归位；相似判断仅提示重叠，不作语义删除。"
+  ],
+  "content_coverage": {
+    "total": 19,
+    "covered": 19,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "cycle-b2d8c4561268bb65",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-eb602570f2dfb7eb",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-c8d04616373450c4",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-08bd55ec555b9ad5",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-b8cadddd6b6dca7a",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-e3446fb7ee178741",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-97884f172160f1ea",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-3597e2681ca1c1c9",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-bd2f6009f5baa727",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-1d4cae2d39adf4a1",
+        "sections": [
+          "stages"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-230a44a591c29d53",
+        "sections": [
+          "stages"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-3d8ed4eae82591c9",
+        "sections": [
+          "position"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-b5936df6515daf89",
+        "sections": [
+          "position"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-851777b8b103fd83",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-6a30d10192e028cc",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-eb9a2fdfd580539f",
+        "sections": [
+          "stages"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-14cccac125e233cc",
+        "sections": [
+          "stages"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-b0cda3792475a301",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-7c79aba17d194d27",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/text/1",
+        "claim_id": "cycle-b2d8c4561268bb65",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/2",
+        "claim_id": "cycle-eb602570f2dfb7eb",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/3",
+        "claim_id": "cycle-c8d04616373450c4",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/text/4",
+        "claim_id": "cycle-08bd55ec555b9ad5",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/5",
+        "claim_id": "cycle-b8cadddd6b6dca7a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/heading/6",
+        "claim_id": "cycle-e3446fb7ee178741",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/7",
+        "claim_id": "cycle-97884f172160f1ea",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/heading/8",
+        "claim_id": "cycle-3597e2681ca1c1c9",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/9",
+        "claim_id": "cycle-bd2f6009f5baa727",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/heading/10",
+        "claim_id": "cycle-1d4cae2d39adf4a1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/11",
+        "claim_id": "cycle-230a44a591c29d53",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/heading/12",
+        "claim_id": "cycle-3d8ed4eae82591c9",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/13",
+        "claim_id": "cycle-b5936df6515daf89",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/heading/14",
+        "claim_id": "cycle-851777b8b103fd83",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/15",
+        "claim_id": "cycle-6a30d10192e028cc",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/heading/16",
+        "claim_id": "cycle-eb9a2fdfd580539f",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/17",
+        "claim_id": "cycle-14cccac125e233cc",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/heading/18",
+        "claim_id": "cycle-b0cda3792475a301",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260908.json",
+        "pointer": "/bodies/cycle/block/19",
+        "claim_id": "cycle-7c79aba17d194d27",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 19
+  },
+  "role_overlap": [],
+  "editorial_notes": [
+    "量能、先行指标、阶段投票和梯队各自承担一类证据。",
+    "攻防区集中呈现仓位条件，缺周期判断时只回源事实。",
+    "深挖保留新问题，认知保留新验证和下次证伪，历史另行链接。"
+  ],
+  "evidence": [
+    {
+      "id": "ev-cycle-b2d8c4561268bb65",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/text/1"
+    },
+    {
+      "id": "ev-cycle-eb602570f2dfb7eb",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/2"
+    },
+    {
+      "id": "ev-cycle-c8d04616373450c4",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/3"
+    },
+    {
+      "id": "ev-cycle-08bd55ec555b9ad5",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/text/4"
+    },
+    {
+      "id": "ev-cycle-b8cadddd6b6dca7a",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/5"
+    },
+    {
+      "id": "ev-cycle-e3446fb7ee178741",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/heading/6"
+    },
+    {
+      "id": "ev-cycle-97884f172160f1ea",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/7"
+    },
+    {
+      "id": "ev-cycle-3597e2681ca1c1c9",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/heading/8"
+    },
+    {
+      "id": "ev-cycle-bd2f6009f5baa727",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/9"
+    },
+    {
+      "id": "ev-cycle-1d4cae2d39adf4a1",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/heading/10"
+    },
+    {
+      "id": "ev-cycle-230a44a591c29d53",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/11"
+    },
+    {
+      "id": "ev-cycle-3d8ed4eae82591c9",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/heading/12"
+    },
+    {
+      "id": "ev-cycle-b5936df6515daf89",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/13"
+    },
+    {
+      "id": "ev-cycle-851777b8b103fd83",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/heading/14"
+    },
+    {
+      "id": "ev-cycle-6a30d10192e028cc",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/15"
+    },
+    {
+      "id": "ev-cycle-eb9a2fdfd580539f",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/heading/16"
+    },
+    {
+      "id": "ev-cycle-14cccac125e233cc",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/17"
+    },
+    {
+      "id": "ev-cycle-b0cda3792475a301",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/heading/18"
+    },
+    {
+      "id": "ev-cycle-7c79aba17d194d27",
+      "d": "20260908",
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle/block/19"
+    },
+    {
+      "id": "fact-19",
+      "d": "20260908",
+      "source": "fact_20260908.json",
+      "pointer": "/facts/涨停数",
+      "value": 73
+    },
+    {
+      "id": "fact-20",
+      "d": "20260908",
+      "source": "fact_20260908.json",
+      "pointer": "/facts/温度",
+      "value": 42.3
+    },
+    {
+      "id": "fact-21",
+      "d": "20260908",
+      "source": "fact_20260908.json",
+      "pointer": "/facts/最高连板",
+      "value": 4
+    },
+    {
+      "id": "fact-22",
+      "d": "20260908",
+      "source": "fact_20260908.json",
+      "pointer": "/facts/成交额亿",
+      "value": 19603.0
+    },
+    {
+      "id": "kpi-source-0-0",
+      "d": "20260908",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "20c37f1176780a8cdbcf28edb79ff0f0dd480d5d4babae32fdcf22dc40f664bf",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-0-1",
+      "d": "20260908",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "03f39e888a661fd66eb6fe4dcb6becdfa1e44faf0b10b58df43eb1621913bada",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-1-0",
+      "d": "20260908",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "20c37f1176780a8cdbcf28edb79ff0f0dd480d5d4babae32fdcf22dc40f664bf",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-1-1",
+      "d": "20260908",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "03f39e888a661fd66eb6fe4dcb6becdfa1e44faf0b10b58df43eb1621913bada",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-2-0",
+      "d": "20260908",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "20c37f1176780a8cdbcf28edb79ff0f0dd480d5d4babae32fdcf22dc40f664bf",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-2-1",
+      "d": "20260908",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "03f39e888a661fd66eb6fe4dcb6becdfa1e44faf0b10b58df43eb1621913bada",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-3-0",
+      "d": "20260908",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "20c37f1176780a8cdbcf28edb79ff0f0dd480d5d4babae32fdcf22dc40f664bf",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-3-1",
+      "d": "20260908",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "03f39e888a661fd66eb6fe4dcb6becdfa1e44faf0b10b58df43eb1621913bada",
+      "verification": "file_hash"
+    }
+  ],
+  "sources": [
+    "judgment_20260908.json"
+  ],
+  "paper": null,
+  "ticker": "量能19603亿｜涨停73｜跌停0｜炸板率33.6%｜最高4板｜一进二15%｜主线未确认",
+  "legacy_ticker": "量能19603亿｜涨停73｜跌停0｜炸板率33.6%｜最高4板｜一进二15%｜主线未确认",
+  "legacy_audit": [
+    {
+      "source": "judgment_20260908.json",
+      "pointer": "/bodies/cycle",
+      "raw": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">CYCLE / 20260908</div><h1>退潮·降：偏冷周期，防守优先</h1><p>温度42.3，封板率66.4%，主线未确认；先等修复证据。</p><span class=\"stance pill warn\">退潮·降</span></div><div class=\"kpi\"><div><b>42.3</b><span>温度</span></div><div><b>19603</b><span>成交额·亿</span></div><div><b>66.4%</b><span>封板率</span></div><div><b>0</b><span>跌停</span></div></div></div>\n<h2>一 量能台阶 <span class=\"hint\">两市成交额</span></h2><p>两市成交额19603.0亿，量能数据真实可追溯；不以单日量能替代情绪修复。</p>\n<h2>二 情绪先行指标 <span class=\"hint\">晋级与溢价</span></h2><p>涨停73、首板55、二板12、一进二率0.15；二进三率、高度晋级率、昨停溢价为null/unavailable。</p>\n<h2>三 周期五阶段 <span class=\"hint\">主判</span></h2><p>主判：退潮。局部竞价一字9只与B档净买是结构强点，但炸板37、质量执1最高45.9%未过门槛。</p>\n<h2>四 三态攻防 <span class=\"hint\">C档防守</span></h2><div class=\"obs\"><div class=\"obs-head\"><span class=\"obs-nm\">空仓为主</span><span class=\"mut\">20260908</span><span class=\"obs-pos\">C档防守</span></div><div class=\"obs-watch\"><span class=\"obs-lab\">环境</span>温度42.3·偏冷；涨停73、炸板37、封板率66.4%、最高4板。</div><div class=\"obs-rec\"><span class=\"obs-lab2\">触发/证伪</span>仅当宽度、晋级、高度、封板质量同步改善，才复议升档；当前不构成买入或成交指令。</div></div>\n<h2>五 梯队与高度 <span class=\"hint\">连板结构</span></h2><p>梯队：1板55、2板12、3板3、4板3；最高连板4，未出现可确认的高度突破。</p>\n<h2>六 五路周期投票 <span class=\"hint\">主判与投票台账</span></h2><p>周期主判退潮·降；auction降、lhb平、theme降、logic降、limitup降，分歧未达当日复议阈值。</p>\n<h2>七 我的认知迭代 <span class=\"hint\">最新在上</span></h2><p>周期判断优先看可执行质量：数量回升、局部强度和成交额不能单独构成升档依据。</p>"
+    }
+  ],
+  "components": [],
+  "judgment_complete": true,
+  "machine_complete": true,
+  "paper_applicable": false,
+  "paper_complete": true,
+  "machine_anchors": {},
+  "shared_definitions": []
+}

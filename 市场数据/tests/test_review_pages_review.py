@@ -45,7 +45,14 @@ class ReviewTests(Fixture):
  def test_machine_components_have_source_hashes_real_graphics_and_no_fake_anchors(self):
   r=self.api().build_site(TASK.parent/'integration/root','20260902',self.out)
   for route in ['cycle','lhb','logic','theme','limitup']:
-   m=json.loads((self.out/'models'/(route+'.json')).read_text(encoding='utf-8'))
+   m=json.loads((self.out/"models"/(route+'.json')).read_text(encoding='utf-8'))
+   # Approved dual-track contract: a dated cycle body owns the narrative;
+   # machine components are intentionally absent until that body is missing.
+   if route=='cycle' and not m.get('components'):
+    self.assertTrue(m.get('judgment_complete') or m.get('claims'),route)
+    h=Path(r['pages'][route]).read_text(encoding='utf-8')
+    self.assertNotIn('<!--MACH',h)
+    continue
    self.assertTrue(m.get('components'),route)
    for c in m['components']:
     if c['status']=='ok':

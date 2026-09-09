@@ -1,14 +1,16 @@
 """真实 fact/推演回放；边界与坏输入通过明确标注的受控注入构造。"""
 import copy
 import json
+import os
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import review_learning as learning
-BASE=Path(__file__).resolve().parents[2]
-SAMPLES=BASE/"evidence"/"real_samples"
+P2_ROOT=Path(os.environ.get("SENTIMENT_P2_TASK", str(Path(__file__).resolve().parents[2]/"codex_workspace"/"stability-20260906"/"p2")))
+BASE=P2_ROOT
+SAMPLES=P2_ROOT/"evidence"/"real_samples"
 
 def read(p): return json.loads(p.read_text(encoding="utf-8-sig"))
 def write(p,o):

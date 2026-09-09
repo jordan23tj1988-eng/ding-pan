@@ -1,12 +1,13 @@
 """P1 contract tests. Temporary files stay under this isolated task directory."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
 import unittest
 
-TASK = Path(__file__).resolve().parents[2]
+TASK = Path(os.environ.get("SENTIMENT_P1_TASK", str(Path(__file__).resolve().parents[2]/"codex_workspace"/"stability-20260906"/"p1")))
 ROOT = TASK / "root"
 sys.path.insert(0, str(ROOT))
 ROUTES = ("index", "cycle", "auction", "lhb", "theme", "logic", "limitup")

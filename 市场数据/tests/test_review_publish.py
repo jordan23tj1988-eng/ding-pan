@@ -1,6 +1,7 @@
 """P0 tests: copied real judgment; mock checks are CONTROLLED TEST INJECTION only."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -9,7 +10,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-TASK = Path(__file__).resolve().parents[2]
+TASK = Path(os.environ.get("SENTIMENT_P2_TASK", str(Path(__file__).resolve().parents[2] / "codex_workspace" / "stability-20260906" / "p2")))
 CODE = TASK / "root"
 sys.path.insert(0, str(CODE))
 PROD = Path("D:/股票数据/市场数据")

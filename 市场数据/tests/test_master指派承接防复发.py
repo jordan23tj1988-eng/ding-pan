@@ -43,7 +43,7 @@ def test_master结算截止日查证(mkt, tmp_path, monkeypatch):
     """跨日查证必须实读截止日；不以旧函数名/字符串拼写判正确。"""
     from pathlib import Path
     import review_learning as learning
-    source = Path(__file__).resolve().parents[2] / 'evidence' / 'real_samples'
+    source = Path(os.environ.get("SENTIMENT_P2_TASK", str(Path(__file__).resolve().parents[2]/"codex_workspace"/"stability-20260906"/"p2"))) / 'evidence' / 'real_samples'
     seen=[]
     original=learning._load
     def tracked(path):

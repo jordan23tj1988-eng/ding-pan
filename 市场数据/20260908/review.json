@@ -1,0 +1,30 @@
+{
+  "date": "20260908",
+  "source_status": "deterministic_from_existing_real_inputs",
+  "data_source": "20260908/summary.json + _学习/_市场温度表.json + _学习/fact_20260908.json + _学习/总审_20260908.json",
+  "scenario": "偏冷·C档防守",
+  "stage": "退潮",
+  "position_band": "空仓为主",
+  "temperature": 42.3,
+  "temperature_band": "偏冷",
+  "market_risk": "高炸板率与低封板质量，主线及高质量资金未确认",
+  "risk_level": "高",
+  "scoring_detail": {
+    "turnover_yi": 19603.0,
+    "limit_up_count": 73,
+    "limit_down_count": 0,
+    "burst_count": 37,
+    "burst_rate": 0.336,
+    "max_board": 4,
+    "volume_detail": "两市成交额19603.0亿，来源=20260908/summary.json",
+    "missing_fields": ["昨日涨停溢价", "二进三率", "高度晋级率", "核按钮率", "中报预增双源核验"],
+    "source_note": "缺失字段保持null/unavailable，未补造"
+  },
+  "decision": {
+    "stance": "C档防守",
+    "cash_pct": 100,
+    "basis": "总审_20260908.json：涨停73、炸板37、封板率66.4%、温度42.3偏冷、题材归位73只均为B档行业兜底、席位S档0席、质量执1最高45.9%且均涨最高-0.09%"
+  },
+  "review_contract": "review/v1",
+  "generated_note": "本文件为补跑所需的确定性review汇总；推理结论以五路判断、总审和推演文件为准。"
+}

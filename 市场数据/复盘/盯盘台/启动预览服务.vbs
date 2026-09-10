@@ -24,7 +24,7 @@ If fso.FileExists(portFile) Then
 End If
 If Not isUp Then
     ' 以隐藏窗口方式启动 python http.server, 根=复盘目录
-    WshShell.Run "cmd /c cd /d D:\股票数据\市场数据\复盘 && python -m http.server 8899 --bind 0.0.0.0", 0, False
+    WshShell.Run "cmd /c cd /d D:\股票数据\市场数据\复盘 && ""C:\Users\66353\AppData\Local\Python\pythoncore-3.14-64\python.exe"" -m http.server 8899 --bind 0.0.0.0", 0, False
     WScript.Sleep 3000
     WScript.Echo "盯盘台预览服务已启动: http://0.0.0.0:8899/盯盘台/index.html (局域网可访问)"
 Else

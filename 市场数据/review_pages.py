@@ -13,8 +13,72 @@ import re
 
 CONTRACT_PATH = Path(__file__).resolve().parent / "_契约" / "页面契约.v1.json"
 
+# 页面级阅读路径增强：只读取已存在的 section/h2，不引入任何新数据。
+VISUAL_JS = r'''<script>
+(function(){
+  var wrap=document.querySelector('.wrap');
+  if(!wrap)return;
+  var sections=Array.prototype.filter.call(wrap.children,function(el){return el.tagName==='SECTION';});
+  if(sections.length<3)return;
+  var map=document.createElement('nav');
+  map.className='page-map';
+  map.setAttribute('aria-label','本页阅读地图');
+  var label=document.createElement('span');
+  label.className='page-map-label';
+  label.textContent='本页阅读';
+  map.appendChild(label);
+  var links=[];
+  sections.forEach(function(sec,i){
+    var h=Array.prototype.find.call(sec.children,function(el){return el.tagName==='H2';});
+    if(!h)return;
+    if(!sec.id)sec.id='section-'+(i+1);
+    var a=document.createElement('a');
+    a.href='#'+sec.id;
+    a.textContent=h.textContent.replace(/^[一二三四五六七八九十]+\\s*/,'');
+    a.setAttribute('data-section',sec.id);
+    map.appendChild(a); links.push({a:a,sec:sec});
+  });
+  if(links.length)wrap.insertBefore(map,sections[0]);
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      links.forEach(function(x){x.a.classList.toggle('active',x.sec===entry.target);});
+    });
+  },{rootMargin:'-88px 0px -64% 0px',threshold:0});
+  links.forEach(function(x){io.observe(x.sec);});
+})();
+</script>'''
+
 def _contract():
     return json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
+
+V42_CSS = r'''
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}.navbar{display:block}.navbar .brand{margin-bottom:6px}.navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}.navbar .upd{display:block;margin-top:6px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+'''
+
+def _page_css(contract):
+    base = contract["visual"]["css"]
+    return base if 'v4.2 reading spine / claim proof layer' in base else base + V42_CSS
 
 def _check_date(d):
     if not isinstance(d, str) or not re.fullmatch(r"[0-9]{8}", d):
@@ -59,6 +123,7 @@ def build_page_model(root: Path, d: str, route: str) -> dict:
         return _fail(d, exc)
 
 ROLES = {"verdict", "observation", "evidence", "counterevidence", "condition", "research", "cognition", "limitation"}
+ROLE_LABELS = {"verdict":"结论", "observation":"观察", "evidence":"证据", "counterevidence":"反证", "condition":"条件", "research":"研究", "cognition":"认知", "limitation":"限制"}
 
 EDITORIAL = {
     "index": ["首屏只给总判断及决定性变化，观察点负责次日验证。", "五路看牌保留各自依据，拐点区专列反证与转向条件。", "总裁决交代攻防；Master 专列新问题、线索、指派与认知，不再重复编号。"],
@@ -370,10 +435,10 @@ def _facts(model, root):
         model['limitations'] = ['当日周期判断缺失；仅呈现当日事实，不从其他日期重造决策。']
 
 HEADING_MAP = {
- 'index': [('总判断','observations'),('核心观察','observations'),('环境','observations'),('周期与攻防','turning'),('五路看牌','routes'),('五路','routes'),('明日观察','turning'),('拐点预警','turning'),('拐点','turning'),('检查四项','turning'),('总裁决','verdict'),('Master','master'),('深挖','master'),('认知','master'),('指派','master')],
+ 'index': [('总判断','observations'),('核心观察','observations'),('环境','observations'),('题材树','observations'),('每路独立核算','routes'),('周期与攻防','turning'),('五路看牌','routes'),('五路','routes'),('明日观察','turning'),('拐点预警','turning'),('拐点','turning'),('检查四项','turning'),('发布门禁','turning'),('推演指派','master'),('总裁决','verdict'),('Master','master'),('深挖','master'),('认知','master'),('指派','master')],
  'cycle': [('量能','volume'),('先行','leading'),('五阶段','stages'),('周期投票','stages'),('连板梯队','ladder'),('梯队','ladder'),('攻防','position'),('深挖','research'),('认知','cognition')],
  'auction': [('竞价选股池','pool'),('当日','pool'),('昨日池','settlement'),('温度','temperature'),('胜率','winrate'),('深挖','research'),('认知','cognition')],
- 'lhb': [('今日S/A动向','temperature'),('训练库','research'),('席位荐票','seats'),('席位综合','seats'),('资金温度','temperature'),('台账','ledger'),('分档','tiers'),('深挖','research'),('认知','cognition')],
+ 'lhb': [('今日S/A动向','temperature'),('训练库','research'),('席位荐票','seats'),('席位综合','seats'),('当日榜','seats'),('资金温度','temperature'),('台账','ledger'),('分档','tiers'),('深挖','research'),('认知','cognition')],
  'theme': [('荐票','recommendations'),('三级','matrix'),('龙头','matrix'),('生命周期','lifecycle'),('深挖','research'),('认知','cognition')],
  'logic': [('承接Master指派','research'),('产业逻辑·业绩腿命门','recommendations'),('产业逻辑判断','hardness'),('产业逻辑','hardness'),('荐票','recommendations'),('链条','chains'),('产业链','chains'),('逻辑硬度','hardness'),('前置','forward'),('风险日历','forward'),('中报','earnings'),('深挖','research'),('认知','cognition')],
  'limitup': [('荐票','recommendations'),('温度','temperature'),('台账','ledger'),('训练','training'),('质量库','training'),('深挖','research'),('认知','cognition')],
@@ -452,7 +517,7 @@ def _legacy(model, root):
     first = model['sections'][0]['id']
     evidence_section = 'hardness' if route=='logic' else model['sections'][1]['id']
     if data:
-        allowed = ('日期','date','路','来源','结论','五路裁决','总裁决','检查四项','分歧裁决','分歧点','综合深挖','认知迭代','线索跟踪','指派清单','schema_version','昨日战绩验收','环境加权依据','页面合同') if route=='index' else ('日期','date','路','来源','判断','荐票','认知迭代','认知迭代_条目','深挖')
+        allowed = ('日期','date','路','来源','结论','五路裁决','总裁决','检查四项','发布门禁','推演指派','分歧裁决','分歧点','综合深挖','认知迭代','线索跟踪','指派清单','schema_version','昨日战绩验收','环境加权依据','页面合同') if route=='index' else ('日期','date','路','来源','判断','荐票','认知迭代','认知迭代_条目','深挖')
         _keys(data,allowed,filename)
         if '路' in data and data['路']!=route:
             raise ValueError(filename+' 路不匹配')
@@ -460,7 +525,7 @@ def _legacy(model, root):
             if top in ('日期','date','路','来源','schema_version','昨日战绩验收','环境加权依据','页面合同'):
                 continue
             if route=='index':
-                section = {'结论':'verdict','五路裁决':'routes','总裁决':'verdict','检查四项':'turning','分歧裁决':'turning','分歧点':'turning','综合深挖':'master','认知迭代':'master','线索跟踪':'master','指派清单':'master'}[top]
+                section = {'结论':'verdict','五路裁决':'routes','总裁决':'verdict','检查四项':'turning','发布门禁':'turning','推演指派':'master','分歧裁决':'turning','分歧点':'turning','综合深挖':'master','认知迭代':'master','线索跟踪':'master','指派清单':'master'}[top]
                 role = 'cognition' if top=='认知迭代' else 'research' if top=='综合深挖' else 'counterevidence' if top in ('分歧裁决','分歧点') else 'verdict' if top in ('结论','总裁决') else 'evidence'
             else:
                 section = 'cognition' if top.startswith('认知迭代') else 'research' if top=='深挖' else first if top=='荐票' else evidence_section
@@ -505,7 +570,9 @@ def _theme(model, root):
     life = _dated(root,'题材生命周期判断_'+d+'.json',d)
     model['theme_matrix'] = []
     if leaders:
-        _keys(leaders,('日期','路','龙头标的','判断'),'题材龙头判断')
+        _keys(leaders,('日期','路','龙头标的','判断','说明'),'题材龙头判断')
+        if leaders.get('说明'):
+            _add(model, str(leaders['说明']), 'matrix', 'limitation', '题材龙头判断_'+d+'.json', '/说明')
         names = list(leaders.get('判断',{}))
         names += [n for n in leaders.get('龙头标的',{}) if n not in names]
         for name in names:
@@ -529,7 +596,9 @@ def _theme(model, root):
                 model['evidence'].append({'id':ev,'d':d,'source':six_name,'pointer':'/题材_聚类口径/'+str(index)+'/得分','value':row['six_you']})
                 row['evidence_refs'].append(ev)
     if life:
-        _keys(life,('日期','路','来源','逐线判断','高低切'),'题材生命周期判断')
+        _keys(life,('日期','路','来源','逐线判断','高低切','说明'),'题材生命周期判断')
+        if life.get('说明'):
+            _add(model, str(life['说明']), 'lifecycle', 'limitation', '题材生命周期判断_'+d+'.json', '/说明')
         for top in ('来源','逐线判断','高低切'):
             if top in life:
                 for pointer,value in _leaf_items(life[top],'/'+top):
@@ -1135,14 +1204,19 @@ def _render(model,contract):
             content='<div class="obs-head"><span class="obs-nm">观察与验证</span></div><div class="obs-watch"><span class="obs-lab">依据</span>'+content+'</div>'
         if c.get('legacy_html') or c['role'] not in ('observation','cognition'):
             cls=''
-        return '<div class="' + cls + '" id="claim-' + e(key) + '" data-role="' + e(c["role"]) + '">' + content + '</div>'
+        role = c.get('role','limitation')
+        role_label = ROLE_LABELS.get(role, role)
+        role_head = '<div class="claim-head"><span class="claim-role role-' + e(role) + '">' + e(role_label) + '</span><span class="claim-source">' + e(_claim_label(c)) + '</span></div>'
+        proof = ('<div class="claim-proof"><span class="proof-label">证据回链</span>' + links + '</div>') if links else ''
+        return '<div class="' + cls + '" id="claim-' + e(key) + '" data-role="' + e(role) + '">' + role_head + content + proof + '</div>'
     hero_ids = model["hero"]["claim_refs"]
     hero_id = hero_ids[0] if hero_ids else None
     if hero_id:
         shown.add(hero_id)
     ticker=model.get('ticker','')
     ticker_html='<div class="ticker"><div class="in"><div class="grp">'+ticker+'</div><div class="grp">'+ticker+'</div></div></div>'
-    body = ticker_html + '<div class="rowA"><div class="hero"><div class="kick">' + e(model["title"]) + ' · ' + d + ' · ' + e(model["status"]) + '</div><h1' + (' id="claim-' + e(hero_id) + '"' if hero_id else '') + '>' + e(model["hero"]["text"]) + '</h1>'
+    reading_spine = '<nav class="reading-spine" aria-label="阅读顺序"><span class="rs-title">阅读顺序</span><span class="rs-step"><b>01</b>结论</span><span class="rs-arrow">→</span><span class="rs-step"><b>02</b>指标</span><span class="rs-arrow">→</span><span class="rs-step"><b>03</b>分段证据</span><span class="rs-arrow">→</span><span class="rs-step"><b>04</b>来源审计</span></nav>'
+    body = ticker_html + reading_spine + '<div class="rowA"><div class="hero"><div class="kick">' + e(model["title"]) + ' · ' + d + ' · ' + e(model["status"]) + '</div><h1' + (' id="claim-' + e(hero_id) + '"' if hero_id else '') + '>' + e(model["hero"]["text"]) + '</h1>'
     change = model["hero"].get("change_ref")
     if change and change != hero_id:
         shown.add(change)
@@ -1212,7 +1286,7 @@ def _render(model,contract):
     for ev in model["evidence"]:
         body += '<div id="evidence-' + e(ev["id"]) + '"><b>' + e(ev["id"]) + '</b><pre>' + e(_dump(ev)) + '</pre></div>'
     body += '<p><a href="audit/' + e(route) + '.json">原文审计与来源条目</a> · <a href="models/' + e(route) + '.json">结构化页面模型</a></p></div></details>'
-    return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>' + e(model["title"]) + '</title><style>' + contract["visual"]["css"] + '</style></head><body>' + nav + '<div class="wrap">' + body + contract["visual"]["foot"] + '</div></body></html>\n'
+    return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>' + e(model["title"]) + '</title><style>' + _page_css(contract) + '</style></head><body data-route="' + e(route) + '" data-template-version="' + e(contract["template_version"]) + '">' + nav + '<div class="wrap">' + body + contract["visual"]["foot"] + '</div>' + VISUAL_JS + '</body></html>\n'
 
 def build_site(root: Path, d: str, out: Path) -> dict:
     """Render only to caller-owned staging out; never publish or edit history."""
@@ -1242,7 +1316,7 @@ def build_site(root: Path, d: str, out: Path) -> dict:
             history = [c for c in m['claims'] if c.get('history_ref')]
             if history:
                 contents = ''.join('<article id="claim-'+escape(c['id'])+'">'+c['legacy_html']+'</article>' for c in history)
-                html = '<!DOCTYPE html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>历史来源摘录</title><style>'+contract['visual']['css']+'</style><body><div class="wrap"><p>仅供追溯本次导入的历史源块；原发出版未更改。</p><a href="../'+r+'.html">返回当日页</a>'+contents+'</div></body></html>'
+                html = '<!DOCTYPE html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>历史来源摘录</title><style>'+_page_css(contract)+'</style><body><div class="wrap"><p>仅供追溯本次导入的历史源块；原发出版未更改。</p><a href="../'+r+'.html">返回当日页</a>'+contents+'</div></body></html>'
                 (out/'history_sources'/(r+'.html')).write_text(html,encoding='utf-8',newline='\n')
             pages[r] = str(path)
         return {"status": "ok" if all(m["complete"] for m in models.values()) else "degraded",

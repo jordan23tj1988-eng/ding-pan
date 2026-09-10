@@ -345,9 +345,11 @@ def card(d, t):
         + lamp(hit["hot"], "过热禁追窗", "☢", "温度≥85", "0/6全负·-1.86%", "#d64541")
         + lamp(hit["wash"], "洗出反弹窗", "♨", "溢价连负3日", "+0.46%/65%(n=34)·只反弹不反转", "#d9a441") + "</div>")
     tstr = ("%.1f·%s" % (temp, wg if wg is not None else "—")) if temp is not None else "—"
+    latest_zt = zt[-1] if zt else None
+    metric_anchor = (f'<div data-metric="涨停数_净" style="font-size:11px;color:#6b7683">涨停数_净={latest_zt if latest_zt is not None else "null"}</div>')
     html = ('<div class="card"><p style="font-weight:700;margin-bottom:2px">情绪先行指标 · 近20日 '
         f'<span class="mut" style="font-weight:400">(脚本段A档 · 情绪先行指标.py --card · 当日温度 {tstr},阈值冰点&lt;25/过热≥85)</span></p>'
-        + svg1 + svg2 + lamps
+        + metric_anchor + svg1 + svg2 + lamps
         + '<div style="font-size:11px;color:#6b7683;margin-top:8px">读法:柱线剪刀口张开(涨停创高而金线趴地)=数量繁荣×接力冰点;三窗战绩=2025-07~2026-07单牛市周期回测,小样本,给环境判断不给指令。已证伪:复合"冰点+≥2转机分量"硬条件。</div></div>')
     p1 = os.path.join(L, f"先行指标卡_{d}.html")
     open(p1, "w", encoding="utf-8").write(html)

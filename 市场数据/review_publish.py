@@ -1018,7 +1018,7 @@ def expected_kpis(root,d,route,template_version=None):
         sources+=['_情绪先行指标.json']
     elif route=='cycle':
         values=[market.get('成交额亿'),None,market.get('温度'),None]
-        if template_version=='p1.2':
+        if template_version in ('p1.2','p1.3'):
             sources.append('_周期投票台账.jsonl')
             path=root/'_学习/_周期投票台账.jsonl'
             votes=[json.loads(line) for line in path.read_text(encoding='utf-8-sig').splitlines() if line.strip()] if path.exists() else []
@@ -1036,7 +1036,7 @@ def expected_kpis(root,d,route,template_version=None):
     elif route=='lhb':
         sources=['_资金温度.json'];row=next((r for r in (get(sources[0]) or []) if str(r.get('日'))==d),{})
         values=[row.get('温度分位'),f"{row['机构席次']}席 / {row['机构金额亿']}亿" if all(k in row for k in ('机构席次','机构金额亿')) else None,None,None]
-        if template_version=='p1.2':
+        if template_version in ('p1.2','p1.3'):
             sources.append('席位荐票_'+d+'.json')
             picks=(get(sources[-1]) or {}).get('top5',[])
             values[2]=picks[0].get('名称') if picks else None

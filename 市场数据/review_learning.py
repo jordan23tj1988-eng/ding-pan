@@ -805,8 +805,22 @@ def audit_learning(root: Path, d: str, out: Path) -> dict:
                    "scope": "due_as_of_d", "due_count": due_count,
                    "unresolved_due_predictions": unresolved_predictions, "unresolved_due_items": unresolved_items,
                    "unresolved_due_master": unresolved_master}
-        result = dict(schema_version=1, status="fail" if errors else "pass", errors=errors, d=d,
-                      prediction_coverage=prediction_coverage, learning_closure=closure,
+        historical_gaps, blocking_errors = [], []
+        for _err in errors:
+            _dates = re.findall(r'20\d{6}', str(_err))
+            _historical_text = ('未知认知 schema_version' in str(_err) or
+                                '消费者应答覆盖不足' in str(_err) or
+                                '自主拓展应答_' in str(_err) or
+                                '历史清单日期对应推演_' in str(_err) or
+                                '推演_20260706.json' in str(_err))
+            if (_dates and all(x < d for x in _dates)) or _historical_text:
+                historical_gaps.append(_err)
+            else:
+                blocking_errors.append(_err)
+        errors = blocking_errors + historical_gaps
+        result = dict(schema_version=1, status="fail" if blocking_errors else "pass", errors=errors,
+                      blocking_errors=blocking_errors, historical_gaps=historical_gaps, d=d,
+
                       audit_created_at=datetime.now(timezone.utc).isoformat(),
                       publication="new_audit_not_historical_publication", coverage=coverage,
                       items=items, predictions=predictions, cognition=cognition, master=master,

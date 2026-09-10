@@ -356,12 +356,13 @@ def build_page_full(d, paper_block=''):
         paper = '<!--PAPERTRADE-->\n' + paper_block + '<!--/PAPERTRADE-->\n'
     if body:
         out = body
-        # ★2026-08-16 竞价路改六段: 盘中竞价强势(★今晨闸门/★今晨初读)移出竞价页→盘中作战页
-        #   历史八段 body 残留的闸门/初读段(含空锚)在此清理, 不再显示。
-        out = re.sub(r'<section[^>]*>\s*<h2[^>]*>★今晨闸门.*?</section>\s*', '', out, flags=re.S)
-        out = re.sub(r'<section[^>]*>\s*<h2[^>]*>★今晨初读.*?</section>\s*', '', out, flags=re.S)
-        out = re.sub(r'<h2[^>]*>★今晨闸门.*?</h2>\s*<!--MACHGATE-->.*?<!--/MACHGATE-->', '', out, flags=re.S)
-        out = re.sub(r'<h2[^>]*>★今晨初读.*?</h2>\s*<!--MACHREAD-->.*?<!--/MACHREAD-->', '', out, flags=re.S)
+        # 黄金最低骨架：闸门与初读段永远存在；无当日权威数据时保留 null。
+        if '★今晨闸门' not in out:
+            out = '<h2>★今晨闸门</h2><div class="card"><b>闸门状态</b> <span class="mut">null（当日早盘证据未留档）</span></div>\n' + out
+        if '★今晨初读' not in out:
+            out = '<h2>★今晨初读</h2><div class="card"><b>初读状态</b> <span class="mut">null（当日竞价初读未留档）</span></div>\n' + out
+        # 黄金版固定保留“今晨闸门/今晨初读”两段；它们是竞价页证据链。
+        # 不再从复盘页删除，盘中作战页可复用但不能取代复盘证据。
         # ★S2(2026-08-12 补): 机器卡注入——body 里管道预留空锚
         #   <!--SCORECARD-->(评分表) <!--POOLLEDGER-->(结算)
         #   空锚=注入点→填对应机器卡(去MACH锚名防哨兵撞锚); POOLLEDGER 无锚(补跑body)=尾部追加;

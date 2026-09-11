@@ -1,0 +1,38 @@
+{
+  "date": "20260910",
+  "source_status": "deterministic_from_existing_real_inputs",
+  "data_source": "20260910/summary.json + _学习/_市场温度表.json + _学习/fact_20260910.json + _学习/总审_20260910.json",
+  "scenario": "冰点·C档防守",
+  "stage": "冰点",
+  "position_band": "空仓为主",
+  "temperature": 11.7,
+  "temperature_band": "冰点",
+  "market_risk": "最高None板孤立、封板率61.4%、炸板率38.6%、题材归位无A档催化线，主线与高质量资金未确认",
+  "risk_level": "高",
+  "scoring_detail": {
+    "turnover_yi": 19719.0,
+    "limit_up_count": 35,
+    "limit_down_count": 11,
+    "burst_count": 22,
+    "burst_rate": 0.386,
+    "max_board": null,
+    "volume_detail": "两市成交额19719.0亿，来源=20260910/summary.json",
+    "missing_fields": [
+      "龙虎榜双源校验",
+      "风险日历事件源",
+      "竞价撤单差分",
+      "开盘验证维",
+      "日内温度曲线",
+      "日内轮动图谱",
+      "中报预增双源核验"
+    ],
+    "source_note": "缺失字段保持null/unavailable，未补造"
+  },
+  "decision": {
+    "stance": "C档防守",
+    "cash_pct": 100,
+    "basis": "总审_20260910.json：涨停35、炸板22、封板率61.4%、温度11.7冰点、题材归位35只均为B档行业兜底(来源档A0/B35/C0)、席位分档S21席、五路为竞价C/席位B/题材C/逻辑C/涨停C防守、推演与master计划 buys=[] sells=[]"
+  },
+  "review_contract": "review/v1",
+  "generated_note": "本文件为补跑所需的确定性review汇总；推理结论以五路判断、总审和推演文件为准。"
+}

@@ -7,7 +7,7 @@ import shutil
 from tests.test_review_pages import Fixture, TASK, ROUTES, EXPECTED
 
 ANCHORS={
- 'index': ['IDXTEMP','IDXLEAD','IDXVOTE'],
+ 'index': ['CROSSPICK','IDXTEMP','IDXLEAD','IDXVOTE'],
  'cycle': ['VOLSTEP','LEADIND','LADDER','MACHVOTE','VOTEBOARD'],
  'auction': ['SCORECARD','POOLLEDGER','MACHSIG'],
  'lhb': ['FUNDTEMP','LHBLEDGER','SEATCARD'],
@@ -80,7 +80,9 @@ class LayoutTests(Fixture):
   from html import escape
   h=Path(r['pages']['theme']).read_text(encoding='utf-8')
   self.assertIn(escape(c['text']),h)
-  self.assertIn('href="#claim-'+key+'"',h)
+  hero=h.split('<div class="hero">',1)[1].split('</div> <div class="kpi">',1)[0]
+  self.assertNotIn('href="#claim-'+key+'"',hero)
+  self.assertNotIn('回看完整判断与证据',hero)
 
  def test_identical_nested_data_table_rendered_once_with_accessible_reference(self):
   self.sample();r=self.api().build_site(self.root,'20260904',self.out)

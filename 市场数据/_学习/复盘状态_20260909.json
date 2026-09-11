@@ -1,6 +1,18 @@
 {
   "date": "20260909",
   "status": "completed",
+  "校正登记": {
+    "校正时间": "2026-09-10 18:38:53",
+    "校正人": "Hermes（代理运维）",
+    "原因": "原账写于 2026-09-10 13:53:52，记 build_id=rev1 且 blocking_items=[]，与总审 12:41 的『发布门禁=blocked』自相矛盾；且全仓无脚本消费本账（纯审计材料）。现按事实校正，旧账原文内嵌于本文件『原文快照』（本仓库无 git，不能靠版本控制留痕）",
+    "改动范围": "只校正 release.build_id/release_dir、blocking_items 及其说明、补 门禁 真源指针；completed 段与 notes 段保持与原账一致"
+  },
+  "门禁": {
+    "当前状态": "cleared（5 项阻断中 2 修复+1 清除+2 事实保留）",
+    "逐项处置详证": "_学习/_总审_20260909_门禁校正.json",
+    "总审内字段说明": "_学习/总审_20260909.json 的 发布门禁=blocked 为 2026-09-10 12:41:51 落笔快照（发出版凭证，按不可覆盖原则未回写）",
+    "台账条目": "_变更总账.md #158"
+  },
   "completed": {
     "data": {
       "summary": true,
@@ -27,10 +39,21 @@
     "p1": "pass",
     "p3": "page_only_controlled_no_production_transaction",
     "sentinel_exit": 0,
-    "build_id": "20260909-1-8239b09a66ad4e639330b335d29e2342",
-    "release_dir": "releases/20260909-1-8239b09a66ad4e639330b335d29e2342"
+    "build_id": "20260909-6-9aa612a86853457d9538ad95979b6bcb",
+    "release_dir": "releases/20260909-6-9aa612a86853457d9538ad95979b6bcb",
+    "latest": "见 CURRENT.json（当前 rev6）",
+    "history": [
+      "20260909-1-8239b09a66ad4e639330b335d29e2342",
+      "20260909-2-aaf38d1b3fb447f0be1d7858d3dec4a0",
+      "20260909-3-49b17e8aacea41fcb51beb0435cfefab",
+      "20260909-4-417fce2245464b908e9e0a3b852670e3",
+      "20260909-5-7ae8f3ccb48d4b4f879c70919337b950",
+      "20260909-6-9aa612a86853457d9538ad95979b6bcb"
+    ],
+    "history_说明": "rev1→rev4 为 20260909 复盘发布链；rev5=校正发布(门禁校正+coverage归一化+prompt真源)；rev6=追加校正发布(源日断言+豁免扩面)"
   },
   "blocking_items": [],
+  "blocking_items_说明": "无硬阻断：五路判断/周期主判/总审/推演/哨兵/P2 学习层均已复核通过（P2: coverage pass errors 0；audit pass，其 errors 6 条全为 7 月历史欠账）。总审 blocked 的 5 项逐项处置见 _学习/_总审_20260909_门禁校正.json",
   "artifacts": [
     "_学习/judgment_20260909.json",
     "_学习/总审_20260909.json",
@@ -41,6 +64,54 @@
   "notes": [
     "当日周期投票n_voted=0，保持弃权事实，不写五路共识。",
     "题材归位48/48来自THS涨停原因字段的可追溯机器归位，未宣称人工主线确认。",
-    "P3独立provenance/真实交易登记未启用，按页发布策略完成正式页面，不伪造生产交易。"
-  ]
+    "P3独立provenance/真实交易登记未启用，按页发布策略完成正式页面，不伪造生产交易。",
+    "指派的跨日闭环在 20260908/20260909 断档（0908 缺 指派清单、0909 用非规格字段 推演指派），缺口留档于 _学习/_指派清单缺口登记_20260908_20260909.json。"
+  ],
+  "原文快照": {
+    "说明": "2026-09-10 13:53:52 版原文（逐字），仅作留痕，不作为当前口径",
+    "date": "20260909",
+    "status": "completed",
+    "completed": {
+      "data": {
+        "summary": true,
+        "zt_pool": true,
+        "lhb": true,
+        "THS_reason": true,
+        "fact": true
+      },
+      "routes": {
+        "auction": "pass",
+        "lhb": "pass",
+        "theme": "pass_unique_relocation_source",
+        "logic": "pass_equivalent_validator",
+        "limitup": "pass"
+      },
+      "cycle": "pass_with_n_voted_0_explicit",
+      "master_audit": "pass_p2",
+      "deduction": "pass_structured_predictions",
+      "plans": "six_plans_present"
+    },
+    "release": {
+      "formal_page": "published",
+      "p2": "pass",
+      "p1": "pass",
+      "p3": "page_only_controlled_no_production_transaction",
+      "sentinel_exit": 0,
+      "build_id": "20260909-1-8239b09a66ad4e639330b335d29e2342",
+      "release_dir": "releases/20260909-1-8239b09a66ad4e639330b335d29e2342"
+    },
+    "blocking_items": [],
+    "artifacts": [
+      "_学习/judgment_20260909.json",
+      "_学习/总审_20260909.json",
+      "_学习/推演_20260909.json",
+      "_学习/cycle主判_20260909.json",
+      "_学习/交易计划_master_20260909.json"
+    ],
+    "notes": [
+      "当日周期投票n_voted=0，保持弃权事实，不写五路共识。",
+      "题材归位48/48来自THS涨停原因字段的可追溯机器归位，未宣称人工主线确认。",
+      "P3独立provenance/真实交易登记未启用，按页发布策略完成正式页面，不伪造生产交易。"
+    ]
+  }
 }

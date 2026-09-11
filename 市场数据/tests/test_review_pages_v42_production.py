@@ -30,8 +30,13 @@ def test_v42_reading_spine_claim_roles_and_proof_links():
         assert 'class="claim-role role-' in html
         assert 'class="claim-proof"' in html
         assert 'href="#evidence-' in html
-        for label in ("结论", "分段证据", "来源审计"):
+        for label in ("结论", "来源审计"):
             assert label in html
+        # v4.3：静态"阅读顺序 01结论/02指标/03分段证据/04来源审计"改为真实栏目锚点，
+        # 原"分段证据"并入各栏目依据组，故此处改为校验锚点齐全（合同变更见 _变更总账.md）
+        for sid in ("observations", "routes", "turning", "verdict", "master"):
+            assert 'href="#%s"' % sid in html
+        assert 'href="#audit-fold"' in html
 
 
 def test_v42_contract_hash_matches_css_snapshot():

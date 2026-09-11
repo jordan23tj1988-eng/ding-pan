@@ -12,7 +12,7 @@ ROOT = TASK / "root"
 sys.path.insert(0, str(ROOT))
 ROUTES = ("index", "cycle", "auction", "lhb", "theme", "logic", "limitup")
 EXPECTED = {
- "index": ["observations", "routes", "turning", "verdict", "master"],
+ "index": ["recommendations", "observations", "routes", "turning", "verdict", "master"],
  "cycle": ["volume", "leading", "stages", "ladder", "position", "research", "cognition"],
  "auction": ["pool", "settlement", "temperature", "winrate", "research", "cognition"],
  "lhb": ["seats", "temperature", "ledger", "tiers", "research", "cognition"],

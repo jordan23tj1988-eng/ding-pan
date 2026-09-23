@@ -199,6 +199,18 @@ def main(argv=None) -> int:
         root = args.root.resolve()
         out = (args.out or root.parent / f"review_run_{target}_cognition").resolve()
         result = run(target, root, out)
+        # 在认知库更新后同步能力进化账本：承接历史、去重、保留验证/命中证据
+        import subprocess, sys
+        evo = root / "自我进化闭环.py"
+        if evo.exists() and result.get("status") == "pass":
+            p = subprocess.run([sys.executable, str(evo), target], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
+            result["evolution_ledger"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
+        verifier = root / "认知验证闭环.py"
+        if verifier.exists() and result.get("status") == "pass":
+            p = subprocess.run([sys.executable, str(verifier), "--as-of", target], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
+            result["cognition_verification"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
+            if p.returncode != 0:
+                result["status"] = "fail"
     except (OSError, ValueError, TypeError, KeyError, ImportError) as exc:
         result = {"status": "fail", "d": args.d, "errors": [str(exc)], "snapshots_written": []}
     print(json.dumps(result, ensure_ascii=False, allow_nan=False))

@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 230, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 216, in main
+    out = build_page(d, current)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 125, in build_page
+    evo = _renumber_evolution(evo[:2])
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 64, in _renumber_evolution
+    raise RuntimeError(f"能力进化模块数量异常: {len(sections)}")
+RuntimeError: 能力进化模块数量异常: 0

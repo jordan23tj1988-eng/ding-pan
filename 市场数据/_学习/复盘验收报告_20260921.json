@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "日期": "20260921",
+  "状态": "degraded_not_published",
+  "零后视镜": true,
+  "生产脚本修改": false,
+  "事实": {
+    "涨停数": 103,
+    "炸板数": 25,
+    "跌停数": 2,
+    "炸板率": 0.195,
+    "封板率": 0.8047,
+    "温度": 63.2,
+    "温度档": "中性",
+    "最高板": 5,
+    "成交额亿": 20315.0
+  },
+  "题材归位": {
+    "涨停池行数": 103,
+    "映射数": 103,
+    "缺失代码": [],
+    "多余代码": [],
+    "来源档": {
+      "A": 0,
+      "B": 103,
+      "C": 0
+    }
+  },
+  "五路": [
+    {
+      "route": "auction",
+      "grade": "C",
+      "conclusion": "C档防守：结构偏强但有效9:25快照与撤单轨迹不可用，明晨空仓，等待高开闸门与开盘右侧确认。",
+      "confidence": "中低：静态池、评分、温度和历史桶齐全，但缺少可用于9:25确认的有效动态快照。",
+      "pick_count": 0,
+      "pick_codes": [],
+      "code_source_check": {
+        "source": "20260921/zt_pool.csv",
+        "missing": []
+      }
+    },
+    {
+      "route": "lhb",
+      "grade": "B",
+      "conclusion": "B档：中性偏进攻但只保留一只条件性轻仓荐票。市场温度处于中性，双源一致票存在A档双点共振；S档正式参与仅2行，B档与未匹配通道占主导，不能把单日涨停扩散读成全面进攻。",
+      "confidence": 78,
+      "pick_count": 3,
+      "pick_codes": [
+        "002080",
+        "002792",
+        "603120"
+      ],
+      "code_source_check": {
+        "source": "20260921/lhb.csv",
+        "missing": []
+      }
+    },
+    {
+      "route": "theme",
+      "grade": "C",
+      "conclusion": "无可核验A档催化主线；103只涨停全部为B档行业兜底，行业聚集不能升级为题材主线。结构上家居用品具备5板/3家/早封占比约0.67/开板占比0.33的最强承载，出版、房地产服、医疗服务、化学制品有局部高度，但均缺公告或THS催化确认，统一按C档观察，空仓。",
+      "confidence": 86,
+      "pick_count": 0,
+      "pick_codes": [],
+      "code_source_check": {
+        "source": "20260921/zt_pool.csv",
+        "missing": []
+      }
+    },
+    {
+      "route": "logic",
+      "grade": "C",
+      "conclusion": "C档防守：空仓为主，不把行业归位或单票首板升级为产业逻辑主线。20260921涨停池103只，模板153只唯一代码中仅4只覆盖，且4只均1板、分属不同链条；当日中报预增雷达缺失，无法完成模板全量×雷达交叉，因此不具备A档业绩背书。",
+      "confidence": 88,
+      "pick_count": 3,
+      "pick_codes": [
+        "001389",
+        "600992",
+        "605196"
+      ],
+      "code_source_check": {
+        "source": "20260921/zt_pool.csv",
+        "missing": []
+      }
+    },
+    {
+      "route": "limitup",
+      "grade": "C防守",
+      "conclusion": "C防守，空仓；全池执行口径仍是负期望，观察不买。",
+      "confidence": 82,
+      "pick_count": 3,
+      "pick_codes": [
+        "688137",
+        "002080",
+        "001317"
+      ],
+      "code_source_check": {
+        "source": "20260921/zt_pool.csv",
+        "missing": []
+      }
+    }
+  ],
+  "推演可结算": true,
+  "发布": {
+    "status": "fail",
+    "published": false,
+    "preview_dir": "D:\\股票数据\\市场数据\\.review_staging\\20260921-1-d7bb0e65e4f94764b026e0d7c7eca3a5",
+    "errors": [
+      "P1 reported fail",
+      "index: model incomplete: []",
+      "auction: model incomplete: []",
+      "lhb: model incomplete: []",
+      "theme: model incomplete: []",
+      "logic: model incomplete: []",
+      "limitup: model incomplete: []",
+      "page index: status=degraded errors=[]",
+      "page auction: status=degraded errors=[]",
+      "page lhb: status=degraded errors=[]",
+      "page theme: status=degraded errors=[]",
+      "page logic: status=degraded errors=[]",
+      "page limitup: status=degraded errors=[]",
+      "stage postprocess failed: 提示: 候选概览页无能力模块，使用主题专用能力模板: D:\\股票数据\\市场数据\\_学习\\主题页能力进化模板.html\nTraceback (most recent call last):\n  File \"D:\\股票数据\\市场数据\\生成盯盘台.py\", line 913, in <module>\n    _postprocess_site(sys.argv[2], sys.argv[3] if len(sys.argv) > 3\n  File \"D:\\股票数据\\市场数据\\生成盯盘台.py\", line 761, in _postprocess_site\n    raise RuntimeError('cycle visual repair failed: ' + str(repair) + '\\n'\nRuntimeError: cycle visual repair failed: D:\\股",
+      "check cycle: fail ['sentinel exit=1, baseline_ok=False, checks=25', 'missing component VOTEBOARD', 'check process exit=1']",
+      "check auction: fail ['sentinel exit=1, baseline_ok=False, checks=12', 'POOLLEDGER component missing', 'missing component POOLLEDGER', 'check process exit=1']",
+      "check lhb: fail ['sentinel exit=1, baseline_ok=False, checks=31', 'conflicting dated seat snapshots', 'check process exit=1']",
+      "check theme: fail ['sentinel exit=1, baseline_ok=False, checks=51', 'check process exit=1']",
+      "check limitup: fail ['sentinel exit=1, baseline_ok=False, checks=32', 'check process exit=1']",
+      "check logic: fail ['logic: model incomplete: []', 'check process exit=1']",
+      "check consistency: fail ['C2 auction 目标日来源不可核验: 净值缺目标日20260921', 'C2 lhb 目标日来源不可核验: 净值缺目标日20260921', 'C2 theme 目标日来源不可核验: 净值缺目标日20260921', 'C2 logic 目标日来源不可核验: 净值缺目标日20260921', 'C2 limitup 目标日来源不可核验: 净值缺目标日20260921', 'C2 master 目标日来源不可核验: 净值缺目标日20260921', \"C5 20260918结算无效: ['质量荐票结算:缺文件', '题材荐票结算:缺文件', '席位荐票结算:缺文件'](bars_cache没补齐就跑了结算?)\", 'C9 limitup LEDGER 最新日块=None 应=09-21(当日涨停归位)——台账脚本 --from-data 可能漏了日期参数,当日日块没建;补跑\"台账脚本 20260921 --from-data\"+dashboard+生成盯盘台+inject', 'C9 lhb LHBLEDGER 最新日块=None 应=09-21(当日席位荐票卡)——台账脚本 --from-data 可能漏了日期参数,当日日块没建;补跑\"台账脚本 20260921 --from-data\"+dashboard+生成盯盘台+inject', 'C9 auction POOLLEDGER 最新日块=None 应=09-18(昨日池今日结算)——台账脚本 --from-data 可能漏了日期参数,当日日块没建;补跑\"台账脚本 20260921 --from-data\"+dashboard+生成盯盘台+inject', 'C12 龙虎榜专属核对失败:   ✓ 分档库档数P  [页面168 vs 源168]   ✓ 分档表新鲜度  [窗口末日20260918 vs 核对日20260921(容忍20260921-5日)] FAIL 6 项 — 页面数字与数据源不一致, 禁止出页', 'check process exit=1']"
+    ]
+  },
+  "明确缺口": [
+    "正式页面未发布：review_publish 门禁失败。",
+    "盘面五路中竞价9:25动态轨迹/撤单差分不可用。",
+    "风险日历为partial，风险事件源缺失。",
+    "中报预增雷达当日文件缺失。",
+    "模拟盘状态文件仍为旧日期，未篡改为当日；引擎看板缺失。",
+    "C1-C12哨兵仍有失败，不能宣称C1-C28全通过。"
+  ]
+}

@@ -1,0 +1,734 @@
+{
+  "schema_version": 1,
+  "d": "20260911",
+  "route": "lhb",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20260911.json",
+      "pointer": "/bodies/lhb",
+      "raw": "<!doctype html><meta charset=\"utf-8\"><title>席位路判断 20260911</title><style>body{font-family:Arial,\"Microsoft YaHei\";background:#0f172a;color:#e2e8f0;padding:24px;line-height:1.6}.card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:16px;margin:12px 0}h1{color:#f8fafc}h2{color:#93c5fd}.tag{color:#fca5a5;font-weight:700}</style><h1>席位路判断 · 20260911</h1><div class=\"card\"><h2>席位综合判断</h2><p class=\"tag\">C档防守，空仓；无正式荐票。</p><p>冰点温度12.7，涨停40、跌停21；双源校验6只强矛盾，未形成S/A多档共振。</p></div><div class=\"card\"><h2>资金温度</h2><p>可比47只：一致17、分歧19、强矛盾6、打折5。源1为当日榜权威，源2为买入前五偏买口径；强矛盾禁入荐票。</p></div><div class=\"card\"><h2>席位荐票</h2><p>现金100%，模拟盘无持仓。等待双源方向一致、S/A多档共振与封板结构修复。</p></div><div class=\"card\"><h2>席位分档</h2><p>S档至少5席，且两只涨停池股票双源一致并有S/A共振；封板率≥0.80、炸板率&lt;0.20。</p></div>\n"
+    }
+  ],
+  "claims": [
+    {
+      "id": "lhb-1f10e5e62aaae163",
+      "role": "verdict",
+      "text": "席位路判定为C档防守：冰点延续且跌停扩大，双源校验出现6只强矛盾；正净买集中于机构/大额单点，未形成可交易的S/A多档共振，本期空仓。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-1f10e5e62aaae163"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/结论"
+    },
+    {
+      "id": "lhb-c1886da576e225c0",
+      "role": "evidence",
+      "text": "20260911市场温度12.7、冰点；涨停40、炸板18、炸板率0.31、跌停21、最高4板，情绪较前日进一步恶化。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-c1886da576e225c0"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/证据/0"
+    },
+    {
+      "id": "lhb-477e291270e0a779",
+      "role": "evidence",
+      "text": "龙虎榜双源校验通过但源1/源2可比47只中一致17、分歧19、强矛盾6、打折5；强矛盾票按规则禁入荐票。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-477e291270e0a779"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/证据/1"
+    },
+    {
+      "id": "lhb-eb92b047d162ef7c",
+      "role": "evidence",
+      "text": "当日龙虎榜68条；风华高科000636净买2.925亿、神宇股份300563净买1.270亿等虽为涨停，但缺少可核实S/A多档共振，且题材归位全为B行业兜底，不能升级。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-eb92b047d162ef7c"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/证据/2"
+    },
+    {
+      "id": "lhb-290abdf64d07140b",
+      "role": "evidence",
+      "text": "强矛盾含600359新农开发（源1近零、源2买侧1.296亿），即使2板也必须打折；000823、603601等元件方向亦存在源1净卖与源2买侧冲突。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-290abdf64d07140b"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/证据/3"
+    },
+    {
+      "id": "lhb-ac2617fc6d1db568",
+      "role": "evidence",
+      "text": "席位路近期合计24/56、均收-0.60%，仅作校准；模拟盘lhb截至20260910持仓为空，现金约102.93万。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-ac2617fc6d1db568"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/证据/4"
+    },
+    {
+      "id": "lhb-c37406377f93810d",
+      "role": "evidence",
+      "text": "C",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-c37406377f93810d"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/档位"
+    },
+    {
+      "id": "lhb-452bdac489c5e5e9",
+      "role": "evidence",
+      "text": "90",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-452bdac489c5e5e9"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/置信度"
+    },
+    {
+      "id": "lhb-c0949251faf5262a",
+      "role": "condition",
+      "text": "后续交易日出现至少5席S档正式出手，且两只以上涨停池股票同时满足源1源2方向一致、S/A多档共振、机构同向净买，且封板率>=0.80、炸板率<0.20，方可解除防守。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-c0949251faf5262a"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/可证伪条件"
+    },
+    {
+      "id": "lhb-6741bea7f617a9e2",
+      "role": "limitation",
+      "text": "仅读取本路允许输入，未读取其他路当日判断；双源源2为买入前五偏买口径，不能替代源1当日榜净买；题材归位缺THS催化，全部B行业兜底；未使用目标日后数据。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-6741bea7f617a9e2"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/判断/独立盲区声明"
+    },
+    {
+      "id": "lhb-c6b6edb5163a6177",
+      "role": "observation",
+      "text": "无正式买入荐票；空仓合法。强矛盾或单点机构净买仅列为观察，不构成交易指令。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-c6b6edb5163a6177"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/荐票/结论"
+    },
+    {
+      "id": "lhb-d8b3290e5a5b760f",
+      "role": "observation",
+      "text": "[]",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-d8b3290e5a5b760f"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/荐票/标的"
+    },
+    {
+      "id": "lhb-c066fa76e5970a71",
+      "role": "cognition",
+      "text": "20260911",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-c066fa76e5970a71"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/认知迭代/0/日期"
+    },
+    {
+      "id": "lhb-82ca34667ea98516",
+      "role": "cognition",
+      "text": "双源强矛盾优先级高于涨停与净买额",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-82ca34667ea98516"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/认知迭代/0/标题"
+    },
+    {
+      "id": "lhb-afd4eb2f501d81d3",
+      "role": "cognition",
+      "text": "源1当日榜与源2买侧明细方向相反且绝对额显著时，视为卖压污染嫌疑，禁止因涨停或买侧金额大而升级荐票；需等待次日源1源2方向一致并出现S/A共振才可证伪。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-afd4eb2f501d81d3"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/认知迭代/0/正文"
+    },
+    {
+      "id": "lhb-3177d80ef5c0b877",
+      "role": "research",
+      "text": "元件行业虽贡献9只涨停，但榜面既有风华高科正净买也有超声电子、再升科技等强矛盾，行业宽度不能替代席位确认。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-lhb-3177d80ef5c0b877"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/深挖/0"
+    },
+    {
+      "id": "lhb-4d2768465bbb95d6",
+      "role": "research",
+      "text": "机构净买单点票不等于短线可交易强，当前环境适配状态灯为红色：冰点+跌停扩张+双源矛盾。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-lhb-4d2768465bbb95d6"
+      ],
+      "source": "lhb判断_20260911.json",
+      "source_pointer": "/深挖/1"
+    },
+    {
+      "id": "lhb-4949abec93b9cbb6",
+      "role": "evidence",
+      "text": "席位路判断 20260911",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-4949abec93b9cbb6"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/text/1"
+    },
+    {
+      "id": "lhb-417d86bcdfad9997",
+      "role": "evidence",
+      "text": "body{font-family:Arial,\"Microsoft YaHei\";background:#0f172a;color:#e2e8f0;padding:24px;line-height:1.6}.card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:16px;margin:12px 0}h1{color:#f8fafc}h2{color:#93c5fd}.tag{color:#fca5a5;font-weight:700}",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-417d86bcdfad9997"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/text/2"
+    },
+    {
+      "id": "lhb-36d93b1b13b40013",
+      "role": "evidence",
+      "text": "席位路判断 · 20260911",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-36d93b1b13b40013"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/block/3",
+      "legacy_html": "<h3>席位路判断 · 20260911</h3>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "lhb-9ba500bac046541e",
+      "role": "evidence",
+      "text": "席位综合判断",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-9ba500bac046541e"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/heading/4"
+    },
+    {
+      "id": "lhb-f65d84a681dca388",
+      "role": "evidence",
+      "text": "C档防守，空仓；无正式荐票。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-f65d84a681dca388"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/block/5",
+      "legacy_html": "<p class=\"tag\">C档防守，空仓；无正式荐票。</p>",
+      "context": "席位综合判断"
+    },
+    {
+      "id": "lhb-17da3786c22f4bcf",
+      "role": "evidence",
+      "text": "冰点温度12.7，涨停40、跌停21；双源校验6只强矛盾，未形成S/A多档共振。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-17da3786c22f4bcf"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/block/6",
+      "legacy_html": "<p>冰点温度12.7，涨停40、跌停21；双源校验6只强矛盾，未形成S/A多档共振。</p>",
+      "context": "席位综合判断"
+    },
+    {
+      "id": "lhb-7e494a7f44143404",
+      "role": "evidence",
+      "text": "资金温度",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-7e494a7f44143404"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/heading/7",
+      "component_ref": "FUNDTEMP"
+    },
+    {
+      "id": "lhb-b90e1448a5ee1e2c",
+      "role": "evidence",
+      "text": "可比47只：一致17、分歧19、强矛盾6、打折5。源1为当日榜权威，源2为买入前五偏买口径；强矛盾禁入荐票。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-b90e1448a5ee1e2c"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/block/8",
+      "legacy_html": "<p>可比47只：一致17、分歧19、强矛盾6、打折5。源1为当日榜权威，源2为买入前五偏买口径；强矛盾禁入荐票。</p>",
+      "context": "资金温度"
+    },
+    {
+      "id": "lhb-a5f7071f0edaa237",
+      "role": "evidence",
+      "text": "席位荐票",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-a5f7071f0edaa237"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/heading/9"
+    },
+    {
+      "id": "lhb-15e7d5401d977b0b",
+      "role": "evidence",
+      "text": "现金100%，模拟盘无持仓。等待双源方向一致、S/A多档共振与封板结构修复。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-15e7d5401d977b0b"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/block/10",
+      "legacy_html": "<p>现金100%，模拟盘无持仓。等待双源方向一致、S/A多档共振与封板结构修复。</p>",
+      "context": "席位荐票"
+    },
+    {
+      "id": "lhb-dcca1049520beee6",
+      "role": "evidence",
+      "text": "席位分档",
+      "section": "tiers",
+      "evidence_refs": [
+        "ev-lhb-dcca1049520beee6"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/heading/11"
+    },
+    {
+      "id": "lhb-0ef1a86ef860edb4",
+      "role": "evidence",
+      "text": "S档至少5席，且两只涨停池股票双源一致并有S/A共振；封板率≥0.80、炸板率<0.20。",
+      "section": "tiers",
+      "evidence_refs": [
+        "ev-lhb-0ef1a86ef860edb4"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/lhb/block/12",
+      "legacy_html": "<p>S档至少5席，且两只涨停池股票双源一致并有S/A共振；封板率≥0.80、炸板率&lt;0.20。</p>",
+      "context": "席位分档"
+    }
+  ],
+  "content_coverage": {
+    "total": 29,
+    "covered": 29,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "lhb-1f10e5e62aaae163",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-c1886da576e225c0",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-477e291270e0a779",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-eb92b047d162ef7c",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-290abdf64d07140b",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-ac2617fc6d1db568",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-c37406377f93810d",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-452bdac489c5e5e9",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-c0949251faf5262a",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-6741bea7f617a9e2",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-c6b6edb5163a6177",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-d8b3290e5a5b760f",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-c066fa76e5970a71",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-82ca34667ea98516",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-afd4eb2f501d81d3",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-3177d80ef5c0b877",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-4d2768465bbb95d6",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-4949abec93b9cbb6",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-417d86bcdfad9997",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-36d93b1b13b40013",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-9ba500bac046541e",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-f65d84a681dca388",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-17da3786c22f4bcf",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-7e494a7f44143404",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-b90e1448a5ee1e2c",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-a5f7071f0edaa237",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-15e7d5401d977b0b",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-dcca1049520beee6",
+        "sections": [
+          "tiers"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-0ef1a86ef860edb4",
+        "sections": [
+          "tiers"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/结论",
+        "claim_id": "lhb-1f10e5e62aaae163",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/证据/0",
+        "claim_id": "lhb-c1886da576e225c0",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/证据/1",
+        "claim_id": "lhb-477e291270e0a779",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/证据/2",
+        "claim_id": "lhb-eb92b047d162ef7c",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/证据/3",
+        "claim_id": "lhb-290abdf64d07140b",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/证据/4",
+        "claim_id": "lhb-ac2617fc6d1db568",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/档位",
+        "claim_id": "lhb-c37406377f93810d",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/置信度",
+        "claim_id": "lhb-452bdac489c5e5e9",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/可证伪条件",
+        "claim_id": "lhb-c0949251faf5262a",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/判断/独立盲区声明",
+        "claim_id": "lhb-6741bea7f617a9e2",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/荐票/结论",
+        "claim_id": "lhb-c6b6edb5163a6177",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/荐票/标的",
+        "claim_id": "lhb-d8b3290e5a5b760f",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/认知迭代/0/日期",
+        "claim_id": "lhb-c066fa76e5970a71",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/认知迭代/0/标题",
+        "claim_id": "lhb-82ca34667ea98516",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/认知迭代/0/正文",
+        "claim_id": "lhb-afd4eb2f501d81d3",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/深挖/0",
+        "claim_id": "lhb-3177d80ef5c0b877",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260911.json",
+        "pointer": "/深挖/1",
+        "claim_id": "lhb-4d2768465bbb95d6",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/text/1",
+        "claim_id": "lhb-4949abec93b9cbb6",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/text/2",
+        "claim_id": "lhb-417d86bcdfad9997",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/block/3",
+        "claim_id": "lhb-36d93b1b13b40013",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/heading/4",
+        "claim_id": "lhb-9ba500bac046541e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/block/5",
+        "claim_id": "lhb-f65d84a681dca388",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/block/6",
+        "claim_id": "lhb-17da3786c22f4bcf",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/heading/7",
+        "claim_id": "lhb-7e494a7f44143404",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/block/8",
+        "claim_id": "lhb-b90e1448a5ee1e2c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/heading/9",
+        "claim_id": "lhb-a5f7071f0edaa237",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/block/10",
+        "claim_id": "lhb-15e7d5401d977b0b",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/heading/11",
+        "claim_id": "lhb-dcca1049520beee6",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/lhb/block/12",
+        "claim_id": "lhb-0ef1a86ef860edb4",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 29
+  },
+  "legacy_ticker": null
+}

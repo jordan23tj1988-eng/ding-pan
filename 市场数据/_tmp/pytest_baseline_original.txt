@@ -1,0 +1,39 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+cachedir: _tmp\.pytest_cache
+rootdir: D:\股票数据\市场数据
+configfile: pytest.ini
+collected 14 items
+
+tests\test_gate_repair_followup.py ...FF.                                [ 42%]
+tests\test_review_pages_reco_wiring.py .                                 [ 50%]
+tests\test_review_pages_hero_golden.py ......F                           [100%]
+
+================================== FAILURES ===================================
+_________________ test_cycle_missing_judgment_remains_honest __________________
+tests\test_gate_repair_followup.py:32: in test_cycle_missing_judgment_remains_honest
+    assert result['status']=='pass',result['errors']
+E   AssertionError: ['sentinel exit=1, baseline_ok=False, checks=24', 'missing component VOTEBOARD']
+E   assert 'fail' == 'pass'
+E     
+E     - pass
+E     + fail
+__________ test_cycle_body_day_omits_machine_components_and_anchors ___________
+tests\test_gate_repair_followup.py:47: in test_cycle_body_day_omits_machine_components_and_anchors
+    assert {c['id'] for c in model.get('components',[])}.isdisjoint({'VOLSTEP','LEADIND','VOTEBOARD','LADDER'})
+E   AssertionError: assert False
+E    +  where False = <built-in method isdisjoint of set object at 0x000001B92ED6FE60>({'LADDER', 'LEADIND', 'VOLSTEP', 'VOTEBOARD'})
+E    +    where <built-in method isdisjoint of set object at 0x000001B92ED6FE60> = {'LADDER', 'LEADIND', 'MACHVOTE', 'VOLSTEP'}.isdisjoint
+_ test_every_route_hero_matches_golden_hierarchy_without_evidence_link[limitup] _
+tests\test_review_pages_hero_golden.py:35: in test_every_route_hero_matches_golden_hierarchy_without_evidence_link
+    rendered = mod._render(model, mod._contract())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+review_pages.py:1571: in _render
+    mt_path = root / '_学习' / '_市场温度表.json'
+              ^^^^^^^^^^^^
+E   TypeError: unsupported operand type(s) for /: 'NoneType' and 'str'
+=========================== short test summary info ===========================
+FAILED tests/test_gate_repair_followup.py::test_cycle_missing_judgment_remains_honest
+FAILED tests/test_gate_repair_followup.py::test_cycle_body_day_omits_machine_components_and_anchors
+FAILED tests/test_review_pages_hero_golden.py::test_every_route_hero_matches_golden_hierarchy_without_evidence_link[limitup]
+======================== 3 failed, 11 passed in 28.98s ========================

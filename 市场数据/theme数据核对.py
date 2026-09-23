@@ -11,7 +11,7 @@ from collections import Counter
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 L = os.path.join(BASE, '_学习')
-SITE = os.path.join(BASE, '复盘', '盯盘台')
+SITE = os.environ.get('POST_SITE_ROOT') or os.path.join(BASE, '复盘', '盯盘台')
 
 def load_page(d, page_path=None):
     p = page_path or os.path.join(SITE, 'theme.html')
@@ -62,14 +62,32 @@ def main():
             n = len(jd.get('逐线判断') or {})
             chk(issues, n >= 3, f'结构化产物 {fn} 逐线判断≥3条', f'实际{n}条')
 
-    # ===== 0. 结构基线: 机器锚成对 + h2 五板块 =====
+    # ===== 0. 结构基线: 机器锚成对 + 三个业务板块 + 两个能力模块 =====
     for anchor in ('THEMEBATTLE', '6YOU', 'FOURDIM', 'LIFECYCLE'):
         a = h.count(f'<!--{anchor}-->'); b = h.count(f'<!--/{anchor}-->')
         chk(issues, a == 1 and b == 1, f'机器锚 {anchor} 开闭成对', f'开{a}/闭{b}')
-    h2s = re.findall(r'<h2>([一二三四五])', h)
-    for i, num in enumerate('一二三四五', 1):
+    h2s = re.findall(r'<h2>([一二三四五六七])', h)
+    for i, num in enumerate('一二三', 1):
         chk(issues, h2s.count(num) == 1, f'h2 板块{num} 唯一', f'出现{h2s.count(num)}次')
-    chk(issues, len(h2s) == 5, 'h2 五板块齐全(板块四龙头识别已并入矩阵)', f'实际{len(h2s)}个')
+    chk(issues, not re.search(r'<section id="(?:research|cognition)"', h),
+        '旧 research/cognition 模块已移除', '只保留标准能力进化模块')
+    for sid in ('matrix', 'lifecycle'):
+        sec = re.search(r'<section id="' + sid + r'".*?</section>', h, re.S)
+        n = len(re.findall(r'id="claim-theme-', sec.group(0))) if sec else -1
+        chk(issues, n == 0, f'{sid}旧证据卡组已移除', f'剩余{n}个' if n >= 0 else 'section缺失')
+    chk(issues, len(h2s) == 5, 'h2 三业务+两能力模块齐全', f'实际{len(h2s)}个')
+    # 主题页只保留与周期/龙虎榜同构的两组 evolution 模块；
+    # 旧 research/cognition 仍可存在于 model/audit，但不得回到读者页面。
+    evo = re.findall(r'<section class="evolution">.*?</section>', h, re.S)
+    chk(issues, len(evo) == 2, '能力进化模块恰为2组', f'实际{len(evo)}组')
+    if len(evo) == 2:
+        for n, block in zip(('四', '五'), evo):
+            chk(issues, f'<h2>{n} ' in block, f'能力模块{n}编号顺延', '标题编号匹配' if f'<h2>{n} ' in block else '编号错误')
+            chk(issues, all(t in block for t in ('class="evo-stats"', 'class="evo-list"')),
+                f'能力模块{n}展示组件齐全', 'evo-stats/evo-list')
+        style_id_count = h.count('id="overview-evolution-sync"')
+        chk(issues, style_id_count == 1,
+            '能力模块样式ID唯一', f'实际{style_id_count}')
     chk(issues, h.count('<!--PAPERTRADE-->') == h.count('<!--/PAPERTRADE-->'),
          'PAPERTRADE 锚开闭配对', f'开{h.count("<!--PAPERTRADE-->")}/闭{h.count("<!--/PAPERTRADE-->")}')
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><title>展示层清理 · 前后对照(竞价页真实数据)</title>
+<style>
+body{margin:0;background:#0d0f14;color:#e9edf5;font-family:'Microsoft YaHei',system-ui,sans-serif}
+.hd{padding:18px 22px;border-bottom:1px solid #232936;position:sticky;top:0;background:#0d0f14;z-index:9}
+h1{font-size:18px;margin:0 0 6px}p.sub{color:#96a0b5;font-size:12.5px;margin:0}
+.cols{display:flex;gap:14px;padding:14px}
+.col{flex:1;min-width:0}
+.cap{font-size:13px;font-weight:700;padding:8px 10px;border-radius:8px;margin-bottom:8px}
+.cap.bad{background:rgba(255,95,86,.14);color:#ff9b95}
+.cap.good{background:rgba(47,211,197,.14);color:#6fe3d6}
+iframe{width:100%;height:800px;border:1px solid #232936;border-radius:8px;background:#0d0f14}
+.note{padding:0 22px 24px;color:#96a0b5;font-size:12.5px;line-height:1.7}
+table{border-collapse:collapse;margin:10px 0;font-size:12.5px}
+th,td{border:1px solid #2a3140;padding:5px 9px;text-align:left}
+th{background:#161b24;color:#c9d3e6}
+</style></head><body>
+<div class="hd"><h1>展示层清理对照 · 竞价页（20260921 真实发布数据）</h1>
+<p class="sub">左＝当前线上原样；右＝按你要求去掉徽章/来源标签/证据回链小字后的效果。两栏截图范围相同。</p></div>
+<div class="cols">
+  <div class="col"><div class="cap bad">当前 · 带标签噪声</div><iframe src="auction_当前.html#pool"></iframe></div>
+  <div class="col"><div class="cap good">清理后 · 只留内容</div><iframe src="auction_去标签+碎片折叠.html#pool"></iframe></div>
+</div>
+<div class="note"><b>清理规则</b>：① 删掉卡片头的角色徽章（证据/结论/观察…）与来源标签；② 删掉尾行“证据回链/来源”字样，证据链接本身保留（有真源文件名的直接显示文件名）；③ 删掉重复的“观察与验证/依据”两层小标题；④ 只有一句短语的碎片卡从正文流收进栏目尾部折叠块，claim 锚点与证据链接一条不删。</div>
+</body></html>

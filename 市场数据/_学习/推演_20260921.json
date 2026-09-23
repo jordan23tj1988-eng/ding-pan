@@ -1,0 +1,89 @@
+{
+  "日期": "20260921",
+  "schema_version": 1,
+  "证据": [
+    "_学习/fact_20260921.json",
+    "_学习/题材归位_20260921.json",
+    "_学习/风险日历_20260921.json",
+    "_学习/竞价撤单差分_20260921.json"
+  ],
+  "predictions": [
+    {
+      "schema_version": 1,
+      "id": "p20260921-01",
+      "d": "20260921",
+      "due_d": "20260922",
+      "event_type": "numeric",
+      "field": "涨停数",
+      "op": "ge",
+      "threshold": 104,
+      "unit": "只",
+      "source": ["_学习/fact_20260921.json/涨停数"],
+      "condition": null,
+      "claim": "次日涨停数≥104",
+      "说明": "宽度继续扩张才支持转强；否则不支持本次转强假设。"
+    },
+    {
+      "schema_version": 1,
+      "id": "p20260921-02",
+      "d": "20260921",
+      "due_d": "20260922",
+      "event_type": "numeric",
+      "field": "炸板率",
+      "op": "le",
+      "threshold": 0.195,
+      "unit": "ratio",
+      "source": ["_学习/fact_20260921.json/炸板率"],
+      "condition": null,
+      "claim": "次日炸板率≤0.195",
+      "说明": "炸板率不恶化是防守判断被削弱的必要信号之一。"
+    },
+    {
+      "schema_version": 1,
+      "id": "p20260921-03",
+      "d": "20260921",
+      "due_d": "20260922",
+      "event_type": "numeric",
+      "field": "最高连板",
+      "op": "ge",
+      "threshold": 5,
+      "unit": "板",
+      "source": ["_学习/fact_20260921.json/最高连板"],
+      "condition": null,
+      "claim": "次日最高连板≥5",
+      "说明": "高度维持或上移才支持梯队未退坡。"
+    },
+    {
+      "schema_version": 1,
+      "id": "p20260921-04",
+      "d": "20260921",
+      "due_d": "20260922",
+      "event_type": "numeric",
+      "field": "温度",
+      "op": "ge",
+      "threshold": 63.2,
+      "unit": "number",
+      "source": ["_学习/fact_20260921.json/温度"],
+      "condition": null,
+      "claim": "次日温度≥63.2",
+      "说明": "温度不降且主线证据补齐，才可能推翻C档防守。"
+    },
+    {
+      "schema_version": 1,
+      "id": "p20260921-05",
+      "d": "20260921",
+      "due_d": "20260922",
+      "event_type": "conditional",
+      "field": null,
+      "op": null,
+      "threshold": null,
+      "source": ["_学习/题材归位_20260921.json", "_学习/涨停对链条_20260921.json"],
+      "condition": null,
+      "claim": "出现同链跨环节扩散且有可核验催化",
+      "说明": "非数值条件，需人工复核，不将行业兜底当催化。"
+    }
+  ],
+  "认知迭代": [
+    "把温度中性与主线可交易分开；数值预测全部给出可机械结算op与阈值。"
+  ]
+}

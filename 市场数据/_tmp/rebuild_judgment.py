@@ -1,0 +1,3 @@
+import json
+from pathlib import Path
+L=Path(r"D:\股票数据\市场数据\_学习"); d='20260911'; jp=L/f'judgment_{d}.json'; j=json.loads(jp.read_text(encoding='utf-8')); b={x:(L/f'{x}_body_{d}.html').read_text(encoding='utf-8') for x in ['auction','lhb','theme','logic','limitup']}; b['cycle']=(L/f'cycle_body_{d}.html').read_text(encoding='utf-8'); b['index']='<section class="index-body"><div class="hero"><h1>20260911 总审概览</h1><p>冰点防守，五路判断完成，盘中连续tick缺口如实保留。</p></div><h2>总审</h2><p>五路均未形成可交易的强共振，空仓观察。</p></section>'; j['bodies']=b; j['archive_body']='<p>20260911补跑：五路判断、总审与推演已生成；三项盘中连续tick能力不可用，保留unavailable。</p>'; jp.write_text(json.dumps(j,ensure_ascii=False,indent=2),encoding='utf-8'); print(list(b))

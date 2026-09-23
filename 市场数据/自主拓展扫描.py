@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """自主拓展扫描 v1.0 (2026-07-12) —— 全系统"自主立项"三层机制的兜底层(零遗漏)
-源起=用户给11号产逻的方案(横切面扫描),按职能推广到 auction/lhb/theme/limitup/cycle/master 六域。
-★产业逻辑(logic)不在本脚本范围——11号的横切面扫描由另一程序实现,勿重复勿冲突(故本脚本文件名用"自主拓展*"错开"待深挖*")。
+源起=用户给11号产逻的方案(横切面扫描),按职能覆盖 auction/lhb/theme/logic/limitup/cycle/master 七域。
+★logic仍由横切面扫描.py负责触发与台账维护；本脚本不重复扫描，但统一由自我进化闭环归档进能力库。
 规范=_agent规格/自主拓展机制.md
 子命令:
  scan {d}  : 横切面扫描→ _学习/自主拓展清单_{d}.json (agent对每项强制应答:立项或写不深挖理由→自主拓展应答_{d}.json)
@@ -179,6 +179,11 @@ def scan(d):
             add('master','质量路选股增益连续3日为正(%s)——总账裁决是否低配了该路票'%['%.1f'%x for x in g2],3,'源=_涨停质量反思.jsonl')
     out={'d':d,'items':items,'说明':'各路agent对本清单强制应答:立项(进孵化区)或写不深挖理由(★理由会被audit结算打脸)'}
     jsave(os.path.join(L(),'自主拓展清单_%s.json'%d),out)
+    # 扫描完成即同步进化账本：历史专题先承接，再登记本次发现/追踪状态
+    import subprocess, sys
+    evo=os.path.join(ROOT,'自我进化闭环.py')
+    if os.path.exists(evo):
+        subprocess.run([sys.executable,evo,d],cwd=ROOT,check=False)
     print('scan',d,'共%d项:'%len(items),json.dumps([{'route':i['route'],'signal':i['signal'][:40]} for i in items],ensure_ascii=False))
 
 def audit(d, *, root=None, out=None):

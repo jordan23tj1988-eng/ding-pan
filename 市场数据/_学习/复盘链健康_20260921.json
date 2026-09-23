@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-22T18:14:04.866445+08:00",
+  "target_date": "20260921",
+  "settlement_date": "20260918",
+  "status": "warn",
+  "gate": {
+    "continuity_pass": true,
+    "coverage_gate": "pass",
+    "threshold": 0.9
+  },
+  "continuity": {
+    "target": "20260921",
+    "artifacts": {
+      "总审": true,
+      "推演": true,
+      "盯盘台归档": true
+    },
+    "release_dirs": 4,
+    "pass": true
+  },
+  "coverage": {
+    "issued_count": 0,
+    "matched_count": 0,
+    "ratio": null,
+    "routes": {
+      "auction": {
+        "status": "empty_issued",
+        "issue_day": "20260918",
+        "source": "D:\\股票数据\\市场数据\\_学习\\竞价池发出_20260918.json",
+        "source_basis": "竞价池发出_20260918.json",
+        "issued_count": 0,
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\竞价池结算_20260918.json",
+        "settled_rows": 11,
+        "matched_count": 0,
+        "coverage": null,
+        "duplicate_settlement_rows": 0,
+        "missing_codes": []
+      },
+      "lhb": {
+        "status": "missing_source",
+        "issue_day": "20260918",
+        "source_candidates": [
+          "D:\\股票数据\\市场数据\\_学习\\席位荐票_20260918.json",
+          "D:\\股票数据\\市场数据\\_学习\\龙虎榜荐票_20260918.json"
+        ],
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\席位荐票结算_20260918.json"
+      },
+      "theme": {
+        "status": "missing_source",
+        "issue_day": "20260918",
+        "source_candidates": [
+          "D:\\股票数据\\市场数据\\_学习\\题材荐票_20260918.json"
+        ],
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\题材荐票结算_20260918.json"
+      },
+      "logic": {
+        "status": "missing_source",
+        "issue_day": "20260918",
+        "source_candidates": [
+          "D:\\股票数据\\市场数据\\_学习\\逻辑判断_20260918.json",
+          "D:\\股票数据\\市场数据\\_学习\\logic判断_20260918.json"
+        ],
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\逻辑荐票结算_20260918.json"
+      },
+      "limitup": {
+        "status": "missing_source",
+        "issue_day": "20260918",
+        "source_candidates": [
+          "D:\\股票数据\\市场数据\\_学习\\涨停质量荐票_20260918.json",
+          "D:\\股票数据\\市场数据\\_学习\\涨停荐票_20260918.json"
+        ],
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260918.json"
+      }
+    },
+    "missing_source_routes": [
+      "lhb",
+      "theme",
+      "logic",
+      "limitup"
+    ],
+    "failed_routes": []
+  },
+  "policy": "缺源=缺口告警；缺少结算不可视为无荐票；不补写历史收益；只对明确发出版逐票计覆盖率"
+}

@@ -9,11 +9,15 @@ import re, os, sys, json, csv, glob, datetime
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 L = os.path.join(BASE, '_学习')
-SITE = os.path.join(BASE, '复盘', '盯盘台')
+SITE = os.environ.get('POST_SITE_ROOT') or os.path.join(BASE, '复盘', '盯盘台')
 
 def load_page(d, page_path=None):
     """页面文件: 默认 SITE/lhb.html; --page 指定独立输出(如 lhb_20260811.html)"""
-    p = page_path or os.path.join(SITE, 'lhb.html')
+    site_root = os.environ.get('LHB_SITE_ROOT', SITE)
+    if page_path:
+        p = page_path if os.path.isabs(page_path) else os.path.join(site_root, page_path)
+    else:
+        p = os.path.join(site_root, 'lhb.html')
     if not os.path.exists(p): return None, os.path.basename(p) + ' 不存在'
     return open(p, encoding='utf-8').read(), None
 
@@ -59,12 +63,38 @@ def main():
     d = sys.argv[1]
     page_path = None
     if '--page' in sys.argv:
-        page_path = os.path.join(SITE, sys.argv[sys.argv.index('--page') + 1])
+        page_path = sys.argv[sys.argv.index('--page') + 1]
     issues = []
     h, err = load_page(d, page_path)
     if err: print('FAIL', err); return 1
 
-    # ===== 0. 锚点成对 + 无重复 h2(结构基线) =====
+    # ===== 0. 黄金页结构 + 锚点成对 + 无重复 h2(结构基线) =====
+    # 龙虎榜与周期页同属黄金壳：前四段由动态渲染器供数，能力进化两段保留在页尾。
+    evo_n = len(re.findall(r'<section class="evolution"[^>]*>', h))
+    golden_mode = (
+        '<section id="' not in h
+        and evo_n == 2
+        and all(f'<h2>{n} ' in h for n in '一二三四五六')
+    )
+    chk(issues, golden_mode, '黄金页结构模式',
+        '前四段动态 + 两组能力进化' if golden_mode else '未进入龙虎榜黄金结构')
+    for token in ('class="ticker"', 'class="reading-spine"', 'class="rowA"',
+                  'class="hero"', 'class="kpi"', 'class="stance"'):
+        chk(issues, token in h, f'黄金头部组件·{token[7:-1]}', '黄金版头部')
+    chk(issues, '<section id="' not in h, '无发布页section壳', '黄金版 h2 直连')
+    # 数据边界模块已下线(2026-09-12)：lhb 页按黄金版工程实现，出现即 FAIL，防止复盘复发。
+    chk(issues, '数据边界' not in h, '无数据边界模块',
+        '黄金版工程不含该模块' if '数据边界' not in h else f'页面仍含数据边界 {h.count("数据边界")} 处')
+    evo_pos = [m.start() for m in re.finditer(r'<section class="evolution"', h)]
+    i4 = h.find('<h2>四 ')
+    foot_pos = h.rfind('<div class="foot">')
+    chk(issues, len(evo_pos) == 2 and i4 >= 0 and i4 < evo_pos[0] < foot_pos,
+        '能力进化位于前四段之后',
+        f'四段@{i4} evo@{evo_pos[0] if evo_pos else -1} foot@{foot_pos}')
+    chk(issues, h.count('<div') == h.count('</div>'), 'HTML div配平',
+        f'开{h.count("<div")}闭{h.count("</div>")}')
+
+    # ===== 0b. 锚点成对 + 无重复 h2(结构基线) =====
     # FUNDTEMP/LHBLEDGER 必须 1/1; PAPERTRADE 允许 0/0(独立页面不走模拟盘引擎注入, 全站页须 1/1)
     for anchor in ('FUNDTEMP', 'LHBLEDGER'):
         a = h.count(f'<!--{anchor}-->'); b = h.count(f'<!--/{anchor}-->')
@@ -76,7 +106,9 @@ def main():
     chk(issues, not dup, '无重复h2', '; '.join(dup) if dup else f'{len(hs)}个h2')
 
     # ===== 1. 台账 strip 三数(页面 vs 存档 summary 同源发出版; 零后视镜: 不用当前分档表复算历史) =====
-    m = re.search(r'<summary><b>\d\d-\d\d</b> <span class="chip cold">最新</span> 上榜(\d+) · 机构在场(\d+)只 · S/A出手(\d+)笔</summary>', h)
+    # 黄金壳历史上使用 chip cold；新渲染器使用 chip。两者语义相同，
+    # 允许可选 cold 类，仍严格校验最新日期与三项数字。
+    m = re.search(r'<summary><b>\d\d-\d\d</b> <span class="chip(?: cold)?">最新</span> 上榜(\d+) · 机构在场(\d+)只 · S/A出手(\d+)笔</summary>', h)
     if not m:
         chk(issues, False, '台账最新日summary存在', '未找到 最新 日块summary')
     else:

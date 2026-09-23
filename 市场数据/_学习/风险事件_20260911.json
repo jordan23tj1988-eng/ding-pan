@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "capability": "risk_events",
+  "date": "20260911",
+  "status": "pass",
+  "sources": [
+    "东财 RPT_LIFT_STAGE",
+    "东财 RPT_SHAREBONUS_DET"
+  ],
+  "metrics": {
+    "事件条数": 20,
+    "限售解禁条数": 2,
+    "分红除权条数": 18,
+    "覆盖维度": [
+      "限售解禁",
+      "分红除权"
+    ],
+    "未接入维度": [
+      "财报披露日历",
+      "股东大会",
+      "业绩预告"
+    ]
+  },
+  "errors": [],
+  "note": "覆盖维度=限售解禁+分红除权；未接入维度=财报披露日历/股东大会/业绩预告 —— 未接入≠无风险，引用时不得据此声称无此类风险",
+  "生成时间": "2026-09-11T20:40:18",
+  "事件": [
+    {
+      "类型": "限售解禁",
+      "代码": "600642",
+      "名称": "申能股份",
+      "解禁日": "2026-09-11",
+      "解禁类型": "股权激励限售股份",
+      "解禁股数万股": 26.622,
+      "解禁市值万元": 228.41676,
+      "占流通股_pct": 0.0054
+    },
+    {
+      "类型": "限售解禁",
+      "代码": "300008",
+      "名称": "天海防务",
+      "解禁日": "2026-09-11",
+      "解禁类型": "定向增发机构配售股份",
+      "解禁股数万股": 6300,
+      "解禁市值万元": 41895,
+      "占流通股_pct": 3.6467
+    },
+    {
+      "类型": "分红除权",
+      "代码": "300286",
+      "名称": "安科瑞",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 1,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "301108",
+      "名称": "洁雅股份",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 1.2,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "605305",
+      "名称": "中际联合",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 3.8,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "301239",
+      "名称": "普瑞眼科",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 3,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "603868",
+      "名称": "飞科电器",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 5,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "600309",
+      "名称": "万华化学",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 8.1,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "603456",
+      "名称": "九洲药业",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 1,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "920096",
+      "名称": "嘉晨智能",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 4.3,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "002353",
+      "名称": "杰瑞股份",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 1.5,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "001267",
+      "名称": "汇绿生态",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 0.2,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "603697",
+      "名称": "有友食品",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 2.7,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "600750",
+      "名称": "华润江中",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 5,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "605118",
+      "名称": "力鼎光电",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 0.5,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "603600",
+      "名称": "永艺股份",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 2,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "601016",
+      "名称": "节能风电",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 0.11,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "603998",
+      "名称": "方盛制药",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 2,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "601058",
+      "名称": "赛轮轮胎",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 1.5,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    },
+    {
+      "类型": "分红除权",
+      "代码": "603520",
+      "名称": "司太立",
+      "股权登记日": "2026-09-10",
+      "除权除息日": "2026-09-11",
+      "方案原字段": {
+        "BONUS_IT_RATIO": null,
+        "BONUS_RATIO": null,
+        "IT_RATIO": null,
+        "PRETAX_BONUS_RMB": 0.5,
+        "ASSIGN_PROGRESS": "实施分配"
+      }
+    }
+  ]
+}

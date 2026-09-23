@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "upgrade_id": "UPG-20260912-capability-chain-reset",
+  "date": "20260912",
+  "status": "registered",
+  "action": "terminate_incomplete_blocked_interrupted_legacy_tasks",
+  "scope": [
+    "旧版 overnight 预览链",
+    "未完成的认知每日复核链",
+    "未完成的正式概览发布链",
+    "被 lhb 冲突快照阻断的发布尝试",
+    "被 P3 provenance/真实登记阻断的发布尝试"
+  ],
+  "disposition": "terminated_by_upgrade",
+  "preserve_evidence": true,
+  "delete_source_failures": false,
+  "production_page_overwritten": false,
+  "replacement": "以统一能力账本和新版概览设计作为新链路基线",
+  "seven_routes": ["auction", "lhb", "theme", "logic", "limitup", "cycle", "master"],
+  "note": "终止旧任务状态不等于宣称新链路已完成；新链路需重新通过真实数据、发布门禁和哨兵。"
+}

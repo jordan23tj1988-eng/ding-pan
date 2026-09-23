@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "d": "20260921",
+  "route": "auction",
+  "legacy_bodies": [],
+  "claims": [
+    {
+      "id": "auction_1",
+      "role": "evidence",
+      "text": "C档防守：结构偏强但有效9:25快照与撤单轨迹不可用，明晨空仓，等待高开闸门与开盘右侧确认。",
+      "section": "pool",
+      "evidence_refs": [
+        "e22"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/auction/claims/0"
+    },
+    {
+      "id": "auction_2",
+      "role": "evidence",
+      "text": "昨日池终结算只使用已留档历史结果。",
+      "section": "settlement",
+      "evidence_refs": [
+        "e23"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/auction/claims/1"
+    },
+    {
+      "id": "auction_3",
+      "role": "evidence",
+      "text": "市场温度63.2中性，涨停103、炸板25、最高5板。",
+      "section": "temperature",
+      "evidence_refs": [
+        "e24",
+        "e25"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/auction/claims/2"
+    },
+    {
+      "id": "auction_4",
+      "role": "condition",
+      "text": "滚动分桶仅作群体统计，执行需等待有效开盘闸门。",
+      "section": "winrate",
+      "evidence_refs": [
+        "e26"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/auction/claims/3"
+    },
+    {
+      "id": "auction_5",
+      "role": "research",
+      "text": "竞价撤单差分unavailable，污染快照不倒推9:25。",
+      "section": "research",
+      "evidence_refs": [
+        "e27"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/auction/claims/4"
+    },
+    {
+      "id": "auction_6",
+      "role": "cognition",
+      "text": "认知库最新累计快照as_of=20260911（本日为历史累计真源，库内无当日晚间新增条目）；本日缺有效9:25轨迹时维持C档，不以静态结构替代动态确认。当日认知迭代条目：当日温度63.2、冻结池21只且09:25一字8/21，结构强于38.0分池基准；但快照meta在11:49:02采集并标注污染:>09:30盘中累计,只留档不训练，不能补造9:25大单、撤单或池内开盘分布。评分继续只作池内排序，执行先服从高开闸门。",
+      "section": "cognition",
+      "evidence_refs": [
+        "e28"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/auction/claims/5"
+    }
+  ],
+  "content_coverage": {
+    "total": 6,
+    "covered": 6,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "auction_1",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction_2",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction_3",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction_4",
+        "sections": [
+          "winrate"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction_5",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction_6",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/auction/claims/0",
+        "claim_id": "auction_1",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/auction/claims/1",
+        "claim_id": "auction_2",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/auction/claims/2",
+        "claim_id": "auction_3",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/auction/claims/3",
+        "claim_id": "auction_4",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/auction/claims/4",
+        "claim_id": "auction_5",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/auction/claims/5",
+        "claim_id": "auction_6",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 6
+  },
+  "legacy_ticker": null
+}

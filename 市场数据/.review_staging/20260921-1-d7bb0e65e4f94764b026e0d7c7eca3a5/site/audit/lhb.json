@@ -1,0 +1,1233 @@
+{
+  "schema_version": 1,
+  "d": "20260921",
+  "route": "lhb",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20260921.json",
+      "pointer": "/bodies/lhb",
+      "raw": "<!doctype html><html lang=\"zh-CN\"><body><div class=\"rowA\"><div class=\"hero\"><h1>lhb路·2026-09-21</h1><p class=\"hint\">仅使用截至2026-09-21的已留档数据；缺失项保持缺失。</p><p>B档中性偏进攻；002080为条件性局部信号，002792与603120仅观察。</p></div><div class=\"kpi\"><div class=\"card\"><b>日期</b><span>20260921</span></div><div class=\"card\"><b>档位</b><span>B</span></div><div class=\"card\"><b>状态</b><span>空仓/观察</span></div><div class=\"card\"><b>数据</b><span>可追溯</span></div></div></div><section id=\"lhb-1\"><h2>席位综合<span class=\"hint\">证据与边界</span></h2><p>B档中性偏进攻；002080为条件性局部信号，002792与603120仅观察。</p></section><section id=\"lhb-2\"><h2>资金温度<span class=\"hint\">证据与边界</span></h2><p>席位证据有双源分歧、S档小样本与买入前五口径限制。</p></section><section id=\"lhb-3\"><h2>台账<span class=\"hint\">证据与边界</span></h2><p>股票级净买以当日榜行为准，区间累计与转债剔除；603120不在当日涨停池但在当日龙虎榜。</p></section><section id=\"lhb-4\"><h2>分档<span class=\"hint\">证据与边界</span></h2><p>A/B/S档历史对照仅作概率参考，不保证次日表现。</p></section><section id=\"lhb-5\"><h2>深挖<span class=\"hint\">证据与边界</span></h2><p>席位路与其他路未形成共振，因此不升级总环境。</p></section><section id=\"lhb-6\"><h2>认知<span class=\"hint\">证据与边界</span></h2><p>局部强席位信号必须经过双源、样本和总环境三重约束。</p></section></body></html><!--FUNDTEMP--><!--/FUNDTEMP--><!--LHBLEDGER--><!--/LHBLEDGER--><!--SEATCARD--><!--/SEATCARD-->"
+    }
+  ],
+  "claims": [
+    {
+      "id": "lhb-10be2befc4494cc6",
+      "role": "verdict",
+      "text": "B档：中性偏进攻但只保留一只条件性轻仓荐票。市场温度处于中性，双源一致票存在A档双点共振；S档正式参与仅2行，B档与未匹配通道占主导，不能把单日涨停扩散读成全面进攻。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-10be2befc4494cc6"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/结论"
+    },
+    {
+      "id": "lhb-529ff690da1b65c7",
+      "role": "evidence",
+      "text": "lhb.csv共68行、60只代码；股票级净买只取当日榜行，剔除连续/累计/严重异常区间榜，不累加同票多榜；席位动向原始290行，当前榜口径54行，按（代码,席位）取买入金额最大去重后222行。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-529ff690da1b65c7"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/证据/0"
+    },
+    {
+      "id": "lhb-14a39aafbcdd4204",
+      "role": "evidence",
+      "text": "分档匹配：S档2行/2席，净额0.3725亿；A档17行/12席，净额6.6059亿；B档140行/38席，净额33.0297亿；未匹配29行。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-14a39aafbcdd4204"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/证据/1"
+    },
+    {
+      "id": "lhb-1292d6917e2dfef0",
+      "role": "evidence",
+      "text": "市场温度63.2、中性；涨停103、炸板25、炸板率0.195、跌停2、最高5板、二板加21，封板结构尚可但非极热。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-1292d6917e2dfef0"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/证据/2"
+    },
+    {
+      "id": "lhb-3f5efbabeb1fe4b8",
+      "role": "evidence",
+      "text": "双源校验status=pass：可比52，一致19，分歧12，强矛盾3，打折18；源1为股票级当日榜净买权威，源2为买入前五买侧净额，卖出前五缺失。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-3f5efbabeb1fe4b8"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/证据/3"
+    },
+    {
+      "id": "lhb-8fef9666c2798e66",
+      "role": "evidence",
+      "text": "正式荐票中002080中材科技源1净买5.5527亿、源28.8864亿，双源一致且两席A档净买；002792仅列观察；603120因双源打折、S档n=9小样本且近60日位置偏高降级。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-8fef9666c2798e66"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/证据/4"
+    },
+    {
+      "id": "lhb-68281fb80f98c583",
+      "role": "evidence",
+      "text": "历史校准：席位路最新战绩画像截至20260911，合计24/56、均收-0.6%；信号基准样本区间20260401-20260703，总样本4433，基准观察胜率47.6%、观察均涨0.23%，跟随胜率45.0%、跟随均涨-0.09%。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-68281fb80f98c583"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/证据/5"
+    },
+    {
+      "id": "lhb-67790aaca2fda7ee",
+      "role": "evidence",
+      "text": "模拟盘实际状态文件date=20260911、持仓数=0、现金=1029268.94；本期无持仓可卖，交易计划仅对候选逐票表态。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-67790aaca2fda7ee"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/证据/6"
+    },
+    {
+      "id": "lhb-4cd0bd6425f57089",
+      "role": "evidence",
+      "text": "B",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-4cd0bd6425f57089"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/档位"
+    },
+    {
+      "id": "lhb-f8553f4eb1396a23",
+      "role": "evidence",
+      "text": "78",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-f8553f4eb1396a23"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/置信度",
+      "component_ref": "FUNDTEMP"
+    },
+    {
+      "id": "lhb-a8194a655d075ede",
+      "role": "condition",
+      "text": "明日若S档正式出手至少5席，且至少两只涨停池股票同时满足源1源2方向一致、S/A多档共振、机构同向净买并且双源分歧不扩大，则当前B档谨慎判断上修；若S档仍低参与或荐票源1转净卖，则下修为防守。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-a8194a655d075ede"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/可证伪条件"
+    },
+    {
+      "id": "lhb-f473ce2aa6fa5d80",
+      "role": "limitation",
+      "text": "只读取本路指定输入与本路最新认知/战绩文件，未读取其他路当日判断；双源源2是买入前五偏买口径，卖出前五缺失，强矛盾与打折按清单如实降级。用户指定的_学习/20260921/zt_pool.csv不存在，使用同日D:/股票数据/市场数据/20260921/zt_pool.csv并在输出中标明路径差异；分档窗口为20260401~20260918、信号胜率样本截至20260703，均有滞后；未使用20260921之后信息。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-f473ce2aa6fa5d80"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/判断/独立盲区声明"
+    },
+    {
+      "id": "lhb-87384c7a3e5c5b8d",
+      "role": "observation",
+      "text": "1只条件性轻仓荐票，2只观察；不追竞价高开，不把观察票当交易指令。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-87384c7a3e5c5b8d"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/结论"
+    },
+    {
+      "id": "lhb-4f9b805340aea20c",
+      "role": "observation",
+      "text": "002080",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-4f9b805340aea20c"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/0/代码",
+      "component_ref": "SEATCARD"
+    },
+    {
+      "id": "lhb-3a3fa0f515bec5fe",
+      "role": "observation",
+      "text": "中材科技",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-3a3fa0f515bec5fe"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/0/名称",
+      "component_ref": "SEATCARD"
+    },
+    {
+      "id": "lhb-101fcafdedec7085",
+      "role": "observation",
+      "text": "荐票",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-101fcafdedec7085"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/0/类型"
+    },
+    {
+      "id": "lhb-df8bccae41666d69",
+      "role": "observation",
+      "text": "A档国盛证券股份有限公司宁波桑田路证券营业部：n=44，收缩执1胜率55.5%、均涨1.58%；A档联储证券股份有限公司杭州环城北路证券营业部：n=11，收缩执1胜率57.1%、均涨1.73%（小样本）；净买占比5-10%历史n=709，观察胜率55.4%、均涨1.23%，跟随胜率47.8%、均涨0.59%；涨停上榜历史n=2086，观察胜率57.0%、均涨1.6%，跟随胜率47.4%、均涨0.37%",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-df8bccae41666d69"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/0/历史对照"
+    },
+    {
+      "id": "lhb-90ad6a68e60c9b6a",
+      "role": "observation",
+      "text": "股票级当日榜净买5.5527亿元（买入12.7941亿、卖出7.2414亿，净买占比6.500391265033%）；席位明细去重后A档双点共振，合计净买3.6141亿元；机构专用与深股通同向，双源判定一致（源2买侧8.8864亿，不替代源1）；同日涨停池，连板数1。近60日日K收盘66.24，距离近60日高点-29.68%，区间位置48.36%，非高位追涨型；仅作条件性轻仓观察，不追竞价高开。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-90ad6a68e60c9b6a"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/0/理由"
+    },
+    {
+      "id": "lhb-7767dc729ca2f833",
+      "role": "observation",
+      "text": "002792",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-7767dc729ca2f833"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/1/代码"
+    },
+    {
+      "id": "lhb-e337ee4dd75d426c",
+      "role": "observation",
+      "text": "通宇通讯",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-e337ee4dd75d426c"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/1/名称"
+    },
+    {
+      "id": "lhb-831803ff4b6236d6",
+      "role": "observation",
+      "text": "观察",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-831803ff4b6236d6"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/1/类型"
+    },
+    {
+      "id": "lhb-a8fe3ad37d954bb1",
+      "role": "observation",
+      "text": "A档国盛证券股份有限公司杭州建设三路证券营业部：n=30，收缩执1胜率50.0%、均涨1.51%；净买占比5-10%历史n=709，观察胜率55.4%、均涨1.23%，跟随胜率47.8%、均涨0.59%；15-30%换手历史n=1263，观察胜率47.4%、均涨0.14%，跟随胜率45.4%、均涨-0.1%",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-a8fe3ad37d954bb1"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/1/历史对照"
+    },
+    {
+      "id": "lhb-1b4b01611dcc8685",
+      "role": "observation",
+      "text": "股票级当日榜净买1.1694亿元（买入3.8514亿、卖出2.682亿，换手20.3126%）；A档国盛杭州建设三路净买0.345亿元，B档含机构/深股通，双源判定一致（源21.6176亿）；同日涨停池，连板数1。近60日日K距离高点-14.76%、区间位置68.66%，单A档且换手偏高，列观察，不直接执行。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-1b4b01611dcc8685"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/1/理由"
+    },
+    {
+      "id": "lhb-eff56176f0e08e30",
+      "role": "observation",
+      "text": "603120",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-eff56176f0e08e30"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/2/代码",
+      "component_ref": "SEATCARD"
+    },
+    {
+      "id": "lhb-36852cfcee783615",
+      "role": "observation",
+      "text": "肯特催化",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-36852cfcee783615"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/2/名称",
+      "component_ref": "SEATCARD"
+    },
+    {
+      "id": "lhb-61dbcf2c24e074d4",
+      "role": "observation",
+      "text": "观察",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-61dbcf2c24e074d4"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/2/类型"
+    },
+    {
+      "id": "lhb-ec903e6ae3c9779b",
+      "role": "observation",
+      "text": "S档国联民生证券股份有限公司宁波财神殿南路证券营业部：n=9，收缩执1胜率63.1%、均涨2.52%（小样本）；15-30%换手历史n=1263，观察胜率47.4%、均涨0.14%，跟随胜率45.4%、均涨-0.1%；净买占比5-10%历史n=709，观察胜率55.4%、均涨1.23%",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-ec903e6ae3c9779b"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/2/历史对照"
+    },
+    {
+      "id": "lhb-db2d99749c194a7a",
+      "role": "observation",
+      "text": "股票级当日榜净买0.5052亿元，但源2买侧1.7089亿元相对源1明显放大，双源判定为打折；唯一S档席位净买0.3043亿元且n=9为小样本，另有B档通道；未在同日涨停池。近60日收盘距高点-4.75%、区间位置87.83%，位置偏高，禁止升级正式买入。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-db2d99749c194a7a"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/荐票/标的/2/理由"
+    },
+    {
+      "id": "lhb-c5c00d2282cdfc3e",
+      "role": "cognition",
+      "text": "20260921",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-c5c00d2282cdfc3e"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/认知迭代/0/日期"
+    },
+    {
+      "id": "lhb-c48185a01999e281",
+      "role": "cognition",
+      "text": "双源一致与A档双点共振可上修，但S档低参与时仍须位置闸门",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-c48185a01999e281"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/认知迭代/0/标题"
+    },
+    {
+      "id": "lhb-0237f6b2ac3debec",
+      "role": "cognition",
+      "text": "本日中材科技以股票级当日榜净买5.5527亿元、源2买侧8.8864亿元双源一致，且两席A档净买、近60日收盘距高点29.68%；同日肯特催化虽然有S档，但源2相对源1明显放大且位置处近60日高位。规则更新为：双源一致是必要条件，A/S多档与近60日位置共同决定是否进入荐票；S档小样本或双源打折只能观察。可证伪判据：后续同类票若双源一致、A/S多档、非高位且次日执行口径持续优于信号基准，才提高本规则权重。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-0237f6b2ac3debec"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/认知迭代/0/正文"
+    },
+    {
+      "id": "lhb-e74d9e3e145ce3d3",
+      "role": "research",
+      "text": "资金结构：S档净额0.3725亿、A档净额6.6059亿，但B档净额33.0297亿，B档通道资金远大于正式S/A，不等同聪明游资全面回归。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-lhb-e74d9e3e145ce3d3"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/深挖/0"
+    },
+    {
+      "id": "lhb-18844096eb3a1967",
+      "role": "research",
+      "text": "候选分层：002080为双A档+机构/深股通同向且双源一致；002792为单A档+B档共振但换手20.3126%偏高；603120为S+B但源2买侧打折、S档n=9小样本且近60日区间位置87.83%，不升级。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-lhb-18844096eb3a1967"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/深挖/1"
+    },
+    {
+      "id": "lhb-cd3b613d1cbc4a0d",
+      "role": "research",
+      "text": "数据边界：指定学习目录下同日zt_pool缺失，已回源同日根目录文件；席位净额仍是买入前五明细，不能据此推断完整卖方结构；转债与区间累计榜均未进入荐票口径。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-lhb-cd3b613d1cbc4a0d"
+      ],
+      "source": "lhb判断_20260921.json",
+      "source_pointer": "/深挖/2"
+    },
+    {
+      "id": "lhb-3db25d2b63c8d43c",
+      "role": "evidence",
+      "text": "lhb路·2026-09-21",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-3db25d2b63c8d43c"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/1",
+      "legacy_html": "<h3>lhb路·2026-09-21</h3>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "lhb-5c94a7435093bc42",
+      "role": "evidence",
+      "text": "仅使用截至2026-09-21的已留档数据；缺失项保持缺失。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-5c94a7435093bc42"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/2",
+      "legacy_html": "<p class=\"hint\">仅使用截至2026-09-21的已留档数据；缺失项保持缺失。</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "lhb-3aeb33ef60053d08",
+      "role": "evidence",
+      "text": "B档中性偏进攻；002080为条件性局部信号，002792与603120仅观察。",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-3aeb33ef60053d08"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/3",
+      "legacy_html": "<p>B档中性偏进攻；002080为条件性局部信号，002792与603120仅观察。</p>",
+      "context": "原首屏补充",
+      "source_occurrences": [
+        "/bodies/lhb/block/6"
+      ]
+    },
+    {
+      "id": "lhb-42e5880be5b27913",
+      "role": "evidence",
+      "text": "日期20260921档位B状态空仓/观察数据可追溯",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-42e5880be5b27913"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/4",
+      "legacy_html": "<p>日期20260921档位B状态空仓/观察数据可追溯</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "lhb-d4bc7db002554b4c",
+      "role": "evidence",
+      "text": "席位综合证据与边界",
+      "section": "seats",
+      "evidence_refs": [
+        "ev-lhb-d4bc7db002554b4c"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/heading/5"
+    },
+    {
+      "id": "lhb-d070213b0d148c19",
+      "role": "evidence",
+      "text": "资金温度证据与边界",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-d070213b0d148c19"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/heading/7"
+    },
+    {
+      "id": "lhb-377c22c911e0a6da",
+      "role": "evidence",
+      "text": "席位证据有双源分歧、S档小样本与买入前五口径限制。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-lhb-377c22c911e0a6da"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/8",
+      "legacy_html": "<p>席位证据有双源分歧、S档小样本与买入前五口径限制。</p>",
+      "context": "资金温度证据与边界"
+    },
+    {
+      "id": "lhb-fd3e8b99f7ab5f60",
+      "role": "evidence",
+      "text": "台账证据与边界",
+      "section": "ledger",
+      "evidence_refs": [
+        "ev-lhb-fd3e8b99f7ab5f60"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/heading/9"
+    },
+    {
+      "id": "lhb-ae257101610f6c7b",
+      "role": "evidence",
+      "text": "股票级净买以当日榜行为准，区间累计与转债剔除；603120不在当日涨停池但在当日龙虎榜。",
+      "section": "ledger",
+      "evidence_refs": [
+        "ev-lhb-ae257101610f6c7b"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/10",
+      "legacy_html": "<p>股票级净买以当日榜行为准，区间累计与转债剔除；603120不在当日涨停池但在当日龙虎榜。</p>",
+      "context": "台账证据与边界"
+    },
+    {
+      "id": "lhb-e963d9b173df9f20",
+      "role": "evidence",
+      "text": "分档证据与边界",
+      "section": "tiers",
+      "evidence_refs": [
+        "ev-lhb-e963d9b173df9f20"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/heading/11"
+    },
+    {
+      "id": "lhb-5564b96a37ef5b0e",
+      "role": "evidence",
+      "text": "A/B/S档历史对照仅作概率参考，不保证次日表现。",
+      "section": "tiers",
+      "evidence_refs": [
+        "ev-lhb-5564b96a37ef5b0e"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/12",
+      "legacy_html": "<p>A/B/S档历史对照仅作概率参考，不保证次日表现。</p>",
+      "context": "分档证据与边界"
+    },
+    {
+      "id": "lhb-f1a4b06d16e9d9c9",
+      "role": "evidence",
+      "text": "深挖证据与边界",
+      "section": "research",
+      "evidence_refs": [
+        "ev-lhb-f1a4b06d16e9d9c9"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/heading/13"
+    },
+    {
+      "id": "lhb-9b1eabe71375f22f",
+      "role": "research",
+      "text": "席位路与其他路未形成共振，因此不升级总环境。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-lhb-9b1eabe71375f22f"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/14",
+      "legacy_html": "<p>席位路与其他路未形成共振，因此不升级总环境。</p>",
+      "context": "深挖证据与边界"
+    },
+    {
+      "id": "lhb-bd6fddd6c00f2e7a",
+      "role": "evidence",
+      "text": "认知证据与边界",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-bd6fddd6c00f2e7a"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/heading/15"
+    },
+    {
+      "id": "lhb-f4868b4b6112196f",
+      "role": "cognition",
+      "text": "局部强席位信号必须经过双源、样本和总环境三重约束。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-lhb-f4868b4b6112196f"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/lhb/block/16",
+      "legacy_html": "<p>局部强席位信号必须经过双源、样本和总环境三重约束。</p>",
+      "context": "认知证据与边界"
+    }
+  ],
+  "content_coverage": {
+    "total": 49,
+    "covered": 49,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "lhb-10be2befc4494cc6",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-529ff690da1b65c7",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-14a39aafbcdd4204",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-1292d6917e2dfef0",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-3f5efbabeb1fe4b8",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-8fef9666c2798e66",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-68281fb80f98c583",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-67790aaca2fda7ee",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-4cd0bd6425f57089",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-f8553f4eb1396a23",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-a8194a655d075ede",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-f473ce2aa6fa5d80",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-87384c7a3e5c5b8d",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-4f9b805340aea20c",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-3a3fa0f515bec5fe",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-101fcafdedec7085",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-df8bccae41666d69",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-90ad6a68e60c9b6a",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-7767dc729ca2f833",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-e337ee4dd75d426c",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-831803ff4b6236d6",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-a8fe3ad37d954bb1",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-1b4b01611dcc8685",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-eff56176f0e08e30",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-36852cfcee783615",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-61dbcf2c24e074d4",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-ec903e6ae3c9779b",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-db2d99749c194a7a",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-c5c00d2282cdfc3e",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-c48185a01999e281",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-0237f6b2ac3debec",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-e74d9e3e145ce3d3",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-18844096eb3a1967",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-cd3b613d1cbc4a0d",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-3db25d2b63c8d43c",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-5c94a7435093bc42",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-3aeb33ef60053d08",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-42e5880be5b27913",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-d4bc7db002554b4c",
+        "sections": [
+          "seats"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-d070213b0d148c19",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-377c22c911e0a6da",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-fd3e8b99f7ab5f60",
+        "sections": [
+          "ledger"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-ae257101610f6c7b",
+        "sections": [
+          "ledger"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-e963d9b173df9f20",
+        "sections": [
+          "tiers"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-5564b96a37ef5b0e",
+        "sections": [
+          "tiers"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-f1a4b06d16e9d9c9",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-9b1eabe71375f22f",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-bd6fddd6c00f2e7a",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "lhb-f4868b4b6112196f",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/结论",
+        "claim_id": "lhb-10be2befc4494cc6",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/证据/0",
+        "claim_id": "lhb-529ff690da1b65c7",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/证据/1",
+        "claim_id": "lhb-14a39aafbcdd4204",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/证据/2",
+        "claim_id": "lhb-1292d6917e2dfef0",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/证据/3",
+        "claim_id": "lhb-3f5efbabeb1fe4b8",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/证据/4",
+        "claim_id": "lhb-8fef9666c2798e66",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/证据/5",
+        "claim_id": "lhb-68281fb80f98c583",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/证据/6",
+        "claim_id": "lhb-67790aaca2fda7ee",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/档位",
+        "claim_id": "lhb-4cd0bd6425f57089",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/置信度",
+        "claim_id": "lhb-f8553f4eb1396a23",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/可证伪条件",
+        "claim_id": "lhb-a8194a655d075ede",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/判断/独立盲区声明",
+        "claim_id": "lhb-f473ce2aa6fa5d80",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/结论",
+        "claim_id": "lhb-87384c7a3e5c5b8d",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/0/代码",
+        "claim_id": "lhb-4f9b805340aea20c",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/0/名称",
+        "claim_id": "lhb-3a3fa0f515bec5fe",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/0/类型",
+        "claim_id": "lhb-101fcafdedec7085",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/0/历史对照",
+        "claim_id": "lhb-df8bccae41666d69",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/0/理由",
+        "claim_id": "lhb-90ad6a68e60c9b6a",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/1/代码",
+        "claim_id": "lhb-7767dc729ca2f833",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/1/名称",
+        "claim_id": "lhb-e337ee4dd75d426c",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/1/类型",
+        "claim_id": "lhb-831803ff4b6236d6",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/1/历史对照",
+        "claim_id": "lhb-a8fe3ad37d954bb1",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/1/理由",
+        "claim_id": "lhb-1b4b01611dcc8685",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/2/代码",
+        "claim_id": "lhb-eff56176f0e08e30",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/2/名称",
+        "claim_id": "lhb-36852cfcee783615",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/2/类型",
+        "claim_id": "lhb-61dbcf2c24e074d4",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/2/历史对照",
+        "claim_id": "lhb-ec903e6ae3c9779b",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/荐票/标的/2/理由",
+        "claim_id": "lhb-db2d99749c194a7a",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/认知迭代/0/日期",
+        "claim_id": "lhb-c5c00d2282cdfc3e",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/认知迭代/0/标题",
+        "claim_id": "lhb-c48185a01999e281",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/认知迭代/0/正文",
+        "claim_id": "lhb-0237f6b2ac3debec",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/深挖/0",
+        "claim_id": "lhb-e74d9e3e145ce3d3",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/深挖/1",
+        "claim_id": "lhb-18844096eb3a1967",
+        "status": "displayed"
+      },
+      {
+        "source": "lhb判断_20260921.json",
+        "pointer": "/深挖/2",
+        "claim_id": "lhb-cd3b613d1cbc4a0d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/1",
+        "claim_id": "lhb-3db25d2b63c8d43c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/2",
+        "claim_id": "lhb-5c94a7435093bc42",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/3",
+        "claim_id": "lhb-3aeb33ef60053d08",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/6",
+        "claim_id": "lhb-3aeb33ef60053d08",
+        "status": "referenced"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/4",
+        "claim_id": "lhb-42e5880be5b27913",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/heading/5",
+        "claim_id": "lhb-d4bc7db002554b4c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/heading/7",
+        "claim_id": "lhb-d070213b0d148c19",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/8",
+        "claim_id": "lhb-377c22c911e0a6da",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/heading/9",
+        "claim_id": "lhb-fd3e8b99f7ab5f60",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/10",
+        "claim_id": "lhb-ae257101610f6c7b",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/heading/11",
+        "claim_id": "lhb-e963d9b173df9f20",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/12",
+        "claim_id": "lhb-5564b96a37ef5b0e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/heading/13",
+        "claim_id": "lhb-f1a4b06d16e9d9c9",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/14",
+        "claim_id": "lhb-9b1eabe71375f22f",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/heading/15",
+        "claim_id": "lhb-bd6fddd6c00f2e7a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/lhb/block/16",
+        "claim_id": "lhb-f4868b4b6112196f",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 50
+  },
+  "legacy_ticker": "<div class=\"ticker\"><span>2026-09-21 · 总审C档防守 · 缺口如实保留</span></div>"
+}

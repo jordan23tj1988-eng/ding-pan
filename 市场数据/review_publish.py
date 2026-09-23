@@ -61,6 +61,40 @@ def digest(path):
     return h.hexdigest()
 
 
+def _optional_digest(path):
+    path = Path(path)
+    return digest(path) if path.is_file() else None
+
+
+def theme_freeze_record(root):
+    """Read the accepted live theme freeze, if one exists."""
+    path = Path(root) / "复盘" / "盯盘台" / ".theme_page_freeze.json"
+    if not path.is_file():
+        return None
+    record = read_json(path)
+    if not isinstance(record, dict) or record.get("schema_version") != 1:
+        raise ValueError("theme freeze metadata invalid")
+    if not re.fullmatch(r"[0-9]{8}", str(record.get("d", ""))):
+        raise ValueError("theme freeze date invalid")
+    if not re.fullmatch(r"[0-9a-f]{64}", str(record.get("theme_sha256", ""))):
+        raise ValueError("theme freeze hash invalid")
+    return record
+
+
+def validate_theme_freeze(root, stage, d):
+    """Same-day theme pages must remain byte-identical to the accepted page."""
+    record = theme_freeze_record(root)
+    if not record or record.get("d") != d:
+        return []
+    target = Path(stage) / "theme.html"
+    if not target.is_file():
+        return ["theme freeze target missing"]
+    actual = digest(target)
+    if actual != record["theme_sha256"]:
+        return ["theme freeze violation: same-day candidate theme.html differs from accepted freeze"]
+    return []
+
+
 def contained(base, value):
     """Reject traversal, Windows drives/ADS, symlinks and junction escapes."""
     base = Path(base).resolve()
@@ -190,6 +224,31 @@ def input_files(root, d):
         names.update({f"_学习/_模拟盘/{route}/{name}" for name in ("状态.json", "state.json", "净值.json", "账本.jsonl", f"看板_{d}.html")})
         names.add(f"_学习/交易计划_{route}_{d}.json")
     names.update(f"复盘/盯盘台/{name}.html" for name in ("intraday", "history"))
+    freeze = root / "复盘" / "盯盘台" / ".theme_page_freeze.json"
+    if freeze.is_file():
+        names.add("复盘/盯盘台/.theme_page_freeze.json")
+    theme_template = root / "_学习" / "主题页能力进化模板.html"
+    if theme_template.is_file():
+        names.add("_学习/主题页能力进化模板.html")
+    # 两块标准能力模块(五路+概览公共能力)的唯一真源消费面(2026-09-22)：
+    # 快照(只取 <=d 最近一日) + 两个能力库账本 + 当日产出档。冻结它们，回放复算才能
+    # 与门禁/哨兵比对基准同源(否则冻结缺失→复算全 0→"字节与唯一真源不一致")。
+    capability_learn = root / "_学习"
+    for ledger in ("能力进化库_自主拓展.json", "能力进化库_认知迭代.json"):
+        if (capability_learn / ledger).is_file():
+            names.add("_学习/" + ledger)
+    capability_snapshots = sorted(
+        p for p in capability_learn.glob("能力进化快照_*.json")
+        if re.fullmatch(r"能力进化快照_[0-9]{8}\.json", p.name)
+        and p.name.rsplit("_", 1)[-1][:-5] <= d)
+    if capability_snapshots:
+        names.add(capability_snapshots[-1].relative_to(root).as_posix())
+    capability_artifact = capability_learn / f"能力进化模块_{d}.html"
+    if capability_artifact.is_file():
+        names.add(f"_学习/能力进化模块_{d}.html")
+    runtime_lib = root / "复盘" / "盯盘台" / "lib"
+    if runtime_lib.exists():
+        names.update(p.relative_to(root).as_posix() for p in runtime_lib.rglob("*") if p.is_file())
     for folder in ("archive",):
         base = root / "复盘" / "盯盘台" / folder
         if base.exists():
@@ -421,7 +480,10 @@ def validate_pages(stage, result, d):
                 if model.get("d") == d and model.get("schema_version") == 1 and model.get("template_version") == expected_version:
                     if re.search(r'class="kick"[^>]*>[^<]*'+d, raw):
                         h.dates.append(d)
-                    if re.search(r'data-template-version="p1\.[0-9]+"', raw):
+                    # p1.1 历史发布物没有嵌入 DOM schema 属性；其模型已由
+                    # adapt_p1_report 绑定并通过 hash/辅助资产审计，按历史契约
+                    # 用模型 schema_version 作为可验证的 schema 证据。
+                    if expected_version == "p1.1" or re.search(r'data-template-version="p1\.[0-9]+"', raw):
                         h.schemas.append("1")
             if not h.body:
                 errors.append(f"page {route}: no body element")
@@ -495,6 +557,60 @@ def seat_snapshot(root,d):
     return selected[-1]
 
 
+DISPLAY_REPLACED_SECTIONS = ('research', 'cognition')
+_NUMERALS = '一二三四五六七八九十'
+
+
+def capability_headings(root, d, route):
+    """两块标准能力模块在页面里的 h2 文本(含 hint)，与生产字节同源(能力进化模块.py)。
+
+    只比对标题文本(不含统计数字)，口径与日期无关。模块代码优先用冻结副本(回放自洽)，
+    冻结快照里还没有它时回落到生产代码根；页面的能力块由生产根随发布冻结进 inputs。
+    """
+    code_root = Path(__file__).resolve().parent
+    module_path = Path(root) / '能力进化模块.py'
+    if not module_path.is_file():
+        module_path = code_root / '能力进化模块.py'
+    try:
+        module = load_module(module_path)
+        sections = module.canonical_sections(code_root, d, route)
+    except Exception:  # noqa: BLE001
+        return []
+    out = []
+    for section in sections:
+        match = re.search(r'<h2[^>]*>(.*?)</h2>', section, re.S)
+        if match:
+            out.append(re.sub(r'<[^>]+>', '', match.group(1)).strip())
+    return out
+
+
+def display_contract(root, d, route, raw):
+    """展示层段落契约(2026-09-22 统一): 五路+概览的 research/cognition 由两块标准能力模块承载。
+
+    用户指令: 「自主拓展 · 能力进化」「认知迭代 · 能力进化」是每一路与概览都该有的公共能力，
+    展示层不再并存旧『自主深挖/我的认知迭代』段(内容仍在 model/audit 与能力库)。
+
+    返回 (sections_for_view, expected_headings, hidden_section_ids)：
+      - 终版(页内已有 2 块标准能力模块)：业务段 + 两块标准模块标题；research/cognition 段壳
+        与对应 claim 不再要求出现在 DOM；
+      - 候选版(后处理前，页面还没有标准模块)：仍按契约段渲染(主题页除外)，期望标题=契约标题。
+    """
+    sections = page_contract(root)['routes'][route]['sections']
+    final_form = len(re.findall(r'<section class="evolution"[^>]*>', raw)) == 2
+    if not final_form:
+        keep = [s for s in sections
+                if not (route == 'theme' and s['id'] in DISPLAY_REPLACED_SECTIONS)]
+        # 候选版(后处理前)主题页同样不渲染 research/cognition 段：主题页 2026-09-16 起已由
+        # 两块标准模块承载这两段，其 claim 仍在 model/audit 中，不能让 P1 重验误判为数据丢失
+        # (历史口径：view_check 对主题页无条件隐藏这两段)。
+        hidden = DISPLAY_REPLACED_SECTIONS if route == 'theme' else ()
+        return keep, [n + ' ' + s['title'] for n, s in zip(_NUMERALS, keep)], hidden
+    keep = [s for s in sections if s['id'] not in DISPLAY_REPLACED_SECTIONS]
+    expected = [n + ' ' + s['title'] for n, s in zip(_NUMERALS, keep)]
+    expected += capability_headings(root, d, route)
+    return keep, expected, DISPLAY_REPLACED_SECTIONS
+
+
 def scoped_p12_check(root,stage,d,route,*,raw=None):
     """P1.2 gate repair contract: actual producer data in its fixed section.
 
@@ -505,12 +621,62 @@ def scoped_p12_check(root,stage,d,route,*,raw=None):
     try:
         contract=page_contract(root)
         model=read_json(stage/'models'/(route+'.json'))
-        if contract.get('template_version')!='p1.2' or model.get('template_version')!='p1.2' or model.get('d')!=d or model.get('route')!=route:
+        supported_versions = {'p1.2', 'p1.3'}
+        if contract.get('template_version') not in supported_versions or model.get('template_version') not in supported_versions or model.get('d')!=d or model.get('route')!=route:
             raise ValueError('unsupported scoped template/date/route')
         raw=(stage/(route+'.html')).read_text(encoding='utf-8') if raw is None else raw
         dom=_DOM(raw)
-        sections=contract['routes'][route]['sections']
-        expected=[n+' '+sec['title'] for n,sec in zip('一二三四五六七',sections)]
+        # cycle/lhb 的终版由黄金恢复器提供壳，正文仍来自目标日模块渲染器：
+        # 它刻意没有 P1 section id/component-* 壳，机器内容由成对锚点承载。
+        # 先识别这种已由 stage postprocess 产出的终版，再走对应的严格锚点/来源校验，
+        # 不把黄金壳误判为“旧页面缺 section”。
+        golden_route = (
+            route in ('cycle', 'lhb')
+            and '<section id="' not in raw
+            and len(re.findall(r'<section class="evolution"[^>]*>', raw)) == 2
+        )
+        if golden_route:
+            if '<div class="rowA">' not in raw or '<div class="hero">' not in raw:
+                errors.append('golden header missing')
+            if len(dom.headings) < 4:
+                errors.append('golden headings incomplete')
+            # 黄金壳的 component-* id/section 壳被恢复器剥离；仍校验每个模型
+            # 组件的冻结来源 hash，以及黄金终版需要的生产锚点。黄金恢复器会
+            # 合法裁剪 LEADIND/LHBLEDGER 的包裹内容，不能拿 P1 原始 HTML 做字节等价。
+            golden_anchors = {
+                'cycle': {'VOLSTEP', 'LEADIND', 'LADDER'},
+                'lhb': {'FUNDTEMP', 'LHBLEDGER'},
+            }[route]
+            for comp in model.get('components', []):
+                key = comp.get('id')
+                if comp.get('status') != 'ok' or not comp.get('sources'):
+                    errors.append('golden component source missing ' + str(key))
+                    continue
+                for source in comp.get('sources', []):
+                    source_path = source.get('path')
+                    try:
+                        if digest(contained(root, source_path)) != source.get('sha256'):
+                            errors.append('golden source hash ' + str(key))
+                    except Exception as exc:
+                        errors.append('golden source unavailable ' + str(key) + ': ' + str(exc))
+                start = '<!--' + key + '-->'
+                end = '<!--/' + key + '-->'
+                if raw.count(start) != 1 or raw.count(end) != 1:
+                    # SEATCARD 在黄金龙虎榜台账中按既有回链重复嵌入，SEATLIB
+                    # 是第四段既有展示内容；两者由 lhb 专属哨兵核对，不强行
+                    # 重造重复 component-* 壳。
+                    if key not in ('SEATCARD', 'SEATLIB'):
+                        errors.append('golden component anchor pair ' + str(key))
+                    continue
+                if key not in golden_anchors:
+                    continue
+            return {
+                'status': 'fail' if errors else 'pass',
+                'errors': errors,
+                'contract': 'gate-repair/p1.3-golden-v1',
+                'dimensions': ['黄金壳头部/能力模块', '目标日机器组件锚点与冻结来源']
+            }
+        sections,expected,_hidden=display_contract(root,d,route,raw)
         if [''.join(n['text']).strip() for n in dom.headings]!=expected:errors.append('ordered sections mismatch')
         if dom.duplicates:errors.append('duplicate IDs')
         if len(dom.kpis)!=4:errors.append('four KPI slots required')
@@ -528,19 +694,43 @@ def scoped_p12_check(root,stage,d,route,*,raw=None):
                 cycle_body = read_json(judgment).get('bodies', {}).get('cycle', '') or ''
         cycle_body_mode = route == 'cycle' and bool(cycle_body and '<h2>一' in cycle_body)
         if cycle_body_mode:
-            # Body days follow the golden shape: no machine components,
-            # no machine fold, and no machine anchors.  The legacy sentinel
-            # still runs below and independently checks the same absence.
-            for key in ('VOLSTEP','LEADIND','VOTEBOARD','LADDER'):
-                if key in components:
-                    errors.append('body-day must omit machine component '+key)
+            # 展示完整性契约(2026-09-12 用户定向"按黄金页把展示内容还原到工程里, 并保证不再错位"):
+            # 旧规则=有 body 日机器卡必须缺席 → 一旦 body 段没自带组件(9/10 起出现), 页面就只剩文字, 黄金版展示消失。
+            # 新规则=按段判定: body 段落自带该组件则保真不动; 缺件的段必须由机器卡补齐(真源直出, 与黄金版同套 markup)。
+            def _cseg(a, b):
+                i = cycle_body.find(a)
+                if i < 0:
+                    return ''
+                k = cycle_body.find(b, i + 1)
+                return cycle_body[i:k] if k > i else cycle_body[i:]
+            need = []
+            if 'class="steps"' not in _cseg('一 量能台阶', '二 先行指标'):
+                need.append(('VOLSTEP', 'volume'))
+            if '<svg' not in _cseg('二 先行指标', '三 情绪'):
+                need.append(('LEADIND', 'leading'))
+            if '<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板'):
+                need.append(('MACHVOTE', 'stages'))
+            if 'class="cols"' not in _cseg('四 连板', '五 攻防'):
+                need.append(('LADDER', 'ladder'))
+            for key, section in need:
+                comp = components.get(key)
+                node = dom.ids.get('component-' + key)
+                if not comp or comp.get('status') != 'ok' or not comp.get('sources') or node is None:
+                    errors.append('missing display component ' + key)
+                    continue
+                if comp.get('section') != section or not any(n['tag'] == 'section' and n['attrs'].get('id') == section for n in node['ancestors']):
+                    errors.append('wrong component section ' + key)
+                if any(n['tag'] == 'details' for n in node['ancestors']):
+                    errors.append('display component folded ' + key)
+                if raw.count('<!--' + key + '-->') != 1 or raw.count('<!--/' + key + '-->') != 1:
+                    errors.append('display anchor not paired ' + key)
             if 'details class="chain"' in raw:
                 # The page-level audit fold is allowed; only a machine fold is
                 # forbidden.  A machine fold has the explicit source summary.
                 if re.search(r'<details[^>]*class="chain"[^>]*>\s*<summary>\s*<b>机器数据源', raw):
                     errors.append('body-day must omit machine fold')
-            dimensions.append('cycle body-day golden shape: machine components/fold/anchors absent')
-            required = {}
+            dimensions.append('cycle body-day display completeness: 台阶块/先行指标图卡/投票块/梯队条 各段在位(body自带或机器卡)')
+            required = {k: s for k, s in (('VOLSTEP', 'volume'), ('LEADIND', 'leading'), ('MACHVOTE', 'stages'), ('LADDER', 'ladder')) if k in components}
         for key,section in required.items():
             comp=components.get(key);node=dom.ids.get('component-'+key)
             if not comp or comp.get('status')!='ok' or not comp.get('sources') or node is None:errors.append('missing component '+key);continue
@@ -635,7 +825,8 @@ def _check_one(frozen, stage, d, route):
             view=view_check(frozen,stage,d,route)
             settlement=previous_pool_check(frozen,stage,d)
     scoped=None
-    if route in ('cycle','auction','lhb') and (stage/'models'/(route+'.json')).is_file() and page_contract(frozen).get('template_version')=='p1.2':
+    scoped_versions = {'p1.2', 'p1.3'}
+    if route in ('cycle','auction','lhb') and (stage/'models'/(route+'.json')).is_file() and page_contract(frozen).get('template_version') in scoped_versions:
         scoped=scoped_p12_check(frozen,stage,d,route)
         if route=='cycle':
             original_check_page=module.check_page
@@ -704,7 +895,8 @@ def run_checks(frozen, stage, d):
     results = []
     for route in REQUIRED_CHECKS:
         try:
-            env = dict(os.environ, PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
+            env = dict(os.environ, PYTHONUTF8="1", PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1",
+                       REVIEW_STAGE=str(stage), LHB_SITE_ROOT=str(stage / "site"))
             r = subprocess.run([sys.executable, "-B", str(Path(__file__).resolve()), "_check", d,
                                 "--root", str(frozen), "--stage", str(stage), "--route", route],
                                cwd=frozen, env=env, capture_output=True, text=True, encoding="utf-8", timeout=180)
@@ -747,6 +939,70 @@ def tree_hashes(directory):
     return result
 
 
+def _postprocess_stage(root, stage, d):
+    """候选站点统一后处理(2026-09-12)：门禁检查前先跑与到站完全相同的一套处理。
+
+    背景：到站(_deploy_site)原先在门禁之后才做"能力模块同步 + cycle/lhb 黄金视觉锁"，
+    导致门禁检查的是发布页、部署的是黄金页——检查与实际产物不同源，龙虎榜/周期页
+    的结构化哨兵必然假阴性。此处把同一函数(生成盯盘台.py::_postprocess_site)提前到
+    门禁之前跑在候选站点上，从而使"被检查的页面" == "被部署的页面"。
+    失败即返回 ok=False，由调用方阻断发布(不制造 page_hashes 之后的漂移)。
+    """
+    script = Path(root) / "生成盯盘台.py"
+    if not script.is_file():
+        # 最小发布单元测试夹具可能不带页面后处理器；真正到站时由
+        # _deploy_site 将此标记视为硬失败，不能绕过生产门禁。
+        return {"ok": True, "skipped": "generator missing in isolated fixture"}
+    if not (Path(stage) / "lhb.html").is_file():
+        return {"ok": True, "skipped": "no lhb page in stage"}
+    env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+    # 能力模块数据根 = 本次发布的冻结 inputs(与发布门禁/哨兵复算基准同源)：
+    # 「被检查的页面 == 被部署的页面」这条不变量要求字节同源，否则回放复算报"字节不一致"。
+    frozen = Path(stage).parent / "inputs"
+    env.pop("POST_BASE", None)
+    if (frozen / "能力进化模块.py").is_file():
+        env["POST_BASE"] = str(frozen)
+    cp = subprocess.run(
+        [sys.executable, str(script), "--stage-postprocess", str(stage), d],
+        cwd=str(root), capture_output=True, text=True, encoding="utf-8", env=env,
+    )
+    if cp.returncode != 0:
+        return {"ok": False, "error": (cp.stdout[-1500:] + cp.stderr[-1500:])}
+    return {"ok": True, "stdout": cp.stdout[-800:], "capability_root": env.get("POST_BASE", str(root))}
+
+
+def validate_capability_blocks(root, stage, d):
+    """两块标准能力模块(五路+概览)齐备性门禁(2026-09-22 用户指令修复)。
+
+    故障背景：历史实现只把主题页统一替换成两块标准能力模块，概览/竞价/产业逻辑/涨停页
+    长期缺块、龙虎榜页与旧『自主深挖/我的认知迭代』并存，而门禁只校验"机器卡缺席"，
+    于是缺块可以静默发布(用户看到的正是"有的路有，有的路还没有改过来")。
+    此处逐页比对唯一真源(能力进化模块.py 当日产出)的数量/编号/位置/样式/残留旧标题/字节，
+    任一不符即阻断发布 —— 保证下次复盘不可能再漏、再并存、再退回冻结字节。
+    """
+    errors = []
+    producer = Path(root) / "能力进化模块.py"
+    if not producer.is_file():
+        return ["capability block gate: 能力进化模块.py missing"]
+    try:
+        module = load_module(producer)
+        routes = tuple(module.ROUTES)
+    except Exception as exc:  # noqa: BLE001
+        return ["capability block gate: source unavailable: %s" % exc]
+    for route in routes:
+        path = Path(stage) / (route + ".html")
+        if not path.is_file():
+            errors.append("capability block gate: missing page %s.html" % route)
+            continue
+        html = path.read_text(encoding="utf-8")
+        try:
+            problems = module.verify_page(html, route, Path(root), d)
+        except Exception as exc:  # noqa: BLE001
+            problems = ["verify_page failed: %s" % exc]
+        errors.extend("capability block gate: %s.html -> %s" % (route, p) for p in problems)
+    return errors
+
+
 def _build(root, d, publish, allow_degraded):
     staging = contained(root, ".review_staging")
     releases = contained(root, "releases")
@@ -766,6 +1022,9 @@ def _build(root, d, publish, allow_degraded):
                 "checks": [{"name": n, "status": "not_run", "errors": ["build has not reached checks"]} for n in REQUIRED_CHECKS],
                 "status": "fail", "errors": [], "published": False,
                 "created_at": dt.datetime.now(dt.timezone.utc).isoformat()}
+    live_theme = root / "复盘" / "盯盘台" / "theme.html"
+    live_theme_before = _optional_digest(live_theme)
+    manifest["live_theme_guard"] = {"path": "复盘/盯盘台/theme.html", "before": live_theme_before}
     errors = manifest["errors"]
     try:
         names = input_files(root, d)
@@ -796,8 +1055,28 @@ def _build(root, d, publish, allow_degraded):
             result = adapt_p1_report(frozen, stage, result, d)
             manifest["template_version"] = result.get("template_version") if isinstance(result, dict) else None
             errors.extend(validate_pages(stage, result, d))
+            # 发布前统一后处理(2026-09-12)：候选站点先用与到站同一套处理，
+            # 保证门禁检查的页面 == 最终部署的页面；失败直接阻断。
+            postprocess = _postprocess_stage(root, stage, d)
+            manifest["stage_postprocess"] = postprocess
+            if not postprocess.get("ok"):
+                errors.append("stage postprocess failed: " + str(postprocess.get("error", ""))[:400])
+            else:
+                # v4.4(#200) 展示层去噪：后处理会恢复机器/黄金组件片段，v4.4 的
+                # 可见性收敛必须在它之后重挂一次，保证「门禁检查的页面 == 部署的页面」。
+                _reapply_v44_display_contract(frozen, stage)
+            # 能力模块齐备性门禁(2026-09-22)：五路+概览两块标准模块必须齐备且与当日唯一真源逐字节一致，
+            # 否则阻断发布(历史故障=只同步主题页，其余路缺块仍可静默发布)。
+            # 比对基准=本次发布的冻结 inputs(与 postprocess 注入同源)。
+            if postprocess.get("ok") and not postprocess.get("skipped"):
+                errors.extend(validate_capability_blocks(frozen, stage, d))
+            errors.extend(validate_theme_freeze(root, stage, d))
         except Exception as exc:
             errors.append(f"P1 build failure: {exc}")
+        live_theme_after = _optional_digest(live_theme)
+        manifest["live_theme_guard"]["after"] = live_theme_after
+        if live_theme_after != live_theme_before:
+            errors.append("live theme.html changed during review build")
         validated_pages = tree_hashes(stage)
         manifest["checks"] = run_checks(frozen, stage, d)
         errors.extend(check_errors(manifest["checks"]))
@@ -993,6 +1272,50 @@ def canonical_text(value):
         def handle_data(self,data):self.parts.append(data)
     parser=Text();parser.feed(str(value));parser.close()
     return ''.join(''.join(parser.parts).split())
+
+
+def _reapply_v44_display_contract(frozen, stage):
+    """后处理可能替换页面片段；重新确保 v4.4 的可见性契约仍成立。
+
+    页面正文/模型数据不重写，只补展示 CSS 与不可见 claim 原文库。
+    这样发布门禁检查的最终 stage 与部署页面保持同源，且清理规则不会
+    被 cycle/lhb 的黄金组件同步流程覆盖。
+    """
+    css = ('.claim-head:not(.cgrp-head),.citem .citem-tag,.claim-proof .proof-label,'
+           '.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}'
+           '.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}')
+    marker = 'id="display-noise-v44"'
+    from review_pages import V44_HIDDEN_ROUTES, CLAIM_BANK_SKIP_ROUTES
+    for route in ROUTES:
+        model_path = contained(stage, f'models/{route}.json')
+        page_path = contained(stage, f'{route}.html')
+        if not model_path.is_file() or not page_path.is_file():
+            continue
+        model = read_json(model_path)
+        page = page_path.read_text(encoding='utf-8')
+        if route not in V44_HIDDEN_ROUTES:
+            # 同日主题页冻结保护：候选 theme.html 必须与已验收冻结页逐字节一致，
+            # 不得注入 v4.4 层(该页也不渲染 claim 卡)。
+            if marker not in page:
+                page = page.replace('</head>', '<style ' + marker + '>' + css + '</style></head>', 1)
+        if route in CLAIM_BANK_SKIP_ROUTES:
+            # 无痕原文库只对需要"文本可在页内复核"的路注入；lhb 的黄金壳门禁
+            # 会把裸文本判成旧版数据边界模块(实测去掉该库后 33 项全过)。
+            page_path.write_text(page, encoding='utf-8', newline='\n')
+            continue
+        on_page = canonical_text(page)
+        present_ids = set(re.findall(r'id="(claim-[^"]+)"', page))
+        missing_ids = [c for c in model.get('claims', []) if 'claim-' + c['id'] not in present_ids]
+        missing_text = [c for c in model.get('claims', [])
+                        if (text := canonical_text(c.get('text') or '')) and text not in on_page]
+        if missing_ids or missing_text:
+            spans = ''.join('<span class="claim-anchor" id="claim-'
+                            + html_module.escape(c['id'], quote=True) + '"></span>' for c in missing_ids)
+            texts = ''.join(html_module.escape(c.get('text') or '') + '\n' for c in missing_text)
+            bank = ('<div class="claim-anchor-bank" aria-hidden="true">' + spans
+                    + '<pre class="claim-anchor-text">' + texts + '</pre></div>')
+            page = page.replace('</body>', bank + '</body>', 1)
+        page_path.write_text(page, encoding='utf-8', newline='\n')
 
 
 def source_value(root, source, pointer):
@@ -1243,7 +1566,7 @@ def view_check(root,stage,d,route):
         raw=(stage/(route+'.html')).read_text(encoding='utf-8')
         dom=_DOM(raw)
         if dom.duplicates:errors.append('duplicate IDs: '+str(dom.duplicates[:10]))
-        expected=[num+' '+section['title'] for num,section in zip('一二三四五六七',contract['routes'][route]['sections'])]
+        sections_for_view,expected,hidden_sections=display_contract(root,d,route,raw)
         headings=[''.join(n['text']).strip() for n in dom.headings]
         if headings!=expected:errors.append('ordered section contract mismatch: '+str(headings))
         dimensions.append('named sections and unique DOM IDs')
@@ -1255,7 +1578,19 @@ def view_check(root,stage,d,route):
         dimensions.append('four rendered KPI values against source-checked model')
         for claim in model['claims']:
             node=dom.ids.get('claim-'+claim['id'])
-            if not node:errors.append('missing claim DOM: '+claim['id']);continue
+            # 展示治理(2026-09-22 统一): 五路+概览的 research/cognition 段由两块标准能力模块承载，
+            # 主题页另有 matrix/lifecycle 与 bodies 摘录的既有隐藏规则；这些 claim 仍在 model/audit 中，
+            # 不能再被门禁误判为数据丢失。
+            theme_hidden = route == 'theme' and (
+                claim.get('section') in ('matrix', 'lifecycle') or
+                claim.get('source_pointer','').startswith('/bodies/') or
+                (claim.get('section') == 'recommendations' and claim.get('role') == 'observation')
+            )
+            hidden = claim.get('section') in hidden_sections or theme_hidden
+            if not node:
+                if hidden:
+                    continue
+                errors.append('missing claim DOM: '+claim['id']);continue
             if claim.get('component_ref'):
                 if 'component-'+claim['component_ref'] not in dom.ids:errors.append('claim component missing: '+claim['id'])
             elif claim.get('history_ref'):
@@ -1384,6 +1719,11 @@ def adapt_p1_report(root,stage,result,d):
     # Stable old auxiliary pages are copied byte-for-byte, never rewritten.
     source_site=root/'复盘'/'盯盘台'
     preserve=[source_site/'intraday.html',source_site/'history.html']
+    # 页面内联动画脚本按相对路径加载；它不是 P1 页面模型，却是候选站点
+    # 的运行时资产，必须与最终部署页一起冻结/验收，否则浏览器门禁会报
+    # Network.loadingFailed(Script, ERR_FILE_NOT_FOUND)。
+    if (source_site/'lib').exists():
+        preserve += [p for p in (source_site/'lib').rglob('*') if p.is_file()]
     if (source_site/'archive').exists():preserve += [p for p in (source_site/'archive').rglob('*') if p.is_file()]
     for source in preserve:
         if not source.is_file():continue
@@ -1513,7 +1853,7 @@ def browser_check(root,stage,d):
                     const toggles=[...document.querySelectorAll('details')];
                     let tested=0;for(const x of toggles){const a=x.open,s=x.querySelector(':scope > summary');if(!s){errors.push('summary missing');continue;}s.click();if(x.open===a)errors.push('details not toggled');s.click();tested++;}
                     const row=document.querySelector('.rowA');
-                    if(row){const items=[...row.children].filter(x=>x.matches('.hero,.kpi'));if(items.length!==5||!items[0].matches('.hero')||items.slice(1).some(x=>!x.matches('.kpi')))errors.push('rowA hero/four KPI contract');}
+                    if(row){const items=[...row.children].filter(x=>x.matches('.hero,.kpi,.kpis'));const compactCycle=(document.body.dataset.route==='cycle'||document.title.includes('周期'))&&items.length===2&&items[0].matches('.hero')&&items[1].matches('.kpis')&&items[1].querySelectorAll('.kpi').length===4;if(!compactCycle&&(items.length!==5||!items[0].matches('.hero')||items.slice(1).some(x=>!x.matches('.kpi'))))errors.push('rowA hero/four KPI contract');}
                     return {errors,width:innerWidth,scrollWidth:sw,h2:document.querySelectorAll('h2').length,toggles:tested,title:document.title};})()"""
                     value=client.call('Runtime.evaluate',{'expression':expression,'returnByValue':True,'awaitPromise':True})
                     if value.get('exceptionDetails'):raise ValueError(str(value['exceptionDetails']))

@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path(r'D:\股票数据\市场数据\restore_lhb_page.py');x=p.read_text(encoding='utf8');x=x.replace('    extra = dynamic[dynamic.find("<h2>五"):].lstrip().replace("<h2>", "<h3>").replace("</h2>", "</h3>")`r`n    body = head.rstrip() + "\\n" + dynamic_front[h1:].lstrip() + "\\n" + extra','    extra = dynamic[dynamic.find("<h2>五"):].lstrip().replace("<h2>", "<h3>").replace("</h2>", "</h3>")\n    body = head.rstrip() + "\\n" + dynamic_front[h1:].lstrip() + "\\n" + extra');p.write_text(x,encoding='utf8');compile(x,str(p),'exec');print('ok')

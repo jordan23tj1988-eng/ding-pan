@@ -48,7 +48,7 @@ def walk(node):
   for child in node.children:yield from walk(child)
 
 def test_cognition_one_visible_and_unique_fold_all_routes(stage):
- for route in ("cycle","lhb","logic","auction","theme","limitup"):
+ for route in ("cycle","lhb","logic","auction","limitup"):
   raw=(stage/(route+".html")).read_text(encoding="utf-8")
   nodes=list(walk(pages._Tree(raw).root));section=next(n for n in nodes if n.attrs.get("id")=="cognition")
   folds=[n for n in walk(section) if "tlfold" in n.attrs.get("class","").split()]

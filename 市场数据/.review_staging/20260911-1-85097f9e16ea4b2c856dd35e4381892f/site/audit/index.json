@@ -1,0 +1,729 @@
+{
+  "schema_version": 1,
+  "d": "20260911",
+  "route": "index",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20260911.json",
+      "pointer": "/bodies/index",
+      "raw": "<section class=\"index-body\"><div class=\"hero\"><h1>20260911 总判断概览</h1><p>冰点防守，五路判断完成，盘中连续tick缺口如实保留。</p></div><h2>总判断</h2><p>五路均未形成可交易的强共振，空仓观察。</p></section>\n<h2>五路看牌</h2><div class=\"card\"><p>[实证] 五路目标日判断：竞价仅观察评分池；席位路不主动买入；题材、逻辑和涨停质量均无正式荐票。机械跨路筛选卡展示机器候选，不能替代五路自主交易计划。六路模拟盘收盘状态及指令由引擎看板直出。</p></div>\n"
+    }
+  ],
+  "claims": [
+    {
+      "id": "index-a11d8682dbd050b7",
+      "role": "cognition",
+      "text": "冰点下行业宽度不等于主线",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-a11d8682dbd050b7"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/认知迭代/0/认知点"
+    },
+    {
+      "id": "index-b8a2f1702968278d",
+      "role": "condition",
+      "text": "同题材涨停>=5且最高连板>=3且有催化",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-b8a2f1702968278d"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/认知迭代/0/可证伪条件"
+    },
+    {
+      "id": "index-c5fd0f0757b68405",
+      "role": "cognition",
+      "text": "温度12.7、归位A=0/B=40",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-c5fd0f0757b68405"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/认知迭代/0/依据"
+    },
+    {
+      "id": "index-971d199a6f0f8da7",
+      "role": "evidence",
+      "text": "涨停>=5且>=3板且有公告",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-971d199a6f0f8da7"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/指派清单/0/判定条件"
+    },
+    {
+      "id": "index-4f02537fae471f14",
+      "role": "evidence",
+      "text": "待承接",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-4f02537fae471f14"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/指派清单/0/状态"
+    },
+    {
+      "id": "index-1e6f7a98f436b1e8",
+      "role": "evidence",
+      "text": "9只聚集但无梯队",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-1e6f7a98f436b1e8"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/指派清单/0/理由"
+    },
+    {
+      "id": "index-c8897bd02794199a",
+      "role": "evidence",
+      "text": "theme",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-c8897bd02794199a"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/指派清单/0/指派给"
+    },
+    {
+      "id": "index-ebd37551ce6302fc",
+      "role": "evidence",
+      "text": "master-20260911-theme-01",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-ebd37551ce6302fc"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/指派清单/0/指派ID"
+    },
+    {
+      "id": "index-eacd0387735594db",
+      "role": "evidence",
+      "text": "核验元件主线",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-eacd0387735594db"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/指派清单/0/深挖任务"
+    },
+    {
+      "id": "index-90da339f8bc2a858",
+      "role": "evidence",
+      "text": "20260914",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-90da339f8bc2a858"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/指派清单/0/截止"
+    },
+    {
+      "id": "index-1b9893ee358df8e1",
+      "role": "verdict",
+      "text": "冰点防守，五路一致偏谨慎；仅保留观察，不形成进攻仓位。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-1b9893ee358df8e1"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/总裁决/结论"
+    },
+    {
+      "id": "index-d432d8e8e0248c9f",
+      "role": "verdict",
+      "text": "温度12.7、最高连板4、涨停40、炸板18、跌停21，均来自fact_20260911.json",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-d432d8e8e0248c9f"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/总裁决/证据/0"
+    },
+    {
+      "id": "index-2e2454642d84e968",
+      "role": "verdict",
+      "text": "竞价/席位/题材/逻辑/涨停质量五路均未形成可交易的强共振",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-2e2454642d84e968"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/总裁决/证据/1"
+    },
+    {
+      "id": "index-85823606f2cfc5d0",
+      "role": "verdict",
+      "text": "C",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-85823606f2cfc5d0"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/总裁决/档位"
+    },
+    {
+      "id": "index-b26179ec4ae91e43",
+      "role": "verdict",
+      "text": "0.82",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-b26179ec4ae91e43"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/总裁决/置信度"
+    },
+    {
+      "id": "index-4fa7e2adbd53ec4d",
+      "role": "condition",
+      "text": "次日温度回升至40以上且连板晋级、封板质量和至少两路荐票同时改善，否则维持防守。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-4fa7e2adbd53ec4d"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/总裁决/可证伪条件"
+    },
+    {
+      "id": "index-11f15b2d1b42aba8",
+      "role": "limitation",
+      "text": "20260911缺少连续盘中tick，开盘验证、日内温度曲线、日内轮动图谱不可用；题材归位全为B档行业兜底，不能当公告催化。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-11f15b2d1b42aba8"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/总裁决/独立盲区声明"
+    },
+    {
+      "id": "index-376a394800bef55f",
+      "role": "research",
+      "text": "连续两日涨停>=5且>=3板并有公告",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-376a394800bef55f"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/综合深挖/0/判定条件"
+    },
+    {
+      "id": "index-2f91767a93abf505",
+      "role": "research",
+      "text": "9只涨停但全B兜底",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-2f91767a93abf505"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/综合深挖/0/深挖结论"
+    },
+    {
+      "id": "index-a241b1b8ec5584bf",
+      "role": "research",
+      "text": "下一交易日",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-a241b1b8ec5584bf"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/综合深挖/0/下次验证点"
+    },
+    {
+      "id": "index-751fe5afc2f101bd",
+      "role": "research",
+      "text": "元件行业聚集",
+      "section": "master",
+      "evidence_refs": [
+        "ev-index-751fe5afc2f101bd"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/综合深挖/0/主题"
+    },
+    {
+      "id": "index-3bab3eab65ea72a2",
+      "role": "evidence",
+      "text": "空仓观察",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-3bab3eab65ea72a2"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/检查四项/五路荐票/结论"
+    },
+    {
+      "id": "index-d32c3cbdde9cfbca",
+      "role": "evidence",
+      "text": "[]",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-d32c3cbdde9cfbca"
+      ],
+      "source": "总审_20260911.json",
+      "source_pointer": "/检查四项/五路荐票/标的"
+    },
+    {
+      "id": "index-7dbd6650c5ff789c",
+      "role": "evidence",
+      "text": "20260911 总判断概览",
+      "section": "observations",
+      "evidence_refs": [
+        "ev-index-7dbd6650c5ff789c"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/index/block/1",
+      "legacy_html": "<h3>20260911 总判断概览</h3>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "index-d4ddcefd2625e478",
+      "role": "evidence",
+      "text": "冰点防守，五路判断完成，盘中连续tick缺口如实保留。",
+      "section": "observations",
+      "evidence_refs": [
+        "ev-index-d4ddcefd2625e478"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/index/block/2",
+      "legacy_html": "<p>冰点防守，五路判断完成，盘中连续tick缺口如实保留。</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "index-ab23bd64fc6f49f6",
+      "role": "evidence",
+      "text": "总判断",
+      "section": "observations",
+      "evidence_refs": [
+        "ev-index-ab23bd64fc6f49f6"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/index/heading/3"
+    },
+    {
+      "id": "index-818e152317d6f925",
+      "role": "evidence",
+      "text": "五路均未形成可交易的强共振，空仓观察。",
+      "section": "observations",
+      "evidence_refs": [
+        "ev-index-818e152317d6f925"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/index/block/4",
+      "legacy_html": "<p>五路均未形成可交易的强共振，空仓观察。</p>",
+      "context": "总判断"
+    },
+    {
+      "id": "index-848937241c4df69d",
+      "role": "evidence",
+      "text": "五路看牌",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-848937241c4df69d"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/index/heading/5"
+    },
+    {
+      "id": "index-76a1afa2613a177c",
+      "role": "evidence",
+      "text": "[实证] 五路目标日判断：竞价仅观察评分池；席位路不主动买入；题材、逻辑和涨停质量均无正式荐票。机械跨路筛选卡展示机器候选，不能替代五路自主交易计划。六路模拟盘收盘状态及指令由引擎看板直出。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-76a1afa2613a177c"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/index/block/6",
+      "legacy_html": "<div class=\"card\"><p>[实证] 五路目标日判断：竞价仅观察评分池；席位路不主动买入；题材、逻辑和涨停质量均无正式荐票。机械跨路筛选卡展示机器候选，不能替代五路自主交易计划。六路模拟盘收盘状态及指令由引擎看板直出。</p></div>",
+      "context": "五路看牌"
+    }
+  ],
+  "content_coverage": {
+    "total": 29,
+    "covered": 29,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "index-a11d8682dbd050b7",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b8a2f1702968278d",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c5fd0f0757b68405",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-971d199a6f0f8da7",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4f02537fae471f14",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1e6f7a98f436b1e8",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c8897bd02794199a",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ebd37551ce6302fc",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-eacd0387735594db",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-90da339f8bc2a858",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1b9893ee358df8e1",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d432d8e8e0248c9f",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2e2454642d84e968",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-85823606f2cfc5d0",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b26179ec4ae91e43",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4fa7e2adbd53ec4d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-11f15b2d1b42aba8",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-376a394800bef55f",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2f91767a93abf505",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a241b1b8ec5584bf",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-751fe5afc2f101bd",
+        "sections": [
+          "master"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3bab3eab65ea72a2",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d32c3cbdde9cfbca",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7dbd6650c5ff789c",
+        "sections": [
+          "observations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d4ddcefd2625e478",
+        "sections": [
+          "observations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ab23bd64fc6f49f6",
+        "sections": [
+          "observations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-818e152317d6f925",
+        "sections": [
+          "observations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-848937241c4df69d",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-76a1afa2613a177c",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/认知迭代/0/认知点",
+        "claim_id": "index-a11d8682dbd050b7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/认知迭代/0/可证伪条件",
+        "claim_id": "index-b8a2f1702968278d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/认知迭代/0/依据",
+        "claim_id": "index-c5fd0f0757b68405",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/指派清单/0/判定条件",
+        "claim_id": "index-971d199a6f0f8da7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/指派清单/0/状态",
+        "claim_id": "index-4f02537fae471f14",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/指派清单/0/理由",
+        "claim_id": "index-1e6f7a98f436b1e8",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/指派清单/0/指派给",
+        "claim_id": "index-c8897bd02794199a",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/指派清单/0/指派ID",
+        "claim_id": "index-ebd37551ce6302fc",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/指派清单/0/深挖任务",
+        "claim_id": "index-eacd0387735594db",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/指派清单/0/截止",
+        "claim_id": "index-90da339f8bc2a858",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/总裁决/结论",
+        "claim_id": "index-1b9893ee358df8e1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/总裁决/证据/0",
+        "claim_id": "index-d432d8e8e0248c9f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/总裁决/证据/1",
+        "claim_id": "index-2e2454642d84e968",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/总裁决/档位",
+        "claim_id": "index-85823606f2cfc5d0",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/总裁决/置信度",
+        "claim_id": "index-b26179ec4ae91e43",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/总裁决/可证伪条件",
+        "claim_id": "index-4fa7e2adbd53ec4d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/总裁决/独立盲区声明",
+        "claim_id": "index-11f15b2d1b42aba8",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/综合深挖/0/判定条件",
+        "claim_id": "index-376a394800bef55f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/综合深挖/0/深挖结论",
+        "claim_id": "index-2f91767a93abf505",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/综合深挖/0/下次验证点",
+        "claim_id": "index-a241b1b8ec5584bf",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/综合深挖/0/主题",
+        "claim_id": "index-751fe5afc2f101bd",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/检查四项/五路荐票/结论",
+        "claim_id": "index-3bab3eab65ea72a2",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20260911.json",
+        "pointer": "/检查四项/五路荐票/标的",
+        "claim_id": "index-d32c3cbdde9cfbca",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/index/block/1",
+        "claim_id": "index-7dbd6650c5ff789c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/index/block/2",
+        "claim_id": "index-d4ddcefd2625e478",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/index/heading/3",
+        "claim_id": "index-ab23bd64fc6f49f6",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/index/block/4",
+        "claim_id": "index-818e152317d6f925",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/index/heading/5",
+        "claim_id": "index-848937241c4df69d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/index/block/6",
+        "claim_id": "index-76a1afa2613a177c",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 29
+  },
+  "legacy_ticker": null
+}

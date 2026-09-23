@@ -365,25 +365,21 @@ def build_page(d):
         return r_gap_card(d)
     master = r_master(d)
     _zj = load_json('总审_%s.json' % d)
-    master_has_cog = bool(_zj and (_zj.get('认知迭代') or []))  # 总审认知迭代字段非空才收编
+    master_has_cog = bool(_zj and (_zj.get('认知迭代') or []))
     segs = split_h2(body)
     out = []
     master_done = False
     for i, (h2raw, seg) in enumerate(segs):
-        is_last = (i == len(segs) - 1)
-        # 五 认知迭代板块: 收编(总审有认知迭代) 或 折叠
         if '认知迭代' in seg[:40]:
             if not master_done and master:
                 out.append(master); master_done = True
             if master_has_cog:
-                continue  # 收编: 总审认知迭代替代 index body 的"五"
+                continue
             out.append(r_cog(seg, -1))
             continue
         out.append(seg)
-        # 四 总裁决 之后插入 Master 板块
         if '总裁决' in seg[:40] and master and not master_done:
             out.append(master); master_done = True
-    # fallback: 无"总裁决"板块 → Master 板块放末尾
     if master and not master_done:
         out.append(master)
     return ''.join(out)
@@ -410,7 +406,9 @@ def build_page_full(d, paper_block=''):
                 '<p>机器数据(温度总览/先行指标/五路投票)按数据源渲染; 判断板块缺 body 不编造。</p>'
                 '<div class="stance"><span class="pill warn">状态 · <b class="s-weak">复盘断档</b></span></div></div>\n</div>\n'
                 % (d[4:6] + '-' + d[6:8], d[4:6] + '-' + d[6:8]))
-    mach = ''.join([r_mach_temp(d), r_mach_lead(d), r_mach_vote(d)])
+    mach = ''
+    if not body:
+        mach = ''.join([r_mach_temp(d), r_mach_lead(d), r_mach_vote(d)])
     if body:
         mach = ''
     elif mach.strip():

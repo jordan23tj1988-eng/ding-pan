@@ -1,0 +1,1109 @@
+{
+  "schema_version": 1,
+  "d": "20260911",
+  "route": "limitup",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20260911.json",
+      "pointer": "/bodies/limitup",
+      "raw": "<article><h2>一 涨停复盘 · Top5荐票</h2><p>冰点温度12.7，涨停40只、炸板18只。质量Top5仅作历史桶观察；执行口径偏弱，本路空仓，不发出买入荐票。</p><h2>二 市场温度 · 涨停生态</h2><p>温度卡=市场温度.py权威生成。当前为冰点，涨停生态分歧高，追涨容错低。</p><h2>三 归位台账</h2><p>归位台账沿用涨停对链条_20260911.json与题材归位_20260911.json；未另行改写题材归属。</p><h2>四 涨停质量库 · 因子与规则</h2><p>因子表=训练库机器生成；规则榜/分板胜率库/甜点=脚本产出折叠。质量分是历史均值，不是个股预言；执行收益优先。</p><h2>五 自主深挖</h2><p>本日触发“冰点下质量荐票执行偏弱”观察。可结算条件：下一交易日统计Top5执行执1/执2均值，若连续两日转正再恢复候选输出。</p><h2>六 我的认知迭代</h2><p>在温度12.7且炸板18的组合下，空仓是合法决策。后续检验温度修复与主线集中是否同步。</p></article>"
+    }
+  ],
+  "claims": [
+    {
+      "id": "limitup-a275e099d36e65d6",
+      "role": "verdict",
+      "text": "冰点防守，空仓",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-a275e099d36e65d6"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/结论"
+    },
+    {
+      "id": "limitup-fa71fc478a010788",
+      "role": "evidence",
+      "text": "市场温度12.7，处于冰点区间；涨停40只，炸板18只，封板质量弱。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-fa71fc478a010788"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/证据/0"
+    },
+    {
+      "id": "limitup-e1308a7a5fc295d1",
+      "role": "evidence",
+      "text": "质量荐票Top5的执行执1/执2均值多为负，历史均值不构成个股预言；冰点环境下追涨赔率不足。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-e1308a7a5fc295d1"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/证据/1"
+    },
+    {
+      "id": "limitup-1612a93a5221c6fd",
+      "role": "evidence",
+      "text": "仅使用20260910及更早可得信息，未使用未来数据。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-1612a93a5221c6fd"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/证据/2"
+    },
+    {
+      "id": "limitup-2d1f251cc4e376d1",
+      "role": "evidence",
+      "text": "C",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-2d1f251cc4e376d1"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/定位"
+    },
+    {
+      "id": "limitup-698a6adcc92d6993",
+      "role": "evidence",
+      "text": "82",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-698a6adcc92d6993"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/置信度",
+      "component_ref": "TEMPCARD"
+    },
+    {
+      "id": "limitup-aefeeba0a0fcaab7",
+      "role": "evidence",
+      "text": "温度回升至40以上且炸板率明显下降",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-aefeeba0a0fcaab7"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/反证条件/0"
+    },
+    {
+      "id": "limitup-22bb1b1972db435a",
+      "role": "evidence",
+      "text": "连续两日出现可执行正收益质量桶并有主线集中",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-22bb1b1972db435a"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/反证条件/1"
+    },
+    {
+      "id": "limitup-d494d87f71637117",
+      "role": "limitation",
+      "text": "当日无可验证的持仓状态文件，无法对具体持仓做个股判断",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-d494d87f71637117"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/判断/认知盲区/0"
+    },
+    {
+      "id": "limitup-c3efe2e71a525be0",
+      "role": "observation",
+      "text": "空仓合法；本路不发出买入荐票",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-c3efe2e71a525be0"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/结论"
+    },
+    {
+      "id": "limitup-37650733ae96c1a6",
+      "role": "observation",
+      "text": "002848",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-37650733ae96c1a6"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/0/代码",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-4e3320ff96f08382",
+      "role": "observation",
+      "text": "高斯贝尔",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-4e3320ff96f08382"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/0/名称",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-c43e0a72b0de0089",
+      "role": "observation",
+      "text": "null",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-c43e0a72b0de0089"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/0/连板"
+    },
+    {
+      "id": "limitup-3157898a141adf4e",
+      "role": "observation",
+      "text": "6",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-3157898a141adf4e"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/0/质量分",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-afceec6560dab75a",
+      "role": "observation",
+      "text": "43.1",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-afceec6560dab75a"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/0/预测执1胜率",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-3fed64fd74aede35",
+      "role": "observation",
+      "text": "-0.33",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-3fed64fd74aede35"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/0/预测执1均涨",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-c075a566a4c723f7",
+      "role": "observation",
+      "text": "null",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-c075a566a4c723f7"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/0/题材"
+    },
+    {
+      "id": "limitup-6885add4f0d4a39c",
+      "role": "observation",
+      "text": "000823",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-6885add4f0d4a39c"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/1/代码",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-df9f9a0ccc723fdf",
+      "role": "observation",
+      "text": "超声电子",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-df9f9a0ccc723fdf"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/1/名称",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-828e74e3c63b6003",
+      "role": "observation",
+      "text": "null",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-828e74e3c63b6003"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/1/连板"
+    },
+    {
+      "id": "limitup-0c18561c8a47e701",
+      "role": "observation",
+      "text": "6",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-0c18561c8a47e701"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/1/质量分",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-2fa7680c61c32b70",
+      "role": "observation",
+      "text": "43.9",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-2fa7680c61c32b70"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/1/预测执1胜率",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-e69f93b821a1d1f2",
+      "role": "observation",
+      "text": "-0.27",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-e69f93b821a1d1f2"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/1/预测执1均涨",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-4e9546190e0c363f",
+      "role": "observation",
+      "text": "null",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-4e9546190e0c363f"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/1/题材"
+    },
+    {
+      "id": "limitup-f21f30ba5b40ca25",
+      "role": "observation",
+      "text": "603421",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-f21f30ba5b40ca25"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/2/代码",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-48288a537004e349",
+      "role": "observation",
+      "text": "鼎信通讯",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-48288a537004e349"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/2/名称",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-a55abe789f8b3cba",
+      "role": "observation",
+      "text": "null",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-a55abe789f8b3cba"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/2/连板"
+    },
+    {
+      "id": "limitup-3995089f50b72372",
+      "role": "observation",
+      "text": "8",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-3995089f50b72372"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/2/质量分",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-0ae8016e56cb95ca",
+      "role": "observation",
+      "text": "44.7",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-0ae8016e56cb95ca"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/2/预测执1胜率",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-f97c550571d18a80",
+      "role": "observation",
+      "text": "-0.17",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-f97c550571d18a80"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/2/预测执1均涨",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "limitup-a00ebb1a08c7c986",
+      "role": "observation",
+      "text": "null",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-a00ebb1a08c7c986"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/候选观察/2/题材"
+    },
+    {
+      "id": "limitup-55bf8ab9f5057b82",
+      "role": "observation",
+      "text": "目标涨停池虽有候选，但冰点12.7且执行收益预期偏负，按纪律放弃追涨。",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-55bf8ab9f5057b82"
+      ],
+      "source": "limitup判断_20260911.json",
+      "source_pointer": "/荐票/理由"
+    },
+    {
+      "id": "limitup-39d8cbe7fe78f459",
+      "role": "evidence",
+      "text": "一 涨停复盘 · Top5荐票",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-39d8cbe7fe78f459"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/heading/1"
+    },
+    {
+      "id": "limitup-1c15ae75d3f72a7d",
+      "role": "evidence",
+      "text": "冰点温度12.7，涨停40只、炸板18只。质量Top5仅作历史桶观察；执行口径偏弱，本路空仓，不发出买入荐票。",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-limitup-1c15ae75d3f72a7d"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/block/2",
+      "legacy_html": "<p>冰点温度12.7，涨停40只、炸板18只。质量Top5仅作历史桶观察；执行口径偏弱，本路空仓，不发出买入荐票。</p>",
+      "context": "一 涨停复盘 · Top5荐票"
+    },
+    {
+      "id": "limitup-74ce22b178eee88c",
+      "role": "evidence",
+      "text": "二 市场温度 · 涨停生态",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-74ce22b178eee88c"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/heading/3"
+    },
+    {
+      "id": "limitup-e097892bb298b07d",
+      "role": "evidence",
+      "text": "温度卡=市场温度.py权威生成。当前为冰点，涨停生态分歧高，追涨容错低。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-limitup-e097892bb298b07d"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/block/4",
+      "legacy_html": "<p>温度卡=市场温度.py权威生成。当前为冰点，涨停生态分歧高，追涨容错低。</p>",
+      "context": "二 市场温度 · 涨停生态"
+    },
+    {
+      "id": "limitup-958da7b8040f8cf0",
+      "role": "evidence",
+      "text": "三 归位台账",
+      "section": "ledger",
+      "evidence_refs": [
+        "ev-limitup-958da7b8040f8cf0"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/heading/5"
+    },
+    {
+      "id": "limitup-8b609bcef409e5bf",
+      "role": "evidence",
+      "text": "归位台账沿用涨停对链条_20260911.json与题材归位_20260911.json；未另行改写题材归属。",
+      "section": "ledger",
+      "evidence_refs": [
+        "ev-limitup-8b609bcef409e5bf"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/block/6",
+      "legacy_html": "<p>归位台账沿用涨停对链条_20260911.json与题材归位_20260911.json；未另行改写题材归属。</p>",
+      "context": "三 归位台账"
+    },
+    {
+      "id": "limitup-ce0b84492553f60d",
+      "role": "evidence",
+      "text": "四 涨停质量库 · 因子与规则",
+      "section": "training",
+      "evidence_refs": [
+        "ev-limitup-ce0b84492553f60d"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/heading/7"
+    },
+    {
+      "id": "limitup-dc3c074a1b160395",
+      "role": "evidence",
+      "text": "因子表=训练库机器生成；规则榜/分板胜率库/甜点=脚本产出折叠。质量分是历史均值，不是个股预言；执行收益优先。",
+      "section": "training",
+      "evidence_refs": [
+        "ev-limitup-dc3c074a1b160395"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/block/8",
+      "legacy_html": "<p>因子表=训练库机器生成；规则榜/分板胜率库/甜点=脚本产出折叠。质量分是历史均值，不是个股预言；执行收益优先。</p>",
+      "context": "四 涨停质量库 · 因子与规则"
+    },
+    {
+      "id": "limitup-7b5e486e641599b1",
+      "role": "evidence",
+      "text": "五 自主深挖",
+      "section": "research",
+      "evidence_refs": [
+        "ev-limitup-7b5e486e641599b1"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/heading/9"
+    },
+    {
+      "id": "limitup-8c9e537822929358",
+      "role": "research",
+      "text": "本日触发“冰点下质量荐票执行偏弱”观察。可结算条件：下一交易日统计Top5执行执1/执2均值，若连续两日转正再恢复候选输出。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-limitup-8c9e537822929358"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/block/10",
+      "legacy_html": "<p>本日触发“冰点下质量荐票执行偏弱”观察。可结算条件：下一交易日统计Top5执行执1/执2均值，若连续两日转正再恢复候选输出。</p>",
+      "context": "五 自主深挖"
+    },
+    {
+      "id": "limitup-07ac34182f90ef25",
+      "role": "evidence",
+      "text": "六 我的认知迭代",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-limitup-07ac34182f90ef25"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/heading/11"
+    },
+    {
+      "id": "limitup-ff2b070953f099fe",
+      "role": "cognition",
+      "text": "在温度12.7且炸板18的组合下，空仓是合法决策。后续检验温度修复与主线集中是否同步。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-limitup-ff2b070953f099fe"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/limitup/block/12",
+      "legacy_html": "<p>在温度12.7且炸板18的组合下，空仓是合法决策。后续检验温度修复与主线集中是否同步。</p>",
+      "context": "六 我的认知迭代"
+    }
+  ],
+  "content_coverage": {
+    "total": 44,
+    "covered": 44,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "limitup-a275e099d36e65d6",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-fa71fc478a010788",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-e1308a7a5fc295d1",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-1612a93a5221c6fd",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-2d1f251cc4e376d1",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-698a6adcc92d6993",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-aefeeba0a0fcaab7",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-22bb1b1972db435a",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-d494d87f71637117",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-c3efe2e71a525be0",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-37650733ae96c1a6",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-4e3320ff96f08382",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-c43e0a72b0de0089",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-3157898a141adf4e",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-afceec6560dab75a",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-3fed64fd74aede35",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-c075a566a4c723f7",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-6885add4f0d4a39c",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-df9f9a0ccc723fdf",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-828e74e3c63b6003",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-0c18561c8a47e701",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-2fa7680c61c32b70",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-e69f93b821a1d1f2",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-4e9546190e0c363f",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-f21f30ba5b40ca25",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-48288a537004e349",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-a55abe789f8b3cba",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-3995089f50b72372",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-0ae8016e56cb95ca",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-f97c550571d18a80",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-a00ebb1a08c7c986",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-55bf8ab9f5057b82",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-39d8cbe7fe78f459",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-1c15ae75d3f72a7d",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-74ce22b178eee88c",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-e097892bb298b07d",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-958da7b8040f8cf0",
+        "sections": [
+          "ledger"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-8b609bcef409e5bf",
+        "sections": [
+          "ledger"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-ce0b84492553f60d",
+        "sections": [
+          "training"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-dc3c074a1b160395",
+        "sections": [
+          "training"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-7b5e486e641599b1",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-8c9e537822929358",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-07ac34182f90ef25",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup-ff2b070953f099fe",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/结论",
+        "claim_id": "limitup-a275e099d36e65d6",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/证据/0",
+        "claim_id": "limitup-fa71fc478a010788",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/证据/1",
+        "claim_id": "limitup-e1308a7a5fc295d1",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/证据/2",
+        "claim_id": "limitup-1612a93a5221c6fd",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/定位",
+        "claim_id": "limitup-2d1f251cc4e376d1",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/置信度",
+        "claim_id": "limitup-698a6adcc92d6993",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/反证条件/0",
+        "claim_id": "limitup-aefeeba0a0fcaab7",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/反证条件/1",
+        "claim_id": "limitup-22bb1b1972db435a",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/判断/认知盲区/0",
+        "claim_id": "limitup-d494d87f71637117",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/结论",
+        "claim_id": "limitup-c3efe2e71a525be0",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/0/代码",
+        "claim_id": "limitup-37650733ae96c1a6",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/0/名称",
+        "claim_id": "limitup-4e3320ff96f08382",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/0/连板",
+        "claim_id": "limitup-c43e0a72b0de0089",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/0/质量分",
+        "claim_id": "limitup-3157898a141adf4e",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/0/预测执1胜率",
+        "claim_id": "limitup-afceec6560dab75a",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/0/预测执1均涨",
+        "claim_id": "limitup-3fed64fd74aede35",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/0/题材",
+        "claim_id": "limitup-c075a566a4c723f7",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/1/代码",
+        "claim_id": "limitup-6885add4f0d4a39c",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/1/名称",
+        "claim_id": "limitup-df9f9a0ccc723fdf",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/1/连板",
+        "claim_id": "limitup-828e74e3c63b6003",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/1/质量分",
+        "claim_id": "limitup-0c18561c8a47e701",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/1/预测执1胜率",
+        "claim_id": "limitup-2fa7680c61c32b70",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/1/预测执1均涨",
+        "claim_id": "limitup-e69f93b821a1d1f2",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/1/题材",
+        "claim_id": "limitup-4e9546190e0c363f",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/2/代码",
+        "claim_id": "limitup-f21f30ba5b40ca25",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/2/名称",
+        "claim_id": "limitup-48288a537004e349",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/2/连板",
+        "claim_id": "limitup-a55abe789f8b3cba",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/2/质量分",
+        "claim_id": "limitup-3995089f50b72372",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/2/预测执1胜率",
+        "claim_id": "limitup-0ae8016e56cb95ca",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/2/预测执1均涨",
+        "claim_id": "limitup-f97c550571d18a80",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/候选观察/2/题材",
+        "claim_id": "limitup-a00ebb1a08c7c986",
+        "status": "displayed"
+      },
+      {
+        "source": "limitup判断_20260911.json",
+        "pointer": "/荐票/理由",
+        "claim_id": "limitup-55bf8ab9f5057b82",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/heading/1",
+        "claim_id": "limitup-39d8cbe7fe78f459",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/block/2",
+        "claim_id": "limitup-1c15ae75d3f72a7d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/heading/3",
+        "claim_id": "limitup-74ce22b178eee88c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/block/4",
+        "claim_id": "limitup-e097892bb298b07d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/heading/5",
+        "claim_id": "limitup-958da7b8040f8cf0",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/block/6",
+        "claim_id": "limitup-8b609bcef409e5bf",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/heading/7",
+        "claim_id": "limitup-ce0b84492553f60d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/block/8",
+        "claim_id": "limitup-dc3c074a1b160395",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/heading/9",
+        "claim_id": "limitup-7b5e486e641599b1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/block/10",
+        "claim_id": "limitup-8c9e537822929358",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/heading/11",
+        "claim_id": "limitup-07ac34182f90ef25",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/limitup/block/12",
+        "claim_id": "limitup-ff2b070953f099fe",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 44
+  },
+  "legacy_ticker": null
+}

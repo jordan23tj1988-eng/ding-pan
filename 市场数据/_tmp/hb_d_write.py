@@ -1,0 +1,144 @@
+# -*- coding: utf-8 -*-
+"""hb-d 13:30 (2026-09-21) 临盘决断写档: 零 fills / 零条件价, 纯留档。
+发出版不可覆盖: 目标文件不存在则新建, 存在则中止(不覆盖)。"""
+import json, os, datetime as dt, hashlib
+
+ROOT = r"D:\股票数据\市场数据"
+TODAY = "20260921"
+D = os.path.join(ROOT, "盘中", TODAY)
+NOW = dt.datetime(2026, 9, 21, 13, 30, 0)
+OUT = os.path.join(D, "临盘决断_%s_1330.json" % TODAY)
+assert not os.path.exists(OUT), "发出版已存在, 禁覆盖: %s" % OUT
+
+write_ts = dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+rows = [json.loads(l) for l in open(os.path.join(D, "realtime_ticks.jsonl"), encoding="utf-8") if l.strip()]
+rows = [r for r in rows if dt.datetime.strptime(r["ts"], "%Y-%m-%d %H:%M:%S") <= NOW]
+last = {x["code"]: x for x in rows[-1]["rows"]}
+af = [r for r in rows if dt.datetime.strptime(r["ts"], "%Y-%m-%d %H:%M:%S").hour >= 13]
+a0 = {x["code"]: x for x in af[0]["rows"]}
+m0 = sum(v["pct"] for v in a0.values()) / len(a0)
+m1 = sum(v["pct"] for v in last.values()) / len(last)
+pcts = [v["pct"] for v in last.values()]
+gain = sorted(last.values(), key=lambda x: x["pct"], reverse=True)[:3]
+lose = sorted(last.values(), key=lambda x: x["pct"])[:5]
+gap = (NOW - dt.datetime.strptime(rows[-1]["ts"], "%Y-%m-%d %H:%M:%S")).total_seconds()
+improve = sorted(((last[c]["pct"] - a0[c]["pct"], a0[c]["name"], last[c]["latest"], last[c]["pct"]) for c in a0 if c in last), reverse=True)[:3]
+retrace = [(v["code"], v["name"], v["high"], v["latest"], round((v["latest"] - v["high"]) / v["high"] * 100, 2), v["pct"])
+           for v in sorted(last.values(), key=lambda x: (x["latest"] - x["high"]) / x["high"]) if (v["latest"] - v["high"]) / v["high"] * 100 <= -5]
+
+doc = {
+  "date": TODAY,
+  "session": "hb-d",
+  "ts": "13:30",
+  "decision_ts_nominal": ("2026-09-21 13:30 (cron c415a7792216 '30 13 * * 1-5' 名义段; executions.db: "
+                          "scheduled_instant=2026-09-21T05:30:00+00:00(=13:30 CST), claimed_at=13:30:08.731349, "
+                          "started_at=13:30:09.654518 → lateness≈8.7s, kind=on_time → 本场为在窗实时场次, "
+                          "非 catch_up 迟到型)"),
+  "write_ts": write_ts,
+  "level": "ALARM_ONLY",
+  "动作级别": "无动作(零 fills / 零预判 / 零条件价 / 零 px_exec)",
+  "场次说明": ("13:30 午后延续段心跳 hb-d。本场与今日上午三场(hb-a/b/c, 均于 11:46 集中补发、名义时点前留档=零)"
+            "性质不同: 本场调度(on_time)与本机盘中链路(自 11:46:29 起每 60s 落 tick)同时在窗, "
+            "决断时点前有 104 条连续留档、断更仅 %.1fs(0.22 分钟) → 未触发『断更>10分钟只报警禁决策』红线, "
+            "具备合法决策条件。但三个级别的判定对象全部为空(见三级判定) → 输出 ALARM_ONLY(零动作), "
+            "仅登记机制报警项, 不制造任何决策内容。" % gap),
+  "条件决断": [],
+  "fills": [],
+  "data_freshness": {
+    "交易日校验": {
+      "任务指定": ("python -c \"from sentiment.core.calendar import is_trading_day,today_str\" → "
+                "ModuleNotFoundError: No module named 'sentiment'(cwd=D:\\股票数据\\市场数据 实测复现, "
+                "该包全盘不存在) → 指定校验环节不可用。"),
+      "本场判定依据": ("① 盘中/20260921/realtime_ticks.jsonl 决断时点前已落 104 条连续盘中报价"
+                    "(11:46:29–13:29:47, 每 60s, 无 >90s 断档) → 今日为交易日(实据非推断); "
+                    "② _学习/早盘简报_20260921.md(11:52 落档)自身以交易日口径写就; ③ 2026-09-21=周一。"),
+    },
+    "realtime_channel": {
+      "path": "盘中/20260921/realtime_ticks.jsonl", "n_total_now": 105, "n_at_or_before_1330": len(rows),
+      "first_ts": rows[0]["ts"], "last_at_or_before_1330": rows[-1]["ts"],
+      "gap_min_at_decision": round(gap / 60.0, 2), "src": "腾讯", "n_per_tick": rows[-1]["n"],
+      "pool_date": rows[-1]["pool_date"], "pool_stale": rows[-1]["pool_stale"], "pool_kind": rows[-1]["pool_kind"],
+      "结论": "新鲜, 未触发断更红线(>10分钟); 但为降级链路(仅腾讯单源 + 陈旧观察池)"
+    },
+    "源健康": {
+      "pipeline_alarm": "盘中/20260921/pipeline_alarm.jsonl 11:46:23 ALARM type=pool_stale: 目标日 20260918 涨停池未落档, 降级用最近可用池 20260911(40只)",
+    },
+    "缺失真源(标 null, 禁编造)": ["pulse.json(全盘 0 命中, 契约路径未实现)", "执行流水.jsonl(全盘 0 命中, 契约路径未实现)",
+                            "warboard.json 今日缺(盘中目录最新=20260909)", "playbook max=20260907", "六路交易计划 max=20260911",
+                            "总审 max=20260911", "日链日目录 max=20260911 → 温度/涨停家数/炸板率/封板质量/一进二率 全 null"]
+  },
+  "池内实况_决断时点前最后留档": {
+    "时点": rows[-1]["ts"] + "(决断时点前最后一条)",
+    "样本": "n=40(池=20260911 涨停池, 陈旧 5 个交易日, 降级观察样本; 不代表今日全市场结构)",
+    "涨跌": "涨 %d / 跌 %d, 中位 %+.2f%%, 均值 %+.2f%%" % (len([p for p in pcts if p > 0]), len([p for p in pcts if p < 0]),
+                                                      sorted(pcts)[len(pcts) // 2], sum(pcts) / len(pcts)),
+    "涨停": [(v["code"], v["name"], v["pct"]) for v in last.values() if v["pct"] >= 9.8],
+    "涨幅前3": [(v["name"], v["pct"]) for v in gain],
+    "跌幅前5": [(v["name"], v["pct"]) for v in lose],
+    "午后段": ("13:00:42 → 13:29:47: 池内均值 %+.2f%% → %+.2f%% (Δ%+.2fpp) = 温和走弱、无跳水; "
+             "改善前列 %s" % (m0, m1, m1 - m0, [(n, round(d, 2), px, pc) for d, n, px, pc in improve])),
+    "风险扫描": {
+      "2分钟窗口批量跳水(≥3只跌≥3%)": "0 命中",
+      "单票2分钟急跌≥3%": "0 命中",
+      "当日高点回撤≥5%": retrace if retrace else "0 命中",
+      "口径限制": "扫描样本仅上述 40 只陈旧池成分 → 不支持全市场『题材批量跳水』判定; 全市场宽度/涨停家数/温度源缺失, 标 null"
+    }
+  },
+  "三级判定": {
+    "A级_预案内": {
+      "对象": "无",
+      "依据": ("今日 playbook 缺(最新 20260907, buys=[]) + warboard 今日缺(盘中目录最新 20260909) + 六路交易计划缺"
+             "(最新 20260911) → 无 trigger 可核, 条件决断=[]. 唯一时点在前的预判 = _学习/盘中尾盘复盘_20260918.md §八"
+             "『明日(9/21)预案要点』6 条观察锚(华天科技晋2板/锡华·华瓷 4→5 板/涨停家数守 70+ 且首板占比回落/昨日 8 只晋2板"
+             "的3板承接/上证 3900 得失/量能延续+7%), 原文只给观察方向、未给触发区间与价位, 且该文件自身定级=维持 C 档防守 →"
+             "不构成可执行 trigger; 其 3/5/6 条今日仍需收盘源, 决断时点前不可判。")
+    },
+    "B级_预案外防守": {
+      "对象": "无",
+      "依据": ("三账本全程空仓: 盘中作战 cash=1000000.0/positions=[]/n_pos=0, master cash=1009012.5/positions=[], "
+             "次日卖出指令=[] → 无持仓可逐票表态; 池内实况扫描三类触发(炸板/大幅回撤/题材批量跳水)均 0 命中 "
+             "(2分钟批量跳水=0, 单票2分钟急跌=0, 高点回撤≥5% 仅 1 只且当日仍为红盘) → 无触发证据可写, 无需防守动作。")
+    },
+    "C级_预案外进攻": {
+      "对象": "无(禁)",
+      "依据": ("总审 20260911 档位 C/置信 0.82『冰点防守…仅保留观察, 不形成进攻仓位』未解除(其可证伪条件需『次日温度回升至40"
+             "以上且连板晋级、封板质量和至少两路荐票同时改善』, 因 9/12 起日链+fact 断供至今无法验证); 叠加盘中禁改参数 +"
+             " 观察池陈旧 5 个交易日 + 无全景源 → 预案外进攻一律不做, 仅记录, 不设价位不设仓位。")
+    }
+  },
+  "报警项": [
+    "①【契约三缺】pulse.json 全盘 0 命中 / 执行流水.jsonl 全盘 0 命中 / warboard.json 今日缺(最新 20260909 目录) → 契约-实现二选一仍未决(断供第 N 日);",
+    "②【预案真源断供】playbook max=20260907(空缺第 10 个交易日), 六路交易计划/总审 max=20260911 → A/C 级判定无底座;",
+    "③【日链停摆第 7 个交易日】市场数据日目录 max=20260911 → 涨停池/炸板/跌停/龙虎榜/fact/T+0 温度全断, 早盘简报表内第 3/5/6 条锚永久不可核;",
+    "④【观察池滞后】pool_date=20260911, pool_stale=true(管道 11:46:23 自产 ALARM: 目标日 20260918 涨停池未落档) → 池内实况仅 40 只陈旧成分, 全市场结论不可得;",
+    "⑤【本日调度集中补发】今日 44 条执行全由 pid 19836 于 11:46:14–11:46:33 补发(hb-a 名义 09:40 迟到 126.25min / hb-b 76.2min / hb-c 46.3min / 9/19 遗留 job 亦在列) → 09:25 竞价窗与 09:40/10:30/11:00 三场名义时点前留档=零(已由 hb-a/b/c 各自留档); 本场 hb-d 为今日首个在窗场次(lateness≈8.7s);",
+    "⑥【iFinD 不可用】早盘简报实测 THS_iFinDLogin rc=-2(客户端未起, 8602/8899 无监听) → 外围锚/竞价快照降级至末位源 sina, 无外围 context;",
+    "⑦【引擎判定流水停更】_学习/_模拟盘/盘中作战/判断流水.jsonl mtime=11:46:31, 末条=08-21 11:46 → 今日盘中回应引擎未产出新判定行;"
+  ],
+  "对账": {
+    "引擎已执行": "无(执行流水.jsonl 全盘不存在; 判断流水末条=08-21 11:46)",
+    "账本": "全账户空仓(盘中作战 cash=1000000.0/n_pos=0/持仓=[]; master cash=1009012.5/n_pos=0; 次日卖出指令=[])",
+    "结论": "一致, 无异常; 无成交、无持仓、无卖单 → 今日无敞口被漏记"
+  },
+  "后视镜边界声明": ("决断时点=2026-09-21 13:30(名义/计划时点), 实际写档=%s。全部决策输入限定为该时点之前已留档的数据"
+                "(实时 tick ≤13:29:47 共 %d 条 / 三账本 / 预案与总审枚举 / 管道与报警留档 / 9-18 尾盘复盘), 或『该数据不存在』"
+                "这一事实本身。写档时点之后的实测(executions.db 本场执行行、写档瞬间 tick 总数)仅用于本文件自身完整性描述, "
+                "不构成决策输入。本场零 fills、零预判、零触发区间、零条件价、零 px_exec → 不构成编造(铁律①)。" % (write_ts, len(rows))),
+  "report": ("心跳hb-d无动作·仅报警: 2026-09-21 13:30 段(在窗实时, lateness≈8.7s)—— 实时留档新鲜"
+           "(决断时点前 %.1fs 内有 tick, 11:46:29–13:29:47 共 %d 条/src=腾讯降级单源), 未触发断更红线; "
+           "A级无对象(playbook max 20260907、warboard 今日缺、六路交易计划 max 20260911; 9-18 复盘 §八 6 条只给观察锚无 trigger), "
+           "B级无对象(三账本空仓, 池内 2分钟批量跳水/急跌/高点回撤三类 0 命中), C级禁(总审 20260911 C档 0.82 未解除) → "
+           "ALARM_ONLY, 零 fills 零条件价; 池内 40 只(9/11 陈旧池) 涨24/跌14、午后均值 0.72%%→0.46%% 温和走弱无跳水; "
+           "另报 契约三缺(pulse/执行流水/warboard)/日链停摆第7日/池陈旧/今日 44 条执行 11:46 集中补发/iFinD rc=-2, 收市后待批。"
+           % (gap, len(rows))),
+  "发出版声明": "本文件为 2026-09-21 13:30 段(hb-d)首次占用之唯一发出版; 写入前目标文件不存在(已核), 未覆盖任何既有文件。"
+}
+
+with open(OUT, "w", encoding="utf-8") as f:
+    json.dump(doc, f, ensure_ascii=False, indent=1)
+h = hashlib.sha256(open(OUT, "rb").read()).hexdigest()[:16]
+print("WROTE", OUT)
+print("sha256_16 =", h)
+print("bytes =", os.path.getsize(OUT))
+print("write_ts =", write_ts)

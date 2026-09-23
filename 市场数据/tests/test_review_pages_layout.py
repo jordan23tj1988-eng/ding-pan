@@ -24,7 +24,8 @@ class LayoutTests(Fixture):
    with self.subTest(route=route):
     h=Path(path).read_text(encoding='utf-8')
     self.assertEqual(len(re.findall(r'class="kpi"',h)),4)
-    self.assertEqual(len(re.findall(r'<h2>',h)),len(EXPECTED[route]))
+    expected_h2=len(EXPECTED[route]) - (2 if route == 'theme' else 0)
+    self.assertEqual(len(re.findall(r'<h2>',h)),expected_h2)
     m=json.loads((self.out/'models'/(route+'.json')).read_text(encoding='utf-8'))
     for anchor in ANCHORS[route]:
      expected=1 if anchor in m['machine_anchors'] else 0
@@ -60,7 +61,10 @@ class LayoutTests(Fixture):
   for item in coverage['source_items']:
    self.assertTrue(item['claim_id']);self.assertIn(item['status'],['displayed','referenced'])
   h=Path(r['pages']['theme']).read_text(encoding='utf-8')
-  self.assertIn('audit/theme.json',h)
+  # 主题页隐藏整份来源审计折叠，但审计 JSON 仍必须落盘。
+  self.assertNotIn('audit/theme.json',h)
+  self.assertNotIn('编辑说明与来源审计',h)
+  self.assertTrue((self.out/'audit/theme.json').is_file())
   audit=json.loads((self.out/'audit/theme.json').read_text(encoding='utf-8'))
   source=json.loads((self.root/'_学习/judgment_20260904.json').read_text(encoding='utf-8-sig'))
   self.assertEqual(audit['legacy_bodies'][0]['raw'],source['bodies']['theme'])
@@ -79,7 +83,7 @@ class LayoutTests(Fixture):
   r=self.api().build_site(self.root,'20260904',self.out)
   from html import escape
   h=Path(r['pages']['theme']).read_text(encoding='utf-8')
-  self.assertIn(escape(c['text']),h)
+  self.assertNotIn(escape(c['text']),h)
   hero=h.split('<div class="hero">',1)[1].split('</div> <div class="kpi">',1)[0]
   self.assertNotIn('href="#claim-'+key+'"',hero)
   self.assertNotIn('回看完整判断与证据',hero)

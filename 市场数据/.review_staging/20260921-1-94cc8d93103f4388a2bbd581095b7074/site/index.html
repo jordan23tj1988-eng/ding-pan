@@ -1,0 +1,2629 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>概览</title><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+
+/* ── v4.1 页面阅读路径与响应式增强 ── */
+:root{--route-accent:var(--accent)}
+body[data-route="cycle"]{--route-accent:#7b8cff}
+body[data-route="auction"]{--route-accent:#e8a33d}
+body[data-route="lhb"]{--route-accent:#b18aff}
+body[data-route="theme"]{--route-accent:#2fd3c5}
+body[data-route="logic"]{--route-accent:#63b3ff}
+body[data-route="limitup"]{--route-accent:#ff7b72}
+
+/* 内容宽度按信息密度自适应：宽表不再挤成一团，概览 bento 仍保持黄金版宽度。 */
+.wrap:has(>section){max-width:1180px}
+.wrap:has(.rowA){max-width:1440px}
+.wrap>section{scroll-margin-top:92px;margin-top:30px}
+.wrap>section>h2{margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid var(--line2);position:relative}
+.wrap>section>h2::before{background:var(--route-accent,var(--accent));box-shadow:0 0 14px color-mix(in srgb,var(--route-accent,var(--accent)) 35%,transparent)}
+.wrap>section:first-of-type{margin-top:24px}
+
+/* 页面阅读地图：显示板块职责，不复制正文事实。 */
+.page-map{position:sticky;top:78px;z-index:6;display:flex;align-items:center;gap:5px;overflow-x:auto;white-space:nowrap;margin:0 0 18px;padding:6px;background:rgba(18,20,28,.90);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(12px);scrollbar-width:none}
+.page-map::-webkit-scrollbar{display:none}
+.page-map-label{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:0 8px 0 5px;flex:0 0 auto}
+.page-map a{color:var(--sub);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:.16s;flex:0 0 auto}
+.page-map a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.page-map a.active{color:var(--route-accent,var(--accent));background:color-mix(in srgb,var(--route-accent,var(--accent)) 13%,transparent);box-shadow:inset 0 -2px 0 var(--route-accent,var(--accent));font-weight:700}
+.page-map a:focus-visible{outline:2px solid var(--route-accent,var(--accent));outline-offset:1px}
+
+/* 卡片层级：标题、来源提示、正文和长表分出视觉层。 */
+.card,.obs,.kpi,details.chain{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.card h3,.card h4{line-height:1.45}
+.card>h3:first-child,.card>h4:first-child{color:var(--ink)}
+.card .hint{display:inline-block;line-height:1.45}
+.card table{margin-top:10px}
+table tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+table tr:hover td{background:color-mix(in srgb,var(--route-accent,var(--accent)) 7%,transparent)}
+th{white-space:nowrap}
+pre{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:rgba(0,0,0,.16);font-family:var(--mono);font-size:11px;line-height:1.55}
+
+/* 触屏和窄屏：不缩小关键数字，改为卡内横向浏览，避免整页横溢出。 */
+@media(max-width:640px){
+    .navbar{display:block;top:6px;margin:6px 8px 0;max-width:calc(100% - 16px);padding:8px 10px;border-radius:14px}
+  .navbar .brand{font-size:13px;margin-bottom:6px}.navbar .logo{width:28px;height:28px;border-radius:8px}
+  .navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}
+  .navbar .pills::-webkit-scrollbar{display:none}
+  .navbar .pills a{font-size:12px;padding:6px 10px}
+  .navbar .upd{margin-left:auto;font-size:10px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap{padding:18px 10px 48px}.wrap:has(>section),.wrap:has(.rowA){max-width:none}
+  .page-map{top:65px;margin-bottom:14px}
+  .wrap>section{margin-top:24px}.wrap>section>h2{font-size:14.5px;padding-bottom:8px}
+  .card,.obs{padding-left:14px;padding-right:14px;border-radius:11px}
+  .card{overflow-x:auto}.card>h3,.card>h4,.card>p,.card>ul,.card>ol{min-width:0}
+  table{min-width:620px;font-size:12px}th,td{padding:7px 8px}
+  .routes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:19px 18px}.hero h1{font-size:21px}
+  .kpi .big{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.page-map a,.card,.obs,.kpi{transition:none!important}}
+
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}}
+
+/* ── v4.3 概览可读层 ── 只收敛版式与信息层级，不改判断内容 */
+.reading-spine a.rs-step{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-weight:600;white-space:nowrap}
+.reading-spine a.rs-step:hover{border-color:var(--line2);color:var(--ink)}
+.reading-spine a.rs-step b{color:var(--accent);font-family:var(--mono);font-size:10.5px;margin-right:6px;font-weight:800}
+.cgrp{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 20px 6px;margin-top:13px}
+.cgrp-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px dashed var(--line2)}
+.cgrp-head .cgrp-note{color:var(--dim);font-size:11.3px;font-family:var(--mono)}
+.cgrp-body{display:flex;flex-direction:column}
+.citem{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:2px 12px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:0;padding-bottom:2px}
+.citem>p{margin:0;line-height:1.62}
+.citem .citem-tag{color:var(--dim);font-size:11.1px;margin:2px 0 0;font-family:var(--mono);white-space:nowrap;text-align:right}
+.claim-proof{grid-column:2;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.claim-proof .proof-label{color:var(--dim);font-size:10.6px;font-weight:700}
+.claim-proof a{color:var(--sub);font-size:10.7px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--mono)}
+.claim-proof a:hover{border-color:var(--accent-dim);color:var(--ink)}
+.audit-fold{margin-top:13px}
+.audit-fold>summary{cursor:pointer;color:var(--sub);font-size:12.6px;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+.audit-fold>summary::-webkit-details-marker{display:none}
+.audit-fold>summary::before{content:'▸';color:var(--accent);font-family:var(--mono);font-size:12px}
+.audit-fold[open]>summary::before{content:'▾'}
+.audit-fold .inner{padding:2px 0 12px}
+.audit-fold .fold-note{color:var(--dim);font-size:11.6px;margin:0 0 10px}
+.audit-fold .inner-limit{margin:0 0 12px}
+.audit-fold .inner-limit b{color:var(--sub);font-size:12.2px}
+.audit-fold .inner-limit ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:11.8px}
+.machfold{margin-top:13px}
+.kpi .sub2{font-family:var(--mono);font-size:11px}
+.kpi .gauge .gl{font-size:10.4px;color:var(--dim)}
+.mx{width:100%;border-collapse:collapse;margin:2px 0 4px;table-layout:fixed}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mx thead th{color:var(--dim);font-size:11.1px;font-weight:700;font-family:var(--mono);white-space:nowrap}
+.mx tbody th{color:var(--sub);font-weight:600;font-size:11.6px;font-family:var(--mono);white-space:nowrap;width:66px}
+.mx td{font-size:12.2px;line-height:1.62}
+.mx td a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.mx td a:hover{border-bottom-color:var(--accent-dim)}
+.mx .mx-empty{color:var(--dim)}
+.mx tr:last-child th,.mx tr:last-child td{border-bottom:0}
+.chip2.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+section>h2{margin-top:32px}
+.chip2.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.chip2.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+</style></head><meta name="review-date" content="20260921"><meta name="review-schema-version" content="1"><body data-route="index" data-d="20260921" data-schema-version="1" data-template-version="p1.3"><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="on" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd">更新 20260921</span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp"></div><div class="grp"></div></div></div><nav class="reading-spine" aria-label="本页阅读顺序"><span class="rs-title">本页阅读</span><a class="rs-step" href="#recommendations"><b>01</b>Top5 荐票 · 跨路筛选</a><span class="rs-arrow">→</span><a class="rs-step" href="#observations"><b>02</b>明日核心观察点</a><span class="rs-arrow">→</span><a class="rs-step" href="#routes"><b>03</b>五路看牌</a><span class="rs-arrow">→</span><a class="rs-step" href="#turning"><b>04</b>拐点预警</a><span class="rs-arrow">→</span><a class="rs-step" href="#verdict"><b>05</b>总裁决 · 自主进化</a><span class="rs-arrow">→</span><a class="rs-step" href="#master"><b>06</b>Master 综合</a><span class="rs-arrow">→</span><a class="rs-step" href="#audit-fold"><b>07</b>来源审计</a></nav><div class="rowA"><div class="hero"><div class="kick">概览 · 我当前的判断 · 截至 2026-09-21 收盘</div><h1 id="claim-index_1" aria-label="总审C档防守、空仓合法；没有跨路共同确认的正式买入。"><em>总审C档防守、空仓合法；没有跨路共同确认的正式买入。</em></h1><p>此刻我对市场的判断。明日观察点在第一屏；五路荐票按 ①竞价→②龙虎榜→③主线题材→④产业逻辑→⑤涨停复盘 深读。</p><div class="stance"><span class="pill warn">情绪档 · <b class="s-weak">总审C档防守、空仓合法；没有跨路共同确认的正式买入。 · 温度63.2</b></span><span class="pill">周期 · <b>量能2.03万亿 · 弱修档</b></span><span class="pill warn">攻防 · <b>防守观察</b></span><span class="pill hot"><b class="s-ok">三窗 · 条件观察</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">中性 45–65</span></div><span class="lab">情绪温度 · 250日分位</span><span class="big">63.2</span><div class="gauge"><div class="gtrack"><i class="gmark" style="left:63.2%"></i></div><div class="gl"><span>冰点</span><span>偏冷</span><span>中性</span><span>偏热</span><span>过热</span></div></div><span class="sub2">昨42.9→今63.2（+20.3） · 档位 偏冷→中性</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">弱修档</span></div><span class="lab">两市量能</span><span class="big">2.03<small>万亿</small></span><svg class="spark" viewBox="0 0 180 44" aria-hidden="true"><polyline fill="none" stroke="#e8a33d" stroke-width="2" points="0.0,38.0 45.0,16.84 90.0,16.84 135.0,6.0 180.0,6.0"/></svg><span class="sub2">1.97 → 2.03 → 2.03 平量（缩量分歧）</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">环比 +32%</span></div><span class="lab">涨停 / 跌停(剔ST退)</span><span class="big"><b class="up">103</b><span class="mut">/</span><b class="dn">2</b></span><span class="sub2">昨78/0→今103/2 · 炸板25只·炸板率19.5%（昨24.3%）</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">09-21</span></div><span class="lab">1进2率</span><span class="big">30.3<small>%</small></span><span class="sub2">今30.3% · 2进3率50.0% · 高度晋级46.7%</span></div></div><div class="card">模拟盘当日引擎看板缺失：—</div><details class="chain audit-fold machfold"><summary><b>机器数据核对层</b><span class="chip">温度总览 · 先行指标灯</span></summary><div class="inner"><p class="fold-note">当日权威机器源读数，供核对；判断正文见下方各栏目。</p><div id="component-IDXTEMP"><!--IDXTEMP-->
+<div class="card"><h3 style="margin:0 0 8px">温度总览 <span class="hint">机器核对 · 市场温度表权威</span></h3><p class="mut" style="margin:0 0 6px">近5日: <span class="dayc">09-09 24.2°/48只</span><span class="dayc">09-10 11.7°/35只</span><span class="dayc">09-11 12.7°/40只</span><span class="dayc">09-18 42.9°/78只</span><span class="dayc now">09-21 63.2°/103只</span></p><div id="table-2ebb99cb8abb5117"><table class="p2"><tr><th class="l">指标</th><th>读数</th></tr><tr><td class="l">情绪温度</td><td>63.2 · 档位 中性</td></tr>
+<tr><td class="l">涨停/跌停</td><td>103 / 2 · 炸板率 19.5%</td></tr>
+<tr><td class="l">量能</td><td>2.03 万亿</td></tr>
+<tr><td class="l">连板梯队</td><td> · 梯队: 5板1只 4板2只 3板5只 2板13只 1板82只</td></tr>
+</table></div></div>
+
+<!--/IDXTEMP--></div><div id="component-IDXLEAD"><!--IDXLEAD--><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 10px;font-size:12px"><span style="color:#98a0ab;font-weight:700">三窗触发器(A档)</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">❄冰点进攻窗·灭</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">☢过热禁追窗·灭</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">♨洗出反弹窗·—</span><span style="color:#6b7683">温度 63.2·中性 · 1进2率 30.3% · 昨停溢价 —</span></div><!--/IDXLEAD--></div></div></details><section id="recommendations"><h2>一 Top5 荐票 · 跨路筛选</h2><div class="card"><b>当日组件缺失</b><p>CROSSPICK：当日权威机器源缺失</p></div><div class="cgrp"><div class="cgrp-head"><span class="claim-role role-verdict">结论</span><span class="claim-source">index · claims</span></div><div class="cgrp-body"><p class="mut"><a href="#claim-index_1" title="index_1">回看完整判断与证据</a></p></div></div></section><section id="observations"><h2>二 明日核心观察点</h2><div class="cgrp"><div class="cgrp-head"><span class="claim-role role-condition">条件</span><span class="claim-source">index · claims</span></div><div class="cgrp-body"><div class="citem" id="claim-index_2"><p class="citem-tag">index · claims</p><p>明日观察涨停数、炸板率、最高板、温度及同链跨环节扩散；缺口恢复后复议。</p><div class="claim-proof"><span class="proof-label">来源</span><a href="#evidence-e2" title="e2">总审_20260921.json</a></div></div></div></div></section><section id="routes"><h2>三 五路看牌</h2><div class="card"><b>当日组件缺失</b><p>IDXVOTE：当日权威机器源缺失</p></div><div class="cgrp"><div class="cgrp-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">index · claims</span></div><div class="cgrp-body"><div class="citem" id="claim-index_3"><p class="citem-tag">index · claims</p><p>五路裁决：竞价C、席位B、题材C、产业逻辑C、涨停质量C；分歧按保守原则处理。</p><div class="claim-proof"><span class="proof-label">来源</span><a href="#evidence-e3" title="e3">总审_20260921.json</a></div></div></div></div></section><section id="turning"><h2>四 拐点预警</h2><div class="cgrp"><div class="cgrp-head"><span class="claim-role role-counterevidence">反证</span><span class="claim-source">index · claims</span></div><div class="cgrp-body"><div class="citem" id="claim-index_4"><p class="citem-tag">index · claims</p><p>中报预增雷达、风险事件源和有效9:25动态轨迹缺失；缺失不等于无风险。</p><div class="claim-proof"><span class="proof-label">来源</span><a href="#evidence-e4" title="e4">总审_20260921.json</a></div></div></div></div></section><section id="verdict"><h2>五 总裁决 · 自主进化</h2><div id="component-ENGINEBOOKS"><!--ENGINEBOOKS--><div class="rowE"><div class="card"><h3>六账本 · 当日引擎净值</h3><div class="hb"><span class="hbl">竞价</span><div class="hbt"><i class="" style="width:0%"></i></div><span class="hbv">—</span><span class="hbs">净值 —</span></div><div class="hb"><span class="hbl">龙虎榜席位</span><div class="hbt"><i class="" style="width:0%"></i></div><span class="hbv">—</span><span class="hbs">净值 —</span></div><div class="hb"><span class="hbl">主线题材</span><div class="hbt"><i class="" style="width:0%"></i></div><span class="hbv">—</span><span class="hbs">净值 —</span></div><div class="hb"><span class="hbl">产业逻辑</span><div class="hbt"><i class="" style="width:0%"></i></div><span class="hbv">—</span><span class="hbs">净值 —</span></div><div class="hb"><span class="hbl">涨停质量</span><div class="hbt"><i class="" style="width:0%"></i></div><span class="hbv">—</span><span class="hbs">净值 —</span></div><div class="hb"><span class="hbl">总 Master</span><div class="hbt"><i class="" style="width:0%"></i></div><span class="hbv">—</span><span class="hbs">净值 —</span></div><p class="mut">日期 20260921 · 各账本独立核算；读取当日引擎净值，未重算交易收益。</p></div></div><!--/ENGINEBOOKS--></div><div class="cgrp"><div class="cgrp-head"><span class="claim-role role-verdict">结论</span><span class="claim-source">index · claims</span></div><div class="cgrp-body"><div class="citem" id="claim-index_5"><p class="citem-tag">index · claims</p><p>C档防守，席位路局部B档不足以推翻其他四路防守判断。</p><div class="claim-proof"><span class="proof-label">来源</span><a href="#evidence-e5" title="e5">总审_20260921.json</a></div></div></div></div></section><section id="master"><h2>六 Master 综合</h2><div class="cgrp"><div class="cgrp-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">index · claims</span></div><div class="cgrp-body"><div class="citem" id="claim-index_6"><p class="citem-tag">index · claims</p><p>认知库最新累计快照as_of=20260911（本日为历史累计真源，库内无当日晚间新增条目）；本日总审按防守原则处理五路分歧，未升级席位路局部信号。当日认知迭代条目：中性温度不能替代主线确认；将温度、梯队、催化证据、竞价动态分层。</p><div class="claim-proof"><span class="proof-label">来源</span><a href="#evidence-e6" title="e6">总审_20260921.json</a></div></div></div></div></section><details class="chain audit-fold" id="audit-fold"><summary><b>来源审计 · 编辑说明与全部证据回链</b><span class="chip">3 条说明 · 83 条证据</span></summary><div class="inner"><div class="inner-limit"><b>数据边界</b><ul><li>仅使用截至20260921已留档数据；缺失口径保持null或partial，不以缺失推断安全。</li><li>当日机器组件未齐：CROSSPICK、IDXVOTE、ENGINEBOOKS</li><li>当日引擎看板缺失；收益与持仓显示 —，未手算。</li></ul></div><ul><li>首屏只给总判断及决定性变化，观察点负责次日验证。</li><li>五路看牌保留各自依据，拐点区专列反证与转向条件。</li><li>总裁决交代攻防；Master 专列新问题、线索、指派与认知，不再重复编号。</li></ul><div id="evidence-e1"><b>e1</b><pre>{
+  &quot;id&quot;: &quot;e1&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决&quot;,
+  &quot;value&quot;: {
+    &quot;结论&quot;: &quot;C档防守：五路中四路为C档，席位路为B档但证据集中且存在双源/样本限制，不能单独推翻环境与主线缺口。&quot;,
+    &quot;档位&quot;: &quot;C&quot;,
+    &quot;证据&quot;: [
+      &quot;温度63.2中性、涨停103/炸板25、最高板5、首板82；A档催化主线数为0。&quot;,
+      &quot;竞价有效9:25动态轨迹及撤单差分不可用；风险事件源缺失，不能把缺失当利多。&quot;,
+      &quot;席位路虽为B档，但荐票为条件性且与其余四路未形成共振，按分歧保守处理。&quot;
+    ],
+    &quot;空仓语义&quot;: &quot;当前无共同确认的进攻主线；空仓为合法研究结论，不代表预测市场必跌。&quot;
+  },
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e2"><b>e2</b><pre>{
+  &quot;id&quot;: &quot;e2&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单&quot;,
+  &quot;value&quot;: [
+    &quot;补齐缺失源后重新跑事实层与相应命门路&quot;,
+    &quot;下一交易日结算本次可证伪条件&quot;,
+    &quot;确认正式发布版本与哨兵结果后再对外宣称完成&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e3"><b>e3</b><pre>{
+  &quot;id&quot;: &quot;e3&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决&quot;,
+  &quot;value&quot;: [
+    {
+      &quot;路&quot;: &quot;auction&quot;,
+      &quot;档位&quot;: &quot;C&quot;,
+      &quot;结论&quot;: &quot;C档防守：结构偏强但有效9:25快照与撤单轨迹不可用，明晨空仓，等待高开闸门与开盘右侧确认。&quot;,
+      &quot;荐票数&quot;: 0
+    },
+    {
+      &quot;路&quot;: &quot;lhb&quot;,
+      &quot;档位&quot;: &quot;B&quot;,
+      &quot;结论&quot;: &quot;B档：中性偏进攻但只保留一只条件性轻仓荐票。市场温度处于中性，双源一致票存在A档双点共振；S档正式参与仅2行，B档与未匹配通道占主导，不能把单日涨停扩散读成全面进攻。&quot;,
+      &quot;荐票数&quot;: 3
+    },
+    {
+      &quot;路&quot;: &quot;theme&quot;,
+      &quot;档位&quot;: &quot;C&quot;,
+      &quot;结论&quot;: &quot;无可核验A档催化主线；103只涨停全部为B档行业兜底，行业聚集不能升级为题材主线。结构上家居用品具备5板/3家/早封占比约0.67/开板占比0.33的最强承载，出版、房地产服、医疗服务、化学制品有局部高度，但均缺公告或THS催化确认，统一按C档观察，空仓。&quot;,
+      &quot;荐票数&quot;: 0
+    },
+    {
+      &quot;路&quot;: &quot;logic&quot;,
+      &quot;档位&quot;: &quot;C&quot;,
+      &quot;结论&quot;: &quot;C档防守：空仓为主，不把行业归位或单票首板升级为产业逻辑主线。20260921涨停池103只，模板153只唯一代码中仅4只覆盖，且4只均1板、分属不同链条；当日中报预增雷达缺失，无法完成模板全量×雷达交叉，因此不具备A档业绩背书。&quot;,
+      &quot;荐票数&quot;: 3
+    },
+    {
+      &quot;路&quot;: &quot;limitup&quot;,
+      &quot;档位&quot;: &quot;C防守&quot;,
+      &quot;结论&quot;: &quot;C防守，空仓；全池执行口径仍是负期望，观察不买。&quot;,
+      &quot;荐票数&quot;: 3
+    }
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e4"><b>e4</b><pre>{
+  &quot;id&quot;: &quot;e4&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/检查四项&quot;,
+  &quot;value&quot;: {
+    &quot;数据核验&quot;: &quot;103/103涨停池与题材归位一致；事实层关键数值已由fact回源。&quot;,
+    &quot;五路独立性&quot;: &quot;五路判断文件分别读取并落盘；总审仅在其后汇总，不回写路判断。&quot;,
+    &quot;零后视镜&quot;: &quot;证据范围截至20260921；次日内容仅作为可证伪条件，不作为今日证据。&quot;,
+    &quot;缺口&quot;: &quot;中报预增雷达缺失、风险事件源缺失、竞价9:25轨迹缺失、部分模拟盘状态缺失。&quot;
+  },
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e5"><b>e5</b><pre>{
+  &quot;id&quot;: &quot;e5&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/结论&quot;,
+  &quot;value&quot;: &quot;今日复盘总裁决：C档防守：五路中四路为C档，席位路为B档但证据集中且存在双源/样本限制，不能单独推翻环境与主线缺口。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e6"><b>e6</b><pre>{
+  &quot;id&quot;: &quot;e6&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0&quot;,
+  &quot;value&quot;: &quot;中性温度不能替代主线确认；将温度、梯队、催化证据、竞价动态分层。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e7"><b>e7</b><pre>{
+  &quot;id&quot;: &quot;e7&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e8"><b>e8</b><pre>{
+  &quot;id&quot;: &quot;e8&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e9"><b>e9</b><pre>{
+  &quot;id&quot;: &quot;e9&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e10"><b>e10</b><pre>{
+  &quot;id&quot;: &quot;e10&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e11"><b>e11</b><pre>{
+  &quot;id&quot;: &quot;e11&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e12"><b>e12</b><pre>{
+  &quot;id&quot;: &quot;e12&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;pointer&quot;: &quot;/20260921/晋级&quot;,
+  &quot;value&quot;: {
+    &quot;来源&quot;: &quot;local&quot;,
+    &quot;涨停数_净&quot;: 103,
+    &quot;首板&quot;: 82,
+    &quot;二连板&quot;: 10,
+    &quot;三连板&quot;: 5,
+    &quot;一进二率&quot;: 0.303,
+    &quot;二进三率&quot;: 0.5,
+    &quot;高度晋级率&quot;: 0.467
+  },
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;a881ffa6e4c64048ee4aad52aa5152783b2e78f452117957097d0844f546e0de&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e13"><b>e13</b><pre>{
+  &quot;id&quot;: &quot;e13&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e14"><b>e14</b><pre>{
+  &quot;id&quot;: &quot;e14&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e15"><b>e15</b><pre>{
+  &quot;id&quot;: &quot;e15&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决&quot;,
+  &quot;value&quot;: {
+    &quot;结论&quot;: &quot;C档防守：五路中四路为C档，席位路为B档但证据集中且存在双源/样本限制，不能单独推翻环境与主线缺口。&quot;,
+    &quot;档位&quot;: &quot;C&quot;,
+    &quot;证据&quot;: [
+      &quot;温度63.2中性、涨停103/炸板25、最高板5、首板82；A档催化主线数为0。&quot;,
+      &quot;竞价有效9:25动态轨迹及撤单差分不可用；风险事件源缺失，不能把缺失当利多。&quot;,
+      &quot;席位路虽为B档，但荐票为条件性且与其余四路未形成共振，按分歧保守处理。&quot;
+    ],
+    &quot;空仓语义&quot;: &quot;当前无共同确认的进攻主线；空仓为合法研究结论，不代表预测市场必跌。&quot;
+  },
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e16"><b>e16</b><pre>{
+  &quot;id&quot;: &quot;e16&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/总审_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖&quot;,
+  &quot;value&quot;: [
+    &quot;主线形成条件：A档催化或同链跨环节扩散，且高度梯队不塌。&quot;,
+    &quot;先行指标的昨日涨停溢价为null，不能用于正向确认。&quot;,
+    &quot;下一次复议优先补齐中报预增雷达、风险事件源和9:25动态轨迹。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;00df6d4ba5e0c81c5584b01ace95d418e0a6d75be23bf1dfefe5fab8943b6d40&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e17"><b>e17</b><pre>{
+  &quot;id&quot;: &quot;e17&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/cycle判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0&quot;,
+  &quot;value&quot;: &quot;中性温度不等于可进攻；将宽度/高度/催化证据分开审查。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;1e362d8683962aa51fe47af8fbb3bb8494b0a5f07784d17fdfb62708d836b8f6&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e18"><b>e18</b><pre>{
+  &quot;id&quot;: &quot;e18&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e19"><b>e19</b><pre>{
+  &quot;id&quot;: &quot;e19&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e20"><b>e20</b><pre>{
+  &quot;id&quot;: &quot;e20&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e21"><b>e21</b><pre>{
+  &quot;id&quot;: &quot;e21&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e22"><b>e22</b><pre>{
+  &quot;id&quot;: &quot;e22&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/auction判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/结论&quot;,
+  &quot;value&quot;: &quot;C档防守：结构偏强但有效9:25快照与撤单轨迹不可用，明晨空仓，等待高开闸门与开盘右侧确认。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;254707f49ac44fc9fd7aaf59d6c95a3d07325507bc983aa116598248db088c4d&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e23"><b>e23</b><pre>{
+  &quot;id&quot;: &quot;e23&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/auction判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖/1/结论&quot;,
+  &quot;value&quot;: &quot;最新可用20260918池执行均收-1.16%、执行胜率4/11，高开档为低开≤0 -0.27、0~5 -5.57、≥5 -0.83；静态强度不直接等于次日收益。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;254707f49ac44fc9fd7aaf59d6c95a3d07325507bc983aa116598248db088c4d&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e24"><b>e24</b><pre>{
+  &quot;id&quot;: &quot;e24&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e25"><b>e25</b><pre>{
+  &quot;id&quot;: &quot;e25&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e26"><b>e26</b><pre>{
+  &quot;id&quot;: &quot;e26&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/auction判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/可证伪条件&quot;,
+  &quot;value&quot;: [
+    &quot;若后续取得同口径9:25前后轨迹，且池内高开分布与历史闸门方向一致，则C档可上调为A/B档观察。&quot;,
+    &quot;若明晨高开≥5%的池票仍能在执行口径下稳定取得正均收且胜率明显高于历史桶，则高开闸门需重标。&quot;,
+    &quot;若下一交易日不满足高开闸门并出现开盘大单承接、板块联动与分时均线之上确认，则空仓结论可被右侧信号推翻。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;254707f49ac44fc9fd7aaf59d6c95a3d07325507bc983aa116598248db088c4d&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e27"><b>e27</b><pre>{
+  &quot;id&quot;: &quot;e27&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/auction判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/独立盲区声明&quot;,
+  &quot;value&quot;: &quot;本判断只读取竞价路输入、竞价历史分桶/结算/认知及auction模拟盘状态，不读取其他路当日判断；竞价快照存档 meta 采集时间11:49:02、来源sina_spot，可信度标注为污染:&gt;09:30盘中累计,只留档不训练；因此不能把该csv的开盘字段倒推为有效9:25轨迹。竞价撤单差分unavailable且错误为[&#x27;缺少同一代码9:20前后两时点轨迹&#x27;]；昨日涨停溢价字段为None，无数据处写null，未用其他来源补造。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;254707f49ac44fc9fd7aaf59d6c95a3d07325507bc983aa116598248db088c4d&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e28"><b>e28</b><pre>{
+  &quot;id&quot;: &quot;e28&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/auction判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/正文&quot;,
+  &quot;value&quot;: &quot;当日温度63.2、冻结池21只且09:25一字8/21，结构强于38.0分池基准；但快照meta在11:49:02采集并标注污染:&gt;09:30盘中累计,只留档不训练，不能补造9:25大单、撤单或池内开盘分布。评分继续只作池内排序，执行先服从高开闸门。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;254707f49ac44fc9fd7aaf59d6c95a3d07325507bc983aa116598248db088c4d&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e29"><b>e29</b><pre>{
+  &quot;id&quot;: &quot;e29&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e30"><b>e30</b><pre>{
+  &quot;id&quot;: &quot;e30&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e31"><b>e31</b><pre>{
+  &quot;id&quot;: &quot;e31&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e32"><b>e32</b><pre>{
+  &quot;id&quot;: &quot;e32&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e33"><b>e33</b><pre>{
+  &quot;id&quot;: &quot;e33&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/lhb判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/结论&quot;,
+  &quot;value&quot;: &quot;B档：中性偏进攻但只保留一只条件性轻仓荐票。市场温度处于中性，双源一致票存在A档双点共振；S档正式参与仅2行，B档与未匹配通道占主导，不能把单日涨停扩散读成全面进攻。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;7fb4ac6b9bfc5c6b923c53c679253c4e82f85f59edbc7ac05eccd9366a07b7ab&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e34"><b>e34</b><pre>{
+  &quot;id&quot;: &quot;e34&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/lhb判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据&quot;,
+  &quot;value&quot;: [
+    &quot;lhb.csv共68行、60只代码；股票级净买只取当日榜行，剔除连续/累计/严重异常区间榜，不累加同票多榜；席位动向原始290行，当前榜口径54行，按（代码,席位）取买入金额最大去重后222行。&quot;,
+    &quot;分档匹配：S档2行/2席，净额0.3725亿；A档17行/12席，净额6.6059亿；B档140行/38席，净额33.0297亿；未匹配29行。&quot;,
+    &quot;市场温度63.2、中性；涨停103、炸板25、炸板率0.195、跌停2、最高5板、二板加21，封板结构尚可但非极热。&quot;,
+    &quot;双源校验status=pass：可比52，一致19，分歧12，强矛盾3，打折18；源1为股票级当日榜净买权威，源2为买入前五买侧净额，卖出前五缺失。&quot;,
+    &quot;正式荐票中002080中材科技源1净买5.5527亿、源28.8864亿，双源一致且两席A档净买；002792仅列观察；603120因双源打折、S档n=9小样本且近60日位置偏高降级。&quot;,
+    &quot;历史校准：席位路最新战绩画像截至20260911，合计24/56、均收-0.6%；信号基准样本区间20260401-20260703，总样本4433，基准观察胜率47.6%、观察均涨0.23%，跟随胜率45.0%、跟随均涨-0.09%。&quot;,
+    &quot;模拟盘实际状态文件date=20260911、持仓数=0、现金=1029268.94；本期无持仓可卖，交易计划仅对候选逐票表态。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;7fb4ac6b9bfc5c6b923c53c679253c4e82f85f59edbc7ac05eccd9366a07b7ab&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e35"><b>e35</b><pre>{
+  &quot;id&quot;: &quot;e35&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/lhb判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/结论&quot;,
+  &quot;value&quot;: &quot;1只条件性轻仓荐票，2只观察；不追竞价高开，不把观察票当交易指令。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;7fb4ac6b9bfc5c6b923c53c679253c4e82f85f59edbc7ac05eccd9366a07b7ab&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e36"><b>e36</b><pre>{
+  &quot;id&quot;: &quot;e36&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/lhb判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/可证伪条件&quot;,
+  &quot;value&quot;: &quot;明日若S档正式出手至少5席，且至少两只涨停池股票同时满足源1源2方向一致、S/A多档共振、机构同向净买并且双源分歧不扩大，则当前B档谨慎判断上修；若S档仍低参与或荐票源1转净卖，则下修为防守。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;7fb4ac6b9bfc5c6b923c53c679253c4e82f85f59edbc7ac05eccd9366a07b7ab&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e37"><b>e37</b><pre>{
+  &quot;id&quot;: &quot;e37&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/lhb判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖&quot;,
+  &quot;value&quot;: [
+    &quot;资金结构：S档净额0.3725亿、A档净额6.6059亿，但B档净额33.0297亿，B档通道资金远大于正式S/A，不等同聪明游资全面回归。&quot;,
+    &quot;候选分层：002080为双A档+机构/深股通同向且双源一致；002792为单A档+B档共振但换手20.3126%偏高；603120为S+B但源2买侧打折、S档n=9小样本且近60日区间位置87.83%，不升级。&quot;,
+    &quot;数据边界：指定学习目录下同日zt_pool缺失，已回源同日根目录文件；席位净额仍是买入前五明细，不能据此推断完整卖方结构；转债与区间累计榜均未进入荐票口径。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;7fb4ac6b9bfc5c6b923c53c679253c4e82f85f59edbc7ac05eccd9366a07b7ab&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e38"><b>e38</b><pre>{
+  &quot;id&quot;: &quot;e38&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/lhb判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/正文&quot;,
+  &quot;value&quot;: &quot;本日中材科技以股票级当日榜净买5.5527亿元、源2买侧8.8864亿元双源一致，且两席A档净买、近60日收盘距高点29.68%；同日肯特催化虽然有S档，但源2相对源1明显放大且位置处近60日高位。规则更新为：双源一致是必要条件，A/S多档与近60日位置共同决定是否进入荐票；S档小样本或双源打折只能观察。可证伪判据：后续同类票若双源一致、A/S多档、非高位且次日执行口径持续优于信号基准，才提高本规则权重。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;7fb4ac6b9bfc5c6b923c53c679253c4e82f85f59edbc7ac05eccd9366a07b7ab&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e39"><b>e39</b><pre>{
+  &quot;id&quot;: &quot;e39&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e40"><b>e40</b><pre>{
+  &quot;id&quot;: &quot;e40&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e41"><b>e41</b><pre>{
+  &quot;id&quot;: &quot;e41&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e42"><b>e42</b><pre>{
+  &quot;id&quot;: &quot;e42&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e43"><b>e43</b><pre>{
+  &quot;id&quot;: &quot;e43&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/theme判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/结论&quot;,
+  &quot;value&quot;: &quot;无可核验A档催化主线；103只涨停全部为B档行业兜底，行业聚集不能升级为题材主线。结构上家居用品具备5板/3家/早封占比约0.67/开板占比0.33的最强承载，出版、房地产服、医疗服务、化学制品有局部高度，但均缺公告或THS催化确认，统一按C档观察，空仓。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;85e171f1be7a7ba00b7b394a9bb91101d1947d361e1d12cb30e03baf6ff86968&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e44"><b>e44</b><pre>{
+  &quot;id&quot;: &quot;e44&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/theme判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/独立盲区声明&quot;,
+  &quot;value&quot;: &quot;独立盲区：题材四维_20260921.json尚未生成，不能重算宽度/高度/晋级/动量序列；本日未发现公告或THS涨停原因，题材归位103只全部为B档行业兜底(A=0、B=103、C=0)，行业字段只用于归位，不能冒充题材催化；生命周期文件虽存在，其阶段仅作已落盘结构标签，不补齐缺失四维。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;85e171f1be7a7ba00b7b394a9bb91101d1947d361e1d12cb30e03baf6ff86968&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e45"><b>e45</b><pre>{
+  &quot;id&quot;: &quot;e45&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/theme判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖&quot;,
+  &quot;value&quot;: [
+    &quot;已使用唯一题材真源、涨停对链条、主流题材6有、题材生命周期、市场温度表、zt_pool.csv、summary.json及本路模拟盘状态；已读取最新本路认知库_theme_20260911.json与战绩画像_theme_20260911.json；未读取其他路当日判断。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;85e171f1be7a7ba00b7b394a9bb91101d1947d361e1d12cb30e03baf6ff86968&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e46"><b>e46</b><pre>{
+  &quot;id&quot;: &quot;e46&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/theme判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/正文&quot;,
+  &quot;value&quot;: &quot;当日103只全部B档行业兜底、题材四维缺口且无公告/THS原因时，即使存在5板高标，也只记录结构观察，不升级为主线或荐票。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;85e171f1be7a7ba00b7b394a9bb91101d1947d361e1d12cb30e03baf6ff86968&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e47"><b>e47</b><pre>{
+  &quot;id&quot;: &quot;e47&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/涨停对链条_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/题材线数&quot;,
+  &quot;value&quot;: 52,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;51327e8deb365bcf5db564cfab0721f5bb2e5bb54cbace14685fcca2574f6f24&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e48"><b>e48</b><pre>{
+  &quot;id&quot;: &quot;e48&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/题材归位_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/映射&quot;,
+  &quot;value&quot;: {
+    &quot;000504&quot;: {
+      &quot;股票代码&quot;: &quot;000504&quot;,
+      &quot;名称&quot;: &quot;南华生物&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗服务&quot;,
+      &quot;环节&quot;: &quot;医疗服务&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗服务&quot;,
+      &quot;连板数&quot;: &quot;3&quot;,
+      &quot;涨停统计&quot;: &quot;3/3&quot;
+    },
+    &quot;000607&quot;: {
+      &quot;股票代码&quot;: &quot;000607&quot;,
+      &quot;名称&quot;: &quot;华媒控股&quot;,
+      &quot;大方向&quot;: &quot;待归位·广告营销&quot;,
+      &quot;环节&quot;: &quot;广告营销&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;广告营销&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;001216&quot;: {
+      &quot;股票代码&quot;: &quot;001216&quot;,
+      &quot;名称&quot;: &quot;华瓷股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·家居用品&quot;,
+      &quot;环节&quot;: &quot;家居用品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;家居用品&quot;,
+      &quot;连板数&quot;: &quot;5&quot;,
+      &quot;涨停统计&quot;: &quot;5/5&quot;
+    },
+    &quot;600743&quot;: {
+      &quot;股票代码&quot;: &quot;600743&quot;,
+      &quot;名称&quot;: &quot;华远控股&quot;,
+      &quot;大方向&quot;: &quot;待归位·房地产服&quot;,
+      &quot;环节&quot;: &quot;房地产服&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;房地产服&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600630&quot;: {
+      &quot;股票代码&quot;: &quot;600630&quot;,
+      &quot;名称&quot;: &quot;龙头股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·服装家纺&quot;,
+      &quot;环节&quot;: &quot;服装家纺&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;服装家纺&quot;,
+      &quot;连板数&quot;: &quot;3&quot;,
+      &quot;涨停统计&quot;: &quot;3/3&quot;
+    },
+    &quot;600301&quot;: {
+      &quot;股票代码&quot;: &quot;600301&quot;,
+      &quot;名称&quot;: &quot;华锡有色&quot;,
+      &quot;大方向&quot;: &quot;待归位·小金属&quot;,
+      &quot;环节&quot;: &quot;小金属&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;小金属&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600825&quot;: {
+      &quot;股票代码&quot;: &quot;600825&quot;,
+      &quot;名称&quot;: &quot;新华传媒&quot;,
+      &quot;大方向&quot;: &quot;待归位·出版&quot;,
+      &quot;环节&quot;: &quot;出版&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;出版&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603230&quot;: {
+      &quot;股票代码&quot;: &quot;603230&quot;,
+      &quot;名称&quot;: &quot;内蒙新华&quot;,
+      &quot;大方向&quot;: &quot;待归位·出版&quot;,
+      &quot;环节&quot;: &quot;出版&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;出版&quot;,
+      &quot;连板数&quot;: &quot;4&quot;,
+      &quot;涨停统计&quot;: &quot;4/4&quot;
+    },
+    &quot;002453&quot;: {
+      &quot;股票代码&quot;: &quot;002453&quot;,
+      &quot;名称&quot;: &quot;华软科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制品&quot;,
+      &quot;环节&quot;: &quot;化学制品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制品&quot;,
+      &quot;连板数&quot;: &quot;3&quot;,
+      &quot;涨停统计&quot;: &quot;3/3&quot;
+    },
+    &quot;002614&quot;: {
+      &quot;股票代码&quot;: &quot;002614&quot;,
+      &quot;名称&quot;: &quot;奥佳华&quot;,
+      &quot;大方向&quot;: &quot;待归位·其他家电&quot;,
+      &quot;环节&quot;: &quot;其他家电&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;其他家电&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002172&quot;: {
+      &quot;股票代码&quot;: &quot;002172&quot;,
+      &quot;名称&quot;: &quot;澳洋健康&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗服务&quot;,
+      &quot;环节&quot;: &quot;医疗服务&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗服务&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;601123&quot;: {
+      &quot;股票代码&quot;: &quot;601123&quot;,
+      &quot;名称&quot;: &quot;马矿股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·冶钢原料&quot;,
+      &quot;环节&quot;: &quot;冶钢原料&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;冶钢原料&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;6/3&quot;
+    },
+    &quot;000910&quot;: {
+      &quot;股票代码&quot;: &quot;000910&quot;,
+      &quot;名称&quot;: &quot;大亚圣象&quot;,
+      &quot;大方向&quot;: &quot;待归位·家居用品&quot;,
+      &quot;环节&quot;: &quot;家居用品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;家居用品&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;002303&quot;: {
+      &quot;股票代码&quot;: &quot;002303&quot;,
+      &quot;名称&quot;: &quot;美盈森&quot;,
+      &quot;大方向&quot;: &quot;待归位·包装印刷&quot;,
+      &quot;环节&quot;: &quot;包装印刷&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;包装印刷&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;4/2&quot;
+    },
+    &quot;603316&quot;: {
+      &quot;股票代码&quot;: &quot;603316&quot;,
+      &quot;名称&quot;: &quot;诚邦股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·半导体&quot;,
+      &quot;环节&quot;: &quot;半导体&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;半导体&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;601811&quot;: {
+      &quot;股票代码&quot;: &quot;601811&quot;,
+      &quot;名称&quot;: &quot;新华文轩&quot;,
+      &quot;大方向&quot;: &quot;待归位·出版&quot;,
+      &quot;环节&quot;: &quot;出版&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;出版&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;000756&quot;: {
+      &quot;股票代码&quot;: &quot;000756&quot;,
+      &quot;名称&quot;: &quot;新华制药&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600448&quot;: {
+      &quot;股票代码&quot;: &quot;600448&quot;,
+      &quot;名称&quot;: &quot;华纺股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·纺织制造&quot;,
+      &quot;环节&quot;: &quot;纺织制造&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;纺织制造&quot;,
+      &quot;连板数&quot;: &quot;3&quot;,
+      &quot;涨停统计&quot;: &quot;3/3&quot;
+    },
+    &quot;600664&quot;: {
+      &quot;股票代码&quot;: &quot;600664&quot;,
+      &quot;名称&quot;: &quot;哈药股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603580&quot;: {
+      &quot;股票代码&quot;: &quot;603580&quot;,
+      &quot;名称&quot;: &quot;艾艾精工&quot;,
+      &quot;大方向&quot;: &quot;待归位·塑料&quot;,
+      &quot;环节&quot;: &quot;塑料&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;塑料&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002860&quot;: {
+      &quot;股票代码&quot;: &quot;002860&quot;,
+      &quot;名称&quot;: &quot;星帅尔&quot;,
+      &quot;大方向&quot;: &quot;待归位·家电零部&quot;,
+      &quot;环节&quot;: &quot;家电零部&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;家电零部&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;001376&quot;: {
+      &quot;股票代码&quot;: &quot;001376&quot;,
+      &quot;名称&quot;: &quot;百通能源&quot;,
+      &quot;大方向&quot;: &quot;待归位·电力&quot;,
+      &quot;环节&quot;: &quot;电力&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;电力&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;688315&quot;: {
+      &quot;股票代码&quot;: &quot;688315&quot;,
+      &quot;名称&quot;: &quot;诺禾致源&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗服务&quot;,
+      &quot;环节&quot;: &quot;医疗服务&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗服务&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002178&quot;: {
+      &quot;股票代码&quot;: &quot;002178&quot;,
+      &quot;名称&quot;: &quot;延华智能&quot;,
+      &quot;大方向&quot;: &quot;待归位·软件开发&quot;,
+      &quot;环节&quot;: &quot;软件开发&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;软件开发&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603068&quot;: {
+      &quot;股票代码&quot;: &quot;603068&quot;,
+      &quot;名称&quot;: &quot;博通集成&quot;,
+      &quot;大方向&quot;: &quot;待归位·半导体&quot;,
+      &quot;环节&quot;: &quot;半导体&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;半导体&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;002367&quot;: {
+      &quot;股票代码&quot;: &quot;002367&quot;,
+      &quot;名称&quot;: &quot;康力电梯&quot;,
+      &quot;大方向&quot;: &quot;待归位·专用设备&quot;,
+      &quot;环节&quot;: &quot;专用设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;专用设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;001389&quot;: {
+      &quot;股票代码&quot;: &quot;001389&quot;,
+      &quot;名称&quot;: &quot;广合科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·元件&quot;,
+      &quot;环节&quot;: &quot;元件&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;元件&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603636&quot;: {
+      &quot;股票代码&quot;: &quot;603636&quot;,
+      &quot;名称&quot;: &quot;南威软件&quot;,
+      &quot;大方向&quot;: &quot;待归位·IT服务Ⅱ&quot;,
+      &quot;环节&quot;: &quot;IT服务Ⅱ&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;IT服务Ⅱ&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002589&quot;: {
+      &quot;股票代码&quot;: &quot;002589&quot;,
+      &quot;名称&quot;: &quot;瑞康医药&quot;,
+      &quot;大方向&quot;: &quot;待归位·医药商业&quot;,
+      &quot;环节&quot;: &quot;医药商业&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医药商业&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;603663&quot;: {
+      &quot;股票代码&quot;: &quot;603663&quot;,
+      &quot;名称&quot;: &quot;三祥新材&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学原料&quot;,
+      &quot;环节&quot;: &quot;化学原料&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学原料&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;601086&quot;: {
+      &quot;股票代码&quot;: &quot;601086&quot;,
+      &quot;名称&quot;: &quot;国芳集团&quot;,
+      &quot;大方向&quot;: &quot;待归位·一般零售&quot;,
+      &quot;环节&quot;: &quot;一般零售&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;一般零售&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;17/9&quot;
+    },
+    &quot;603001&quot;: {
+      &quot;股票代码&quot;: &quot;603001&quot;,
+      &quot;名称&quot;: &quot;奥康国际&quot;,
+      &quot;大方向&quot;: &quot;待归位·服装家纺&quot;,
+      &quot;环节&quot;: &quot;服装家纺&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;服装家纺&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;600218&quot;: {
+      &quot;股票代码&quot;: &quot;600218&quot;,
+      &quot;名称&quot;: &quot;全柴动力&quot;,
+      &quot;大方向&quot;: &quot;待归位·汽车零部&quot;,
+      &quot;环节&quot;: &quot;汽车零部&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;汽车零部&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;688112&quot;: {
+      &quot;股票代码&quot;: &quot;688112&quot;,
+      &quot;名称&quot;: &quot;鼎阳科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·通用设备&quot;,
+      &quot;环节&quot;: &quot;通用设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;通用设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002585&quot;: {
+      &quot;股票代码&quot;: &quot;002585&quot;,
+      &quot;名称&quot;: &quot;双星新材&quot;,
+      &quot;大方向&quot;: &quot;待归位·塑料&quot;,
+      &quot;环节&quot;: &quot;塑料&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;塑料&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;7/4&quot;
+    },
+    &quot;600613&quot;: {
+      &quot;股票代码&quot;: &quot;600613&quot;,
+      &quot;名称&quot;: &quot;神奇制药&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600281&quot;: {
+      &quot;股票代码&quot;: &quot;600281&quot;,
+      &quot;名称&quot;: &quot;华阳新材&quot;,
+      &quot;大方向&quot;: &quot;待归位·小金属&quot;,
+      &quot;环节&quot;: &quot;小金属&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;小金属&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603319&quot;: {
+      &quot;股票代码&quot;: &quot;603319&quot;,
+      &quot;名称&quot;: &quot;美湖股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·汽车零部&quot;,
+      &quot;环节&quot;: &quot;汽车零部&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;汽车零部&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002869&quot;: {
+      &quot;股票代码&quot;: &quot;002869&quot;,
+      &quot;名称&quot;: &quot;金溢科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·计算机设&quot;,
+      &quot;环节&quot;: &quot;计算机设&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;计算机设&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603258&quot;: {
+      &quot;股票代码&quot;: &quot;603258&quot;,
+      &quot;名称&quot;: &quot;电魂网络&quot;,
+      &quot;大方向&quot;: &quot;待归位·游戏Ⅱ&quot;,
+      &quot;环节&quot;: &quot;游戏Ⅱ&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;游戏Ⅱ&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002084&quot;: {
+      &quot;股票代码&quot;: &quot;002084&quot;,
+      &quot;名称&quot;: &quot;海鸥住工&quot;,
+      &quot;大方向&quot;: &quot;待归位·家居用品&quot;,
+      &quot;环节&quot;: &quot;家居用品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;家居用品&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600894&quot;: {
+      &quot;股票代码&quot;: &quot;600894&quot;,
+      &quot;名称&quot;: &quot;广日股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·专用设备&quot;,
+      &quot;环节&quot;: &quot;专用设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;专用设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603042&quot;: {
+      &quot;股票代码&quot;: &quot;603042&quot;,
+      &quot;名称&quot;: &quot;华脉科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·通信设备&quot;,
+      &quot;环节&quot;: &quot;通信设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;通信设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;4/2&quot;
+    },
+    &quot;001373&quot;: {
+      &quot;股票代码&quot;: &quot;001373&quot;,
+      &quot;名称&quot;: &quot;翔腾新材&quot;,
+      &quot;大方向&quot;: &quot;待归位·光学光电&quot;,
+      &quot;环节&quot;: &quot;光学光电&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;光学光电&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603289&quot;: {
+      &quot;股票代码&quot;: &quot;603289&quot;,
+      &quot;名称&quot;: &quot;泰瑞机器&quot;,
+      &quot;大方向&quot;: &quot;待归位·专用设备&quot;,
+      &quot;环节&quot;: &quot;专用设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;专用设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600593&quot;: {
+      &quot;股票代码&quot;: &quot;600593&quot;,
+      &quot;名称&quot;: &quot;大连圣亚&quot;,
+      &quot;大方向&quot;: &quot;待归位·旅游及景&quot;,
+      &quot;环节&quot;: &quot;旅游及景&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;旅游及景&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;3/2&quot;
+    },
+    &quot;600785&quot;: {
+      &quot;股票代码&quot;: &quot;600785&quot;,
+      &quot;名称&quot;: &quot;新华百货&quot;,
+      &quot;大方向&quot;: &quot;待归位·一般零售&quot;,
+      &quot;环节&quot;: &quot;一般零售&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;一般零售&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;920478&quot;: {
+      &quot;股票代码&quot;: &quot;920478&quot;,
+      &quot;名称&quot;: &quot;峆一药业&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002349&quot;: {
+      &quot;股票代码&quot;: &quot;002349&quot;,
+      &quot;名称&quot;: &quot;精华制药&quot;,
+      &quot;大方向&quot;: &quot;待归位·中药Ⅱ&quot;,
+      &quot;环节&quot;: &quot;中药Ⅱ&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;中药Ⅱ&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002388&quot;: {
+      &quot;股票代码&quot;: &quot;002388&quot;,
+      &quot;名称&quot;: &quot;新亚制程&quot;,
+      &quot;大方向&quot;: &quot;待归位·其他电子&quot;,
+      &quot;环节&quot;: &quot;其他电子&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;其他电子&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;4/2&quot;
+    },
+    &quot;002724&quot;: {
+      &quot;股票代码&quot;: &quot;002724&quot;,
+      &quot;名称&quot;: &quot;海洋王&quot;,
+      &quot;大方向&quot;: &quot;待归位·照明设备&quot;,
+      &quot;环节&quot;: &quot;照明设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;照明设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;4/2&quot;
+    },
+    &quot;600721&quot;: {
+      &quot;股票代码&quot;: &quot;600721&quot;,
+      &quot;名称&quot;: &quot;百花医药&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗服务&quot;,
+      &quot;环节&quot;: &quot;医疗服务&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗服务&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;3/2&quot;
+    },
+    &quot;688026&quot;: {
+      &quot;股票代码&quot;: &quot;688026&quot;,
+      &quot;名称&quot;: &quot;洁特生物&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗器械&quot;,
+      &quot;环节&quot;: &quot;医疗器械&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗器械&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;001234&quot;: {
+      &quot;股票代码&quot;: &quot;001234&quot;,
+      &quot;名称&quot;: &quot;泰慕士&quot;,
+      &quot;大方向&quot;: &quot;待归位·服装家纺&quot;,
+      &quot;环节&quot;: &quot;服装家纺&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;服装家纺&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600992&quot;: {
+      &quot;股票代码&quot;: &quot;600992&quot;,
+      &quot;名称&quot;: &quot;贵绳股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·通用设备&quot;,
+      &quot;环节&quot;: &quot;通用设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;通用设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002792&quot;: {
+      &quot;股票代码&quot;: &quot;002792&quot;,
+      &quot;名称&quot;: &quot;通宇通讯&quot;,
+      &quot;大方向&quot;: &quot;待归位·通信设备&quot;,
+      &quot;环节&quot;: &quot;通信设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;通信设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002080&quot;: {
+      &quot;股票代码&quot;: &quot;002080&quot;,
+      &quot;名称&quot;: &quot;中材科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·玻璃玻纤&quot;,
+      &quot;环节&quot;: &quot;玻璃玻纤&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;玻璃玻纤&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600714&quot;: {
+      &quot;股票代码&quot;: &quot;600714&quot;,
+      &quot;名称&quot;: &quot;金瑞矿业&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学原料&quot;,
+      &quot;环节&quot;: &quot;化学原料&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学原料&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;001317&quot;: {
+      &quot;股票代码&quot;: &quot;001317&quot;,
+      &quot;名称&quot;: &quot;三羊马&quot;,
+      &quot;大方向&quot;: &quot;待归位·铁路公路&quot;,
+      &quot;环节&quot;: &quot;铁路公路&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;铁路公路&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;600812&quot;: {
+      &quot;股票代码&quot;: &quot;600812&quot;,
+      &quot;名称&quot;: &quot;华北制药&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;000829&quot;: {
+      &quot;股票代码&quot;: &quot;000829&quot;,
+      &quot;名称&quot;: &quot;天音控股&quot;,
+      &quot;大方向&quot;: &quot;待归位·专业连锁&quot;,
+      &quot;环节&quot;: &quot;专业连锁&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;专业连锁&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;300642&quot;: {
+      &quot;股票代码&quot;: &quot;300642&quot;,
+      &quot;名称&quot;: &quot;透景生命&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗器械&quot;,
+      &quot;环节&quot;: &quot;医疗器械&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗器械&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002321&quot;: {
+      &quot;股票代码&quot;: &quot;002321&quot;,
+      &quot;名称&quot;: &quot;华英农业&quot;,
+      &quot;大方向&quot;: &quot;待归位·养殖业&quot;,
+      &quot;环节&quot;: &quot;养殖业&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;养殖业&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;3/2&quot;
+    },
+    &quot;600127&quot;: {
+      &quot;股票代码&quot;: &quot;600127&quot;,
+      &quot;名称&quot;: &quot;金健米业&quot;,
+      &quot;大方向&quot;: &quot;待归位·农产品加&quot;,
+      &quot;环节&quot;: &quot;农产品加&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;农产品加&quot;,
+      &quot;连板数&quot;: &quot;3&quot;,
+      &quot;涨停统计&quot;: &quot;3/3&quot;
+    },
+    &quot;603151&quot;: {
+      &quot;股票代码&quot;: &quot;603151&quot;,
+      &quot;名称&quot;: &quot;邦基科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·饲料&quot;,
+      &quot;环节&quot;: &quot;饲料&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;饲料&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600587&quot;: {
+      &quot;股票代码&quot;: &quot;600587&quot;,
+      &quot;名称&quot;: &quot;新华医疗&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗器械&quot;,
+      &quot;环节&quot;: &quot;医疗器械&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗器械&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002022&quot;: {
+      &quot;股票代码&quot;: &quot;002022&quot;,
+      &quot;名称&quot;: &quot;科华生物&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗器械&quot;,
+      &quot;环节&quot;: &quot;医疗器械&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗器械&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002246&quot;: {
+      &quot;股票代码&quot;: &quot;002246&quot;,
+      &quot;名称&quot;: &quot;北化股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制品&quot;,
+      &quot;环节&quot;: &quot;化学制品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制品&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600712&quot;: {
+      &quot;股票代码&quot;: &quot;600712&quot;,
+      &quot;名称&quot;: &quot;南宁百货&quot;,
+      &quot;大方向&quot;: &quot;待归位·一般零售&quot;,
+      &quot;环节&quot;: &quot;一般零售&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;一般零售&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;688137&quot;: {
+      &quot;股票代码&quot;: &quot;688137&quot;,
+      &quot;名称&quot;: &quot;近岸蛋白&quot;,
+      &quot;大方向&quot;: &quot;待归位·生物制品&quot;,
+      &quot;环节&quot;: &quot;生物制品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;生物制品&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002900&quot;: {
+      &quot;股票代码&quot;: &quot;002900&quot;,
+      &quot;名称&quot;: &quot;哈三联&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002907&quot;: {
+      &quot;股票代码&quot;: &quot;002907&quot;,
+      &quot;名称&quot;: &quot;华森制药&quot;,
+      &quot;大方向&quot;: &quot;待归位·中药Ⅱ&quot;,
+      &quot;环节&quot;: &quot;中药Ⅱ&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;中药Ⅱ&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;300110&quot;: {
+      &quot;股票代码&quot;: &quot;300110&quot;,
+      &quot;名称&quot;: &quot;华仁药业&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002622&quot;: {
+      &quot;股票代码&quot;: &quot;002622&quot;,
+      &quot;名称&quot;: &quot;皓宸医疗&quot;,
+      &quot;大方向&quot;: &quot;待归位·医疗服务&quot;,
+      &quot;环节&quot;: &quot;医疗服务&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;医疗服务&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;000566&quot;: {
+      &quot;股票代码&quot;: &quot;000566&quot;,
+      &quot;名称&quot;: &quot;海南海药&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603819&quot;: {
+      &quot;股票代码&quot;: &quot;603819&quot;,
+      &quot;名称&quot;: &quot;神力股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·电机Ⅱ&quot;,
+      &quot;环节&quot;: &quot;电机Ⅱ&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;电机Ⅱ&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603020&quot;: {
+      &quot;股票代码&quot;: &quot;603020&quot;,
+      &quot;名称&quot;: &quot;爱普股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制品&quot;,
+      &quot;环节&quot;: &quot;化学制品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制品&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603395&quot;: {
+      &quot;股票代码&quot;: &quot;603395&quot;,
+      &quot;名称&quot;: &quot;红四方&quot;,
+      &quot;大方向&quot;: &quot;待归位·农化制品&quot;,
+      &quot;环节&quot;: &quot;农化制品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;农化制品&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002259&quot;: {
+      &quot;股票代码&quot;: &quot;002259&quot;,
+      &quot;名称&quot;: &quot;升达林业&quot;,
+      &quot;大方向&quot;: &quot;待归位·燃气Ⅱ&quot;,
+      &quot;环节&quot;: &quot;燃气Ⅱ&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;燃气Ⅱ&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600503&quot;: {
+      &quot;股票代码&quot;: &quot;600503&quot;,
+      &quot;名称&quot;: &quot;华丽家族&quot;,
+      &quot;大方向&quot;: &quot;待归位·房地产开&quot;,
+      &quot;环节&quot;: &quot;房地产开&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;房地产开&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;000020&quot;: {
+      &quot;股票代码&quot;: &quot;000020&quot;,
+      &quot;名称&quot;: &quot;深华发Ａ&quot;,
+      &quot;大方向&quot;: &quot;待归位·光学光电&quot;,
+      &quot;环节&quot;: &quot;光学光电&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;光学光电&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;600606&quot;: {
+      &quot;股票代码&quot;: &quot;600606&quot;,
+      &quot;名称&quot;: &quot;绿地控股&quot;,
+      &quot;大方向&quot;: &quot;待归位·房地产开&quot;,
+      &quot;环节&quot;: &quot;房地产开&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;房地产开&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    },
+    &quot;601579&quot;: {
+      &quot;股票代码&quot;: &quot;601579&quot;,
+      &quot;名称&quot;: &quot;会稽山&quot;,
+      &quot;大方向&quot;: &quot;待归位·非白酒&quot;,
+      &quot;环节&quot;: &quot;非白酒&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;非白酒&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;12/6&quot;
+    },
+    &quot;300829&quot;: {
+      &quot;股票代码&quot;: &quot;300829&quot;,
+      &quot;名称&quot;: &quot;金丹科技&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制品&quot;,
+      &quot;环节&quot;: &quot;化学制品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制品&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;000995&quot;: {
+      &quot;股票代码&quot;: &quot;000995&quot;,
+      &quot;名称&quot;: &quot;皇台酒业&quot;,
+      &quot;大方向&quot;: &quot;待归位·白酒Ⅱ&quot;,
+      &quot;环节&quot;: &quot;白酒Ⅱ&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;白酒Ⅱ&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603958&quot;: {
+      &quot;股票代码&quot;: &quot;603958&quot;,
+      &quot;名称&quot;: &quot;哈森股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·服装家纺&quot;,
+      &quot;环节&quot;: &quot;服装家纺&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;服装家纺&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;000560&quot;: {
+      &quot;股票代码&quot;: &quot;000560&quot;,
+      &quot;名称&quot;: &quot;我爱我家&quot;,
+      &quot;大方向&quot;: &quot;待归位·房地产服&quot;,
+      &quot;环节&quot;: &quot;房地产服&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;房地产服&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002963&quot;: {
+      &quot;股票代码&quot;: &quot;002963&quot;,
+      &quot;名称&quot;: &quot;豪尔赛&quot;,
+      &quot;大方向&quot;: &quot;待归位·装修装饰&quot;,
+      &quot;环节&quot;: &quot;装修装饰&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;装修装饰&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;4/2&quot;
+    },
+    &quot;600857&quot;: {
+      &quot;股票代码&quot;: &quot;600857&quot;,
+      &quot;名称&quot;: &quot;宁波中百&quot;,
+      &quot;大方向&quot;: &quot;待归位·一般零售&quot;,
+      &quot;环节&quot;: &quot;一般零售&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;一般零售&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;001201&quot;: {
+      &quot;股票代码&quot;: &quot;001201&quot;,
+      &quot;名称&quot;: &quot;东瑞股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·养殖业&quot;,
+      &quot;环节&quot;: &quot;养殖业&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;养殖业&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;605196&quot;: {
+      &quot;股票代码&quot;: &quot;605196&quot;,
+      &quot;名称&quot;: &quot;华通线缆&quot;,
+      &quot;大方向&quot;: &quot;待归位·电网设备&quot;,
+      &quot;环节&quot;: &quot;电网设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;电网设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002285&quot;: {
+      &quot;股票代码&quot;: &quot;002285&quot;,
+      &quot;名称&quot;: &quot;世联行&quot;,
+      &quot;大方向&quot;: &quot;待归位·房地产服&quot;,
+      &quot;环节&quot;: &quot;房地产服&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;房地产服&quot;,
+      &quot;连板数&quot;: &quot;4&quot;,
+      &quot;涨停统计&quot;: &quot;10/5&quot;
+    },
+    &quot;600325&quot;: {
+      &quot;股票代码&quot;: &quot;600325&quot;,
+      &quot;名称&quot;: &quot;华发股份&quot;,
+      &quot;大方向&quot;: &quot;待归位·房地产开&quot;,
+      &quot;环节&quot;: &quot;房地产开&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;房地产开&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603175&quot;: {
+      &quot;股票代码&quot;: &quot;603175&quot;,
+      &quot;名称&quot;: &quot;超颖电子&quot;,
+      &quot;大方向&quot;: &quot;待归位·元件&quot;,
+      &quot;环节&quot;: &quot;元件&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;元件&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;300691&quot;: {
+      &quot;股票代码&quot;: &quot;300691&quot;,
+      &quot;名称&quot;: &quot;联合光电&quot;,
+      &quot;大方向&quot;: &quot;待归位·计算机设&quot;,
+      &quot;环节&quot;: &quot;计算机设&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;计算机设&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;000402&quot;: {
+      &quot;股票代码&quot;: &quot;000402&quot;,
+      &quot;名称&quot;: &quot;金 融 街&quot;,
+      &quot;大方向&quot;: &quot;待归位·房地产开&quot;,
+      &quot;环节&quot;: &quot;房地产开&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;房地产开&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002795&quot;: {
+      &quot;股票代码&quot;: &quot;002795&quot;,
+      &quot;名称&quot;: &quot;永和智控&quot;,
+      &quot;大方向&quot;: &quot;待归位·通用设备&quot;,
+      &quot;环节&quot;: &quot;通用设备&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;通用设备&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;920427&quot;: {
+      &quot;股票代码&quot;: &quot;920427&quot;,
+      &quot;名称&quot;: &quot;华维设计&quot;,
+      &quot;大方向&quot;: &quot;待归位·工程咨询&quot;,
+      &quot;环节&quot;: &quot;工程咨询&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;工程咨询&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;002755&quot;: {
+      &quot;股票代码&quot;: &quot;002755&quot;,
+      &quot;名称&quot;: &quot;奥赛康&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制药&quot;,
+      &quot;环节&quot;: &quot;化学制药&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制药&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;605566&quot;: {
+      &quot;股票代码&quot;: &quot;605566&quot;,
+      &quot;名称&quot;: &quot;福莱蒽特&quot;,
+      &quot;大方向&quot;: &quot;待归位·化学制品&quot;,
+      &quot;环节&quot;: &quot;化学制品&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;化学制品&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;4/2&quot;
+    },
+    &quot;002042&quot;: {
+      &quot;股票代码&quot;: &quot;002042&quot;,
+      &quot;名称&quot;: &quot;华孚时尚&quot;,
+      &quot;大方向&quot;: &quot;待归位·纺织制造&quot;,
+      &quot;环节&quot;: &quot;纺织制造&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;纺织制造&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;603093&quot;: {
+      &quot;股票代码&quot;: &quot;603093&quot;,
+      &quot;名称&quot;: &quot;南华期货&quot;,
+      &quot;大方向&quot;: &quot;待归位·多元金融&quot;,
+      &quot;环节&quot;: &quot;多元金融&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;多元金融&quot;,
+      &quot;连板数&quot;: &quot;1&quot;,
+      &quot;涨停统计&quot;: &quot;1/1&quot;
+    },
+    &quot;000532&quot;: {
+      &quot;股票代码&quot;: &quot;000532&quot;,
+      &quot;名称&quot;: &quot;华金资本&quot;,
+      &quot;大方向&quot;: &quot;待归位·多元金融&quot;,
+      &quot;环节&quot;: &quot;多元金融&quot;,
+      &quot;催化&quot;: &quot;未获取到20260921公告或THS涨停原因；行业字段仅用于归位，不构成催化&quot;,
+      &quot;来源档&quot;: &quot;B&quot;,
+      &quot;来源说明&quot;: &quot;B行业兜底：20260921/zt_pool.csv 的“所属行业”字段；20260921/summary.json仅用于校验涨停池数量。本地未发现20260921公告文件或THS涨停原因文件，故不编造催化。&quot;,
+      &quot;所属行业&quot;: &quot;多元金融&quot;,
+      &quot;连板数&quot;: &quot;2&quot;,
+      &quot;涨停统计&quot;: &quot;2/2&quot;
+    }
+  },
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;fc003db05e81d040b90cc3877e58ad730f3482706618bd2be28ae36506e7ee97&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e49"><b>e49</b><pre>{
+  &quot;id&quot;: &quot;e49&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e50"><b>e50</b><pre>{
+  &quot;id&quot;: &quot;e50&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e51"><b>e51</b><pre>{
+  &quot;id&quot;: &quot;e51&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e52"><b>e52</b><pre>{
+  &quot;id&quot;: &quot;e52&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e53"><b>e53</b><pre>{
+  &quot;id&quot;: &quot;e53&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/logic判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/结论&quot;,
+  &quot;value&quot;: &quot;C档防守：空仓为主，不把行业归位或单票首板升级为产业逻辑主线。20260921涨停池103只，模板153只唯一代码中仅4只覆盖，且4只均1板、分属不同链条；当日中报预增雷达缺失，无法完成模板全量×雷达交叉，因此不具备A档业绩背书。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;040ddb55d9c59ff86524f9569eff99c21df372a039f73a718507beb88c18f1a5&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e54"><b>e54</b><pre>{
+  &quot;id&quot;: &quot;e54&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/logic判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/0&quot;,
+  &quot;value&quot;: &quot;20260921/zt_pool.csv：涨停103只；产业链模板递归去重代码153只，模板∩涨停=4只（覆盖率由脚本复算为4/103），分别为001389广合科技、600992贵绳股份、605196华通线缆、000829天音控股；四只均为1板，炸板次数分别为1、0、0、2。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;040ddb55d9c59ff86524f9569eff99c21df372a039f73a718507beb88c18f1a5&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e55"><b>e55</b><pre>{
+  &quot;id&quot;: &quot;e55&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/logic判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/2&quot;,
+  &quot;value&quot;: &quot;_学习/风险日历_20260921.json：status=partial，事件源缺失，事件条数/覆盖维度均为null；不能把缺事件解释为无风险，荐票前无法完成踩窗过滤。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;040ddb55d9c59ff86524f9569eff99c21df372a039f73a718507beb88c18f1a5&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e56"><b>e56</b><pre>{
+  &quot;id&quot;: &quot;e56&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/logic判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/独立盲区声明/2&quot;,
+  &quot;value&quot;: &quot;当日链条位置文件缺失；仅有20260715/20260716及更早快照，位置判断标为盲区。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;040ddb55d9c59ff86524f9569eff99c21df372a039f73a718507beb88c18f1a5&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e57"><b>e57</b><pre>{
+  &quot;id&quot;: &quot;e57&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/logic判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/独立盲区声明/0&quot;,
+  &quot;value&quot;: &quot;中报预增雷达_20260921.json缺失：模板全量×雷达无法执行，链内A档/链外验证/已兑现无法按当日雷达区分，不能编造为0命中。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;040ddb55d9c59ff86524f9569eff99c21df372a039f73a718507beb88c18f1a5&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e58"><b>e58</b><pre>{
+  &quot;id&quot;: &quot;e58&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/logic判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖&quot;,
+  &quot;value&quot;: [
+    &quot;待验证：补齐中报预增雷达_20260921.json后，对产业链模板153只逐代码扫描六个名单，分别标记链内A档、链外验证、已兑现，并与103只涨停池交集复算；本次不以缺失替代结果。&quot;,
+    &quot;待验证：对001389、600992、605196补查公告/订单与未来30日解禁减持风险；当前风险事件源缺失，三只均维持观察。&quot;,
+    &quot;待验证：补齐当日链条位置快照后再判断AI算力PCB、商业航天回收装备、电解铝铝加工的高低位；现有20260715/16快照不外推。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;040ddb55d9c59ff86524f9569eff99c21df372a039f73a718507beb88c18f1a5&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e59"><b>e59</b><pre>{
+  &quot;id&quot;: &quot;e59&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/logic判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0&quot;,
+  &quot;value&quot;: &quot;当日应用（引用认知库_logic_20260911）：预增A成色池必须与涨停池及题材承载同步验证；本日雷达缺失时，禁止把缺失误读成零A档。可证伪：补齐当日雷达后出现链内A共振且同链至少2只涨停。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;040ddb55d9c59ff86524f9569eff99c21df372a039f73a718507beb88c18f1a5&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e60"><b>e60</b><pre>{
+  &quot;id&quot;: &quot;e60&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e61"><b>e61</b><pre>{
+  &quot;id&quot;: &quot;e61&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e62"><b>e62</b><pre>{
+  &quot;id&quot;: &quot;e62&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e63"><b>e63</b><pre>{
+  &quot;id&quot;: &quot;e63&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e64"><b>e64</b><pre>{
+  &quot;id&quot;: &quot;e64&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/limitup判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/结论&quot;,
+  &quot;value&quot;: &quot;C防守，空仓；全池执行口径仍是负期望，观察不买。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;da521557f406c166a96399ba7d156b1c522756ddcea1bf5e971a055cc143472a&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e65"><b>e65</b><pre>{
+  &quot;id&quot;: &quot;e65&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e66"><b>e66</b><pre>{
+  &quot;id&quot;: &quot;e66&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/炸板数/value&quot;,
+  &quot;value&quot;: 25,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e67"><b>e67</b><pre>{
+  &quot;id&quot;: &quot;e67&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/封板率/value&quot;,
+  &quot;value&quot;: 0.8047,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e68"><b>e68</b><pre>{
+  &quot;id&quot;: &quot;e68&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/limitup判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据&quot;,
+  &quot;value&quot;: [
+    &quot;zt_pool.csv重算103只涨停、池内有56只含炸板记录；市场封板率按summary/温度表口径=103/(103+25)=80.5%，达到米开80%分化阈值附近；summary/温度表同为103涨停、25炸板、2跌停。&quot;,
+    &quot;重算连板梯队={5: 1, 4: 2, 3: 5, 2: 13, 1: 82}，最高板为华瓷股份5板；首封分桶={&#x27;一字≤09:25&#x27;: 4, &#x27;秒板09:26-09:31&#x27;: 14, &#x27;早盘09:32-10:00&#x27;: 32, &#x27;盘中10:01-14:00&#x27;: 48, &#x27;尾盘&gt;14:00&#x27;: 5}；含炸板记录56只、炸板次数合计235次。&quot;,
+    &quot;温度源：温度63.2、温度档中性、回封数56；情绪先行源：一进二率原值0.303（此处×100=30.3%）、二进三率原值0.5（×100=50.0%），昨日涨停溢价为null。&quot;,
+    &quot;质量荐票全池103只中执1胜率最高45.6%、均值43.2%，其中预测执1均涨为正仅0只；全窗基准n=18487执1胜率43.3%、执1均涨-0.31%。规则命中1只，不能把抓龙率排序当成买入信号。&quot;,
+    &quot;题材归位档计数A0/B103/C0，总计103只；链条源共52条线，强承载仅作为观察结构，不补写未获取到的催化。&quot;,
+    &quot;质量库v6更新20260921，样本18487；规则榜和封板环境均强调执行口径，当前不满足进攻条件。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;da521557f406c166a96399ba7d156b1c522756ddcea1bf5e971a055cc143472a&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e69"><b>e69</b><pre>{
+  &quot;id&quot;: &quot;e69&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/limitup判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/独立盲区声明&quot;,
+  &quot;value&quot;: &quot;昨日涨停溢价源为null，无法用昨日溢价验证接力赚钱效应；题材归位103只全部为B档行业兜底，链条文件对催化明确写未获取到公告或涨停原因，故不把行业归位当成题材催化；最新状态.json截至20260911且持仓为空；领域手册指定路径`_agent规格/领域手册_limitup_v1.md`本机不存在，框架依据采用已读技能规则；因子快检脚本未另行调用，本次深挖只用已读原始池做分桶。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;da521557f406c166a96399ba7d156b1c522756ddcea1bf5e971a055cc143472a&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e70"><b>e70</b><pre>{
+  &quot;id&quot;: &quot;e70&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/limitup判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖&quot;,
+  &quot;value&quot;: [
+    &quot;来源: 20260921/zt_pool.csv 手工重算；首封分桶={&#x27;一字≤09:25&#x27;: 4, &#x27;秒板09:26-09:31&#x27;: 14, &#x27;早盘09:32-10:00&#x27;: 32, &#x27;盘中10:01-14:00&#x27;: 48, &#x27;尾盘&gt;14:00&#x27;: 5}，连板梯队={5: 1, 4: 2, 3: 5, 2: 13, 1: 82}，含炸板记录56/103。&quot;,
+    &quot;来源: 涨停质量荐票_20260921.json；全池执1最高45.6%、均值43.2%，正执1均涨0/103，只作负筛证据，不扩展为买入结论。&quot;
+  ],
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;da521557f406c166a96399ba7d156b1c522756ddcea1bf5e971a055cc143472a&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e71"><b>e71</b><pre>{
+  &quot;id&quot;: &quot;e71&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/limitup判断_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/正文&quot;,
+  &quot;value&quot;: &quot;本日封板率由zt_pool.csv重算为80.5%、温度63.2，但质量荐票执1最高仅45.6%且全池执行均值为43.2%；沿用(认知库 20260911)“执行口径优先、空仓可为正确解”，把C防守与空仓绑定，待下一交易日用可执行正收益和主线集中共同证伪。&quot;,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;da521557f406c166a96399ba7d156b1c522756ddcea1bf5e971a055cc143472a&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e72"><b>e72</b><pre>{
+  &quot;id&quot;: &quot;e72&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数/value&quot;,
+  &quot;value&quot;: 103,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e73"><b>e73</b><pre>{
+  &quot;id&quot;: &quot;e73&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度/value&quot;,
+  &quot;value&quot;: 63.2,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e74"><b>e74</b><pre>{
+  &quot;id&quot;: &quot;e74&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板/value&quot;,
+  &quot;value&quot;: 5,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-e75"><b>e75</b><pre>{
+  &quot;id&quot;: &quot;e75&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/fact_20260921.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿/value&quot;,
+  &quot;value&quot;: 20315.0,
+  &quot;quality&quot;: &quot;source&quot;,
+  &quot;sha256&quot;: &quot;d8b1f0d6cb1e9e3abf7e6b4cc57df68868c520f8c5827c3ec7264e9c472c6797&quot;,
+  &quot;verified&quot;: true
+}
+</pre></div><div id="evidence-kpi-source-0-0"><b>kpi-source-0-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-0&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;7bc8535d94ead04f560e9887e72f9efdced6e7d96c99cc8a1564c42479f05258&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-0-1"><b>kpi-source-0-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-1&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;a881ffa6e4c64048ee4aad52aa5152783b2e78f452117957097d0844f546e0de&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-0"><b>kpi-source-1-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-0&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;7bc8535d94ead04f560e9887e72f9efdced6e7d96c99cc8a1564c42479f05258&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-1"><b>kpi-source-1-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-1&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;a881ffa6e4c64048ee4aad52aa5152783b2e78f452117957097d0844f546e0de&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-0"><b>kpi-source-2-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-0&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;7bc8535d94ead04f560e9887e72f9efdced6e7d96c99cc8a1564c42479f05258&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-1"><b>kpi-source-2-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-1&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;a881ffa6e4c64048ee4aad52aa5152783b2e78f452117957097d0844f546e0de&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-0"><b>kpi-source-3-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-0&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;7bc8535d94ead04f560e9887e72f9efdced6e7d96c99cc8a1564c42479f05258&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-1"><b>kpi-source-3-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-1&quot;,
+  &quot;d&quot;: &quot;20260921&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;a881ffa6e4c64048ee4aad52aa5152783b2e78f452117957097d0844f546e0de&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><p><a href="audit/index.json">原文审计与来源条目</a> · <a href="models/index.json">结构化页面模型</a></p></div></details><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+  var wrap=document.querySelector('.wrap');
+  if(!wrap)return;
+  /* 阅读条已给出真实栏目锚点时，不再叠加第二份导航 */
+  if(wrap.querySelector('.reading-spine a.rs-step'))return;
+  var sections=Array.prototype.filter.call(wrap.children,function(el){return el.tagName==='SECTION';});
+  if(sections.length<3)return;
+  var map=document.createElement('nav');
+  map.className='page-map';
+  map.setAttribute('aria-label','本页阅读地图');
+  var label=document.createElement('span');
+  label.className='page-map-label';
+  label.textContent='本页阅读';
+  map.appendChild(label);
+  var links=[];
+  sections.forEach(function(sec,i){
+    var h=Array.prototype.find.call(sec.children,function(el){return el.tagName==='H2';});
+    if(!h)return;
+    if(!sec.id)sec.id='section-'+(i+1);
+    var a=document.createElement('a');
+    a.href='#'+sec.id;
+    a.textContent=h.textContent.replace(/^[一二三四五六七八九十]+\\s*/,'');
+    a.setAttribute('data-section',sec.id);
+    map.appendChild(a); links.push({a:a,sec:sec});
+  });
+  if(links.length)wrap.insertBefore(map,sections[0]);
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      links.forEach(function(x){x.a.classList.toggle('active',x.sec===entry.target);});
+    });
+  },{rootMargin:'-88px 0px -64% 0px',threshold:0});
+  links.forEach(function(x){io.observe(x.sec);});
+})();
+</script></body></html>

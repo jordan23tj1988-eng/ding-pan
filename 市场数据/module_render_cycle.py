@@ -324,6 +324,11 @@ def r_mach_vote(d):
     agree_n = 0
     for rk, rl in ROUTE_LABEL:
         vt = votes.get(rk) or {}
+        if isinstance(vt, str):
+            # 弃权/无票 形态(台账里该路写的是字符串而非 dict): 如实标"无票(弃权)", 不折算成任何 stage/direction
+            cards += ('<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#5c6674">%s <br>无票(%s)</div>\n'
+                      % (rl, _esc(vt)))
+            continue
         if not vt:
             cards += ('<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#5c6674">%s <br>无票</div>\n' % rl)
             continue
@@ -420,12 +425,10 @@ def build_page_full(d, paper_block=''):
                 '<div class="stance"><span class="pill warn">状态 · <b class="s-weak">复盘断档</b></span></div></div>\n'
                 % (d[4:6] + '-' + d[6:8], d[4:6] + '-' + d[6:8]))
     mach = ''.join([r_mach_volstep(d), r_mach_leadind(d), r_mach_ladder(d), r_mach_vote(d)])
-    # ★2026-08-12 用户"为什么改变了我页面的样式": 黄金版 cycle 形态=hero+七板块直连,
-    # 机器数据本就嵌在 LLM 七板块内(段一量能/段二先行指标/段三投票), 独立折叠区属我引入的样式改动。
-    # → 有 body 日 mach 置空(黄金版形态); 折叠区仅无 body 断档日兜底(此时无黄金版对照)。
-    if body:
-        mach = ''
-    elif mach.strip():
+    # 有 body 日也必须补齐当日机器组件：body 只负责判断正文，机器卡负责真实数据展示；避免复盘后退化为纯文字
+    if body and mach.strip():
+        mach = '<div class="cycle-machine-inline">\\n' + mach + '</div>\\n'
+    elif not body and mach.strip():
         chips = '<span class="chip">%d卡</span>' % mach.count('class="card"')
         mach = ('<details class="chain"><summary><b>机器数据源</b> %s '
                 '<span class="mut">量能/先行指标/梯队/投票数字核对层 · 展开查看 · 判断以七板块为准</span></summary>'

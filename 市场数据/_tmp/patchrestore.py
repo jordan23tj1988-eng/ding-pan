@@ -1,0 +1,2 @@
+from pathlib import Path
+p=Path(r'D:\股票数据\市场数据\restore_lhb_page.py');x=p.read_text(encoding='utf8');old='    body = head.rstrip() + "\\n" + dynamic_front[h1:].lstrip() + "\\n" + extra';new='    body = head.rstrip() + "\\n" + dynamic_front[h1:].lstrip() + "\\n<h2>五 自主深挖</h2>\\n<h2>六 我的认知迭代</h2>\\n" + extra';assert old in x;x=x.replace(old,new);p.write_text(x,encoding='utf8');compile(x,str(p),'exec')

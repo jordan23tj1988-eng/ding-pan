@@ -1,0 +1,123 @@
+{
+  "schema_version": 2,
+  "date": "20260922",
+  "generated_at": "2026-09-22T19:28:28",
+  "status": "fail",
+  "hard_missing": [
+    "auction_cancel_diff"
+  ],
+  "capabilities": [
+    {
+      "key": "risk_calendar",
+      "label": "风险日历",
+      "hard": true,
+      "status": "available",
+      "producers": [
+        "风险日历.py"
+      ],
+      "evidence": "_学习/风险日历_20260922.json",
+      "evidence_status": "pass"
+    },
+    {
+      "key": "auction_cancel_diff",
+      "label": "竞价撤单差分",
+      "hard": true,
+      "status": "evidence_not_pass",
+      "producers": [
+        "竞价撤单差分.py"
+      ],
+      "evidence": "_学习/竞价撤单差分_20260922.json",
+      "evidence_status": "unavailable"
+    },
+    {
+      "key": "open_verification",
+      "label": "开盘验证维",
+      "hard": true,
+      "status": "available",
+      "producers": [
+        "开盘验证维.py"
+      ],
+      "evidence": "_学习/开盘验证维_20260922.json",
+      "evidence_status": "pass"
+    },
+    {
+      "key": "intraday_temperature_curve",
+      "label": "日内温度曲线",
+      "hard": true,
+      "status": "available",
+      "producers": [
+        "日内温度曲线.py"
+      ],
+      "evidence": "_学习/日内温度曲线_20260922.json",
+      "evidence_status": "pass"
+    },
+    {
+      "key": "intraday_rotation_graph",
+      "label": "日内轮动图谱",
+      "hard": true,
+      "status": "available",
+      "producers": [
+        "日内轮动图谱.py"
+      ],
+      "evidence": "_学习/日内轮动图谱_20260922.json",
+      "evidence_status": "pass"
+    },
+    {
+      "key": "theme_relocation",
+      "label": "题材归位",
+      "hard": true,
+      "status": "available",
+      "producers": [
+        "题材归位.py"
+      ],
+      "evidence": "_学习/题材归位门禁_20260922.json",
+      "evidence_status": "pass"
+    },
+    {
+      "key": "cognition_pack",
+      "label": "认知库打包/蒸馏",
+      "hard": false,
+      "status": "partial_producer",
+      "producers": [
+        "_认知库蒸馏_五路.py",
+        "review_learning.py"
+      ],
+      "evidence": null,
+      "evidence_status": null
+    },
+    {
+      "key": "playbook",
+      "label": "playbook生成",
+      "hard": false,
+      "status": "installed_no_evidence",
+      "producers": [
+        "playbook生成.py"
+      ],
+      "evidence": "盘中/20260922/playbook.json",
+      "evidence_status": null
+    },
+    {
+      "key": "lhb_dual_source",
+      "label": "龙虎榜双源校验",
+      "hard": false,
+      "status": "available",
+      "producers": [
+        "龙虎榜双源校验.py"
+      ],
+      "evidence": "_学习/龙虎榜双源校验_20260922.json",
+      "evidence_status": "pass"
+    },
+    {
+      "key": "risk_events_source",
+      "label": "风险事件源",
+      "hard": false,
+      "status": "available",
+      "producers": [
+        "风险事件.py"
+      ],
+      "evidence": "_学习/风险事件_20260922.json",
+      "evidence_status": "pass"
+    }
+  ],
+  "policy": "只有生产者齐全且本日证据status=pass才算available；缺数据保持fail-closed"
+}

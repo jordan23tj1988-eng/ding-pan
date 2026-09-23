@@ -32,6 +32,9 @@ class StructuredTests(Fixture):
    self.assertLessEqual(len(m["editorial_notes"]),5)
    h=Path(result["pages"][route]).read_text(encoding="utf-8")
    for c in doc["pages"][route]["claims"]:
+    if route == 'theme' and c['section'] in ('matrix','lifecycle','research','cognition'):
+     self.assertNotIn('id="claim-'+c["id"]+'"',h)
+     continue
     self.assertIn('id="claim-'+c["id"]+'"',h)
     self.assertIn(escape(c["text"]),h)
  def test_exact_claim_reuse_uses_accessible_reference_not_repetition(self):
@@ -58,7 +61,7 @@ class StructuredTests(Fixture):
   p["kpis"][0]["label"]='"><img src=x onerror=alert(1)>'
   self.put(doc);r=self.api().build_site(self.root,"20260904",self.out)
   h=Path(r["pages"]["theme"]).read_text(encoding="utf-8")
-  self.assertIn(escape(p["claims"][1]["text"]),h)
+  self.assertNotIn(escape(p["claims"][1]["text"]),h)
   self.assertNotIn('<script>alert',h)
   self.assertNotIn('<img src=x',h)
  def test_unknown_mapping_missing_reference_and_future_evidence_fail(self):

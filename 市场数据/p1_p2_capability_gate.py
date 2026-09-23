@@ -14,6 +14,10 @@ CAPABILITIES={
  'theme_relocation':{'label':'题材归位','producers':['题材归位.py'],'evidence':'_学习/题材归位门禁_{d}.json','hard':True},
  'cognition_pack':{'label':'认知库打包/蒸馏','producers':['认知库打包.py','_认知库蒸馏_五路.py','review_learning.py'],'evidence':None,'hard':False},
  'playbook':{'label':'playbook生成','producers':['playbook生成.py'],'evidence':'盘中/{d}/playbook.json','hard':False},
+ # 20260911 新增(非 hard: 先可见、积累若干日绿灯后再考虑升 hard; 风险日历的强制口径已通过
+ # risk_calendar 的硬门禁传导 —— 风险事件.py 不产 pass, 风险日历即 partial → hard_missing)
+ 'lhb_dual_source':{'label':'龙虎榜双源校验','producers':['龙虎榜双源校验.py'],'evidence':'_学习/龙虎榜双源校验_{d}.json','hard':False},
+ 'risk_events_source':{'label':'风险事件源','producers':['风险事件.py'],'evidence':'_学习/风险事件_{d}.json','hard':False},
 }
 
 def _read(path):

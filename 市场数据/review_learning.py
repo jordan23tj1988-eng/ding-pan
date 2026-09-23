@@ -44,7 +44,20 @@ def normalize_responses(raw: dict, items: list, d: str) -> dict:
     else:
         # 旧版 route -> [response] 或 date + id -> response。
         payload = {k: v for k, v in raw.items() if k not in metadata}
-        if payload and all(k in route_ids for k in payload):
+        # 旧版扁平 id 映射只允许五路清单；master 只能出现在带明确
+        # items/应答包装的新版格式，避免把未知路由静默当作合法应答。
+        if payload and set(payload).issubset(set(ids)):
+            allowed_legacy_routes = set(ROUTES) | {'cycle'}
+            # master 指派路由从 2026-08-17 才进入旧版扁平文件契约；
+            # 更早的 master 键是历史未知项，必须拒绝而非静默接纳。
+            if d >= '20260817':
+                allowed_legacy_routes.add('master')
+            unknown_routes = {str(k).split('_', 1)[0] for k in payload
+                              if str(k).split('_', 1)[0] not in allowed_legacy_routes}
+            if unknown_routes:
+                raise ValueError(f"未知项={sorted(unknown_routes)}")
+            mapping = payload
+        elif payload and all(k in route_ids for k in payload):
             mapping = {}
             for route, responses in payload.items():
                 if not isinstance(responses, list) or len(responses) != len(route_ids[route]):
@@ -234,7 +247,9 @@ def _legacy_op(item):
     explicit = {">=": "ge", ">": "gt", "<=": "le", "<": "lt", "=": "eq"}
     if direction in explicit:
         # 不把反方向的原文静默解释成机器键。
-        if direction in (">=", ">") and re.search(r"低于|以下|跌破", claim):
+        # 只看主句（判据句）；逗号/分号/“若”之后的证伪描述句不参与方向校验。
+        primary = re.split(r"[，,；;]|若", claim, maxsplit=1)[0]
+        if direction in (">=", ">") and re.search(r"(?<!不)低于|(?<!不)以下|(?<!不)跌破", primary):
             return None
         return explicit[direction]
     if direction == "升" and re.search(r"以上|上方|≥|>=", claim):
@@ -866,7 +881,7 @@ def audit_learning(root: Path, d: str, out: Path) -> dict:
         unresolved_items = sum(due(x) and x["status"] not in ("true", "false", "not_triggered") for x in items)
         unresolved_master = sum(due(x) and x["status"] not in ("validated", "refuted") for x in master.get("assignments", []))
         due_count = sum(due(x) for x in predictions + items + master.get("assignments", []))
-        closure = {"status": "incomplete" if errors or unresolved_predictions or unresolved_items or unresolved_master else "complete" if due_count else "not_due",
+        closure = {"status": "not_due" if not due_count else "incomplete" if errors or unresolved_predictions or unresolved_items or unresolved_master else "complete",
                    "scope": "due_as_of_d", "due_count": due_count,
                    "unresolved_due_predictions": unresolved_predictions, "unresolved_due_items": unresolved_items,
                    "unresolved_due_master": unresolved_master}
@@ -876,9 +891,9 @@ def audit_learning(root: Path, d: str, out: Path) -> dict:
             _historical_text = ('未知认知 schema_version' in str(_err) or
                                 '消费者应答覆盖不足' in str(_err) or
                                 '自主拓展应答_' in str(_err) or
-                                '历史清单日期对应推演_' in str(_err) or
                                 '推演_20260706.json' in str(_err))
-            if (_dates and all(x < d for x in _dates)) or _historical_text:
+            if ((_dates and all(x < d for x in _dates) and
+                 '历史清单日期对应推演' not in str(_err)) or _historical_text):
                 historical_gaps.append(_err)
             else:
                 blocking_errors.append(_err)
@@ -889,6 +904,7 @@ def audit_learning(root: Path, d: str, out: Path) -> dict:
 
                       audit_created_at=datetime.now(timezone.utc).isoformat(),
                       publication="new_audit_not_historical_publication", coverage=coverage,
+                      prediction_coverage=prediction_coverage, learning_closure=closure,
                       items=items, predictions=predictions, cognition=cognition, master=master,
                       calibration={"formal_source_exists": (root / "_学习" / f"校准_{d}.json").exists(),
                                    "kind": "new_audit_settlement", "historical_publication_modified": False})

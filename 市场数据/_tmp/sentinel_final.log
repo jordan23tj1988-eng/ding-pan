@@ -1,0 +1,15 @@
+Exception in thread Thread-2 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\66353\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "C:\Users\66353\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\66353\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xb9 in position 47: invalid start byte
+== 复盘一致性哨兵 20260911 ==
+  WARN C8 R根目录临时脚本残留 _preview_index_rebuild.py(规矩: 一次性脚本进 _tmp/,用完即弃)
+  FAIL C12 龙虎榜专属核对失败: 
+结论: 1项FAIL——不要通知完成,先修复再重跑哨兵

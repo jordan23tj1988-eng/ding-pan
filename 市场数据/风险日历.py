@@ -12,12 +12,25 @@ def build(root: Path, d: str):
     # 事件源必须是独立文件；不存在时不能声称“无风险事件”。
     event_path=root/"_学习"/f"风险事件_{d}.json"
     events=load_json(event_path, None)
+    ev = events if isinstance(events, dict) else {}
+    ev_status = ev.get("status") if event_path.is_file() else None
+    ev_metrics = ev.get("metrics") if isinstance(ev.get("metrics"), dict) else {}
+    ev_ok = event_path.is_file() and ev_status == "pass"      # 只认 pass：partial/unavailable 不得当“无风险”
     sources=["_学习/_交易日历.json"] if cal else []
     if event_path.is_file(): sources.append(event_path.relative_to(root).as_posix())
-    status="pass" if in_cal and isinstance(events, (dict,list)) else ("partial" if in_cal else "unavailable")
-    return result("risk_calendar",d,status,sources,{"is_trading_day":in_cal,"event_source_present":event_path.is_file()},
-                   [] if in_cal else ["目标日不在已留档交易日历"],
-                   "事件源缺失时保持partial；不把缺事件解释成无风险")
+    sources.extend([str(x) for x in (ev.get("sources") or [])])
+    errors=[]
+    if not in_cal: errors.append("目标日不在已留档交易日历")
+    elif not event_path.is_file(): errors.append(f"事件源缺失: _学习/风险事件_{d}.json 未生成(风险事件.py 未跑或失败)")
+    elif ev_status != "pass": errors.append(f"事件源 status={ev_status}: "+"; ".join([str(x) for x in (ev.get("errors") or [])[:3]]))
+    status="unavailable" if not in_cal else ("pass" if ev_ok else "partial")
+    metrics={"is_trading_day":in_cal,"event_source_present":event_path.is_file(),
+             "event_source_status":ev_status,"事件条数":ev_metrics.get("事件条数"),
+             "覆盖维度":ev_metrics.get("覆盖维度"),"未接入维度":ev_metrics.get("未接入维度")}
+    note="事件源缺失/降级时保持partial；不把缺事件解释成无风险"
+    if ev_metrics.get("未接入维度"):
+        note += "；未接入维度=" + "/".join(str(x) for x in ev_metrics["未接入维度"]) + "（不得据此声称无此类风险）"
+    return result("risk_calendar",d,status,sources,metrics,errors,note)
 
 def main(argv=None):
     p=argparse.ArgumentParser(); p.add_argument('d'); p.add_argument('--root',type=Path,default=Path(__file__).resolve().parent); p.add_argument('--out',type=Path)

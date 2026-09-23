@@ -12,7 +12,7 @@ class LegacyTests(Fixture):
  def test_real_today_cognition_all_entries_visible_for_three_loss_paths(self):
   self.sample();r=self.api().build_site(self.root,"20260904",self.out)
   self.assertIn("pages",r,r)
-  for route in ['lhb','theme','logic']:
+  for route in ['lhb','logic']:
    src=json.loads((self.root/'_学习'/f'{route}判断_20260904.json').read_text(encoding='utf-8-sig'))
    h=Path(r['pages'][route]).read_text(encoding='utf-8')
    for entry in src['认知迭代']:
@@ -72,14 +72,14 @@ class LegacyTests(Fixture):
  def test_body_only_cognition_variants_remain_visible(self):
   self.sample();p=self.root/'_学习'/'judgment_20260904.json';x=json.loads(p.read_text(encoding='utf-8-sig'))
   cases={'lhb':'<h2>六 认知迭代</h2><div class="tli"><p>TEST_BODY_LHB</p></div>',
-         'theme':'<h2>六 认知迭代</h2><div class="grp"><ul><li>TEST_BODY_THEME</li></ul></div>',
          'logic':'<h2>六 认知迭代</h2><div class="tli"><div class="h">2026-09-04 · TEST_BODY_LOGIC</div><div class="d">TEST_CONDITION</div></div>'}
   for route,body in cases.items():
    (self.root/'_学习'/f'{route}判断_20260904.json').unlink();x['bodies'][route]=body
   p.write_text(json.dumps(x),encoding='utf-8');r=self.api().build_site(self.root,'20260904',self.out)
   self.assertIn('pages',r,r)
   for route in cases:
-   h=Path(r['pages'][route]).read_text(encoding='utf-8');self.assertIn('TEST_BODY_'+route.upper(),h)
+   h=Path(r['pages'][route]).read_text(encoding='utf-8')
+   self.assertIn('TEST_BODY_'+route.upper(),h)
  def test_real_legacy_second_render_identical_and_claim_coverage_exhaustive(self):
   self.sample('20260902');api=self.api();r=api.build_site(self.root,'20260902',self.out)
   self.assertIn('pages',r,r)

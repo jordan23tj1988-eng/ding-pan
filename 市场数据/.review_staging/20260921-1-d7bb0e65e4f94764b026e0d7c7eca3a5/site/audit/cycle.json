@@ -1,0 +1,774 @@
+{
+  "schema_version": 1,
+  "d": "20260921",
+  "route": "cycle",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20260921.json",
+      "pointer": "/bodies/cycle",
+      "raw": "<!doctype html><html lang=\"zh-CN\"><body><div class=\"rowA\"><div class=\"hero\"><h1>cycle路·2026-09-21</h1><p class=\"hint\">仅使用截至2026-09-21的已留档数据；缺失项保持缺失。</p><p>成交额20315.0亿，来源温度表；仅作为环境事实，不单独推导进攻。</p></div><div class=\"kpi\"><div class=\"card\"><b>日期</b><span>20260921</span></div><div class=\"card\"><b>档位</b><span>C</span></div><div class=\"card\"><b>状态</b><span>空仓/观察</span></div><div class=\"card\"><b>数据</b><span>可追溯</span></div></div></div><section id=\"cycle-1\"><h2>量能<span class=\"hint\">证据与边界</span></h2><p>成交额20315.0亿，来源温度表；仅作为环境事实，不单独推导进攻。</p></section><section id=\"cycle-2\"><h2>先行<span class=\"hint\">证据与边界</span></h2><p>涨停103、首板82、一进二率0.303、二进三率0.5；昨日涨停溢价为null。</p></section><section id=\"cycle-3\"><h2>连板梯队<span class=\"hint\">证据与边界</span></h2><p>1板82、2板13、3板5、4板2、5板1，宽度大于高度。</p></section><section id=\"cycle-4\"><h2>攻防<span class=\"hint\">证据与边界</span></h2><p>中性偏防守：主线确认不足，按轮动而非趋势行情处理。</p></section><section id=\"cycle-5\"><h2>深挖<span class=\"hint\">证据与边界</span></h2><p>风险日历partial、竞价撤单差分unavailable；不把缺失字段补造成安全信号。</p></section><section id=\"cycle-6\"><h2>认知<span class=\"hint\">证据与边界</span></h2><p>中性温度不等于可交易主线；高度、催化和跨环节扩散需同时复核。</p></section><section><h2>周期投票<span class=\"hint\">机器锚点与人工判断分离</span></h2><p>当日宽度与高度分层记录；不把缺失动态数据补造成投票。</p></section></body></html><!--VOLSTEP--><!--/VOLSTEP--><!--LEADIND--><!--/LEADIND--><!--MACHVOTE--><!--/MACHVOTE--><!--VOTEBOARD--><!--/VOTEBOARD--><!--LADDER--><!--/LADDER-->"
+    }
+  ],
+  "claims": [
+    {
+      "id": "cycle-e959630ebd2317fd",
+      "role": "verdict",
+      "text": "中性偏防守：宽度尚可但主线确认不足，按轮动而非趋势行情处理。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-e959630ebd2317fd"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/结论"
+    },
+    {
+      "id": "cycle-2351bfd054bacd44",
+      "role": "evidence",
+      "text": "市场温度63.2，温度档为中性；涨停103、炸板25、封板率80.47%、最高板5。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-2351bfd054bacd44"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/证据/0"
+    },
+    {
+      "id": "cycle-10b43c2f0eddd56b",
+      "role": "evidence",
+      "text": "结构上首板82/103，二板13、三板5、四板2、五板1，宽度明显高于高度。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-10b43c2f0eddd56b"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/证据/1"
+    },
+    {
+      "id": "cycle-8e3f966e9348ecd9",
+      "role": "evidence",
+      "text": "题材归位来源档A=0、B=103、C=0，且题材线52条，未形成可核验的公告催化主线。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-8e3f966e9348ecd9"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/证据/2"
+    },
+    {
+      "id": "cycle-504ff3a846a3f4e5",
+      "role": "evidence",
+      "text": "风险日历为partial，竞价撤单差分为unavailable；两项缺口不能被解释为无风险或无撤单。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-504ff3a846a3f4e5"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/证据/3"
+    },
+    {
+      "id": "cycle-82c2abbfc6bd9a43",
+      "role": "evidence",
+      "text": "C",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-82c2abbfc6bd9a43"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/档位"
+    },
+    {
+      "id": "cycle-83f7c89b0a7af6ae",
+      "role": "evidence",
+      "text": "中",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-83f7c89b0a7af6ae"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/置信度"
+    },
+    {
+      "id": "cycle-f7c67f94435e004e",
+      "role": "condition",
+      "text": "若后续交易日出现高度晋级、封板率改善且形成同链跨环节主线，则本次“主线确认不足”的判断被证伪。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-f7c67f94435e004e"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/可证伪条件"
+    },
+    {
+      "id": "cycle-b302ae3c720babf5",
+      "role": "limitation",
+      "text": "未将缺失的风险事件源、9:25动态轨迹和撤单差分补造成证据；周期判断不外推缺失字段。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-b302ae3c720babf5"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/判断/独立盲区声明"
+    },
+    {
+      "id": "cycle-6c91bd0bcc134736",
+      "role": "observation",
+      "text": "不荐票，空仓合法。",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-6c91bd0bcc134736"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/荐票/结论"
+    },
+    {
+      "id": "cycle-713f1a1c5916b20b",
+      "role": "observation",
+      "text": "[]",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-713f1a1c5916b20b"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/荐票/标的"
+    },
+    {
+      "id": "cycle-cf6d5d85e385f4e7",
+      "role": "cognition",
+      "text": "中性温度不等于可进攻；将宽度/高度/催化证据分开审查。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-cycle-cf6d5d85e385f4e7"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/认知迭代/0"
+    },
+    {
+      "id": "cycle-d3bb914e0ecc97e1",
+      "role": "research",
+      "text": "验证下一交易日是否出现同链跨环节扩散，以及五板核心能否带动二板以上梯队。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-cycle-d3bb914e0ecc97e1"
+      ],
+      "source": "cycle判断_20260921.json",
+      "source_pointer": "/深挖/0"
+    },
+    {
+      "id": "cycle-4d991fe453b8a217",
+      "role": "evidence",
+      "text": "cycle路·2026-09-21",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-4d991fe453b8a217"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/1",
+      "legacy_html": "<h3>cycle路·2026-09-21</h3>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "cycle-35808f91fc7add54",
+      "role": "evidence",
+      "text": "仅使用截至2026-09-21的已留档数据；缺失项保持缺失。",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-35808f91fc7add54"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/2",
+      "legacy_html": "<p class=\"hint\">仅使用截至2026-09-21的已留档数据；缺失项保持缺失。</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "cycle-9d8540134c7281f3",
+      "role": "evidence",
+      "text": "成交额20315.0亿，来源温度表；仅作为环境事实，不单独推导进攻。",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-9d8540134c7281f3"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/3",
+      "legacy_html": "<p>成交额20315.0亿，来源温度表；仅作为环境事实，不单独推导进攻。</p>",
+      "context": "原首屏补充",
+      "source_occurrences": [
+        "/bodies/cycle/block/6"
+      ]
+    },
+    {
+      "id": "cycle-ef471ca56451559d",
+      "role": "evidence",
+      "text": "日期20260921档位C状态空仓/观察数据可追溯",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-ef471ca56451559d"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/4",
+      "legacy_html": "<p>日期20260921档位C状态空仓/观察数据可追溯</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "cycle-b25b7b75572e1ef0",
+      "role": "evidence",
+      "text": "量能证据与边界",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-b25b7b75572e1ef0"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/heading/5"
+    },
+    {
+      "id": "cycle-953cd3d8f1dec3ff",
+      "role": "evidence",
+      "text": "先行证据与边界",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-953cd3d8f1dec3ff"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/heading/7"
+    },
+    {
+      "id": "cycle-f4ec1058b8d20e21",
+      "role": "evidence",
+      "text": "涨停103、首板82、一进二率0.303、二进三率0.5；昨日涨停溢价为null。",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-f4ec1058b8d20e21"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/8",
+      "legacy_html": "<p>涨停103、首板82、一进二率0.303、二进三率0.5；昨日涨停溢价为null。</p>",
+      "context": "先行证据与边界"
+    },
+    {
+      "id": "cycle-26561131e8ad7a07",
+      "role": "evidence",
+      "text": "连板梯队证据与边界",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-26561131e8ad7a07"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/heading/9"
+    },
+    {
+      "id": "cycle-e28cacdb269a8e80",
+      "role": "evidence",
+      "text": "1板82、2板13、3板5、4板2、5板1，宽度大于高度。",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-e28cacdb269a8e80"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/10",
+      "legacy_html": "<p>1板82、2板13、3板5、4板2、5板1，宽度大于高度。</p>",
+      "context": "连板梯队证据与边界"
+    },
+    {
+      "id": "cycle-89b98a62151887a0",
+      "role": "evidence",
+      "text": "攻防证据与边界",
+      "section": "position",
+      "evidence_refs": [
+        "ev-cycle-89b98a62151887a0"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/heading/11"
+    },
+    {
+      "id": "cycle-3db5ddefa0413385",
+      "role": "evidence",
+      "text": "中性偏防守：主线确认不足，按轮动而非趋势行情处理。",
+      "section": "position",
+      "evidence_refs": [
+        "ev-cycle-3db5ddefa0413385"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/12",
+      "legacy_html": "<p>中性偏防守：主线确认不足，按轮动而非趋势行情处理。</p>",
+      "context": "攻防证据与边界"
+    },
+    {
+      "id": "cycle-dbfd833bd61b26a8",
+      "role": "evidence",
+      "text": "深挖证据与边界",
+      "section": "research",
+      "evidence_refs": [
+        "ev-cycle-dbfd833bd61b26a8"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/heading/13"
+    },
+    {
+      "id": "cycle-b132dd57a17e105f",
+      "role": "research",
+      "text": "风险日历partial、竞价撤单差分unavailable；不把缺失字段补造成安全信号。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-cycle-b132dd57a17e105f"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/14",
+      "legacy_html": "<p>风险日历partial、竞价撤单差分unavailable；不把缺失字段补造成安全信号。</p>",
+      "context": "深挖证据与边界"
+    },
+    {
+      "id": "cycle-3f5d63b3ff1c254b",
+      "role": "evidence",
+      "text": "认知证据与边界",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-cycle-3f5d63b3ff1c254b"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/heading/15"
+    },
+    {
+      "id": "cycle-af84d531f47e3554",
+      "role": "cognition",
+      "text": "中性温度不等于可交易主线；高度、催化和跨环节扩散需同时复核。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-cycle-af84d531f47e3554"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/16",
+      "legacy_html": "<p>中性温度不等于可交易主线；高度、催化和跨环节扩散需同时复核。</p>",
+      "context": "认知证据与边界"
+    },
+    {
+      "id": "cycle-bb7ea3f42e39b44d",
+      "role": "evidence",
+      "text": "周期投票机器锚点与人工判断分离",
+      "section": "stages",
+      "evidence_refs": [
+        "ev-cycle-bb7ea3f42e39b44d"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/heading/17"
+    },
+    {
+      "id": "cycle-e6e9013b92652ded",
+      "role": "evidence",
+      "text": "当日宽度与高度分层记录；不把缺失动态数据补造成投票。",
+      "section": "stages",
+      "evidence_refs": [
+        "ev-cycle-e6e9013b92652ded"
+      ],
+      "source": "judgment_20260921.json",
+      "source_pointer": "/bodies/cycle/block/18",
+      "legacy_html": "<p>当日宽度与高度分层记录；不把缺失动态数据补造成投票。</p>",
+      "context": "周期投票机器锚点与人工判断分离"
+    }
+  ],
+  "content_coverage": {
+    "total": 30,
+    "covered": 30,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "cycle-e959630ebd2317fd",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-2351bfd054bacd44",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-10b43c2f0eddd56b",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-8e3f966e9348ecd9",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-504ff3a846a3f4e5",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-82c2abbfc6bd9a43",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-83f7c89b0a7af6ae",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-f7c67f94435e004e",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-b302ae3c720babf5",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-6c91bd0bcc134736",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-713f1a1c5916b20b",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-cf6d5d85e385f4e7",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-d3bb914e0ecc97e1",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-4d991fe453b8a217",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-35808f91fc7add54",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-9d8540134c7281f3",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-ef471ca56451559d",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-b25b7b75572e1ef0",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-953cd3d8f1dec3ff",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-f4ec1058b8d20e21",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-26561131e8ad7a07",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-e28cacdb269a8e80",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-89b98a62151887a0",
+        "sections": [
+          "position"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-3db5ddefa0413385",
+        "sections": [
+          "position"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-dbfd833bd61b26a8",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-b132dd57a17e105f",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-3f5d63b3ff1c254b",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-af84d531f47e3554",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-bb7ea3f42e39b44d",
+        "sections": [
+          "stages"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-e6e9013b92652ded",
+        "sections": [
+          "stages"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/结论",
+        "claim_id": "cycle-e959630ebd2317fd",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/证据/0",
+        "claim_id": "cycle-2351bfd054bacd44",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/证据/1",
+        "claim_id": "cycle-10b43c2f0eddd56b",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/证据/2",
+        "claim_id": "cycle-8e3f966e9348ecd9",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/证据/3",
+        "claim_id": "cycle-504ff3a846a3f4e5",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/档位",
+        "claim_id": "cycle-82c2abbfc6bd9a43",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/置信度",
+        "claim_id": "cycle-83f7c89b0a7af6ae",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/可证伪条件",
+        "claim_id": "cycle-f7c67f94435e004e",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/判断/独立盲区声明",
+        "claim_id": "cycle-b302ae3c720babf5",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/荐票/结论",
+        "claim_id": "cycle-6c91bd0bcc134736",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/荐票/标的",
+        "claim_id": "cycle-713f1a1c5916b20b",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/认知迭代/0",
+        "claim_id": "cycle-cf6d5d85e385f4e7",
+        "status": "displayed"
+      },
+      {
+        "source": "cycle判断_20260921.json",
+        "pointer": "/深挖/0",
+        "claim_id": "cycle-d3bb914e0ecc97e1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/1",
+        "claim_id": "cycle-4d991fe453b8a217",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/2",
+        "claim_id": "cycle-35808f91fc7add54",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/3",
+        "claim_id": "cycle-9d8540134c7281f3",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/6",
+        "claim_id": "cycle-9d8540134c7281f3",
+        "status": "referenced"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/4",
+        "claim_id": "cycle-ef471ca56451559d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/heading/5",
+        "claim_id": "cycle-b25b7b75572e1ef0",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/heading/7",
+        "claim_id": "cycle-953cd3d8f1dec3ff",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/8",
+        "claim_id": "cycle-f4ec1058b8d20e21",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/heading/9",
+        "claim_id": "cycle-26561131e8ad7a07",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/10",
+        "claim_id": "cycle-e28cacdb269a8e80",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/heading/11",
+        "claim_id": "cycle-89b98a62151887a0",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/12",
+        "claim_id": "cycle-3db5ddefa0413385",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/heading/13",
+        "claim_id": "cycle-dbfd833bd61b26a8",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/14",
+        "claim_id": "cycle-b132dd57a17e105f",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/heading/15",
+        "claim_id": "cycle-3f5d63b3ff1c254b",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/16",
+        "claim_id": "cycle-af84d531f47e3554",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/heading/17",
+        "claim_id": "cycle-bb7ea3f42e39b44d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260921.json",
+        "pointer": "/bodies/cycle/block/18",
+        "claim_id": "cycle-e6e9013b92652ded",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 31
+  },
+  "legacy_ticker": "<div class=\"ticker\"><span>2026-09-21 · 总审C档防守 · 缺口如实保留</span></div>"
+}

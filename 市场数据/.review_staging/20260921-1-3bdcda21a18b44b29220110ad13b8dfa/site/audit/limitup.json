@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "d": "20260921",
+  "route": "limitup",
+  "legacy_bodies": [],
+  "claims": [
+    {
+      "id": "limitup_1",
+      "role": "verdict",
+      "text": "C防守，空仓；全池执行口径仍是负期望，观察不买。",
+      "section": "recommendations",
+      "evidence_refs": [
+        "e64"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/limitup/claims/0"
+    },
+    {
+      "id": "limitup_2",
+      "role": "evidence",
+      "text": "涨停103、炸板25、封板率0.8047、跌停2、最高5板。",
+      "section": "temperature",
+      "evidence_refs": [
+        "e65",
+        "e66",
+        "e67"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/limitup/claims/1"
+    },
+    {
+      "id": "limitup_3",
+      "role": "evidence",
+      "text": "连板梯队与题材归位作为结构证据，归位覆盖103/103。",
+      "section": "ledger",
+      "evidence_refs": [
+        "e68"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/limitup/claims/2"
+    },
+    {
+      "id": "limitup_4",
+      "role": "condition",
+      "text": "历史统计仅作校准，昨日涨停溢价为null时不补造收益。",
+      "section": "training",
+      "evidence_refs": [
+        "e69"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/limitup/claims/3"
+    },
+    {
+      "id": "limitup_5",
+      "role": "research",
+      "text": "封板率与连板结构只能提供环境仪表盘，不能独立推出交易结论。",
+      "section": "research",
+      "evidence_refs": [
+        "e70"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/limitup/claims/4"
+    },
+    {
+      "id": "limitup_6",
+      "role": "cognition",
+      "text": "认知库最新累计快照as_of=20260911（本日为历史累计真源，库内无当日晚间新增条目）；本日结构、封板质量与主线催化分开，缺一不升档。当日认知迭代条目：本日封板率由zt_pool.csv重算为80.5%、温度63.2，但质量荐票执1最高仅45.6%且全池执行均值为43.2%；沿用(认知库 20260911)“执行口径优先、空仓可为正确解”，把C防守与空仓绑定，待下一交易日用可执行正收益和主线集中共同证伪。",
+      "section": "cognition",
+      "evidence_refs": [
+        "e71"
+      ],
+      "source": "页面判断_20260921.json",
+      "source_pointer": "/pages/limitup/claims/5"
+    }
+  ],
+  "content_coverage": {
+    "total": 6,
+    "covered": 6,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "limitup_1",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup_2",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup_3",
+        "sections": [
+          "ledger"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup_4",
+        "sections": [
+          "training"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup_5",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "limitup_6",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/limitup/claims/0",
+        "claim_id": "limitup_1",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/limitup/claims/1",
+        "claim_id": "limitup_2",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/limitup/claims/2",
+        "claim_id": "limitup_3",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/limitup/claims/3",
+        "claim_id": "limitup_4",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/limitup/claims/4",
+        "claim_id": "limitup_5",
+        "status": "displayed"
+      },
+      {
+        "source": "页面判断_20260921.json",
+        "pointer": "/pages/limitup/claims/5",
+        "claim_id": "limitup_6",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 6
+  },
+  "legacy_ticker": null
+}

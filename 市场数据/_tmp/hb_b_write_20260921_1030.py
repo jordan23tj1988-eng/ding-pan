@@ -1,0 +1,218 @@
+# -*- coding: utf-8 -*-
+"""hb-b 10:30 心跳场次留档 20260921 — ALARM_ONLY(数据断更红线)"""
+import json, os, datetime, io
+
+d = "20260921"
+base = os.path.join("盘中", d)
+pf = os.path.join(base, "临盘决断_%s_1030.json" % d)
+af = os.path.join(base, "报警_%s.jsonl" % d)
+print("decision exists:", os.path.exists(pf), "| alarm exists:", os.path.exists(af))
+if os.path.exists(pf):
+    raise SystemExit("ABORT: 目标决断文件已存在(发出版不可覆盖) -> %s" % pf)
+
+now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+sess = (
+ "10:30趋势确认段心跳 hb-b。本场身份读自 cron 真源(非自报): jobs.json id=aee9c2fb913b / "
+ "name=sentiment-intraday-hb-b / expr='30 10 * * 1-5' / enabled=true; "
+ "executions.db 本次行 scheduled_instant=2026-09-21T02:30:00+00:00(=2026-09-21 10:30 CST), "
+ "claimed_at=2026-09-21T11:46:15.280258+08:00, started_at=2026-09-21T11:46:19.997698+08:00 "
+ "→ lateness=4575.0s≈76.2min; agent.log 11:46:33 cron.scheduler: Running job 'sentiment-intraday-hb-b'。"
+ "★身份辨析(避坑): lateness 76.2min 仍小于该 job 容忍窗 grace=7200s(120min) → 调度侧【未】判 catch_up"
+ "(故 agent.log 今日无 'sentiment-intraday-hb-b missed its scheduled time' 行); 对照 hb-a(09:40+120min=11:40 < 11:46) "
+ "已被标 catch_up 并有 missed 行。但『调度未过期』≠『时窗内有数据』: 名义时点 10:30 之前本交易日盘中留档=零"
+ "(pipeline.lock=『20260921 22156 11:46:21』, 首 tick=11:46:29) → 数据侧本段实质缺席, 故本场按『零时窗内留档』处理"
+ "并在本文件显式声明, 不假扮时窗内决断(铁律②)。决断输入严格限于名义决断时点(2026-09-21 10:30)之前已留档数据"
+ "(=2026-09-17 15:04:36 及更早); 11:46 通道重启后产生的一切数据仅作台账/根因诊断, 不入决策。"
+ "本文件为『只报警』留档: level=ALARM_ONLY, fills=[], 持仓表态=[], 条件决断=[]; 依 cron 契约 step5 文件名落档"
+ "(与同批 hb-a/preread 及前日同场惯例一致), 为新建文件、未覆盖任何既有发出版。"
+)
+
+reason = (
+ "【红线硬触发·数据断更】名义决断时点(2026-09-21 10:30)之前, 本交易日盘中留档=零: 盘中/20260921/ 目录 11:46 才建立, "
+ "管道 11:46:21 才上锁, 首 tick 11:46:29; 名义时点前最后一条盘中留档=盘中/20260917/realtime_ticks.jsonl 末条 "
+ "ts=2026-09-17 15:04:36 → 断更 5485.4min(≈91.42h)【名义口径】/ 5561.6min(≈92.69h)【实际认领口径】, 远超 10 分钟红线; "
+ "且本场实际执行时点(11:46)已过上午收盘(11:30)、名义段(10:30)时窗实质缺席 → 按铁律②只报警禁决策, "
+ "不写任何预判/触发区间/条件价(写即编造, 铁律①)。"
+ "【A级无对象·预案链断供】warboard.json 最新=20260909(断供第 8 个交易日)、playbook.json 最新=20260907(buys=[])、"
+ "六路交易计划 max=20260911、pulse.json 与 执行流水.jsonl 全盘 0 命中 → 无 leg=close/take_zt 可触发票据, "
+ "条件决断=[] 属合法空(无预案即无触发器, 非漏写)。"
+ "【B级防守无对象】第七账 cash=1000000.0 / positions=[] / n_pos=0 / 次日卖出指令=[] → 空仓即防守(非漏执行); "
+ "三类防守触发条件(持仓炸板/大幅回撤/题材批量跳水≥3只2分钟内-3%)因持仓为空、且观察池滞后 5 个交易日"
+ "(20260911 zt_pool)而无有效判定对象 → 不作个股级判定, 亦不据此编造结论。"
+ "【C级禁止】最新总审=_学习/总审_20260911.json 档位=C/置信度 0.82『冰点防守，五路一致偏谨慎；仅保留观察，不形成进攻仓位。』"
+ "未解除, 叠加盘中禁改参数 + 本场零时窗内留档验证 + 名义时窗已闭 → 不预埋、不追买、不设帽, 预案外进攻一律不做(铁律④)。"
+ "【本场非『无动作秒退』】断更红线为硬触发, 必须留档报警(本决断文件 + 盘中/20260921/报警_20260921.jsonl 追加), "
+ "A/B/C 三级均无合法动作对象 → 零 fills 零预判。"
+)
+
+note = (
+ "根因(调度/宿主侧, 均为实测): ①本机 LastBootUpTime=2026-09-21 08:45:59(已开机), 但 Hermes 后端 serve 进程 "
+ "CreationDate=2026-09-21 11:45:27(pid 6812/19836, profile=default) → 08:46–11:45:27 无 Hermes 后端; "
+ "agent.log 本日 08/09/10 时零行(最早 11:46 起) → 上午 09:15–11:30 全时段零派发零留档; "
+ "②集中补跑规模: executions.db 本日共 15 条, claimed_at 全部落在 11:46:13.96–11:50:25.65, 其中 11 条为 missed-instant 补跑、"
+ "6 个 agent 场次于 11:46:33 并发启动(weekly-training/preread/hb-c/hb-a/hb-b/morning-auction) → 盘中 5 个时段"
+ "(09:14 管道 / 09:21 预读 / 09:40 hb-a / 10:30 hb-b / 11:00 hb-c)全部落在离线窗口; 本日首次准点派发=11:50:25"
+ "(job 5d3bdd715496, sched 11:50); ③离线起点可定位: job hermes-cockpit-refresh 的 instant=2026-09-18 22:00 至今未被认领"
+ "(本日 11:46 才补跑, 状态 running) → 宿主自 9/18 22:00 前离线, 跨 9/19(六)、9/20(日) 至 9/21 11:45; "
+ "④候选假设(未证实, 待收市后核): 自启项缺失 —— Startup 目录现仅 desktop.ini 与 SuperCommand_iFinD接口.lnk, "
+ "未见记忆台账中的 Hermes 网关自启脚本; HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run 亦无 Hermes 项 "
+ "→ 『后端未随开机自启』成立; 但 11:45:27 拉起后端的具体触发源未确认, 不作定论; "
+ "⑤旁证: iFinD 保活体检本日 failed(login_rc=-2), memory-tencentdb Gateway 持续 ERROR(WinError 2); "
+ "⑥机制缺陷延续: catch_up 风暴第 4 次(9/15、9/17、9/18、9/21), 本型为『机器已开机但后端未起』型(区别于 9/18 的整日零派发型); "
+ "每 job 仅补一个错失 instant、已过时段仍被补跑 → 9/17 起提出的『盘中场次时窗合法性门禁』与"
+ "『catch_up 按交易日逐段补跑/收盘后自动降级 ALARM_ONLY』两条建议截至本场仍为待批未实施。"
+ "以上均待收市后批, 本场零改动(未改任何参数、未触碰 warboard/账本/发出版)。"
+)
+
+doc = {
+ "date": d,
+ "session": "hb-b",
+ "ts": "10:30",
+ "write_ts": now,
+ "场次说明": sess,
+ "条件决断": [],
+ "data_freshness": {
+  "交易日校验": (
+   "契约命令 python -c \"from sentiment.core.calendar import is_trading_day,today_str\" 本机 FAIL"
+   "(ModuleNotFoundError: No module named 'sentiment'; D:\\股票数据\\市场数据 下无 sentiment 包) → 独立证据链: "
+   "①腾讯实时行情码戳 sh000001 date_time=20260921115100 / sz399001=20260921115057 / sz399006=20260921115112"
+   "(★仅取 date_time 字段作日历核验, 价格数值不入决策) → 2026-09-21 市场在交易(当前 11:5x 处午间休市, 上午 09:30–11:30 已运行); "
+   "②2026-09-21=周一, 无假期; ③_学习/_交易日历.json 共 5397 条、末条=20260911(bars_cache 派生, 滞后 6 个交易日, 不可作依据) "
+   "→ 判定=正常交易日, 本场非空跑。"
+  ),
+  "实时通道": (
+   "名义决断时点(10:30)前本日盘中留档=零: 盘中/20260921/ 目录于 11:46 才建立, pipeline.lock=『20260921 22156 11:46:21』"
+   "(pid 22156 存活, 命令行=盘中实时管道.py), 首 tick ts=2026-09-21 11:46:29(src=腾讯, n=40)。"
+   "名义时点前最后一次盘中留档=盘中/20260917/realtime_ticks.jsonl 末条 ts=2026-09-17 15:04:36 "
+   "→ 断更=5485.4min(91.42h)【相对名义 10:30】/ 5561.6min(92.69h)【相对实际认领 11:46:15】, 两种口径均远超 10 分钟红线 → 只报警禁决策。"
+   "补充: 9/18(周五)整交易日盘中留档亦为零(realtime_ticks.jsonl 不存在), 断更自 9/17 15:04:36 起连续跨越 9/18 与 9/21 上午两个交易时段。"
+  ),
+  "管道状态": (
+   "pipeline.lock=『20260921 22156 11:46:21』→ 通道于本日 11:46:21 换代上锁(pid 22156 实测存活); "
+   "盘中/launcher.log 末 6 行=[11:46:29]–[11:51:30] 每 60s 一条 tick 源=腾讯 n=40, "
+   "其前一条为 [15:05:36] 收盘退出(属 9/17) → 通道自 9/17 收盘后至本日 11:46 未再启动。"
+  ),
+  "管道报警": (
+   "盘中/20260921/pipeline_alarm.jsonl(11:46:23 由管道自写): level=ALARM / type=pool_stale / "
+   "detail=『目标日 20260918 涨停池未落档, 降级用最近可用池 20260911(40只)』→ 观察池滞后 5 个交易日。"
+  ),
+  "预案对象": (
+   "pulse.json 全盘 0 命中; 执行流水.jsonl 全盘 0 命中(契约 step2 所列两文件名与实现不符=规格漂移, 第 3 次记录); "
+   "盘中/20260921/warboard.json 不存在; warboard.json 最新=盘中/20260909/warboard.json"
+   "(断供第 8 个交易日: 9/10、9/11、9/14、9/15、9/16、9/17、9/18、9/21); playbook.json 最新=盘中/20260907(buys=[]); "
+   "六路交易计划 max=_学习/交易计划_*_20260911.json(9/14–9/21 全缺) → 今日专属预案不存在, 条件决断=[] 属合法空。"
+  ),
+  "持仓账本": (
+   "第七账·盘中作战 state.json: 本金 1000000 / cash=1000000.0 / positions=[]; 净值.json date=20260921 / nav=1000000.0 / "
+   "cash=1000000.0 / pos_val=0.0 / n_pos=0; 次日卖出指令.json=[] → 空仓即防守(非漏执行)。"
+   "账本.jsonl 末笔=2026-08-13(起算清仓两笔), 其后零成交。(三账本 mtime=2026-09-21 11:46 属本批补跑批写, 内容与收盘态一致、无新增成交。)"
+  ),
+  "观察池": (
+   "最新涨停池=20260911 zt_pool(40只; 目标日 20260918 未落档, 见 pipeline_alarm) → "
+   "『持仓炸板/大幅回撤/题材批量跳水(≥3只2分钟内-3%)』三类触发条件均无有效判定对象: 持仓为空, "
+   "且在滞后 5 个交易日的旧池上做个股级判定无效(不作判定, 也不以此编造结论)。"
+  ),
+  "总审档位": (
+   "最新总审=_学习/总审_20260911.json: 档位=C / 置信度=0.82 / 结论=『冰点防守，五路一致偏谨慎；仅保留观察，不形成进攻仓位。』"
+   "→ 防守框架未解除且未覆盖 09-21 → C 级(预案外进攻)禁止。"
+  ),
+  "报警物资": (
+   "盘中/20260921/报警_20260921.jsonl 在本场写档前不存在(由本场首次创建并追加断更红线留档); "
+   "盘中/20260921/pipeline_alarm.jsonl=管道自写 1 条 pool_stale ALARM。"
+  ),
+  "同批互证": (
+   "本日 11:46 起为一次性集中补跑: agent.log 11:46:11–11:46:13 共 11 行 'missed its scheduled time'"
+   "(sentiment-morning-auction 09:24 / sentiment-weekly-training 09-19 20:00 / sentiment-intraday-pipeline 09:14 / "
+   "sentiment-intraday-preread 09:21 / sentiment-intraday-hb-a 09:40 / weixin-intraday-push 09:00 / ifind-keepalive 08:45 / "
+   "hermes-cockpit-refresh 09-18 22:00 / 盘中回应引擎 09:25 / intraday-pipeline-watch 10:00 / risk-events-daily 08:50), "
+   "随后 11:46:33 并发启动 6 个 agent 场次(weekly-training、preread、hb-c、hb-a、hb-b、morning-auction)。"
+   "其中 preread(09:21 段)已落档 盘中/20260921/临盘决断_20260921_0921.json(level=ALARM_ONLY / fills=[], 11:54 写), "
+   "结论与本场一致, 互不覆盖。"
+  ),
+  "旁证(仅诊断, 非决策输入)": (
+   "①iFinD 保活体检 job 5d8760e7a962 本日 failed, cron 错误原文照引: 『ALARM [2026-09-21 11:46:25] iFinD保活体检失败: "
+   "login/取数失败: D:\\股票数据\\.venv312\\Lib\\site-packages\\iFinDPy.pth / login_rc=-2』(未独立核实缺失件明细, 不推定) "
+   "→ 盘中仅腾讯降级源; ②memory-tencentdb Gateway 本日持续 ERROR(WinError 2 系统找不到指定的文件, errors.log 至 11:53) "
+   "→ 记忆链路降级; ③指数(我实测约 11:55, 腾讯码戳 20260921115100): 上证 3933.37 +0.55% / 深成 13718.23 +0.57% / "
+   "创业板 3403.97 +0.93% —— 晚于名义决断时点(10:30), 明示仅台账用途。"
+  )
+ },
+ "decision": {
+  "level": "ALARM_ONLY",
+  "fills": [],
+  "持仓表态": [],
+  "reason": reason,
+  "note": note
+ },
+ "后视镜边界声明": (
+  "本文件决断输入 = 名义决断时点(2026-09-21 10:30)之前的留档: 该窗口内本日盘中留档=零(最新=2026-09-17 15:04:36), "
+  "9/18 与 9/21 上午两个交易时段的盘中实时域均未留档且不可复现, 不得以 11:46 后数据回填。"
+  "11:46 起通道重启产生的数据(realtime_ticks 11:46:29 起、pipeline_alarm 11:46:23、账本三件 11:46 批写、判断流水、"
+  "他场决断文件、指数实测)一律标注为非决断输入, 仅作台账/根因诊断; 腾讯行情仅取 date_time 字段作日历核验。"
+  "未生成任何 fills(无决断依据, 写即编造), 未改参数, 未覆盖任何既有文件(本文件与 报警_20260921.jsonl 均为新建/追加)。"
+ ),
+ "report": (
+  "报警留档: 盘中/20260921/报警_20260921.jsonl(hb-b_1030 条, 追加/本场创建); "
+  "本文件=本场决断留档(ALARM_ONLY, fills=[], 持仓表态=[], 条件决断=[])。"
+ )
+}
+
+with io.open(pf, "w", encoding="utf-8") as f:
+    json.dump(doc, f, ensure_ascii=False, indent=1)
+print("WROTE", pf, os.path.getsize(pf))
+
+alarm = {
+ "ts": now,
+ "date": d,
+ "session": "hb-b_1030",
+ "job_id": "aee9c2fb913b",
+ "execution_ref": "scheduled_instant=2026-09-21T02:30:00+00:00 / claimed_at=2026-09-21T11:46:15.280258+08:00 / started_at=2026-09-21T11:46:19.997698+08:00",
+ "scheduled_instant": "2026-09-21T02:30:00+00:00 (= 2026-09-21 10:30 CST)",
+ "kind": "in_grace_late_run (lateness=4575.0s≈76.2min < grace=7200s → 调度侧未标 catch_up; 但名义时窗 10:30 前盘中留档=零)",
+ "lateness": "4575.0s ≈ 76.2min (名义 10:30 → 认领 11:46:15.28); 实际执行已过上午收盘 11:30",
+ "type": "intraday_channel_dark_before_backend_start + stale_observation_pool",
+ "level": "ALARM_ONLY",
+ "fills": [],
+ "持仓表态": [],
+ "decision_file": "盘中/20260921/临盘决断_20260921_1030.json",
+ "reason": reason,
+ "data_freshness": {
+  "pulse": "exists=False(全盘 0 命中) → 无对象可核",
+  "realtime_ticks": "本日首条 ts=2026-09-21 11:46:29(src=腾讯, n=40, pool_date=20260911, pool_stale=True) → 名义 10:30 前本日零条; 前一条=2026-09-17 15:04:36",
+  "warboard": "本日 exists=False; 最新=20260909(断供第 8 个交易日)",
+  "执行流水": "全盘不存在 → 零成交",
+  "预案真源": "playbook max=20260907(buys=[]); 六路交易计划 max=20260911; 总审 max=20260911(档位C/置信0.82)",
+  "第七账": "cash=1000000.0 / positions=[] / nav=1000000.0 / n_pos=0 → 空仓",
+  "日链": "市场数据根日目录 max=20260911(9/14–9/21 共 6 个交易日全缺)",
+  "stale_min": "5485.4 分钟(相对名义 10:30) / 5561.6 分钟(相对实际认领)",
+  "交易日": "是(腾讯码戳 20260921115100/115057/115112; 指定模块 sentiment.core.calendar 不可用; 交易日历缓存末条=20260911)"
+ },
+ "对账": {"引擎已执行": "无(执行流水.jsonl 全盘 0 命中)", "账本": "空仓(账本.jsonl 末笔 2026-08-13)", "结论": "一致, 无异常"},
+ "机制发现": [
+  "①宿主型黑障新变种: 机器 08:45:59 已开机, 但 Hermes 后端 11:45:27 才启动 → 08:46–11:45 零调度, 覆盖上午全交易时段; 与 9/18『整机/宿主整日未起』型不同, 需分别设防(开机自启校验 + 盘中时点自检告警)。",
+  "②自启项缺失(候选根因, 未证实): Startup 目录仅 desktop.ini + SuperCommand_iFinD接口.lnk, HKCU Run 无 Hermes 项 → 后端未随开机自启; 11:45:27 拉起触发源未确认, 不作定论。",
+  "③catch_up 风暴第 4 次(9/15、9/17、9/18、9/21): 11 条 missed-instant 一次性补跑 + 6 场次并发; 每 job 只认领一个错失 instant, 已过时段仍被补跑。",
+  "④grace=7200s 掩盖时窗缺席: hb-b 10:30 的 lateness 76.2min 落在 grace 内 → 调度侧不标 catch_up、也无 missed 行, 但数据侧 10:30 前零留档 → 仅靠调度元数据无法识别『假时窗内执行』, 建议加数据侧时窗门禁。",
+  "⑤日链停摆第 6 个交易日(根日目录停在 20260911): 涨停池/炸板/龙虎榜/fact 全缺, 观察池被迫降级 20260911(滞后 5 个交易日)。",
+  "⑥契约对齐漂移三处: pulse.json / 执行流水.jsonl 全盘 0 命中、sentiment.core.calendar 缺失、交易日历缓存末条=20260911。",
+  "⑦旁路: iFinD 保活体检 failed(login_rc=-2) → 盘中仅腾讯降级源; memory-tencentdb Gateway 持续 ERROR(WinError 2) → 记忆链路降级。"
+ ],
+ "后视镜边界声明": (
+  "本场名义决断时点=2026-09-21 10:30 CST; 实际执行/写档见 ts 字段(11:5x, 已过上午收盘)。"
+  "全部结论输入均为『名义时点之前已留档』或『该时点前不存在这一事实本身』; 11:46 通道重启后产生的数据仅作台账/根因诊断, "
+  "严禁作决策或训练输入。本场零 fills、零预判、零改动、零覆盖。"
+ ),
+ "收市后待批清单": [
+  "①【最高·宿主级】后端未随开机自启(08:45:59 开机 → 11:45:27 后端起), 覆盖 09:15–11:30 上午全时段 → 查自启项/拉起触发源与电源日志根因, 出防黑障方案(开机自启校验 + 多时点自检告警)。",
+  "②【链路级】日链停摆第 6 个交易日(根日目录 max=20260911): StockDailyChain / AStock-BLite-Daily-Update / AStock-BLite-Tushare-Extended 恢复 + 补拉范围待定。",
+  "③【派发机制】catch_up 风暴第 4 次; 且 grace=7200s 使『时窗已闭的场次』不标 catch_up(机制发现④) → 建议按交易日逐段补跑 + 数据侧时窗合法性门禁(无时窗内留档即强制 ALARM_ONLY)。",
+  "④【契约对齐】pulse.json / 执行流水.jsonl 全盘 0 命中 + sentiment.core.calendar 缺失 + 交易日历缓存滞后 → 补实现或改契约。",
+  "⑤【数据源】iFinD 保活体检 failed(login_rc=-2) + memory-tencentdb Gateway ERROR(WinError 2) → 盘中仅腾讯降级源、记忆链路降级, 待修。",
+  "⑥【数据链】观察池降级 20260911(滞后 5 个交易日) → 恢复 20260918 涨停池落档后方可恢复个股级防守判定。"
+ ]
+}
+
+with io.open(af, "a", encoding="utf-8") as f:
+    f.write(json.dumps(alarm, ensure_ascii=False) + "\n")
+print("APPENDED", af, os.path.getsize(af))

@@ -574,11 +574,237 @@ def _ab_fallback(j, date):
             '<p style="margin:6px 0 0">%s</p></div>%s' % (date, one, seg))
 
 
+# 路由/段数表、同步锚点、样式 id 与页面契约校验都由唯一真源(能力进化模块.py)提供。
+CAPABILITY_SYNC_START = '<!--OVERVIEW_EVOLUTION_SYNC_START-->'
+CAPABILITY_SYNC_END = '<!--OVERVIEW_EVOLUTION_SYNC_END-->'
+_CAPABILITY_CN = '一二三四五六七八九十'
+# 展示层历史模块标题(自主深挖/我的认知迭代)；内容保留在判断层与能力库，仅展示层摘除。
+_LEGACY_MODULE_RE = _re.compile(r'自主深挖|我的认知迭代|认知迭代')
+_CAPABILITY_STYLE_RE = _re.compile(
+    r'<style\b[^>]*\bid=["\'](?:overview-evolution-sync|evolution-style-sync)["\'][^>]*>.*?</style\s*>',
+    _re.S | _re.I)
+_CAPABILITY_STYLE_SELFCLOSE_RE = _re.compile(
+    r'<style\b[^>]*\bid=["\'](?:overview-evolution-sync|evolution-style-sync)["\'][^>]*/>',
+    _re.S | _re.I)
+
+
+def _capability_module():
+    """加载两块标准能力模块的唯一真源(能力进化模块.py)。"""
+    import importlib.util
+    from pathlib import Path
+    path = Path(BASE) / '能力进化模块.py'
+    if not path.is_file():
+        raise RuntimeError('能力进化模块.py 缺失，无法生成标准能力模块')
+    spec = importlib.util.spec_from_file_location('capability_module_source', path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _strip_legacy_modules(html):
+    """摘除展示层历史模块段(从标题到下一标题/foot 之前)，返回 (html, 摘除数)。
+
+    2026-09-22：与主题页/周期页/龙虎榜页同一口径——展示层只留两块标准能力模块，
+    旧『六 自主深挖 · …』『七 我的认知迭代 · 最新』不再与标准模块并存。
+    这些段落的正文仍在判断层(model)与能力库中，未被删除，只是不再重复展示。
+    """
+    removed = 0
+    while True:
+        target = None
+        for m in _re.finditer(r'<h2[^>]*>(.*?)</h2>', html, _re.S):
+            if _LEGACY_MODULE_RE.search(_re.sub(r'<[^>]+>', '', m.group(1))):
+                target = m
+                break
+        if target is None:
+            return html, removed
+        ends = [x for x in (html.find('<h2', target.end()),
+                            html.find('<section class="evolution">', target.end()),
+                            html.find('<div class="foot">', target.end())) if x >= 0]
+        end = min(ends) if ends else len(html)
+        html = html[:target.start()].rstrip('\n') + '\n' + html[end:].lstrip('\n')
+        removed += 1
+
+
+def _sync_capability_blocks(site_dir, date, routes=None, root=None):
+    """五路 + 概览统一为同一套两块标准能力模块(唯一真源=能力进化模块.py 直出当日能力库)。
+
+    2026-09-22 用户指令修复：「自主拓展 · 能力进化」「认知迭代 · 能力进化」是每一路与概览
+    都该有的公共能力，但历史实现只同步主题页 → 概览/竞价/产业逻辑/涨停页长期缺块，
+    龙虎榜页与旧模块并存；且搬运的是页面里冻结的旧字节，数字与当日能力库脱节。现改为：
+      1) 唯一来源=当日能力库(快照 + 账本)直出，不从任何页面搬运；
+      2) 目标=七页全覆盖(index + 五路)，缺页即报错；
+      3) 展示层旧模块按主题页已验收口径摘除，不并存；
+      4) 编号按各页业务段数顺延，与契约段数不符即报错(防编号漂移)；
+      5) 幂等：重跑先清旧块/旧样式，再注入同一份字节。
+      6) 数据根取调用方给的 root/POST_BASE(候选发布=冻结 inputs)，缺省才是现站 BASE：
+         页面字节与发布门禁/哨兵比对基准必须同源，否则回放复算必然"字节不一致"。
+    """
+    from pathlib import Path
+    site = Path(site_dir).resolve()
+    mod = _capability_module()
+    routes = tuple(routes) if routes else tuple(mod.ROUTES)
+    data_root = Path(root) if root else None
+    if data_root is None or not (data_root / '能力进化模块.py').is_file():
+        data_root = Path(BASE)
+    payload = mod.build(data_root, date)
+    sections, css = payload['sections'], payload['css']
+    if len(sections) != 2 or not css:
+        raise RuntimeError('能力模块产出异常: sections=%d css=%d' % (len(sections), len(css)))
+    style = '<style id="overview-evolution-sync">' + css + '</style>'
+    report = []
+    for route in routes:
+        path = site / (route + '.html')
+        if not path.is_file():
+            raise RuntimeError('能力模块统一目标缺页: ' + str(path))
+        s = path.read_text(encoding='utf-8')
+        s = _re.sub(r'\n*' + _re.escape(CAPABILITY_SYNC_START) + r'.*?' + _re.escape(CAPABILITY_SYNC_END) + r'\n*',
+                   '\n', s, flags=_re.S)
+        s = _re.sub(r'<section class="evolution">.*?</section>\s*', '', s, flags=_re.S)
+        s = _CAPABILITY_STYLE_RE.sub('', s)
+        s = _CAPABILITY_STYLE_SELFCLOSE_RE.sub('', s)
+        s, removed = _strip_legacy_modules(s)
+        nums = [_CAPABILITY_CN.index(x) + 1
+                for x in _re.findall(r'<h2[^>]*>\s*([一二三四五六七八九十])\s', s)]
+        expected = mod.BUSINESS_SECTIONS[route]
+        if not nums or max(nums) != expected:
+            raise RuntimeError('页面业务段数与契约不符，拒绝注入能力模块: %s (max=%s expect=%d)'
+                               % (path.name, max(nums) if nums else None, expected))
+        start = expected + 1
+        local = [mod.renumber(sec, start + i) for i, sec in enumerate(sections)]
+        s = s.replace('</head>', style + '</head>', 1)
+        pos = s.rfind('<div class="foot">')
+        if pos < 0:
+            raise RuntimeError('page foot anchor missing: ' + str(path))
+        block = ('\n\n' + CAPABILITY_SYNC_START + '\n' + local[0] + '\n' + local[1] + '\n'
+                 + CAPABILITY_SYNC_END + '\n')
+        s = s[:pos].rstrip('\n') + block + s[pos:]
+        # 注入后自检走唯一契约实现(与发布门禁/现站哨兵同一份判定)，不再各写一套。
+        # 比对基准的数据根与注入同源(data_root)，回放时同为准入的冻结 inputs。
+        problems = mod.verify_page(s, route, data_root, date)
+        if problems:
+            raise RuntimeError('能力模块注入自检失败: %s -> %s' % (path, '; '.join(problems)))
+        path.write_text(s, encoding='utf-8', newline='\n')
+        report.append('%s(%s/%s%s)' % (path.name, _CAPABILITY_CN[start - 1], _CAPABILITY_CN[start],
+                                       '，清旧%d' % removed if removed else ''))
+    return report
+
+
+
+def _theme_sha256(path):
+    import hashlib
+    h = hashlib.sha256()
+    with open(path, 'rb') as fh:
+        for block in iter(lambda: fh.read(1024 * 1024), b''):
+            h.update(block)
+    return h.hexdigest()
+
+
+def _theme_freeze_path():
+    return os.path.join(SITE, '.theme_page_freeze.json')
+
+
+def _read_theme_freeze():
+    path = _theme_freeze_path()
+    if not os.path.isfile(path):
+        return None
+    with open(path, encoding='utf-8') as fh:
+        record = json.load(fh)
+    if (record.get('schema_version') != 1 or
+            not _re.fullmatch(r'[0-9]{8}', str(record.get('d', ''))) or
+            not _re.fullmatch(r'[0-9a-f]{64}', str(record.get('theme_sha256', '')))):
+        raise RuntimeError('主题页冻结元数据非法: ' + path)
+    return record
+
+
+def _write_theme_freeze(date, build_id, theme_path):
+    path = _theme_freeze_path()
+    record = {'schema_version': 1, 'd': date, 'build_id': build_id,
+              'theme_sha256': _theme_sha256(theme_path),
+              'policy': 'same-day-theme-immutable',
+              'frozen_at': datetime.datetime.now(datetime.timezone.utc).isoformat()}
+    tmp = path + '.tmp'
+    with open(tmp, 'w', encoding='utf-8', newline='\n') as fh:
+        json.dump(record, fh, ensure_ascii=False, indent=2)
+        fh.write('\n')
+        fh.flush(); os.fsync(fh.fileno())
+    os.replace(tmp, path)
+    return record
+
+
+def _postprocess_site(site_dir, date):
+    """页面发布统一后处理：只接受 staging/release 目录，禁止直接改现站 theme.html。
+
+    候选站点在门禁前处理；到站只复制已通过门禁的候选，不再对现站做二次后处理。
+    """
+    import os as _os
+    import subprocess as _sp
+    from pathlib import Path
+    site = Path(site_dir).resolve()
+    live_site = Path(SITE).resolve()
+    if site == live_site and (site / 'theme.html').is_file():
+        raise RuntimeError('拒绝对现站 theme.html 后处理：复盘只能处理 staging/release')
+    env = {k: v for k, v in _os.environ.items() if k != 'PYTHONPATH'}
+    env['PYTHONUTF8']='1'; env['PYTHONIOENCODING']='utf-8'
+    # 发布侧(review_publish._postprocess_stage)会把候选发布的冻结 inputs 作为数据根传进来：
+    # 页面里的能力模块字节必须与门禁/哨兵复算基准同源，否则回放复算必然"字节不一致"。
+    incoming = _os.environ.get('POST_BASE')
+    data_root = incoming if incoming and (Path(incoming) / '能力进化模块.py').is_file() else BASE
+    env['POST_BASE'] = data_root
+    env['POST_SITE_ROOT'] = str(site)
+    titles = [('index', '概览'), ('cycle', '周期情绪'), ('auction', '竞价·第一路'), ('lhb', '龙虎榜·第二路'),
+              ('theme', '主线题材·第三路'), ('logic', '产业逻辑·第四路'), ('limitup', '涨停复盘·第五路')]
+    missing = [k + '.html' for k, _t in titles if not (site / (k + '.html')).is_file()]
+    if missing:
+        raise RuntimeError('统一后处理站点缺页: ' + ','.join(missing))
+
+    # 五路 + 概览统一两块标准能力模块(唯一真源 能力进化模块.py，直出当日能力库)。
+    # 顺序: 先跑 cycle/lhb 黄金视觉锁(恢复器各自需要一份能力模块/CSS 源)，
+    # 最后 _sync_capability_blocks 把七页统一覆盖成同一份字节；缺页/编号漂移/注入自检失败即报错。
+    import re as _re
+    overview = site / 'index.html'
+    overview_ready = len(_re.findall(r'<section class="evolution">',
+                                     overview.read_text(encoding='utf-8'), _re.S)) == 2
+    if not overview_ready:
+        # 候选概览页不带能力模块时，恢复器回退现站页作源(其内容随后被统一覆盖)。
+        print('提示: 候选概览页无能力模块，cycle/lhb 恢复器使用现站源', live_site)
+        env['CYCLE_EVO_SOURCE'] = str(live_site / 'cycle.html')
+        # 候选/现站 cycle.html 是黄金壳，故不内嵌 evolution CSS；
+        # lhb.html 保留同一套能力模块样式，作为稳定回退源。
+        env['CYCLE_CSS_SOURCE'] = str(live_site / 'lhb.html')
+        env['LHB_ABILITY_FALLBACK'] = str(live_site / 'lhb.html')
+    # cycle 黄金视觉锁: release 只提供当日数据，周期页形态由只读黄金版固定；六/七能力模块从现站/概览移植
+    for repair in (Path(BASE) / 'restore_cycle_page.py', Path(BASE) / 'restore_evolution_style.py'):
+        if not repair.exists():
+            raise RuntimeError('cycle visual repair script missing: ' + str(repair))
+        py_exec = str(Path(r'D:\股票数据\.venv312\Scripts\python.exe')) if Path(r'D:\股票数据\.venv312\Scripts\python.exe').is_file() else sys.executable
+        cp = _sp.run([py_exec, str(repair), date], cwd=BASE, capture_output=True, text=True,
+                     encoding='utf-8', env=dict(env, CYCLE_PAGE_TARGET=str(site / 'cycle.html')))
+        if cp.returncode != 0:
+            raise RuntimeError('cycle visual repair failed: ' + str(repair) + '\n'
+                               + cp.stdout[-2000:] + cp.stderr[-2000:])
+    # 龙虎榜黄金视觉锁：release 只提供当日数据，页面形态由黄金版固定；
+    # 自主拓展/认知迭代模块（候选页已同步）原样保留，并由目标日模拟盘重接。
+    lhb_repair = Path(BASE) / 'restore_lhb_page.py'
+    if not lhb_repair.exists():
+        raise RuntimeError('lhb visual repair script missing: ' + str(lhb_repair))
+    cp = _sp.run([py_exec, str(lhb_repair), date], cwd=BASE, capture_output=True, text=True,
+                 encoding='utf-8',
+                 env=dict(env, LHB_PAGE_TARGET=str(site / 'lhb.html'),
+                          LHB_PAGE_SOURCE=str(site / 'lhb.html')))
+    if cp.returncode != 0:
+        raise RuntimeError('lhb visual repair failed: ' + str(lhb_repair) + '\n'
+                           + cp.stdout[-2000:] + cp.stderr[-2000:])
+    blocks = _sync_capability_blocks(site, date, root=data_root)
+    print('统一后处理完成:', site, '| 标准能力模块(七页)', ' '.join(blocks), '| cycle/lhb 黄金视觉锁',
+          '| 能力数据根', data_root)
+
+
 def _deploy_site(date, result):
     """到站(2026-09-07部署断层修复): release site 7主页面 -> 复盘/盯盘台;
     承接旧链尾部职责(新渲染链不含): 当日存档 ARC/date.html + history_index.json + history.html 重建。
     仅门禁PASS后由 build() 调用; intraday/archive旧档/辅助文件不动。"""
     import shutil
+    import subprocess
     from pathlib import Path
     rel = result.get('release_dir')
     if not rel:
@@ -590,11 +816,36 @@ def _deploy_site(date, result):
     os.makedirs(ARC, exist_ok=True)
     titles = [('index', '概览'), ('cycle', '周期情绪'), ('auction', '竞价·第一路'), ('lhb', '龙虎榜·第二路'),
               ('theme', '主线题材·第三路'), ('logic', '产业逻辑·第四路'), ('limitup', '涨停复盘·第五路')]
+    postprocess = result.get('stage_postprocess') or {}
+    if not postprocess.get('ok') or postprocess.get('skipped') == 'generator missing in isolated fixture':
+        raise RuntimeError('拒绝到站：候选站点未完成门禁前后处理，禁止改写现站页面')
+    # 同日主题页冻结：复盘可以重建候选，但不得覆盖已验收现站主题页。
+    live_theme = Path(SITE) / 'theme.html'
+    freeze = _read_theme_freeze()
+    same_day_frozen = bool(freeze and freeze.get('d') == date)
+    if same_day_frozen:
+        if not live_theme.is_file() or _theme_sha256(live_theme) != freeze['theme_sha256']:
+            raise RuntimeError('主题页冻结被破坏：现站 theme.html 与冻结哈希不一致')
+        candidate_theme = src / 'theme.html'
+        if _theme_sha256(candidate_theme) != freeze['theme_sha256']:
+            raise RuntimeError('同日主题页候选与冻结哈希不一致，拒绝覆盖现站')
     for k, _t in titles:
         f = src / (k + '.html')
         if not f.exists():
             raise RuntimeError('release missing page: ' + f.name)
+        if k == 'theme' and same_day_frozen:
+            print('到站: 同日主题页已冻结，跳过 theme.html 覆盖')
+            continue
         shutil.copy2(f, os.path.join(SITE, k + '.html'))
+    if not same_day_frozen:
+        freeze = _write_theme_freeze(date, result.get('build_id', ''), live_theme)
+    # 到站不再二次后处理；候选站点与门禁检查必须同源、同字节。
+    print('到站: 候选站点已完成统一后处理，跳过二次处理(与门禁检查同源)')
+    # 修复后再次确认页面存在并交给周期/龙虎榜专属哨兵
+    if not (Path(SITE) / 'cycle.html').is_file():
+        raise RuntimeError('cycle page missing after visual repair')
+    if not (Path(SITE) / 'lhb.html').is_file():
+        raise RuntimeError('lhb page missing after visual repair')
     jpath = os.path.join(L, 'judgment_' + date + '.json')
     if os.path.exists(jpath):
         j = json.load(open(jpath, encoding='utf-8'))
@@ -680,4 +931,8 @@ def build(date):
 
 
 if __name__=='__main__':
+    if len(sys.argv) > 2 and sys.argv[1] == '--stage-postprocess':
+        _postprocess_site(sys.argv[2], sys.argv[3] if len(sys.argv) > 3
+                          else datetime.date.today().strftime('%Y%m%d'))
+        raise SystemExit(0)
     build(sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d'))

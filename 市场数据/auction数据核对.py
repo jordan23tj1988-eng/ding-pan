@@ -12,7 +12,7 @@ import re, os, sys, json, csv
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 L = os.path.join(BASE, '_学习')
-SITE = os.path.join(BASE, '复盘', '盯盘台')
+SITE = os.environ.get('POST_SITE_ROOT') or os.path.join(BASE, '复盘', '盯盘台')
 
 def load_page(d, page_path=None):
     p = page_path or os.path.join(SITE, 'auction.html')

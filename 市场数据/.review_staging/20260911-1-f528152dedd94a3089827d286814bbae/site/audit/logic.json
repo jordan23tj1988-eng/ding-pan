@@ -1,0 +1,1001 @@
+{
+  "schema_version": 1,
+  "d": "20260911",
+  "route": "logic",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20260911.json",
+      "pointer": "/bodies/logic",
+      "raw": "<div class=\"logic-body\"><div class=\"hero\"><div class=\"kick\">产业逻辑路｜截至20260911</div><h1>行业扩散，催化缺席</h1><p>涨停40只；题材归位A=0、B=40；元件聚集9只但最高2板，今日空仓防守。</p></div><div class=\"kpis\"><div class=\"kpi-card\"><b>涨停</b><span>40</span></div><div class=\"kpi-card\"><b>B档兜底</b><span>40</span></div><div class=\"kpi-card\"><b>元件聚集</b><span>9</span></div><div class=\"kpi-card\"><b>荐票</b><span>0</span></div></div><h2>荐票卡｜空仓为主</h2><div class=\"card\"><p>无正式荐票；行业聚集仅作观察，不进入交易计划。</p></div><h2>产业逻辑判断｜C档防守</h2><div class=\"card\"><p>40只涨停全部B行业兜底，B档不能当催化；元件9只但最高2板、承载分歧。</p></div><h2>产业链｜元件聚集待核</h2><div class=\"card\"><p>协和电子、澳弘电子、超声电子等9只元件股形成行业聚集，订单与真实卡位尚未核验。</p></div><h2>风险日历｜事件维度不完整</h2><div class=\"card\"><p>风险日历status=pass、事件20，但未接入财报、股东会、业绩预告，不能宣称已完成上述风险过滤。</p></div><h2>认知迭代｜宽度不等于催化</h2><div class=\"card\"><p>预增A成色池仅为研究候选，需与公告/订单和盘面交集同步验证。</p></div></div>\n"
+    }
+  ],
+  "claims": [
+    {
+      "id": "logic-db00d98046d75710",
+      "role": "verdict",
+      "text": "C档防守：涨停池虽扩至40只，但题材归位全部B行业兜底，缺少可核验公告/订单催化；产业链承载集中于元件9只、最高仅2板且多数午后封板，暂不形成可交易主线，空仓合法。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-db00d98046d75710"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/结论"
+    },
+    {
+      "id": "logic-e0aac852574d4167",
+      "role": "evidence",
+      "text": "20260911/zt_pool.csv：涨停40只，炸板22只；最高连板4（瑞尔特），逻辑链条内元件方向9只但最高2板。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-e0aac852574d4167"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/证据/0"
+    },
+    {
+      "id": "logic-1ef519f77982201a",
+      "role": "evidence",
+      "text": "_学习/涨停对链条_20260911.json：元件为主要聚集环节，早封占比低、开板分歧明显；其余环节多为单票扩散。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-1ef519f77982201a"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/证据/1"
+    },
+    {
+      "id": "logic-fd0550f64375482b",
+      "role": "evidence",
+      "text": "_学习/题材归位_20260911.json：40只全部B档行业兜底，A=0、B=40、C=0；行业归位不等于催化确认。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-fd0550f64375482b"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/证据/2"
+    },
+    {
+      "id": "logic-b6d857ba55c41024",
+      "role": "evidence",
+      "text": "_学习/中报预增雷达_20260911.json：预增798、未发酵606、A成色65，但当日A池未给出可直接核验的涨停交集，不能把预增池当买入信号。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-b6d857ba55c41024"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/证据/3"
+    },
+    {
+      "id": "logic-8e21f20a26e2d49f",
+      "role": "evidence",
+      "text": "_学习/风险日历_20260911.json：status=pass、事件20；但未覆盖股票信息披露/股东会/业绩预告，不能据此宣称财报与股东会风险已过滤。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-8e21f20a26e2d49f"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/证据/4"
+    },
+    {
+      "id": "logic-4c3f8eb0c7ea4719",
+      "role": "evidence",
+      "text": "C",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-4c3f8eb0c7ea4719"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/档位"
+    },
+    {
+      "id": "logic-9e41ace47be17578",
+      "role": "evidence",
+      "text": "80",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-9e41ace47be17578"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/置信度"
+    },
+    {
+      "id": "logic-0098454d63e8677f",
+      "role": "condition",
+      "text": "后续≤20260911可核验数据中，出现同一产业链至少3只涨停、最高连板≥3，且有公告/订单/业绩动因实锤，则上调至B档。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-0098454d63e8677f"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/可证伪条件/0"
+    },
+    {
+      "id": "logic-4f28fc8adf6c76a1",
+      "role": "condition",
+      "text": "题材归位恢复A档催化并连续两日出现跨环节承载，则撤销空仓防守。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-4f28fc8adf6c76a1"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/可证伪条件/1"
+    },
+    {
+      "id": "logic-915bb2c8cbac1fde",
+      "role": "limitation",
+      "text": "风险日历虽pass，但未接入财报、股东会、业绩预告维度；踩窗风险仍需人工补查。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-915bb2c8cbac1fde"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/独立盲区声明/0"
+    },
+    {
+      "id": "logic-fa699e0eee9d72f2",
+      "role": "limitation",
+      "text": "题材归位40只均B行业兜底，B档不能当催化；无THS原因时按行业归类仅作骨架。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-fa699e0eee9d72f2"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/独立盲区声明/1"
+    },
+    {
+      "id": "logic-9f0ac2ae26bbe8f3",
+      "role": "limitation",
+      "text": "预增雷达为自动成色，缺少逐票双源复核；行情字段可能存在补拉/复权口径差异。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-9f0ac2ae26bbe8f3"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/判断/独立盲区声明/2"
+    },
+    {
+      "id": "logic-3901649563010993",
+      "role": "observation",
+      "text": "空仓；无正式荐票。元件、通信设备、电力等仅作观察，因题材催化均未核验且缺乏跨环节承载，不进入交易计划。",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-3901649563010993"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/荐票/结论"
+    },
+    {
+      "id": "logic-26551a3b21b0f11b",
+      "role": "observation",
+      "text": "[]",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-26551a3b21b0f11b"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/荐票/标的"
+    },
+    {
+      "id": "logic-1ee38af6022bc06b",
+      "role": "cognition",
+      "text": "行业宽度在缺催化时会放大强度幻觉；先验证公告/订单，再看连板与封板质量。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-logic-1ee38af6022bc06b"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/认知迭代/0"
+    },
+    {
+      "id": "logic-ce9595299e173c9e",
+      "role": "cognition",
+      "text": "预增A成色池是研究候选，不等于盘面确认；需与涨停池交集及题材四维同步验证。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-logic-ce9595299e173c9e"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/认知迭代/1"
+    },
+    {
+      "id": "logic-1cd9cd8cc182ef0f",
+      "role": "research",
+      "text": "元件链：协和电子、澳弘电子、超声电子、博敏电子、风华高科、崇达技术、嘉立创、骏亚科技、铜峰电子共9只，行业聚集但B档兜底，卡位与订单待核。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-logic-1cd9cd8cc182ef0f"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/深挖/0"
+    },
+    {
+      "id": "logic-02bc25316f152c6a",
+      "role": "research",
+      "text": "电力链：闽东电力、杭州热电、江苏新能、拓日新能等4只，封板分散，未形成产业主线。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-logic-02bc25316f152c6a"
+      ],
+      "source": "logic判断_20260911.json",
+      "source_pointer": "/深挖/1"
+    },
+    {
+      "id": "logic-e7c73e89361f1ed5",
+      "role": "evidence",
+      "text": "产业逻辑路｜截至20260911",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-e7c73e89361f1ed5"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/1"
+    },
+    {
+      "id": "logic-40a21fd678b26971",
+      "role": "evidence",
+      "text": "行业扩散，催化缺席",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-40a21fd678b26971"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/block/2",
+      "legacy_html": "<h3>行业扩散，催化缺席</h3>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "logic-94bba0f1aea5f1b7",
+      "role": "evidence",
+      "text": "涨停40只；题材归位A=0、B=40；元件聚集9只但最高2板，今日空仓防守。",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-94bba0f1aea5f1b7"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/block/3",
+      "legacy_html": "<p>涨停40只；题材归位A=0、B=40；元件聚集9只但最高2板，今日空仓防守。</p>",
+      "context": "原首屏补充"
+    },
+    {
+      "id": "logic-14608c2e84e0658a",
+      "role": "evidence",
+      "text": "涨停",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-14608c2e84e0658a"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/4"
+    },
+    {
+      "id": "logic-9c84999996c71690",
+      "role": "evidence",
+      "text": "40",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-9c84999996c71690"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/5"
+    },
+    {
+      "id": "logic-a7d101b693a3fe61",
+      "role": "evidence",
+      "text": "B档兜底",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-a7d101b693a3fe61"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/6"
+    },
+    {
+      "id": "logic-0b9157ce3cba11c6",
+      "role": "evidence",
+      "text": "40",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-0b9157ce3cba11c6"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/7"
+    },
+    {
+      "id": "logic-76af61e31ebe2bdb",
+      "role": "evidence",
+      "text": "元件聚集",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-76af61e31ebe2bdb"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/8"
+    },
+    {
+      "id": "logic-f3b992fd183bbae1",
+      "role": "evidence",
+      "text": "9",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-f3b992fd183bbae1"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/9",
+      "component_ref": "RECOLOGIC"
+    },
+    {
+      "id": "logic-24c0a6848db5760f",
+      "role": "evidence",
+      "text": "荐票",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-24c0a6848db5760f"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/10"
+    },
+    {
+      "id": "logic-6da51f85e19a460c",
+      "role": "evidence",
+      "text": "0",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-6da51f85e19a460c"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/text/11",
+      "component_ref": "RECOLOGIC"
+    },
+    {
+      "id": "logic-047a668bbb542747",
+      "role": "evidence",
+      "text": "荐票卡｜空仓为主",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-047a668bbb542747"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/heading/12"
+    },
+    {
+      "id": "logic-1fc4c41f30f46873",
+      "role": "evidence",
+      "text": "无正式荐票；行业聚集仅作观察，不进入交易计划。",
+      "section": "recommendations",
+      "evidence_refs": [
+        "ev-logic-1fc4c41f30f46873"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/block/13",
+      "legacy_html": "<div class=\"card\"><p>无正式荐票；行业聚集仅作观察，不进入交易计划。</p></div>",
+      "context": "荐票卡｜空仓为主"
+    },
+    {
+      "id": "logic-1821f5880937f15a",
+      "role": "evidence",
+      "text": "产业逻辑判断｜C档防守",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-1821f5880937f15a"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/heading/14"
+    },
+    {
+      "id": "logic-593e4c26a1b3afac",
+      "role": "evidence",
+      "text": "40只涨停全部B行业兜底，B档不能当催化；元件9只但最高2板、承载分歧。",
+      "section": "hardness",
+      "evidence_refs": [
+        "ev-logic-593e4c26a1b3afac"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/block/15",
+      "legacy_html": "<div class=\"card\"><p>40只涨停全部B行业兜底，B档不能当催化；元件9只但最高2板、承载分歧。</p></div>",
+      "context": "产业逻辑判断｜C档防守"
+    },
+    {
+      "id": "logic-55a09adde27ece8a",
+      "role": "evidence",
+      "text": "产业链｜元件聚集待核",
+      "section": "chains",
+      "evidence_refs": [
+        "ev-logic-55a09adde27ece8a"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/heading/16"
+    },
+    {
+      "id": "logic-2fb661e1b9ff2afd",
+      "role": "evidence",
+      "text": "协和电子、澳弘电子、超声电子等9只元件股形成行业聚集，订单与真实卡位尚未核验。",
+      "section": "chains",
+      "evidence_refs": [
+        "ev-logic-2fb661e1b9ff2afd"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/block/17",
+      "legacy_html": "<div class=\"card\"><p>协和电子、澳弘电子、超声电子等9只元件股形成行业聚集，订单与真实卡位尚未核验。</p></div>",
+      "context": "产业链｜元件聚集待核"
+    },
+    {
+      "id": "logic-623960bcfa36600e",
+      "role": "evidence",
+      "text": "风险日历｜事件维度不完整",
+      "section": "forward",
+      "evidence_refs": [
+        "ev-logic-623960bcfa36600e"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/heading/18"
+    },
+    {
+      "id": "logic-09c7e91e9079edad",
+      "role": "evidence",
+      "text": "风险日历status=pass、事件20，但未接入财报、股东会、业绩预告，不能宣称已完成上述风险过滤。",
+      "section": "forward",
+      "evidence_refs": [
+        "ev-logic-09c7e91e9079edad"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/block/19",
+      "legacy_html": "<div class=\"card\"><p>风险日历status=pass、事件20，但未接入财报、股东会、业绩预告，不能宣称已完成上述风险过滤。</p></div>",
+      "context": "风险日历｜事件维度不完整"
+    },
+    {
+      "id": "logic-18dca9f6e7ee9d4e",
+      "role": "evidence",
+      "text": "认知迭代｜宽度不等于催化",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-logic-18dca9f6e7ee9d4e"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/heading/20"
+    },
+    {
+      "id": "logic-d622653f6ff98347",
+      "role": "cognition",
+      "text": "预增A成色池仅为研究候选，需与公告/订单和盘面交集同步验证。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-logic-d622653f6ff98347"
+      ],
+      "source": "judgment_20260911.json",
+      "source_pointer": "/bodies/logic/block/21",
+      "legacy_html": "<div class=\"card\"><p>预增A成色池仅为研究候选，需与公告/订单和盘面交集同步验证。</p></div>",
+      "context": "认知迭代｜宽度不等于催化"
+    }
+  ],
+  "content_coverage": {
+    "total": 40,
+    "covered": 40,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "logic-db00d98046d75710",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-e0aac852574d4167",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-1ef519f77982201a",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-fd0550f64375482b",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-b6d857ba55c41024",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-8e21f20a26e2d49f",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-4c3f8eb0c7ea4719",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-9e41ace47be17578",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-0098454d63e8677f",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-4f28fc8adf6c76a1",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-915bb2c8cbac1fde",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-fa699e0eee9d72f2",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-9f0ac2ae26bbe8f3",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-3901649563010993",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-26551a3b21b0f11b",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-1ee38af6022bc06b",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-ce9595299e173c9e",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-1cd9cd8cc182ef0f",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-02bc25316f152c6a",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-e7c73e89361f1ed5",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-40a21fd678b26971",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-94bba0f1aea5f1b7",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-14608c2e84e0658a",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-9c84999996c71690",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-a7d101b693a3fe61",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-0b9157ce3cba11c6",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-76af61e31ebe2bdb",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-f3b992fd183bbae1",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-24c0a6848db5760f",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-6da51f85e19a460c",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-047a668bbb542747",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-1fc4c41f30f46873",
+        "sections": [
+          "recommendations"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-1821f5880937f15a",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-593e4c26a1b3afac",
+        "sections": [
+          "hardness"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-55a09adde27ece8a",
+        "sections": [
+          "chains"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-2fb661e1b9ff2afd",
+        "sections": [
+          "chains"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-623960bcfa36600e",
+        "sections": [
+          "forward"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-09c7e91e9079edad",
+        "sections": [
+          "forward"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-18dca9f6e7ee9d4e",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "logic-d622653f6ff98347",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/结论",
+        "claim_id": "logic-db00d98046d75710",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/证据/0",
+        "claim_id": "logic-e0aac852574d4167",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/证据/1",
+        "claim_id": "logic-1ef519f77982201a",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/证据/2",
+        "claim_id": "logic-fd0550f64375482b",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/证据/3",
+        "claim_id": "logic-b6d857ba55c41024",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/证据/4",
+        "claim_id": "logic-8e21f20a26e2d49f",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/档位",
+        "claim_id": "logic-4c3f8eb0c7ea4719",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/置信度",
+        "claim_id": "logic-9e41ace47be17578",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/可证伪条件/0",
+        "claim_id": "logic-0098454d63e8677f",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/可证伪条件/1",
+        "claim_id": "logic-4f28fc8adf6c76a1",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/独立盲区声明/0",
+        "claim_id": "logic-915bb2c8cbac1fde",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/独立盲区声明/1",
+        "claim_id": "logic-fa699e0eee9d72f2",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/判断/独立盲区声明/2",
+        "claim_id": "logic-9f0ac2ae26bbe8f3",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/荐票/结论",
+        "claim_id": "logic-3901649563010993",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/荐票/标的",
+        "claim_id": "logic-26551a3b21b0f11b",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/认知迭代/0",
+        "claim_id": "logic-1ee38af6022bc06b",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/认知迭代/1",
+        "claim_id": "logic-ce9595299e173c9e",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/深挖/0",
+        "claim_id": "logic-1cd9cd8cc182ef0f",
+        "status": "displayed"
+      },
+      {
+        "source": "logic判断_20260911.json",
+        "pointer": "/深挖/1",
+        "claim_id": "logic-02bc25316f152c6a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/1",
+        "claim_id": "logic-e7c73e89361f1ed5",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/block/2",
+        "claim_id": "logic-40a21fd678b26971",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/block/3",
+        "claim_id": "logic-94bba0f1aea5f1b7",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/4",
+        "claim_id": "logic-14608c2e84e0658a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/5",
+        "claim_id": "logic-9c84999996c71690",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/6",
+        "claim_id": "logic-a7d101b693a3fe61",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/7",
+        "claim_id": "logic-0b9157ce3cba11c6",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/8",
+        "claim_id": "logic-76af61e31ebe2bdb",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/9",
+        "claim_id": "logic-f3b992fd183bbae1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/10",
+        "claim_id": "logic-24c0a6848db5760f",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/text/11",
+        "claim_id": "logic-6da51f85e19a460c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/heading/12",
+        "claim_id": "logic-047a668bbb542747",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/block/13",
+        "claim_id": "logic-1fc4c41f30f46873",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/heading/14",
+        "claim_id": "logic-1821f5880937f15a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/block/15",
+        "claim_id": "logic-593e4c26a1b3afac",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/heading/16",
+        "claim_id": "logic-55a09adde27ece8a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/block/17",
+        "claim_id": "logic-2fb661e1b9ff2afd",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/heading/18",
+        "claim_id": "logic-623960bcfa36600e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/block/19",
+        "claim_id": "logic-09c7e91e9079edad",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/heading/20",
+        "claim_id": "logic-18dca9f6e7ee9d4e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260911.json",
+        "pointer": "/bodies/logic/block/21",
+        "claim_id": "logic-d622653f6ff98347",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 40
+  },
+  "legacy_ticker": null
+}

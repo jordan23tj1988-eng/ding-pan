@@ -21,7 +21,7 @@ bodies手写数字 vs 数据源**,手抄错误靠用户逐卡验收才显形。
 import sys, os, csv, json, re, glob
 
 R = os.path.dirname(os.path.abspath(__file__))
-SITE = os.path.join(R, '复盘', '盯盘台')
+SITE = os.environ.get('POST_SITE_ROOT') or os.path.join(R, '复盘', '盯盘台')
 L = os.path.join(R, '_学习')
 
 

@@ -12,9 +12,11 @@
   C9 台账最新日块日期对账(涨停/龙虎榜=d,竞价=dprev;台账脚本--from-data漏日期会静默跳过当日日块=2026-07-16龙虎榜事故)
   C10 池外候选链核对(2026-08-13 上线)
   C11 交易计划六路文件当日存在性(2026-08-17 上线: 契约⑪硬要求, 引擎静默空仓无告警=8/13起断供5日事故)
+  C12 龙虎榜黄金页结构+数据专属哨兵(恢复器闭环后接入)
+  C13 主题页同日冻结哈希(2026-09-13 上线: 复盘期间主题页不可改写)
 退出码: 0=全过 1=有FAIL(打印明细,流水线应停下重看)
 """
-import os,sys,glob,json,re,datetime
+import os,sys,glob,json,re,datetime,subprocess,hashlib
 
 R=None
 for g in glob.glob('/sessions/*/mnt/股票数据/市场数据'):
@@ -196,9 +198,17 @@ for p in pages:
     if _ri>0:
         _rj=h.find('<h2',_ri)
         _seg=h[_ri:(_rj if _rj>0 else _ri+3000)]
-        _items=[m.group(1) for m in re.finditer(r'<div class="(hero|kpi)"',_seg)]
-        if _items!=['hero','kpi','kpi','kpi','kpi']:
-            FAIL.append(f'C6 {p}.html rowA直接子元素={_items}(应[hero,kpi,kpi,kpi,kpi],有KPI卡结构散落/游离grid item)')
+        # cycle 黄金壳允许“hero + 紧凑 kpis 容器(内含4张卡)”布局；
+        # 其他页面仍严格要求 hero + 4 张并列 KPI。
+        _compact_cycle = (p == 'cycle' and '<section id="' not in h
+                          and '<div class="kpis">' in _seg)
+        if _compact_cycle:
+            _items = ['hero', 'kpis']
+        else:
+            _items=[m.group(1) for m in re.finditer(r'<div class="(hero|kpi)"',_seg)]
+        _expected_items = ['hero', 'kpis'] if _compact_cycle else ['hero','kpi','kpi','kpi','kpi']
+        if _items != _expected_items:
+            FAIL.append(f'C6 {p}.html rowA直接子元素={_items}(应{_expected_items}，有KPI卡结构散落/游离grid item)')
 
 # ---------- C7 脚本产出卡陈旧嵌入(07-15晚: 先行指标卡重生成但页面嵌旧版,溢价柱显∅) ----------
 # ★2026-08-12 口径更新: cycle 已模块化渲染(module_render_cycle, LEADIND区自渲染自数据源),
@@ -301,9 +311,73 @@ if _missing_plans:
 elif len(_missing_plans)==0:
     pass
 
+# ---------- C12 龙虎榜黄金页专属哨兵 ----------
+_lhb_checker = os.path.join(R, 'lhb数据核对.py')
+if os.path.isfile(_lhb_checker):
+    _cp = subprocess.run(
+        [r"D:\股票数据\.venv312\Scripts\python.exe" if os.path.isfile(r"D:\股票数据\.venv312\Scripts\python.exe") else sys.executable, _lhb_checker, d],
+        cwd=R, env=dict(os.environ, LHB_SITE_ROOT=SITE, PYTHONUTF8='1', PYTHONIOENCODING='utf-8'), capture_output=True, text=True, encoding='utf-8', errors='replace',
+    )
+    if _cp.returncode != 0:
+        _tail = ' '.join(_cp.stdout.strip().splitlines()[-3:])
+        FAIL.append(f'C12 龙虎榜专属核对失败: {_tail[:500]}')
+else:
+    FAIL.append('C12 龙虎榜专属核对脚本缺失: lhb数据核对.py')
+
+# ---------- C13 主题页同日冻结哈希 ----------
+_theme_freeze = os.path.join(SITE, '.theme_page_freeze.json')
+_theme_check_site = os.environ.get('REVIEW_STAGE', SITE)
+if os.path.isfile(_theme_freeze):
+    try:
+        with open(_theme_freeze, encoding='utf-8') as fh:
+            _tf = json.load(fh)
+        if _tf.get('schema_version') != 1 or not re.fullmatch(r'[0-9]{8}', str(_tf.get('d', ''))):
+            raise ValueError('冻结元数据 schema/date 非法')
+        if _tf.get('d') == d:
+            _theme_page = os.path.join(_theme_check_site, 'theme.html')
+            if not os.path.isfile(_theme_page):
+                raise ValueError('冻结期 theme.html 不存在')
+            _h = hashlib.sha256()
+            with open(_theme_page, 'rb') as fh:
+                for _block in iter(lambda: fh.read(1024 * 1024), b''):
+                    _h.update(_block)
+            if _h.hexdigest() != _tf.get('theme_sha256'):
+                raise ValueError('theme.html 与冻结哈希不一致')
+    except Exception as _e:
+        FAIL.append('C13 主题页冻结校验失败: %s' % _e)
+
+# ---------- C14 两块标准能力模块(五路+概览)齐备(2026-09-22 用户指令修复) ----------
+# 故障背景: 只有主题页被统一替换, 概览/竞价/产业逻辑/涨停页长期缺这两块, 龙虎榜页与旧
+# 『自主深挖/我的认知迭代』并存, 而旧哨兵只管"机器卡缺席"→缺块可静默发布。此处逐页比对
+# 唯一真源(能力进化模块.py 当日产出)的数量/编号/位置/样式/残留旧标题/字节, 现站缺块即 FAIL。
+_cap_src = os.path.join(R, '能力进化模块.py')
+if not os.path.isfile(_cap_src):
+    FAIL.append('C14 能力模块唯一真源缺失: 能力进化模块.py')
+else:
+    try:
+        import importlib.util as _ilu
+        _spec = _ilu.spec_from_file_location('capability_module_sentinel', _cap_src)
+        _cap = _ilu.module_from_spec(_spec)
+        _spec.loader.exec_module(_cap)
+        _cap_site = os.environ.get('REVIEW_STAGE', SITE)
+        for _r in _cap.ROUTES:
+            _p = os.path.join(_cap_site, _r + '.html')
+            if not os.path.isfile(_p):
+                FAIL.append('C14 %s.html 不存在' % _r)
+                continue
+            with open(_p, encoding='utf-8') as _fh:
+                _html = _fh.read()
+            for _prob in _cap.verify_page(_html, _r, R, d):
+                FAIL.append('C14 %s.html 能力模块不合契约: %s' % (_r, _prob))
+    except Exception as _e:
+        FAIL.append('C14 能力模块齐备性核对失败: %s' % _e)
+
 print(f'== 复盘一致性哨兵 {d} ==')
 for w in WARN: print('  WARN',w)
 if FAIL:
     for x in FAIL: print('  FAIL',x)
     print(f'结论: {len(FAIL)}项FAIL——不要通知完成,先修复再重跑哨兵');sys.exit(1)
 print(f'结论: 全过({len(WARN)}警告)');sys.exit(0)
+
+
+

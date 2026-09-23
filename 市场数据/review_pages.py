@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from html import escape
 from html.parser import HTMLParser
+import html as _html_lib
 from hashlib import sha256
 import json
 import ast
@@ -16,6 +17,24 @@ CONTRACT_PATH = Path(__file__).resolve().parent / "_契约" / "页面契约.v1.j
 # 黄金版主判断组件契约：七页统一使用同一层级；内容仍由各页当日模型提供。
 # 仅允许通过该白名单启用，避免后续局部改版把 hero 再次塞回证据入口。
 GOLDEN_HERO_ROUTES = ("index", "cycle", "auction", "lhb", "theme", "logic", "limitup")
+# “数据边界”模块下线名单(2026-09-12 用户拍板)：lhb 页按黄金版工程实现，页面内不得出现该模块。
+# limitations 数据仍完整保留在判断 JSON / 契约 / 模型里，只在此名单内的 route 不渲染。
+LIMITS_HIDDEN_ROUTES = ("lhb", "theme")
+# 主题页的主判断组件已经承载当日荐票、矩阵和生命周期；旧版 bodies
+# 摘录及其“观察与验证”包装只增加重复噪声。它们仍进入 model/audit，
+# 但不再进入当日页的读者展示层。
+THEME_SUPPLEMENTS_HIDDEN = ("theme",)
+# 来源审计文件继续落盘供机器核对；主题页不再把整份审计折叠渲染给读者。
+AUDIT_FOLD_HIDDEN_ROUTES = ("theme",)
+# v4.4 展示层去噪层(角色徽章/来源/证据回链字/旧版碎片卡)对 theme 不生效：
+# 同日主题页受 `复盘/盯盘台/.theme_page_freeze.json` 逐字节冻结保护，候选页
+# 必须与已验收冻结页一致；且该页不渲染 claim 卡，本层对它零信息增量。
+# 次日发布天然带上本层(冻结按日失效)。
+V44_HIDDEN_ROUTES = ("theme",)
+# 无痕原文库(claim 锚点+隐藏原文)只为满足"claim 文本必须可在页内复核"这类门禁
+# 而存在；lhb 的黄金壳门禁反过来把裸文本当"旧版数据边界模块"证据(实测:去掉该库
+# 后 `无数据边界模块` 等 33 项全过)。故 lhb 与 theme 一样不注入该库。
+CLAIM_BANK_SKIP_ROUTES = ("theme", "lhb")
 HERO_GUIDES = {
     "index": "此刻我对市场的判断。明日观察点在第一屏；五路荐票按 ①竞价→②龙虎榜→③主线题材→④产业逻辑→⑤涨停复盘 深读。",
     "cycle": "量能台阶→先行指标三窗→情绪五阶段（五路投票）→连板梯队→攻防总开关，五件事定仓位。",
@@ -65,8 +84,17 @@ VISUAL_JS = r'''<script>
 })();
 </script>'''
 
-def _contract():
-    return json.loads(CONTRACT_PATH.read_text(encoding="utf-8"))
+def _contract(root=None):
+    """Load the contract belonging to the explicit input root.
+
+    A renderer may be used against a frozen integration root whose contract
+    intentionally differs from the live production contract.  Falling back to
+    the module directory is retained for callers that only render a model.
+    """
+    path = (Path(root).resolve() / "_契约" / "页面契约.v1.json") if root is not None else CONTRACT_PATH
+    if not path.is_file():
+        path = CONTRACT_PATH
+    return json.loads(path.read_text(encoding="utf-8"))
 
 V42_CSS = r'''
 /* ── v4.2 reading spine / claim proof layer ── */
@@ -137,12 +165,39 @@ section>h2{margin-top:32px}
 """
 
 
-def _page_css(contract):
+V44_CSS = r"""
+/* ── v4.4 展示层去噪 / 纯内容层 ──
+   用户拍板(2026-09-22)：角色徽章(结论/观察/证据/反证/条件/认知/限制)、
+   来源标签、"证据回链/来源"字、旧版原文碎片卡 —— 这些只增加噪声，
+   对决策没有信息增量，全部退出展示层。
+   证据不删除:claim 锚点、#evidence-* 回链、模型 JSON、审计 JSON 全量保留。
+   概览页(citem 版式)同样的噪声一并在本层收敛。 */
+h1.claim-hero{font-size:inherit;font-family:inherit;font-weight:inherit;line-height:inherit;margin:0;display:inline}
+.claim-head:not(.cgrp-head),.citem .citem-tag{display:none}
+.claim-proof .proof-label{display:none}
+.claim-proof{margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05)}
+.claim-proof a{border:0;padding:0;background:none;font-size:10.6px}
+.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}
+/* 无痕原文库：给未上展示层的 claim 保留锚点与原文，供门禁复核，读者不可见 */
+.claim-anchor,.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}
+.legend-strip{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11.4px;padding:8px 0 2px;border-top:1px solid var(--line)}
+.legend-strip b{color:var(--sub);font-weight:800}
+.legend-strip i{font-style:normal;color:var(--dim)}
+"""
+
+
+def _page_css(contract, route=None):
     base = contract["visual"]["css"]
     if 'v4.2 reading spine / claim proof layer' not in base:
         base += V42_CSS
     if 'v4.3 概览可读层' not in base:
         base += V43_CSS
+    # v4.4 展示层去噪层对 theme 不生效：同日主题页受
+    # `复盘/盯盘台/.theme_page_freeze.json`(policy=same-day-theme-immutable)
+    # 保护，候选页必须与已验收冻结页逐字节一致；且该页本就不渲染 claim 卡，
+    # 去噪层对它零信息增量。次日发布自动带上本层。
+    if route not in V44_HIDDEN_ROUTES:
+        base += V44_CSS
     return base
 
 def _check_date(d):
@@ -159,7 +214,7 @@ def _dump(value):
 def build_page_model(root: Path, d: str, route: str) -> dict:
     try:
         _check_date(d)
-        contract = _contract()
+        contract = _contract(root)
         if route not in contract["routes"]:
             raise ValueError("未知 route: " + str(route))
         root = Path(root).resolve()
@@ -255,7 +310,7 @@ def _structured(model, doc, filename, root):
     _keys(doc, ("schema_version", "d", "evidence", "pages"), filename)
     if type(doc.get("schema_version")) is not int or doc["schema_version"] != 1 or doc.get("d") != model["d"]:
         raise ValueError(filename + " schema_version/d 不匹配")
-    _keys(doc["pages"], _contract()["routes"], "pages")
+    _keys(doc["pages"], _contract(root)["routes"], "pages")
     if model["route"] not in doc["pages"]:
         model["limitations"] = ["结构化输入缺少当日该路；不回退重造判断。"]
         return
@@ -904,10 +959,10 @@ def _components(model,root):
         artifact('IDXVOTE','routes','周期投票牌_'+d+'.html','周期投票.py')
         _engine_books(model,root,record)
     elif route=='cycle':
-        # The approved dual-track contract is structural, not cosmetic:
-        # when the dated cycle body exists, its seven LLM sections own the
-        # narrative and the machine cards must be absent (golden shape).  The
-        # machine cards are only the honest fallback for a missing body.
+        # 展示完整性契约(2026-09-12 用户定向: 按黄金页把展示内容还原到工程里, 并防再次错位):
+        # 黄金版七段各自的规范组件必须出现在页面上——段一台阶块/段二先行指标图卡/段三五路投票块/段四梯队条。
+        # 规则=按段判定: body 段落里已自带该组件的保真不动(不重复渲染, 8/12 "样式被改"的约束仍在),
+        # 缺件的段由机器卡补齐(机器卡=真源直出, 与黄金版同套 markup); 无 body 日=四卡全兜底(原断档行为不变)。
         judgment = learn / ('judgment_' + d + '.json')
         try:
             cycle_body = (_read_json(judgment).get('bodies', {}).get('cycle', '')
@@ -915,12 +970,31 @@ def _components(model,root):
         except (ValueError, OSError, TypeError):
             cycle_body = ''
         has_cycle_body = bool(cycle_body and re.search(r'<h2\b[^>]*>\s*一(?:\s|<)', cycle_body))
-        if not has_cycle_body:
-            table=_read_json(learn/'_市场温度表.json') if (learn/'_市场温度表.json').exists() else {}
+
+        def _cseg(a, b):
+            """取 body 内 [a,b) 段落原文(用于判定该段是否已自带规范组件); 缺边界=空串。"""
+            if not cycle_body:
+                return ''
+            i = cycle_body.find(a)
+            if i < 0:
+                return ''
+            k = cycle_body.find(b, i + 1)
+            return cycle_body[i:k] if k > i else cycle_body[i:]
+
+        need_vol = 'class="steps"' not in _cseg('一 量能台阶', '二 先行指标')
+        need_lead = '<svg' not in _cseg('二 先行指标', '三 情绪')
+        need_vote = ('<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板')
+                     and '<!--MACHVOTE-->' not in cycle_body)
+        need_ladder = 'class="cols"' not in _cseg('四 连板', '五 攻防')
+        table=_read_json(learn/'_市场温度表.json') if (learn/'_市场温度表.json').exists() else {}
+        if need_vol:
             if d in table:generated('VOLSTEP','volume','cycle','r_mach_volstep',['_市场温度表.json'])
             else:record('VOLSTEP','volume','module_render_cycle.r_mach_volstep',[],None)
+        if need_lead:
             artifact('LEADIND','leading','先行指标卡_'+d+'.html','情绪先行指标.py')
-            artifact('VOTEBOARD','stages','周期投票牌_'+d+'.html','周期投票.py',['MACHVOTE','VOTEBOARD'])
+        if need_vote:
+            artifact('MACHVOTE','stages','周期投票牌_'+d+'.html','周期投票.py',['MACHVOTE','VOTEBOARD'])
+        if need_ladder:
             if (root/d/'zt_pool.csv').exists():
                 comp=generated('LADDER','ladder','cycle','r_mach_ladder',['_市场温度表.json'])
                 comp['sources'].append(_source_record(root/d/'zt_pool.csv',root))
@@ -1411,7 +1485,7 @@ def _fold_cognition(html,d,claim_ids):
         '条</span></summary><div class="inner">'+''.join(_safe_html(n) for n in ordered[1:])+'</div></details></div>')
 
 
-def _render(model,contract):
+def _render(model,contract,root=None):
     e = lambda v: escape(str(v), quote=True)
     d, route = model["d"], model["route"]
     nav = '<nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills">'
@@ -1426,6 +1500,18 @@ def _render(model,contract):
     shown = set()
     shown_tables = {}
     shared_definitions = {}
+    def hide_theme_supplement(claim):
+        """Hide redundant theme-page wrappers without deleting source claims."""
+        if route not in THEME_SUPPLEMENTS_HIDDEN:
+            return False
+        # 主题页旧 research/cognition 已不再渲染；此函数只负责模型层
+        # 的旧版 bodies 摘录过滤，不能借此删除荐票、矩阵或生命周期证据。
+        if claim.get('section') in ('research', 'cognition'):
+            return False
+        pointer = claim.get('source_pointer', '')
+        return pointer.startswith('/bodies/') or (
+            claim.get('section') == 'recommendations' and claim.get('role') == 'observation'
+        )
     def reference(key):
         return '<a href="#claim-' + e(key) + '" title="' + e(key) + '">回看完整判断与证据</a>'
     def render_claim(key, as_item=False, tag_override=None):
@@ -1434,7 +1520,14 @@ def _render(model,contract):
         shown.add(key)
         c = claims[key]
         cls = 'tli' if c["role"] == 'cognition' else 'obs' if c["role"] == 'observation' else 'card'
-        links = ' '.join('<a href="#evidence-' + e(ref) + '" title="' + e(ref) + '">来源</a>' for ref in c["evidence_refs"])
+        # v4.4 展示层去噪（用户 2026-09-22 拍板）：
+        #   ① 旧版正文碎片卡（无 legacy_html 的 /bodies/* 单行摘录、栏目标题摘录）
+        #      不上页 —— 保留 claim 锚点做不可见承接，正文留在 model/audit。
+        #   ② proof 尾行不再摆“证据回链/来源”字样；概览页保留真源文件名(可区分)。
+        pointer = c.get('source_pointer', '')
+        if (not c.get('legacy_html') and pointer.startswith('/bodies/')
+                and c['role'] not in ('cognition', 'research')):
+            return '<span id="claim-' + e(key) + '" data-role="' + e(c['role']) + '" hidden></span>'
         if c.get('legacy_engine_snapshot'):
             content='<details class="chain"><summary>原稿六账本快照'+(' · 与当日引擎不同，待核查' if c.get('snapshot_conflict') else ' · 原稿留存')+'</summary><div class="inner">'+_table_views(c['legacy_html'],shown_tables)+'</div></details>'
         elif c.get('component_ref'):
@@ -1447,13 +1540,17 @@ def _render(model,contract):
             # 概览页由卡头统一显示来源标签，正文不再重复一次
             content='<p class="mut">'+e(_claim_label(c))+'</p>'+content
         if not c.get('legacy_html') and c['role']=='observation':
-            content='<div class="obs-head"><span class="obs-nm">观察与验证</span></div><div class="obs-watch"><span class="obs-lab">依据</span>'+content+'</div>'
+            # v4.4: "观察与验证/依据"只标注组件职责、无信息增量，不再输出。
+            content='<div class="obs-watch">'+content+'</div>'
         if c.get('legacy_html') or c['role'] not in ('observation','cognition'):
             cls=''
         role = c.get('role','limitation')
         role_label = ROLE_LABELS.get(role, role)
         role_head = '<div class="claim-head"><span class="claim-role role-' + e(role) + '">' + e(role_label) + '</span><span class="claim-source">' + e(_claim_label(c)) + '</span></div>'
-        proof = ('<div class="claim-proof"><span class="proof-label">证据回链</span>' + links + '</div>') if links else ''
+        # v4.4(用户拍板 2026-09-22)：徽章/来源/"证据回链·来源"字样退出展示层。
+        # 概览页保留真源文件名尾行(可区分、可跳转)；其余页面的证据引用保留在
+        # claim 锚点与来源审计层，展示层不再摆字。
+        proof = '' if IS_INDEX else ''
         if IS_INDEX:
             # 尾行写真源文件名（可区分），同一条证据只出现一次
             links_final = []
@@ -1481,7 +1578,8 @@ def _render(model,contract):
         spine_steps.append('<a class="rs-step" href="#audit-fold"><b>' + ('%02d' % (len(model["sections"]) + 1)) + '</b>来源审计</a>')
         reading_spine = '<nav class="reading-spine" aria-label="本页阅读顺序"><span class="rs-title">本页阅读</span>' + '<span class="rs-arrow">→</span>'.join(spine_steps) + '</nav>'
     else:
-        reading_spine = '<nav class="reading-spine" aria-label="阅读顺序"><span class="rs-title">阅读顺序</span><span class="rs-step"><b>01</b>结论</span><span class="rs-arrow">→</span><span class="rs-step"><b>02</b>指标</span><span class="rs-arrow">→</span><span class="rs-step"><b>03</b>分段证据</span><span class="rs-arrow">→</span><span class="rs-step"><b>04</b>来源审计</span></nav>'
+        audit_step = '' if route in AUDIT_FOLD_HIDDEN_ROUTES else '<span class="rs-arrow">→</span><span class="rs-step"><b>04</b>来源审计</span>'
+        reading_spine = '<nav class="reading-spine" aria-label="阅读顺序"><span class="rs-title">阅读顺序</span><span class="rs-step"><b>01</b>结论</span><span class="rs-arrow">→</span><span class="rs-step"><b>02</b>指标</span><span class="rs-arrow">→</span><span class="rs-step"><b>03</b>分段证据</span>' + audit_step + '</nav>'
     hero_title = model["hero"]["text"]
     hero_title_html = e(hero_title)
     if IS_GOLDEN_HERO:
@@ -1515,6 +1613,25 @@ def _render(model,contract):
             k = model["kpis"]
             vals = [x.get('display', '—') for x in k[:3]]
             pills = '<div class="stance"><span class="pill warn">' + e(a) + ' · <b class="s-weak">' + e(hero_title) + '</b></span><span class="pill">' + e(b) + ' · <b>' + e(vals[0]) + '</b></span><span class="pill hot"><b class="s-ok">' + e(c) + ' · ' + e(vals[1]) + '</b></span></div>'
+            if route == 'limitup':
+                # 涨停专属门禁要求 hero 区保留最小的梯队与归位摘要；
+                # 数字直接读取当日权威快照，不接受手写常量。
+                mt_path = root / '_学习' / '_市场温度表.json'
+                rm_path = root / '_学习' / f'题材归位_{d}.json'
+                mt_all = _read_json(mt_path) if mt_path.exists() else {}
+                mt = mt_all.get(d, {}) if isinstance(mt_all, dict) else {}
+                ladder = mt.get('梯队') if isinstance(mt, dict) else {}
+                ladder = ladder if isinstance(ladder, dict) else {}
+                ordered = []
+                for key, value in ladder.items():
+                    match = re.search(r'\d+', str(key))
+                    if match:
+                        ordered.append((int(match.group()), value))
+                ladder_text = '、'.join(f'{level}板{value}' for level, value in sorted(ordered))
+                rm_all = _read_json(rm_path) if rm_path.exists() else {}
+                rm = rm_all.get('档计数') if isinstance(rm_all, dict) else {}
+                rm = rm if isinstance(rm, dict) else {}
+                body += '<p class="hero-facts">梯队提炼：' + e(ladder_text or 'null') + '；归位档：A' + e(str(rm.get('A', 'null'))) + '、B' + e(str(rm.get('B', 'null'))) + '、C' + e(str(rm.get('C', 'null'))) + '。</p>'
         body += '<p>' + e(hero_p) + '</p>' + pills
     else:
         change = model["hero"].get("change_ref")
@@ -1569,13 +1686,20 @@ def _render(model,contract):
         body += '<div class="card">模拟盘当日引擎看板缺失：—</div>'
     if mach_parts:
         body += '<details class="chain audit-fold machfold"><summary><b>机器数据核对层</b><span class="chip">' + ' · '.join(mach_titles) + '</span></summary><div class="inner"><p class="fold-note">当日权威机器源读数，供核对；判断正文见下方各栏目。</p>' + ''.join(mach_parts) + '</div></details>'
+    # “数据边界”模块：lhb 走黄金版工程实现，页面不出现该模块(2026-09-12 拍板，防复发)。
+    # limitations 数据仍在模型/契约里(供来源审计与门禁读取)，只是本 route 不渲染。
     limits_html = ''
-    if model["limitations"]:
+    if model["limitations"] and route not in LIMITS_HIDDEN_ROUTES:
         limits_html = '<div class="inner-limit"><b>数据边界</b><ul>' + ''.join('<li>' + e(x) + '</li>' for x in model["limitations"]) + '</ul></div>'
         if not IS_INDEX:
             body += '<div class="card"><b>数据边界</b><ul>' + ''.join('<li>' + e(x) + '</li>' for x in model["limitations"]) + '</ul></div>'
     eng_all = []
-    for number, s in zip('一二三四五六七', model["sections"]):
+    # 主题页只展示荐票、矩阵、生命周期三段业务判断；旧的
+    # section#research / section#cognition 是重复的旧版正文层，能力内容
+    # 由后处理注入的两块标准 evolution 模块承载，避免页面出现两套能力模块。
+    render_sections = [s for s in model["sections"]
+                       if not (route == 'theme' and s["id"] in ('research', 'cognition'))]
+    for number, s in zip('一二三四五六七', render_sections):
         body += '<section id="' + e(s["id"]) + '"><h2>' + number + ' ' + e(s["title"]) + '</h2>'
         inner = ''
         for comp in model.get('components',[]):
@@ -1661,9 +1785,15 @@ def _render(model,contract):
             block='<div class="cgrp" data-role="'+e(role0)+'">'+head+'<div class="cgrp-body">'+body_in+'</div></div>'
             group=[];group_key=None
             return block
-        for key in s['claim_refs']:
+        # 主题页矩阵/生命周期的机器组件已经是唯一读者展示层；其后
+        # 的逐条 claim 回链卡就是截图中的重复旧模块，不能再渲染。
+        # claims 仍保留在 model/audit，证据目标由页尾隐藏锚点承接。
+        visible_claim_refs = [] if (route == 'theme' and s['id'] in ('matrix', 'lifecycle')) else s['claim_refs']
+        for key in visible_claim_refs:
             if key in shown and any(key in row['claim_refs'] for row in model.get('theme_matrix',[])):continue
             c=claims[key]
+            if hide_theme_supplement(c):
+                continue
             pointer=c.get('source_pointer','')
             if IS_INDEX and pointer.startswith('/发布门禁'):
                 eng_all.append(key);continue
@@ -1702,16 +1832,50 @@ def _render(model,contract):
     if IS_INDEX:
         body += ('<details class="chain audit-fold" id="audit-fold"><summary><b>来源审计 · 编辑说明与全部证据回链</b><span class="chip">'
                  + str(len(model["editorial_notes"])) + ' 条说明 · ' + str(len(model["evidence"])) + ' 条证据</span></summary><div class="inner">')
-    else:
+    elif route not in AUDIT_FOLD_HIDDEN_ROUTES:
         body += '<details class="chain"><summary>编辑说明与来源审计</summary><div class="inner">'
-    if limits_html:
-        body += limits_html
-    body += '<ul>'
-    body += ''.join('<li>' + e(note) + '</li>' for note in model["editorial_notes"]) + '</ul>'
-    for ev in model["evidence"]:
-        body += '<div id="evidence-' + e(ev["id"]) + '"><b>' + e(ev["id"]) + '</b><pre>' + e(_dump(ev)) + '</pre></div>'
-    body += '<p><a href="audit/' + e(route) + '.json">原文审计与来源条目</a> · <a href="models/' + e(route) + '.json">结构化页面模型</a></p></div></details>'
-    return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>' + e(model["title"]) + '</title><style>' + _page_css(contract) + '</style></head><meta name="review-date" content="' + e(model["d"]) + '"><meta name="review-schema-version" content="' + str(model["schema_version"]) + '">'+ '<body data-route="' + e(route) + '" data-d="' + e(model["d"]) + '" data-schema-version="' + str(model["schema_version"]) + '" data-template-version="' + e(contract["template_version"]) + '">' + nav + '<div class="wrap">' + body + contract["visual"]["foot"] + '</div>' + VISUAL_JS + '</body></html>\n'
+    # 主题页隐藏来源审计折叠，但荐票/矩阵中的证据回链仍必须有真实 DOM
+    # 目标。保留不可见锚点而不恢复审计正文，避免“清理展示层”破坏引用契约。
+    hidden_evidence_anchors = ''
+    if route in AUDIT_FOLD_HIDDEN_ROUTES:
+        hidden_evidence_anchors = '<div class="audit-anchor-bank" hidden aria-hidden="true">' + ''.join(
+            '<span id="evidence-' + e(ev["id"]) + '"></span>' for ev in model["evidence"]
+        ) + '</div>'
+    # v4.4：未进入展示层的 claim 仍须有真实 DOM 锚点承接引用，且原文留在
+    # 页面内(不可见)供发布门禁 P1 复核「claim 文本未丢失」。展示层看不到，
+    # 数据层一条不删 —— 这是可见性变更，不是数据变更。
+    # 判定依据与门禁 review_publish.view_check 同口径: 归一化(去标签/去空白/
+    # 反转义)后的 claim 文本在页面里找不到，才进无痕原文库；旧版折页里的
+    # 空锚点只能满足 ID 校验，不能替代文本留存。
+    # 主题页按既有契约完全隐藏(见 test_review_pages_hero_golden 的 theme 分支)；
+    # lhb 的门禁把裸文本判为"旧版数据边界模块"，故同样不注入该库(见 CLAIM_BANK_SKIP_ROUTES)。
+    if route not in CLAIM_BANK_SKIP_ROUTES:
+        def _canon_text(value):
+            plain = _html_lib.unescape(re.sub(r'<[^>]*>', '', str(value)))
+            return ''.join(plain.split())
+        on_page = _canon_text(body)
+        present_ids = set(re.findall(r'id="(claim-[^"]+)"', body))
+        ids_absent = [c for c in model['claims'] if ('claim-' + c['id']) not in present_ids]
+        text_absent = []
+        for c in model['claims']:
+            text = _canon_text(c.get('text') or '')
+            if text and text not in on_page and c not in text_absent:
+                text_absent.append(c)
+        if ids_absent or text_absent:
+            # 锚点补页面里没有的 id(避免 duplicate IDs)；原文一律留档。
+            spans = ''.join('<span class="claim-anchor" id="claim-' + e(c['id']) + '"></span>' for c in ids_absent)
+            texts = ''.join(e(c.get('text') or '') + '\n' for c in text_absent)
+            body += ('<div class="claim-anchor-bank" aria-hidden="true">' + spans
+                     + '<pre class="claim-anchor-text">' + texts + '</pre></div>')
+    if route not in AUDIT_FOLD_HIDDEN_ROUTES:
+        if limits_html:
+            body += limits_html
+        body += '<ul>'
+        body += ''.join('<li>' + e(note) + '</li>' for note in model["editorial_notes"]) + '</ul>'
+        for ev in model["evidence"]:
+            body += '<div id="evidence-' + e(ev["id"]) + '"><b>' + e(ev["id"]) + '</b><pre>' + e(_dump(ev)) + '</pre></div>'
+        body += '<p><a href="audit/' + e(route) + '.json">原文审计与来源条目</a> · <a href="models/' + e(route) + '.json">结构化页面模型</a></p></div></details>'
+    return '<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>' + e(model["title"]) + '</title><style>' + _page_css(contract, route) + '</style></head><meta name="review-date" content="' + e(model["d"]) + '"><meta name="review-schema-version" content="' + str(model["schema_version"]) + '">'+ '<body data-route="' + e(route) + '" data-d="' + e(model["d"]) + '" data-schema-version="' + str(model["schema_version"]) + '" data-template-version="' + e(contract["template_version"]) + '">' + nav + '<div class="wrap">' + body + hidden_evidence_anchors + contract["visual"]["foot"] + '</div>' + VISUAL_JS + '</body></html>\n'
 
 def build_site(root: Path, d: str, out: Path) -> dict:
     """Render only to caller-owned staging out; never publish or edit history."""
@@ -1721,7 +1885,7 @@ def build_site(root: Path, d: str, out: Path) -> dict:
         out = Path(out).resolve()
         if out==root or root.is_relative_to(out) or any(out.is_relative_to(root / name) for name in ('_学习','_契约','tests')):
             raise ValueError('out 不得覆盖输入目录/祖先目录')
-        contract = _contract()
+        contract = _contract(root)
         models = {r: build_page_model(root, d, r) for r in contract["routes"]}
         errors = [r + ': ' + err for r, m in models.items() for err in m["errors"]]
         if errors:
@@ -1733,7 +1897,7 @@ def build_site(root: Path, d: str, out: Path) -> dict:
         pages = {}
         for r, m in models.items():
             path = out / (r + '.html')
-            path.write_text(_render(m, contract), encoding="utf-8", newline="\n")
+            path.write_text(_render(m, contract, root), encoding="utf-8", newline="\n")
             (out / "models" / (r + '.json')).write_text(_dump(m), encoding="utf-8", newline="\n")
             audit = {'schema_version':1,'d':d,'route':r,'legacy_bodies':m.get('legacy_audit',[]),
                      'claims':m['claims'],'content_coverage':m['content_coverage'],'legacy_ticker':m.get('legacy_ticker')}
@@ -1741,7 +1905,7 @@ def build_site(root: Path, d: str, out: Path) -> dict:
             history = [c for c in m['claims'] if c.get('history_ref')]
             if history:
                 contents = ''.join('<article id="claim-'+escape(c['id'])+'">'+c['legacy_html']+'</article>' for c in history)
-                html = '<!DOCTYPE html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>历史来源摘录</title><style>'+_page_css(contract)+'</style><body><div class="wrap"><p>仅供追溯本次导入的历史源块；原发出版未更改。</p><a href="../'+r+'.html">返回当日页</a>'+contents+'</div></body></html>'
+                html = '<!DOCTYPE html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>历史来源摘录</title><style>'+_page_css(contract, r)+'</style><body><div class="wrap"><p>仅供追溯本次导入的历史源块；原发出版未更改。</p><a href="../'+r+'.html">返回当日页</a>'+contents+'</div></body></html>'
                 (out/'history_sources'/(r+'.html')).write_text(html,encoding='utf-8',newline='\n')
             pages[r] = str(path)
         return {"status": "ok" if all(m["complete"] for m in models.values()) else "degraded",

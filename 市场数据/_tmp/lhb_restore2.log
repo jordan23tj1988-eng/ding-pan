@@ -1,0 +1,22 @@
+Exception in thread Thread-1 (_readerthread):
+Traceback (most recent call last):
+  File "C:\Users\66353\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "C:\Users\66353\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "C:\Users\66353\AppData\Roaming\uv\python\cpython-3.12-windows-x86_64-none\Lib\subprocess.py", line 1599, in _readerthread
+    buffer.append(fh.read())
+                  ^^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0xbf in position 10: invalid start byte
+Traceback (most recent call last):
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 219, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 205, in main
+    out = build_page(d, current)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 185, in build_page
+    if page.find("<h2>五") < page.find("<h2>四"): raise RuntimeError("龙虎榜段序错位")
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: 龙虎榜段序错位

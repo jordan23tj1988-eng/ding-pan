@@ -1,0 +1,1271 @@
+{
+  "schema_version": 1,
+  "d": "20260922",
+  "route": "auction",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20260922.json",
+      "pointer": "/bodies/auction",
+      "raw": "<section class=\"auction-body\">\n  <h2>一 竞价选股池<span class=\"hint\">冻结池只作排序，不替代开盘闸门</span></h2>\n  <div class=\"section-body\">\n    <p>冻结池共17只，09:25一字11只（64.7%），09:31前首封17只（100.0%）。一字数量满足强度观察条件，但冻结池只作排序，开盘闸门仍优先。</p>\n    <!--SCORECARD-->\n    <p>评分最高50.3（智度股份、先导基电）；评分用于池内排序，不替代高开闸门与开盘承接确认。</p>\n  </div>\n  <h2>二 今日竞价温度<span class=\"hint\">温度与接力结构分开读</span></h2>\n  <div class=\"section-body\">\n    <p>温度56.3，档位为中性，昨日63.2；涨停63家、跌停3家、炸板18家，成交额21356.0亿，封板率66.8%。温度下降但接力未到冰点：一进二率45.5%，二进三率40.0%。</p>\n  </div>\n  <h2>三 昨日池终结算<span class=\"hint\">最新可用结算为前一交易日池</span></h2>\n  <div class=\"section-body\">\n    <!--POOLLEDGER-->\n    <p>昨日池终结算为21只，次日封板13/21，执行胜率5/20，执行均收-1.1%。按信号：一字均收0.19%，秒板均收-1.96%；按高开档：高开≥5%均收-2.37%。</p>\n  </div>\n  <h2>四 信号胜率追踪<span class=\"hint\">滚动分桶是群体统计，不是个股预言</span></h2>\n  <div class=\"section-body\">\n    <p>历史结算账截至20260921共37条日记录，画像合计执行胜率171/448、均收-0.71%；昨日池高开≥5%均收-2.37%，闸门内7只均收+1.25%而全池-1.10%。这些是群体统计，不是个股预言。</p>\n    <p>当前可用情景桶：高开0~5%样本n=535、胜率53.5%、均涨0.16%；高开≥5%样本n=552、胜率26.4%、均涨-2.52%。</p>\n  </div>\n  <h2>五 深挖<span class=\"hint\">只写可回源的缺口与结构</span></h2>\n  <div class=\"section-body\">\n    <p>快照显示冻结池17只中16只高开≥5%、1只落在0~5%，竞价强度集中而非温和扩散。全市场竞价额排名前5为澜起科技、海光信息、中际旭创、中国长城、哈药股份；与冻结池方向不完全同构，不能据此确认主线对齐。</p>\n    <p>负面过滤：高开≥5%历史n=552、胜率26.4%、均涨-2.52%，不因评分靠前放宽；605218高开4.62%但秒板|首板信号桶n=729均涨-0.66%，因此也只作观察。</p>\n  </div>\n  <h2>六 认知<span class=\"hint\">当日迭代，历史由认知库注入</span></h2>\n  <div class=\"section-body\">\n    <div class=\"iter-card\"><b>当日认知</b><p>温度56.3的中性环境中，16/17池票高开≥5%，竞价强度与执行过滤出现分离；评分是池内排序工具，高开闸门优先。来源：认知库历史规律与20260922当日数据复核。</p></div>\n    <div class=\"iter-card\"><b>当日认知</b><p>09:25一字11/17只可用于强度观察，不能直接推出收益；昨日一字均收0.19%，一字强封与执行alpha需拆开。</p></div>\n  </div>\n</section>\n"
+    }
+  ],
+  "claims": [
+    {
+      "id": "auction-26c0c7c25bf0b29e",
+      "role": "verdict",
+      "text": "中性偏分歧，竞价强度有广度但执行性不足；按高开闸门与右侧承接过滤，今日不形成荐票级开仓。置信度(评分,未校准)：57/100。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-26c0c7c25bf0b29e"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/结论"
+    },
+    {
+      "id": "auction-9da9b10012ee96e2",
+      "role": "evidence",
+      "text": "温度56.3（中性），昨日63.2；涨停63、跌停3、炸板18、成交额21356.0亿、封板率66.8%，市场从中性降温但未到冰点。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-9da9b10012ee96e2"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/证据/0"
+    },
+    {
+      "id": "auction-8ca7ab026117feb7",
+      "role": "evidence",
+      "text": "冻结竞价池17只：09:25一字11只（64.7%），一字信号11只；09:31前首封17只（100.0%），满足‘一字≥2定强度’的点火条件。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-8ca7ab026117feb7"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/证据/1"
+    },
+    {
+      "id": "auction-5d5d3726a9673edd",
+      "role": "evidence",
+      "text": "接力先行指标：一进二率45.5%、二进三率40.0%、高度晋级率46.7%，并非接力冰点，但与炸板18家、封板率66.8%共同构成分歧。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-5d5d3726a9673edd"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/证据/2"
+    },
+    {
+      "id": "auction-1307363553394a02",
+      "role": "evidence",
+      "text": "昨日池终结算：次日封板13/21，执行胜率5/20，执行均收-1.1%；一字均收0.19%，秒板均收-1.96%，高开≥5%均收-2.37%。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-1307363553394a02"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/证据/3"
+    },
+    {
+      "id": "auction-0ff6c99488af0bf2",
+      "role": "evidence",
+      "text": "评分卡最高分为50.3（智度股份、先导基电），但池内排序不等于绝对收益；留档快照中17只池票有16只高开≥5%、1只在0~5%，执行过滤优先于分数。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-0ff6c99488af0bf2"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/证据/4"
+    },
+    {
+      "id": "auction-50274adb2d27e8f8",
+      "role": "evidence",
+      "text": "925成交额排名与逐笔大单属于实盘C档要素；本次仅使用已留档09:25快照作A档代理，不把逐笔大单结论伪装成可回测结果。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-50274adb2d27e8f8"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/证据/5"
+    },
+    {
+      "id": "auction-3874e11fba621e63",
+      "role": "evidence",
+      "text": "B",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-3874e11fba621e63"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/档位"
+    },
+    {
+      "id": "auction-395e272ffefa57df",
+      "role": "evidence",
+      "text": "57",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-395e272ffefa57df"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/置信度"
+    },
+    {
+      "id": "auction-70cfed3fede5076b",
+      "role": "condition",
+      "text": "若开盘后池内温和高开票无法站稳分时均线，或炸板扩散、封板率继续下行，则中性偏分歧判断成立并继续空仓。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-70cfed3fede5076b"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/可证伪条件/0"
+    },
+    {
+      "id": "auction-48091a3935514403",
+      "role": "condition",
+      "text": "若后续交易中一字梯队全守、温和高开票出现持续大单承接且接力率回升，今日防守判断被证伪，需重标闸门与主线对齐关系。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-48091a3935514403"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/可证伪条件/1"
+    },
+    {
+      "id": "auction-e97b05fce01fe82a",
+      "role": "condition",
+      "text": "高开≥5%不得因评分高而放宽过滤；只有实盘确认承接才可重新评估。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-e97b05fce01fe82a"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/可证伪条件/2"
+    },
+    {
+      "id": "auction-ee40ef3020b43e9d",
+      "role": "limitation",
+      "text": "竞价第一式逐笔大单、实时撤单与盘口承接未进入可回测样本，留档快照只能作A档代理；该核心信号仍属C档实盘盲区。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-ee40ef3020b43e9d"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/独立盲区声明/0"
+    },
+    {
+      "id": "auction-6962db649784823b",
+      "role": "limitation",
+      "text": "涨停原因文件映射为空，题材归位催化均标B档行业兜底，不能把行业字段升级为A档催化。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-6962db649784823b"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/独立盲区声明/1"
+    },
+    {
+      "id": "auction-07d12eec2c9a3890",
+      "role": "limitation",
+      "text": "本路战绩画像存在但为聚合战绩账，未提供可直接拆分到本次个股的独立胜率；历史对照采用评分卡情景桶并标样本量。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-07d12eec2c9a3890"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/判断/独立盲区声明/2"
+    },
+    {
+      "id": "auction-30b9d863fe038f5c",
+      "role": "observation",
+      "text": "空仓；仅保留1只观察标的，原因是闸门与右侧承接尚未形成可执行的荐票级优势。",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-30b9d863fe038f5c"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/荐票/结论"
+    },
+    {
+      "id": "auction-f9d3bc6e6c89e235",
+      "role": "observation",
+      "text": "605218",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-f9d3bc6e6c89e235"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/荐票/标的/0/代码",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "auction-4425deb4cdb61133",
+      "role": "observation",
+      "text": "伟时电子",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-4425deb4cdb61133"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/荐票/标的/0/名称",
+      "component_ref": "SCORECARD"
+    },
+    {
+      "id": "auction-9dd6383966639b1c",
+      "role": "observation",
+      "text": "观察",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-9dd6383966639b1c"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/荐票/标的/0/类型"
+    },
+    {
+      "id": "auction-07012cc52e2992e2",
+      "role": "observation",
+      "text": "同类高开0~5%历史 n=535，胜率53.5%，均涨0.16%（评分卡情景桶）",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-07012cc52e2992e2"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/荐票/标的/0/历史对照"
+    },
+    {
+      "id": "auction-b8ca6ff756e098a8",
+      "role": "observation",
+      "text": "评分44.3、池内排序靠前；留档快照高开4.62%未越5%闸门，同类高开0~5%历史n=535胜率53.5%均涨0.16%；但秒板|首板信号桶n=729均涨-0.66%，且催化为B档行业兜底（THS涨停原因(B档, 同花顺涨停池)），仅观察，不构成买入指令。",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-b8ca6ff756e098a8"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/荐票/标的/0/理由"
+    },
+    {
+      "id": "auction-b20499f28aa9e0eb",
+      "role": "cognition",
+      "text": "20260922",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-b20499f28aa9e0eb"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/认知迭代/0/日期"
+    },
+    {
+      "id": "auction-12e1914fe50ba0bb",
+      "role": "cognition",
+      "text": "中性温度下池内高开集中，评分仍应让位于闸门",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-12e1914fe50ba0bb"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/认知迭代/0/标题"
+    },
+    {
+      "id": "auction-3e702427bc635b6a",
+      "role": "cognition",
+      "text": "今日温度56.3为中性，冻结池17只中留档快照16只高开≥5%；昨日高开≥5%均收-2.37%，再次说明评分只作池内排序，高开闸门优先。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-3e702427bc635b6a"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/认知迭代/0/正文"
+    },
+    {
+      "id": "auction-5a92e0ec5353addf",
+      "role": "cognition",
+      "text": "20260922",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-5a92e0ec5353addf"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/认知迭代/1/日期"
+    },
+    {
+      "id": "auction-f6d29ad70d38ecd9",
+      "role": "cognition",
+      "text": "一字定强度与执行收益必须分离",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-f6d29ad70d38ecd9"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/认知迭代/1/标题"
+    },
+    {
+      "id": "auction-bffb8ca6e55056bb",
+      "role": "cognition",
+      "text": "今日09:25一字11/17，满足强度观察条件；但昨日池一字均收仅0.19%，强度不等于可执行收益。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-bffb8ca6e55056bb"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/认知迭代/1/正文"
+    },
+    {
+      "id": "auction-e9512e9ef97f8334",
+      "role": "research",
+      "text": "池内结构",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-e9512e9ef97f8334"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/深挖/0/主题"
+    },
+    {
+      "id": "auction-96e50e8905c72194",
+      "role": "research",
+      "text": "一字11只、秒板6只；最高连板6板为华瓷股份，结构有高度但广度兑现率仍受炸板18家约束。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-96e50e8905c72194"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/深挖/0/结论"
+    },
+    {
+      "id": "auction-ea0e888a764a872a",
+      "role": "research",
+      "text": "竞价方向",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-ea0e888a764a872a"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/深挖/1/主题"
+    },
+    {
+      "id": "auction-6a7bc109596f1672",
+      "role": "research",
+      "text": "快照全市场竞价额Top5为澜起科技、海光信息、中际旭创、中国长城、哈药股份；与本冻结池方向并非完全同构，方向对齐度不作强结论。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-6a7bc109596f1672"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/深挖/1/结论"
+    },
+    {
+      "id": "auction-580737b741d6d98f",
+      "role": "research",
+      "text": "负面过滤",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-580737b741d6d98f"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/深挖/2/主题"
+    },
+    {
+      "id": "auction-9c9a66d080b114ef",
+      "role": "research",
+      "text": "高开≥5%执行桶历史n=552、胜率26.4%、均涨-2.52%（评分卡情景桶）直接过滤；封板率66.8%与炸板18家不支持无条件追高。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-9c9a66d080b114ef"
+      ],
+      "source": "auction判断_20260922.json",
+      "source_pointer": "/深挖/2/结论"
+    },
+    {
+      "id": "auction-4a1392a7409080c4",
+      "role": "evidence",
+      "text": "一 竞价选股池冻结池只作排序，不替代开盘闸门",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-4a1392a7409080c4"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/heading/1"
+    },
+    {
+      "id": "auction-9b5e0185755e2a50",
+      "role": "evidence",
+      "text": "冻结池共17只，09:25一字11只（64.7%），09:31前首封17只（100.0%）。一字数量满足强度观察条件，但冻结池只作排序，开盘闸门仍优先。",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-9b5e0185755e2a50"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/2",
+      "legacy_html": "<p>冻结池共17只，09:25一字11只（64.7%），09:31前首封17只（100.0%）。一字数量满足强度观察条件，但冻结池只作排序，开盘闸门仍优先。</p>",
+      "context": "一 竞价选股池冻结池只作排序，不替代开盘闸门"
+    },
+    {
+      "id": "auction-a6657f483359724e",
+      "role": "evidence",
+      "text": "评分最高50.3（智度股份、先导基电）；评分用于池内排序，不替代高开闸门与开盘承接确认。",
+      "section": "pool",
+      "evidence_refs": [
+        "ev-auction-a6657f483359724e"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/3",
+      "legacy_html": "<p>评分最高50.3（智度股份、先导基电）；评分用于池内排序，不替代高开闸门与开盘承接确认。</p>",
+      "context": "一 竞价选股池冻结池只作排序，不替代开盘闸门"
+    },
+    {
+      "id": "auction-bda289871ad5dfcc",
+      "role": "evidence",
+      "text": "二 今日竞价温度温度与接力结构分开读",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-auction-bda289871ad5dfcc"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/heading/4"
+    },
+    {
+      "id": "auction-f6c962f00ba8a29e",
+      "role": "evidence",
+      "text": "温度56.3，档位为中性，昨日63.2；涨停63家、跌停3家、炸板18家，成交额21356.0亿，封板率66.8%。温度下降但接力未到冰点：一进二率45.5%，二进三率40.0%。",
+      "section": "temperature",
+      "evidence_refs": [
+        "ev-auction-f6c962f00ba8a29e"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/5",
+      "legacy_html": "<p>温度56.3，档位为中性，昨日63.2；涨停63家、跌停3家、炸板18家，成交额21356.0亿，封板率66.8%。温度下降但接力未到冰点：一进二率45.5%，二进三率40.0%。</p>",
+      "context": "二 今日竞价温度温度与接力结构分开读"
+    },
+    {
+      "id": "auction-16614d377c7512f1",
+      "role": "evidence",
+      "text": "三 昨日池终结算最新可用结算为前一交易日池",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-16614d377c7512f1"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/heading/6"
+    },
+    {
+      "id": "auction-7656866828ceff13",
+      "role": "evidence",
+      "text": "昨日池终结算为21只，次日封板13/21，执行胜率5/20，执行均收-1.1%。按信号：一字均收0.19%，秒板均收-1.96%；按高开档：高开≥5%均收-2.37%。",
+      "section": "settlement",
+      "evidence_refs": [
+        "ev-auction-7656866828ceff13"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/7",
+      "legacy_html": "<p>昨日池终结算为21只，次日封板13/21，执行胜率5/20，执行均收-1.1%。按信号：一字均收0.19%，秒板均收-1.96%；按高开档：高开≥5%均收-2.37%。</p>",
+      "context": "三 昨日池终结算最新可用结算为前一交易日池"
+    },
+    {
+      "id": "auction-7e90ea51af7bbbe7",
+      "role": "evidence",
+      "text": "四 信号胜率追踪滚动分桶是群体统计，不是个股预言",
+      "section": "winrate",
+      "evidence_refs": [
+        "ev-auction-7e90ea51af7bbbe7"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/heading/8"
+    },
+    {
+      "id": "auction-6de81bc955fc58ba",
+      "role": "evidence",
+      "text": "历史结算账截至20260921共37条日记录，画像合计执行胜率171/448、均收-0.71%；昨日池高开≥5%均收-2.37%，闸门内7只均收+1.25%而全池-1.10%。这些是群体统计，不是个股预言。",
+      "section": "winrate",
+      "evidence_refs": [
+        "ev-auction-6de81bc955fc58ba"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/9",
+      "legacy_html": "<p>历史结算账截至20260921共37条日记录，画像合计执行胜率171/448、均收-0.71%；昨日池高开≥5%均收-2.37%，闸门内7只均收+1.25%而全池-1.10%。这些是群体统计，不是个股预言。</p>",
+      "context": "四 信号胜率追踪滚动分桶是群体统计，不是个股预言"
+    },
+    {
+      "id": "auction-1b065298496851c9",
+      "role": "evidence",
+      "text": "当前可用情景桶：高开0~5%样本n=535、胜率53.5%、均涨0.16%；高开≥5%样本n=552、胜率26.4%、均涨-2.52%。",
+      "section": "winrate",
+      "evidence_refs": [
+        "ev-auction-1b065298496851c9"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/10",
+      "legacy_html": "<p>当前可用情景桶：高开0~5%样本n=535、胜率53.5%、均涨0.16%；高开≥5%样本n=552、胜率26.4%、均涨-2.52%。</p>",
+      "context": "四 信号胜率追踪滚动分桶是群体统计，不是个股预言"
+    },
+    {
+      "id": "auction-a5840726b65fafc1",
+      "role": "evidence",
+      "text": "五 深挖只写可回源的缺口与结构",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-a5840726b65fafc1"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/heading/11"
+    },
+    {
+      "id": "auction-f400d410a1b5b6a2",
+      "role": "research",
+      "text": "快照显示冻结池17只中16只高开≥5%、1只落在0~5%，竞价强度集中而非温和扩散。全市场竞价额排名前5为澜起科技、海光信息、中际旭创、中国长城、哈药股份；与冻结池方向不完全同构，不能据此确认主线对齐。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-f400d410a1b5b6a2"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/12",
+      "legacy_html": "<p>快照显示冻结池17只中16只高开≥5%、1只落在0~5%，竞价强度集中而非温和扩散。全市场竞价额排名前5为澜起科技、海光信息、中际旭创、中国长城、哈药股份；与冻结池方向不完全同构，不能据此确认主线对齐。</p>",
+      "context": "五 深挖只写可回源的缺口与结构"
+    },
+    {
+      "id": "auction-49f022d266cfb7be",
+      "role": "research",
+      "text": "负面过滤：高开≥5%历史n=552、胜率26.4%、均涨-2.52%，不因评分靠前放宽；605218高开4.62%但秒板|首板信号桶n=729均涨-0.66%，因此也只作观察。",
+      "section": "research",
+      "evidence_refs": [
+        "ev-auction-49f022d266cfb7be"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/13",
+      "legacy_html": "<p>负面过滤：高开≥5%历史n=552、胜率26.4%、均涨-2.52%，不因评分靠前放宽；605218高开4.62%但秒板|首板信号桶n=729均涨-0.66%，因此也只作观察。</p>",
+      "context": "五 深挖只写可回源的缺口与结构"
+    },
+    {
+      "id": "auction-2104c0984e1aa78e",
+      "role": "evidence",
+      "text": "六 认知当日迭代，历史由认知库注入",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-2104c0984e1aa78e"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/heading/14"
+    },
+    {
+      "id": "auction-bbc4fa942cfa810c",
+      "role": "evidence",
+      "text": "当日认知",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-bbc4fa942cfa810c"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/text/15"
+    },
+    {
+      "id": "auction-039715ec41240a71",
+      "role": "cognition",
+      "text": "温度56.3的中性环境中，16/17池票高开≥5%，竞价强度与执行过滤出现分离；评分是池内排序工具，高开闸门优先。来源：认知库历史规律与20260922当日数据复核。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-039715ec41240a71"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/16",
+      "legacy_html": "<p>温度56.3的中性环境中，16/17池票高开≥5%，竞价强度与执行过滤出现分离；评分是池内排序工具，高开闸门优先。来源：认知库历史规律与20260922当日数据复核。</p>",
+      "context": "六 认知当日迭代，历史由认知库注入"
+    },
+    {
+      "id": "auction-edccf3240ee2689a",
+      "role": "evidence",
+      "text": "当日认知",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-edccf3240ee2689a"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/text/17"
+    },
+    {
+      "id": "auction-198970ee4981d56f",
+      "role": "cognition",
+      "text": "09:25一字11/17只可用于强度观察，不能直接推出收益；昨日一字均收0.19%，一字强封与执行alpha需拆开。",
+      "section": "cognition",
+      "evidence_refs": [
+        "ev-auction-198970ee4981d56f"
+      ],
+      "source": "judgment_20260922.json",
+      "source_pointer": "/bodies/auction/block/18",
+      "legacy_html": "<p>09:25一字11/17只可用于强度观察，不能直接推出收益；昨日一字均收0.19%，一字强封与执行alpha需拆开。</p>",
+      "context": "六 认知当日迭代，历史由认知库注入"
+    }
+  ],
+  "content_coverage": {
+    "total": 51,
+    "covered": 51,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "auction-26c0c7c25bf0b29e",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-9da9b10012ee96e2",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-8ca7ab026117feb7",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-5d5d3726a9673edd",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-1307363553394a02",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-0ff6c99488af0bf2",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-50274adb2d27e8f8",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-3874e11fba621e63",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-395e272ffefa57df",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-70cfed3fede5076b",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-48091a3935514403",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-e97b05fce01fe82a",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-ee40ef3020b43e9d",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-6962db649784823b",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-07d12eec2c9a3890",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-30b9d863fe038f5c",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-f9d3bc6e6c89e235",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-4425deb4cdb61133",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-9dd6383966639b1c",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-07012cc52e2992e2",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-b8ca6ff756e098a8",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-b20499f28aa9e0eb",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-12e1914fe50ba0bb",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-3e702427bc635b6a",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-5a92e0ec5353addf",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-f6d29ad70d38ecd9",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-bffb8ca6e55056bb",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-e9512e9ef97f8334",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-96e50e8905c72194",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-ea0e888a764a872a",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-6a7bc109596f1672",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-580737b741d6d98f",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-9c9a66d080b114ef",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-4a1392a7409080c4",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-9b5e0185755e2a50",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-a6657f483359724e",
+        "sections": [
+          "pool"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-bda289871ad5dfcc",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-f6c962f00ba8a29e",
+        "sections": [
+          "temperature"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-16614d377c7512f1",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-7656866828ceff13",
+        "sections": [
+          "settlement"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-7e90ea51af7bbbe7",
+        "sections": [
+          "winrate"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-6de81bc955fc58ba",
+        "sections": [
+          "winrate"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-1b065298496851c9",
+        "sections": [
+          "winrate"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-a5840726b65fafc1",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-f400d410a1b5b6a2",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-49f022d266cfb7be",
+        "sections": [
+          "research"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-2104c0984e1aa78e",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-bbc4fa942cfa810c",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-039715ec41240a71",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-edccf3240ee2689a",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "auction-198970ee4981d56f",
+        "sections": [
+          "cognition"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/结论",
+        "claim_id": "auction-26c0c7c25bf0b29e",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/证据/0",
+        "claim_id": "auction-9da9b10012ee96e2",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/证据/1",
+        "claim_id": "auction-8ca7ab026117feb7",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/证据/2",
+        "claim_id": "auction-5d5d3726a9673edd",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/证据/3",
+        "claim_id": "auction-1307363553394a02",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/证据/4",
+        "claim_id": "auction-0ff6c99488af0bf2",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/证据/5",
+        "claim_id": "auction-50274adb2d27e8f8",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/档位",
+        "claim_id": "auction-3874e11fba621e63",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/置信度",
+        "claim_id": "auction-395e272ffefa57df",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/可证伪条件/0",
+        "claim_id": "auction-70cfed3fede5076b",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/可证伪条件/1",
+        "claim_id": "auction-48091a3935514403",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/可证伪条件/2",
+        "claim_id": "auction-e97b05fce01fe82a",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/独立盲区声明/0",
+        "claim_id": "auction-ee40ef3020b43e9d",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/独立盲区声明/1",
+        "claim_id": "auction-6962db649784823b",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/判断/独立盲区声明/2",
+        "claim_id": "auction-07d12eec2c9a3890",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/荐票/结论",
+        "claim_id": "auction-30b9d863fe038f5c",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/荐票/标的/0/代码",
+        "claim_id": "auction-f9d3bc6e6c89e235",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/荐票/标的/0/名称",
+        "claim_id": "auction-4425deb4cdb61133",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/荐票/标的/0/类型",
+        "claim_id": "auction-9dd6383966639b1c",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/荐票/标的/0/历史对照",
+        "claim_id": "auction-07012cc52e2992e2",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/荐票/标的/0/理由",
+        "claim_id": "auction-b8ca6ff756e098a8",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/认知迭代/0/日期",
+        "claim_id": "auction-b20499f28aa9e0eb",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/认知迭代/0/标题",
+        "claim_id": "auction-12e1914fe50ba0bb",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/认知迭代/0/正文",
+        "claim_id": "auction-3e702427bc635b6a",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/认知迭代/1/日期",
+        "claim_id": "auction-5a92e0ec5353addf",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/认知迭代/1/标题",
+        "claim_id": "auction-f6d29ad70d38ecd9",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/认知迭代/1/正文",
+        "claim_id": "auction-bffb8ca6e55056bb",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/深挖/0/主题",
+        "claim_id": "auction-e9512e9ef97f8334",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/深挖/0/结论",
+        "claim_id": "auction-96e50e8905c72194",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/深挖/1/主题",
+        "claim_id": "auction-ea0e888a764a872a",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/深挖/1/结论",
+        "claim_id": "auction-6a7bc109596f1672",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/深挖/2/主题",
+        "claim_id": "auction-580737b741d6d98f",
+        "status": "displayed"
+      },
+      {
+        "source": "auction判断_20260922.json",
+        "pointer": "/深挖/2/结论",
+        "claim_id": "auction-9c9a66d080b114ef",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/heading/1",
+        "claim_id": "auction-4a1392a7409080c4",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/2",
+        "claim_id": "auction-9b5e0185755e2a50",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/3",
+        "claim_id": "auction-a6657f483359724e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/heading/4",
+        "claim_id": "auction-bda289871ad5dfcc",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/5",
+        "claim_id": "auction-f6c962f00ba8a29e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/heading/6",
+        "claim_id": "auction-16614d377c7512f1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/7",
+        "claim_id": "auction-7656866828ceff13",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/heading/8",
+        "claim_id": "auction-7e90ea51af7bbbe7",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/9",
+        "claim_id": "auction-6de81bc955fc58ba",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/10",
+        "claim_id": "auction-1b065298496851c9",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/heading/11",
+        "claim_id": "auction-a5840726b65fafc1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/12",
+        "claim_id": "auction-f400d410a1b5b6a2",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/13",
+        "claim_id": "auction-49f022d266cfb7be",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/heading/14",
+        "claim_id": "auction-2104c0984e1aa78e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/text/15",
+        "claim_id": "auction-bbc4fa942cfa810c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/16",
+        "claim_id": "auction-039715ec41240a71",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/text/17",
+        "claim_id": "auction-edccf3240ee2689a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20260922.json",
+        "pointer": "/bodies/auction/block/18",
+        "claim_id": "auction-198970ee4981d56f",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 51
+  },
+  "legacy_ticker": null
+}

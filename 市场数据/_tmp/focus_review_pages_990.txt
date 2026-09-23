@@ -1,0 +1,56 @@
+990:         except (ValueError, OSError, TypeError):
+991:             cycle_body = ''
+992:         has_cycle_body = bool(cycle_body and re.search(r'<h2\b[^>]*>\s*一(?:\s|<)', cycle_body))
+993: 
+994:         def _cseg(a, b):
+995:             """取 body 内 [a,b) 段落原文(用于判定该段是否已自带规范组件); 缺边界=空串。"""
+996:             if not cycle_body:
+997:                 return ''
+998:             i = cycle_body.find(a)
+999:             if i < 0:
+1000:                 return ''
+1001:             k = cycle_body.find(b, i + 1)
+1002:             return cycle_body[i:k] if k > i else cycle_body[i:]
+1003: 
+1004:         need_vol = 'class="steps"' not in _cseg('一 量能台阶', '二 先行指标')
+1005:         need_lead = '<svg' not in _cseg('二 先行指标', '三 情绪')
+1006:         need_vote = ('<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板')
+1007:                      and '<!--MACHVOTE-->' not in cycle_body)
+1008:         need_ladder = 'class="cols"' not in _cseg('四 连板', '五 攻防')
+1009:         table=_read_json(learn/'_市场温度表.json') if (learn/'_市场温度表.json').exists() else {}
+1010:         if need_vol:
+1011:             if d in table:generated('VOLSTEP','volume','cycle','r_mach_volstep',['_市场温度表.json'])
+1012:             else:record('VOLSTEP','volume','module_render_cycle.r_mach_volstep',[],None)
+1013:         if need_lead:
+1014:             artifact('LEADIND','leading','先行指标卡_'+d+'.html','情绪先行指标.py')
+1015:         if need_vote:
+1016:             artifact('MACHVOTE','stages','周期投票牌_'+d+'.html','周期投票.py',['MACHVOTE','VOTEBOARD'])
+1017:         if need_ladder:
+1018:             if (root/d/'zt_pool.csv').exists():
+1019:                 comp=generated('LADDER','ladder','cycle','r_mach_ladder',['_市场温度表.json'])
+1020:                 comp['sources'].append(_source_record(root/d/'zt_pool.csv',root))
+1021:             else:record('LADDER','ladder','module_render_cycle.r_mach_ladder',[],None)
+1022:     elif route=='auction':
+1023:         artifact('SCORECARD','pool','竞价评分卡_'+d+'.html','竞价评分.py',['SCORECARD','MACHSCORE'])
+1024:         ledger('POOLLEDGER','settlement')['anchors']=['POOLLEDGER','MACHPOOL']
+1025:         artifact('MACHSIG','winrate','竞价评分库卡_'+d+'.html','竞价评分.py')
+1026:     elif route=='lhb':
+1027:         artifact('SEATCARD','seats','席位荐票卡_'+d+'.html','席位荐票.py')
+1028:         artifact('FUNDTEMP','temperature','资金温度卡_'+d+'.html','资金温度.py')
+1029:         ledger('LHBLEDGER','ledger')
+1030:         _seat_library(model,root,record)
+1031:     elif route=='theme':
+1032: 
+1033:         generated('THEMEBATTLE','matrix','theme','r_chart_matrix',['主流题材6有_'+d+'.json','_题材四维.json','题材龙头判断_'+d+'.json','题材归位_'+d+'.json','涨停对链条_'+d+'.json'],['THEMEBATTLE','6YOU','FOURDIM'])
+1034:         generated('LIFECYCLE','lifecycle','theme','r_chart_lifeaxis',['题材生命周期_'+d+'.json','主流题材6有_'+d+'.json','题材生命周期判断_'+d+'.json','题材龙头判断_'+d+'.json'])
+1035:         # 荐票卡常驻：正式荐票与观察候选均由本路发出版直渲，空仓保留统一表格卡；缺源显示断档。
+1036:         generated_reco('RECOTHEME','recommendations','theme',['题材荐票_'+d+'.json'])
+1037:     elif route=='logic':
+1038: 
+1039:         generated('MACHCHAIN','chains','logic','r_mach_chain',['链条纵深库.json'])
+1040:         comp=generated('MACHRADAR','earnings','logic','r_mach_radar',['中报预增雷达_'+d+'.json'])
+1041:         if comp['status']!='ok' and not (learn / ('中报预增雷达_' + d + '.json')).exists():
+1042:             comp['allow_missing']=True
+1043:             comp['html']='<div class="card"><span class="mut">当日权威机器源缺失：—</span></div>'
+1044:         generated('MACHHIST','hardness','logic','r_mach_hist',['_逻辑荐票结算.jsonl'])
+1045:         # 荐票卡常驻：正式荐票与观察候选均由本路发出版直渲，空仓保留统一表格卡；缺源显示断档。

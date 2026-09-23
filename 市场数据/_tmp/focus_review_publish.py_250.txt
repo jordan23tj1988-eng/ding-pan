@@ -1,0 +1,102 @@
+---review_publish.py:250-350---
+250:     names = {"review_pages.py", f"_学习/judgment_{d}.json", f"_学习/fact_{d}.json"}
+251:     for route in SAFE_SENTINELS:
+252:         names.add(f"{route}数据核对.py")
+253:     for name in ("_市场温度表.json", "_情绪先行指标.json", "_周期投票台账.jsonl",
+254:                  "_竞价池结算.jsonl", "_逻辑荐票结算.jsonl", "_资金温度.json", "_席位分档.json", "_席位分档快照.jsonl", "_题材四维.json"):
+255:         names.add("_学习/" + name)
+256:     for prefix in ("竞价池发出", "竞价池结算", "席位荐票", "题材归位", "涨停对链条",
+257:                    "主流题材6有", "题材生命周期判断", "题材龙头判断", "review_view"):
+258:         names.add(f"_学习/{prefix}_{d}.json")
+259:     names.update({f"{d}/zt_pool.csv", f"{d}/lhb.csv", f"_学习/_席位动向/{d}.csv",
+260:                   f"_学习/席位荐票卡_{d}.html", f"_学习/龙虎榜复盘存档/{d}.json"})
+261:     names.update({"_契约/页面契约.v1.json", f"_学习/页面判断_{d}.json",
+262:                   "复盘一致性哨兵.py", "module_render_limitup.py", "_认知库渲染.py", "trading_calendar.py",
+263:                   "_学习/_交易日历.json", "_学习/_ths_zt_pool.json", "_变更总账.md"})
+264:     names.update({'module_render_'+route+'.py' for route in ROUTES})
+265:     names.add('logic_pool.py')
+266:     names.update('_学习/'+name for name in ('链条纵深库.json',f'中报预增雷达_{d}.json',
+267:         f'竞价评分_{d}.json',f'题材生命周期_{d}.json'))
+268:     names.update(f'_学习/{prefix}_{d}.html' for prefix in ('先行指标灯','周期投票牌','先行指标卡',
+269:         '竞价评分卡','竞价评分库卡','资金温度卡','涨停质量荐票卡','市场温度卡','质量库折叠',
+270:         '跨路荐票卡'))
+271:     for prefix in ("总审", "cycle判断", "auction判断", "lhb判断", "theme判断", "logic判断", "limitup判断",
+272:                    "涨停质量荐票", "先行指标卡", "池外候选卡"):
+273:         names.add(f"_学习/{prefix}_{d}.{'html' if prefix.endswith('卡') else 'json'}")
+274:     for route in ("master", "auction", "lhb", "theme", "logic", "limitup"):
+275:         names.update({f"_学习/_模拟盘/{route}/{name}" for name in ("状态.json", "state.json", "净值.json", "账本.jsonl", f"看板_{d}.html")})
+276:         names.add(f"_学习/交易计划_{route}_{d}.json")
+277:     names.update(f"复盘/盯盘台/{name}.html" for name in ("intraday", "history"))
+278:     freeze = root / "复盘" / "盯盘台" / ".theme_page_freeze.json"
+279:     if freeze.is_file():
+280:         names.add("复盘/盯盘台/.theme_page_freeze.json")
+281:     theme_template = root / "_学习" / "主题页能力进化模板.html"
+282:     if theme_template.is_file():
+283:         names.add("_学习/主题页能力进化模板.html")
+284:     # 两块标准能力模块(五路+概览公共能力)的唯一真源消费面(2026-09-22)：
+285:     # 快照(只取 <=d 最近一日) + 两个能力库账本 + 当日产出档。冻结它们，回放复算才能
+286:     # 与门禁/哨兵比对基准同源(否则冻结缺失→复算全 0→"字节与唯一真源不一致")。
+287:     capability_learn = root / "_学习"
+288:     for ledger in ("能力进化库_自主拓展.json", "能力进化库_认知迭代.json"):
+289:         if (capability_learn / ledger).is_file():
+290:             names.add("_学习/" + ledger)
+291:     capability_snapshots = sorted(
+292:         p for p in capability_learn.glob("能力进化快照_*.json")
+293:         if re.fullmatch(r"能力进化快照_[0-9]{8}\.json", p.name)
+294:         and p.name.rsplit("_", 1)[-1][:-5] <= d)
+295:     if capability_snapshots:
+296:         names.add(capability_snapshots[-1].relative_to(root).as_posix())
+297:     capability_artifact = capability_learn / f"能力进化模块_{d}.html"
+298:     if capability_artifact.is_file():
+299:         names.add(f"_学习/能力进化模块_{d}.html")
+300:     runtime_lib = root / "复盘" / "盯盘台" / "lib"
+301:     if runtime_lib.exists():
+302:         names.update(p.relative_to(root).as_posix() for p in runtime_lib.rglob("*") if p.is_file())
+303:     for folder in ("archive",):
+304:         base = root / "复盘" / "盯盘台" / folder
+305:         if base.exists():
+306:             names.update(p.relative_to(root).as_posix() for p in base.rglob("*") if p.is_file())
+307:     names.add(f'_external/candidates/candidates_{d}.json')
+308:     # C4 reads every recommendation; C8 audits registration of all root scripts/specs.
+309:     for pattern in ('*.py','_agent规格/*.md',f'_学习/*荐票_{d}.json'):
+310:         names.update(p.relative_to(root).as_posix() for p in root.glob(pattern) if p.is_file())
+311:     names.update(('_多agent重构_设计规范.md','_盯盘台组件规范.md','_模拟盘设计.md','_链路地图.md'))
+312:     for path in (root/'_学习').glob('链条位置_*_????????.json'):
+313:         date=path.stem.rsplit('_',1)[-1]
+314:         if re.fullmatch(r'[0-9]{8}',date) and date<=d:names.add(path.relative_to(root).as_posix())
+315:     prior = sorted(p.name for p in root.iterdir() if p.is_dir() and re.fullmatch(r"[0-9]{8}",p.name) and p.name < d)
+316:     if prior:
+317:         previous = prior[-1]
+318:         names.add(f"{previous}/zt_pool.csv")
+319:         names.update(f"_学习/{prefix}_{previous}.json" for prefix in ("质量荐票结算","题材荐票结算","逻辑荐票结算","席位荐票结算"))
+320:     extra_bars = root / "_学习" / "_模拟盘" / "_bars_extra"
+321:     if extra_bars.exists():
+322:         names.update(p.relative_to(root).as_posix() for p in extra_bars.glob("*.csv") if p.is_file())
+323:     cache = root / "_学习" / "_bars_cache"
+324:     if cache.exists():
+325:         # C3 enumerates the cache; C4 reads exact dates. Freeze its actual inputs.
+326:         names.update(p.relative_to(root).as_posix() for p in cache.glob("*.csv"))
+327:     structured = root / "_学习" / f"页面判断_{d}.json"
+328:     if structured.exists():
+329:         for evidence in read_json(structured).get("evidence", []):
+330:             name = evidence.get("source", "").split("#",1)[0]
+331:             if name:
+332:                 names.add(name if "/" in name else "_学习/"+name)
+333:     builder = contained(root, "review_pages.py")
+334:     if builder.is_file():
+335:         with isolated_imports(root, root):
+336:             m = load_module(builder)
+337:             extra = m.input_files(root, d) if hasattr(m, "input_files") else None
+338:         if extra is not None:
+339:             if not isinstance(extra, (list, tuple)) or not all(isinstance(x, str) for x in extra):
+340:                 raise ValueError("input_files must return relative path strings")
+341:             for name in extra:
+342:                 if Path(name).is_absolute():
+343:                     raise ValueError("input_files must be relative")
+344:                 contained(root, name)
+345:                 if any(token > d for token in re.findall(r"(?<![0-9])[0-9]{8}(?![0-9])", name)):
+346:                     raise ValueError(f"future input: {name}")
+347:                 names.add(name)
+348:     return sorted(names)
+349: 
+350: 

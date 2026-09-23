@@ -1,0 +1,466 @@
+[
+  {
+    "build_id": "20260922-5-46e84d25f17b41a3a380a13203c274c8",
+    "mtime": "2026-09-23T18:34:11.452943",
+    "status": "fail",
+    "published": false,
+    "errors": [
+      "check auction: fail ['sentinel exit=1, baseline_ok=False, checks=14', 'check process exit=1']",
+      "check lhb: fail ['sentinel exit=1, baseline_ok=False, checks=33', 'check process exit=1']",
+      "check limitup: fail ['sentinel exit=1, baseline_ok=False, checks=33', 'check process exit=1']",
+      "check consistency: fail ['C3 auction 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板', 'C3 lhb 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板', 'C3 theme 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板', 'C3 logic 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板', 'C3 limitup 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板', 'C3 master 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板', 'C12 龙虎榜专属核对失败:   ✓ 分档库档数P  [页面165 vs 源165]   ✓ 分档表新鲜度  [窗口末日20260922 vs 核对日20260922(容忍20260922-5日)] FAIL 1 项 — 页面数字与数据源不一致, 禁止出页', 'check process exit=1']"
+    ],
+    "checks": [
+      {
+        "name": "cycle",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 量能档位(LLM段一)  [米开档位=弱修]\n  ✓ 先行指标·涨停数_净  [源63(页面含净语境)]\n  ✓ 最高板个股(LLM段四)  [页面vs源最高6板=华瓷股份]\n  ✓ 首板数(LLM段四)  [源首板39]\n  ✓ VOTEBOARD主判  [台账20260922 主判=分化退潮中的弱修复/质量防守·降]\n  ✓ LLM七板块完整  [黄金版七段]\nPASS 全部一致 (23项)\nPASS 负面注入: 改坏量能数字 → 哨兵拦截(1项FAIL)"
+      },
+      {
+        "name": "auction",
+        "status": "fail",
+        "errors": [
+          "sentinel exit=1, baseline_ok=False, checks=14",
+          "check process exit=1"
+        ],
+        "exit_code": 1,
+        "log_tail": "  ✓ 池数文本(LLM body)  [源池17只]\n  ✓ 结算·封板回源(6/17)  [页面含6/17]\n  ✓ 结算·胜率回源(6/17)  [页面含6/17]\n  ✓ 结算·均收回源(-1.2)  [页面含-1.2]\n  ✗ 温度回源(57.1)  [页面含温度值]\n  ✓ 涨停数回源(63)  [页面含涨停数]\n  ✓ LLM六段完整  [全部在位]\nFAIL 1 项 — 页面数字与数据源不一致, 禁止出页"
+      },
+      {
+        "name": "lhb",
+        "status": "fail",
+        "errors": [
+          "sentinel exit=1, baseline_ok=False, checks=33",
+          "check process exit=1"
+        ],
+        "exit_code": 1,
+        "log_tail": "  ✓ 分档库笔数  [页面17450 vs 源17450]\n  ✓ 分档库档数S  [页面19 vs 源19]\n  ✓ 分档库档数A  [页面45 vs 源45]\n  ✓ 分档库档数B  [页面130 vs 源130]\n  ✓ 分档库档数C  [页面76 vs 源76]\n  ✓ 分档库档数P  [页面165 vs 源165]\n  ✓ 分档表新鲜度  [窗口末日20260922 vs 核对日20260922(容忍20260922-5日)]\nFAIL 1 项 — 页面数字与数据源不一致, 禁止出页"
+      },
+      {
+        "name": "theme",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ judgment bodies 多路齐全  [7路]\n  ✓ bodies.theme 内代码∈zt_pool  [全在池内]\n  ✓ 战场全貌含 Top1 归位线  [待归位·家居用品]\n  ✓ 6有卡含 Top1 题材  [化学制药]\n  ✓ 四维卡含最宽线  [待归位·家居用品]\n  ✓ fact归位ABC==归位文件实算  [fact A0/B63/C0 vs 实算 ANone/B63/CNone]\n  ✓ fact题材线数==对链条  [fact39 vs 对链条39]\nPASS 全部一致 (51项)"
+      },
+      {
+        "name": "limitup",
+        "status": "fail",
+        "errors": [
+          "sentinel exit=1, baseline_ok=False, checks=33",
+          "check process exit=1"
+        ],
+        "exit_code": 1,
+        "log_tail": "  ✓ 归位映射=池数\n  ✓ 归位线=bodies组\n  ✓ HTML div平衡 开904闭904\n  ✓ rowA 在 wrap 内\n  ✓ ticker闭合数=4(应4)\n  ✓ 一句话高标=映射最高板\n  ✗ 元信息温度引用  [文本56.3 vs 温度表57.1]\nFAIL 1 项 — 页面数字与数据源不一致, 禁止出页"
+      },
+      {
+        "name": "logic",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "consistency",
+        "status": "fail",
+        "errors": [
+          "C3 auction 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板",
+          "C3 lhb 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板",
+          "C3 theme 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板",
+          "C3 logic 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板",
+          "C3 limitup 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板",
+          "C3 master 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板",
+          "C12 龙虎榜专属核对失败:   ✓ 分档库档数P  [页面165 vs 源165]   ✓ 分档表新鲜度  [窗口末日20260922 vs 核对日20260922(容忍20260922-5日)] FAIL 1 项 — 页面数字与数据源不一致, 禁止出页",
+          "check process exit=1"
+        ],
+        "exit_code": 1,
+        "log_tail": "  FAIL C3 auction 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板\n  FAIL C3 lhb 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板\n  FAIL C3 theme 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板\n  FAIL C3 logic 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板\n  FAIL C3 limitup 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板\n  FAIL C3 master 历史版本证据不足：看板_20260922.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板\n  FAIL C12 龙虎榜专属核对失败:   ✓ 分档库档数P  [页面165 vs 源165]   ✓ 分档表新鲜度  [窗口末日20260922 vs 核对日20260922(容忍20260922-5日)] FAIL 1 项 — 页面数字与数据源不一致, 禁止出页\n结论: 7项FAIL——不要通知完成,先修复再重跑哨兵"
+      },
+      {
+        "name": "browser",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      }
+    ]
+  },
+  {
+    "build_id": "20260922-5-ad77ff8078f14252a5d91c3379defb8d",
+    "mtime": "2026-09-23T18:27:21.614965",
+    "status": "fail",
+    "published": false,
+    "errors": [
+      "source changed while freezing"
+    ],
+    "checks": [
+      {
+        "name": "cycle",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "auction",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "lhb",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "theme",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "limitup",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "logic",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "consistency",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "browser",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      }
+    ]
+  },
+  {
+    "build_id": "20260922-5-7355d0d63c354881a32cc18d4a41a52a",
+    "mtime": "2026-09-23T18:16:58.851543",
+    "status": "fail",
+    "published": false,
+    "errors": [
+      "source changed while freezing"
+    ],
+    "checks": [
+      {
+        "name": "cycle",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "auction",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "lhb",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "theme",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "limitup",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "logic",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "consistency",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "browser",
+        "status": "not_run",
+        "errors": [
+          "build has not reached checks"
+        ],
+        "exit_code": null,
+        "log_tail": ""
+      }
+    ]
+  },
+  {
+    "build_id": "20260922-3-bff4a37dded44f2d98f593ef8180834f",
+    "mtime": "2026-09-23T09:58:11.286583",
+    "status": "fail",
+    "published": false,
+    "errors": [
+      "check consistency: fail [\"C8 改了没登记: ['review_contract.py', 'review_learning.py', 'review_pages.py', 'review_publish.py'] mtime晚于_变更总账.md——按改动三合一SOP补登记(_链路地图.md 〇节)后重跑哨兵\", 'check process exit=1']"
+    ],
+    "checks": [
+      {
+        "name": "cycle",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 量能档位(LLM段一)  [米开档位=弱修]\n  ✓ 先行指标·涨停数_净  [源63(页面含净语境)]\n  ✓ 最高板个股(LLM段四)  [页面vs源最高6板=华瓷股份]\n  ✓ 首板数(LLM段四)  [源首板39]\n  ✓ VOTEBOARD主判  [台账20260922 主判=分化退潮中的弱修复/质量防守·降]\n  ✓ LLM七板块完整  [黄金版七段]\nPASS 全部一致 (23项)\nPASS 负面注入: 改坏量能数字 → 哨兵拦截(1项FAIL)"
+      },
+      {
+        "name": "auction",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 无重复h2  [4个h2]\n  ✓ 池数文本(LLM body)  [源池17只]\n  ✓ 结算(未到结算日)  [jsonl无20260922条目]\n  ✓ 温度回源(56.3)  [页面含温度值]\n  ✓ 涨停数回源(63)  [页面含涨停数]\n  ✓ LLM六段完整  [全部在位]\nPASS 全部一致 (12项)\nPASS 负面注入: 改坏温度 56.3 → 哨兵拦截(1项FAIL)"
+      },
+      {
+        "name": "lhb",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 分档库笔数  [页面17032 vs 源17032]\n  ✓ 分档库档数S  [页面25 vs 源25]\n  ✓ 分档库档数A  [页面43 vs 源43]\n  ✓ 分档库档数B  [页面118 vs 源118]\n  ✓ 分档库档数C  [页面75 vs 源75]\n  ✓ 分档库档数P  [页面168 vs 源168]\n  ✓ 分档表新鲜度  [窗口末日20260921 vs 核对日20260922(容忍20260922-5日)]\nPASS 全部一致 (33项)"
+      },
+      {
+        "name": "theme",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ judgment bodies 多路齐全  [7路]\n  ✓ bodies.theme 内代码∈zt_pool  [全在池内]\n  ✓ 战场全貌含 Top1 归位线  [待归位·家居用品]\n  ✓ 6有卡含 Top1 题材  [化学制药]\n  ✓ 四维卡含最宽线  [待归位·家居用品]\n  ✓ fact归位ABC==归位文件实算  [fact A0/B63/C0 vs 实算 ANone/B63/CNone]\n  ✓ fact题材线数==对链条  [fact39 vs 对链条39]\nPASS 全部一致 (51项)"
+      },
+      {
+        "name": "limitup",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 归位档 C0\n  ✓ 归位映射=池数\n  ✓ 归位线=bodies组\n  ✓ HTML div平衡 开900闭900\n  ✓ rowA 在 wrap 内\n  ✓ ticker闭合数=4(应4)\n  ✓ 一句话高标=映射最高板\nPASS 全部一致"
+      },
+      {
+        "name": "logic",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "consistency",
+        "status": "fail",
+        "errors": [
+          "C8 改了没登记: ['review_contract.py', 'review_learning.py', 'review_pages.py', 'review_publish.py'] mtime晚于_变更总账.md——按改动三合一SOP补登记(_链路地图.md 〇节)后重跑哨兵",
+          "check process exit=1"
+        ],
+        "exit_code": 1,
+        "log_tail": "== 复盘一致性哨兵 20260922 ==\n  WARN C4 关键股64只中1只bars未到20260922: ['600403']\n  FAIL C8 改了没登记: ['review_contract.py', 'review_learning.py', 'review_pages.py', 'review_publish.py'] mtime晚于_变更总账.md——按改动三合一SOP补登记(_链路地图.md 〇节)后重跑哨兵\n结论: 1项FAIL——不要通知完成,先修复再重跑哨兵"
+      },
+      {
+        "name": "browser",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      }
+    ]
+  },
+  {
+    "build_id": "20260922-1-effac9af63f1490faea6463b7e3ba807",
+    "mtime": "2026-09-22T22:02:25.682431",
+    "status": "fail",
+    "published": false,
+    "errors": [
+      "check limitup: fail ['sentinel exit=1, baseline_ok=False, checks=33', 'check process exit=1']"
+    ],
+    "checks": [
+      {
+        "name": "cycle",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 量能档位(LLM段一)  [米开档位=弱修]\n  ✓ 先行指标·涨停数_净  [源63(页面含净语境)]\n  ✓ 最高板个股(LLM段四)  [页面vs源最高6板=华瓷股份]\n  ✓ 首板数(LLM段四)  [源首板39]\n  ✓ VOTEBOARD主判  [台账20260922 主判=分化退潮中的弱修复/质量防守·降]\n  ✓ LLM七板块完整  [黄金版七段]\nPASS 全部一致 (23项)\nPASS 负面注入: 改坏量能数字 → 哨兵拦截(1项FAIL)"
+      },
+      {
+        "name": "auction",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 无重复h2  [4个h2]\n  ✓ 池数文本(LLM body)  [源池17只]\n  ✓ 结算(未到结算日)  [jsonl无20260922条目]\n  ✓ 温度回源(56.3)  [页面含温度值]\n  ✓ 涨停数回源(63)  [页面含涨停数]\n  ✓ LLM六段完整  [全部在位]\nPASS 全部一致 (12项)\nPASS 负面注入: 改坏温度 56.3 → 哨兵拦截(1项FAIL)"
+      },
+      {
+        "name": "lhb",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 分档库笔数  [页面17032 vs 源17032]\n  ✓ 分档库档数S  [页面25 vs 源25]\n  ✓ 分档库档数A  [页面43 vs 源43]\n  ✓ 分档库档数B  [页面118 vs 源118]\n  ✓ 分档库档数C  [页面75 vs 源75]\n  ✓ 分档库档数P  [页面168 vs 源168]\n  ✓ 分档表新鲜度  [窗口末日20260921 vs 核对日20260922(容忍20260922-5日)]\nPASS 全部一致 (33项)"
+      },
+      {
+        "name": "theme",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ judgment bodies 多路齐全  [7路]\n  ✓ bodies.theme 内代码∈zt_pool  [全在池内]\n  ✓ 战场全貌含 Top1 归位线  [待归位·家居用品]\n  ✓ 6有卡含 Top1 题材  [化学制药]\n  ✓ 四维卡含最宽线  [待归位·家居用品]\n  ✓ fact归位ABC==归位文件实算  [fact A0/B63/C0 vs 实算 ANone/B63/CNone]\n  ✓ fact题材线数==对链条  [fact39 vs 对链条39]\nPASS 全部一致 (51项)"
+      },
+      {
+        "name": "limitup",
+        "status": "fail",
+        "errors": [
+          "sentinel exit=1, baseline_ok=False, checks=33",
+          "check process exit=1"
+        ],
+        "exit_code": 1,
+        "log_tail": "  ✓ 归位映射=池数\n  ✓ 归位线=bodies组\n  ✓ HTML div平衡 开225闭225\n  ✓ rowA 在 wrap 内\n  ✓ ticker闭合数=4(应4)\n  ✗ 元信息字段存在性  [缺失: judgment.一句话]\n  ✓ 一句话高标=映射最高板\nFAIL 2 项 — 页面数字与数据源不一致, 禁止出页"
+      },
+      {
+        "name": "logic",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "consistency",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "== 复盘一致性哨兵 20260922 ==\n  WARN C4 关键股64只中1只bars未到20260922: ['600403']\n结论: 全过(1警告)"
+      },
+      {
+        "name": "browser",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      }
+    ]
+  },
+  {
+    "build_id": "20260922-1-fd2bf7026a614ab29dda270e7ae05633",
+    "mtime": "2026-09-22T21:57:54.825376",
+    "status": "fail",
+    "published": false,
+    "errors": [
+      "check limitup: fail ['sentinel exit=1, baseline_ok=False, checks=33', 'check process exit=1']"
+    ],
+    "checks": [
+      {
+        "name": "cycle",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 量能档位(LLM段一)  [米开档位=弱修]\n  ✓ 先行指标·涨停数_净  [源63(页面含净语境)]\n  ✓ 最高板个股(LLM段四)  [页面vs源最高6板=华瓷股份]\n  ✓ 首板数(LLM段四)  [源首板39]\n  ✓ VOTEBOARD主判  [台账20260922 主判=分化退潮中的弱修复/质量防守·降]\n  ✓ LLM七板块完整  [黄金版七段]\nPASS 全部一致 (23项)\nPASS 负面注入: 改坏量能数字 → 哨兵拦截(1项FAIL)"
+      },
+      {
+        "name": "auction",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 无重复h2  [4个h2]\n  ✓ 池数文本(LLM body)  [源池17只]\n  ✓ 结算(未到结算日)  [jsonl无20260922条目]\n  ✓ 温度回源(56.3)  [页面含温度值]\n  ✓ 涨停数回源(63)  [页面含涨停数]\n  ✓ LLM六段完整  [全部在位]\nPASS 全部一致 (12项)\nPASS 负面注入: 改坏温度 56.3 → 哨兵拦截(1项FAIL)"
+      },
+      {
+        "name": "lhb",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ 分档库笔数  [页面17032 vs 源17032]\n  ✓ 分档库档数S  [页面25 vs 源25]\n  ✓ 分档库档数A  [页面43 vs 源43]\n  ✓ 分档库档数B  [页面118 vs 源118]\n  ✓ 分档库档数C  [页面75 vs 源75]\n  ✓ 分档库档数P  [页面168 vs 源168]\n  ✓ 分档表新鲜度  [窗口末日20260921 vs 核对日20260922(容忍20260922-5日)]\nPASS 全部一致 (33项)"
+      },
+      {
+        "name": "theme",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "  ✓ judgment bodies 多路齐全  [7路]\n  ✓ bodies.theme 内代码∈zt_pool  [全在池内]\n  ✓ 战场全貌含 Top1 归位线  [待归位·家居用品]\n  ✓ 6有卡含 Top1 题材  [化学制药]\n  ✓ 四维卡含最宽线  [待归位·家居用品]\n  ✓ fact归位ABC==归位文件实算  [fact A0/B63/C0 vs 实算 ANone/B63/CNone]\n  ✓ fact题材线数==对链条  [fact39 vs 对链条39]\nPASS 全部一致 (51项)"
+      },
+      {
+        "name": "limitup",
+        "status": "fail",
+        "errors": [
+          "sentinel exit=1, baseline_ok=False, checks=33",
+          "check process exit=1"
+        ],
+        "exit_code": 1,
+        "log_tail": "  ✓ 归位映射=池数\n  ✓ 归位线=bodies组\n  ✓ HTML div平衡 开225闭225\n  ✓ rowA 在 wrap 内\n  ✓ ticker闭合数=4(应4)\n  ✗ 元信息字段存在性  [缺失: judgment.一句话]\n  ✓ 一句话高标=映射最高板\nFAIL 2 项 — 页面数字与数据源不一致, 禁止出页"
+      },
+      {
+        "name": "logic",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      },
+      {
+        "name": "consistency",
+        "status": "pass",
+        "errors": [],
+        "exit_code": 0,
+        "log_tail": "== 复盘一致性哨兵 20260922 ==\n  WARN C4 关键股64只中1只bars未到20260922: ['600403']\n结论: 全过(1警告)"
+      },
+      {
+        "name": "browser",
+        "status": "pass",
+        "errors": [],
+        "exit_code": null,
+        "log_tail": ""
+      }
+    ]
+  }
+]

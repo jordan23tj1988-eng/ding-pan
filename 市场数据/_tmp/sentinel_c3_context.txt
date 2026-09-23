@@ -1,0 +1,107 @@
+---93-198---
+93:         else:
+94:             if st.get('date')!=d: raise ValueError(f'状态日期{st.get("date")}不是目标日{d}')
+95:             cum=_c2_number(st['累计pct'])
+96:     except Exception as exc:
+97:         FAIL.append(f'C2 {route} 目标日来源不可核验: {exc}');continue
+98:     h=open(f,encoding='utf-8').read()
+99:     i=h.find('PAPER TRADING')
+100:     if i<0: FAIL.append(f'C2 {pg}.html 无PAPERTRADE段');continue
+101:     seg=re.sub('<[^>]+>',' ',h[i:i+400])
+102:     m=re.search(r'累计\s*([+-]?[0-9.]+)%',seg)
+103:     if not m: FAIL.append(f'C2 {pg}.html 找不到累计%');continue
+104:     page_v=float(m.group(1))
+105:     if abs(page_v-float(cum))>0.005:
+106:         FAIL.append(f'C2 {route} 页面累计{page_v}% != 目标日{d}来源累计{cum}%')
+107: 
+108: # ---------- C3 看板新鲜度 vs bars_cache ----------
+109: bc=os.path.join(L,'_bars_cache')
+110: try:
+111:     cache_mtime=max(os.path.getmtime(os.path.join(bc,x)) for x in os.listdir(bc)[:400] if x.endswith('.csv'))
+112: except Exception:
+113:     cache_mtime=None
+114: if cache_mtime:
+115:     for route in PAGE:
+116:         kb=os.path.join(L,'_模拟盘',route,f'看板_{d}.html')
+117:         if os.path.isfile(kb) and os.path.getmtime(kb) < cache_mtime - 60:
+118:             FAIL.append(f'C3 {route} 历史版本证据不足：看板_{d}.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板')
+119: 
+120: # ---------- C4 关键股当日bar覆盖 ----------
+121: need=set()
+122: zp=os.path.join(R,d,'zt_pool.csv')
+123: if os.path.isfile(zp):
+124:     import csv as _csv
+125:     for row in _csv.DictReader(open(zp,encoding='utf-8-sig')):
+126:         need.add(str(row.get('代码','')).zfill(6))
+127: for f in glob.glob(os.path.join(L,f'*荐票_{d}.json'))+[os.path.join(L,f'竞价池发出_{d}.json')]:
+128:     try:
+129:         j=json.load(open(f,encoding='utf-8'))
+130:         for it in (j.get('荐票') or j.get('池') or []):
+131:             if isinstance(it,dict) and it.get('代码'): need.add(str(it['代码']).zfill(6))
+132:     except Exception: pass
+133: for route in PAGE:
+134:     sp=os.path.join(L,'_模拟盘',route,'state.json')
+135:     if os.path.isfile(sp):
+136:         try:
+137:             for pos in json.load(open(sp,encoding='utf-8')).get('positions',[]): need.add(pos['code'])
+138:         except Exception: pass
+139: _e=_EXPECT_D; dd=f'{_e[:4]}-{_e[4:6]}-{_e[6:]}';miss=[]
+140: for c in sorted(need):
+141:     f=os.path.join(bc,c+'.csv')
+142:     ok=False
+143:     if os.path.isfile(f):
+144:         try:
+145:             # Coverage means one unambiguous target-day row, not the final row.
+146:             # Strict decoding: corrupted bytes or duplicate target dates cannot pass.
+147:             import csv as _csv
+148:             with open(f,encoding='utf-8-sig',newline='') as fh:
+149:                 rows=list(_csv.DictReader(fh))
+150:             matches=[row for row in rows if str(row.get('date','')) in (dd,_e)]
+151:             ok=len(matches)==1
+152:         except Exception: pass
+153:     if not ok: miss.append(c)
+154: if miss:
+155:     lvl=FAIL if len(miss)>max(3,len(need)*0.05) else WARN
+156:     lvl.append(f'C4 关键股{len(need)}只中{len(miss)}只bars未到{_e}: {miss[:8]}{"…" if len(miss)>8 else ""}')
+157: 
+158: # ---------- C5 昨日结算有效性 ----------
+159: _c5_expired=True
+160: if dprev and _CAL and _LAST_TD:
+161:     _dn=next_trading_day(dprev,_CAL)
+162:     if _dn is None or _dn>_LAST_TD: _c5_expired=False  # ★2026-08-16: T+1未发生或尚未到期(如8/14荐票需8/17数据), 结算未到期, 跳过C5
+163: if dprev and _c5_expired:
+164:     empty=[]
+165:     for name in ['质量荐票结算','题材荐票结算','逻辑荐票结算','席位荐票结算']:
+166:         f=os.path.join(L,f'{name}_{dprev}.json')
+167:         if not os.path.isfile(f): empty.append(name+':缺文件');continue
+168:         try:
+169:             j=json.load(open(f,encoding='utf-8'));s=json.dumps(j.get('汇总',{}),ensure_ascii=False)
+170:             detail=j.get('明细')
+171:             if isinstance(detail,list) and len(detail)==0:
+172:                 continue  # 空仓(0荐票), 0/0 是合法结果非"bars没补齐"
+173:             if re.search(r'\"执行均收\":\s*null',s) and '0/0' in s: empty.append(name+':0/0全None')
+174:         except Exception as e: empty.append(name+':读失败')
+175:     if empty: FAIL.append(f'C5 {dprev}结算无效: {empty}(bars_cache没补齐就跑了结算?)')
+176: 
+177: # ---------- C6 HTML结构完好+时间线折叠(07-15晚: 孤立<与折叠失效事故) ----------
+178: for p in pages:
+179:     f=os.path.join(SITE,p+'.html')
+180:     if not os.path.isfile(f): continue
+181:     h=open(f,encoding='utf-8').read()
+182:     if '<</' in h or '><<' in h:
+183:         FAIL.append(f'C6 {p}.html 存在孤立<(HTML被切坏,查_rt/_fold_tl不平衡守卫)')
+184:     # 认知迭代tl条目>=2却没有tlfold=折叠失效
+185:     for m in re.finditer(r'<div class="tl">',h):
+186:         seg=h[m.start():m.start()+6000]
+187:         nitems=len(re.findall(r'<div class="tli[^"]*">',seg[:seg.find('</details>') if '</details>' in seg else len(seg)]))
+188:         if nitems>=2 and 'tlfold' not in h[max(0,m.start()-300):m.start()+6000]:
+189:             FAIL.append(f'C6 {p}.html 时间线{nitems}条未折叠(应最新1条外露+其余进tlfold)')
+190:         break
+191:     # ★2026-08-14 补三查: (1)div开闭配对平衡 (2)游离>字符 (3)rowA直接子元素=黄金契约
+192:     #   动机: lhb四组件没并排连续被用户抓3-4次, 根因=强档KPI卡</div>错位(div差1)+游离'>'在grid成匿名item,
+193:     #   C6旧查(孤立<)两样都漏。这三查覆盖"LLM手写HTML结构写坏"这一类。
+194:     o=h.count('<div'); c=h.count('</div>')
+195:     if o!=c:
+196:         FAIL.append(f'C6 {p}.html div开{o}闭{c}差{o-c}(有未闭合或多余闭合,查bodies.{p}的KPI卡</div>错位)')
+197:     if re.search(r'</(div|span|p|h[1-6]|li|td|th)>[ \t]*>', h):
+198:         FAIL.append(f'C6 {p}.html 存在游离>字符(闭合标签后跟裸>,在grid成匿名item会挤坏并排,查bodies.{p})')

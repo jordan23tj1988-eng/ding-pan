@@ -1,0 +1,124 @@
+---130-280---
+130:             mv, err = load_seats(d)
+131:             if err:
+132:                 chk(issues, False, '台账三数', err)
+133:             else:
+134:                 up = mv['代码'].nunique()
+135:                 jg = mv[mv['席位'].astype(str).str.contains('机构专用')]['代码'].nunique()
+136:                 lib, _ = load_lib()
+137:                 sa = []
+138:                 if lib:
+139:                     try:
+140:                         sa = [s for s, v in lib['席位'].items() if v['档'] in 'SA']
+141:                     except Exception:
+142:                         pass
+143:                 sa_n = len(mv[(mv['席位'].isin(sa)) & (mv['净额'] > 0) & (mv['买入金额'] >= 1e7)].drop_duplicates(subset=['代码', '席位']))
+144:                 chk(issues, p_up == up, '台账·上榜数(复算)', f'页面{p_up} vs 源{up}')
+145:                 chk(issues, p_jg == jg, '台账·机构在场(复算)', f'页面{p_jg} vs 源{jg}')
+146:                 chk(issues, p_sa == sa_n, '台账·S/A出手(复算)', f'页面{p_sa} vs 源{sa_n}')
+147: 
+148:     # ===== 2. Top5 荐票卡: 页面含卡文件内容 + 卡内股票回源 lhb.csv =====
+149:     card, err = load_seatcard(d)
+150:     if err:
+151:         chk(issues, False, 'Top5荐票卡', err)
+152:     else:
+153:         chk(issues, card.strip() in h, 'Top5卡在页面', f'卡{len(card)}字符 页面含=OK')
+154:         lhb_rows, lerr = load_lhb(d)
+155:         if lerr:
+156:             chk(issues, False, 'Top5回源', lerr)
+157:         else:
+158:             names = {r.get('名称', '') for r in lhb_rows}
+159:             card_names = re.findall(r'<td[^>]*><b[^>]*>([^<]+)</b></td>', card)
+160:             miss = [n for n in card_names if n and not any(n in x or x in n for x in names)]
+161:             chk(issues, not miss, 'Top5股票回源lhb.csv', '全部命中' if not miss else f'缺:{miss}')
+162: 
+163:     # ===== 3. FUNDTEMP 表(最近5日 vs _资金温度.json) =====
+164:     temp, terr = load_temp()
+165:     if terr:
+166:         chk(issues, False, 'FUNDTEMP表', terr)
+167:     else:
+168:         t5 = [r for r in temp if r['日'] <= d][-5:][::-1]  # 按核对日截断(零后视镜: 历史核对不用主表最新行)
+169:         # ★2026-08-13: h2 可能因契约外板块插入重编号 → 按"资金温度"关键词定块, 不按"二"编号
+170:         # ★优先按 FUNDTEMP 锚定块(权威标记, 防 agent 手写文本"资金温度"字样干扰关键词定位)
+171:         ki = h.find('<!--FUNDTEMP-->')
+172:         if ki >= 0:
+173:             kj = h.find('<!--/FUNDTEMP-->', ki)
+174:             tseg = h[ki:(kj if kj > 0 else len(h))]
+175:         else:
+176:             ki = h.find('资金温度')
+177:             ti = h.rfind('<h2>', 0, ki) if ki >= 0 else -1
+178:             if ti < 0:
+179:                 tseg = None
+180:             else:
+181:                 tj = h.find('<h2>', ti + 4)
+182:                 tseg = h[ti:tj if tj > 0 else len(h)]
+183:         trows = re.findall(r'<tr><td[^>]*>(\d\d-\d\d)</td>(.*?)</tr>', tseg or '')
+184:         if not trows:
+185:             chk(issues, False, 'FUNDTEMP表', '页面无温度表行')
+186:         else:
+187:             rows = []
+188:             for dt, rest in trows:
+189:                 cells = [re.sub(r'<[^>]+>', '', x) for x in re.findall(r'<td[^>]*>(.*?)</td>', rest)]
+190:                 rows.append((dt, cells))
+191:             # 数据源侧构建同样形态
+192:             for i, r in enumerate(t5):
+193:                 dt = r['日'][4:6] + '-' + r['日'][6:]
+194:                 if i < len(rows):
+195:                     pdt, pcells = rows[i]
+196:                     chk(issues, pdt == dt, f'FUNDTEMP行{i+1}日期', f'页面{pdt} vs 源{dt}')
+197:                     expect = [str(r['机构席次']), str(r['量化席次']), str(r['知名游资席次']), str(r['北向席次']), f"{r['总金额亿']}亿", str(r['温度分位'])]
+198:                     for j, (pv, ev) in enumerate(zip(pcells, expect)):
+199:                         if pv and ev and pv.split('/')[0] != ev:
+200:                             chk(issues, False, f'FUNDTEMP行{i+1}第{j+1}列', f'页面{pv} vs 源{ev}')
+201: 
+202:     # ===== 4. 分档库窗口+档数(页面 vs _席位分档.json) =====
+203:     lib, lerr = load_lib()
+204:     if lerr:
+205:         chk(issues, False, '分档库', lerr)
+206:     else:
+207:         m2 = re.search(r'窗口(\d+)~(\d+) (\d+)笔', h)
+208:         if not m2:
+209:             chk(issues, False, '分档库窗口', '页面无窗口标注')
+210:         else:
+211:             w = lib.get('窗口', '')
+212:             w2 = (w or '').replace('~', '')
+213:             chk(issues, f'{m2.group(1)}~{m2.group(2)}' == w, '分档库窗口', f'页面{m2.group(1)}~{m2.group(2)} vs 源{w}')
+214:             chk(issues, int(m2.group(3)) == lib.get('笔数'), '分档库笔数', f'页面{m2.group(3)} vs 源{lib.get("笔数")}')
+215:         from collections import Counter
+216:         c = Counter(v['档'] for v in lib['席位'].values())
+217:         m3 = re.search(r'<span class="chip">S(\d+)/A(\d+)/B(\d+)/C(\d+)/预备(\d+)</span>', h)
+218:         if not m3:
+219:             chk(issues, False, '分档库档数', '页面无档数标注')
+220:         else:
+221:             got = {'S': int(m3.group(1)), 'A': int(m3.group(2)), 'B': int(m3.group(3)), 'C': int(m3.group(4)), 'P': int(m3.group(5))}
+222:             for k in ('S', 'A', 'B', 'C', 'P'):
+223:                 chk(issues, got[k] == c.get(k, 0), f'分档库档数{k}', f'页面{got[k]} vs 源{c.get(k, 0)}')
+224: 
+225:     # ===== 5. 分档表新鲜度(窗口末日 vs d) =====
+226:     if lib and lib.get('窗口'):
+227:         we = lib['窗口'].split('~')[-1]
+228:         _cut = (datetime.datetime.strptime(d, '%Y%m%d') - datetime.timedelta(days=5)).strftime('%Y%m%d')
+229:         chk(issues, we >= _cut, '分档表新鲜度', f'窗口末日{we} vs 核对日{d}(容忍{d}-5日)')
+230: 
+231:     # ===== 6. 负面验证(限 LLM 手写文本区: 头部+板块一/五/六; 不扫 CSS/JS/SVG 合法内容) =====
+232:     htxt = re.sub(r'<script.*?</script>', '', h, flags=re.S)
+233:     htxt = re.sub(r'<style.*?</style>', '', htxt, flags=re.S)
+234:     # ★2026-08-21: 台账/存档折叠区(含已冻结历史发出版的"待结算None"占位)属机器区, 非LLM手写区
+235:     #   与注释本意对齐: 折叠区剔除后再扫, 防历史存档占位误报阻断发布
+236:     htxt = re.sub(r'<details class="chain".*?</details>', '', htxt, flags=re.S)
+237:     htxt = re.sub(r'<[^>]+>', '', htxt)
+238:     for kw in ('NaN', 'None', '{{', 'TODO', 'undefined', 'null</'):
+239:         if kw in htxt:
+240:             chk(issues, False, f'负面验证·{kw}', '手写文本区出现禁词')
+241: 
+242:     fails = sum(1 for ok, _, _ in issues if not ok)
+243:     for ok, lab, det in issues:
+244:         print(('  ✓ ' if ok else '  ✗ ') + lab + (f'  [{det}]' if det else ''))
+245:     if fails:
+246:         print(f'FAIL {fails} 项 — 页面数字与数据源不一致, 禁止出页')
+247:         return 1
+248:     print(f'PASS 全部一致 ({len(issues)}项)')
+249:     return 0
+250: 
+251: if __name__ == '__main__':
+252:     sys.exit(main())

@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 249, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 235, in main
+    out = build_page(d, current)
+          ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 127, in build_page
+    dynamic = _render_dynamic(d)
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\restore_lhb_page.py", line 106, in _render_dynamic
+    raise RuntimeError("龙虎榜动态渲染失败:\n" + cp.stdout[-2000:] + cp.stderr[-2000:])
+RuntimeError: 龙虎榜动态渲染失败:
+Traceback (most recent call last):
+  File "D:\股票数据\市场数据\module_render_lhb.py", line 365, in <module>
+    page = build_page_full(d)
+           ^^^^^^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\module_render_lhb.py", line 361, in build_page_full
+    return head + build_page(d)
+                  ^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\module_render_lhb.py", line 334, in build_page
+    r_judge(body),             # 板块一: 含 h2 一 (LLM bodies 原文)
+    ^^^^^^^^^^^^^
+  File "D:\股票数据\市场数据\module_render_lhb.py", line 130, in r_judge
+    return _rec2obs(body[i:_next_pos]) + chr(10) + r_seatcard(body, d)
+                                                   ^^^^^^^^^^^^^^^^^^^
+TypeError: r_seatcard() takes 1 positional argument but 2 were given
+

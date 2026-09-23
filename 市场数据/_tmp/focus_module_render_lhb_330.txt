@@ -1,0 +1,51 @@
+330:     """拼装完整 lhb 页 body(不含 shell/不含 PAPERTRADE 锚点) → 供 S2 接线
+331:     ★PAPERTRADE 大坑(limitup S2 两轮踩中): 不能输出锚点, 模拟盘引擎走 hero 定位插入"""
+332:     body = load_body(d)
+333:     plates = [
+334:         r_judge(body),             # 板块一: 含 h2 一 (LLM bodies 原文)
+335:         r_sec2_preserve(body),     # 契约外板块二保真(如席位动向全景; 资金温度态返回空)
+336:         r_fundtemp(d),             # 板块二: 含 h2 二 + FUNDTEMP 锚 (权威生成器)
+337:         r_ledger(body),            # 板块三: 含 h2 三 (bodies 注入段 + foldarchive)
+338:         (_body_h2(body, '四 ') or '<h2>四 席位分档库</h2>') + '\n' + r_lib(d),  # 板块四: h2四(LLM) + 分档库(机器)
+339:         r_scan(body),              # 板块五: 含 h2 五 (LLM bodies 原文)
+340:         (_body_h2(body, '六 ') or '<h2>六 我的认知迭代</h2>') + '\n' + r_cog(body, d) + r_cog_lib('lhb', d),  # 板块六
+341:     ]
+342:     page = assemble_lhb(plates)
+343:     if page.count('<div') != page.count('</div>'):
+344:         raise RuntimeError(
+345:             'lhb body contract failed: div open=%d close=%d' %
+346:             (page.count('<div'), page.count('</div>'))
+347:         )
+348:     if r_sec2_preserve(body):      # 有契约外板块插入 → h2 编号按顺序重排
+349:         page = _renum_h2(page)
+350:     return page
+351: 
+352: def build_page_full(d):
+353:     """完整页 body(头部区 + 六板块) → S2 接线用
+354:     头部区(bodies 开头 rowA/hero/kick/h1/导语/stance/kpi)从 bodies 提取(LLM 手写, 逐字节保真);
+355:     不含 PAPERTRADE 锚点(模拟盘引擎 inject 走 hero 定位, S2 文档★大坑)"""
+356:     body = load_body(d)
+357:     head = ''
+358:     i2 = body.find('<h2>一')
+359:     if i2 > 0:
+360:         head = body[:i2] + '\n'
+361:     return head + build_page(d)
+362: 
+363: if __name__ == '__main__':
+364:     d = sys.argv[1] if len(sys.argv) > 1 else '20260716'
+365:     page = build_page_full(d)
+366:     print('=== lhb 模块化渲染 @%s ===' % d)
+367:     print('整页 body: %d KB | 卡%d 表%d 折叠%d h2:%d' % (
+368:         len(page) // 1024, page.count('class="card"'), page.count('<table'),
+369:         page.count('<details'), len(re.findall(r'<h2>', page))))
+370:     print('板块锚: FUNDTEMP=%s LHBLEDGER=%s SEATCARD=%s PAPERTRADE=%s' % (
+371:         '<!--FUNDTEMP-->' in page, '<!--LHBLEDGER-->' in page or '<!--/LHBLEDGER-->' in page,
+372:         page.count('<!--SEATCARD-->'), '<!--PAPERTRADE-->' in page))
+373:     if '--shell' in sys.argv:
+374:         # 独立页面完整套壳: head+body开标签 + navbar导航 + <div class="wrap">(960px居中)
+375:         # + 尾部动画脚本 — 从 SITE 全站页解析提取, 防浏览器默认编码乱码+组件缺失+页面全宽
+376:         shell = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '复盘', '盯盘台', 'lhb.html'), encoding='utf-8').read()
+377:         ib = shell.find('<body'); jb = shell.find('>', ib) + 1 if ib > 0 else len(shell)
+378:         iw = shell.find('<div class="wrap">') if '<div class="wrap">' in shell else -1
+379:         if iw > 0:
+380:             # 显式 wrap 闭合(不依赖 rfind('</div>') 猜测 — ★2026-08-14 修复: 对齐 module_render_theme.py

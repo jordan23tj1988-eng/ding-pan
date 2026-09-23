@@ -120,13 +120,16 @@ class ReviewTests(Fixture):
    self.assertIsNotNone(lib);self.assertIn(window,lib['html'])
    self.assertTrue(lib['sources'])
  def test_primary_observations_have_golden_structure_and_evidence_group(self):
+  # 2026-09-23 用户拍板: 概览页结果层只留黄金组件, observation/判断卡不再上页,
+  # 原文与证据回链改由无痕原文库(claim-anchor-bank)+来源审计承接, 一条不删。
   doc=primary.StructuredTests.document(self);page=doc['pages']['index']
   page['claims'][1]['role']='observation'
   primary.StructuredTests.put(self,doc)
   r=self.api().build_site(self.root,'20260904',self.out)
   h=Path(r['pages']['index']).read_text(encoding='utf-8')
-  self.assertIn('class="obs-head"',h);self.assertIn('class="obs-watch"',h)
-  self.assertNotIn('class="card" id="claim-index-verdict"',h)
+  self.assertIn('<!--GOLDEN-INDEX:recommendations-->',h)
+  self.assertNotIn('class="citem"',h)
+  self.assertIn('claim-anchor-bank',h)
 
  def test_shared_rule_keeps_each_stock_and_distinct_date_window(self):
   api=self.api()

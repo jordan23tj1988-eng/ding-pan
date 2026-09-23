@@ -1,0 +1,25 @@
+=== 认知迭代全量更新.py 20260923 --root D:/股票数据/市场数据 --out D:/股票数据/_audit_runs ===
+{"status": "pass", "d": "20260923", "as_of": "20260923", "audit_artifact": "D:\\股票数据\\_audit_runs\\cognition_36cf57bf04cb4c4da88e2b04b6c955bb\\cognition.json", "routes": {"auction": 37, "cycle": 30, "lhb": 46, "limitup": 87, "logic": 38, "theme": 22, "master": 9}, "total_records": 269, "snapshots_written": ["D:\\股票数据\\市场数据\\_学习\\_认知库_auction.json", "D:\\股票数据\\市场数据\\_学习\\_认知库_cycle.json", "D:\\股票数据\\市场数据\\_学习\\_认知库_lhb.json", "D:\\股票数据\\市场数据\\_学习\\_认知库_limitup.json", "D:\\股票数据\\市场数据\\_学习\\_认知库_logic.json", "D:\\股票数据\\市场数据\\_学习\\_认知库_theme.json", "D:\\股票数据\\市场数据\\_学习\\_认知库_master.json"], "enhanced_written": ["D:\\股票数据\\市场数据\\_学习\\子agent增强\\认知库_auction_20260923.json", "D:\\股票数据\\市场数据\\_学习\\子agent增强\\认知库_cycle_20260923.json", "D:\\股票数据\\市场数据\\_学习\\子agent增强\\认知库_lhb_20260923.json", "D:\\股票数据\\市场数据\\_学习\\子agent增强\\认知库_limitup_20260923.json", "D:\\股票数据\\市场数据\\_学习\\子agent增强\\认知库_logic_20260923.json", "D:\\股票数据\\市场数据\\_学习\\子agent增强\\认知库_theme_20260923.json", "D:\\股票数据\\市场数据\\_学习\\子agent增强\\认知库_master_20260923.json"], "historical_publication_modified": false, "evolution_ledger": {"status": "pass", "output": "{\n  \"as_of\": \"20260923\",\n  \"自主拓展\": {\n    \"total\": 19,\n    \"inherited\": 19,\n    \"experiences\": 7,\n    \"tracking\": 0,\n    \"shelved\": 9,\n    \"validated\": 0,\n    \"refuted\": 1,\n    \"capabilities\": 2,\n    \"hits\": 0,\n    \"reused\": 0,\n    \"tracking_events\": 61,\n    \"review_events\": 0\n  },\n  \"认知迭代\": {\n    \"total\": 912,\n    \"inherited\": 912,\n    \"experiences\": 912,\n    \"tracking\": 0,\n    \"shelved\": 0,\n    \"validated\": 0,\n    \"refuted\": 0,\n    \"capabilities\": 0,\n    \"hits\": 0,\n    \"reused\": 0,\n    \"tracking_events\": 0,\n    \"review_events\": 1792\n  },\n  \"规则\": \"只有存在明确验证、命中、能力化字段时才计数；null表示既有数据没有证据\"\n}\n"}, "cognition_verification": {"status": "pass", "output": "{\"status\": \"pass\", \"as_of\": \"20260923\", \"records\": 912, \"new_review_events\": 912, \"counts\": {\"unverifiable\": 912}, \"dry_run\": false, \"policy\": \"不自动判命中；无绑定证据保持unverifiable\"}\n"}}
+[rc=0] 认知迭代全量更新.py 20260923 --root D:/股票数据/市场数据 --out D:/股票数据/_audit_runs
+=== playbook生成.py 20260923 --root D:/股票数据/市场数据 ===
+{"status": "pass", "out": "D:\\股票数据\\市场数据\\盘中\\20260923\\playbook.json", "date": "20260923", "watch_count": 0, "route_plan_count": 5}
+[rc=0] playbook生成.py 20260923 --root D:/股票数据/市场数据
+=== 盘中账本结算.py --root D:/股票数据/市场数据 --out D:/股票数据/_audit_runs settle 20260923 ===
+usage: 盘中账本结算.py [-h] --root ROOT --out OUT d
+盘中账本结算.py: error: unrecognized arguments: 20260923
+[rc=2] 盘中账本结算.py --root D:/股票数据/市场数据 --out D:/股票数据/_audit_runs settle 20260923
+=== master结算.py --root D:/股票数据/市场数据 --out D:/股票数据/_audit_runs settle 20260922 ===
+usage: master结算.py [-h] --root ROOT --out OUT [--target-d TARGET_D]
+                   {audit,coverage,cognition,master,settle} d
+master结算.py: error: unrecognized arguments: 20260922
+[rc=2] master结算.py --root D:/股票数据/市场数据 --out D:/股票数据/_audit_runs settle 20260922
+=== 周期投票.py tally 20260923 ===
+缺周期主判_20260923.json,先让05认知写主判
+[rc=0] 周期投票.py tally 20260923
+=== 周期投票.py board 20260923 ===
+Traceback (most recent call last):
+  File "D:\股票数据\市场数据\周期投票.py", line 163, in <module>
+    {'settle':settle,'tally':tally}[a[0]](a[1])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'board'
+[rc=1] 周期投票.py board 20260923

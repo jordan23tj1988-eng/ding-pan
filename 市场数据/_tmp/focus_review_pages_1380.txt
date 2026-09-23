@@ -1,0 +1,71 @@
+1380:             return escape(node)
+1381:         if node.tag=='table':
+1382:             raw = _safe_html(node)
+1383:             key = 'table-' + sha256(raw.encode()).hexdigest()[:16]
+1384:             if raw in seen:
+1385:                 return '<p><a href="#'+seen[raw]+'">回看同一份数据表</a></p>'
+1386:             seen[raw] = key
+1387:             return '<div id="'+key+'">'+raw+'</div>'
+1388:         # Preserve the already-sanitized outer tag; only replace table descendants.
+1389:         if not node.has('table'):
+1390:             return _safe_html(node)
+1391:         if node.tag=='root':
+1392:             return ''.join(visit(x) for x in node.children)
+1393:         empty = _Node(node.tag,node.attrs.items())
+1394:         outer = _safe_html(empty)
+1395:         closing = '</'+node.tag+'>'
+1396:         if outer.endswith(closing):
+1397:             return outer[:-len(closing)] + ''.join(visit(x) for x in node.children) + closing
+1398:         return _safe_html(node)
+1399:     return visit(tree)
+1400: 
+1401: def _shared_cells(fragment,scope,registry):
+1402:     """Share only typed rule cells/statistics in the same source date/window.
+1403: 
+1404:     Exact definitions stay visible at first use. Stock rows, negations, amounts,
+1405:     risk cells, and every occurrence's source claim remain independently present.
+1406:     Unclassified prose is deliberately never factored by text similarity.
+1407:     """
+1408:     root=_Tree(fragment).root
+1409:     def definition(node,window,kind):
+1410:         raw=_safe_html(node);text=node.text().strip()
+1411:         if not text:return
+1412:         key=(window,kind,raw)
+1413:         if key in registry:
+1414:             record=registry[key];record['references']+=1
+1415:             label='同窗口席位统计' if kind=='seat-window' else '同口径规则与完整限制'
+1416:             node.children=_Tree('<a href="#'+record['id']+'">'+label+'</a>').root.children
+1417:         else:
+1418:             ident='shared-'+sha256((window+'|'+kind+'|'+raw).encode()).hexdigest()[:16]
+1419:             registry[key]={'id':ident,'scope':window,'kind':kind,'text':text,'references':0,'source_html':raw}
+1420:             node.children.insert(0,_Node('span',{'id':ident}.items()))
+1421:     def walk(node,window):
+1422:         if not isinstance(node,_Node):return
+1423:         if node.tag=='details':
+1424:             summary=next((x for x in node.children if isinstance(x,_Node) and x.tag=='summary'),None)
+1425:             if summary:
+1426:                 explicit=re.search(r'窗口\s*(20[0-9]{6}~20[0-9]{6})',summary.text())
+1427:                 day=re.search(r'(?<![0-9])(20[0-9]{6})(?![0-9])',summary.text())
+1428:                 short=re.search(r'(?<![0-9])([01][0-9]-[0-3][0-9])(?![0-9])',summary.text())
+1429:                 if explicit:window='window:'+explicit.group(1)
+1430:                 elif day:window=day.group(1)
+1431:                 elif short:window=scope[:4]+short.group(1).replace('-','')
+1432:         if node.tag=='table':
+1433:             def rows(n):
+1434:                 if not isinstance(n,_Node):return
+1435:                 if n.tag=='tr':yield n;return
+1436:                 for c in n.children:yield from rows(c)
+1437:             table_rows=list(rows(node));indices={}
+1438:             for row in table_rows:
+1439:                 cells=[c for c in row.children if isinstance(c,_Node) and c.tag in ('td','th')]
+1440:                 if cells and all(c.tag=='th' for c in cells):
+1441:                     indices={i:c.text().strip() for i,c in enumerate(cells) if any(k in c.text() for k in ('主导因子','命中规则','次日买入/放弃条件','开盘分桶','席位(滚动战绩)'))}
+1442:                     continue
+1443:                 for index,kind in indices.items():
+1444:                     if index<len(cells):definition(cells[index],window,'seat-window' if '滚动战绩' in kind else 'rule:'+kind)
+1445:         if node.tag=='p' and re.match(r'^\[[SABCP]\].+滚动执1.+n=',node.text().strip()) and not any(k in node.text() for k in ('净买','净卖')):
+1446:             definition(node,window,'seat-window');return
+1447:         for child in node.children:walk(child,window)
+1448:     walk(root,scope)
+1449:     def emit(node):
+1450:         if isinstance(node,_Node) and node.tag=='comment':return '<!--'+node.attrs['text']+'-->'

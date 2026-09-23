@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>情绪盯盘台 · 主线题材·第三路</title><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+</style></head><body><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="on" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd"><i class="live"></i><span class="txt">更新 20260814 复盘</span></span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp"><span>量能 <b class="a">2.14万亿</b></span><span>涨停 <b class="u">63</b> / 跌停 <b class="d">10</b></span><span>炸板 <b>19</b>·炸板率 <b>23.2%</b></span><span>最高 <b class="u">5板</b>(蓝盾光电)</span><span>情绪温度 <b>38.5</b>(偏冷)</span><span>回封 <b>28</b>·二板加 <b>11</b></span></div><div class="grp" aria-hidden="true"><span>量能 <b class="a">2.14万亿</b></span><span>涨停 <b class="u">63</b> / 跌停 <b class="d">10</b></span><span>炸板 <b>19</b>·炸板率 <b>23.2%</b></span><span>最高 <b class="u">5板</b>(蓝盾光电)</span><span>情绪温度 <b>38.5</b>(偏冷)</span><span>回封 <b>28</b>·二板加 <b>11</b></span></div></div></div><div class="rowA">
+<div class="hero"><div class="kick">Theme · 题材命门 · 第3路 · 截至 2026-08-14 收盘</div><h1>无确认主线:AI算力<em>2→25爆量(+1150%)</em>成唯一候选,机器人秦安断板正式退位,蓝盾5板炸板封单崩塌=退潮反抽</h1><p>6有聚类口径三级判定→生命周期→龙头识别;题材归属唯一真源=题材归位_20260814(63只逐只归位全B档=THS原因,连板逐只标注);温度38.5偏冷(连续偏冷),涨停63(剔ST)/跌停10/炸板率23.2%,量能2.14万亿。</p><div class="stance"><span class="pill hot">宽度爆量候选 · <b class="s-mid">AI算力/液冷存储 4/6(宽25·高3板·开板0.52)</b></span><span class="pill warn">旧主线退位 · <b class="s-weak">机器人(宽7·秦安5板断板·晋级率0)</b></span><span class="pill warn">孤高标 · <b class="s-mid">蓝盾光电5板(炸6次·封单崩塌)</b></span></div></div>
+<div class="kpi"><div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-warn">反抽</span></div><span class="lab">涨停数(剔ST退)</span><span class="big" data-v="63">63</span><span class="sub2">炸板19·炸板率23.2%·跌停10;梯队1板52/2板5/3板5/5板1,二板加11(昨59/炸板36/跌停4/二板加22)</span></div>
+<div class="kpi"><div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M5 21V9l7-6 7 6v12"/></svg></span><span class="chip2 c-warn">孤高</span></div><span class="lab">最高连板</span><span class="big" data-v="5">5<span style="font-size:15px">板·蓝盾光电</span></span><span class="sub2">炸6次·封单3128万(昨4板封单10.38亿崩塌);昨秦安5板今日断板=高度龙轮换</span></div>
+<div class="kpi"><div class="top"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-hot">偏冷</span></div><span class="lab">市场温度档</span><span class="big" data-v="38.5">38.5</span><span class="sub2">偏冷档(昨40.1继续偏冷);炸板率23.2%(昨37.9%回落);成交2.14万亿;跌停4→10增加=情绪续弱</span></div>
+<div class="kpi"><div class="top"><span class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span><span class="chip2 c-acc">候选</span></div><span class="lab">主线候选(聚类4/6)</span><span class="big">4/6</span><span class="sub2">AI算力/液冷存储:宽25(环比+1150%爆量)·高3板·一字0·开板0.52;无题材过6有=无确认主线</span></div>
+</div>
+
+
+<!--PAPERTRADE-->
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 第三路·题材</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+2.01%</b></span> <span>本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-0.09%</b></span> <span>基准本周 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+22.91%</b></span> <span>平仓胜率 <b style="font-family:monospace">75.0%</b>(n=4)</span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="105.1" x2="620" y2="105.1" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,118.8 105.7,105.6 191.4,108.9 277.1,116.1 362.9,33.1 448.6,31.2 534.3,31.2 620.0,41.7" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,105.4 105.7,103.7 191.4,99.5 277.1,97.0 362.9,95.8 448.6,98.1 534.3,98.1 620.0,97.4" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="97.4" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20260814  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="92.4" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">1.0201</text></svg></div>
+</div><div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">688192 迪哲医药-U</td><td style="font-family:monospace">1200</td><td style="font-family:monospace">66.00</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-7.76%</b></td><td style="font-family:monospace">5</td><td>继续持有</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">002632 道明光学</td><td style="font-family:monospace">9700</td><td style="font-family:monospace">8.39</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+1.62%</b></td><td style="font-family:monospace">4</td><td>继续持有</td></tr>
+</table>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20260814发出,明日固定价执行)</div>
+<div style="color:#8d93a8;margin-top:4px">今晚指令单未发出</div>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(4)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>002379 宏桥控股</td><td style="font-family:monospace">20260715@18.10</td><td style="font-family:monospace">20260811@19.40</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+7.02%</b></td><td>收·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600664 哈药股份</td><td style="font-family:monospace">20260714@3.80</td><td style="font-family:monospace">20260716@4.94</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+29.81%</b></td><td>收·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>003020 立方制药</td><td style="font-family:monospace">20260713@20.04</td><td style="font-family:monospace">20260714@22.10</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+10.11%</b></td><td>开·持1日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600118 中国卫星</td><td style="font-family:monospace">20260713@93.50</td><td style="font-family:monospace">20260714@86.00</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-8.16%</b></td><td>开·持1日</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<h2>一 荐票卡<span class="hint">发出版不可覆盖(题材荐票_20260814.json);今日空仓(明确)+观察3只(全∈zt_pool64只);荐票=龙头候选可结算化≠确认;爆量首日+开板0.52&gt;0.45兑现日预案不追</span></h2>
+<div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:104px"><col style="width:52px"><col><col style="width:170px"></colgroup><tr><th>#</th><th>标的</th><th>类型</th><th>荐票理由(身位·逻辑·执行口径)</th><th>历史对照</th></tr><tr><td>1</td><td style="white-space:nowrap"><b>天洋新材</b><br><span class="mut">603330</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">AI算力线内质量最扎实3板高标:3板0炸+09:30首封+封板9363万+CPO(光模块上游电子胶)+半年报预盈双催化;但线开板占比0.52&gt;0.45+一字0+高度仅3板=宽度爆量未立高度(20260804前科同构),按兑现日预案不追3板降观察;观察次日AI算力是否立4板高度(主线成立判据)。断承接=高开≥5弃/炸板不回封弃。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px"></span></td></tr><tr><td>2</td><td style="white-space:nowrap"><b>中石科技</b><br><span class="mut">300684</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">AI算力线内封单质量龙:首板0炸+09:25首封+封板10.4亿全场第一(全池64只最高)+中际旭创入股+CPO散热+液冷服务器+20cm;但身位=首板(存量线爆量首日),按'爆发日开板&gt;0.45→兑现日预案'不追首板降观察;观察次日是否晋级2板(晋级=线立高度信号)。断承接=次日竞价高开&lt;3%且封单缩水弃。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px"></span></td></tr><tr><td>3</td><td style="white-space:nowrap"><b>澳洋健康</b><br><span class="mut">002172</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">创新药线内唯一晋级高度:3板09:25一字0炸+封板1.36亿,2板→3板连续晋级(昨日观察票命中);但线宽度13→10缩圈+仅澳洋1只3板(未成梯队)+百花7板断板后无更高承接=个股晋级非主线承接,不荐(0714'荐衰竭线龙头=接大面')降观察;观察创新药明日是否新出≥3板形成梯队承接。断承接=明日断板/炸板不回封→承接证伪。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px"></span></td></tr></table></div>
+<div class="hint">发出版不可覆盖(题材荐票_20260814.json); 荐票=龙头候选可结算化≠确认; 结算=执行口径; 历史对照n=本路同类身位样本; 桶均值非个股预言</div><div class="card"><b>洞察(agent)</b><p style="margin:6px 0 0">①今日无确认主线:6有聚类口径最高=AI算力/液冷存储4/6(大分支),无一5/6主流候选;旧主线机器人正式退位(秦安5板断板不在池+晋级率0二连板0+宽度9→7继续缩圈);②AI算力/液冷存储宽度2→25(+1150%爆量)成为全场唯一主线候选,但"宽度先行、高度未立"——高度仅3板+一字0+开板占比0.52&gt;0.45=20260804"宽度爆量首日"同构且更极端,按兑现日预案不追;③蓝盾光电4→5板晋级全场最高标但炸6次+封单10.38亿→3128万崩塌(缩水97%)=孤高标情绪温度计,跨线不追;④创新药缩圈(13→10)澳洋2→3板晋级但仅1只3板未成高度梯队;⑤环境退潮反抽:温度38.5偏冷+跌停10(昨4增)+二板加11腰斩+涨停63普涨无高度(1板52占82.5%+4板缺位断层);⑥今日空仓合法:爆量首日+开板0.52&gt;0.45兑现日预案+温度偏冷,只观察3只(天洋/中石/澳洋),等次日立高度再谈主线。</p></div>
+
+<div class="card"><b>荐票结论:空仓</b><p style="margin:6px 0 0">理由=①AI算力宽度爆量+1150%但开板占比0.52&gt;0.45(认知库0716"爆发日开板&gt;0.45→次日兑现日预案")+一字0+高度仅3板未立=20260804一日游前科同构,追首板/追3板即接面;②环境退潮反抽(温度38.5偏冷+跌停10+二板加11腰斩),高标分歧大(蓝盾5板炸6次/华西3板炸7次/共进2板炸12次);③旧主线机器人退位(秦安断板+晋级率0)=方向真空期;④战绩画像对照:本路合计胜率10/24=41.7%均收+0.5%,人气龙候选-4.33(n=2)/正统龙候选-1.73(n=4)负样本,爆量首日追高身位无正样本。空仓合法,观察票=次日验证备选池。</p></div>
+
+
+
+<div class="card"><b>诚实标注</b><p style="margin:6px 0 0">①今日荐票=空仓(明确),观察3只(天洋/中石/澳洋)全∈20260814/zt_pool.csv(64只),封板资金/首封时间/炸板次数逐项可回源;②空仓理由=AI算力宽度爆量+1150%但开板0.52&gt;0.45(兑现日预案)+一字0+高度仅3板未立=20260804一日游前科同构,叠加温度38.5偏冷+跌停10+二板加11腰斩;③荐票≠龙头确认,AI算力主线确认等次日立4板高度;④旧主线机器人正式退位(秦安5板断板+晋级率0),全场无确认主线分支轮动;⑤本路战绩画像合计胜率10/24=41.7%均收+0.5%,身位归因:业绩锚+2.72(n=5)/正统龙候选(高位)+2.67(n=2)为正,人气龙-4.33/正统龙-1.73/卡位独门-8.46为负;⑥蓝盾光电5板(炸6次+封单10.38亿→3128万崩塌)跨线孤高标不追;⑦3只观察票不参与执行,明日0815晚间跑题材荐票结算.py结算。</p></div>
+<div class="card"><b>昨日对账</b><p style="margin:6px 0 0">发出版题材荐票_20260813逐票核对:①秦安股份5板→今日断板不在池(荐票,兑现"断板出局",触发"秦安断板→机器人主线退位"判据✓);②蓝盾光电4板→今日5板✓晋级(观察票命中,但炸6次+封单10.38亿→3128万崩塌=高度龙退坡前兆);③城地香江3板→今日断板不在池(观察票断板出局,AI算力质量线未延续);④京投发展4板→今日断板不在池(观察票断板出局,地产链缩圈证伪兑现);⑤澳洋健康2板→今日3板✓晋级(观察票命中,创新药唯一晋级高度);⑥一鸣食品今日不在池(观察票慢牛断板)。昨日荐票1只(秦安)断板出局,观察4只2晋级2断板1慢牛断,环境退潮反抽兑现。</p></div>
+<h2>二 三级判定<span class="hint">聚类口径(题材≠行业,唯一真源=题材归位_20260814);mini条=四维当日宽度,环比/晋级率逐项标注;6有得分下界可人工上调但须注明(今日无上调)</span></h2>
+<div class="trow"><div class="tr1"><span class="tnm">AI算力/液冷存储</span><span class="d6"><i class="on"></i>×4<i></i></span><span class="tjd tj-main">4/6·大分支(宽度爆量候选)</span><div class="tbar"><i style="width:100%"></i></div><span class="tct">25只</span></div><div class="tds">华西3板(炸7次封单4394万·光芯片/磷化铟)+天洋3板(0炸封单9363万·CPO电子胶)+理工能科2板(炸2)+海洋王2板(0炸封单1亿)+共进2板(炸12次封单9214万)+19首板(中石封板10.4亿全场第一/华正3.8亿/剑桥3.08亿/网宿2.59亿/数据港2.19亿等);一字0+开板0.52+早封0.44+高度3板=纯首板扩散为主,无4板高度断层。<span class="mut">四维:宽度25·高度3板·首板19·二连板3·环比+1150%·晋级率3.0(脚本口径异常:分母昨首板仅1只)【放宽】 <b style="display:inline-block;width:6px;height:16px;background:#b8860b"></b></span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">创新药/医药</span><span class="d6"><i class="on"></i>×3<i></i></span><span class="tjd tj-minor">3/6·分支(缩圈·澳洋晋级)</span><div class="tbar"><i style="width:40%"></i></div><span class="tct">10只</span></div><div class="tds">澳洋健康3板(09:25一字0炸封单1.36亿·脑机接口)+神奇制药2板(09:25一字0炸封单1.49亿)+6首板(华森/中源协和/开开/重药/人民同泰/西点/圣达等);宽13→10缩圈(-23%)+高度仅3板+晋级率18.2%=澳洋个股晋级未成梯队,百花7板断板后无更高承接。<span class="mut">四维:宽度10·高度3板·首板6·二连板2·环比-23%·晋级率18.2% <b style="display:inline-block;width:6px;height:16px;background:#4a5666"></b></span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">机器人/人形机器人</span><span class="d6"><i class="on"></i>×3<i></i></span><span class="tjd tj-minor">3/6·分支(退位·秦安断板)</span><div class="tbar"><i style="width:28%"></i></div><span class="tct">7只</span></div><div class="tds">坤泰股份3板(09:25一字0炸封单3.37亿线内最强)+6首板(天安/正裕/索菱/敏芯/华宏/豪美);秦安5板断板不在池+晋级率0(二连板0)+宽9→7继续缩圈=高度5→3板塌+晋级率0=正式退位,坤泰为退位线补涨身位不荐。<span class="mut">四维:宽度7·高度3板·首板6·二连板0·环比-22%·晋级率0【缩圈】 <b style="display:inline-block;width:6px;height:16px;background:#b8860b"></b></span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">环保/公用</span><span class="d6"><i class="on"></i>×3<i></i></span><span class="tjd tj-minor">3/6·分支(孤高标5板)</span><div class="tbar"><i style="width:16%"></i></div><span class="tct">4只</span></div><div class="tds">蓝盾光电5板(炸6次封单3128万·收购+低空经济+环境监测)+3首板(九州一轨/德创环保/华骐环保);宽4高5板=孤高标结构(线宽小+开板0.5+高度5板全场最高),蓝盾为跨线独立重组票非环保梯队。<span class="mut">四维:宽度4·高度5板·首板3·环比+300%·晋级率0 <b style="display:inline-block;width:6px;height:16px;background:#4a5666"></b></span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">半导体材料/光刻胶</span><span class="d6"><i class="on"></i>×2<i></i></span><span class="tjd tj-minor">2/6·分支(全首板)</span><div class="tbar"><i style="width:24%"></i></div><span class="tct">6只</span></div><div class="tds">金戈新材/大恒科技/郑中设计/中天精装/雪迪龙/旭光电子全首板;宽6高1板+环比+500%=首板扩散无高标无梯队,一字1(金戈北交所)。<span class="mut">四维:宽度6·高度1板·首板6·环比+500%·晋级率0 <b style="display:inline-block;width:6px;height:16px;background:#4a5666"></b></span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">地产链/房地产</span><span class="d6"><i class="on"></i>×2<i></i></span><span class="tjd tj-minor">2/6·分支(缩圈证伪)</span><div class="tbar"><i style="width:12%"></i></div><span class="tct">3只</span></div><div class="tds">金螳螂3板(炸1封单9373万·洁净室+数据中心)+快意电梯首板+成都路桥首板;宽5→3继续缩圈(-40%)+高度3板=新线一日游证伪延续,京投4板断板不在池。<span class="mut">四维:宽度3·高度3板·环比-40%·晋级率0【缩圈】 <b style="display:inline-block;width:6px;height:16px;background:#b8860b"></b></span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">军工/通信6G/稀土/消费/新能源等散支</span><span class="d6"><i class="on"></i>×2<i></i></span><span class="tjd tj-minor">散支(首板无梯队)</span><div class="tbar"><i style="width:8%"></i></div><span class="tct">散只</span></div><div class="tds">军工2(利君/厦工全首板)+通信6G 2(大唐电信炸1/经纬辉开尾盘封·全首板,宽4→3→2缩圈)+稀土1(中国稀土)+消费1(桂发祥)+新能源电力1(金时科技炸3)+化工1(海阳科技);散支基本首板无梯队无承接。</div></div>
+<details class="chain"><summary><b>三级判定·数字核对层</b> <span class="chip">3卡</span> <span class="mut">题材战场全貌 / 6有评分 / 四维走势 · 展开核对 · 判断以对应板块正文为准</span></summary><div class="inner">
+<!--THEMEBATTLE-->
+<div class="card"><h3 style="margin:0 0 8px">题材战场全貌 <span class="hint">机器核对 · 归位唯一真源 vs 对链条互证</span></h3><p style="margin:4px 0 8px" class="mut">归位映射 63 只 · 来源档 A公告/B THS/C搭车: B63 · 对链条: 涨停64 / 题材线12</p><div class="tl"><div class="trow"><div class="tr1"><span class="tnm">AI算力/液冷存储</span><span class="tct">25只</span><span class="mut">最高3板</span><span class="mut"></span><div class="tbar"><i style="width:100%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">创新药/医药</span><span class="tct">10只</span><span class="mut">最高3板</span><span class="mut"></span><div class="tbar"><i style="width:40%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">机器人/人形机器人</span><span class="tct">7只</span><span class="mut">最高3板</span><span class="mut"></span><div class="tbar"><i style="width:28%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">半导体材料/光刻胶</span><span class="tct">6只</span><span class="mut">最高1板</span><span class="mut"></span><div class="tbar"><i style="width:24%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">环保/公用</span><span class="tct">4只</span><span class="mut">最高5板</span><span class="mut"></span><div class="tbar"><i style="width:16%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">地产链/房地产</span><span class="tct">3只</span><span class="mut">最高3板</span><span class="mut"></span><div class="tbar"><i style="width:12%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">军工/航空</span><span class="tct">2只</span><span class="mut">最高1板</span><span class="mut"></span><div class="tbar"><i style="width:8%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">通信/6G</span><span class="tct">2只</span><span class="mut">最高1板</span><span class="mut"></span><div class="tbar"><i style="width:8%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">稀土/有色</span><span class="tct">1只</span><span class="mut">最高1板</span><span class="mut"></span><div class="tbar"><i style="width:4%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">消费/乳业食品</span><span class="tct">1只</span><span class="mut">最高1板</span><span class="mut"></span><div class="tbar"><i style="width:4%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">新能源电力</span><span class="tct">1只</span><span class="mut">最高1板</span><span class="mut"></span><div class="tbar"><i style="width:4%"></i></div></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">化工/染料</span><span class="tct">1只</span><span class="mut">最高1板</span><span class="mut"></span><div class="tbar"><i style="width:4%"></i></div></div></div>
+</div><p style="margin:8px 0 4px"><b>对链条强度画像 Top6</b> <span class="hint">强度画像原文=子agent可引证据</span></p><div class="tl"><div class="trow"><div class="tr1"><span class="tnm">AI算力/液冷存储</span><span class="tct">25只</span><span class="mut">高3板</span><span class="mut">开板52%</span><div class="tbar"><i style="width:100%"></i></div></div><div class="tds"><span class="mut">承载环节=通信设备(1连板);家数25、最高3板、早封占比0.44、开板占比0.52。早封少/开板偏多=首板扩散或分歧,非高标主线</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">创新药/医药</span><span class="tct">10只</span><span class="mut">高3板</span><span class="mut">开板50%</span><div class="tbar"><i style="width:40%"></i></div></div><div class="tds"><span class="mut">承载环节=医药商业(1连板);家数10、最高3板、早封占比0.5、开板占比0.5。早封少/开板偏多=首板扩散或分歧,非高标主线</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">机器人/人形机器人</span><span class="tct">7只</span><span class="mut">高3板</span><span class="mut">开板29%</span><div class="tbar"><i style="width:28%"></i></div></div><div class="tds"><span class="mut">承载环节=汽车零部(1连板);家数7、最高3板、早封占比0.29、开板占比0.29。早封少/开板偏多=首板扩散或分歧,非高标主线</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">半导体材料/光刻胶</span><span class="tct">6只</span><span class="mut">高1板</span><span class="mut">开板17%</span><div class="tbar"><i style="width:24%"></i></div></div><div class="tds"><span class="mut">承载环节=建筑装饰(1连板);家数6、最高1板、早封占比0.0、开板占比0.17。早封少/开板偏多=首板扩散或分歧,非高标主线</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">环保/公用</span><span class="tct">4只</span><span class="mut">高5板</span><span class="mut">开板50%</span><div class="tbar"><i style="width:16%"></i></div></div><div class="tds"><span class="mut">承载环节=环境治理(1连板);家数4、最高5板、早封占比0.0、开板占比0.5。早封少/开板偏多=首板扩散或分歧,非高标主线</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">地产链/房地产</span><span class="tct">3只</span><span class="mut">高3板</span><span class="mut">开板33%</span><div class="tbar"><i style="width:12%"></i></div></div><div class="tds"><span class="mut">承载环节=专用设备(1连板);家数3、最高3板、早封占比0.33、开板占比0.33。早封少/开板偏多=首板扩散或分歧,非高标主线</span></div></div>
+</div></div>
+<!--/THEMEBATTLE-->
+<!--6YOU-->
+<div class="card"><h3 style="margin:0 0 8px">6有评分卡 <span class="hint">行业口径(6有) · 阈值 宽≥15 / 容量≥200.0亿 · 与归位聚类口径并存不互斥</span></h3><p style="margin:4px 0 8px" class="mut">量能档 万亿以上 · 两市成交 21428.0 亿</p><table class="p2"><tr><th class="l">题材(行业口径)</th><th>涨停数</th><th>宽度</th><th>强度</th><th>容量</th><th>弹性20cm</th><th>高度</th><th>换手</th><th>得分</th><th>判定</th></tr><tr><td class="l">环境治理</td><td>5</td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><b>2/6</b></td><td>分支</td></tr>
+<tr><td class="l">通信设备</td><td>5</td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><b>2/6</b></td><td>分支</td></tr>
+<tr><td class="l">建筑装饰</td><td>4</td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><b style="color:#e8c86a">✓</b></td><td><b>2/6</b></td><td>分支</td></tr>
+<tr><td class="l">汽车零部</td><td>3</td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><b style="color:#e8c86a">✓</b></td><td><b>2/6</b></td><td>分支</td></tr>
+<tr><td class="l">食品加工</td><td>3</td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><b>2/6</b></td><td>分支</td></tr>
+<tr><td class="l">医药商业</td><td>3</td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><span class="mut">✗</span></td><td><b style="color:#e8c86a">✓</b></td><td><b>1/6</b></td><td>分支</td></tr>
+</table><p style="margin:6px 0 0"><b>全场判定:</b> 行业口径无题材过6有,分支轮动;聚类口径最高=AI算力/液冷存储4/6</p></div>
+<!--/6YOU-->
+<!--FOURDIM-->
+<div class="card"><h3 style="margin:0 0 8px">四维走势 <span class="hint">宽度/高度日序列 · 环比=今日/昨日-1 · 晋级率=今二连板/昨首板 · 8/10断档→null如实</span></h3><table class="p2"><tr><th class="l">题材线</th><th>今日宽度</th><th>08</th>-11<th>08</th>-12<th>08</th>-13<th>环比</th><th>晋级率</th></tr><tr><td class="l">AI算力/液冷存储</td><td>25</td><td>2板</td><td>2板<span style="color:#b8860b">▼</span></td><td>3板<span style="color:#b8860b">▼</span></td><span class="ok">+1150%</span>+300.0%</tr>
+<tr><td class="l">创新药/医药</td><td>10</td><td>6板</td><td>7板<span style="color:#e8c86a">▲</span></td><td>2板<span style="color:#e8c86a">▲</span></td><span class="warn">-23%</span>+18.2%</tr>
+<tr><td class="l">机器人/人形机器人</td><td>7</td><td>3板</td><td>4板<span style="color:#e8c86a">▲</span></td><td>5板<span style="color:#b8860b">▼</span></td><span class="warn">-22%</span>+0.0%</tr>
+<tr><td class="l">半导体材料/光刻胶</td><td>6</td><td>2板</td><td>1板<span style="color:#e8c86a">▲</span></td><td>1板<span style="color:#b8860b">▼</span></td><span class="ok">+500%</span>+0.0%</tr>
+<tr><td class="l">环保/公用</td><td>4</td><td>2板</td><td>1板<span style="color:#e8c86a">▲</span></td><td>1板<span style="color:#b8860b">▼</span></td><span class="ok">+300%</span>+0.0%</tr>
+<tr><td class="l">地产链/房地产</td><td>3</td><td class="mut">—</td><td>3板</td><td>4板<span style="color:#b8860b">▼</span></td><span class="warn">-40%</span>+0.0%</tr>
+<tr><td class="l">军工/航空</td><td>2</td><td class="mut">—</td><td class="mut">—</td><td>1板</td><span class="ok">+100%</span>+0.0%</tr>
+<tr><td class="l">通信/6G</td><td>2</td><td>1板</td><td>1板<span style="color:#e8c86a">▲</span></td><td>1板<span style="color:#b8860b">▼</span></td><span class="warn">-33%</span>+0.0%</tr>
+<tr><td class="l">稀土/有色</td><td>1</td><td class="mut">—</td><td class="mut">—</td><td class="mut">—</td><span class="mut">—</span><span class="mut">—(断档/漂移)</span></tr>
+<tr><td class="l">消费/乳业食品</td><td>1</td><td>2板</td><td>3板<span style="color:#e8c86a">▲</span></td><td>4板<span style="color:#b8860b">▼</span></td><span class="warn">-83%</span>+0.0%</tr>
+<tr><td class="l">新能源电力</td><td>1</td><td>2板</td><td>2板<span style="color:#e8c86a">▲</span></td><td>2板<span style="color:#e8c86a">▲</span></td><span class="warn">-88%</span>+0.0%</tr>
+<tr><td class="l">化工/染料</td><td>1</td><td>2板</td><td>1板<span style="color:#e8c86a">▲</span></td><td class="mut">—</td><span class="mut">—</span><span class="mut">—(断档/漂移)</span></tr>
+</table><p style="margin:6px 0 0" class="warn"><b>警报:</b> 【放宽】AI算力/液冷存储 宽度2→25(+1150%)；【缩圈】机器人/人形机器人 宽度20→9→7(-65%)且高度未抬升——高潮回落段特征,减仓位不是上车位；【缩圈】地产链/房地产 宽度13→5→3(-77%)且高度未抬升——高潮回落段特征,减仓位不是上车位；【缩圈】消费/乳业食品 宽度12→6→1(-92%)且高度未抬升——高潮回落段特征,减仓位不是上车位；【缩圈】通信/6G 宽度4→3→2(-50%)且高度未抬升——高潮回落段特征,减仓位不是上车位</p></div>
+<!--/FOURDIM-->
+</div></details>
+<h2>三 主流生命周期<span class="hint">判衰竭必附高低切预判;AI算力=爆量启动段(宽度先行),机器人=退潮退位段,创新药=缩圈承接段,地产链=缩圈证伪</span></h2>
+<div class="card"><p style="margin:0"><b>AI算力/液冷存储:爆量启动段(宽度先行·高度未立)</b>(0813宽2高3→0814宽25高3,+1150%)。宽度爆量首日但高度卡在3板+一字0+开板0.52&gt;0.45=20260804"宽度爆量首日→次日一日游"前科同构(更极端)。判据:明日宽度≥13且新出4板→转主线成立(A档);腰斩或高度≤3板→一日游脉冲(降C)。<b>机器人/人形机器人:退潮退位段</b>(0812宽20高4发酵→0813宽9高5缩圈→0814宽7高3退位)。秦安5板断板+晋级率0+高度塌=认知库0716"缩圈且高度塌→全线退避"兑现,主线正式退位,坤泰3板为退位线补涨不接。<b>创新药/医药:缩圈承接段</b>(0812百花7板→0813断板13只低位发散→0814缩圈10只澳洋3板晋级)。澳洋2→3板是唯一高度晋级但未成梯队,承接未确认,对齐0714"荐衰竭线龙头=接大面",只观明日是否新出≥3板。<b>地产链/房地产:缩圈证伪</b>(0812宽13新线→0813宽5→0814宽3),京投4板断板=一日游证伪坐实。<b>高低切预判(第7例)</b>:机器人/消费/地产缩圈资金→AI算力宽度爆量(2→25)为唯一承接候选,但算力高度未立+开板0.52=兑现日预案,次日分辨"真承接"vs"一日游脉冲";前6例规律"退潮期资金只认防守+低位+业绩低切"与AI算力(高位CPO已涨多)方向有张力。</p></div>
+<details class="chain"><summary><b>生命周期·机械底座</b> <span class="chip">1卡</span> <span class="mut">七段状态机 · 展开核对 · 判断以对应板块正文为准</span></summary><div class="inner">
+<!--LIFECYCLE-->
+<div class="card"><h3 style="margin:0 0 8px">七段生命周期状态机 <span class="hint">萌发→启动→发酵→高潮→退坡→退潮→消亡 · 陷阱=标记不占段 · 概率=历史转移频率(N&lt;3标?) · 次日可机械化结算</span></h3><div class="tl"><div class="trow"><div class="tr1"><span class="tnm">通信/6G</span><span class="chip">消亡</span><span class="mut">宽2·高1板</span></div><div class="tds"><b>→萌发</b> <span class="mut">观察不介入·50%</span> <span class="mut">确认:宽度&gt;=5</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">新能源电力</span><span class="chip">消亡</span><span class="mut">宽1·高1板</span></div><div class="tds"><b>→萌发</b> <span class="mut">观察不介入·50%</span> <span class="mut">确认:宽度&gt;=5</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">消费</span><span class="chip">消亡</span><span class="mut">宽1·高1板</span></div><div class="tds"><b>→萌发</b> <span class="mut">观察不介入·50%</span> <span class="mut">确认:宽度&gt;=5</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">机器人</span><span class="chip">退潮</span><span class="mut">宽7·高3板</span></div><div class="tds"><b>→消亡</b> <span class="mut">剔除·等新催化·?</span> <span class="mut">确认:宽度&lt;=2</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">地产链/房地产</span><span class="chip">退潮</span><span class="mut">宽3·高3板</span></div><div class="tds"><b>→消亡</b> <span class="mut">剔除·等新催化·?</span> <span class="mut">确认:宽度&lt;=2</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">医药/创新药</span><span class="chip">退坡</span><span class="mut">宽10·高3板</span></div><div class="tds"><b>→启动</b> <span class="mut">低吸铺·轻仓试错·31%</span> <span class="mut">确认:宽度环比&gt;=1.0</span></div><div class="tds"><b>→退潮</b> <span class="mut">空仓·低切防御·23%</span> <span class="mut">确认:高度&lt;4且题材晋级率==0</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">环保/公用</span><span class="chip">发酵</span><span class="mut">宽4·高5板</span></div><div class="tds"><b>→退坡</b> <span class="mut">兑现·防御·20%</span> <span class="mut">确认:宽度环比&lt;=-0.2</span></div><div class="tds"><b>→高潮</b> <span class="mut">减仓·不追高·0%</span> <span class="mut">确认:宽度环比&gt;=0且高度&gt;=4</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">AI算力</span><span class="chip">启动</span><span class="chip" style="background:rgba(255,95,86,.15);color:#ff5f56">⚠宽度陷阱</span><span class="mut">宽25·高3板</span></div><div class="tds"><b>→退坡</b> <span class="mut">兑现·防御·60%</span> <span class="mut">确认:宽度环比&lt;=-0.3</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">半导体材料/光刻胶</span><span class="chip">启动</span><span class="mut">宽6·高1板</span></div><div class="tds"><b>→退坡</b> <span class="mut">兑现·防御·60%</span> <span class="mut">确认:宽度环比&lt;=-0.3</span></div><div class="tds"><b>→发酵</b> <span class="mut">最佳上车点·第1次分歧可加·20%</span> <span class="mut">确认:高度&gt;=3且宽度环比&gt;=0</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">军工/航空</span><span class="chip">萌发</span><span class="mut">宽2·高1板</span></div><div class="tds"><b>→启动</b> <span class="mut">低吸铺·轻仓试错·26%</span> <span class="mut">确认:宽度环比&gt;=1.0且宽度&gt;=8</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">化工/染料</span><span class="chip">萌发</span><span class="mut">宽1·高1板</span></div><div class="tds"><b>→启动</b> <span class="mut">低吸铺·轻仓试错·26%</span> <span class="mut">确认:宽度环比&gt;=1.0且宽度&gt;=8</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">稀土/有色</span><span class="chip">萌发</span><span class="mut">宽1·高1板</span></div><div class="tds"><b>→启动</b> <span class="mut">低吸铺·轻仓试错·26%</span> <span class="mut">确认:宽度环比&gt;=1.0且宽度&gt;=8</span></div></div>
+</div><p style="margin:6px 0 0" class="mut">机械底座(题材生命周期.py); 强度(一字/封单/炸板)四维不含, 由题材命门判断层补; 预判=方向+可结算条件, 非买卖指令。</p></div>
+<!--/LIFECYCLE-->
+</div></details>
+<h2>四 龙头识别<span class="hint">8/14最高5板=蓝盾光电(环保孤高标,炸6次封单崩塌);昨高度龙秦安5板已断板退位;主线候选龙=AI算力线内最高身位+封单质量双核</span></h2>
+<div class="card"><p style="margin:0">全场高度龙(孤高标)=<b>蓝盾光电</b>(5板,环保/公用,收购+低空经济——炸6次+封单10.38亿→3128万崩塌+首封10:13,情绪温度计,跨线不追);<b>AI算力候选龙头=华西股份</b>(3板炸7次封单4394万·光芯片/磷化铟,质量差)/<b>天洋新材</b>(3板0炸封单9363万·CPO+电子胶,质量扎实,线内质量锚);<b>AI算力封单质量龙=中石科技</b>(首板0炸封板10.4亿全场第一+中际旭创入股+CPO散热);<b>机器人退位龙=秦安股份</b>(昨日5板→今日断板=主线退位信号);<b>机器人线内残余身位=坤泰股份</b>(3板09:25一字0炸封单3.37亿,退位线补涨);<b>创新药晋级龙=澳洋健康</b>(3板09:25一字0炸封单1.36亿,2→3晋级);<b>地产链残余=金螳螂</b>(3板炸1封单9373万)。节点龙判定:蓝盾5板=孤高标情绪温度计(封单崩塌=熄灭前兆),天洋/中石=AI算力爆量线内质量双锚,秦安断板=机器人主线退位起点,澳洋3板=创新药唯一晋级高度。</p></div>
+<h2>五 自主深挖 · 新线孵化<span class="hint">【放宽】AI算力2→25 /【缩圈】机器人20→9→7 强制应答=生命周期段+荐票纪律;高低切接棒库第7例观察</span></h2>
+<div class="card"><b>【放宽】AI算力/液冷存储 宽度2→25(+1150%) · 强制应答</b><p style="margin:6px 0 0">判定=宽度爆量首日候选(段一:首板发酵Day1),高度未立(最高3板)+一字0+开板0.52&gt;0.45=按兑现日预案不追(认知库0716"爆发日开板&gt;0.45→次日兑现日预案")。荐票纪律=不追首板不追3板(20260804一日游前科),只观身位=天洋新材(3板质量锚)/中石科技(首板封单龙)。可证伪:明日宽度≥13且新出4板→升A档主线;腰斩或高度仍≤3板→一日游脉冲降C档。</p></div>
+<div class="card"><b>【缩圈】机器人/人形机器人 宽度20→9→7(-65%)且高度未抬升 · 强制应答</b><p style="margin:6px 0 0">判定=主线退位确认(段四:退潮):秦安5板断板不在池+晋级率0(二连板0)+高度5→3板塌,对齐认知库0716"缩圈且高度塌→全线退避"。荐票纪律=全线退避不接,坤泰3板虽0炸封单3.37亿但为退位线补涨身位不荐。可证伪:明日坤泰断板或机器人宽&lt;5→退位坐实;秦安反包/宽度回升≥10→缩圈反转(小概率)。</p></div>
+<div class="card"><b>高低切接棒库 · 第7例观察</b><p style="margin:6px 0 0">机器人/消费/地产缩圈兑现,资金去向=AI算力宽度爆量(2→25)为唯一承接候选,但算力高度未立+开板0.52=兑现日预案,次日分辨"真承接"vs"一日游脉冲";前6例规律"退潮期资金只认防守+低位+业绩低切"与今日AI算力(高位CPO/光模块已涨多)方向存在张力,次日结算验证。</p></div>
+<div class="card"><b>聚类口径守卫 + 出页自检</b><p style="margin:6px 0 0">AI算力2→25爆量含:海洋王/共进由通信6G线漂移归入(CPO/数据中心交换机催化)+19只真新首板(中石/华正/剑桥/网宿/数据港等),非纯标签吸并;通信6G线宽4→3→2缩圈与AI算力爆量此消彼长,是否构成"合线"已留痕提请12号校验。出页自检:"明天AI算力能追吗"→段一判据(宽度≥13且新出4板才谈主线,今日不追);"秦安断板了吗"→已断板(5板→不在池),机器人退位;"蓝盾5板能上吗"→炸6次+封单3128万崩塌=孤高标不追;"今天为什么空仓"→宽度爆量+开板0.52&gt;0.45兑现日预案+温度偏冷跌停10,空仓合法。</p></div>
+<h2>六 我的认知迭代 · 最新<span class="hint">认知迭代时间线(永远最末段);今日新沉淀=宽度爆量+开板&gt;0.45兑现日预案三验证/孤高标封单崩塌信号/普涨反抽结构识别</span></h2>
+<div class="tl"><div class="tli"><b>08-14</b> 宽度爆量+开板&gt;0.45=兑现日预案三验证:AI算力2→25(+1150%)是20260804(+423%)以来最强宽度爆量,但一字0+高度仅3板+开板0.52&gt;0.45=宽度陷阱3.0(更极端),叠加温度38.5偏冷+跌停10=爆量首日不追,等次日立高度(宽度≥13且新出4板)再谈主线。</div></div><details class="chain tlfold"><summary><b>当日更多认知</b> <span class="chip">4条</span> <span class="mut">08-14 ~ 08-14</span></summary><div class="inner"><div class="tl"><div class="tli"><b>08-14</b> 兑现昨日判据:0813判"秦安断板→机器人主线退位"✓兑现(秦安5板→今日断板不在池+晋级率0+宽9→7),机器人正式退位;0813判"创新药需出≥3板承接"✓部分兑现(澳洋2→3板晋级但仅1只未成梯队)。</div><div class="tli"><b>08-14</b> 孤高标封单崩塌信号:蓝盾光电4板封板10.38亿→5板封板3128万(缩水97%)+炸6次=高度龙退坡前兆,沉淀判据"高度龙封单单日缩水&gt;90%且炸板≥5次=退位信号,情绪温度计熄灭"。</div><div class="tli"><b>08-14</b> 普涨反抽结构识别:涨停63(剔ST)略增但梯队1板52占82.5%+4板缺位断层+二板加22→11腰斩=退潮后普涨反抽,宽度扩散不立高度,区别于"主线发酵"的高低位健康分布。</div><div class="tli"><b>08-14</b> 退潮日荐票纪律延续:爆量首日+退潮反抽日空仓合法,观察票=次日验证备选池,不把"宽度爆量"当"确定性身位"。</div></div></div></details>
+<details class="chain tlfold"><summary><b>更早的认知迭代</b> <span class="chip">15条</span> <span class="mut">07-06 ~ 08-13</span></summary><div class="inner"><div class="tl"><div class="tli"><div class="d"><b>08-13</b></div><div class="b">缩圈但高度续命结构:发酵加速日(0812宽20高4)次日宽度-55%腰斩但高度4→5板续创新高+高标3只全一字锁死+早封占比0.89=【缩圈分歧兑现段】,区别于0716"宽而不硬急缩"(高度未立/开板&gt;0.45)——缩圈但高度续命=旗帜仍可做(秦安),补涨全避。</div></div><div class="tli"><div class="d"><b>08-12</b></div><div class="b">主线候选双确认范式:机器人=宽高同立发酵加速(6/6唯一满分+昨日9只全晋级零掉队+13只新扩散+梯队4-3-2-1完整),区别于20260804"宽高分离"纯爆量(宽度+423%但最高3板);沉淀判据:昨日线内&ge;5只且晋级延续率&ge;60%+高度+1板=发酵确认可给主流候选,纯宽度爆量只给候选观察。</div></div><div class="tli"><div class="d"><b>08-11</b></div><div class="b">断档恢复日判定:环比/晋级率=null时,定性用"6有+高度+开板质量"三维替代——创新药(5/6+6板)与机器人(5/6+开板0.11)同分不同质,判双主流候选不合并;命名漂移(医药/创新药→创新药/医药)致四维序列断链,引用注明不回拼。可证伪:明日创新药宽度≥8且新出2板→高度线承接成立;百花炸板不回封→兑现日兑现,高度线证伪。</div></div><div class="tli"><div class="d"><b>07-16</b></div><div class="b">"宽而不硬"次日即【急缩】-57%:昨晚我把医药标6/6主流候选但留了开板占比0.48的暗门——今日验证宽度陷阱2.0,教训沉淀:宽度环比+300%级的爆发若当日开板占比&gt;0.45,次日按"兑现日"预案而非"发酵日"预案。新线判定实操:AI硬件/消费电子走完线名守卫(查归一表→登记→建模板)再开线,四维序列Day1起干净——0708 AI算力改名断裂的坑算是补上了。荐票纪律:急缩线只荐存量最高标(哈药旗帜)不荐补涨,新线只荐Day1身位龙(道明)。</div></div><div class="tli"><div class="d"><b>07-15</b></div><div class="b">医药/创新药【放宽】+320%是唯一带4板梯队的承载线,但开板占比0.48=宽而不硬,与0709"宽度陷阱2.0"(42只宽而不硬)同构,故判"发酵Day1未证"而非确认主升,身位只做业绩锚(迪哲/哈药/昭衍)禁GLP-1/CRO首板接力。AI算力5/6却-50%、油气煤炭-67%=承载线退位,不做龙做中军。</div></div><div class="tli"><div class="d"><b>07-14</b></div><div class="h">★宽度回来≠主流回来;身位归因首开口:业绩锚+7.37 vs 人气龙-5.88,线衰时身位差(13pp)大于线选择差</div><div class="b">修复日AI算力放宽3→26(+767%)看似主流回归,但晋级率0/二连板0/最高2板=纯首板普涨,与0709"42只宽而不硬"同构——判主流看的是高度与晋级,不是宽度;宽度是入场券,高度才是定性票。同日昨日荐票结算给出身位归因第一组硬数据:同一条医药线内,业绩锚+7.37/梯队补涨+4.64/人气龙候选-5.88——线走衰时,身位选择的赔付差远大于线选择;今日荐票据此全部改押业绩系身位(宏桥/生益/昊华),接力人气身位全避,留待明日结算复核。另记:医药形跟踪按判据结案(宽度5&lt;8断承接),哈药3板+迪哲BD实锤的矛盾信号如实入档='神'未断'形'已断,衰竭判形不判神。[A档]</div></div><div class="tli"><div class="d"><b>07-13</b></div><div class="h">★退潮期高切高仅一日寿命,衰竭日的低切防御才是存活方向</div><div class="b">AI算力→商业航天(0710高切高)T+2即崩,商业航天→医药(0713低切防御)当日8只顶宽抗缩——两条样本方向一致:退潮期资金只认"防守属性+低位+业绩"的低切,不认"更高弹性"的高切。已立"高低切接棒库"专题把这条直觉变成可结算规则(样本2/5)。另记:6有脚本给医药3/6,但孵化判据(承接+梯队)达标→人工上调大分支——脚本分是下界不是天花板,聚类口径守卫与人工修正并行,修正必须带可证伪判据。[A档]</div></div><div class="tli"><div class="d"><b>07-11</b></div><div class="h">★theme页改版:第三路荐票卡置顶+发出版强制结算</div><div class="b">与logic页同日同构改版(用户拍板):题材路的龙头识别名单不再只是文字段——升级为置顶荐票卡,发出版json不可覆盖→T+1执行口径自动结算→按身位归因(_题材荐票反思.jsonl喂提炼)。07-10五票(海兰信/中天火箭/中国卫星/九丰能源/同益中)已回溯建档,07-13首结算。身位归因的长期价值:攒样本后可回答"人气龙候选vs正统龙候选vs业绩锚,哪种身位T+1执行口径更有肉"——把龙头识别从叙事变成可结算的假设。</div></div><div class="tli"><div class="d"><b>07-10</b></div><div class="h">★聚类口径再次改写方向结论:商业航天28只4/6,一天立起主流候选</div><div class="b">行业口径看今日=电网7/化学制药7/航天装备6散乱;聚类归位后=商业航天28只大分支(0709该类票混在军工线仅4只)。题材≠行业第三次立功(前两次:AI算力42只/长鑫暗线)。判定纪律:缺高度缺竞价的4/6只给"主流候选"不给"主流",明日竞价+高度补足才升格;上轮商业航天(7/03)一日游前科在案,不因催化大就跳过验证。</div></div><div class="tli"><div class="d"><b>07-09</b></div><div class="h">★半导体全链条扩散成数量主线,但聚类6有仅4/6=无主流</div><div class="b">半导体全链条大扩散(先进封装/材料/设备/硅片/存储/PCB/光模块/电源)=32只(AI算力半导体18+算力14)成数量主线,但聚类6有仅4/6、无题材过6有=无主流;行业口径更散(半导体3/6)。产业逻辑上打的是先进封装(+98%涨到位)/HBM(+108%透支)高位透支环节的补涨,真洼地(IDC/铜连接/算力服务)未起。恒尚8板存储重组=独立跨界高标孤峰,非题材梯队;军工(高德一字预增+星网宇达)4/6是唯一"早封承载"第二方向。题材口径统一:全部对齐 题材归位_20260709.json(45归位A3/B31/C11,30待核)。</div></div><div class="tli"><div class="d"><b>07-08</b></div><div class="h">聚类口径识别算力主流,行业口径误判</div><div class="b">行业口径最高软件开发4/6=大分支,全场误判"无主流";题材聚类口径 AI算力6/6主流候选(27只)。方向gate以聚类口径为准。</div></div><div class="tli"><div class="d"><b>07-07</b></div><div class="h">半导体冒头（顶级资金介入）</div><div class="b">题材更散(全首板)，但半导体4只涨停且华天科技被外资+顶量爆买。认知迭代：半导体从"无"升级为"候选主线苗头"，但仍首板未成梯队——记为"苗头"，不是"主线"。</div></div><div class="tli"><div class="d"><b>07-07</b></div><div class="h">半导体冒头(顶级资金介入)</div><div class="b">题材更散(全首板),但半导体4只涨停、华天被外资+顶量爆买。半导体从"无"升为"候选主线苗头",仍首板未成梯队。</div></div><div class="tli"><div class="d"><b>07-06</b></div><div class="h">主线真空，只有孤标</div><div class="b">通用设备涨停最多(7)但最高才2板；恒尚(装修)5板孤标、金科(房地产)3板孤立。判：无主线、题材涣散。</div></div><div class="tli"><div class="d"><b>07-06</b></div><div class="h">主线真空,只有孤标</div><div class="b">通用设备涨停最多但最高2板;恒尚(装修)5板孤标。判:无主线、题材涣散。</div></div></div></div></details>
+<div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+var RM=false; /*2026-07-15用户拍板:私用盯盘台动画常开,不跟随系统'减少动态效果';要恢复无障碍降级,把false改回 matchMedia('(prefers-reduced-motion: reduce)').matches */
+/* 旧机制:IO进场(全站沿用,无依赖) */
+function legacy(){
+  if(RM)return;
+  var els=document.querySelectorAll('.card,.obs,.routes .rt,.kv,.hero,details.chain,.tli,.cols,.gauge,.trow,.kpi,.ticker,.steps .step');
+  els.forEach(function(e){e.classList.add('rv')});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+}
+/* v4增强:GSAP计数器/sparkline画入(渐进增强;无gsap/RM=静态终态,数字已内联写死) */
+function v4(){
+  if(RM||typeof gsap==='undefined')return;
+  document.querySelectorAll('[data-v]').forEach(function(el){
+    var v=parseFloat(el.dataset.v),d=parseInt(el.dataset.dec||'0',10);
+    var pre=el.dataset.pre||'',suf=el.dataset.suf||'';
+    gsap.to({n:0},{n:v,duration:1.3,ease:'power2.out',onUpdate:function(){
+      el.textContent=pre+this.targets()[0].n.toFixed(d)+suf;}});
+  });
+  document.querySelectorAll('polyline.drawin').forEach(function(p,i){
+    var len=p.getTotalLength();p.style.strokeDasharray=len;p.style.strokeDashoffset=len;
+    gsap.to(p,{strokeDashoffset:0,duration:1.4,ease:'power2.out',delay:.3+i*.15});
+  });
+  gsap.from('.kpi .chip2',{scale:.5,opacity:0,duration:.45,ease:'back.out(1.7)',stagger:.05,delay:.4});
+}
+legacy();
+var s=document.createElement('script');
+s.src=(location.pathname.indexOf('/archive/')>-1?'../':'')+'lib/gsap.min.js';
+s.onload=v4;s.onerror=function(){};
+document.head.appendChild(s);
+})();
+</script></body></html>

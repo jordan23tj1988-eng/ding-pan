@@ -1,0 +1,186 @@
+677:     expected = [n + ' ' + s['title'] for n, s in zip(_NUMERALS, keep)]
+678:     expected += capability_headings(root, d, route)
+679:     return keep, expected, DISPLAY_REPLACED_SECTIONS
+680: 
+681: 
+682: def scoped_p12_check(root,stage,d,route,*,raw=None):
+683:     """P1.2 gate repair contract: actual producer data in its fixed section.
+684: 
+685:     Independent of complete/ok claims; legacy financial checks still execute.
+686:     Does not grant permission to publish a page with missing judgments.
+687:     """
+688:     errors=[];dimensions=[]
+689:     try:
+690:         contract=page_contract(root)
+691:         model=read_json(stage/'models'/(route+'.json'))
+692:         supported_versions = {'p1.2', 'p1.3'}
+693:         if contract.get('template_version') not in supported_versions or model.get('template_version') not in supported_versions or model.get('d')!=d or model.get('route')!=route:
+694:             raise ValueError('unsupported scoped template/date/route')
+695:         raw=(stage/(route+'.html')).read_text(encoding='utf-8') if raw is None else raw
+696:         dom=_DOM(raw)
+697:         # cycle/lhb 的终版由黄金恢复器提供壳，正文仍来自目标日模块渲染器：
+698:         # 它刻意没有 P1 section id/component-* 壳，机器内容由成对锚点承载。
+699:         # 先识别这种已由 stage postprocess 产出的终版，再走对应的严格锚点/来源校验，
+700:         # 不把黄金壳误判为“旧页面缺 section”。
+701:         golden_route = (
+702:             route in ('cycle', 'lhb')
+703:             and '<section id="' not in raw
+704:             and len(re.findall(r'<section class="evolution"[^>]*>', raw)) == 2
+705:         )
+706:         if golden_route:
+707:             if '<div class="rowA">' not in raw or '<div class="hero">' not in raw:
+708:                 errors.append('golden header missing')
+709:             if len(dom.headings) < 4:
+710:                 errors.append('golden headings incomplete')
+711:             # 黄金壳的 component-* id/section 壳被恢复器剥离；仍校验每个模型
+712:             # 组件的冻结来源 hash，以及黄金终版需要的生产锚点。黄金恢复器会
+713:             # 合法裁剪 LEADIND/LHBLEDGER 的包裹内容，不能拿 P1 原始 HTML 做字节等价。
+714:             golden_anchors = {
+715:                 'cycle': {'VOLSTEP', 'LEADIND', 'LADDER'},
+716:                 'lhb': {'FUNDTEMP', 'LHBLEDGER'},
+717:             }[route]
+718:             for comp in model.get('components', []):
+719:                 key = comp.get('id')
+720:                 if comp.get('status') != 'ok' or not comp.get('sources'):
+721:                     errors.append('golden component source missing ' + str(key))
+722:                     continue
+723:                 for source in comp.get('sources', []):
+724:                     source_path = source.get('path')
+725:                     try:
+726:                         if digest(contained(root, source_path)) != source.get('sha256'):
+727:                             errors.append('golden source hash ' + str(key))
+728:                     except Exception as exc:
+729:                         errors.append('golden source unavailable ' + str(key) + ': ' + str(exc))
+730:                 start = '<!--' + key + '-->'
+731:                 end = '<!--/' + key + '-->'
+732:                 if raw.count(start) != 1 or raw.count(end) != 1:
+733:                     # SEATCARD 在黄金龙虎榜台账中按既有回链重复嵌入，SEATLIB
+734:                     # 是第四段既有展示内容；两者由 lhb 专属哨兵核对，不强行
+735:                     # 重造重复 component-* 壳。
+736:                     if key not in ('SEATCARD', 'SEATLIB'):
+737:                         errors.append('golden component anchor pair ' + str(key))
+738:                     continue
+739:                 if key not in golden_anchors:
+740:                     continue
+741:             return {
+742:                 'status': 'fail' if errors else 'pass',
+743:                 'errors': errors,
+744:                 'contract': 'gate-repair/p1.3-golden-v1',
+745:                 'dimensions': ['黄金壳头部/能力模块', '目标日机器组件锚点与冻结来源']
+746:             }
+747:         sections,expected,_hidden=display_contract(root,d,route,raw)
+748:         if [''.join(n['text']).strip() for n in dom.headings]!=expected:errors.append('ordered sections mismatch')
+749:         if dom.duplicates:errors.append('duplicate IDs')
+750:         if len(dom.kpis)!=4:errors.append('four KPI slots required')
+751:         for sec in sections:
+752:             node=dom.ids.get(sec['id'])
+753:             if node is None or node['tag']!='section':errors.append('missing section '+sec['id'])
+754:         dimensions.append('fixed complete sections, four KPI slots, unique IDs')
+755:         required={'cycle':{'VOLSTEP':'volume','LEADIND':'leading','VOTEBOARD':'stages','LADDER':'ladder'},
+756:                   'auction':{'POOLLEDGER':'settlement'},'lhb':{'SEATLIB':'tiers'}}[route]
+757:         components={c['id']:c for c in model.get('components',[])}
+758:         cycle_body = ''
+759:         if route == 'cycle':
+760:             judgment = contained(root, '_学习') / ('judgment_' + d + '.json')
+761:             if judgment.exists():
+762:                 cycle_body = read_json(judgment).get('bodies', {}).get('cycle', '') or ''
+763:         cycle_body_mode = route == 'cycle' and bool(cycle_body and '<h2>一' in cycle_body)
+764:         if cycle_body_mode:
+765:             # 展示完整性契约(2026-09-12 用户定向"按黄金页把展示内容还原到工程里, 并保证不再错位"):
+766:             # 旧规则=有 body 日机器卡必须缺席 → 一旦 body 段没自带组件(9/10 起出现), 页面就只剩文字, 黄金版展示消失。
+767:             # 新规则=按段判定: body 段落自带该组件则保真不动; 缺件的段必须由机器卡补齐(真源直出, 与黄金版同套 markup)。
+768:             def _cseg(a, b):
+769:                 i = cycle_body.find(a)
+770:                 if i < 0:
+771:                     return ''
+772:                 k = cycle_body.find(b, i + 1)
+773:                 return cycle_body[i:k] if k > i else cycle_body[i:]
+774:             need = []
+775:             if 'class="steps"' not in _cseg('一 量能台阶', '二 先行指标'):
+776:                 need.append(('VOLSTEP', 'volume'))
+777:             if '<svg' not in _cseg('二 先行指标', '三 情绪'):
+778:                 need.append(('LEADIND', 'leading'))
+779:             if '<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板'):
+780:                 need.append(('MACHVOTE', 'stages'))
+781:             if 'class="cols"' not in _cseg('四 连板', '五 攻防'):
+782:                 need.append(('LADDER', 'ladder'))
+783:             for key, section in need:
+784:                 comp = components.get(key)
+785:                 node = dom.ids.get('component-' + key)
+786:                 if not comp or comp.get('status') != 'ok' or not comp.get('sources') or node is None:
+787:                     errors.append('missing display component ' + key)
+788:                     continue
+789:                 if comp.get('section') != section or not any(n['tag'] == 'section' and n['attrs'].get('id') == section for n in node['ancestors']):
+790:                     errors.append('wrong component section ' + key)
+791:                 if any(n['tag'] == 'details' for n in node['ancestors']):
+792:                     errors.append('display component folded ' + key)
+793:                 if raw.count('<!--' + key + '-->') != 1 or raw.count('<!--/' + key + '-->') != 1:
+794:                     errors.append('display anchor not paired ' + key)
+795:             if 'details class="chain"' in raw:
+796:                 # The page-level audit fold is allowed; only a machine fold is
+797:                 # forbidden.  A machine fold has the explicit source summary.
+798:                 if re.search(r'<details[^>]*class="chain"[^>]*>\s*<summary>\s*<b>机器数据源', raw):
+799:                     errors.append('body-day must omit machine fold')
+800:             dimensions.append('cycle body-day display completeness: 台阶块/先行指标图卡/投票块/梯队条 各段在位(body自带或机器卡)')
+801:             required = {k: s for k, s in (('VOLSTEP', 'volume'), ('LEADIND', 'leading'), ('MACHVOTE', 'stages'), ('LADDER', 'ladder')) if k in components}
+802:         for key,section in required.items():
+803:             comp=components.get(key);node=dom.ids.get('component-'+key)
+804:             if not comp or comp.get('status')!='ok' or not comp.get('sources') or node is None:errors.append('missing component '+key);continue
+805:             if comp.get('section')!=section or not any(n['tag']=='section' and n['attrs'].get('id')==section for n in node['ancestors']):errors.append('wrong component section '+key)
+806:             if any(n['tag']=='details' for n in node['ancestors']):errors.append('extra machine fold '+key)
+807:             for source in comp.get('sources',[]):
+808:                 if digest(contained(root,source['path']))!=source['sha256']:errors.append('source hash '+key)
+809:             rendered=canonical_text(expanded_dom_text(node,dom))
+810:             if key=='SEATLIB':
+811:                 row=seat_snapshot(root,d)
+812:                 if not row:raise ValueError('missing dated seat snapshot')
+813:                 window=row.get('窗口','');counts=row.get('档分布',{})
+814:                 bounds=window.split('~')
+815:                 if len(bounds)!=2:raise ValueError('invalid snapshot window')
+816:                 for bound in bounds:valid_date(bound)
+817:                 if not bounds[0]<=bounds[1]<=d:raise ValueError('future snapshot window')
+818:                 if type(row.get('笔数')) is not int or any(type(counts.get(k)) is not int or counts[k]<0 for k in 'SABCP'):raise ValueError('missing snapshot counts')
+819:                 expected_window='窗口'+window+str(row['笔数'])+'笔'
+820:                 expected_counts='/'.join((k if k!='P' else '预备')+str(counts[k]) for k in 'SABCP')
+821:                 if expected_window not in rendered:errors.append('dated seat window/count mismatch')
+822:                 if expected_counts not in rendered:errors.append('dated seat tier counts mismatch')
+823:                 if comp.get('window_id')!=window or comp.get('as_of')!=d:errors.append('seat as-of mismatch')
+824:                 if '_学习/_席位分档快照.jsonl' not in {v['path'] for v in comp['sources']}:errors.append('missing snapshot provenance')
+825:             else:
+826:                 original=component_source_text(root,d,route,comp)
+827:                 strip=lambda text:re.sub(r'更早存档[0-9]+条','',text)
+828:                 actual=strip(rendered);source=strip(original)
+829:                 if actual!=source:
+830:                     prefix=source[:-len(actual)] if actual and source.endswith(actual) else None
+831:                     if key!='POOLLEDGER' or prefix is None or prefix not in canonical_text(raw):errors.append('producer content mismatch '+key)
+832:                 anchors={'VOLSTEP':['VOLSTEP'],'LEADIND':['LEADIND'],'VOTEBOARD':['MACHVOTE','VOTEBOARD'],'LADDER':['LADDER'],'POOLLEDGER':['POOLLEDGER','MACHPOOL']}[key]
+833:                 # Check anchor placement in the exact named section as well as totals.
+834:                 start=raw.find('<section id="'+section+'">');end=raw.find('</section>',start)
+835:                 part=raw[start:end]
+836:                 for anchor in anchors:
+837:                     for token in ('<!--'+anchor+'-->','<!--/'+anchor+'-->'):
+838:                         if raw.count(token)!=1 or part.count(token)!=1:errors.append('anchor pair/placement '+anchor)
+839:         dimensions.append('dated source hashes, producer content, exact component positions and anchors')
+840:     except Exception as exc:errors.append(str(exc))
+841:     return {'status':'fail' if errors else 'pass','errors':errors,'contract':'gate-repair/p1.2-v1','dimensions':dimensions}
+842: 
+843: 
+844: def _check_one(frozen, stage, d, route):
+845:     """Child process: audited read-only legacy main, explicit isolated --page."""
+846:     if route not in SAFE_SENTINELS:
+847:         raise ValueError("unaudited check")
+848:     if route == "limitup":
+849:         with isolated_imports(frozen, frozen):
+850:             dep = load_module(frozen / "module_render_limitup.py")
+851:         dep.BASE = dep.CD = str(frozen)
+852:         dep.L = str(frozen / "_学习")
+853:         sys.modules["module_render_limitup"] = dep
+854:     module = load_module(frozen / f"{route}数据核对.py")
+855:     module.R = str(frozen)
+856:     module.BASE = str(frozen)
+857:     module.L = str(frozen / "_学习")
+858:     module.SITE = str(stage)
+859:     sys.argv = [module.__file__, d, "--page", str(stage / f"{route}.html")]
+860:     view = None
+861:     replacement_labels = set()
+862:     active_html = ['']

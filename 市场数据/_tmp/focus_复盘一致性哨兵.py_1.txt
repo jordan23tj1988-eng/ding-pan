@@ -1,0 +1,71 @@
+---复盘一致性哨兵.py:1-70---
+1: # -*- coding: utf-8 -*-
+2: """复盘一致性哨兵.py {d} —— 出页后最后一道自动化检查(2026-07-15晚事故催生)。
+3: 动机: 数据补齐后"判断层修了、展示层stale"散在5处逐个被用户抓——人记不住就让机器查。
+4: 检查项:
+5:   C1 页面残留缺口叙述词(网络不可达/未刷新/沿用0714式旧标记/null溢价)
+6:   C2 PAPERTRADE头部累计% == _模拟盘/{route}/状态.json 累计pct(数字必须出自引擎)
+7:   C3 看板_{d}.html mtime >= bars_cache最新mtime(旧价看板被inject=07-15事故根因)
+8:   C4 bars_cache当日覆盖率(涨停池+荐票股+持仓股必须100%到{d})
+9:   C5 发出版结算字段非全None(结算跑过且有效)
+10:   C6 HTML结构完好+时间线折叠  C7 脚本产出卡陈旧嵌入
+11:   C8 改动登记核对(正式.py/规格/规范mtime晚于_变更总账.md=改了没登记;2026-07-16改动三合一)
+12:   C9 台账最新日块日期对账(涨停/龙虎榜=d,竞价=dprev;台账脚本--from-data漏日期会静默跳过当日日块=2026-07-16龙虎榜事故)
+13:   C10 池外候选链核对(2026-08-13 上线)
+14:   C11 交易计划六路文件当日存在性(2026-08-17 上线: 契约⑪硬要求, 引擎静默空仓无告警=8/13起断供5日事故)
+15:   C12 龙虎榜黄金页结构+数据专属哨兵(恢复器闭环后接入)
+16:   C13 主题页同日冻结哈希(2026-09-13 上线: 复盘期间主题页不可改写)
+17:   C14 两块标准能力模块(五路+概览)齐备
+18:   C15 概览页黄金骨架(2026-09-23 上线: 概览页此前无视觉锁, 连跑两天体量翻倍/判断卡+201)
+19: 退出码: 0=全过 1=有FAIL(打印明细,流水线应停下重看)
+20: """
+21: import os,sys,glob,json,re,datetime,subprocess,hashlib
+22: 
+23: R=None
+24: for g in glob.glob('/sessions/*/mnt/股票数据/市场数据'):
+25:     R=g;break
+26: if R is None and os.path.isdir(r'D:\股票数据\市场数据'): R=r'D:\股票数据\市场数据'
+27: L=os.path.join(R,'_学习');SITE=os.path.join(R,'复盘','盯盘台')
+28: d=sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d')
+29: dprev_dirs=sorted([x for x in os.listdir(R) if x.isdigit() and len(x)==8 and x<d])
+30: dprev=dprev_dirs[-1] if dprev_dirs else None
+31: # ★2026-08-16 周末口径: C4/C5 期望日期用最后交易日(bars最多到最近交易日), 非"今天"(周末/盘前 d 无交易数据)
+32: _LAST_TD=None; _CAL=None
+33: try:
+34:     sys.path.insert(0, R)
+35:     from trading_calendar import load_trading_calendar, next_trading_day
+36:     _CAL=load_trading_calendar()
+37:     if _CAL: _LAST_TD=_CAL[-1]
+38: except Exception:
+39:     _CAL=None; _LAST_TD=None
+40: _EXPECT_D = d if (_CAL and d in _CAL) else (_LAST_TD or d)
+41: FAIL=[];WARN=[]
+42: 
+43: # ---------- C1 页面残留缺口叙述 ----------
+44: pages=['index','cycle','auction','lhb','theme','logic','limitup']
+45: # ★07-15晚二次事故修正: 必须在**去HTML标签后的纯文本**上匹配(标签夹隔曾漏"溢价 <b>null</b>");
+46: # 词表加"不可达"泛化(曾因文案是"源不可达"而非"网络不可达"漏抓)。
+47: pats=[r'不可达',r'网络未刷新',r'未刷新沿',r'沿用'+ (dprev or '00000000'),
+48:       r'溢价\s*null',r'null\s*[\(（]源',r'结算\s*(全)?None',r'价源\s*null',r'数据缺口待补',r'挂起未重训']
+49: for p in pages:
+50:     f=os.path.join(SITE,p+'.html')
+51:     if not os.path.isfile(f): FAIL.append(f'C1 {p}.html 不存在');continue
+52:     h=open(f,encoding='utf-8').read()
+53:     h=re.sub(r'<details class="chain tlfold">.*?</details>','',h,flags=re.DOTALL)  # ★2026-08-16 方案A: C1只扫当日缺口,先剔除认知迭代历史折叠区(历史原文"当时不可达"是真实记录,非当日缺口残留)
+54:     text=re.sub(r'<[^>]+>',' ',h)   # 去标签再查
+55:     for pat in pats:
+56:         m=re.search(pat,text)
+57:         if m:
+58:             ctx=text[max(0,m.start()-40):m.end()+30]
+59:             FAIL.append(f'C1 {p}.html 残留"{pat}": …{" ".join(ctx.split())[:60]}…')
+60: 
+61: # ---------- C2 PAPERTRADE累计 vs 目标日来源 ----------
+62: def _c2_unique(pairs):
+63:     out={}
+64:     for key,value in pairs:
+65:         if key in out: raise ValueError(f'JSON重复键{key}')
+66:         out[key]=value
+67:     return out
+68: 
+69: def _c2_load(path):
+70:     with open(path,encoding='utf-8') as fh:

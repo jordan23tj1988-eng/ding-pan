@@ -1,0 +1,228 @@
+---1-280---
+1: # -*- coding: utf-8 -*-
+2: """auction数据核对.py — auction页数字核对哨兵(2026-08-12 双轨版)
+3: 用法: python auction数据核对.py <YYYYMMDD> [--page 文件名] (exit 0=全过, 1=有FAIL)
+4: ★双轨(同 cycle/lhb):
+5:   有 body 日(黄金版形态=body 整段保真, 机器数据嵌在 LLM body 内):
+6:     机器锚 MACHSCORE/MACHPOOL/MACHSIG 必须缺席(0/0), body 自带 SCORECARD/POOLLEDGER 锚 1/1,
+7:     温度/涨停/结算数字对 LLM body 文本核对(含 8/12 新六段格式与 7/16 旧八段格式)
+8:   无 body 日(断档兜底): 机器折叠区三卡 + 断档卡, 机器锚 1/1, 池/结算/温度逐票回源
+9: 数据源: 竞价池发出_{d}.json + 竞价池结算_{d}.json + _竞价池结算.jsonl + _市场温度表.json + judgment_{d}.json
+10: """
+11: import re, os, sys, json, csv
+12: 
+13: BASE = os.path.dirname(os.path.abspath(__file__))
+14: L = os.path.join(BASE, '_学习')
+15: SITE = os.environ.get('POST_SITE_ROOT') or os.path.join(BASE, '复盘', '盯盘台')
+16: 
+17: def load_page(d, page_path=None):
+18:     p = page_path or os.path.join(SITE, 'auction.html')
+19:     if page_path and not os.path.isabs(p):
+20:         p = os.path.join(SITE, page_path)
+21:     if not os.path.exists(p): return None, os.path.basename(p) + ' 不存在'
+22:     return open(p, encoding='utf-8').read(), None
+23: 
+24: def load_body(d):
+25:     p = os.path.join(L, 'judgment_%s.json' % d)
+26:     if not os.path.exists(p): return None, 'judgment_%s.json 不存在' % d
+27:     try:
+28:         b = json.load(open(p, encoding='utf-8'))['bodies'].get('auction')
+29:         return (b or ''), None
+30:     except Exception as e: return None, str(e)
+31: 
+32: def load_发出(d):
+33:     p = os.path.join(L, '竞价池发出_%s.json' % d)
+34:     if not os.path.exists(p): return None, '竞价池发出_%s.json 不存在' % d
+35:     try: return json.load(open(p, encoding='utf-8')), None
+36:     except Exception as e: return None, str(e)
+37: 
+38: def load_结算(d):
+39:     p = os.path.join(L, '竞价池结算_%s.json' % d)
+40:     if not os.path.exists(p): return None, '竞价池结算_%s.json 不存在(用jsonl汇总降级)'
+41:     try: return json.load(open(p, encoding='utf-8')), None
+42:     except Exception as e: return None, str(e)
+43: 
+44: def load_结账():
+45:     p = os.path.join(L, '_竞价池结算.jsonl')
+46:     if not os.path.exists(p): return None, '_竞价池结算.jsonl 不存在'
+47:     rows = []
+48:     for l in open(p, encoding='utf-8'):
+49:         l = l.strip()
+50:         if not l: continue
+51:         try: j = json.loads(l)
+52:         except Exception: continue
+53:         if j.get('执行均收') is None: continue  # ★未结算占位(胜率0/0均收null)禁引用
+54:         rows.append(j)
+55:     return rows, None
+56: 
+57: def load_temp(d):
+58:     p = os.path.join(L, '_市场温度表.json')
+59:     if not os.path.exists(p): return None, '_市场温度表.json 不存在'
+60:     return json.load(open(p, encoding='utf-8')), None
+61: 
+62: def chk(issues, ok, label, detail=''):
+63:     issues.append((ok, label, detail))
+64: 
+65: def check_page(h, d):
+66:     issues = []
+67:     body, berr = load_body(d)
+68:     has_body = bool(body)
+69:     # ===== 0. 锚点成对 + 无重复h2 =====
+70:     if has_body:
+71:         # 含SCORECARD锚形态(2026-08-16六段化)=机器卡由渲染器注入空锚 → 成对且≤1
+72:         # 纯LLM形态(无 SCORECARD 锚)=机器锚缺席 0/0
+73:         golden8 = h.count('<!--SCORECARD-->') >= 1
+74:         for anchor in ('MACHSCORE', 'MACHPOOL', 'MACHSIG'):
+75:             a = h.count('<!--%s-->' % anchor); b = h.count('<!--/%s-->' % anchor)
+76:             if golden8:
+77:                 chk(issues, a == b and a <= 1, '机器锚%s成对(机器注入)' % anchor, '起%d/止%d' % (a, b))
+78:             else:
+79:                 chk(issues, a == 0 and b == 0, '机器锚%s应缺席(六段LLM形态)' % anchor, '起%d/止%d' % (a, b))
+80:         for anchor in ('SCORECARD', 'POOLLEDGER'):
+81:             a = h.count('<!--%s-->' % anchor); b = h.count('<!--/%s-->' % anchor)
+82:             # body 自带机器卡锚(1/1); 纯 LLM 无锚(0/0) → 成对且≤1
+83:             chk(issues, a == b and a <= 1, 'body锚%s成对(LLM原文)' % anchor, '起%d/止%d' % (a, b))
+84:     else:
+85:         for anchor in ('MACHSCORE', 'MACHPOOL', 'MACHSIG'):
+86:             a = h.count('<!--%s-->' % anchor); b = h.count('<!--/%s-->' % anchor)
+87:             chk(issues, a == 1 and b == 1, '机器锚%s成对(断档兜底)' % anchor, '起%d/止%d' % (a, b))
+88:         for anchor in ('SCORECARD', 'POOLLEDGER'):
+89:             a = h.count('<!--%s-->' % anchor); b = h.count('<!--/%s-->' % anchor)
+90:             chk(issues, a == 0 and b == 0, 'body锚%s应缺席(无body)' % anchor, '起%d/止%d' % (a, b))
+91:     a = h.count('<!--PAPERTRADE-->'); b = h.count('<!--/PAPERTRADE-->')
+92:     chk(issues, a == b and a <= 1, '锚点PAPERTRADE成对', '起%d/止%d' % (a, b))
+93:     hs = re.findall(r'<h2[^>]*>([^<]+)</h2>', h)
+94:     dup = sorted({x for x in hs if hs.count(x) > 1})
+95:     chk(issues, not dup, '无重复h2', '; '.join(dup) if dup else '%d个h2' % len(hs))
+96: 
+97:     # ===== 1. 竞价池回源(机器卡: 池票∈发出版; 有body日=文本含池数) =====
+98:     fc, ferr = load_发出(d)
+99:     if ferr:
+100:         chk(issues, False, '竞价池', ferr)
+101:     else:
+102:         n_pool = len(fc['池'])
+103:         codes = [str(r.get('代码', '')) for r in fc['池']]
+104:         # 无 body 日: MACHSCORE 表逐票核对
+105:         if not has_body:
+106:             tbl = h[h.find('<!--MACHSCORE-->'):h.find('<!--/MACHSCORE-->')]
+107:             miss = [c for c in codes if c not in tbl]
+108:             chk(issues, not miss, 'MACHSCORE池票回源', '缺%d只:%s' % (len(miss), ','.join(miss)) if miss else '%d只全在' % n_pool)
+109:         else:
+110:             chk(issues, ('%d只' % n_pool) in h or str(n_pool) in h, '池数文本(LLM body)', '源池%d只' % n_pool)
+111: 
+112:     # ===== 2. 结算回源(封板/胜率/均收) =====
+113:     hist, herr = load_结账()
+114:     if herr:
+115:         chk(issues, False, '结算', herr)
+116:     else:
+117:         cur = [r for r in hist if str(r.get('池日', '')) == str(d)]
+118:         if not cur:
+119:             chk(issues, '暂无%s池结算' % d, '结算(未到结算日)', 'jsonl无%s条目' % d)
+120:         else:
+121:             c = cur[-1]
+122:             seg = h[h.find('<!--MACHPOOL-->'):h.find('<!--/MACHPOOL-->')] if not has_body else h
+123:             for key, label in (('次日封板', '封板'), ('执行胜率', '胜率'), ('执行均收', '均收')):
+124:                 v = c.get(key)
+125:                 if v is None:
+126:                     chk(issues, False, '结算·%s' % label, '源缺%s字段' % key)
+127:                     continue
+128:                 vs = str(v)
+129:                 ok = vs in seg or vs.replace('.', '') in seg.replace('.', '')
+130:                 chk(issues, ok, '结算·%s回源(%s)' % (label, vs), '页面含%s' % vs)
+131:             if not has_body:
+132:                 det = (c.get('明细') or [])
+133:                 if det:
+134:                     tbl = h[h.find('<!--MACHPOOL-->'):h.find('<!--/MACHPOOL-->')]
+135:                     codes = [str(r.get('代码', '')) for r in det]
+136:                     miss = [x for x in codes if x not in tbl]
+137:                     chk(issues, not miss, 'MACHPOOL结算明细回源', '缺%d只' % len(miss) if miss else '%d只全在' % len(det))
+138: 
+139:     # ===== 3. 温度/涨停回源 =====
+140:     t, terr = load_temp(d)
+141:     if terr:
+142:         chk(issues, False, '温度', terr)
+143:     else:
+144:         days = sorted(k for k in t if re.fullmatch(r'\d{8}', str(k)) and str(k) <= str(d))
+145:         cur = t[days[-1]] if days else {}
+146:         tmp = cur.get('温度')
+147:         zt = cur.get('涨停数')
+148:         if tmp is not None:
+149:             chk(issues, (str(tmp) in h), '温度回源(%s)' % tmp, '页面含温度值')
+150:         if zt is not None:
+151:             chk(issues, (str(zt) in h), '涨停数回源(%s)' % zt, '页面含涨停数')
+152: 
+153:     # ===== 4. LLM 区完整性 =====
+154:     if berr:
+155:         chk(issues, False, 'LLM区', berr)
+156:     elif body:
+157:         need = ['<h2>一', '<h2>二', '<h2>三', '<h2>四', '<h2>五', '<h2>六']
+158:         miss = [x for x in need if x not in h]
+159:         chk(issues, not miss, 'LLM六段完整', '全部在位' if not miss else '缺:%s' % miss)
+160:     else:
+161:         chk(issues, '未产竞价复盘' in h, '断档卡存在', '无body须显式断档卡')
+162:         # hero 区(前4000字符)禁旧日期: 只允许当日 MM-DD
+163:         curd = d[4:6] + '-' + d[6:8]
+164:         dates = re.findall(r'\d{2}-\d{2}', h[:4000])
+165:         bad = [x for x in dates if x != curd]
+166:         chk(issues, not bad, 'hero无旧日期', '出现旧日期:%s' % ','.join(set(bad)) if bad else '仅%s' % curd)
+167: 
+168:     # ===== 5. 负面验证(禁词) =====
+169:     # ★形态区分(2026-08-12): 无 body 日页面全是渲染器新产出 → 全页禁 None;
+170:     #   有 body 日=body 历史原文逐字节保真(7/16 原文含脚本注入期 None 占位=历史事实, 不改),
+171:     #   → 只查渲染链路新注入区(PAPERTRADE 看板/首屏 hero 前 shell 区), body 原文宽容。
+172:     htxt = re.sub(r'<script.*?</script>', '', h, flags=re.S)
+173:     htxt = re.sub(r'<style.*?</style>', '', htxt, flags=re.S)
+174:     if not has_body:
+175:         htxt = re.sub(r'<[^>]+>', '', htxt)
+176:     else:
+177:         htxt = re.sub(r'<[^>]+>', '', htxt)
+178:         pa = htxt.find('模拟盘')
+179:         if pa >= 0:
+180:             htxt = htxt[pa - 2000: pa + 6000]
+181:         else:
+182:             htxt = htxt[:2000]
+183:     for kw in ('NaN', 'None', '{{', 'TODO', 'undefined'):
+184:         if kw in htxt:
+185:             chk(issues, False, '负面验证·%s' % kw, '文本区出现禁词')
+186:     return issues
+187: 
+188: def main():
+189:     if len(sys.argv) < 2:
+190:         print('用法: python auction数据核对.py <YYYYMMDD>'); return 2
+191:     d = sys.argv[1]
+192:     page_path = None
+193:     if '--page' in sys.argv:
+194:         page_path = os.path.join(SITE, sys.argv[sys.argv.index('--page') + 1])
+195:     h, err = load_page(d, page_path)
+196:     if err: print('FAIL', err); return 1
+197:     issues = check_page(h, d)
+198:     fails = sum(1 for ok, _, _ in issues if not ok)
+199:     for ok, lab, det in issues:
+200:         print(('  ✓ ' if ok else '  ✗ ') + lab + (('  [%s]' % det) if det else ''))
+201:     if fails:
+202:         print('FAIL %d 项 — 页面数字与数据源不一致, 禁止出页' % fails)
+203:         return 1
+204:     print('PASS 全部一致 (%d项)' % len(issues))
+205: 
+206:     # ===== 6. 负面注入测试: 改坏当日温度值(有断言) → 哨兵必须 FAIL =====
+207:     if '--skip-inject' not in sys.argv:
+208:         t, terr = load_temp(d)
+209:         tmp = None
+210:         if not terr:
+211:             days = sorted(k for k in t if re.fullmatch(r'\d{8}', str(k)) and str(k) <= str(d))
+212:             if days: tmp = t[days[-1]].get('温度')
+213:         if tmp is not None and str(tmp) in h:
+214:             bad = h.replace(str(tmp), '99.9')
+215:             if bad != h:
+216:                 bissues = check_page(bad, d)
+217:                 bfails = sum(1 for ok, _, _ in bissues if not ok)
+218:                 if bfails == 0:
+219:                     print('FAIL 负面注入测试: 改坏温度值后哨兵未拦截(应 FAIL)')
+220:                     return 1
+221:                 print('PASS 负面注入: 改坏温度 %s → 哨兵拦截(%d项FAIL)' % (tmp, bfails))
+222:         else:
+223:             print('⚠ 负面注入跳过(页面无当日温度值)')
+224:     return 0
+225: 
+226: if __name__ == '__main__':
+227:     sys.exit(main())

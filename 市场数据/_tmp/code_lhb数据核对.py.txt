@@ -1,0 +1,132 @@
+---1-130---
+1: # -*- coding: utf-8 -*-
+2: """lhb数据核对.py — lhb页数字核对哨兵(2026-08-12, 参照 limitup数据核对.py)
+3: 用法: python lhb数据核对.py 20260811   (exit 0=全过, 1=有FAIL)
+4: 核对项: 台账strip三数 / Top5荐票回源 / FUNDTEMP表 / 分档库窗口+档数 / 锚点成对 / 无重复h2 /
+5:         最新台账日 / 分档表新鲜度 / 负面验证
+6: 数据源: _席位动向/{d}.csv + _席位分档.json + _资金温度.json + {d}/lhb.csv + 席位荐票卡_{d}.html
+7: """
+8: import re, os, sys, json, csv, glob, datetime
+9: 
+10: BASE = os.path.dirname(os.path.abspath(__file__))
+11: L = os.path.join(BASE, '_学习')
+12: SITE = os.environ.get('POST_SITE_ROOT') or os.path.join(BASE, '复盘', '盯盘台')
+13: 
+14: def load_page(d, page_path=None):
+15:     """页面文件: 默认 SITE/lhb.html; --page 指定独立输出(如 lhb_20260811.html)"""
+16:     site_root = os.environ.get('LHB_SITE_ROOT', SITE)
+17:     if page_path:
+18:         p = page_path if os.path.isabs(page_path) else os.path.join(site_root, page_path)
+19:     else:
+20:         p = os.path.join(site_root, 'lhb.html')
+21:     if not os.path.exists(p): return None, os.path.basename(p) + ' 不存在'
+22:     return open(p, encoding='utf-8').read(), None
+23: 
+24: def load_seats(d):
+25:     p = os.path.join(L, '_席位动向', f'{d}.csv')
+26:     if not os.path.exists(p): return None, f'_席位动向/{d}.csv 不存在'
+27:     import pandas as pd
+28:     mv = pd.read_csv(p, dtype={'代码': str})
+29:     return mv, None
+30: 
+31: def load_lhb(d):
+32:     p = os.path.join(BASE, d, 'lhb.csv')
+33:     if not os.path.exists(p): return None, f'{d}/lhb.csv 不存在'
+34:     return list(csv.DictReader(open(p, encoding='utf-8-sig'))), None
+35: 
+36: def load_lib():
+37:     p = os.path.join(L, '_席位分档.json')
+38:     if not os.path.exists(p): return None, '_席位分档.json 不存在'
+39:     return json.load(open(p, encoding='utf-8')), None
+40: 
+41: def load_temp():
+42:     p = os.path.join(L, '_资金温度.json')
+43:     if not os.path.exists(p): return None, '_资金温度.json 不存在'
+44:     return json.load(open(p, encoding='utf-8')), None
+45: 
+46: def load_seatcard(d):
+47:     p = os.path.join(L, f'席位荐票卡_{d}.html')
+48:     if not os.path.exists(p): return None, f'席位荐票卡_{d}.html 不存在'
+49:     return open(p, encoding='utf-8').read(), None
+50: 
+51: def find_block(h, start_kw, end_kw, start_from=0):
+52:     i = h.find(start_kw, start_from)
+53:     if i < 0: return None, f'锚点 {start_kw} 未找到'
+54:     j = h.find(end_kw, i + len(start_kw)) if end_kw else len(h)
+55:     return h[i:j if j > 0 else len(h)], None
+56: 
+57: def chk(issues, ok, label, detail=''):
+58:     issues.append((ok, label, detail))
+59: 
+60: def main():
+61:     if len(sys.argv) < 2:
+62:         print('用法: python lhb数据核对.py <YYYYMMDD>'); return 2
+63:     d = sys.argv[1]
+64:     page_path = None
+65:     if '--page' in sys.argv:
+66:         page_path = sys.argv[sys.argv.index('--page') + 1]
+67:     issues = []
+68:     h, err = load_page(d, page_path)
+69:     if err: print('FAIL', err); return 1
+70: 
+71:     # ===== 0. 黄金页结构 + 锚点成对 + 无重复 h2(结构基线) =====
+72:     # 龙虎榜与周期页同属黄金壳：前四段由动态渲染器供数，能力进化两段保留在页尾。
+73:     evo_n = len(re.findall(r'<section class="evolution"[^>]*>', h))
+74:     golden_mode = (
+75:         '<section id="' not in h
+76:         and evo_n == 2
+77:         and all(f'<h2>{n} ' in h for n in '一二三四五六')
+78:     )
+79:     chk(issues, golden_mode, '黄金页结构模式',
+80:         '前四段动态 + 两组能力进化' if golden_mode else '未进入龙虎榜黄金结构')
+81:     for token in ('class="ticker"', 'class="reading-spine"', 'class="rowA"',
+82:                   'class="hero"', 'class="kpi"', 'class="stance"'):
+83:         chk(issues, token in h, f'黄金头部组件·{token[7:-1]}', '黄金版头部')
+84:     chk(issues, '<section id="' not in h, '无发布页section壳', '黄金版 h2 直连')
+85:     # 数据边界模块已下线(2026-09-12)：lhb 页按黄金版工程实现，出现即 FAIL，防止复盘复发。
+86:     chk(issues, '数据边界' not in h, '无数据边界模块',
+87:         '黄金版工程不含该模块' if '数据边界' not in h else f'页面仍含数据边界 {h.count("数据边界")} 处')
+88:     evo_pos = [m.start() for m in re.finditer(r'<section class="evolution"', h)]
+89:     i4 = h.find('<h2>四 ')
+90:     foot_pos = h.rfind('<div class="foot">')
+91:     chk(issues, len(evo_pos) == 2 and i4 >= 0 and i4 < evo_pos[0] < foot_pos,
+92:         '能力进化位于前四段之后',
+93:         f'四段@{i4} evo@{evo_pos[0] if evo_pos else -1} foot@{foot_pos}')
+94:     chk(issues, h.count('<div') == h.count('</div>'), 'HTML div配平',
+95:         f'开{h.count("<div")}闭{h.count("</div>")}')
+96: 
+97:     # ===== 0b. 锚点成对 + 无重复 h2(结构基线) =====
+98:     # FUNDTEMP/LHBLEDGER 必须 1/1; PAPERTRADE 允许 0/0(独立页面不走模拟盘引擎注入, 全站页须 1/1)
+99:     for anchor in ('FUNDTEMP', 'LHBLEDGER'):
+100:         a = h.count(f'<!--{anchor}-->'); b = h.count(f'<!--/{anchor}-->')
+101:         chk(issues, a == 1 and b == 1, f'锚点{anchor}成对', f'起{a}/止{b}')
+102:     a = h.count('<!--PAPERTRADE-->'); b = h.count('<!--/PAPERTRADE-->')
+103:     chk(issues, a == b and a <= 1, '锚点PAPERTRADE成对', f'起{a}/止{b}')
+104:     hs = re.findall(r'<h2[^>]*>([^<]+)</h2>', h)
+105:     dup = sorted({x for x in hs if hs.count(x) > 1})
+106:     chk(issues, not dup, '无重复h2', '; '.join(dup) if dup else f'{len(hs)}个h2')
+107: 
+108:     # ===== 1. 台账 strip 三数(页面 vs 存档 summary 同源发出版; 零后视镜: 不用当前分档表复算历史) =====
+109:     # 黄金壳历史上使用 chip cold；新渲染器使用 chip。两者语义相同，
+110:     # 允许可选 cold 类，仍严格校验最新日期与三项数字。
+111:     m = re.search(r'<summary><b>\d\d-\d\d</b> <span class="chip(?: cold)?">最新</span> 上榜(\d+) · 机构在场(\d+)只 · S/A出手(\d+)笔</summary>', h)
+112:     if not m:
+113:         chk(issues, False, '台账最新日summary存在', '未找到 最新 日块summary')
+114:     else:
+115:         p_up, p_jg, p_sa = int(m.group(1)), int(m.group(2)), int(m.group(3))
+116:         sp = os.path.join(L, '龙虎榜复盘存档', f'{d}.json')
+117:         if os.path.exists(sp):
+118:             arch = json.load(open(sp, encoding='utf-8'))
+119:             sm = arch.get('summary', '')
+120:             mm = re.search(r'上榜(\d+) · 机构在场(\d+)只 · S/A出手(\d+)笔', sm)
+121:             if mm:
+122:                 a_up, a_jg, a_sa = int(mm.group(1)), int(mm.group(2)), int(mm.group(3))
+123:                 chk(issues, p_up == a_up, '台账·上榜数', f'页面{p_up} vs 存档{a_up}')
+124:                 chk(issues, p_jg == a_jg, '台账·机构在场', f'页面{p_jg} vs 存档{a_jg}')
+125:                 chk(issues, p_sa == a_sa, '台账·S/A出手', f'页面{p_sa} vs 存档{a_sa}')
+126:             else:
+127:                 chk(issues, False, '台账三数', f'存档{d} summary格式异常:{sm[:60]}')
+128:         else:
+129:             # 无存档(如8/11补建前)→ 数据源复算(标注口径=当前分档表, 非零后视镜)
+130:             mv, err = load_seats(d)
+---330-470---

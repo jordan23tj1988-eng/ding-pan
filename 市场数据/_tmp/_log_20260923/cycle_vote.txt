@@ -1,0 +1,14 @@
+--- settle 20260923
+settle 20260923 裁判=降(投票日20260922): [('auction', '降', 1), ('lhb', '平', 0), ('theme', '降', 1), ('logic', '平', 0), ('limitup', '降', 1), ('cycle主判', '降', 1)]
+[rc=0]
+--- tally 20260923
+缺周期主判_20260923.json,先让05认知写主判
+[rc=0]
+--- board 20260923
+Traceback (most recent call last):
+  File "D:\股票数据\市场数据\周期投票.py", line 163, in <module>
+    {'settle':settle,'tally':tally}[a[0]](a[1])
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+KeyError: 'board'
+[rc=1]
+{"d": "20260923", "当日复议": false, "连续重做": false, "反对路": [], "加权反对份额": 0.0, "反对侧": "无", "要求": ""}

@@ -1,0 +1,1683 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>概览</title><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+
+/* ── v4.1 页面阅读路径与响应式增强 ── */
+:root{--route-accent:var(--accent)}
+body[data-route="cycle"]{--route-accent:#7b8cff}
+body[data-route="auction"]{--route-accent:#e8a33d}
+body[data-route="lhb"]{--route-accent:#b18aff}
+body[data-route="theme"]{--route-accent:#2fd3c5}
+body[data-route="logic"]{--route-accent:#63b3ff}
+body[data-route="limitup"]{--route-accent:#ff7b72}
+
+/* 内容宽度按信息密度自适应：宽表不再挤成一团，概览 bento 仍保持黄金版宽度。 */
+.wrap:has(>section){max-width:1180px}
+.wrap:has(.rowA){max-width:1440px}
+.wrap>section{scroll-margin-top:92px;margin-top:30px}
+.wrap>section>h2{margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid var(--line2);position:relative}
+.wrap>section>h2::before{background:var(--route-accent,var(--accent));box-shadow:0 0 14px color-mix(in srgb,var(--route-accent,var(--accent)) 35%,transparent)}
+.wrap>section:first-of-type{margin-top:24px}
+
+/* 页面阅读地图：显示板块职责，不复制正文事实。 */
+.page-map{position:sticky;top:78px;z-index:6;display:flex;align-items:center;gap:5px;overflow-x:auto;white-space:nowrap;margin:0 0 18px;padding:6px;background:rgba(18,20,28,.90);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(12px);scrollbar-width:none}
+.page-map::-webkit-scrollbar{display:none}
+.page-map-label{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:0 8px 0 5px;flex:0 0 auto}
+.page-map a{color:var(--sub);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:.16s;flex:0 0 auto}
+.page-map a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.page-map a.active{color:var(--route-accent,var(--accent));background:color-mix(in srgb,var(--route-accent,var(--accent)) 13%,transparent);box-shadow:inset 0 -2px 0 var(--route-accent,var(--accent));font-weight:700}
+.page-map a:focus-visible{outline:2px solid var(--route-accent,var(--accent));outline-offset:1px}
+
+/* 卡片层级：标题、来源提示、正文和长表分出视觉层。 */
+.card,.obs,.kpi,details.chain{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.card h3,.card h4{line-height:1.45}
+.card>h3:first-child,.card>h4:first-child{color:var(--ink)}
+.card .hint{display:inline-block;line-height:1.45}
+.card table{margin-top:10px}
+table tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+table tr:hover td{background:color-mix(in srgb,var(--route-accent,var(--accent)) 7%,transparent)}
+th{white-space:nowrap}
+pre{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:rgba(0,0,0,.16);font-family:var(--mono);font-size:11px;line-height:1.55}
+
+/* 触屏和窄屏：不缩小关键数字，改为卡内横向浏览，避免整页横溢出。 */
+@media(max-width:640px){
+    .navbar{display:block;top:6px;margin:6px 8px 0;max-width:calc(100% - 16px);padding:8px 10px;border-radius:14px}
+  .navbar .brand{font-size:13px;margin-bottom:6px}.navbar .logo{width:28px;height:28px;border-radius:8px}
+  .navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}
+  .navbar .pills::-webkit-scrollbar{display:none}
+  .navbar .pills a{font-size:12px;padding:6px 10px}
+  .navbar .upd{margin-left:auto;font-size:10px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap{padding:18px 10px 48px}.wrap:has(>section),.wrap:has(.rowA){max-width:none}
+  .page-map{top:65px;margin-bottom:14px}
+  .wrap>section{margin-top:24px}.wrap>section>h2{font-size:14.5px;padding-bottom:8px}
+  .card,.obs{padding-left:14px;padding-right:14px;border-radius:11px}
+  .card{overflow-x:auto}.card>h3,.card>h4,.card>p,.card>ul,.card>ol{min-width:0}
+  table{min-width:620px;font-size:12px}th,td{padding:7px 8px}
+  .routes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:19px 18px}.hero h1{font-size:21px}
+  .kpi .big{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.page-map a,.card,.obs,.kpi{transition:none!important}}
+
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}}
+
+/* ── v4.3 概览可读层 ── 只收敛版式与信息层级，不改判断内容 */
+.reading-spine a.rs-step{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-weight:600;white-space:nowrap}
+.reading-spine a.rs-step:hover{border-color:var(--line2);color:var(--ink)}
+.reading-spine a.rs-step b{color:var(--accent);font-family:var(--mono);font-size:10.5px;margin-right:6px;font-weight:800}
+.cgrp{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 20px 6px;margin-top:13px}
+.cgrp-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px dashed var(--line2)}
+.cgrp-head .cgrp-note{color:var(--dim);font-size:11.3px;font-family:var(--mono)}
+.cgrp-body{display:flex;flex-direction:column}
+.citem{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:2px 12px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:0;padding-bottom:2px}
+.citem>p{margin:0;line-height:1.62}
+.citem .citem-tag{color:var(--dim);font-size:11.1px;margin:2px 0 0;font-family:var(--mono);white-space:nowrap;text-align:right}
+.claim-proof{grid-column:2;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.claim-proof .proof-label{color:var(--dim);font-size:10.6px;font-weight:700}
+.claim-proof a{color:var(--sub);font-size:10.7px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--mono)}
+.claim-proof a:hover{border-color:var(--accent-dim);color:var(--ink)}
+.audit-fold{margin-top:13px}
+.audit-fold>summary{cursor:pointer;color:var(--sub);font-size:12.6px;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+.audit-fold>summary::-webkit-details-marker{display:none}
+.audit-fold>summary::before{content:'▸';color:var(--accent);font-family:var(--mono);font-size:12px}
+.audit-fold[open]>summary::before{content:'▾'}
+.audit-fold .inner{padding:2px 0 12px}
+.audit-fold .fold-note{color:var(--dim);font-size:11.6px;margin:0 0 10px}
+.audit-fold .inner-limit{margin:0 0 12px}
+.audit-fold .inner-limit b{color:var(--sub);font-size:12.2px}
+.audit-fold .inner-limit ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:11.8px}
+.machfold{margin-top:13px}
+.kpi .sub2{font-family:var(--mono);font-size:11px}
+.kpi .gauge .gl{font-size:10.4px;color:var(--dim)}
+.mx{width:100%;border-collapse:collapse;margin:2px 0 4px;table-layout:fixed}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mx thead th{color:var(--dim);font-size:11.1px;font-weight:700;font-family:var(--mono);white-space:nowrap}
+.mx tbody th{color:var(--sub);font-weight:600;font-size:11.6px;font-family:var(--mono);white-space:nowrap;width:66px}
+.mx td{font-size:12.2px;line-height:1.62}
+.mx td a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.mx td a:hover{border-bottom-color:var(--accent-dim)}
+.mx .mx-empty{color:var(--dim)}
+.mx tr:last-child th,.mx tr:last-child td{border-bottom:0}
+.chip2.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+section>h2{margin-top:32px}
+.chip2.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.chip2.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+
+/* ── v4.4 展示层去噪 / 纯内容层 ──
+   用户拍板(2026-09-22)：角色徽章(结论/观察/证据/反证/条件/认知/限制)、
+   来源标签、"证据回链/来源"字、旧版原文碎片卡 —— 这些只增加噪声，
+   对决策没有信息增量，全部退出展示层。
+   证据不删除:claim 锚点、#evidence-* 回链、模型 JSON、审计 JSON 全量保留。
+   概览页(citem 版式)同样的噪声一并在本层收敛。 */
+h1.claim-hero{font-size:inherit;font-family:inherit;font-weight:inherit;line-height:inherit;margin:0;display:inline}
+.claim-head:not(.cgrp-head),.citem .citem-tag{display:none}
+.claim-proof .proof-label{display:none}
+.claim-proof{margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05)}
+.claim-proof a{border:0;padding:0;background:none;font-size:10.6px}
+.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}
+/* 无痕原文库：给未上展示层的 claim 保留锚点与原文，供门禁复核，读者不可见 */
+.claim-anchor,.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}
+.legend-strip{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11.4px;padding:8px 0 2px;border-top:1px solid var(--line)}
+.legend-strip b{color:var(--sub);font-weight:800}
+.legend-strip i{font-style:normal;color:var(--dim)}
+</style></head><meta name="review-date" content="20260904"><meta name="review-schema-version" content="1"><body data-route="index" data-d="20260904" data-schema-version="1" data-template-version="p1.3"><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="on" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd">更新 20260904</span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp"><div class="ticker"><div class="in"><div class="grp"><span>量能 <b class="a">2.03万亿</b></span><span>涨停 <b class="u">39</b> / 跌停 <b class="d">9</b></span><span>炸板 <b>48</b>·炸板率 <b>55.2%</b></span><span>最高板 <b class="u">5板</b>·龙版传媒</span><span>梯队 5板1·2板6·1板32</span><span>情绪温度 <b>13.4</b>(冰点)</span><span>一进二 <b>12.2%</b>·二进三 <b>0%</b></span></div><div class="grp" aria-hidden="true"><span>量能 <b class="a">2.03万亿</b></span><span>涨停 <b class="u">39</b> / 跌停 <b class="d">9</b></span><span>炸板 <b>48</b>·炸板率 <b>55.2%</b></span><span>最高板 <b class="u">5板</b>·龙版传媒</span><span>梯队 5板1·2板6·1板32</span><span>情绪温度 <b>13.4</b>(冰点)</span><span>一进二 <b>12.2%</b>·二进三 <b>0%</b></span></div></div></div></div><div class="grp"><div class="ticker"><div class="in"><div class="grp"><span>量能 <b class="a">2.03万亿</b></span><span>涨停 <b class="u">39</b> / 跌停 <b class="d">9</b></span><span>炸板 <b>48</b>·炸板率 <b>55.2%</b></span><span>最高板 <b class="u">5板</b>·龙版传媒</span><span>梯队 5板1·2板6·1板32</span><span>情绪温度 <b>13.4</b>(冰点)</span><span>一进二 <b>12.2%</b>·二进三 <b>0%</b></span></div><div class="grp" aria-hidden="true"><span>量能 <b class="a">2.03万亿</b></span><span>涨停 <b class="u">39</b> / 跌停 <b class="d">9</b></span><span>炸板 <b>48</b>·炸板率 <b>55.2%</b></span><span>最高板 <b class="u">5板</b>·龙版传媒</span><span>梯队 5板1·2板6·1板32</span><span>情绪温度 <b>13.4</b>(冰点)</span><span>一进二 <b>12.2%</b>·二进三 <b>0%</b></span></div></div></div></div></div></div><div class="rowA"><div class="hero"><div class="kick">概览 · 我当前的判断 · 截至 2026-09-04 收盘</div><h1 aria-label="五路全C档防守空仓，总裁决C档(置信82)：温度13.4冰点第2日×炸板率55.2%250日分位100%极值×无3板4板高度断层×封板率44.8%&lt;60%×无主线第9日×业绩腿静默第7次×负期望第15日×承接资金单点回补整体枯竭，七维退潮共振；仅lhb席位资金升温第一天(温度35破34温区+S档5席同向80%)为唯一反向变量但S档全小样本不成进攻，总仓0%">五路全C档防守空仓，总裁决C档(置信82)：<em>温度13.4冰点第2日×炸板率55.2%250日分位100%极值×无3板4板高度断层×封板率44.8%&lt;60%×无主线第9日×业绩腿静默第7次×负期望第15日×承接资金单点回补整体枯竭，七维退潮共振；仅lhb席位资金升温第一天(温度35破34温区+S档5席同向80%)为唯一反向变量但S档全小样本不成进攻，总仓0%</em></h1><p>此刻我对市场的判断。明日观察点在第一屏；五路荐票按 ①竞价→②龙虎榜→③主线题材→④产业逻辑→⑤涨停复盘 深读。</p><div class="stance"><span class="pill warn">情绪档 · <b class="s-weak">五路全C档防守空仓，总裁决C档(置信82) · 温度13.4</b></span><span class="pill">周期 · <b>量能2.03万亿 · 弱修档</b></span><span class="pill warn">攻防 · <b>防守观察</b></span><span class="pill hot"><b class="s-ok">三窗 · 条件观察</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">冰点 &lt;25</span></div><span class="lab">情绪温度 · 250日分位</span><span class="big">13.4</span><div class="gauge"><div class="gtrack"><i class="gmark" style="left:13.4%"></i></div><div class="gl"><span>冰点</span><span>偏冷</span><span>中性</span><span>偏热</span><span>过热</span></div></div><span class="sub2">昨13.2→今13.4（+0.2）</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">弱修档</span></div><span class="lab">两市量能</span><span class="big">2.03<small>万亿</small></span><svg class="spark" viewBox="0 0 180 44" aria-hidden="true"><polyline fill="none" stroke="#e8a33d" stroke-width="2" points="0.0,6.0 45.0,14.39 90.0,35.22 135.0,38.0 180.0,14.63"/></svg><span class="sub2">1.79 → 1.76 → 2.03 回升（缩量分歧）</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">环比 -11%</span></div><span class="lab">涨停 / 跌停(剔ST退)</span><span class="big"><b class="up">39</b><span class="mut">/</span><b class="dn">9</b></span><span class="sub2">昨44/16→今39/9 · 炸板48只·炸板率55.2%（昨42.9%）</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">环比 +2.0pp</span></div><span class="lab">1进2率（昨35只首板）</span><span class="big">12.2<small>%</small></span><span class="sub2">昨10.2%→今12.2% · 2进3率0.0% · 高度晋级9.1%</span></div></div><!--PAPERTRADE-->
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 总·情绪总裁决</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+0.90%</b></span> <span>本周 <b style="color:#8d93a8;font-family:ui-monospace,monospace">+0.00%</b></span> <span>基准本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-4.16%</b></span> <span>平仓胜率 <b style="font-family:monospace">42.9%</b>(n=7)</span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="105.1" x2="620" y2="105.1" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,118.8 48.6,105.6 77.1,108.9 105.7,116.1 134.3,33.1 162.9,31.2 191.4,31.2 220.0,41.7 248.6,54.1 277.1,48.9 305.7,59.2 334.3,77.4 362.9,83.8 391.4,92.6 420.0,96.4 448.6,92.0 477.1,82.1 505.7,89.8 534.3,87.6 562.9,91.4 591.4,98.9 620.0,107.5" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,108.7 48.6,104.4 77.1,99.5 105.7,97.8 134.3,97.1 162.9,98.9 191.4,98.9 220.0,97.8 248.6,99.4 277.1,101.0 305.7,101.6 334.3,101.6 362.9,101.6 391.4,101.6 420.0,101.6 448.6,101.6 477.1,101.6 505.7,101.6 534.3,101.6 562.9,101.6 591.4,101.6 620.0,101.6" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="101.6" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20260904  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="96.6" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">1.0090</text></svg></div>
+<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · 空仓(总仓0%)。依据=五路全C档防守空仓+总审C档置信82综合裁决:①冰点第2日温度13.4+炸板率55.2%为250日分位100%极值+封板率44.8%<60%尚可线=封板质量崩塌;②连板梯队5板1/2板6/1板32无3板无4板高度断层;③无主线第9日(最宽线农业/养殖猪周期7只全首板宽7<13);④业绩腿静默第7次(T-1交叉0只归零);⑤负期望第15日(执1max45.9%<48.2%命中1/39池均-0.33%全负);⑥承接资金单点回补整体枯竭(封板总额26.69亿-13%继续缩)。唯一升温萌芽(资金温度35破34温区+S档同向80%+量能2万亿)均第一天且S档全小样本无坐镇,不足翻多,空仓是铁律内最优。在持票表态=master状态.json持仓=[],无在持票,无卖单(禁漏票无票可漏)。次日(20260907)升B触发条件:①lhb资金温度≥34且非小样本S档(n≥25)坐镇→敦煌种业600354首选轻仓;②theme猪周期宽≥13且立2板且开板≤0.45→农业接棒新主线;③limitup执1max≥48.2%且命中≥3且池均≥0→负期望终结;④auction竞价池0904均收>0且封板≥50%→反转日买新不买旧终结。四者共振方翻多,否则维持C档空仓。</div>
+</div><div>
+<div style="margin-top:12px;color:#8d93a8">当前空仓</div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20260904发出,明日固定价执行)</div>
+<div style="color:#8d93a8;margin-top:4px">★今晚无买卖指令(在持票默认继续持有/或空仓)</div>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(5)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>002739 儒意电影</td><td style="font-family:monospace">20260811@10.30</td><td style="font-family:monospace">20260819@8.74</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-15.27%</b></td><td>开·持6日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>688192 迪哲医药-U</td><td style="font-family:monospace">20260716@66.00</td><td style="font-family:monospace">20260819@60.10</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-9.08%</b></td><td>开·持7日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>002379 宏桥控股</td><td style="font-family:monospace">20260715@18.10</td><td style="font-family:monospace">20260811@19.40</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+7.02%</b></td><td>收·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>300534 陇神戎发</td><td style="font-family:monospace">20260714@8.84</td><td style="font-family:monospace">20260716@10.49</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+18.49%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600664 哈药股份</td><td style="font-family:monospace">20260714@3.80</td><td style="font-family:monospace">20260716@4.94</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+29.81%</b></td><td>收·持2日</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<details class="chain audit-fold machfold"><summary><b>机器数据核对层</b><span class="chip">温度总览 · 周期投票牌</span></summary><div class="inner"><p class="fold-note">当日权威机器源读数，供核对；判断正文见下方各栏目。</p><div id="component-IDXTEMP"><!--IDXTEMP-->
+<div class="card"><h3 style="margin:0 0 8px">温度总览 <span class="hint">机器核对 · 市场温度表权威</span></h3><p class="mut" style="margin:0 0 6px">近5日: <span class="dayc">08-31 52.6°/88只</span><span class="dayc">09-01 67.7°/83只</span><span class="dayc">09-02 30.5°/52只</span><span class="dayc">09-03 13.2°/44只</span><span class="dayc now">09-04 13.4°/39只</span></p><div id="table-1e67cd31d542f6ee"><table class="p2"><tr><th class="l">指标</th><th>读数</th></tr><tr><td class="l">情绪温度</td><td>13.4 · 档位 冰点</td></tr>
+<tr><td class="l">涨停/跌停</td><td>39 / 9 · 炸板率 55.2%</td></tr>
+<tr><td class="l">量能</td><td>2.03 万亿</td></tr>
+<tr><td class="l">连板梯队</td><td> · 梯队: 5板1只 2板6只 1板32只</td></tr>
+</table></div></div>
+
+<!--/IDXTEMP--></div><div id="component-IDXVOTE"><!--IDXVOTE--><div style="margin:10px 0;padding:12px 14px;background:#14171e;border:1px solid #2a2f3a;border-radius:10px">
+<div style="font-size:11px;letter-spacing:2px;color:#d9a441;font-family:monospace">五路周期投票 · 主判=冰点·降</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">①竞价 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">冰点·降</b><br><span style="color:#5c6674">权41%·准确率7/19</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">②席位 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">冰点·降</b><br><span style="color:#5c6674">权38%·准确率6/19</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">③题材 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">冰点·降</b><br><span style="color:#5c6674">权41%·准确率6/17</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">④产逻 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">冰点·降</b><br><span style="color:#5c6674">权48%·准确率9/19</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">⑤质量 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">冰点·降</b><br><span style="color:#5c6674">权38%·准确率6/19</span></div>
+</div>
+<div style="margin-top:8px;color:#5c6674;font-size:11px">分歧未达阈值(当日≥3/5或加权≥0.60复议;连续3日≥2路同向重做) · 次日A档三指标Δ客观结算,准确率定话语权 · ★一致率长期>0.8=回声室警示(evidence须私有数据)</div>
+</div><!--/IDXVOTE--></div></div></details><section id="recommendations"><h2>一 明日核心观察点</h2><!--GOLDEN-INDEX:recommendations--><div class="card"><b>当日跨路荐票未产出</b><p class="mut">五路候选跨路筛选卡缺失: —</p></div><!--/GOLDEN-INDEX:recommendations--></section><section id="turning"><h2>二 拐点预警 · 命门温度背离</h2><!--GOLDEN-INDEX:turning--><div id="component-IDXLEAD"><!--IDXLEAD--><div class="card"><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 10px;font-size:12px"><span style="color:#98a0ab;font-weight:700">三窗触发器(A档)</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">❄冰点进攻窗·灭</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">☢过热禁追窗·灭</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">♨洗出反弹窗·灭</span><span style="color:#6b7683">温度 null · 1进2率 12.2% · 昨停溢价 null</span></div></div><!--/IDXLEAD--></div><!--/GOLDEN-INDEX:turning--></section><section id="routes"><h2>三 五路看牌</h2><!--GOLDEN-INDEX:routes--><div class="routes"><a class="rt" href="auction.html"><span class="rtn">01 / 第一路</span><span class="rtm">竞价·时机</span><b class="rtt s-mid">—档 · —</b><span class="rtd">—</span></a><a class="rt" href="lhb.html"><span class="rtn">02 / 第二路</span><span class="rtm">龙虎榜·席位</span><b class="rtt s-mid">—档 · —</b><span class="rtd">—</span></a><a class="rt" href="theme.html"><span class="rtn">03 / 第三路</span><span class="rtm">题材·主线</span><b class="rtt s-mid">—档 · —</b><span class="rtd">—</span></a><a class="rt" href="logic.html"><span class="rtn">04 / 第四路</span><span class="rtm">产业·逻辑</span><b class="rtt s-mid">—档 · —</b><span class="rtd">—</span></a><a class="rt" href="limitup.html"><span class="rtn">05 / 第五路</span><span class="rtm">涨停·质量</span><b class="rtt s-mid">—档 · —</b><span class="rtd">—</span></a></div><!--/GOLDEN-INDEX:routes--></section><section id="verdict"><h2>四 总裁决 · 自主进化</h2><!--GOLDEN-INDEX:verdict--><div class="card"><b>六账本</b><p class="mut">当日引擎净值缺失：—</p></div><div class="card"><b>总裁决 · <span class="s-weak">C档</span> <span class="hint">置信度 82/100(评分,未校准)</span></b><p style="margin:6px 0 0"></p></div><!--/GOLDEN-INDEX:verdict--></section><details class="chain audit-fold" id="audit-fold"><summary><b>来源审计 · 编辑说明与全部证据回链</b><span class="chip">3 条说明 · 166 条证据</span></summary><div class="inner"><div class="claim-anchor-bank" aria-hidden="true"><span class="claim-anchor" id="claim-index-b82c1874740cb24b"></span><span class="claim-anchor" id="claim-index-cbe2b4bd69bd9817"></span><span class="claim-anchor" id="claim-index-9b078beb4875fc53"></span><span class="claim-anchor" id="claim-index-bc077f7d1fb752b9"></span><span class="claim-anchor" id="claim-index-b0ac53cee7398a31"></span><span class="claim-anchor" id="claim-index-7d54aef1262ff082"></span><span class="claim-anchor" id="claim-index-55a1d29fd14a00c1"></span><span class="claim-anchor" id="claim-index-3d59317762ce2b14"></span><span class="claim-anchor" id="claim-index-dc01bd8f86435244"></span><span class="claim-anchor" id="claim-index-a10cd448c6e30d4b"></span><span class="claim-anchor" id="claim-index-de3937cd7a6f60f6"></span><span class="claim-anchor" id="claim-index-aba5857762d6988d"></span><span class="claim-anchor" id="claim-index-94274f7e76cf5722"></span><span class="claim-anchor" id="claim-index-2ea868492f62dc92"></span><span class="claim-anchor" id="claim-index-4c68e7bad2d213cf"></span><span class="claim-anchor" id="claim-index-027c2b8c23e83a51"></span><span class="claim-anchor" id="claim-index-b142c3183a233fdc"></span><span class="claim-anchor" id="claim-index-4f2106fe9ec8f732"></span><span class="claim-anchor" id="claim-index-c643587535443fb0"></span><span class="claim-anchor" id="claim-index-fcf6a77a1d86458e"></span><span class="claim-anchor" id="claim-index-264efc6a59e72184"></span><span class="claim-anchor" id="claim-index-380b8e52f312e537"></span><span class="claim-anchor" id="claim-index-e399fd2a15b5b260"></span><span class="claim-anchor" id="claim-index-5baae31c863e1701"></span><span class="claim-anchor" id="claim-index-10c1e3beeab559c5"></span><span class="claim-anchor" id="claim-index-78beaaa4b85f3174"></span><span class="claim-anchor" id="claim-index-109bdec3fc238019"></span><span class="claim-anchor" id="claim-index-4b19dfdb7d55755d"></span><span class="claim-anchor" id="claim-index-0008ee6ed01a4b16"></span><span class="claim-anchor" id="claim-index-bba511211fd2b496"></span><span class="claim-anchor" id="claim-index-b2a1eb733d2058a0"></span><span class="claim-anchor" id="claim-index-fe3ecb4c4dc01f9a"></span><span class="claim-anchor" id="claim-index-ee11c9d40ae1cd89"></span><span class="claim-anchor" id="claim-index-7d05654dcbb000e3"></span><span class="claim-anchor" id="claim-index-e91258539af4f24f"></span><span class="claim-anchor" id="claim-index-0f5ce5abd0f48309"></span><span class="claim-anchor" id="claim-index-f113f8a07476c790"></span><span class="claim-anchor" id="claim-index-e0f002ae6fababd0"></span><span class="claim-anchor" id="claim-index-1102cc7202ae616f"></span><span class="claim-anchor" id="claim-index-510ce93d1c762c1d"></span><span class="claim-anchor" id="claim-index-ff625698debabf94"></span><span class="claim-anchor" id="claim-index-dc0fb41bfcf3906a"></span><span class="claim-anchor" id="claim-index-d04ec244cce47c5f"></span><span class="claim-anchor" id="claim-index-7d454fd188e92285"></span><span class="claim-anchor" id="claim-index-3ef101d8cc671558"></span><span class="claim-anchor" id="claim-index-21b08d58ee542884"></span><span class="claim-anchor" id="claim-index-1628c159ba8ceef7"></span><span class="claim-anchor" id="claim-index-c52436de7cb499cd"></span><span class="claim-anchor" id="claim-index-267405a6374aef76"></span><span class="claim-anchor" id="claim-index-400b97af3e1961ea"></span><span class="claim-anchor" id="claim-index-579b0622b527b882"></span><span class="claim-anchor" id="claim-index-169cb0cc6c253380"></span><span class="claim-anchor" id="claim-index-2f955ec9444ae42a"></span><span class="claim-anchor" id="claim-index-58410e35a837bd3f"></span><span class="claim-anchor" id="claim-index-7d4a2dee16825a97"></span><span class="claim-anchor" id="claim-index-12675a9af66cc9ea"></span><span class="claim-anchor" id="claim-index-72cab88ba869c46e"></span><span class="claim-anchor" id="claim-index-e18e0b44b9912461"></span><span class="claim-anchor" id="claim-index-39bbe36f862a3df4"></span><span class="claim-anchor" id="claim-index-ba0b963e12e35017"></span><span class="claim-anchor" id="claim-index-a6219d9521725a15"></span><span class="claim-anchor" id="claim-index-b3d445f95919d76d"></span><span class="claim-anchor" id="claim-index-638f1994e1656a3b"></span><span class="claim-anchor" id="claim-index-eb0804ff22240e5b"></span><span class="claim-anchor" id="claim-index-e2ac9b8cd0e4d683"></span><span class="claim-anchor" id="claim-index-c24a502638fe58a6"></span><span class="claim-anchor" id="claim-index-5e75317fabd0c14e"></span><span class="claim-anchor" id="claim-index-f4bc23ea745f1c8d"></span><span class="claim-anchor" id="claim-index-b6b11a0242796e39"></span><span class="claim-anchor" id="claim-index-b08fd4106091b04d"></span><span class="claim-anchor" id="claim-index-f778780d23395d38"></span><span class="claim-anchor" id="claim-index-988448a43a131d05"></span><span class="claim-anchor" id="claim-index-789365098c29a805"></span><span class="claim-anchor" id="claim-index-300588224dc1c7c3"></span><span class="claim-anchor" id="claim-index-7f30475eb5cf1bd1"></span><span class="claim-anchor" id="claim-index-c7a1b479efa1d9c6"></span><span class="claim-anchor" id="claim-index-4292c35ce5af550b"></span><span class="claim-anchor" id="claim-index-ab7717f4859fc3b2"></span><span class="claim-anchor" id="claim-index-60c94cf248aa3cee"></span><span class="claim-anchor" id="claim-index-4f15af420b34a081"></span><span class="claim-anchor" id="claim-index-870c24eb326d02dc"></span><span class="claim-anchor" id="claim-index-fd6f456a88b6498e"></span><span class="claim-anchor" id="claim-index-f2cffb358d2d1a65"></span><span class="claim-anchor" id="claim-index-0e851e0abb01a063"></span><span class="claim-anchor" id="claim-index-4c2558bff36a7dec"></span><span class="claim-anchor" id="claim-index-ee8c8e8faa796129"></span><span class="claim-anchor" id="claim-index-13b4e682d69c475a"></span><span class="claim-anchor" id="claim-index-b7f9ffc741ccaeee"></span><span class="claim-anchor" id="claim-index-be1ca516ead54098"></span><span class="claim-anchor" id="claim-index-126912c2afbd723c"></span><span class="claim-anchor" id="claim-index-aa4d5002a4dc5eef"></span><span class="claim-anchor" id="claim-index-44cf7b232f28c0e2"></span><span class="claim-anchor" id="claim-index-67643eeb349cff8a"></span><span class="claim-anchor" id="claim-index-90a59958ebdf0c13"></span><span class="claim-anchor" id="claim-index-9831b9357e528dc1"></span><span class="claim-anchor" id="claim-index-afcf7a5a77339382"></span><span class="claim-anchor" id="claim-index-1290eacc9c7be6c2"></span><span class="claim-anchor" id="claim-index-59346b3c7504984e"></span><span class="claim-anchor" id="claim-index-adbc4c48dd9e9fc5"></span><span class="claim-anchor" id="claim-index-69793aebc6dd3e6d"></span><span class="claim-anchor" id="claim-index-172c154d1b28decf"></span><span class="claim-anchor" id="claim-index-b1b76703dc449f98"></span><span class="claim-anchor" id="claim-index-2853f8eb2260e8f8"></span><span class="claim-anchor" id="claim-index-1f0d7b244b3acd01"></span><span class="claim-anchor" id="claim-index-81fc7e179ff94cb4"></span><span class="claim-anchor" id="claim-index-4dd80a2da1e36f58"></span><span class="claim-anchor" id="claim-index-d731b2ddde045716"></span><span class="claim-anchor" id="claim-index-964f4efd8b80d8b7"></span><span class="claim-anchor" id="claim-index-2ea7803678640a56"></span><span class="claim-anchor" id="claim-index-a1c095dbab0fa661"></span><span class="claim-anchor" id="claim-index-a2acb821e457850e"></span><span class="claim-anchor" id="claim-index-7acd7c08e2afd7f2"></span><span class="claim-anchor" id="claim-index-0bd7a20ba398bc04"></span><span class="claim-anchor" id="claim-index-2c1258be6b54773a"></span><span class="claim-anchor" id="claim-index-2f0e51fb5c791ea0"></span><span class="claim-anchor" id="claim-index-a1d6e558f76975b5"></span><span class="claim-anchor" id="claim-index-08bd34da321437b0"></span><span class="claim-anchor" id="claim-index-e9272d79e63d5381"></span><span class="claim-anchor" id="claim-index-1c4b916ce7389e25"></span><span class="claim-anchor" id="claim-index-fa0124ecca830817"></span><span class="claim-anchor" id="claim-index-a5352c7cef564c39"></span><span class="claim-anchor" id="claim-index-bafc8733225afaf1"></span><span class="claim-anchor" id="claim-index-45e8bae64ccd3fde"></span><span class="claim-anchor" id="claim-index-2848d7571814fa02"></span><span class="claim-anchor" id="claim-index-63f3831ab07de8e8"></span><span class="claim-anchor" id="claim-index-cf66457e4f2068f0"></span><span class="claim-anchor" id="claim-index-a5b4ca5d55786059"></span><span class="claim-anchor" id="claim-index-59c9cc9b9597669b"></span><span class="claim-anchor" id="claim-index-b131f1629cf4858a"></span><span class="claim-anchor" id="claim-index-b2b8a38d4470f05d"></span><span class="claim-anchor" id="claim-index-b0fe33692f9617f8"></span><span class="claim-anchor" id="claim-index-fbdc55a320990e14"></span><span class="claim-anchor" id="claim-index-3b2d0b7c515e3e76"></span><span class="claim-anchor" id="claim-index-c3d41db8f52239e2"></span><span class="claim-anchor" id="claim-index-c458f1f5d6d77c05"></span><span class="claim-anchor" id="claim-index-73ddf935199289dd"></span><span class="claim-anchor" id="claim-index-e2e1051650465750"></span><span class="claim-anchor" id="claim-index-94e53767373efaf8"></span><span class="claim-anchor" id="claim-index-ae91d80300a664f4"></span><span class="claim-anchor" id="claim-index-e5e682ca7f8074e2"></span><span class="claim-anchor" id="claim-index-0aef7c66b9ac6270"></span><span class="claim-anchor" id="claim-index-91e773616cf4226c"></span><span class="claim-anchor" id="claim-index-4a1c701f1afb555a"></span><span class="claim-anchor" id="claim-index-5ce6f1a6457aea53"></span><span class="claim-anchor" id="claim-index-e1e849d245b56843"></span><span class="claim-anchor" id="claim-index-5cf87d06ddc68ad6"></span><span class="claim-anchor" id="claim-index-1e2acafe41718cd3"></span><span class="claim-anchor" id="claim-index-363d55c2f91f3170"></span><span class="claim-anchor" id="claim-index-a782cd192be45970"></span><span class="claim-anchor" id="claim-index-8f7b1ce527e7ce85"></span><span class="claim-anchor" id="claim-index-b689d39cb2234044"></span><span class="claim-anchor" id="claim-index-a1b665acd94641c5"></span><span class="claim-anchor" id="claim-index-aa933e2cddbd8a60"></span><span class="claim-anchor" id="claim-index-cc9c8e3682a38966"></span><pre class="claim-anchor-text">五路全C档防守空仓，总裁决C档(置信82)：温度13.4冰点第2日×炸板率55.2%250日分位100%极值×无3板4板高度断层×封板率44.8%&lt;60%×无主线第9日×业绩腿静默第7次×负期望第15日×承接资金单点回补整体枯竭，七维退潮共振；仅lhb席位资金升温第一天(温度35破34温区+S档5席同向80%)为唯一反向变量但S档全小样本不成进攻，总仓0%。
+维持C档(采纳)。反转日买新不买旧第3次坐实(0901池-1.48%→0902池-2.48%→0903池-2.57%连续3日负结算且封板率持续&lt;50%)，竞价池7只全高开≥5%被闸门全挡，无正期望可吃带。
+维持C档(采纳)。资金温度12→35分位破34冷/温分界(升温第一天)+S档5席同向率4/5=80%(昨0/2=0%)，但S档5席全小样本(n≤12)无非小样本坐镇+情绪冰点13.4+炸板率55.2%，&#x27;非小样本S档买涨停净买≥1000万&#x27;硬门槛0席满足；黄河旋风600172完全未上榜(冷区双A档无S档=出货/换手对倒反向信号坐实)。
+72
+维持C档(采纳)。无主线第9日坐实：算力/液冷今日0涨停发酵彻底证伪(集泰股份002909断板)、国芳集团601086断板高度龙带出板块证伪；最宽线切换农业/养殖(猪周期)7家全首板(宽7&lt;13高1板)传媒/出版2家高度孤立，无一线宽≥13。
+63
+维持C档(采纳)。业绩腿静默第7次坐实：T-1交叉(A池0903·185∩涨停0904·39)=0只再次归零(0903=1→0904=0)，存储环节0涨停、深圳华强/大普微/南华0回池，模板153∩涨停=0只(题材腿覆盖2→0归零)。
+维持C档(采纳)。负期望第15日坐实：执1max45.9%(安记食品)&lt;48.2%(重校阈值)且&lt;50%，命中≥3只=0，执1均涨池均-0.33%全负；炸板率55.2%250日极值+封板率44.8%&lt;60%；承接资金单点回补整体枯竭(封单max5.43亿楚天龙单只扛、封板总额26.69亿继续缩)。
+五路全C档防守空仓，无档位分歧。七维退潮证据各自独立同向且较0903更深：①auction反转日买新不买旧第3次坐实(0901-1.48%→0902-2.48%→0903-2.57%连续3日负结算)，竞价池7只全高开≥5%被闸门全挡，冷档池重开可吃窗不成立；②lhb资金温度35分位虽破34温区升温第一天、S档5席同向率80%，但S档全小样本n≤12无非小样本坐镇，席位硬门槛0席满足，黄河旋风反向信号坐实；③theme无主线第9日(算力/液冷0涨停+集泰断板+国芳断板+农业养殖7只全首板宽7&lt;13)；④logic业绩腿静默第7次(T-1交叉0只再次归零+模板覆盖归零)；⑤limitup负期望第15日(执1max45.9%&lt;48.2%)+炸板率55.2%250日极值+封板率44.8%&lt;60%+承接资金单点回补整体枯竭。今日防守共识比0903更深：炸板率42.9%→55.2%(250日分位100%极值)、封板率57.1%→44.8%、量能重回2万亿但涨停续缩(44→39)放量分歧非回暖、4板层级彻底空档(无3板无4板)。唯一反向变量=lhb席位资金升温第一天，但S档全小样本+龙虎榜涨停跟随胜率47.4%≈0无正edge，不构成进攻。五路无一路主张进攻，冰点空仓是唯一共识且为铁律内最优，总仓0%。
+当前温度档=冰点(13.4&lt;25)。战绩画像汇总_20260904.json为aggregate口径(顶层键=五路/合计，各路=按日/合计/归因，无温度档分层维度)，故冰点档机械加权不启用(n&lt;5不参与加权)，退用各路整体战绩作方向性参考并如实标注『非温度档加权』。整体战绩(合计)：limitup 11/30=36.7%均收+0.72%(正，最高)&gt;theme 10/24=41.7%均收+0.46%(正)&gt;auction 140/362=38.7%均收-0.65%(负)&gt;lhb 23/53=43.4%均收-0.56%(负)&gt;logic 3/14=21.4%均收-1.95%(负，最差)。今日五路全C无档位分歧，环境加权不产生裁决分歧，仅确认共识；正edge的limitup(+0.72%)/theme(+0.46%)今日也判防守空仓/观察0仓，进一步印证冰点空仓为全系统共识，非某一路保守。
+①(limitup/质量)20260907读涨停质量荐票_20260907.json：全池执1max≥48.2%(当日基准+5pp)且命中≥3只且执1均涨池均≥0→负期望第15日终结升B/A；执1max仍&lt;48.2%或池均&lt;0→负期望第16日维持C。辅助zt_pool.csv：单票封单max≥5.65亿且封单≥4亿家数≥3且最高板≥5→承接资金质量修复真回归。②(auction/回暖)20260907读竞价池结算_20260904.json：0904池执行均收&gt;0且封板率≥50%→反转日买新不买旧终结升B/A；均收&lt;0→第4次坐实维持C。③(theme/主线)20260907读题材归位+涨停对链条：任一线宽≥13且立4板+且开板≤0.45→主线重新成立升B；农业/养殖(猪周期)宽≥13且立2板+且开板≤0.45→猪周期接棒新主线升B；仍无一线宽≥13→无主线第10日维持C。④(logic/业绩腿)20260907读T-1交叉(A池0904·163∩涨停0907)：≥3只且≥1属模板153→业绩腿真回归升B；否则静默第8次维持C。⑤(lhb/资金)20260907读_资金温度.json末条：温度维持≥34且现非小样本S档(n≥25)买涨停股净买≥1000万且同向率≥50%→升B轻仓(敦煌种业600354为最优先候选)；温度回落&lt;34或S档仍全小样本→维持C。辅助：黄河旋风600172连续第2日缺席→反向信号沉淀为固定过滤。
+0903五路C档防守全部兑现，无打脸：①auction 0903判『反转日买新不买旧第3次坐实/均收&lt;0』→实际0903池执行均收-2.57%&lt;0、封板1/4=25%&lt;50%，第3次坐实✓；②lhb 0903判『黄河旋风S档共振验证/否则维持C』→实际黄河旋风600172今日完全未上榜(S档0席/A档0席/北向0)，反向信号坐实、维持C✓；③theme 0903判『算力/液冷接棒验证/否则无主线第9日』→实际算力/液冷0涨停、集泰股份002909断板、无主线第9日坐实✓；④logic 0903判『业绩腿静默第7次/T-1交叉&lt;3只』→实际T-1交叉0只再次归零、静默第7次坐实✓；⑤limitup 0903判『负期望第15日/执1max&lt;48.2%』→实际执1max45.9%&lt;48.2%、命中1只、池均-0.33%，负期望第15日坐实✓。五路昨日防守判断全部兑现，防守方向历史连续正确(连续第3日C档且均正确)。
+①温度口径双轨矛盾：auction竞价温度13.4冰点(竞价评分.json口径) vs lhb资金温度35分位破温区(资金温度.json口径)，同一交易日两套温度读数方向相反，需厘清为『情绪面冰点+席位资金面升温』两个维度而非真矛盾，避免下游误读为市场回暖。②五路全C档0荐，无『A档却0荐』『C档却重仓荐』类矛盾；观察标的去重：605577龙版传媒(auction/theme/limitup三路观察)、600354敦煌种业(lhb)、000876新希望(lhb)、600108亚盛集团(theme)、001366播恩集团(theme)、003040楚天龙(limitup)、603696安记食品(limitup)、002827高争民爆(auction)，全部为『观察』非『荐票』，均带量化历史对照并如实标注负edge或单样本，无同日同一标的一路买一路卖。③五路档位与结论自洽：auction空仓因池7只全高开≥5闸门弃/lhb空仓因S档全小样本无硬门槛坐镇/theme空仓因无主线第9日/logic空仓因业绩腿静默第7次/limitup空仓因负期望第15日+承接枯竭，理由与档位一一对应。④跨路口径异常：五路子agent可证伪条件统一写『20260905』，但20260905为周六非交易日，本总审统一校正为下一交易日20260907(下周一)，并作为可结算条件重写，避免结算落空。
+五路全C同向是否被情绪冰点共同误导？检查被忽略的进攻信号：①lhb席位资金升温第一天(温度12→35破34温区+S档5席同向率0%→80%)——这是五路中唯一反向变量，auction/theme/logic/limitup四路不读席位资金属结构性趋同盲区；但lhb自身已判C(S档全小样本n≤12无非小样本坐镇+龙虎榜涨停跟随胜率47.4%≈0无正edge+农业主线席位三方确认但无涨停跟随正edge)，升温为『第一天』非『确认』，已纳入次日验证点⑤重点跟踪，避免防守共识踏空升温。②农业/养殖(猪周期)7只全首板——theme(宽7&lt;13高度1板全首板一日游风险)/lhb(敦煌种业S/A/B三档5席位全净买但S档福州东街n=12小样本)/limitup(宽7虚胖)三路独立检视未过主线门槛。③龙版传媒605577五板最高板——theme(线宽2孤高开板0.5)/auction(高开≥5闸门弃+封单比1.21%负桶)/limitup(4板+桶负期望)三路独立判定孤高追高无肉。五路用不同数据独立算出同向防守(auction竞价池结算/lhb资金温度/theme题材宽度/logic业绩腿T-1交叉/limitup质量库执1胜率)，互不读彼此输出，属独立同向非抄袭，升置信。残余踏空风险=若0907 lhb非小样本S档坐镇坐实则防守共识踏空升温，已设验证点⑤单列跟踪。
+五路无A档，荐票全0，无A档编造。观察代码逐一核验∈20260904涨停池(39只剔ST)：605577龙版传媒✓/002827高争民爆✓/600354敦煌种业✓/000876新希望✓/600108亚盛集团✓/001366播恩集团✓/003040楚天龙✓/603696安记食品✓，全部为观察非荐票。证据全部≤20260904收盘，可证伪条件全部用未来日(本总审统一20260907)，无20260904之后数据被当作当日依据，无后视镜。黄河旋风600172未上龙虎榜(两源55代码+66条均无记录)lhb如实标注『完全未上榜』，合规。logic路风险日历_20260904.json本机缺失+双源交叉字段0命中(任务简报称内建与实际文件不符)如实标注不虚构；theme路THS涨停原因停更第18日归位39/39全B档行业兜底如实声明置信压制；limitup路核按钮率分母『昨日涨停数=63与0903实际44不符』分母bug自报，仅按『今日跌停回杀0』方向引用；auction路持仓掌阅科技603533现价用腾讯行情API实测(收盘24.00)非本机引擎产出如实标注。回测胜率均带窗口与n值(auction分桶库窗口截至20260814 n=2941/limitup质量库基准n=18106/lhb江苏路n=145/theme身位n=1-3/logic 3/14)，无『用历史回测胜率冒充当日依据』、无『事后高胜率』编造。
+读总审_20260903总裁决(C档防守置信82)+5条次日验证点对照今日实际，五路全部兑现防守方向，无打脸：①limitup验证『执1max≥48.3%→升B』实际45.9%&lt;48.2%、命中1只、池均-0.33%→负期望第15日坐实✓；②auction验证『0903池均收&gt;0且封板≥50%→升B』实际-2.57%&lt;0封板25%&lt;50%→反转日买新不买旧第3次坐实✓；③theme验证『算力/液冷宽≥13且集泰5板→升B』实际算力/液冷0涨停+集泰断板→无主线第9日✓；④logic验证『T-1交叉≥3且≥1属模板→升B』实际0只归零→静默第7次✓；⑤lhb验证『温度≥34且黄河旋风S档≥3席→升B』实际温度35≥34达标但黄河旋风完全未上榜S档0席→反向信号坐实维持C✓。
+五路档位无分歧(全C防守空仓)，无需档位裁决；但存在信号分歧需裁决：lhb席位资金升温第一天(温度12→35破34温区+S档同向率0%→80%)与其余四路纯冰点防守形成信号分歧——裁决为『升温第一天不改变档位，但提升次日验证权重』，理由：①S档5席全小样本n≤12无非小样本坐镇，席位硬门槛(非小样本S档买涨停净买≥1000万)0席满足；②龙虎榜涨停跟随胜率47.4%≈0无正edge，农业主线席位三方确认但无涨停跟随正edge，升温未传导为进攻质量；③整体情绪仍冰点13.4+炸板率55.2%极值+无3板4板，升温是资金面单点信号非情绪面确认。置信度差异(63~84)为路别证据强度差异非方向分歧：limitup 84最高(负期望第15日+炸板率250日极值最强硬)、logic 82(业绩腿静默第7次T-1交叉0只归零)、auction 80(反转日第3次坐实)、lhb 72(升温第一天但S档全小样本自身保守)、theme 63最低(THS停更18日归位全B档兜底催化真实性未核实，自身声明置信压制)。采信C档，置信取82(五路高置信C档共识加权，theme低置信被logic/limitup/auction高置信托举)。
+冰点第2日×炸板率55.2%250日极值×封板率44.8%&lt;60%×无3板4板高度断层=封板质量崩塌(承接资金单点回补整体枯竭)
+limitup(封板率44.8%&lt;60%+封板总额30.8→26.69亿-13%继续缩+单票封单max5.43亿靠楚天龙单只规则命中票扛)、auction(竞价池7只全高开≥5闸门弃+0903池连续第3日负结算)、theme(5板→2板高度断层4板层级彻底空档)、logic(涨停39只全部农业/养殖/传媒/消费杂散与模板8链零重叠)四路独立指向同一机理：量能17589→20307亿(+15.4%)重回2万亿但涨停44→39续缩+炸板33→48激增=放量分歧非回暖，封板结构崩塌，承接资金由『枯竭』进入『单点回补整体枯竭』(楚天龙单点脉冲+174%但封板总额继续缩)。
+20260907单票封单max≥5.65亿且封单≥4亿家数≥3且封板率≥60%且温度≥25→承接资金回归退潮结束升B；任一不满足→缩量退潮延续维持C。
+20260907
+lhb席位资金升温第一天(温度35破34温区)vs 其余四路纯冰点防守=唯一反向变量
+资金温度12→35(+23点)破冷/温分界、S档出手5席(0903的2席→0904的5席)同向率0%→80%，是0902以来首次升温；同时农业主线席位三方确认(机构新希望5095万纯买+北向平潭发展10122万+S/A共振敦煌种业5席位0卖全净买)。但S档5席全小样本n≤12无非小样本坐镇+龙虎榜涨停跟随胜率47.4%≈0无正edge，黄河旋风反向信号坐实(连续2例博云新材→黄河旋风沉淀为固定过滤)。升温第一天≠进攻确认，是五路全C防守共识中唯一需次日验证的踏空风险点。
+20260907温度维持≥34且现非小样本S档(n≥25)买涨停股净买≥1000万且同向率≥50%→升B轻仓(敦煌种业600354为最优先候选)；温度回落&lt;34或S档仍全小样本→维持C空仓。
+20260907
+无主线第9日×主线切换农业/养殖(猪周期)7只全首板=冰点期风格切换至非模板防御题材
+theme(无一线宽≥13+农业/养殖宽7&lt;13高1板全首板)/logic(涨停39只全农业/养殖/传媒/消费杂散与模板8链零重叠=模板体系零覆盖)/lhb(农业主线席位三方确认但无涨停跟随正edge)/auction(池7只最高分高争民爆002827为1板秒板炸3次封单比0.44%极弱封)四路独立指向：市场风格彻底切换至非模板防御题材，主线真空期第9日，农业养殖为首板扩散一日游脉冲(认知库0821医药37→7宽度陷阱前车)，传媒/出版仅2家(龙版5板+中国出版1板)高度孤立。
+20260907农业/养殖(猪周期)宽≥13且立2板+且开板≤0.45→猪周期接棒新主线升B；仍无一线宽≥13→无主线第10日维持C。
+20260907
+炸板率250日分位100%极值+放量重回2万亿但涨停续缩=封板质量崩塌(放量分歧非回暖)：量能回升+涨停减少+炸板激增=退潮期放量分歧，非回暖信号；判回暖看温度档+涨停数+封板率同向，不看量能单维。
+炸板率42.9%→55.2%(250日分位100%极值)+封板率57.1%→44.8%&lt;60%+量能17589→20307亿(+15.4%)+涨停44→39(-5)+温度13.2→13.4微升，limitup/auction/theme三路独立同向。
+20260907炸板率回落&lt;30%且封板率≥60%且涨停≥60→封板质量修复(本认知修正)；否则延续。
+反转日买新不买旧第3次坐实：0901池-1.48%→0902池-2.48%→0903池-2.57%连续3日负结算且封板率持续&lt;50%，竞价池的肉在环境延续不在反转，冰点日竞价池7只全高开≥5被闸门全挡，冷档池重开可吃窗不成立。
+auction竞价池结算_20260903汇总(0903池4只/封板1/4=25%/均收-2.57%)，与0901池-1.48%/0902池-2.48%连续3日负。
+20260907读竞价池结算_20260904.json：0904池均收&gt;0且封板率≥50%→反转日买新不买旧证伪(踏空升B/A)；仍&lt;0→第4次坐实维持C。
+席位资金升温第一天(温度破34温区+S档同向率80%)≠进攻确认，升B需三条件(温度≥34+非小样本S档坐镇+同向率≥50%)齐备，今日缺『非小样本S档坐镇』第三条件；冷区双A档无S档=出货/换手对倒已连续2例沉淀为固定过滤。
+lhb资金温度12→35破34温区+S档5席同向率0%→80%但全小样本n≤12，黄河旋风600172今日完全未上榜(反向信号坐实)，敦煌种业S/A/B三档5席位全净买但S档福州东街n=12小样本。
+20260907温度≥34且现非小样本S档(n≥25)买涨停净买≥1000万且同向率≥50%→升B轻仓；否则维持C。
+AS-20260904-CLUE-001
+auction
+竞价池7只全高开≥5%被闸门全挡，反转日买新不买旧第3次坐实(0901池-1.48%→0902池-2.48%→0903池-2.57%连续3日负结算)，冷档池重开可吃窗不成立。
+待验证
+20260907读竞价池结算_20260904.json：0904池均收&gt;0且封板率≥50%→踏空升B/A；均收&lt;0→第4次坐实维持C。
+20260907
+AS-20260904-CLUE-002
+席位资金升温第一天(温度35破34温区+S档5席同向率80%)但S档全小样本；黄河旋风600172冷区双A档反向信号坐实；敦煌种业600354为温区首现『接近干净进攻』样本(S/A/B三档5席位0卖全净买，唯一缺口S档福州东街n=12小样本)。
+观察中
+20260907温度≥34且现非小样本S档(n≥25)买涨停净买≥1000万且同向率≥50%→升B轻仓(敦煌种业600354最优先候选)；黄河旋风连续第2日缺席→反向信号沉淀为固定过滤。
+20260907
+AS-20260904-CLUE-003
+theme
+无主线第9日，主线切换农业/养殖(猪周期)7只全首板(宽7&lt;13高1板)，算力/液冷0涨停发酵彻底证伪，国芳集团断板高度龙带出板块证伪，传媒/出版2家(龙版5板孤高)。
+待验证
+20260907任一线宽≥13且立4板+且开板≤0.45→主线重新成立升B；农业/养殖宽≥13且立2板+且开板≤0.45→猪周期接棒升B；否则无主线第10日维持C。
+20260907
+AS-20260904-CLUE-004
+logic
+业绩腿静默第7次(T-1交叉A池0903·185∩涨停0904·39=0只再次归零)，模板153∩涨停=0只(题材腿覆盖2→0归零)，涨停39只全部农业/养殖/传媒/消费杂散与模板8链零重叠。
+待验证
+20260907读T-1交叉(A池0904·163∩涨停0907)：≥3只且≥1属模板153→业绩腿真回归升B；存储环节≥2涨停或深圳华强/大普微/南华回池→露头转持续升B；否则静默第8次维持C。
+20260907
+AS-20260904-CLUE-005
+limitup
+负期望第15日(执1max45.9%&lt;48.2%重校阈值)+炸板率55.2%250日极值+承接资金单点回补整体枯竭(封单max5.43亿楚天龙单只扛、封板总额26.69亿-13%继续缩)。
+待验证
+20260907读涨停质量荐票_20260907.json：执1max≥48.2%且命中≥3只且池均≥0→负期望终结升B/A；辅助zt_pool.csv：单票封单max≥5.65亿且封单≥4亿家数≥3且最高板≥5→承接资金质量修复真回归。
+20260907
+AS-20260904-001
+auction
+20260907
+待承接
+竞价池收缩冰点极值验证+闸门重估：读竞价池结算_20260904.json，若0904池执行均收&gt;0且次日封板率≥50%→『反转日买新不买旧』终结、冷档池重开可吃窗(闸门放宽评估升B/A)；若均收仍&lt;0→第4次坐实维持C。附加：若明晨0904池7只出现高开0~5或低开≤0且落正期望带→闸门内可吃窗重开需重估。
+竞价路是冷档唯一可能重开进攻窗的路，反转日买新不买旧铁律第4次定是否延续。
+20260907读竞价池结算_20260904.json：0904池均收&gt;0且封板率≥50%→升B/A；均收&lt;0→第4次坐实维持C。
+AS-20260904-002
+20260907
+待承接
+席位资金升温第一天验证+敦煌种业非小样本S档共振：读_资金温度.json 20260907末条+_席位动向/20260907.csv，若温度维持≥34且现非小样本S档(n≥25)买涨停股净买≥1000万且同向率≥50%→C升B轻仓(敦煌种业600354若次日续涨且现非小样本S档坐镇为最优先候选)；若温度回落&lt;34或S档仍全小样本→维持C空仓。附加：黄河旋风600172连续第2日缺席→反向信号沉淀为固定过滤。
+席位资金升温是五路全C防守共识中唯一反向变量，非小样本S档坐镇定lhb路能否从空仓转轻仓。
+20260907温度≥34且现非小样本S档(n≥25)买涨停净买≥1000万且同向率≥50%→升B轻仓；否则维持C空仓。
+AS-20260904-003
+theme
+20260907
+待承接
+农业/养殖(猪周期)是否接棒新主线+龙版传媒5板高度验证：读题材归位_20260907.json+涨停对链条_20260907.json，若农业/养殖宽≥13且立2板+且开板≤0.45→猪周期接棒新主线升B；若任一线宽≥13且立4板+且开板≤0.45→主线重新成立升B；否则无主线第10日维持C。附加：龙版传媒605577若6板且传媒/出版宽≥13→传媒转主线。
+主线真空期第9日，农业/养殖7家全首板是全场最宽线，第10日定猪周期是否接棒终结无主线序列。
+20260907任一线宽≥13且立4板+且开板≤0.45→升B；仍无一线宽≥13→无主线第10日维持C。
+AS-20260904-004
+logic
+20260907
+待承接
+业绩腿静默第8次验证+模板腿传导复核：读T-1交叉(A池0904·163∩涨停0907)，若≥3只且≥1属产业链模板153→业绩腿真回归升B；若存储环节(江波龙301308/德明利001309/兆易创新603986/盈方微000670)≥2只涨停或深圳华强000062/大普微301666/南华603093任一回涨停池→露头转持续升B；否则静默第8次维持C。附加：补落地风险日历_20260904.json踩窗过滤与雷达双源交叉字段(排除『双源有色』假阳性，与任务简报声称内建不一致的缺口须补)。
+业绩腿静默第7次T-1交叉0只归零，第8次定该腿是否彻底放弃；本路战绩3/14=21.4%五路最弱，须补落地两个数据缺失项提升证据质量。
+20260907读T-1交叉(A池0904·163∩涨停0907)：≥3只且≥1属模板153→升B；否则静默第8次维持C。
+AS-20260904-005
+limitup
+20260907
+待承接
+负期望第16日终结验证+承接资金质量型修复：读涨停质量荐票_20260907.json，若全池执1max≥48.2%(重校阈值=当日基准+5pp)且命中≥3只且执1均涨池均≥0→负期望第15日终结升B/A；若执1max仍&lt;48.2%或池均&lt;0→负期望第16日维持C。附加读20260907/zt_pool.csv：单票封单max≥5.65亿且封单≥4亿家数≥3且最高板≥5→承接资金质量修复真回归；否则单点回补整体枯竭延续。
+负期望第15日+炸板率250日极值+承接资金单点回补整体枯竭，第16日定是否终结；封板率44.8%&lt;60%退潮延续是防守的硬理由。
+20260907读涨停质量荐票_20260907.json：执1max≥48.2%且命中≥3只且池均≥0→升B/A；否则维持C。辅助zt_pool.csv：单票封单max≥5.65亿且封单≥4亿家数≥3且最高板≥5→质量修复真回归。
+Index · 总判断 · 截至 09-04 收盘
+冰点第2日 · 温度13.4 · 七维退潮共振 · 五路全C档防守空仓
+情绪温度13.4冰点(昨13.2,+0.2)，涨停39(昨44)/跌停9(昨16减半)/炸板率55.2%(昨42.9%激增,250日分位100%极值)/封板率44.8%跌破60%/最高板5板(龙版传媒605577)但3板4板断层/量能20307亿(昨17589,+15.4%重回2万亿)。昨日「退潮C档防守」被今日全面验证正确，七维缩量退潮共振(炸板率250日极值/封板率44.8%跌破60%/无3板4板高度断层/无主线第9日/业绩腿静默第7次/负期望第15日/承接资金单点回补整体枯竭)，唯一反向变量=lhb席位资金升温第一天(温度35破34温区)但S档全小样本不成进攻，总裁决C档(置信82)，总仓0%。
+C档·防守空仓
+炸板率55.2%·250日分位100%极值
+七维退潮共振·五路全C无分歧
+🌡温度情绪温度13.4昨13.2 → +0.2 · 冰点第2日13.4 冰点冰点偏冷中性偏热过热
+🔥涨停涨停/跌停39/ 9涨停39(昨44,-11.4%)·跌停9(昨16减半)·炸板48(55.2%极值)
+💰量能两市成交额2.03T20307亿(昨17589,+15.4%)·重回2万亿但涨停续缩=放量分歧
+🏔最高板连板高度5板龙版传媒5板·梯队5板1·2板6·1板32(无3板4板断层)
+一 总判断
+总裁决 · C档防守(置信82)五路全C档防守空仓，无分歧。七维退潮证据各自独立同向且较0903更深：auction竞价池7只全高开≥5%被闸门全挡+反转日买新不买旧第3次坐实(0901池-1.48%→0902池-2.48%→0903池-2.57%连续3日负结算)；lhb资金温度35分位破34温区升温第一天+S档5席同向率80%但全小样本n≤12无硬门槛坐镇；theme无主线第9日(算力/液冷0涨停+集泰股份002909断板+国芳集团601086断板,主线切换农业/养殖7只全首板宽7&lt;13)；logic业绩腿静默第7次(T-1交叉A池0903·185∩涨停0904·39=0只再次归零+模板覆盖归零)；limitup负期望第15日(执1max45.9%&lt;48.2%重校阈值)+炸板率55.2%250日极值+承接资金单点回补整体枯竭(封单max5.43亿楚天龙单只扛/封板总额26.69亿继续缩)。今日防守共识比0903更深：炸板率42.9%→55.2%(250日分位100%极值)、封板率57.1%→44.8%、量能重回2万亿但涨停续缩(44→39)放量分歧非回暖、4板层级彻底空档(无3板无4板)。五路无一路主张进攻，冰点空仓是唯一共识且为铁律内最优，总仓0%。
+昨日战绩验收昨日(0903)总裁决C档防守(置信82)被今日全面验证正确，五路全部兑现防守方向无打脸：①auction 0903判『反转日买新不买旧第3次坐实/均收&lt;0』→实际0903池执行均收-2.57%&lt;0封板1/4=25%&lt;50%，第3次坐实✓；②lhb 0903判『黄河旋风600172 S档共振验证/否则维持C』→实际黄河旋风今日完全未上榜(冷区双A档无S档=出货/换手对倒反向信号坐实)✓；③theme 0903判『算力/液冷接棒+国芳5板高度龙』→实际算力/液冷0涨停发酵彻底证伪+国芳断板+无主线第9日✓；④logic 0903判『业绩腿静默第7次』→实际T-1交叉0只归零第7次坐实✓；⑤limitup 0903判『负期望第15日』→实际执1max45.9%&lt;48.2%第15日坐实+承接资金单点回补整体枯竭✓。五路连续第3日C档且均正确，防守方向历史连续正确。
+二 五路裁决
+01 / 第1路竞价·时机C·防守维持C档(采纳)。反转日买新不买旧第3次坐实(0903池-2.57%连续3日负结算+封板率持续&lt;50%)，竞价池7只全高开≥5%被闸门全挡，无正期望可吃带。02 / 第2路龙虎榜·席位C·防守维持C档(采纳)。资金温度12→35分位破34温区升温第一天+S档5席同向率80%，但S档5席全小样本n≤12无硬门槛坐镇+黄河旋风600172反向信号坐实。03 / 第3路主线·题材C·防守维持C档(采纳)。无主线第9日(算力/液冷0涨停+集泰断板+国芳断板)，最宽线切换农业/养殖7家全首板(宽7&lt;13高1板)，传媒/出版2家高度孤立。04 / 第4路产业·逻辑C·防守维持C档(采纳)。业绩腿静默第7次(T-1交叉0只再次归零)+存储环节0涨停+模板153∩涨停0只(题材腿覆盖2→0归零)。05 / 第5路涨停·质量C·防守维持C档(采纳)。全池负期望第15日(执1max45.9%&lt;48.2%重校阈值)+炸板率55.2%250日极值+承接资金单点回补整体枯竭(封单max5.43亿楚天龙单只扛)。
+三 检查四项
+① 矛盾捕获 · 通过五路全C档0荐，无『A档却0荐』『C档却重仓荐』类矛盾。观察标的去重8代码(605577龙版传媒/600354敦煌种业/000876新希望/600108亚盛集团/001366播恩集团/003040楚天龙/603696安记食品/002827高争民爆)全部为『观察』非『荐票』，均带量化历史对照并如实标注负edge或单样本。黄河旋风600172未上龙虎榜(两源55代码+66条均无记录)lhb已如实标注『完全未上榜』，合规非编造。温度口径双轨矛盾已厘清：auction竞价温度13.4冰点(情绪面) vs lhb资金温度35分位破温区(席位资金面)=两维度非真矛盾。各路档位与结论自洽：auction空仓因池7只全高开≥5闸门弃/lhb空仓因S档全小样本无硬门槛/logic空仓因业绩腿静默第7次/limitup空仓因负期望第15日+承接枯竭，理由与档位一一对应。
+② 趋同盲区 · 通过五路全C是否被情绪冰点共同误导？检查被忽略的进攻信号：①lhb席位资金升温第一天(温度35破34温区+S档同向率80%)——五路中唯一反向变量，但lhb自身已判C(S档全小样本n≤12无硬门槛坐镇+龙虎榜涨停跟随胜率47.4%≈0无正edge)，升温为『第一天』非『确认』，已纳入次日验证点单列跟踪；②农业/养殖(猪周期)7只全首板——theme(宽7&lt;13高度1板全首板一日游风险)/lhb(敦煌种业S/A/B三档5席位全净买但S档福州东街n=12小样本)/limitup(宽7虚胖)三路独立检视未过主线门槛；③龙版传媒605577五板最高板——theme(线宽2孤高)/auction(高开≥5闸门弃+封单比1.21%负桶)/limitup(4板+桶负期望)三路独立判定孤高追高无肉。五路用不同数据独立算出同向防守，互不读彼此输出，属独立同向非单一信号盲区，升置信。残余踏空风险=若0907 lhb非小样本S档坐镇坐实则防守共识踏空升温，已设验证点单列跟踪。
+③ 编造后视镜 · 通过五路无A档，荐票全0，无A档编造。观察代码逐一核验∈20260904涨停池(39只剔ST)：605577龙版传媒✓/002827高争民爆✓/600354敦煌种业✓/000876新希望✓/600108亚盛集团✓/001366播恩集团✓/003040楚天龙✓/603696安记食品✓，全部为观察非荐票。证据全部≤20260904收盘，可证伪条件全部用未来日(统一20260907)，无后视镜。黄河旋风600172未上榜如实标注。logic路风险日历_20260904.json本机缺失+双源交叉字段0命中如实标注不虚构；theme路THS涨停原因停更第18日归位39/39全B档行业兜底如实声明置信压制；auction路持仓掌阅科技603533现价用腾讯行情API实测(收盘24.00)非本机引擎产出如实标注。回测胜率均带窗口与n值(auction分桶库窗口截至20260814 n=2941/limitup质量库基准n=18106/lhb江苏路n=145/theme身位n=1-3/logic 3/14)。
+④ 打脸结算 · 通过读总审_20260903总裁决(C档防守置信82)+5条次日验证点对照今日实际，五路全部兑现防守方向无打脸：①limitup验证『执1max≥48.3%→升B』实际45.9%&lt;48.2%命中0/39→负期望第15日坐实✓；②auction验证『0903池均收&gt;0且封板≥50%→升B』实际-2.57%&lt;0封板25%&lt;50%→反转日买新不买旧第3次坐实✓；③theme验证『算力液冷宽≥13且集泰5板且开板&lt;0.45→升B』实际0涨停集泰断板国芳断板→无主线第9日✓；④logic验证『T-1交叉≥3且≥1属模板→升B』实际0只→静默第7次✓；⑤lhb验证『温度≥34且现S档共振→升B』实际温度35破温区但S档全小样本无硬门槛→维持C✓。
+六路独立核算 · 战绩画像竞价auction-2.64%总净值龙虎榜席位+2.93%总净值主线题材+2.00%总净值产业逻辑+1.05%总净值涨停质量-1.16%总净值总Master+0.90%总净值
+五 深挖与线索
+线索跟踪 5条·覆盖五路看板观察中AS-20260904-CLUE-001→竞价池7只全高开≥5%闸门全挡(待验证) · CLUE-002→席位资金升温第一天+敦煌种业600354接近干净进攻(观察中) · CLUE-003→无主线第9日主线切农业养殖7只全首板(待验证) · CLUE-004→业绩腿静默第7次T-1交叉0只(待验证) · CLUE-005→负期望第15日+承接单点回补整体枯竭(待验证)观察备选池(次日验证)auction观2(龙版传媒605577/高争民爆002827)·lhb观2(敦煌种业600354/新希望000876)·theme观3(龙版传媒605577/亚盛集团600108/播恩集团001366)·logic观2(通达电气603390/绿康生化002868)·limitup观3(楚天龙003040/龙版传媒605577/安记食品603696)——全部∈今日zt_pool,零编造
+深挖 · 冰点第2日×炸板率55.2%250日极值×封板率44.8%&lt;60%×无3板4板高度断层=封板质量崩塌(承接资金单点回补整体枯竭)limitup(封板率44.8%&lt;60%+封板总额30.8→26.69亿-13%继续缩+单票封单max5.43亿靠楚天龙单只规则命中票扛)、auction(竞价池7只全高开≥5闸门弃+0903池连续第3日负结算)、theme(5板→2板高度断层4板层级彻底空档)、logic(涨停39只全部农业/养殖/传媒/消费杂散与模板8链零重叠)四路独立指向同一机理：量能17589→20307亿(+15.4%)重回2万亿但涨停44→39续缩+炸板33→48激增=放量分歧非回暖，封板结构崩塌，承接资金由『枯竭』进入『单点回补整体枯竭』。判定: 20260907单票封单max≥5.65亿且封单≥4亿家数≥3且封板率≥60%且温度≥25→承接资金回归退潮结束(升B)；任一不满足→缩量退潮延续(维持C)。
+深挖 · lhb席位资金升温第一天(温度35破34温区)vs 其余四路纯冰点防守=唯一反向变量资金温度12→35(+23点)破冷/温分界、S档出手5席(0903的2席→0904的5席)同向率0%→80%，是0902以来首次升温；同时农业主线席位三方确认(机构新希望5095万纯买+北向平潭发展10122万+S/A共振敦煌种业5席位0卖全净买)。但S档5席全小样本n≤12无非小样本坐镇+龙虎榜涨停跟随胜率47.4%≈0无正edge，黄河旋风反向信号坐实。升温第一天≠进攻确认，是五路全C防守共识中唯一需次日验证的踏空风险点。判定: 20260907温度维持≥34且现非小样本S档(n≥25)买涨停股净买≥1000万且同向率≥50%→升B轻仓(敦煌种业600354最优先候选)；温度回落&lt;34或S档仍全小样本→维持C空仓。
+深挖 · 无主线第9日×主线切换农业/养殖(猪周期)7只全首板=冰点期风格切换至非模板防御题材theme(无一线宽≥13+农业/养殖宽7&lt;13高1板全首板)/logic(涨停39只全农业/养殖/传媒/消费杂散与模板8链零重叠=模板体系零覆盖)/lhb(农业主线席位三方确认但无涨停跟随正edge)/auction(池7只最高分高争民爆002827为1板秒板炸3次封单比0.44%极弱封)四路独立指向：市场风格彻底切换至非模板防御题材，主线真空期第9日，农业养殖为首板扩散一日游脉冲(认知库0821医药37→7宽度陷阱前车)，传媒/出版仅2家(龙版5板+中国出版1板)高度孤立。判定: 20260907农业/养殖(猪周期)宽≥13且立2板+且开板≤0.45→猪周期接棒新主线升B；仍无一线宽≥13→无主线第10日维持C。
+AS-20260904-CLUE-001 · 待验证竞价池7只全高开≥5%被闸门全挡，反转日买新不买旧第3次坐实(0901池-1.48%→0902池-2.48%→0903池-2.57%连续3日负结算)，冷档池重开可吃窗不成立。
+AS-20260904-CLUE-002 · 观察中席位资金升温第一天(温度35破34温区+S档5席同向率80%)但S档全小样本；黄河旋风600172冷区双A档反向信号坐实；敦煌种业600354为温区首现『接近干净进攻』样本(S/A/B三档5席位0卖全净买，唯一缺口S档福州东街n=12小样本)。
+AS-20260904-CLUE-003 · 待验证无主线第9日，主线切换农业/养殖(猪周期)7只全首板(宽7&lt;13高1板)，算力/液冷0涨停发酵彻底证伪，国芳集团断板高度龙带出板块证伪，传媒/出版2家(龙版5板孤高)。
+AS-20260904-CLUE-004 · 待验证业绩腿静默第7次(T-1交叉A池0903·185∩涨停0904·39=0只再次归零)，模板153∩涨停=0只(题材腿覆盖2→0归零)，涨停39只全部农业/养殖/传媒/消费杂散与模板8链零重叠。
+AS-20260904-CLUE-005 · 待验证负期望第15日(执1max45.9%&lt;48.2%重校阈值)+炸板率55.2%250日极值+承接资金单点回补整体枯竭(封单max5.43亿楚天龙单只扛、封板总额26.69亿-13%继续缩)。
+六 指派清单 · 认知迭代
+AS-20260904-001 → auction (截止20260907)竞价池收缩冰点极值验证+闸门重估：读竞价池结算_20260904.json，若0904池执行均收&gt;0且次日封板率≥50%→『反转日买新不买旧』终结、冷档池重开可吃窗(闸门放宽评估升B/A)；若均收仍&lt;0→第4次坐实维持C。附加：若明晨0904池7只出现高开0~5或低开≤0且落正期望带→闸门内可吃窗重开需重估。
+AS-20260904-002 → lhb (截止20260907)席位资金升温第一天验证+敦煌种业非小样本S档共振：读_资金温度.json 20260907末条，若温度维持≥34且现非小样本S档(n≥25)买涨停股净买≥1000万且同向率≥50%→C升B轻仓(敦煌种业600354最优先候选)；若温度回落&lt;34或S档仍全小样本→维持C空仓。附加：黄河旋风600172连续第2日缺席→反向信号沉淀为固定过滤。
+AS-20260904-003 → theme (截止20260907)农业/养殖(猪周期)是否接棒新主线+龙版传媒5板高度验证：读题材归位_20260907.json+涨停对链条_20260907.json，若农业/养殖宽≥13且立2板+且开板≤0.45→猪周期接棒新主线升B；若任一线宽≥13且立4板+且开板≤0.45→主线重新成立升B；否则无主线第10日维持C。附加：龙版传媒605577若6板且传媒/出版宽≥13→传媒转主线。
+AS-20260904-004 → logic (截止20260907)业绩腿静默第8次验证+模板腿传导复核：读T-1交叉(A池0904·163∩涨停0907)，若≥3只且≥1属产业链模板153→业绩腿真回归升B；若存储环节(江波龙301308/德明利001309/兆易创新603986/盈方微000670)≥2只涨停或深圳华强000062/大普微301666/南华603093任一回涨停池→露头转持续升B；否则静默第8次维持C。附加：补落地风险日历_20260904.json踩窗过滤与雷达双源交叉字段。
+AS-20260904-005 → limitup (截止20260907)负期望第16日终结验证+承接资金质量型修复：读涨停质量荐票_20260907.json，若全池执1max≥48.2%(重校阈值)且命中≥3只且执1均涨池均≥0→负期望第15日终结升B/A；若执1max仍&lt;48.2%或池均&lt;0→负期望第16日维持C。附加读20260907/zt_pool.csv：单票封单max≥5.65亿且封单≥4亿家数≥3且最高板≥5→承接资金质量修复真回归；否则单点回补整体枯竭延续。
+09-04炸板率250日分位100%极值+放量重回2万亿但涨停续缩=封板质量崩塌(放量分歧非回暖)：量能回升+涨停减少+炸板激增=退潮期放量分歧，非回暖信号；判回暖看温度档+涨停数+封板率同向，不看量能单维。炸板率42.9%→55.2%(250日分位100%极值)+封板率57.1%→44.8%&lt;60%+量能17589→20307亿(+15.4%)+涨停44→39(-5)+温度13.2→13.4微升，limitup/auction/theme三路独立同向。
+09-04反转日买新不买旧第3次坐实：0901池-1.48%→0902池-2.48%→0903池-2.57%连续3日负结算且封板率持续&lt;50%，竞价池的肉在环境延续不在反转，冰点日竞价池7只全高开≥5被闸门全挡，冷档池重开可吃窗不成立。auction竞价池结算_20260903汇总(0903池4只/封板1/4=25%/均收-2.57%)，与0901池-1.48%/0902池-2.48%连续3日负。
+09-04席位资金升温第一天(温度破34温区+S档同向率80%)≠进攻确认，升B需三条件(温度≥34+非小样本S档坐镇+同向率≥50%)齐备，今日缺『非小样本S档坐镇』第三条件；冷区双A档无S档=出货/换手对倒已连续2例沉淀为固定过滤。lhb资金温度12→35破34温区+S档5席同向率0%→80%但全小样本n≤12，黄河旋风600172今日完全未上榜(反向信号坐实)，敦煌种业S/A/B三档5席位全净买但S档福州东街n=12小样本。
+</pre></div><div class="inner-limit"><b>数据边界</b><ul><li>兼容导入旧判断；原文立场未重新验证。</li><li>旧 HTML 补充按原栏目职责归位；相似判断仅提示重叠，不作语义删除。</li><li>当日机器组件未齐：CROSSPICK、ENGINEBOOKS</li></ul></div><ul><li>首屏只给总判断及决定性变化，观察点负责次日验证。</li><li>五路看牌保留各自依据，拐点区专列反证与转向条件。</li><li>总裁决交代攻防；Master 专列新问题、线索、指派与认知，不再重复编号。</li></ul><div id="evidence-ev-index-b82c1874740cb24b"><b>ev-index-b82c1874740cb24b</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b82c1874740cb24b&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/结论&quot;
+}
+</pre></div><div id="evidence-ev-index-cbe2b4bd69bd9817"><b>ev-index-cbe2b4bd69bd9817</b><pre>{
+  &quot;id&quot;: &quot;ev-index-cbe2b4bd69bd9817&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/auction/档位&quot;
+}
+</pre></div><div id="evidence-ev-index-9b078beb4875fc53"><b>ev-index-9b078beb4875fc53</b><pre>{
+  &quot;id&quot;: &quot;ev-index-9b078beb4875fc53&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/auction/裁决&quot;
+}
+</pre></div><div id="evidence-ev-index-bc077f7d1fb752b9"><b>ev-index-bc077f7d1fb752b9</b><pre>{
+  &quot;id&quot;: &quot;ev-index-bc077f7d1fb752b9&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/auction/置信度&quot;
+}
+</pre></div><div id="evidence-ev-index-b0ac53cee7398a31"><b>ev-index-b0ac53cee7398a31</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b0ac53cee7398a31&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/lhb/档位&quot;
+}
+</pre></div><div id="evidence-ev-index-7d54aef1262ff082"><b>ev-index-7d54aef1262ff082</b><pre>{
+  &quot;id&quot;: &quot;ev-index-7d54aef1262ff082&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/lhb/裁决&quot;
+}
+</pre></div><div id="evidence-ev-index-55a1d29fd14a00c1"><b>ev-index-55a1d29fd14a00c1</b><pre>{
+  &quot;id&quot;: &quot;ev-index-55a1d29fd14a00c1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/lhb/置信度&quot;
+}
+</pre></div><div id="evidence-ev-index-3d59317762ce2b14"><b>ev-index-3d59317762ce2b14</b><pre>{
+  &quot;id&quot;: &quot;ev-index-3d59317762ce2b14&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/theme/档位&quot;
+}
+</pre></div><div id="evidence-ev-index-dc01bd8f86435244"><b>ev-index-dc01bd8f86435244</b><pre>{
+  &quot;id&quot;: &quot;ev-index-dc01bd8f86435244&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/theme/裁决&quot;
+}
+</pre></div><div id="evidence-ev-index-a10cd448c6e30d4b"><b>ev-index-a10cd448c6e30d4b</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a10cd448c6e30d4b&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/theme/置信度&quot;
+}
+</pre></div><div id="evidence-ev-index-de3937cd7a6f60f6"><b>ev-index-de3937cd7a6f60f6</b><pre>{
+  &quot;id&quot;: &quot;ev-index-de3937cd7a6f60f6&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/logic/档位&quot;
+}
+</pre></div><div id="evidence-ev-index-aba5857762d6988d"><b>ev-index-aba5857762d6988d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-aba5857762d6988d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/logic/裁决&quot;
+}
+</pre></div><div id="evidence-ev-index-94274f7e76cf5722"><b>ev-index-94274f7e76cf5722</b><pre>{
+  &quot;id&quot;: &quot;ev-index-94274f7e76cf5722&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/logic/置信度&quot;
+}
+</pre></div><div id="evidence-ev-index-2ea868492f62dc92"><b>ev-index-2ea868492f62dc92</b><pre>{
+  &quot;id&quot;: &quot;ev-index-2ea868492f62dc92&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/limitup/档位&quot;
+}
+</pre></div><div id="evidence-ev-index-4c68e7bad2d213cf"><b>ev-index-4c68e7bad2d213cf</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4c68e7bad2d213cf&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/limitup/裁决&quot;
+}
+</pre></div><div id="evidence-ev-index-027c2b8c23e83a51"><b>ev-index-027c2b8c23e83a51</b><pre>{
+  &quot;id&quot;: &quot;ev-index-027c2b8c23e83a51&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/五路裁决/limitup/置信度&quot;
+}
+</pre></div><div id="evidence-ev-index-b142c3183a233fdc"><b>ev-index-b142c3183a233fdc</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b142c3183a233fdc&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决/档位&quot;
+}
+</pre></div><div id="evidence-ev-index-4f2106fe9ec8f732"><b>ev-index-4f2106fe9ec8f732</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4f2106fe9ec8f732&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决/置信度&quot;
+}
+</pre></div><div id="evidence-ev-index-c643587535443fb0"><b>ev-index-c643587535443fb0</b><pre>{
+  &quot;id&quot;: &quot;ev-index-c643587535443fb0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决/依据&quot;
+}
+</pre></div><div id="evidence-ev-index-fcf6a77a1d86458e"><b>ev-index-fcf6a77a1d86458e</b><pre>{
+  &quot;id&quot;: &quot;ev-index-fcf6a77a1d86458e&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决/环境加权依据&quot;
+}
+</pre></div><div id="evidence-ev-index-264efc6a59e72184"><b>ev-index-264efc6a59e72184</b><pre>{
+  &quot;id&quot;: &quot;ev-index-264efc6a59e72184&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决/次日验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-380b8e52f312e537"><b>ev-index-380b8e52f312e537</b><pre>{
+  &quot;id&quot;: &quot;ev-index-380b8e52f312e537&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/总裁决/昨日战绩验收&quot;
+}
+</pre></div><div id="evidence-ev-index-e399fd2a15b5b260"><b>ev-index-e399fd2a15b5b260</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e399fd2a15b5b260&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/检查四项/矛盾捕获&quot;
+}
+</pre></div><div id="evidence-ev-index-5baae31c863e1701"><b>ev-index-5baae31c863e1701</b><pre>{
+  &quot;id&quot;: &quot;ev-index-5baae31c863e1701&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/检查四项/趋同盲区&quot;
+}
+</pre></div><div id="evidence-ev-index-10c1e3beeab559c5"><b>ev-index-10c1e3beeab559c5</b><pre>{
+  &quot;id&quot;: &quot;ev-index-10c1e3beeab559c5&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/检查四项/编造后视镜&quot;
+}
+</pre></div><div id="evidence-ev-index-78beaaa4b85f3174"><b>ev-index-78beaaa4b85f3174</b><pre>{
+  &quot;id&quot;: &quot;ev-index-78beaaa4b85f3174&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/检查四项/打脸结算&quot;
+}
+</pre></div><div id="evidence-ev-index-109bdec3fc238019"><b>ev-index-109bdec3fc238019</b><pre>{
+  &quot;id&quot;: &quot;ev-index-109bdec3fc238019&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/分歧裁决&quot;
+}
+</pre></div><div id="evidence-ev-index-4b19dfdb7d55755d"><b>ev-index-4b19dfdb7d55755d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4b19dfdb7d55755d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/0/主题&quot;
+}
+</pre></div><div id="evidence-ev-index-0008ee6ed01a4b16"><b>ev-index-0008ee6ed01a4b16</b><pre>{
+  &quot;id&quot;: &quot;ev-index-0008ee6ed01a4b16&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/0/深挖结论&quot;
+}
+</pre></div><div id="evidence-ev-index-bba511211fd2b496"><b>ev-index-bba511211fd2b496</b><pre>{
+  &quot;id&quot;: &quot;ev-index-bba511211fd2b496&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/0/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-b2a1eb733d2058a0"><b>ev-index-b2a1eb733d2058a0</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b2a1eb733d2058a0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/0/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-fe3ecb4c4dc01f9a"><b>ev-index-fe3ecb4c4dc01f9a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-fe3ecb4c4dc01f9a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/1/主题&quot;
+}
+</pre></div><div id="evidence-ev-index-ee11c9d40ae1cd89"><b>ev-index-ee11c9d40ae1cd89</b><pre>{
+  &quot;id&quot;: &quot;ev-index-ee11c9d40ae1cd89&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/1/深挖结论&quot;
+}
+</pre></div><div id="evidence-ev-index-7d05654dcbb000e3"><b>ev-index-7d05654dcbb000e3</b><pre>{
+  &quot;id&quot;: &quot;ev-index-7d05654dcbb000e3&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/1/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-e91258539af4f24f"><b>ev-index-e91258539af4f24f</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e91258539af4f24f&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/1/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-0f5ce5abd0f48309"><b>ev-index-0f5ce5abd0f48309</b><pre>{
+  &quot;id&quot;: &quot;ev-index-0f5ce5abd0f48309&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/2/主题&quot;
+}
+</pre></div><div id="evidence-ev-index-f113f8a07476c790"><b>ev-index-f113f8a07476c790</b><pre>{
+  &quot;id&quot;: &quot;ev-index-f113f8a07476c790&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/2/深挖结论&quot;
+}
+</pre></div><div id="evidence-ev-index-e0f002ae6fababd0"><b>ev-index-e0f002ae6fababd0</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e0f002ae6fababd0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/2/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-1102cc7202ae616f"><b>ev-index-1102cc7202ae616f</b><pre>{
+  &quot;id&quot;: &quot;ev-index-1102cc7202ae616f&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/综合深挖/2/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-510ce93d1c762c1d"><b>ev-index-510ce93d1c762c1d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-510ce93d1c762c1d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/认知点&quot;
+}
+</pre></div><div id="evidence-ev-index-ff625698debabf94"><b>ev-index-ff625698debabf94</b><pre>{
+  &quot;id&quot;: &quot;ev-index-ff625698debabf94&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/依据&quot;
+}
+</pre></div><div id="evidence-ev-index-dc0fb41bfcf3906a"><b>ev-index-dc0fb41bfcf3906a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-dc0fb41bfcf3906a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/可证伪条件&quot;
+}
+</pre></div><div id="evidence-ev-index-d04ec244cce47c5f"><b>ev-index-d04ec244cce47c5f</b><pre>{
+  &quot;id&quot;: &quot;ev-index-d04ec244cce47c5f&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/1/认知点&quot;
+}
+</pre></div><div id="evidence-ev-index-7d454fd188e92285"><b>ev-index-7d454fd188e92285</b><pre>{
+  &quot;id&quot;: &quot;ev-index-7d454fd188e92285&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/1/依据&quot;
+}
+</pre></div><div id="evidence-ev-index-3ef101d8cc671558"><b>ev-index-3ef101d8cc671558</b><pre>{
+  &quot;id&quot;: &quot;ev-index-3ef101d8cc671558&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/1/可证伪条件&quot;
+}
+</pre></div><div id="evidence-ev-index-21b08d58ee542884"><b>ev-index-21b08d58ee542884</b><pre>{
+  &quot;id&quot;: &quot;ev-index-21b08d58ee542884&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/2/认知点&quot;
+}
+</pre></div><div id="evidence-ev-index-1628c159ba8ceef7"><b>ev-index-1628c159ba8ceef7</b><pre>{
+  &quot;id&quot;: &quot;ev-index-1628c159ba8ceef7&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/2/依据&quot;
+}
+</pre></div><div id="evidence-ev-index-c52436de7cb499cd"><b>ev-index-c52436de7cb499cd</b><pre>{
+  &quot;id&quot;: &quot;ev-index-c52436de7cb499cd&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/2/可证伪条件&quot;
+}
+</pre></div><div id="evidence-ev-index-267405a6374aef76"><b>ev-index-267405a6374aef76</b><pre>{
+  &quot;id&quot;: &quot;ev-index-267405a6374aef76&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/0/线索ID&quot;
+}
+</pre></div><div id="evidence-ev-index-400b97af3e1961ea"><b>ev-index-400b97af3e1961ea</b><pre>{
+  &quot;id&quot;: &quot;ev-index-400b97af3e1961ea&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/0/来源路&quot;
+}
+</pre></div><div id="evidence-ev-index-579b0622b527b882"><b>ev-index-579b0622b527b882</b><pre>{
+  &quot;id&quot;: &quot;ev-index-579b0622b527b882&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/0/内容&quot;
+}
+</pre></div><div id="evidence-ev-index-169cb0cc6c253380"><b>ev-index-169cb0cc6c253380</b><pre>{
+  &quot;id&quot;: &quot;ev-index-169cb0cc6c253380&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/0/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-2f955ec9444ae42a"><b>ev-index-2f955ec9444ae42a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-2f955ec9444ae42a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/0/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-58410e35a837bd3f"><b>ev-index-58410e35a837bd3f</b><pre>{
+  &quot;id&quot;: &quot;ev-index-58410e35a837bd3f&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/0/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-7d4a2dee16825a97"><b>ev-index-7d4a2dee16825a97</b><pre>{
+  &quot;id&quot;: &quot;ev-index-7d4a2dee16825a97&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/1/线索ID&quot;
+}
+</pre></div><div id="evidence-ev-index-12675a9af66cc9ea"><b>ev-index-12675a9af66cc9ea</b><pre>{
+  &quot;id&quot;: &quot;ev-index-12675a9af66cc9ea&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/1/来源路&quot;
+}
+</pre></div><div id="evidence-ev-index-72cab88ba869c46e"><b>ev-index-72cab88ba869c46e</b><pre>{
+  &quot;id&quot;: &quot;ev-index-72cab88ba869c46e&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/1/内容&quot;
+}
+</pre></div><div id="evidence-ev-index-e18e0b44b9912461"><b>ev-index-e18e0b44b9912461</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e18e0b44b9912461&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/1/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-39bbe36f862a3df4"><b>ev-index-39bbe36f862a3df4</b><pre>{
+  &quot;id&quot;: &quot;ev-index-39bbe36f862a3df4&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/1/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-ba0b963e12e35017"><b>ev-index-ba0b963e12e35017</b><pre>{
+  &quot;id&quot;: &quot;ev-index-ba0b963e12e35017&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/1/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-a6219d9521725a15"><b>ev-index-a6219d9521725a15</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a6219d9521725a15&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/2/线索ID&quot;
+}
+</pre></div><div id="evidence-ev-index-b3d445f95919d76d"><b>ev-index-b3d445f95919d76d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b3d445f95919d76d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/2/来源路&quot;
+}
+</pre></div><div id="evidence-ev-index-638f1994e1656a3b"><b>ev-index-638f1994e1656a3b</b><pre>{
+  &quot;id&quot;: &quot;ev-index-638f1994e1656a3b&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/2/内容&quot;
+}
+</pre></div><div id="evidence-ev-index-eb0804ff22240e5b"><b>ev-index-eb0804ff22240e5b</b><pre>{
+  &quot;id&quot;: &quot;ev-index-eb0804ff22240e5b&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/2/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-e2ac9b8cd0e4d683"><b>ev-index-e2ac9b8cd0e4d683</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e2ac9b8cd0e4d683&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/2/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-c24a502638fe58a6"><b>ev-index-c24a502638fe58a6</b><pre>{
+  &quot;id&quot;: &quot;ev-index-c24a502638fe58a6&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/2/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-5e75317fabd0c14e"><b>ev-index-5e75317fabd0c14e</b><pre>{
+  &quot;id&quot;: &quot;ev-index-5e75317fabd0c14e&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/3/线索ID&quot;
+}
+</pre></div><div id="evidence-ev-index-f4bc23ea745f1c8d"><b>ev-index-f4bc23ea745f1c8d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-f4bc23ea745f1c8d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/3/来源路&quot;
+}
+</pre></div><div id="evidence-ev-index-b6b11a0242796e39"><b>ev-index-b6b11a0242796e39</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b6b11a0242796e39&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/3/内容&quot;
+}
+</pre></div><div id="evidence-ev-index-b08fd4106091b04d"><b>ev-index-b08fd4106091b04d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b08fd4106091b04d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/3/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-f778780d23395d38"><b>ev-index-f778780d23395d38</b><pre>{
+  &quot;id&quot;: &quot;ev-index-f778780d23395d38&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/3/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-988448a43a131d05"><b>ev-index-988448a43a131d05</b><pre>{
+  &quot;id&quot;: &quot;ev-index-988448a43a131d05&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/3/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-789365098c29a805"><b>ev-index-789365098c29a805</b><pre>{
+  &quot;id&quot;: &quot;ev-index-789365098c29a805&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/4/线索ID&quot;
+}
+</pre></div><div id="evidence-ev-index-300588224dc1c7c3"><b>ev-index-300588224dc1c7c3</b><pre>{
+  &quot;id&quot;: &quot;ev-index-300588224dc1c7c3&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/4/来源路&quot;
+}
+</pre></div><div id="evidence-ev-index-7f30475eb5cf1bd1"><b>ev-index-7f30475eb5cf1bd1</b><pre>{
+  &quot;id&quot;: &quot;ev-index-7f30475eb5cf1bd1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/4/内容&quot;
+}
+</pre></div><div id="evidence-ev-index-c7a1b479efa1d9c6"><b>ev-index-c7a1b479efa1d9c6</b><pre>{
+  &quot;id&quot;: &quot;ev-index-c7a1b479efa1d9c6&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/4/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-4292c35ce5af550b"><b>ev-index-4292c35ce5af550b</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4292c35ce5af550b&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/4/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-ab7717f4859fc3b2"><b>ev-index-ab7717f4859fc3b2</b><pre>{
+  &quot;id&quot;: &quot;ev-index-ab7717f4859fc3b2&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/线索跟踪/4/下次验证点&quot;
+}
+</pre></div><div id="evidence-ev-index-60c94cf248aa3cee"><b>ev-index-60c94cf248aa3cee</b><pre>{
+  &quot;id&quot;: &quot;ev-index-60c94cf248aa3cee&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/0/指派ID&quot;
+}
+</pre></div><div id="evidence-ev-index-4f15af420b34a081"><b>ev-index-4f15af420b34a081</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4f15af420b34a081&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/0/指派给&quot;
+}
+</pre></div><div id="evidence-ev-index-870c24eb326d02dc"><b>ev-index-870c24eb326d02dc</b><pre>{
+  &quot;id&quot;: &quot;ev-index-870c24eb326d02dc&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/0/截止&quot;
+}
+</pre></div><div id="evidence-ev-index-fd6f456a88b6498e"><b>ev-index-fd6f456a88b6498e</b><pre>{
+  &quot;id&quot;: &quot;ev-index-fd6f456a88b6498e&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/0/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-f2cffb358d2d1a65"><b>ev-index-f2cffb358d2d1a65</b><pre>{
+  &quot;id&quot;: &quot;ev-index-f2cffb358d2d1a65&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/0/深挖任务&quot;
+}
+</pre></div><div id="evidence-ev-index-0e851e0abb01a063"><b>ev-index-0e851e0abb01a063</b><pre>{
+  &quot;id&quot;: &quot;ev-index-0e851e0abb01a063&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/0/理由&quot;
+}
+</pre></div><div id="evidence-ev-index-4c2558bff36a7dec"><b>ev-index-4c2558bff36a7dec</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4c2558bff36a7dec&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/0/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-ee8c8e8faa796129"><b>ev-index-ee8c8e8faa796129</b><pre>{
+  &quot;id&quot;: &quot;ev-index-ee8c8e8faa796129&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/1/指派ID&quot;
+}
+</pre></div><div id="evidence-ev-index-13b4e682d69c475a"><b>ev-index-13b4e682d69c475a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-13b4e682d69c475a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/1/指派给&quot;
+}
+</pre></div><div id="evidence-ev-index-b7f9ffc741ccaeee"><b>ev-index-b7f9ffc741ccaeee</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b7f9ffc741ccaeee&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/1/截止&quot;
+}
+</pre></div><div id="evidence-ev-index-be1ca516ead54098"><b>ev-index-be1ca516ead54098</b><pre>{
+  &quot;id&quot;: &quot;ev-index-be1ca516ead54098&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/1/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-126912c2afbd723c"><b>ev-index-126912c2afbd723c</b><pre>{
+  &quot;id&quot;: &quot;ev-index-126912c2afbd723c&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/1/深挖任务&quot;
+}
+</pre></div><div id="evidence-ev-index-aa4d5002a4dc5eef"><b>ev-index-aa4d5002a4dc5eef</b><pre>{
+  &quot;id&quot;: &quot;ev-index-aa4d5002a4dc5eef&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/1/理由&quot;
+}
+</pre></div><div id="evidence-ev-index-44cf7b232f28c0e2"><b>ev-index-44cf7b232f28c0e2</b><pre>{
+  &quot;id&quot;: &quot;ev-index-44cf7b232f28c0e2&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/1/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-67643eeb349cff8a"><b>ev-index-67643eeb349cff8a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-67643eeb349cff8a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/2/指派ID&quot;
+}
+</pre></div><div id="evidence-ev-index-90a59958ebdf0c13"><b>ev-index-90a59958ebdf0c13</b><pre>{
+  &quot;id&quot;: &quot;ev-index-90a59958ebdf0c13&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/2/指派给&quot;
+}
+</pre></div><div id="evidence-ev-index-9831b9357e528dc1"><b>ev-index-9831b9357e528dc1</b><pre>{
+  &quot;id&quot;: &quot;ev-index-9831b9357e528dc1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/2/截止&quot;
+}
+</pre></div><div id="evidence-ev-index-afcf7a5a77339382"><b>ev-index-afcf7a5a77339382</b><pre>{
+  &quot;id&quot;: &quot;ev-index-afcf7a5a77339382&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/2/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-1290eacc9c7be6c2"><b>ev-index-1290eacc9c7be6c2</b><pre>{
+  &quot;id&quot;: &quot;ev-index-1290eacc9c7be6c2&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/2/深挖任务&quot;
+}
+</pre></div><div id="evidence-ev-index-59346b3c7504984e"><b>ev-index-59346b3c7504984e</b><pre>{
+  &quot;id&quot;: &quot;ev-index-59346b3c7504984e&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/2/理由&quot;
+}
+</pre></div><div id="evidence-ev-index-adbc4c48dd9e9fc5"><b>ev-index-adbc4c48dd9e9fc5</b><pre>{
+  &quot;id&quot;: &quot;ev-index-adbc4c48dd9e9fc5&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/2/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-69793aebc6dd3e6d"><b>ev-index-69793aebc6dd3e6d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-69793aebc6dd3e6d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/3/指派ID&quot;
+}
+</pre></div><div id="evidence-ev-index-172c154d1b28decf"><b>ev-index-172c154d1b28decf</b><pre>{
+  &quot;id&quot;: &quot;ev-index-172c154d1b28decf&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/3/指派给&quot;
+}
+</pre></div><div id="evidence-ev-index-b1b76703dc449f98"><b>ev-index-b1b76703dc449f98</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b1b76703dc449f98&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/3/截止&quot;
+}
+</pre></div><div id="evidence-ev-index-2853f8eb2260e8f8"><b>ev-index-2853f8eb2260e8f8</b><pre>{
+  &quot;id&quot;: &quot;ev-index-2853f8eb2260e8f8&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/3/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-1f0d7b244b3acd01"><b>ev-index-1f0d7b244b3acd01</b><pre>{
+  &quot;id&quot;: &quot;ev-index-1f0d7b244b3acd01&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/3/深挖任务&quot;
+}
+</pre></div><div id="evidence-ev-index-81fc7e179ff94cb4"><b>ev-index-81fc7e179ff94cb4</b><pre>{
+  &quot;id&quot;: &quot;ev-index-81fc7e179ff94cb4&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/3/理由&quot;
+}
+</pre></div><div id="evidence-ev-index-4dd80a2da1e36f58"><b>ev-index-4dd80a2da1e36f58</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4dd80a2da1e36f58&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/3/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-d731b2ddde045716"><b>ev-index-d731b2ddde045716</b><pre>{
+  &quot;id&quot;: &quot;ev-index-d731b2ddde045716&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/4/指派ID&quot;
+}
+</pre></div><div id="evidence-ev-index-964f4efd8b80d8b7"><b>ev-index-964f4efd8b80d8b7</b><pre>{
+  &quot;id&quot;: &quot;ev-index-964f4efd8b80d8b7&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/4/指派给&quot;
+}
+</pre></div><div id="evidence-ev-index-2ea7803678640a56"><b>ev-index-2ea7803678640a56</b><pre>{
+  &quot;id&quot;: &quot;ev-index-2ea7803678640a56&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/4/截止&quot;
+}
+</pre></div><div id="evidence-ev-index-a1c095dbab0fa661"><b>ev-index-a1c095dbab0fa661</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a1c095dbab0fa661&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/4/状态&quot;
+}
+</pre></div><div id="evidence-ev-index-a2acb821e457850e"><b>ev-index-a2acb821e457850e</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a2acb821e457850e&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/4/深挖任务&quot;
+}
+</pre></div><div id="evidence-ev-index-7acd7c08e2afd7f2"><b>ev-index-7acd7c08e2afd7f2</b><pre>{
+  &quot;id&quot;: &quot;ev-index-7acd7c08e2afd7f2&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/4/理由&quot;
+}
+</pre></div><div id="evidence-ev-index-0bd7a20ba398bc04"><b>ev-index-0bd7a20ba398bc04</b><pre>{
+  &quot;id&quot;: &quot;ev-index-0bd7a20ba398bc04&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;总审_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/指派清单/4/判定条件&quot;
+}
+</pre></div><div id="evidence-ev-index-2c1258be6b54773a"><b>ev-index-2c1258be6b54773a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-2c1258be6b54773a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/text/1&quot;
+}
+</pre></div><div id="evidence-ev-index-2f0e51fb5c791ea0"><b>ev-index-2f0e51fb5c791ea0</b><pre>{
+  &quot;id&quot;: &quot;ev-index-2f0e51fb5c791ea0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/2&quot;
+}
+</pre></div><div id="evidence-ev-index-a1d6e558f76975b5"><b>ev-index-a1d6e558f76975b5</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a1d6e558f76975b5&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/3&quot;
+}
+</pre></div><div id="evidence-ev-index-08bd34da321437b0"><b>ev-index-08bd34da321437b0</b><pre>{
+  &quot;id&quot;: &quot;ev-index-08bd34da321437b0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/text/4&quot;
+}
+</pre></div><div id="evidence-ev-index-e9272d79e63d5381"><b>ev-index-e9272d79e63d5381</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e9272d79e63d5381&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/text/5&quot;
+}
+</pre></div><div id="evidence-ev-index-1c4b916ce7389e25"><b>ev-index-1c4b916ce7389e25</b><pre>{
+  &quot;id&quot;: &quot;ev-index-1c4b916ce7389e25&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/text/6&quot;
+}
+</pre></div><div id="evidence-ev-index-fa0124ecca830817"><b>ev-index-fa0124ecca830817</b><pre>{
+  &quot;id&quot;: &quot;ev-index-fa0124ecca830817&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/7&quot;
+}
+</pre></div><div id="evidence-ev-index-a5352c7cef564c39"><b>ev-index-a5352c7cef564c39</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a5352c7cef564c39&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/8&quot;
+}
+</pre></div><div id="evidence-ev-index-bafc8733225afaf1"><b>ev-index-bafc8733225afaf1</b><pre>{
+  &quot;id&quot;: &quot;ev-index-bafc8733225afaf1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/9&quot;
+}
+</pre></div><div id="evidence-ev-index-45e8bae64ccd3fde"><b>ev-index-45e8bae64ccd3fde</b><pre>{
+  &quot;id&quot;: &quot;ev-index-45e8bae64ccd3fde&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/10&quot;
+}
+</pre></div><div id="evidence-ev-index-2848d7571814fa02"><b>ev-index-2848d7571814fa02</b><pre>{
+  &quot;id&quot;: &quot;ev-index-2848d7571814fa02&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/heading/11&quot;
+}
+</pre></div><div id="evidence-ev-index-63f3831ab07de8e8"><b>ev-index-63f3831ab07de8e8</b><pre>{
+  &quot;id&quot;: &quot;ev-index-63f3831ab07de8e8&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/12&quot;
+}
+</pre></div><div id="evidence-ev-index-cf66457e4f2068f0"><b>ev-index-cf66457e4f2068f0</b><pre>{
+  &quot;id&quot;: &quot;ev-index-cf66457e4f2068f0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/13&quot;
+}
+</pre></div><div id="evidence-ev-index-a5b4ca5d55786059"><b>ev-index-a5b4ca5d55786059</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a5b4ca5d55786059&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/heading/14&quot;
+}
+</pre></div><div id="evidence-ev-index-59c9cc9b9597669b"><b>ev-index-59c9cc9b9597669b</b><pre>{
+  &quot;id&quot;: &quot;ev-index-59c9cc9b9597669b&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/15&quot;
+}
+</pre></div><div id="evidence-ev-index-b131f1629cf4858a"><b>ev-index-b131f1629cf4858a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b131f1629cf4858a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/heading/16&quot;
+}
+</pre></div><div id="evidence-ev-index-b2b8a38d4470f05d"><b>ev-index-b2b8a38d4470f05d</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b2b8a38d4470f05d&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/17&quot;
+}
+</pre></div><div id="evidence-ev-index-b0fe33692f9617f8"><b>ev-index-b0fe33692f9617f8</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b0fe33692f9617f8&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/18&quot;
+}
+</pre></div><div id="evidence-ev-index-fbdc55a320990e14"><b>ev-index-fbdc55a320990e14</b><pre>{
+  &quot;id&quot;: &quot;ev-index-fbdc55a320990e14&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/19&quot;
+}
+</pre></div><div id="evidence-ev-index-3b2d0b7c515e3e76"><b>ev-index-3b2d0b7c515e3e76</b><pre>{
+  &quot;id&quot;: &quot;ev-index-3b2d0b7c515e3e76&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/20&quot;
+}
+</pre></div><div id="evidence-ev-index-c3d41db8f52239e2"><b>ev-index-c3d41db8f52239e2</b><pre>{
+  &quot;id&quot;: &quot;ev-index-c3d41db8f52239e2&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/heading/21&quot;
+}
+</pre></div><div id="evidence-ev-index-c458f1f5d6d77c05"><b>ev-index-c458f1f5d6d77c05</b><pre>{
+  &quot;id&quot;: &quot;ev-index-c458f1f5d6d77c05&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/22&quot;
+}
+</pre></div><div id="evidence-ev-index-73ddf935199289dd"><b>ev-index-73ddf935199289dd</b><pre>{
+  &quot;id&quot;: &quot;ev-index-73ddf935199289dd&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/heading/23&quot;
+}
+</pre></div><div id="evidence-ev-index-e2e1051650465750"><b>ev-index-e2e1051650465750</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e2e1051650465750&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/24&quot;
+}
+</pre></div><div id="evidence-ev-index-94e53767373efaf8"><b>ev-index-94e53767373efaf8</b><pre>{
+  &quot;id&quot;: &quot;ev-index-94e53767373efaf8&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/25&quot;
+}
+</pre></div><div id="evidence-ev-index-ae91d80300a664f4"><b>ev-index-ae91d80300a664f4</b><pre>{
+  &quot;id&quot;: &quot;ev-index-ae91d80300a664f4&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/26&quot;
+}
+</pre></div><div id="evidence-ev-index-e5e682ca7f8074e2"><b>ev-index-e5e682ca7f8074e2</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e5e682ca7f8074e2&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/27&quot;
+}
+</pre></div><div id="evidence-ev-index-0aef7c66b9ac6270"><b>ev-index-0aef7c66b9ac6270</b><pre>{
+  &quot;id&quot;: &quot;ev-index-0aef7c66b9ac6270&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/28&quot;
+}
+</pre></div><div id="evidence-ev-index-91e773616cf4226c"><b>ev-index-91e773616cf4226c</b><pre>{
+  &quot;id&quot;: &quot;ev-index-91e773616cf4226c&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/29&quot;
+}
+</pre></div><div id="evidence-ev-index-4a1c701f1afb555a"><b>ev-index-4a1c701f1afb555a</b><pre>{
+  &quot;id&quot;: &quot;ev-index-4a1c701f1afb555a&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/30&quot;
+}
+</pre></div><div id="evidence-ev-index-5ce6f1a6457aea53"><b>ev-index-5ce6f1a6457aea53</b><pre>{
+  &quot;id&quot;: &quot;ev-index-5ce6f1a6457aea53&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/31&quot;
+}
+</pre></div><div id="evidence-ev-index-e1e849d245b56843"><b>ev-index-e1e849d245b56843</b><pre>{
+  &quot;id&quot;: &quot;ev-index-e1e849d245b56843&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/32&quot;
+}
+</pre></div><div id="evidence-ev-index-5cf87d06ddc68ad6"><b>ev-index-5cf87d06ddc68ad6</b><pre>{
+  &quot;id&quot;: &quot;ev-index-5cf87d06ddc68ad6&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/heading/33&quot;
+}
+</pre></div><div id="evidence-ev-index-1e2acafe41718cd3"><b>ev-index-1e2acafe41718cd3</b><pre>{
+  &quot;id&quot;: &quot;ev-index-1e2acafe41718cd3&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/34&quot;
+}
+</pre></div><div id="evidence-ev-index-363d55c2f91f3170"><b>ev-index-363d55c2f91f3170</b><pre>{
+  &quot;id&quot;: &quot;ev-index-363d55c2f91f3170&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/35&quot;
+}
+</pre></div><div id="evidence-ev-index-a782cd192be45970"><b>ev-index-a782cd192be45970</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a782cd192be45970&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/36&quot;
+}
+</pre></div><div id="evidence-ev-index-8f7b1ce527e7ce85"><b>ev-index-8f7b1ce527e7ce85</b><pre>{
+  &quot;id&quot;: &quot;ev-index-8f7b1ce527e7ce85&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/37&quot;
+}
+</pre></div><div id="evidence-ev-index-b689d39cb2234044"><b>ev-index-b689d39cb2234044</b><pre>{
+  &quot;id&quot;: &quot;ev-index-b689d39cb2234044&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/38&quot;
+}
+</pre></div><div id="evidence-ev-index-a1b665acd94641c5"><b>ev-index-a1b665acd94641c5</b><pre>{
+  &quot;id&quot;: &quot;ev-index-a1b665acd94641c5&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/39&quot;
+}
+</pre></div><div id="evidence-ev-index-aa933e2cddbd8a60"><b>ev-index-aa933e2cddbd8a60</b><pre>{
+  &quot;id&quot;: &quot;ev-index-aa933e2cddbd8a60&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/40&quot;
+}
+</pre></div><div id="evidence-ev-index-cc9c8e3682a38966"><b>ev-index-cc9c8e3682a38966</b><pre>{
+  &quot;id&quot;: &quot;ev-index-cc9c8e3682a38966&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;judgment_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/index/block/41&quot;
+}
+</pre></div><div id="evidence-fact-154"><b>fact-154</b><pre>{
+  &quot;id&quot;: &quot;fact-154&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;fact_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数&quot;,
+  &quot;value&quot;: 39
+}
+</pre></div><div id="evidence-fact-155"><b>fact-155</b><pre>{
+  &quot;id&quot;: &quot;fact-155&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;fact_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度&quot;,
+  &quot;value&quot;: 13.4
+}
+</pre></div><div id="evidence-fact-156"><b>fact-156</b><pre>{
+  &quot;id&quot;: &quot;fact-156&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;fact_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板&quot;,
+  &quot;value&quot;: 5
+}
+</pre></div><div id="evidence-fact-157"><b>fact-157</b><pre>{
+  &quot;id&quot;: &quot;fact-157&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;fact_20260904.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿&quot;,
+  &quot;value&quot;: 20307.0
+}
+</pre></div><div id="evidence-kpi-source-0-0"><b>kpi-source-0-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;2cf86ffdba48e165409c62c6b0c250c11b5ff2ec2fb8710620c14e7f9a126111&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-0-1"><b>kpi-source-0-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;88a6386e10f607d2281e53880b1e9f80beacc690b3160a1ebf00505ffa5affa7&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-0"><b>kpi-source-1-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;2cf86ffdba48e165409c62c6b0c250c11b5ff2ec2fb8710620c14e7f9a126111&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-1"><b>kpi-source-1-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;88a6386e10f607d2281e53880b1e9f80beacc690b3160a1ebf00505ffa5affa7&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-0"><b>kpi-source-2-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;2cf86ffdba48e165409c62c6b0c250c11b5ff2ec2fb8710620c14e7f9a126111&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-1"><b>kpi-source-2-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;88a6386e10f607d2281e53880b1e9f80beacc690b3160a1ebf00505ffa5affa7&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-0"><b>kpi-source-3-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-0&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;2cf86ffdba48e165409c62c6b0c250c11b5ff2ec2fb8710620c14e7f9a126111&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-1"><b>kpi-source-3-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-1&quot;,
+  &quot;d&quot;: &quot;20260904&quot;,
+  &quot;source&quot;: &quot;_学习/_情绪先行指标.json&quot;,
+  &quot;sha256&quot;: &quot;88a6386e10f607d2281e53880b1e9f80beacc690b3160a1ebf00505ffa5affa7&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><p><a href="audit/index.json">原文审计与来源条目</a> · <a href="models/index.json">结构化页面模型</a></p></div></details><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+  var wrap=document.querySelector('.wrap');
+  if(!wrap)return;
+  /* 阅读条已给出真实栏目锚点时，不再叠加第二份导航 */
+  if(wrap.querySelector('.reading-spine a.rs-step'))return;
+  var sections=Array.prototype.filter.call(wrap.children,function(el){return el.tagName==='SECTION';});
+  if(sections.length<3)return;
+  var map=document.createElement('nav');
+  map.className='page-map';
+  map.setAttribute('aria-label','本页阅读地图');
+  var label=document.createElement('span');
+  label.className='page-map-label';
+  label.textContent='本页阅读';
+  map.appendChild(label);
+  var links=[];
+  sections.forEach(function(sec,i){
+    var h=Array.prototype.find.call(sec.children,function(el){return el.tagName==='H2';});
+    if(!h)return;
+    if(!sec.id)sec.id='section-'+(i+1);
+    var a=document.createElement('a');
+    a.href='#'+sec.id;
+    a.textContent=h.textContent.replace(/^[一二三四五六七八九十]+\\s*/,'');
+    a.setAttribute('data-section',sec.id);
+    map.appendChild(a); links.push({a:a,sec:sec});
+  });
+  if(links.length)wrap.insertBefore(map,sections[0]);
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      links.forEach(function(x){x.a.classList.toggle('active',x.sec===entry.target);});
+    });
+  },{rootMargin:'-88px 0px -64% 0px',threshold:0});
+  links.forEach(function(x){io.observe(x.sec);});
+})();
+</script></body></html>

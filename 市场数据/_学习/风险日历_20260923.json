@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "capability": "risk_calendar",
+  "date": "20260923",
+  "status": "partial",
+  "sources": [
+    "_学习/_交易日历.json"
+  ],
+  "metrics": {
+    "is_trading_day": true,
+    "event_source_present": false,
+    "event_source_status": null,
+    "事件条数": null,
+    "覆盖维度": null,
+    "未接入维度": null
+  },
+  "errors": [
+    "事件源缺失: _学习/风险事件_20260923.json 未生成(风险事件.py 未跑或失败)"
+  ],
+  "note": "事件源缺失/降级时保持partial；不把缺事件解释成无风险"
+}

@@ -10,6 +10,7 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
+from review_contract import TOTAL_AUDIT_KEYS, ROUTE_AUDIT_KEYS, validate_schema_version
 
 
 def _date(d: str) -> str:
@@ -499,6 +500,13 @@ def _collect(root, d, out):
         try:
             if path.exists():
                 obj = _load(path); _check_date(obj, d)
+                allowed = TOTAL_AUDIT_KEYS if route == "master" else ROUTE_AUDIT_KEYS
+                unknown = set(obj) - set(allowed)
+                if unknown:
+                    raise ValueError(f"未知认知顶层字段: {sorted(unknown)}")
+                schema_error = validate_schema_version(obj, path.name)
+                if schema_error:
+                    raise ValueError(schema_error)
                 if obj.get("schema_version", 1) != 1:
                     raise ValueError("未知认知 schema_version")
                 for field in ("cognition", "认知迭代"):

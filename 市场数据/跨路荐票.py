@@ -85,7 +85,7 @@ def collect(d):
 
     # ③题材路(标的数组; 类型∈荐票/观察)
     th = load('题材荐票_%s.json' % d) or {}
-    tlist = th.get('标的') or []
+    tlist = (th.get('标的') if isinstance(th, dict) else th) or []  # 容错: 发出版可能是 list 或 dict
     for i, x in enumerate(tlist, 1):
         basis = ' · '.join([v for v in [str(x.get('身位') or ''), str(x.get('题材线') or ''), str(x.get('理由') or '')[:70]] if v]) or '—'
         add('theme', i, _code(x), x.get('名称'), str(x.get('类型') or '—'), basis, '—')

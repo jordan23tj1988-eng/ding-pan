@@ -1,0 +1,186 @@
+1630:         if target in visited or target not in dom.ids:raise ValueError('invalid table reference')
+1631:         return expanded_dom_text(dom.ids[target],dom,visited|{target})
+1632:     return ''.join(part if isinstance(part,str) else expanded_dom_text(part,dom,visited) for part in node['parts'])
+1633: 
+1634: 
+1635: def view_check(root,stage,d,route):
+1636:     errors=[];dimensions=[]
+1637:     try:
+1638:         model=read_json(stage/'models'/(route+'.json'))
+1639:         errors.extend(validate_model_sources(root,d,{route:model}))
+1640:         contract=page_contract(root)
+1641:         raw=(stage/(route+'.html')).read_text(encoding='utf-8')
+1642:         dom=_DOM(raw)
+1643:         if dom.duplicates:errors.append('duplicate IDs: '+str(dom.duplicates[:10]))
+1644:         sections_for_view,expected,hidden_sections=display_contract(root,d,route,raw)
+1645:         headings=[''.join(n['text']).strip() for n in dom.headings]
+1646:         if headings!=expected:errors.append('ordered section contract mismatch: '+str(headings))
+1647:         dimensions.append('named sections and unique DOM IDs')
+1648:         if len(dom.kpis)!=4:errors.append('four KPI slots required')
+1649:         else:
+1650:             for k,node in zip(model['kpis'],dom.kpis):
+1651:                 value='—' if k['value'] is None else str(k['value'])
+1652:                 if canonical_text(value) not in ''.join(''.join(node['text']).split()):errors.append('rendered KPI mismatch: '+k['id'])
+1653:         dimensions.append('four rendered KPI values against source-checked model')
+1654:         for claim in model['claims']:
+1655:             node=dom.ids.get('claim-'+claim['id'])
+1656:             # 展示治理(2026-09-22 统一): 五路+概览的 research/cognition 段由两块标准能力模块承载，
+1657:             # 主题页另有 matrix/lifecycle 与 bodies 摘录的既有隐藏规则；这些 claim 仍在 model/audit 中，
+1658:             # 不能再被门禁误判为数据丢失。
+1659:             theme_hidden = route == 'theme' and (
+1660:                 claim.get('section') in ('matrix', 'lifecycle') or
+1661:                 claim.get('source_pointer','').startswith('/bodies/') or
+1662:                 (claim.get('section') == 'recommendations' and claim.get('role') == 'observation')
+1663:             )
+1664:             hidden = claim.get('section') in hidden_sections or theme_hidden
+1665:             if not node:
+1666:                 if hidden:
+1667:                     continue
+1668:                 errors.append('missing claim DOM: '+claim['id']);continue
+1669:             if claim.get('component_ref'):
+1670:                 if 'component-'+claim['component_ref'] not in dom.ids:errors.append('claim component missing: '+claim['id'])
+1671:             elif claim.get('history_ref'):
+1672:                 url=urlsplit(claim['history_ref']);target=contained(stage,stage/url.path)
+1673:                 if not target.is_file() or 'id="'+url.fragment+'"' not in target.read_text(encoding='utf-8'):errors.append('claim history missing: '+claim['id'])
+1674:             elif canonical_text(claim['text']) not in canonical_text(''.join(node['text'])):
+1675:                 # A deduplicated table is an explicit reference, not discarded data.
+1676:                 text=canonical_text(claim['text'])
+1677:                 if text not in canonical_text(raw):errors.append('claim text not displayed/referenced: '+claim['id'])
+1678:         dimensions.append('all claim IDs and complete source text/history targets')
+1679:         for comp in model.get('components',[]):
+1680:             if comp.get('status')!='ok' or not comp.get('html') or not comp.get('sources'):
+1681:                 if comp.get('allow_missing') and comp.get('status')=='missing' and comp.get('html') and '—' in comp.get('html'):
+1682:                     node=dom.ids.get('component-'+comp['id'])
+1683:                     if node is None:errors.append('missing optional component DOM '+comp['id'])
+1684:                     continue
+1685:                 errors.append('missing machine component '+comp['id']);continue
+1686:             for src in comp['sources']:
+1687:                 if digest(contained(root,src['path']))!=src['sha256']:errors.append('component source hash mismatch '+comp['id'])
+1688:             node=dom.ids.get('component-'+comp['id'])
+1689:             if node is None:errors.append('component absent from DOM '+comp['id'])
+1690:             else:
+1691:                 original=component_source_text(root,d,route,comp)
+1692:                 model_text=canonical_text(comp['html'])
+1693:                 rendered=''.join(expanded_dom_text(node,dom).split())
+1694:                 # Folding adds a single navigational summary, not a new data row.
+1695:                 strip_fold=lambda text:re.sub(r'更早存档[0-9]+条','',text)
+1696:                 original_data,model_data=strip_fold(original),strip_fold(model_text)
+1697:                 same=original_data==model_data
+1698:                 if not same and comp['id'] in ('POOLLEDGER','LHBLEDGER','LEDGER') and model_data and original_data.endswith(model_data):
+1699:                     # P1 may place the ledger's descriptive prefix in a source
+1700:                     # claim beside the component. It must remain displayed in
+1701:                     # full; every ledger row still matches the producer suffix.
+1702:                     prefix=original_data[:-len(model_data)]
+1703:                     same=any(prefix in canonical_text(c['text']) and
+1704:                         'claim-'+c['id'] in dom.ids and prefix in ''.join(expanded_dom_text(dom.ids['claim-'+c['id']],dom).split())
+1705:                         for c in model['claims'])
+1706:                 if not same:errors.append('machine component changed from producer '+comp['id'])
+1707:                 if model_text!=rendered:errors.append('machine component differs in DOM '+comp['id'])
+1708:         dimensions.append('machine producer revalidation, source hashes and complete DOM content including table aliases')
+1709:         for anchor in contract.get('machine_anchors',{}).get(route,{}):
+1710:             if raw.count('<!--'+anchor+'-->')!=1 or raw.count('<!--/'+anchor+'-->')!=1:
+1711:                 errors.append('machine anchor pair '+anchor)
+1712:         dimensions.append('required machine anchors exactly paired')
+1713:     except Exception as exc:errors.append(str(exc))
+1714:     return {'name':route,'status':'fail' if errors else 'pass','errors':errors,'contract':'p1.1','dimensions':dimensions}
+1715: 
+1716: def page_contract(root):
+1717:     path=contained(root,'_契约/页面契约.v1.json')
+1718:     contract=read_json(path)
+1719:     if type(contract.get('schema_version')) is not int or contract['schema_version']!=1 or set(contract.get('routes',{}))!=set(ROUTES):
+1720:         raise ValueError('page contract schema/routes invalid')
+1721:     return contract
+1722: 
+1723: 
+1724: def validate_structured_input(root,d):
+1725:     errors=[]
+1726:     def keys(obj,allowed,label):
+1727:         if not isinstance(obj,dict) or set(obj)-set(allowed):raise ValueError(label+' unknown fields/type')
+1728:     try:
+1729:         doc=read_json(root/'_学习'/f'页面判断_{d}.json')
+1730:         keys(doc,('schema_version','d','evidence','pages'),'document')
+1731:         if type(doc.get('schema_version')) is not int or doc['schema_version']!=1 or doc.get('d')!=d:raise ValueError('document schema/date')
+1732:         if set(doc.get('pages',{}))!=set(ROUTES):raise ValueError('seven structured pages required')
+1733:         contract=page_contract(root)
+1734:         evidence={}
+1735:         for e in doc['evidence']:
+1736:             keys(e,('id','d','source','pointer','value','quality'),'evidence')
+1737:             valid_date(e['d'])
+1738:             if e['d']>d or e['id'] in evidence:raise ValueError('future/duplicate evidence')
+1739:             actual=source_value(root,e['source'],e['pointer'])
+1740:             if 'value' in e:
+1741:                 actual=actual.get('value') if isinstance(actual,dict) and 'value' in actual else actual
+1742:                 if actual!=e['value']:raise ValueError('evidence differs from source: '+e['id'])
+1743:             if e.get('quality')=='conflicted':raise ValueError('conflicted evidence')
+1744:             evidence[e['id']]=e
+1745:         for route,page in doc['pages'].items():
+1746:             keys(page,('hero','kpis','claims','sections','limitations'),'page '+route)
+1747:             ids={c['id'] for c in page['claims']}
+1748:             if not ids or len(ids)!=len(page['claims']):raise ValueError('empty/duplicate claims '+route)
+1749:             sections={s['id'] for s in contract['routes'][route]['sections']}
+1750:             placed=set()
+1751:             for section in page['sections']:
+1752:                 keys(section,('id','claim_refs'),'section')
+1753:                 if section['id'] not in sections or not section['claim_refs']:raise ValueError('missing/unknown section')
+1754:                 for ref in section['claim_refs']:
+1755:                     if ref not in ids:raise ValueError('unresolved claim')
+1756:                     placed.add(ref)
+1757:             if {s['id'] for s in page['sections']}!=sections or placed!=ids:raise ValueError('incomplete placement '+route)
+1758:             if not any(c['role']=='cognition' for c in page['claims']):raise ValueError('missing cognition '+route)
+1759:             for claim in page['claims']:
+1760:                 keys(claim,('id','role','text','section','evidence_refs'),'claim')
+1761:                 if claim['section'] not in sections or not isinstance(claim['text'],str) or not claim['text'].strip():raise ValueError('claim invalid')
+1762:                 if claim['role'] not in ('verdict','observation','evidence','counterevidence','condition','research','cognition','limitation'):raise ValueError('claim role invalid')
+1763:                 if not claim['evidence_refs'] or any(ref not in evidence for ref in claim['evidence_refs']):raise ValueError('claim lacks evidence')
+1764:             keys(page['hero'],('claim_ref','change_ref'),'hero')
+1765:             if page['hero'].get('claim_ref') not in ids:raise ValueError('hero unresolved')
+1766:             if len(page['kpis'])!=4 or len({k['id'] for k in page['kpis']})!=4:raise ValueError('four KPI slots required')
+1767:             for k in page['kpis']:
+1768:                 keys(k,('id','label','value','evidence_refs'),'kpi')
+1769:                 if any(ref not in evidence for ref in k['evidence_refs']):raise ValueError('KPI ref unresolved')
+1770:                 if k['value'] is not None and not any(evidence[ref].get('value')==k['value'] for ref in k['evidence_refs']):raise ValueError('KPI not backed by source')
+1771:     except Exception as exc:errors.append('structured input: '+str(exc))
+1772:     return errors
+1773: 
+1774: 
+1775: def adapt_p1_report(root,stage,result,d):
+1776:     """Explicit p1.1 bridge; preserve failure, verify sidecars, whitelist auxiliary pages."""
+1777:     if not isinstance(result,dict):return result
+1778:     if result.get('status')=='fail' and 'pages' not in result and (root/'_契约'/'页面契约.v1.json').is_file():
+1779:         contract=page_contract(root)
+1780:         return dict(result,pages=[],template_version=contract['template_version'],contract='p1.1',contract_snapshot=contract)
+1781:     if not isinstance(result.get('pages'),dict):return result
+1782:     contract=page_contract(root)
+1783:     missing=[route for route in ROUTES if not (stage/'models'/(route+'.json')).is_file()]
+1784:     if missing:
+1785:         return dict(result,status='fail',pages=[],template_version=contract['template_version'],
+1786:             errors=[str(e) for e in result.get('errors',[])]+['P1 models missing: '+', '.join(missing)])
+1787:     models={route:read_json(stage/'models'/(route+'.json')) for route in ROUTES}
+1788:     errors=[str(e) for e in result.get('errors',[])]+validate_model_sources(root,d,models)
+1789:     entries=[]
+1790:     for route,path in result['pages'].items():
+1791:         status=result.get('page_status',{}).get(route)
+1792:         entries.append({'route':route,'path':path,'status':'pass' if status in ('ok','pass') else status,'errors':models.get(route,{}).get('errors',[])})
+1793:     auxiliary=[]
+1794:     # Stable old auxiliary pages are copied byte-for-byte, never rewritten.
+1795:     source_site=root/'复盘'/'盯盘台'
+1796:     preserve=[source_site/'intraday.html',source_site/'history.html']
+1797:     # 页面内联动画脚本按相对路径加载；它不是 P1 页面模型，却是候选站点
+1798:     # 的运行时资产，必须与最终部署页一起冻结/验收，否则浏览器门禁会报
+1799:     # Network.loadingFailed(Script, ERR_FILE_NOT_FOUND)。
+1800:     if (source_site/'lib').exists():
+1801:         preserve += [p for p in (source_site/'lib').rglob('*') if p.is_file()]
+1802:     if (source_site/'archive').exists():preserve += [p for p in (source_site/'archive').rglob('*') if p.is_file()]
+1803:     for source in preserve:
+1804:         if not source.is_file():continue
+1805:         rel=source.relative_to(source_site).as_posix()
+1806:         target=contained(stage,rel)
+1807:         if target.exists() and digest(target)!=digest(source):
+1808:             errors.append('auxiliary conflict: '+rel);continue
+1809:         if not target.exists():
+1810:             target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(source,target)
+1811:         auxiliary.append({'path':rel,'kind':'preserved','source':source.relative_to(root).as_posix(),'sha256':digest(target)})
+1812:     for route,model in models.items():
+1813:         claims=[c for c in model['claims'] if c.get('history_ref')]
+1814:         if claims:
+1815:             rel='history_sources/'+route+'.html'

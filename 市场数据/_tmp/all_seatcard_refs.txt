@@ -1,0 +1,132 @@
+module_render_lhb.py:72:     """板块一荐票卡: 当日SEATCARD段(台账日块内提取, 与台账同源;
+module_render_lhb.py:74:     s = body.find('<!--SEATCARD-->')
+module_render_lhb.py:75:     e = body.find('<!--/SEATCARD-->', s) if s >= 0 else -1
+module_render_lhb.py:76:     seg = body[s:e + len('<!--/SEATCARD-->')] if e > s else ''
+module_render_lhb.py:112:     """C1.1: h2一 + SEATCARD荐票表 + body板块一原文(SEATCARD段后→h2二前, 含洞察(agent)卡)
+module_render_lhb.py:115:     SEATCARD 段(荐票表)与 LLM 手写 h2二 都落在这个区间内 → 与置顶荐票卡重复、
+module_render_lhb.py:117:     现修正: rest 从 SEATCARD 段结束处起取(置顶卡已含荐票表, 不重复), 到 h2二/FUNDTEMP 前止
+module_render_lhb.py:123:     s = body.find('<!--SEATCARD-->', i)
+module_render_lhb.py:124:     s_end = body.find('<!--/SEATCARD-->', i)
+module_render_lhb.py:128:     # SEATCARD 前包装并从其后截取到下一个 h2，避免跨版本吞页。
+module_render_lhb.py:132:     rest_start = (s_end + len('<!--/SEATCARD-->')) if s_end > 0 else e + 1
+module_render_lhb.py:194:     # ★2026-08-13: 当日日块SEATCARD段(含前导p)已在板块一展示 → 台账内移除防重复(历史日块不动)
+module_render_lhb.py:195:     s1 = seg.find('<!--SEATCARD-->')
+module_render_lhb.py:197:         e1 = seg.find('<!--/SEATCARD-->', s1)
+module_render_lhb.py:203:                     seg = seg[:lp] + seg[e1 + len('<!--/SEATCARD-->'):]
+module_render_lhb.py:370:     print('板块锚: FUNDTEMP=%s LHBLEDGER=%s SEATCARD=%s PAPERTRADE=%s' % (
+module_render_lhb.py:372:         page.count('<!--SEATCARD-->'), '<!--PAPERTRADE-->' in page))
+review_pages.py:495:  'lhb': {'FUNDTEMP':'temperature','LHBLEDGER':'ledger','SEATCARD':'seats'},
+review_pages.py:1027:         artifact('SEATCARD','seats','席位荐票卡_'+d+'.html','席位荐票.py')
+review_publish.py:733:                     # SEATCARD 在黄金龙虎榜台账中按既有回链重复嵌入，SEATLIB
+review_publish.py:736:                     if key not in ('SEATCARD', 'SEATLIB'):
+review_publish.py:931:             dom=_DOM(active_html[0]);node=dom.ids.get('component-SEATCARD')
+review_publish.py:934:             row.update(legacy_ok=row['ok'],ok=bool(ok),replacement_contract='p1.1: exact normalized source card in component-SEATCARD')
+review_publish.py:1560:         'lhb':{'SEATCARD':'席位荐票卡','FUNDTEMP':'资金温度卡'},
+席位荐票.py:32:     card=(f'<!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%">'
+席位荐票.py:36:      f'<div class="hint">候选=当日S/A席位净买≥1000万({out["SA数"]}个S/A,候选{out["候选数"]}只);席位胜率=滚动执行口径历史值(窗口{out["分档窗口"]}),非个股预言;结构分仅辅助。结算列次日由结算脚本原位回填,同一张表不换结构。</div><!--/SEATCARD-->')
+席位荐票结算.py:44:     # ★原位重渲同一张荐票卡(合一结构,2026-07-10用户拍板"一种展示方式"):替换日块SEATCARD段
+席位荐票结算.py:57:         if '<!--SEATCARD-->' in h and '<!--/SEATCARD-->' in h:
+席位荐票结算.py:58:             h=h[:h.find('<!--SEATCARD-->')]+newcard+h[h.find('<!--/SEATCARD-->')+len('<!--/SEATCARD-->'):]
+席位荐票结算.py:62:             h=h[:h.find('<!--/SEATCARD-->')+len('<!--/SEATCARD-->')]+refl_blk+h[h.find('<!--/SEATCARD-->')+len('<!--/SEATCARD-->'):] if '<!--/SEATCARD-->' in h else h+refl_blk
+_变更总账.md:106: - **lhb**:module_render_lhb.py 新增 r_seatcard(从body板块三当日台账日块提取SEATCARD段,与台账同源→次日结算回填后重渲染自动同步)+r_judge拼装(h2一+SEATCARD+body板块一原文)+r_ledger当日日块SEATCARD段移除防重复(历史日块不动);judgment_20260812.json bodies.lhb h2一后、LHBLEDGER锚前插入"洞察(ag
+_变更总账.md:108: - **验证**:三页重渲染(生成盯盘台.py 20260812)数字哨兵22项PASS;出页自检六页PAPERTRADE在位;lhb快照回归C1/C3结构变化=预期演进(板块一+台账SEATCARD位移动)→init更新基准后全PASS;logic快照全PASS;三页板块一结构目检:lhb=SEATCARD→洞察→hint,theme=荐票表→洞察→诚实标注→昨日对账,logic=荐票表(6行2荐票+4观察)。
+_变更总账.md:1315: - 排查链: 用户截图(两张) → GLM-4v视觉读出双区块重复; 页面源码grep确认 h2二×2、SEATCARD锚当日区块相邻两对; 定位 module_render_lhb.py r_judge()。
+_变更总账.md:1316: - 根因: body契约漂移——当日body原文的SEATCARD段(荐票表)与LLM手写`<h2>二 资金温度 · 日度统计</h2>`都落在 r_judge() 的rest提取区间(h2一后→FUNDTEMP锚)内。r_judge返回 h2一+置顶荐票卡(r_seatcard提取)+rest, 而rest又含同一SEATCARD段→荐票卡双份; rest含LLM手写h2二→与机器资金温度卡(r_fundtemp自带h2二+锚)撞车→
+_变更总账.md:1317: - 修复: r_judge() rest起点跳过SEATCARD段结束(`<!--/SEATCARD-->`之后, 置顶卡已含荐票表不重复), 终点截到`<h2>二`前(LLM手写h2二丢弃, 由机器卡权威提供)。仅动module_render_lhb.py一处函数。
+_变更总账.md:1318: - 验证: 单测r_judge输出SEATCARD锚2→1、h2二2→0; build_page_full整页h2 6个全唯一、"二 资金温度"仅1个、688503×4且688563=0(用户截图疑"聚利材料688563"为视觉模型误读, 源码无此代码); 全站重生成+哨兵PASS; chrome headless dump-dom: h2 6个无重复、SEATCARD锚10(历史日块)、无残留隐藏.rv元素。
+_变更总账.md:1463: - 根因: ①r_judge 剥离 SEATCARD 段时 rest 起点在 <!--/SEATCARD--> 之后, 漏掉 h2一 与 SEATCARD 之间的 sec 包裹开放 div(<div class="sec sec-scan"><div class="sec-body">), 仅剩尾部 </div></div> 造成 -2 失衡 ②lhb/logic 五路子agent 手写 body 只给 2 张 kpi(信息型), 违反
+_变更总账.md:1469: ## #120 (2026-09-04 19:58) 数据核对三处修复(ticker最高板/limitup DOCTYPE剥离/lhb SEATCARD空锚注入)
+_变更总账.md:1471: - 根因: ①judgment ticker 写死「最高 <b>5板</b>」, 数据核对需「最高板」或「连板」字样 → 加「板」字 ②limitup 子agent body 写成整页 HTML(<!DOCTYPE><html><head><style>) 而非片段, head 区 4831 字超 4KB 契约 ③lhb 席位荐票卡被注入到 LHBLEDGER 台账区(位置5305)而非 SEATCARD 空锚(1309), r_sea
+_变更总账.md:1472: - 改动: ①ticker「最高 <b」→「最高板 <b」 ②judgment bodies.limitup 剥离 <body> 外层包裹(872825→869261) ③judgment bodies.lhb 空锚 <!--SEATCARD--><!--/SEATCARD--> 注入 席位荐票卡_20260904.html(2961字符)
+_变更总账.md:1474: - 防复发: 子agent body 只写片段禁整页; 荐票卡注入必须进对应锚点(SEATCARD/SEATREC), 禁落台账区
+_变更总账.md:1805: - **子页能力适配(现状即满足)**: 各子页荐票卡一律由本路发出版 JSON 直渲 —— ①竞价=竞价评分卡(POOL) / ②席位=`席位荐票.py`→SEATCARD / ③题材=`r_reco_table`←题材荐票_{d}.json / ④逻辑=`r_reco_table`←logic.json荐票 / ⑤涨停=`涨停质量荐票.py`→SCORECARD; 概览=跨路筛选汇总。
+_变更总账.md:2022: |- **修正**: 黄金 cycle/lhb 页不再要求恢复器裁剪后的 LEADIND/LHBLEDGER 与原始 P1 HTML 字节相等；改为冻结来源 hash、必要成对锚点和专属旧哨兵三重校验。龙虎榜 SEATCARD 的既有重复回链与 SEATLIB 的第四段展示不强行重造 component-* 壳。
+_链路地图.md:82: | 段标题/锚点 | — | 脚本grep定位注入 | 改段标题先grep锚点:FUNDTEMP/LHBLEDGER/SEATCARD/POOLLEDGER/SCORECARD/PAPERTRADE/VOTEBOARD;auction二/三段标题勿改;hero只写class="hero",rowA后第一个h2=段一(坑9) |
+judgment_20260710.json:11:   "lhb": "<div class=\"hero\"><div class=\"kick\">Dragon-Tiger · 龙虎榜/席位命门(资金) · 第二路</div><h1>龙虎榜 · S/A小额试水新主线,大钱仍在半导体权重对倒</h1><p>钱是谁的、认不认、接力靠不靠谱。S/A真金净买vs撤退+资金温度分位=席位温度。</p><div class=\"stance\"><span class=\"pill\">席位温度
+judgment_20260713.json:11:   "lhb": "<div class=\"hero\"><div class=\"kick\">LHB · 龙虎榜/席位命门 · 第二路</div><h1>席位 · 冰点日:柚子出清,机构捡筹</h1><p>席位=钱是谁的、认不认、接力靠不靠谱。收缩胜率口径(K=10,n&lt;25标⚠)。</p><div class=\"stance\"><span class=\"pill warn\">资金温度 · <b class=\"s-
+judgment_20260714.json:9:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 龙虎榜/席位命门 · 第二路</div><h1>席位 · 修复日:冰点捡筹兑现,聪明钱仍谨慎</h1><p>席位=钱是谁的、认不认、接力靠不靠谱。收缩胜率口径(K=10,n&lt;25标⚠)。</p><div class=\"stance\"><span class=\"pill\"><
+judgment_20260715.json:9:   "lhb": "\n<div class=\"rowA\">\n<div class=\"hero\"><div class=\"kick\">LHB · 龙虎榜/席位命门 · 第2路 · 截至 07-15</div><h1>资金偏冷:温度27分位(冷)、S/A出手10笔=大钱未进场,席位Top1中国卫星[S]银河</h1><p>对席位有根本认知+推演;全局扫描全市场席位,固定席位表仅作先验参照非白名单。</p><div class
+judgment_20260716.json:10:   "lhb": "<div class=\"rowA\">\n<div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-07-16 收盘</div><h1>大钱试探:资金温度42分位回升,<em>S/A出手集中儒意一票</em></h1><p>席位综合判断→资金温度(FUNDTEMP)→龙虎榜台账(LHBLEDGER)→席位分档库;席位胜率一律收缩估计(K=1
+judgment_20260811.bak_before_v2.json:8:   "lhb": "<div class=\"rowA\">\n<div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-11 收盘</div><h1>修复首日:冰点温度10分位,<em>机构31只逆势吸筹,国泰海通上海A档5笔高频</em></h1><p>席位综合判断→资金温度(FUNDTEMP)→龙虎榜台账(LHBLEDGER)→席位分档库;席位胜率一
+judgment_20260811.json:8:   "lhb": "<div class=\"rowA\">\n<div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-11 收盘</div><h1>修复首日:冰点温度10分位,<em>机构31只逆势吸筹,国泰海通上海A档5笔高频</em></h1><p>席位综合判断→资金温度(FUNDTEMP)→龙虎榜台账(LHBLEDGER)→席位分档库;席位胜率一
+judgment_20260812.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-12 收盘</div><h1>医药线双票共振·量化太华路11笔全净买：席位资金偏多但3票强矛盾，B档谨慎参与</h1><p>龙虎榜三路资金方向总体偏正（机构21席净买+2.82亿、北向净买+6.73亿、量化太华路11笔全净买3.9亿、S档江
+judgment_20260813.json:10:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-13 收盘</div><h1>龙头断板净卖+涨停出货型2只：席位资金退潮防守，强档3只仅观察</h1><p>龙虎榜三路资金方向分化（机构专用36席净+6.26亿、北向30席净+20.73亿温和偏多；但S档游资仅净+3.89亿退潮收缩、B档普
+judgment_20260814.json:10:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-14 收盘</div><h1>退潮后修复日：量化+北向回流扫AI算力，但S档游资缺席+位置核验缺失，空仓观察</h1><p>三路回暖信号（炸板率37.9%→23.2%、资金温度5→22分位、北向15.2→30.0亿翻倍、量化4.8→14.5
+judgment_20260817.json:10:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-17 收盘</div><h1>情绪回暖日：北向41亿放量+紫阳东路A档下场半导体主线，但资金温度仍22分位冷背离，荐1观察2</h1><p>涨停106家(昨63近翻倍)情绪普涨回暖，但龙虎榜总买额92.1亿处22分位冷(平昨)不增反降，呈\
+judgment_20260818.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-18 收盘</div><h1>退潮日+资金温度5分位极冷：北向腰斩、聪明钱撤退仅游资轮动农业，C档防守空仓观察2只</h1><p>涨停79家(昨106退潮-27)/炸板23(炸板率22.5%翻倍)/最高板压回4/温度44.5偏冷(-15)，
+judgment_20260819.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-19 收盘</div><h1>极端冰点日游资42.6亿放量=跌停博弈做T而非抄底：量化-72%离场、S档休眠、机器候选全灭，C档防守空仓观察2只</h1><p>温度11.4冰点(昨44.5偏冷,-33.1极端转冷)/涨停36(昨79)/跌停
+judgment_20260820.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-20 收盘</div><h1>冰点次日修复：S档5席回归+北向12.46亿回流+医药真金净买，B档谨慎荐1观察3</h1><p>涨停79家(昨36翻倍)/跌停12(昨118收敛)/炸板46(炸板率36.8%偏高)/最高板4/温度29.4偏冷
+judgment_20260821.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-21 收盘</div><h1>冰点边缘二次探底：S档6席回归含2非小样本+医药退潮分化+资金15分位冷，C档防守空仓观察1</h1><p>涨停54家(昨79)/跌停13(昨12)/炸板18(炸板率25%改善)/最高板3(汉森制药中药)/温度
+judgment_20260824.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-24 收盘</div><h1>冰点加深资金温度暴跌至<em>2分位极冷</em>：机构北向腰斩撤退，S档7席买防御票，机器Top5独立过滤仅盈新发展1只过硬</h1><p>温度20.8冰点(连续2日,昨23.4)；涨停46(昨54回落)/跌
+judgment_20260825.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-25 收盘</div><h1>资金温度<em>2分位→40分位升破34分位</em>：机构北向聪明钱回流坐实，但S档游资7席→1席骤降、5板龙头汉森净卖1.02亿出货，B档谨慎进攻只荐英维克+金健米业2只</h1><p>市场温度37.1偏冷
+judgment_20260826.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-26 收盘</div><h1>资金温度<em>40分位→3分位</em>：0825\"聪明钱回流\"完全一日游，S档独立席位仅2个且3笔全买在净卖票上=<em>S档在接货不是在进攻</em>，机器Top5硬过滤存活2/5，C档防守空仓并清出
+judgment_20260827.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-27 收盘</div><h1>资金温度<em>3→27分位回升未破34</em>：&ldquo;纯配置盘脉冲&rdquo;首次升级为<em>&ldquo;配置盘回流+S档1席干净进攻&rdquo;</em>（银河学院南路→大普微净买+2.0
+judgment_20260828.json:10:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-28 收盘</div><h1>资金温度<em>27→5分位回落至冷区</em>：0827&ldquo;配置盘脉冲&rdquo;被证伪，银河学院南路→大普微次日<em>开500收475.86执行-4.83%套牢</em>，S档独立席位缩至1席
+judgment_20260831.json:10:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-08-31 收盘</div><h1>资金温度<em>5→42分位升破34(首次)</em>：承接AS-20260828-003，机构北向量化三方回流+知名游资139席<em>同步接棒</em>，S档独立席位<em>回补6席且半同向(3/6)</e
+judgment_20260901.json:10:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-09-01 收盘 · 承接 AS-20260831-003</div><h1>资金温度<em>42→27分位回落(&lt;34)</em>：0831『进攻窗第1日』<em>未站稳第2日</em>，单日脉冲<em>第三次坐实</em>，S档同向率<
+judgment_20260902.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-09-02 收盘 · 承接 AS-20260901-002</div><h1>资金温度<em>27→3分位继续坠落(&lt;34)</em>：单日脉冲<em>第4次坐实</em>，S档同向率<em>0/4瓦解</em>，三方配置盘冻结、总金额<e
+judgment_20260903.json:8:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-09-03 收盘 · 承接 AS-20260902-002</div><h1>资金温度<em>3→12分位微升仍在冰点(&lt;34)</em>：S档<em>2席同向0/2</em>全买下跌/跌停票，博云新材<em>S档共振证伪</em>，<em
+judgment_20260904.json:9:   "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB · 席位命门 · 第2路 · 截至 2026-09-04 收盘 · 承接 AS-20260903-002</div><h1>资金温度<em>12→35分位破冷区(温)</em>：S档<em>5席同向4/5=80%</em>但全小样本，黄河旋风<em>未上榜·反向信号坐实</em>，<em>C
+judgment_20260907.json:10:   "lhb": "<h2>一 席位综合判断</h2><div class=\"card\"><b>C档·资金升温未完成席位质量确认</b><p>今日资金温度58分位，机构24席16.3亿、游资112席31.8亿、北向28席64.3亿；但去重并剔除连续/累计榜后，S档仅4笔约0.48亿，A档9笔约4.23亿，非小样本S档坐镇条件未满足。涨停93家、最高6板、炸板19家，修复强但不足以确认席位接力，维持C档空仓。</p></div><!-
+judgment_20260908.json:8:   "lhb": "<div class=\"rowA hero\"><div><div class=\"eyebrow\">LHB · 20260908</div><h1>席位命门独立判断</h1><p>当日榜净买先过滤，席位分档再定性。</p></div><div class=\"kpis\"><div class=\"kpi\">档位<strong>B</strong></div><div class=\"kpi\">S档出手<s
+judgment_20260909.json:9:     "lhb": "<div class=\"rowA\"><div class=\"hero\"><div class=\"kick\">LHB / 20260909</div><h1>席位命门：局部净买不等于进攻合力</h1><p>当日榜股票43只，S档正净买且买入≥1000万为0席，A档8席；双源校验缺失，降级观察。</p><span class=\"stance pill warn\">B档 · 防守观察</span></d
+judgment_20260910.bak_before_body3_20260910.json:9:   "lhb": "<section><h2>一 席位综合判断</h2><div><p>20260910席位路判定：B档。冰点温度11.7，龙虎榜净买与净卖分化，S档参与不足；本期无正式买入荐票，002636金安国纪、600359新农开发、600488津药药业仅作观察。</p><p>证据：lhb.csv上榜53只；席位动向301行，按（代码,席位）去重。S档2席、A档17席、B档194席、C档29席、P档9席。S档净额约0.21亿元，A
+judgment_20260910.json:9:   "lhb": "<section><h2>一 席位综合判断</h2><div><p>20260910席位路判定：B档。冰点温度11.7，龙虎榜净买与净卖分化，S档参与不足；本期无正式买入荐票，002636金安国纪、600359新农开发、600488津药药业仅作观察。</p><p>证据：lhb.csv上榜53只；席位动向301行，按（代码,席位）去重。S档2席、A档17席、B档194席、C档29席、P档9席。S档净额约0.21亿元，A
+judgment_20260911.json:8:     "lhb": "<!doctype html><meta charset=\"utf-8\"><title>席位路判断 20260911</title><style>body{font-family:Arial,\"Microsoft YaHei\";background:#0f172a;color:#e2e8f0;padding:24px;line-height:1.6}.card{background:#1e293b;bor
+judgment_20260921.json:9:     "lhb": "<h1>席位路判断 · 20260921</h1>\n<section><h2>一 席位综合判断</h2><div><p><b>B档：中性偏进攻，1只条件性轻仓荐票，2只观察。</b></p><p>市场温度63.2（中性），涨停103、炸板25、跌停2、最高5板。股票级净买以当日榜行权威值为准，区间累计榜、转债和重复榜行剔除。</p><!--REFL--><p>独立判断：双源一致+两席A档使002080可条件性轻
+judgment_20260922.json:9:   "lhb": "<section><h2>一 席位综合判断</h2><div><p><b>B档：局部增量、非全面进攻；不建仓，保留观察。</b></p><p>今日涨停结构有承接也有兑现：环境温度56.3中性，涨停63、炸板18、最高6板、封板率66.8%。清洗后的高档席位并未成为主导，结论更接近存量博弈中的局部换手。</p><!--REFL--><!--/REFL--><p>双源一致只能作为必要条件。明日若只能跟席位动向做一件事，只
+总审_20260922.json:95:   "页面合同": "五个body均已核对为六段结构。auction含SCORECARD、POOLLEDGER锚点；lhb含REFL、FUNDTEMP、LHBLEDGER、SEATCARD锚点；theme含LEDGER及六段；logic为六个h2段；limitup含LEDGER及六段。锚点存在但部分由渲染器填充，不能把空锚位当数据通过。依据：D:/股票数据/市场数据/_学习/auction_body_20260922.html；D:/股
+lhb_body_20260813.html:14: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内);结算按发出版；发出版不可覆盖：8/13名单=零后视镜确定性输出</span></h2>
+lhb_body_20260813.html:15: <details class="chain" open><summary><b>08-13</b> <span class="chip cold">最新</span> 上榜71 · 机构在场29只 · S/A出手24笔</summary><div class="inner"><div class="strip"><div class="kv"><div class="l">上榜(买侧明细)</div><div class="v">71<
+lhb_body_20260814.html:14: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内);结算按发出版;8/14名单=零后视镜确定性输出</span></h2>
+lhb_body_20260814.html:15: <details class="chain" open><summary><b>08-14</b> <span class="chip cold">最新</span> 上榜56 · 机构在场24只 · S/A出手11笔</summary><div class="inner"><div class="strip"><div class="kv"><div class="l">上榜(买侧明细)</div><div class="v">56<
+lhb_body_20260817.html:4: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+lhb_body_20260817.html:15: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内);结算按发出版;8/17名单=零后视镜确定性输出</span></h2>
+lhb_body_20260817.html:16: <!--LHBLEDGER--><details class="chain" open><summary><b>08-17</b> <span class="chip cold">最新</span> 上榜58 · 机构在场26只 · S/A出手15笔</summary><div class="inner"><div class="strip"><div class="kv"><div class="l">上榜(买侧明细)</div><d
+lhb_body_20260818.html:18: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内)</span></h2>
+lhb_body_20260819.html:22: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内)</span></h2>
+lhb_body_20260820.html:20: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内);结算按发出版</span></h2>
+lhb_body_20260821.html:18: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内);结算按发出版</span></h2>
+lhb_body_20260824.html:18: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内);结算按发出版</span></h2>
+lhb_body_20260825.html:20: <h2>三 龙虎榜台账<span class="hint">LHBLEDGER=台账脚本注入(最新日展开,SEATCARD荐票卡在日块内);结算按发出版</span></h2>
+lhb_body_20260903.html:5: <!--SEATCARD--><!--/SEATCARD-->
+lhb_body_20260904.html:5: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+lhb_body_20260907.html:1: <h2>一 席位综合判断</h2><div class="card"><b>C档·资金升温未完成席位质量确认</b><p>今日资金温度58分位，机构24席16.3亿、游资112席31.8亿、北向28席64.3亿；但去重并剔除连续/累计榜后，S档仅4笔约0.48亿，A档9笔约4.23亿，非小样本S档坐镇条件未满足。涨停93家、最高6板、炸板19家，修复强但不足以确认席位接力，维持C档空仓。</p></div><!--SEATCARD-->
+lhb_body_20260908.html:5: <section><h2>四 席位分档库 <span class="hint">席位路独立口径</span></h2><div id="SEATCARD"><div class="body">S档正式出手0席；A/S正净买且买入≥1000万元10席。</div></div></section>
+lhb_body_20260909.html:5: <h2>四 席位分档与观察<span class="hint">历史基准不能替代位置与双源核验</span></h2><div class="card"><!--SEATCARD--><p>000798为2个A档共振，但收盘处缓存近期高位；002702当日收阴且低于当日高；002046接近近期高点且A档样本n=5。三者均只作观察，不形成正式买入荐票。</p><!--/SEATCARD--></div>
+lhb_body_20260911.html:2: <h2>三 龙虎榜台账</h2><p>[实证] 当日日块按权威数据生成，历史原文保留。机器排序不等于自主买入。</p><!--LHBLEDGER--><details class="chain" open><summary><b>09-11</b> <span class="chip">最新</span> 上榜58 · 机构在场28只 · S/A出手9笔</summary><div class="inner"><div class="s
+lhb_body_20260921.html:4: <section><h2>三 龙虎榜台账</h2><div><!--LHBLEDGER--><p>lhb.csv原始68行、60只代码；当日榜股票级净买不累加同票多榜。席位动向原始290行，按（代码,席位）去重后222行。</p><!--SEATCARD--><div class="card"><p><b>002080 中材科技</b> · 荐票</p><p>股票级当日榜净买5.5527亿元（买入12.7941亿、卖出7.2414亿，净
+lhb_body_20260922.html:3: <section><h2>三 龙虎榜台账</h2><div><p>当日台账由渲染器从机器源填充，席位路正文不手写台账表数字。</p><!--LHBLEDGER--><!--/LHBLEDGER--><p>机器席位荐票卡由渲染器填充，正文只保留空锚位。</p><!--SEATCARD--><!--/SEATCARD--></div></section>
+lhb_body_20260923.html:4: <section><h2>三 龙虎榜台账</h2><div><p>当日台账与机器席位荐票卡由渲染器填充，正文不重复手写机器台账。</p><!--LHBLEDGER--><!--/LHBLEDGER--><!--SEATCARD--><!--/SEATCARD--><div class="card"><p><b>独立复核摘要</b></p><p>000993闽东电力：源1净买+0.6349亿，但收盘-9.9952%，S档买入发生在跌停，禁
+席位荐票卡_20260710.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260713.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260714.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260715.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260716.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260811.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260812.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260813.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260814.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260817.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260818.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260819.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260820.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260821.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260824.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260825.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260826.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260827.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260828.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260831.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260901.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260902.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260903.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260904.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260907.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260908.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260909.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260910.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260911.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260921.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260922.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co
+席位荐票卡_20260923.html:1: <!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></co

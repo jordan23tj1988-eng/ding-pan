@@ -1,0 +1,112 @@
+---模拟盘引擎.py:400-510---
+400:         h.append('</div><div>')
+401:         # 持仓
+402:         if st['positions']:
+403:             cal2 = calendar()
+404:             sells_tonight = {str(o.get('code','')).zfill(6):o for o in (plan.get('sells') or [])} if plan else {}
+405:             h.append('<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">')
+406:             h.append('<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>')
+407:             for p in st['positions']:
+408:                 b = load_bars(p['code']); ks = [k for k in sorted(b.keys()) if k<=d]
+409:                 px = b[ks[-1]][3] if ks else p['buy_px']
+410:                 fl = (p['shares']*px/(p['cost'])-1)*100
+411:                 hd = len([x for x in cal2 if p['buy_date'] <= x <= d])
+412:                 if p.get('defer_sell'): ins = '<span style="color:#ff5f56">顺延卖出中(%d次)</span>'%p.get('defers',0)
+413:                 elif p['code'] in sells_tonight:
+414:                     o = sells_tonight[p['code']]
+415:                     ins = '<b style="color:#e8a33d">明日卖·%s</b>%s'%('收盘' if _norm_leg(_g(o,'leg','腿'))=='close' else '开盘',
+416:                           '(高开≥%s%%改收)'%o['sell_switch']['if_gap_ge_pct'] if o.get('sell_switch') else '')
+417:                 else: ins = '继续持有'
+418:                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%d</td><td style="font-family:monospace">%.2f</td><td>%s</td><td style="font-family:monospace">%d</td><td>%s</td></tr>'%(
+419:                     p['code'],p['name'],p['shares'],p['buy_px'],color_ret(fl),hd,ins))
+420:             h.append('</table>')
+421:         else:
+422:             h.append('<div style="margin-top:12px;color:#8d93a8">当前空仓</div>')
+423:         # 当晚计划
+424:         h.append('<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(%s发出,明日固定价执行)</div>'%d)
+425:         buys = (plan.get('buys') or plan.get('positions') or []) if plan else []
+426:         sells = (plan.get('sells') or []) if plan else []
+427:         if plan and (buys or sells):
+428:             h.append('<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8d93a8"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>')
+429:             for p in buys[:5]:
+430:                 gate = _g(p,'buy_gate','买入闸门') or {}
+431:                 gtxt = '·闸门高开≥%s弃'%gate['max_gap_pct'] if 'max_gap_pct' in gate else ('·闸门低开≤%s弃'%gate['min_gap_pct'] if 'min_gap_pct' in gate else '')
+432:                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">%s %s</td><td style="font-family:monospace">%s%%%s</td><td style="color:#a8adbd">%s</td></tr>'%(
+433:                     _g(p,'code','代码'),_g(p,'name','名称'),_g(p,'weight_pct','权重%','权重'),gtxt,_g(p,'reason','理由',default='')))
+434:             for o in sells:
+435:                 stxt = '开盘' if _norm_leg(_g(o,'leg','腿'))!='close' else '收盘'
+436:                 if o.get('sell_switch'): stxt += '(高开≥%s%%改收)'%o['sell_switch'].get('if_gap_ge_pct')
+437:                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">%s %s</td><td>%s</td><td style="color:#a8adbd">%s</td></tr>'%(
+438:                     _g(o,'code','代码'),_g(o,'name','名称',default=''),stxt,_g(o,'reason','理由',default='')))
+439:             h.append('</table>')
+440:         elif plan:
+441:             h.append('<div style="color:#8d93a8;margin-top:4px">★今晚无买卖指令(在持票默认继续持有/或空仓)</div>')
+442:         else:
+443:             h.append('<div style="color:#8d93a8;margin-top:4px">今晚指令单未发出</div>')
+444:         h.append('</div></div>')
+445:         # 最近平仓
+446:         rc = (stat.get('最近平仓') or [])
+447:         if rc:
+448:             h.append('<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(%d)</summary><table style="width:100%%;border-collapse:collapse;font-size:12px;margin-top:4px">'%len(rc))
+449:             h.append('<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>')
+450:             for t in reversed(rc):
+451:                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>%s %s</td><td style="font-family:monospace">%s@%.2f</td><td style="font-family:monospace">%s@%.2f</td><td>%s</td><td>%s%s</td></tr>'%(
+452:                     t['code'],t['name'],t['buy_date'],t['buy_px'],t['sell_date'],t['sell_px'],
+453:                     color_ret(t['ret_pct']),('%s·持%d日'%('收' if t.get('leg')=='T_close' or t.get('leg')=='T2_close' else '开',t.get('hold_days',2))),
+454:                     ('·顺延%d'%t['defers'] if t.get('defers') else '')))
+455:             h.append('</table></details>')
+456:         h.append('<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>')
+457:         h.append('</div>')
+458:         out = os.path.join(simdir(route),'看板_%s.html'%d)
+459:         with open(out,'w',encoding='utf-8',newline='\n') as f: f.write('\n'.join(h))
+460:         print('dashboard',route,'->',out)
+461: 
+462: def inject(d):
+463:     site = os.path.join(ROOT,'复盘','盯盘台')
+464:     for route in ROUTES:
+465:         kb = os.path.join(simdir(route),'看板_%s.html'%d)
+466:         if not os.path.exists(kb):
+467:             print('缺看板',route); continue
+468:         block = '<!--PAPERTRADE-->\n'+open(kb,encoding='utf-8').read()+'\n<!--/PAPERTRADE-->'
+469:         for pg in [os.path.join(site,PAGE[route]), os.path.join(site,'archive','%s.html'%d) if route=='master' else None]:
+470:             if not pg or not os.path.exists(pg): continue
+471:             h = open(pg,encoding='utf-8').read()
+472:             if '<!--PAPERTRADE-->' in h:
+473:                 a = h.find('<!--PAPERTRADE-->'); b = h.find('<!--/PAPERTRADE-->')+len('<!--/PAPERTRADE-->')
+474:                 h = h[:a]+h[b:]
+475:             i = h.find('class="hero"')
+476:             j = h.find('<h2', i) if i>=0 else -1
+477:             if j<0 and i>=0:
+478:                 # ★2026-08-12 断档页兼容: 模块化断档页(如 index 无 body 日)无 h2 锚
+479:                 # → 回退注入到 hero div 配平闭合处(hero 之后), 保证 PAPERTRADE 看板不丢
+480:                 _depth=0
+481:                 for _m in re.finditer(r'<div\b|</div>', h[i:]):
+482:                     if _m.group()=='</div>':
+483:                         _depth-=1
+484:                         if _depth==0: j=i+_m.end(); break
+485:                     else:
+486:                         _depth+=1
+487:             if j<0:
+488:                 print('!未找到锚点',pg); continue
+489:             h = h[:j]+block+'\n'+h[j:]
+490:             with open(pg,'w',encoding='utf-8',newline='\n') as f: f.write(h)
+491:             chk = open(pg,encoding='utf-8').read()
+492:             print('inject',route,'->',os.path.basename(pg),'OK' if '<!--PAPERTRADE-->' in chk else 'FAIL')
+493: 
+494: POOLFILES = {'auction':'竞价池发出_%s.json','lhb':'席位荐票_%s.json','theme':'题材荐票_%s.json',
+495:              'logic':'逻辑荐票_%s.json','limitup':'涨停质量荐票_%s.json'}
+496: def extract_codes(obj, acc):
+497:     if isinstance(obj,dict):
+498:         for k,v in obj.items():
+499:             if k in ('code','代码') and isinstance(v,(str,int)):
+500:                 c = str(v).zfill(6)
+501:                 if c.isdigit() and len(c)==6: acc.add(c)
+502:             else: extract_codes(v,acc)
+503:     elif isinstance(obj,list):
+504:         for x in obj: extract_codes(x,acc)
+505: 
+506: def cohort_ret(codes,t,cal):
+507:     t1 = next_td(t,cal); t2 = next_td(t1,cal) if t1 else None
+508:     if not t1 or not t2: return None,0,len(codes)
+509:     rets = []
+510:     for c in codes:

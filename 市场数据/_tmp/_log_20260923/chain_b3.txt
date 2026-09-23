@@ -1,0 +1,40 @@
+=== playbook生成.py 20260923 ===
+usage: playbook生成.py [-h] --root ROOT [--out OUT] d
+playbook生成.py: error: the following arguments are required: --root
+[rc=2] playbook生成.py 20260923
+=== 涨停fact.py 20260923 ===
+fact_20260923.json 已写入: D:\股票数据\市场数据\_学习\fact_20260923.json
+  ✓ 涨停数=51 (ok) 源=温度表
+  ✓ 炸板数=26 (ok) 源=温度表
+  ✓ 跌停数=13 (ok) 源=温度表
+  ✓ 炸板率=0.338 (ok) 源=温度表
+  ✓ 封板率=0.6623 (ok) 源=温度表自算(涨停/(涨停+炸板))
+  ✓ 温度=20.5 (ok) 源=温度表
+  ✓ 温度档=冰点 (ok) 源=温度表
+  ✓ 最高连板=4 (ok) 源=温度表
+  ✓ 题材线数=42 (ok) 源=涨停对链条
+  ✓ 归位数量=51 (ok) 源=题材归位
+  ✓ 归位A档数=0 (ok) 源=题材归位(来源档计数)
+  ✓ 归位B档数=51 (ok) 源=题材归位(来源档计数)
+  ✓ 归位C档数=0 (ok) 源=题材归位(来源档计数)
+  ✓ 回封数=20 (ok) 源=温度表
+  ✓ 二板加=12 (ok) 源=温度表
+  ✓ 成交额亿=17650.0 (ok) 源=温度表
+  ✓ 封板总额亿=55.7 (ok) 源=温度表
+ALL OK
+[rc=0] 涨停fact.py 20260923
+=== 认知迭代全量更新.py 20260923 ===
+{"status": "fail", "d": "20260923", "errors": ["master: 未知认知顶层字段: ['回填窗口标注', '趋同盲区']"], "audit_artifact": "D:\\股票数据\\review_run_20260923_cognition\\cognition_ce1e093008924cf69a9387b0d4719caf\\cognition.json", "snapshots_written": []}
+[rc=1] 认知迭代全量更新.py 20260923
+=== 周期投票.py settle 20260923 ===
+settle 20260923 裁判=降(投票日20260922): [('auction', '降', 1), ('lhb', '平', 0), ('theme', '降', 1), ('logic', '平', 0), ('limitup', '降', 1), ('cycle主判', '降', 1)]
+[rc=0] 周期投票.py settle 20260923
+=== 盘中账本结算.py settle 20260923 ===
+usage: 盘中账本结算.py [-h] --root ROOT --out OUT d
+盘中账本结算.py: error: the following arguments are required: --root, --out
+[rc=2] 盘中账本结算.py settle 20260923
+=== master结算.py 20260922 ===
+usage: master结算.py [-h] --root ROOT --out OUT [--target-d TARGET_D]
+                   {audit,coverage,cognition,master,settle} d
+master结算.py: error: the following arguments are required: --root, --out
+[rc=2] master结算.py 20260922

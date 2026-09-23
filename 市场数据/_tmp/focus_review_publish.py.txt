@@ -1,0 +1,227 @@
+---850-1075---
+850:             dep = load_module(frozen / "module_render_limitup.py")
+851:         dep.BASE = dep.CD = str(frozen)
+852:         dep.L = str(frozen / "_学习")
+853:         sys.modules["module_render_limitup"] = dep
+854:     module = load_module(frozen / f"{route}数据核对.py")
+855:     module.R = str(frozen)
+856:     module.BASE = str(frozen)
+857:     module.L = str(frozen / "_学习")
+858:     module.SITE = str(stage)
+859:     sys.argv = [module.__file__, d, "--page", str(stage / f"{route}.html")]
+860:     view = None
+861:     replacement_labels = set()
+862:     active_html = ['']
+863:     if route == 'cycle' and (stage/'models'/'cycle.json').is_file():
+864:         contract = page_contract(frozen)
+865:         if contract.get('template_version') == 'p1.1':
+866:             view = view_check(frozen,stage,d,route)
+867:             replacement_labels = {'机器锚'+a+'应缺席(有body黄金版形态)' for a in ('VOLSTEP','LEADIND','LADDER','MACHVOTE')}
+868:             replacement_labels.add('无机器折叠区(黄金版形态)')
+869:             original_check_page = module.check_page
+870:             def checked_page(h,day):
+871:                 active_html[0]=h
+872:                 return original_check_page(h,day)
+873:             module.check_page=checked_page
+874:     bindings = []
+875:     if route in ('lhb','limitup') and (stage/'models'/(route+'.json')).is_file():
+876:         if page_contract(frozen).get('template_version') == 'p1.1':
+877:             view=view_check(frozen,stage,d,route)
+878:             active_html[0]=(stage/(route+'.html')).read_text(encoding='utf-8')
+879:             if route=='limitup':
+880:                 find_block=module.find_block
+881:                 def contract_block(h,start,end,start_from=0):
+882:                     if (start,end)==('一 涨停复盘','<h2>二'):
+883:                         bindings.append({'legacy_section':start,'p1_section':'recommendations','assertions':'unchanged Top5 name/rate against dated source'})
+884:                         opening='<section id="recommendations">'
+885:                         i=h.find(opening)
+886:                         j=h.find('<section id=',i+len(opening)) if i>=0 else -1
+887:                         return (h[i:j if j>=0 else len(h)] if i>=0 and view['status']=='pass' else None),i
+888:                     return find_block(h,start,end,start_from)
+889:                 module.find_block=contract_block
+890:     settlement=None
+891:     if route=='auction' and (stage/'models'/'auction.json').is_file():
+892:         if page_contract(frozen).get('template_version')=='p1.1':
+893:             view=view_check(frozen,stage,d,route)
+894:             settlement=previous_pool_check(frozen,stage,d)
+895:     scoped=None
+896:     scoped_versions = {'p1.2', 'p1.3'}
+897:     if route in ('cycle','auction','lhb') and (stage/'models'/(route+'.json')).is_file() and page_contract(frozen).get('template_version') in scoped_versions:
+898:         scoped=scoped_p12_check(frozen,stage,d,route)
+899:         if route=='cycle':
+900:             original_check_page=module.check_page
+901:             def checked_p12(h,day):
+902:                 active_html[0]=h
+903:                 return original_check_page(h,day)
+904:             module.check_page=checked_p12
+905:             replacement_labels={'机器锚'+a+'应缺席(有body黄金版形态)' for a in ('VOLSTEP','LEADIND','LADDER','MACHVOTE')}
+906:             replacement_labels.add('无机器折叠区(黄金版形态)')
+907:         if route=='auction':settlement=previous_pool_check(frozen,stage,d)
+908:     # Capturing every actual chk call exposes empty or skipped check runs.
+909:     rows = []
+910:     first_issues = []
+911:     original = module.chk
+912:     def record(issues, ok, label, detail=""):
+913:         if not first_issues:
+914:             first_issues.append(issues)
+915:         row = {"ok": bool(ok), "label": label, "detail": str(detail), "negative_injection": issues is not first_issues[0]}
+916:         if scoped is not None and label in replacement_labels:
+917:             validation=scoped_p12_check(frozen,stage,d,route,raw=active_html[0])
+918:             ok=validation['status']=='pass'
+919:             row.update(legacy_ok=row['ok'],ok=ok,replacement_contract=validation['contract'],errors=validation['errors'])
+920:         elif label in replacement_labels:
+921:             # Explicit dual contract: old absent anchors -> source-verified P1.1
+922:             # components, unique paired anchors and named sections. No content
+923:             # assertion is replaced; each injected check uses its own HTML.
+924:             h=active_html[0]
+925:             anchors=('VOLSTEP','LEADIND','LADDER','MACHVOTE','VOTEBOARD')
+926:             ok=view['status']=='pass' and all(h.count('<!--'+a+'-->')==1 and h.count('<!--/'+a+'-->')==1 for a in anchors)
+927:             row.update(legacy_ok=row['ok'],ok=bool(ok),replacement_contract='p1.1: source-verified components and exactly paired anchors')
+928:         if route=='lhb' and view is not None and label=='Top5卡在页面':
+929:             # Sanitization may change harmless tags/attributes. The entire card
+930:             # text must still occupy its named component, with frozen provenance.
+931:             dom=_DOM(active_html[0]);node=dom.ids.get('component-SEATCARD')
+932:             card=(frozen/'_学习'/f'席位荐票卡_{d}.html').read_text(encoding='utf-8-sig')
+933:             ok=view['status']=='pass' and node is not None and canonical_text(card)==''.join(''.join(node['text']).split())
+934:             row.update(legacy_ok=row['ok'],ok=bool(ok),replacement_contract='p1.1: exact normalized source card in component-SEATCARD')
+935:         if settlement is not None and (label.startswith('结算·') or label=='结算(未到结算日)'):
+936:             ok=settlement['status']=='pass'
+937:             row.update(legacy_ok=row['ok'],ok=bool(ok),replacement_contract=('gate-repair/p1.2-v1' if scoped is not None else 'p1.1')+'/C9: previous trading pool settled on d',pool_date=settlement['pool_date'])
+938:         if scoped is not None and route=='cycle' and label=='断档卡存在':
+939:             gap=read_json(stage/'models/cycle.json')
+940:             cp=frozen/'_学习'/f'cycle判断_{d}.json'; jp=frozen/'_学习'/f'judgment_{d}.json'
+941:             source_absent=not (cp.exists() and read_json(cp)) and not (jp.exists() and read_json(jp).get('bodies',{}).get('cycle'))
+942:             ok=scoped['status']=='pass' and gap.get('judgment_complete') is False and source_absent and gap.get('hero',{}).get('text')=='当日判断缺失' and '当日判断缺失' in active_html[0] and '当日周期判断缺失' in active_html[0]
+943:             row.update(legacy_ok=row['ok'],ok=ok,replacement_contract=scoped['contract']+'/explicit missing judgment')
+944:         if scoped is not None and route=='lhb' and label.startswith(('分档库','分档表新鲜度')):
+945:             ok=scoped['status']=='pass'
+946:             row.update(legacy_ok=row['ok'],ok=ok,replacement_contract=scoped['contract'],errors=scoped['errors'])
+947:         rows.append(row)
+948:         return original(issues, ok, label, detail)
+949:     module.chk = record
+950:     log = io.StringIO()
+951:     with readonly_files(frozen,stage) as (reads,denied), contextlib.redirect_stdout(log), contextlib.redirect_stderr(log):
+952:         code = module.main()
+953:     # cycle/auction main also execute negative self-tests; their deliberate FAIL
+954:     # rows are not a production failure when main itself returns zero.
+955:     baseline_ok = bool(rows) and all(r["ok"] for r in rows if not r["negative_injection"])
+956:     passed = code == 0 and baseline_ok and (scoped is None or scoped['status']=='pass') and not denied and (view is None or view["status"] == "pass") and (settlement is None or settlement["status"] == "pass")
+957:     return {"name": route, "status": "pass" if passed else "fail",
+958:             "errors": [] if passed else [f"sentinel exit={code}, baseline_ok={baseline_ok}, checks={len(rows)}"] + ((view or {}).get("errors",[])) + ((settlement or {}).get("errors",[])) + ((scoped or {}).get("errors",[])),
+959:             "scoped_validation": scoped, "exit_code": code, "log": log.getvalue(), "view_verification": view, "section_bindings": bindings, "settlement_validation": settlement, "observed_checks": rows, "read_files": sorted(reads), "denied_operations": denied}
+960: 
+961: 
+962: def run_checks(frozen, stage, d):
+963:     results = []
+964:     for route in REQUIRED_CHECKS:
+965:         try:
+966:             env = dict(os.environ, PYTHONUTF8="1", PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1",
+967:                        REVIEW_STAGE=str(stage), LHB_SITE_ROOT=str(stage / "site"))
+968:             r = subprocess.run([sys.executable, "-B", str(Path(__file__).resolve()), "_check", d,
+969:                                 "--root", str(frozen), "--stage", str(stage), "--route", route],
+970:                                cwd=frozen, env=env, capture_output=True, text=True, encoding="utf-8", timeout=180)
+971:             row = json.loads(r.stdout)
+972:             if r.returncode != 0:
+973:                 row["status"] = "fail"
+974:                 row.setdefault("errors", []).append(f"check process exit={r.returncode}")
+975:             results.append(row)
+976:         except Exception as exc:
+977:             results.append({"name": route, "status": "fail", "errors": [str(exc)]})
+978:     return results
+979: 
+980: 
+981: def check_errors(checks):
+982:     errors = []
+983:     if not isinstance(checks, list):
+984:         return ["checks must be list"]
+985:     seen = set()
+986:     for check in checks:
+987:         if not isinstance(check, dict):
+988:             errors.append("check record invalid")
+989:             continue
+990:         name = check.get("name")
+991:         if not isinstance(name, str) or name in seen:
+992:             errors.append("check name invalid/duplicate")
+993:             continue
+994:         seen.add(name)
+995:         if check.get("status") != "pass" or check.get("errors") != []:
+996:             errors.append(f"check {name}: {check.get('status')} {check.get('errors')}")
+997:     errors.extend(f"check {name}: not_run" for name in REQUIRED_CHECKS if name not in seen)
+998:     return errors
+999: 
+1000: 
+1001: def tree_hashes(directory):
+1002:     result = {}
+1003:     for p in sorted(directory.rglob("*")):
+1004:         contained(directory, p)
+1005:         if p.is_file():
+1006:             result[p.relative_to(directory).as_posix()] = digest(p)
+1007:     return result
+1008: 
+1009: 
+1010: def _postprocess_stage(root, stage, d):
+1011:     """候选站点统一后处理(2026-09-12)：门禁检查前先跑与到站完全相同的一套处理。
+1012: 
+1013:     背景：到站(_deploy_site)原先在门禁之后才做"能力模块同步 + cycle/lhb 黄金视觉锁"，
+1014:     导致门禁检查的是发布页、部署的是黄金页——检查与实际产物不同源，龙虎榜/周期页
+1015:     的结构化哨兵必然假阴性。此处把同一函数(生成盯盘台.py::_postprocess_site)提前到
+1016:     门禁之前跑在候选站点上，从而使"被检查的页面" == "被部署的页面"。
+1017:     失败即返回 ok=False，由调用方阻断发布(不制造 page_hashes 之后的漂移)。
+1018:     """
+1019:     script = Path(root) / "生成盯盘台.py"
+1020:     if not script.is_file():
+1021:         # 最小发布单元测试夹具可能不带页面后处理器；真正到站时由
+1022:         # _deploy_site 将此标记视为硬失败，不能绕过生产门禁。
+1023:         return {"ok": True, "skipped": "generator missing in isolated fixture"}
+1024:     if not (Path(stage) / "lhb.html").is_file():
+1025:         return {"ok": True, "skipped": "no lhb page in stage"}
+1026:     env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+1027:     # 能力模块数据根 = 本次发布的冻结 inputs(与发布门禁/哨兵复算基准同源)：
+1028:     # 「被检查的页面 == 被部署的页面」这条不变量要求字节同源，否则回放复算报"字节不一致"。
+1029:     frozen = Path(stage).parent / "inputs"
+1030:     env.pop("POST_BASE", None)
+1031:     if (frozen / "能力进化模块.py").is_file():
+1032:         env["POST_BASE"] = str(frozen)
+1033:     cp = subprocess.run(
+1034:         [sys.executable, str(script), "--stage-postprocess", str(stage), d],
+1035:         cwd=str(root), capture_output=True, text=True, encoding="utf-8", env=env,
+1036:     )
+1037:     if cp.returncode != 0:
+1038:         return {"ok": False, "error": (cp.stdout[-1500:] + cp.stderr[-1500:])}
+1039:     return {"ok": True, "stdout": cp.stdout[-800:], "capability_root": env.get("POST_BASE", str(root))}
+1040: 
+1041: 
+1042: def validate_capability_blocks(root, stage, d):
+1043:     """两块标准能力模块(五路+概览)齐备性门禁(2026-09-22 用户指令修复)。
+1044: 
+1045:     故障背景：历史实现只把主题页统一替换成两块标准能力模块，概览/竞价/产业逻辑/涨停页
+1046:     长期缺块、龙虎榜页与旧『自主深挖/我的认知迭代』并存，而门禁只校验"机器卡缺席"，
+1047:     于是缺块可以静默发布(用户看到的正是"有的路有，有的路还没有改过来")。
+1048:     此处逐页比对唯一真源(能力进化模块.py 当日产出)的数量/编号/位置/样式/残留旧标题/字节，
+1049:     任一不符即阻断发布 —— 保证下次复盘不可能再漏、再并存、再退回冻结字节。
+1050:     """
+1051:     errors = []
+1052:     producer = Path(root) / "能力进化模块.py"
+1053:     if not producer.is_file():
+1054:         return ["capability block gate: 能力进化模块.py missing"]
+1055:     try:
+1056:         module = load_module(producer)
+1057:         routes = tuple(module.ROUTES)
+1058:     except Exception as exc:  # noqa: BLE001
+1059:         return ["capability block gate: source unavailable: %s" % exc]
+1060:     for route in routes:
+1061:         path = Path(stage) / (route + ".html")
+1062:         if not path.is_file():
+1063:             errors.append("capability block gate: missing page %s.html" % route)
+1064:             continue
+1065:         html = path.read_text(encoding="utf-8")
+1066:         try:
+1067:             problems = module.verify_page(html, route, Path(root), d)
+1068:         except Exception as exc:  # noqa: BLE001
+1069:             problems = ["verify_page failed: %s" % exc]
+1070:         errors.extend("capability block gate: %s.html -> %s" % (route, p) for p in problems)
+1071:     return errors
+1072: 
+1073: 
+1074: def _build(root, d, publish, allow_degraded):
+1075:     staging = contained(root, ".review_staging")

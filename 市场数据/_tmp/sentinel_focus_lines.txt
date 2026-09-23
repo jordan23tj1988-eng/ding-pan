@@ -1,0 +1,20 @@
+7:   C3 看板_{d}.html mtime >= bars_cache最新mtime(旧价看板被inject=07-15事故根因)
+8:   C4 bars_cache当日覆盖率(涨停池+荐票股+持仓股必须100%到{d})
+11:   C8 改动登记核对(正式.py/规格/规范mtime晚于_变更总账.md=改了没登记;2026-07-16改动三合一)
+15:   C12 龙虎榜黄金页结构+数据专属哨兵(恢复器闭环后接入)
+108: # ---------- C3 看板新鲜度 vs bars_cache ----------
+109: bc=os.path.join(L,'_bars_cache')
+111:     cache_mtime=max(os.path.getmtime(os.path.join(bc,x)) for x in os.listdir(bc)[:400] if x.endswith('.csv'))
+113:     cache_mtime=None
+114: if cache_mtime:
+116:         kb=os.path.join(L,'_模拟盘',route,f'看板_{d}.html')
+117:         if os.path.isfile(kb) and os.path.getmtime(kb) < cache_mtime - 60:
+118:             FAIL.append(f'C3 {route} 历史版本证据不足：看板_{d}.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板')
+175:     if empty: FAIL.append(f'C5 {dprev}结算无效: {empty}(bars_cache没补齐就跑了结算?)')
+235: # 规则见 _链路地图.md 〇节: 正式.py/agent规格/四份规范 的mtime 不得晚于 _变更总账.md
+240:     _lm=os.path.getmtime(_ledger)+60  # 60s宽限
+258:     _dirty=[os.path.basename(x) for x in _watch if os.path.getmtime(x)>_lm]
+260:         FAIL.append(f'C8 改了没登记: {_dirty[:10]}{"…" if len(_dirty)>10 else ""} mtime晚于_变更总账.md——按改动三合一SOP补登记(_链路地图.md 〇节)后重跑哨兵')
+316: # ---------- C12 龙虎榜黄金页专属哨兵 ----------
+325:         FAIL.append(f'C12 龙虎榜专属核对失败: {_tail[:500]}')
+327:     FAIL.append('C12 龙虎榜专属核对脚本缺失: lhb数据核对.py')

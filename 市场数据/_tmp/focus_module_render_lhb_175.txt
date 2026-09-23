@@ -1,0 +1,41 @@
+175:     p = os.path.join(L, '资金温度卡_%s.html' % d)
+176:     if not os.path.exists(p): return ''
+177:     return open(p, encoding='utf-8').read()  # card 文件已含尾换行, 不再补
+178: 
+179: # ============ 板块三: 龙虎榜台账 LHBLEDGER(机器注入bodies, 整段保真) ============
+180: def r_ledger(body):
+181:     """C3.1 机器+LLM: bodies <!--LHBLEDGER--> 注入后整段(h2三 到 h2四), 逐字节保真
+182:     模拟 _fold_ledger: bodies 无 foldarchive 且含 >1 日块 → 更早存档折叠(黄金版同构)
+183:     ★2026-08-13: LLM漏写h2三 → 从LHBLEDGER锚起提取+机器补标题(防台账整段丢失)"""
+184:     ls = body.find('<h2>三')
+185:     le = -1
+186:     if ls < 0:
+187:         anchor = body.find('<!--LHBLEDGER-->')
+188:         if anchor < 0: return ''
+189:         le = body.find('<h2>四', anchor)
+190:         seg = '<h2>三 龙虎榜台账 · 逐日</h2>\n' + body[anchor:le if le > 0 else len(body)]
+191:     else:
+192:         le = body.find('<h2>四', ls)
+193:         seg = body[ls:le if le > 0 else len(body)]
+194:     # ★2026-08-13: 当日日块SEATCARD段(含前导p)已在板块一展示 → 台账内移除防重复(历史日块不动)
+195:     s1 = seg.find('<!--SEATCARD-->')
+196:     if s1 >= 0:
+197:         e1 = seg.find('<!--/SEATCARD-->', s1)
+198:         if e1 > s1:
+199:             lp = seg.rfind('<p style="font-weight:700', 0, s1)
+200:             if lp >= 0:
+201:                 le2 = seg.find('</p>', lp)
+202:                 if 0 < le2 < s1:
+203:                     seg = seg[:lp] + seg[e1 + len('<!--/SEATCARD-->'):]
+204:     if 'foldarchive' not in seg:
+205:         o1 = seg.find('<details class="chain" open>')
+206:         if o1 >= 0:
+207:             d2 = seg.find('<details class="chain">', o1 + 10)
+208:             if d2 > 0:
+209:                 newest = seg[:d2]
+210:                 rest = seg[d2:]
+211:                 rest_clean = rest.replace('<!--/LHBLEDGER-->', '').rstrip('\r\n')
+212:                 dts = re.findall(r'<summary><b>([^<]+)</b>', rest_clean)
+213:                 arch = ('<details class="chain foldarchive"><summary><b>更早存档</b> <span class="chip">%d条</span> <span class="mut">%s ~ %s</span></summary>'
+214:                         '<div class="inner">%s</div></details><!--/LHBLEDGER-->\n'
+215:                         % (len(re.findall(r'<details class="chain">', rest_clean)),

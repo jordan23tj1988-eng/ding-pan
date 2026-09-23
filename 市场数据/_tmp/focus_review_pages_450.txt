@@ -1,0 +1,81 @@
+450:             if self.stack[i].tag == tag:
+451:                 del self.stack[i:]
+452:                 break
+453:     def handle_data(self, data):
+454:         self.stack[-1].children.append(data)
+455:     def handle_comment(self, data):
+456:         self.stack[-1].children.append(_Node("comment", {"text": data}))
+457: 
+458: def _safe_html(node):
+459:     if isinstance(node, str):
+460:         return escape(node)
+461:     if node.tag == "comment":
+462:         return ''  # Machine anchors are emitted once by the fixed template.
+463:     children = ''.join(_safe_html(x) for x in node.children)
+464:     if node.tag == "root":
+465:         return children
+466:     if node.tag in {"script", "style", "iframe", "object", "embed", "form"}:
+467:         return '<pre>' + escape(node.text()) + '</pre>'
+468:     allowed = {"div", "span", "p", "b", "strong", "i", "em", "small", "br", "hr", "ul", "ol", "li", "table", "thead", "tbody", "tfoot", "tr", "th", "td", "details", "summary", "h1", "h2", "h3", "h4", "a", "pre", "code", "sup", "sub", "dl", "dt", "dd", "section", "article", "svg", "g", "path", "rect", "circle", "line", "polyline", "polygon", "text", "defs", "lineargradient", "stop", "colgroup", "col"}
+469:     if node.tag not in allowed:
+470:         return children
+471:     attrs = ''
+472:     for key, value in node.attrs.items():
+473:         if value is None:
+474:             if key == 'open': attrs += ' open'
+475:             continue
+476:         if key not in {'id', 'data-theme-name', 'scope', 'class', 'title', 'style', 'href', 'colspan', 'rowspan', 'data-v', 'data-date', 'aria-hidden', 'viewbox', 'xmlns', 'd', 'x', 'y', 'x1', 'y1', 'x2', 'y2', 'width', 'height', 'rx', 'ry', 'cx', 'cy', 'r', 'fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'points', 'font-size', 'text-anchor', 'opacity', 'offset', 'stop-color', 'transform'}:
+477:             continue
+478:         if key == 'href' and (re.match(r'(?i)\s*(?:javascript|data|vbscript):', value) or any(ord(c)<32 for c in value)):
+479:             continue
+480:         if key == 'style' and re.search(r'(?i)url|expression|@import|behavior|binding|\\', value):
+481:             continue
+482:         attrs += ' ' + ('viewBox' if key=='viewbox' else key) + '="' + escape(value, quote=True) + '"'
+483:     # Legacy headings cannot change the page skeleton.
+484:     tag = 'h3' if node.tag in {'h1','h2'} else node.tag
+485:     return '<' + tag + attrs + '>' + children + ('' if tag in {'br','hr','col'} else '</' + tag + '>')
+486: 
+487: def _history_day(label, d):
+488:     m = re.search(r'(?:([0-9]{4})-)?([0-9]{2})-([0-9]{2})', label)
+489:     return (m[1] or d[:4]) + m[2] + m[3] if m else None
+490: 
+491: ANCHORS = {
+492:  'index': {'CROSSPICK':'recommendations','IDXTEMP':'turning','IDXLEAD':'turning','IDXVOTE':'turning'},
+493:  'cycle': {'VOLSTEP':'volume','LEADIND':'leading','MACHVOTE':'stages','VOTEBOARD':'stages','LADDER':'ladder'},
+494:  'auction': {'SCORECARD':'pool','MACHSCORE':'pool','POOLLEDGER':'settlement','MACHPOOL':'settlement','MACHSIG':'winrate'},
+495:  'lhb': {'FUNDTEMP':'temperature','LHBLEDGER':'ledger','SEATCARD':'seats'},
+496:  'theme': {'THEMEBATTLE':'matrix','6YOU':'matrix','FOURDIM':'matrix','LIFECYCLE':'lifecycle'},
+497:  'logic': {'MACHCHAIN':'chains','MACHRADAR':'earnings','MACHHIST':'hardness'},
+498:  'limitup': {'LEDGER':'ledger','TEMPCARD':'temperature','SCORECARD':'recommendations'},
+499: }
+500: 
+501: # Sections whose content is machine-authoritative (a dated producer artifact) and
+502: # therefore carry no LLM claim.  They stay outside the legacy completeness rule and
+503: # never absorb pre-heading body text, but they are still fully checked downstream
+504: # (component anchors, source hashes, DOM-vs-source text equality).
+505: MACHINE_ONLY_SECTIONS = {('index', 'recommendations')}
+506: 
+507: def _leaf_items(value, pointer=""):
+508:     if isinstance(value, dict) and value:
+509:         for key, item in value.items():
+510:             yield from _leaf_items(item, pointer + '/' + str(key).replace('~','~0').replace('/','~1'))
+511:     elif isinstance(value, list) and value:
+512:         for i, item in enumerate(value):
+513:             yield from _leaf_items(item, pointer + '/' + str(i))
+514:     else:
+515:         yield pointer, value
+516: 
+517: def _add(model, text, section, role, source, pointer, fragment=None):
+518:     key = model['route'] + '-' + sha256((source + '#' + pointer).encode()).hexdigest()[:16]
+519:     ev = 'ev-' + key
+520:     claim = {'id': key, 'role': role, 'text': text if isinstance(text,str) else _dump(text).strip(),
+521:              'section': section, 'evidence_refs': [ev], 'source': source, 'source_pointer': pointer}
+522:     if fragment is not None:
+523:         claim['legacy_html'] = fragment
+524:     model['claims'].append(claim)
+525:     model['evidence'].append({'id':ev,'d':model['d'],'source':source,'pointer':pointer})
+526:     next(s for s in model['sections'] if s['id']==section)['claim_refs'].append(key)
+527:     return key
+528: 
+529: def _dated(root, filename, d):
+530:     path = root / '_学习' / filename

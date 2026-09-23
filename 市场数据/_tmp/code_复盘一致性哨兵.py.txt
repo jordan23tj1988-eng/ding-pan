@@ -1,0 +1,445 @@
+---1-180---
+1: # -*- coding: utf-8 -*-
+2: """复盘一致性哨兵.py {d} —— 出页后最后一道自动化检查(2026-07-15晚事故催生)。
+3: 动机: 数据补齐后"判断层修了、展示层stale"散在5处逐个被用户抓——人记不住就让机器查。
+4: 检查项:
+5:   C1 页面残留缺口叙述词(网络不可达/未刷新/沿用0714式旧标记/null溢价)
+6:   C2 PAPERTRADE头部累计% == _模拟盘/{route}/状态.json 累计pct(数字必须出自引擎)
+7:   C3 看板_{d}.html mtime >= bars_cache最新mtime(旧价看板被inject=07-15事故根因)
+8:   C4 bars_cache当日覆盖率(涨停池+荐票股+持仓股必须100%到{d})
+9:   C5 发出版结算字段非全None(结算跑过且有效)
+10:   C6 HTML结构完好+时间线折叠  C7 脚本产出卡陈旧嵌入
+11:   C8 改动登记核对(正式.py/规格/规范mtime晚于_变更总账.md=改了没登记;2026-07-16改动三合一)
+12:   C9 台账最新日块日期对账(涨停/龙虎榜=d,竞价=dprev;台账脚本--from-data漏日期会静默跳过当日日块=2026-07-16龙虎榜事故)
+13:   C10 池外候选链核对(2026-08-13 上线)
+14:   C11 交易计划六路文件当日存在性(2026-08-17 上线: 契约⑪硬要求, 引擎静默空仓无告警=8/13起断供5日事故)
+15:   C12 龙虎榜黄金页结构+数据专属哨兵(恢复器闭环后接入)
+16:   C13 主题页同日冻结哈希(2026-09-13 上线: 复盘期间主题页不可改写)
+17:   C14 两块标准能力模块(五路+概览)齐备
+18:   C15 概览页黄金骨架(2026-09-23 上线: 概览页此前无视觉锁, 连跑两天体量翻倍/判断卡+201)
+19: 退出码: 0=全过 1=有FAIL(打印明细,流水线应停下重看)
+20: """
+21: import os,sys,glob,json,re,datetime,subprocess,hashlib
+22: 
+23: R=None
+24: for g in glob.glob('/sessions/*/mnt/股票数据/市场数据'):
+25:     R=g;break
+26: if R is None and os.path.isdir(r'D:\股票数据\市场数据'): R=r'D:\股票数据\市场数据'
+27: L=os.path.join(R,'_学习');SITE=os.path.join(R,'复盘','盯盘台')
+28: d=sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d')
+29: dprev_dirs=sorted([x for x in os.listdir(R) if x.isdigit() and len(x)==8 and x<d])
+30: dprev=dprev_dirs[-1] if dprev_dirs else None
+31: # ★2026-08-16 周末口径: C4/C5 期望日期用最后交易日(bars最多到最近交易日), 非"今天"(周末/盘前 d 无交易数据)
+32: _LAST_TD=None; _CAL=None
+33: try:
+34:     sys.path.insert(0, R)
+35:     from trading_calendar import load_trading_calendar, next_trading_day
+36:     _CAL=load_trading_calendar()
+37:     if _CAL: _LAST_TD=_CAL[-1]
+38: except Exception:
+39:     _CAL=None; _LAST_TD=None
+40: _EXPECT_D = d if (_CAL and d in _CAL) else (_LAST_TD or d)
+41: FAIL=[];WARN=[]
+42: 
+43: # ---------- C1 页面残留缺口叙述 ----------
+44: pages=['index','cycle','auction','lhb','theme','logic','limitup']
+45: # ★07-15晚二次事故修正: 必须在**去HTML标签后的纯文本**上匹配(标签夹隔曾漏"溢价 <b>null</b>");
+46: # 词表加"不可达"泛化(曾因文案是"源不可达"而非"网络不可达"漏抓)。
+47: pats=[r'不可达',r'网络未刷新',r'未刷新沿',r'沿用'+ (dprev or '00000000'),
+48:       r'溢价\s*null',r'null\s*[\(（]源',r'结算\s*(全)?None',r'价源\s*null',r'数据缺口待补',r'挂起未重训']
+49: for p in pages:
+50:     f=os.path.join(SITE,p+'.html')
+51:     if not os.path.isfile(f): FAIL.append(f'C1 {p}.html 不存在');continue
+52:     h=open(f,encoding='utf-8').read()
+53:     h=re.sub(r'<details class="chain tlfold">.*?</details>','',h,flags=re.DOTALL)  # ★2026-08-16 方案A: C1只扫当日缺口,先剔除认知迭代历史折叠区(历史原文"当时不可达"是真实记录,非当日缺口残留)
+54:     text=re.sub(r'<[^>]+>',' ',h)   # 去标签再查
+55:     for pat in pats:
+56:         m=re.search(pat,text)
+57:         if m:
+58:             ctx=text[max(0,m.start()-40):m.end()+30]
+59:             FAIL.append(f'C1 {p}.html 残留"{pat}": …{" ".join(ctx.split())[:60]}…')
+60: 
+61: # ---------- C2 PAPERTRADE累计 vs 目标日来源 ----------
+62: def _c2_unique(pairs):
+63:     out={}
+64:     for key,value in pairs:
+65:         if key in out: raise ValueError(f'JSON重复键{key}')
+66:         out[key]=value
+67:     return out
+68: 
+69: def _c2_load(path):
+70:     with open(path,encoding='utf-8') as fh:
+71:         return json.load(fh,object_pairs_hook=_c2_unique)
+72: 
+73: def _c2_number(value):
+74:     import math
+75:     if isinstance(value,bool) or not isinstance(value,(int,float)) or not math.isfinite(value):
+76:         raise ValueError('目标日数值必须是有限数字')
+77:     return float(value)
+78: PAGE={'auction':'auction','lhb':'lhb','theme':'theme','logic':'logic','limitup':'limitup','master':'index'}
+79: for route,pg in PAGE.items():
+80:     sp=os.path.join(L,'_模拟盘',route,'状态.json')
+81:     f=os.path.join(SITE,pg+'.html')
+82:     if not os.path.isfile(f): WARN.append(f'C2 {route} 页面缺,跳过');continue
+83:     np=os.path.join(L,'_模拟盘',route,'净值.json')
+84:     try:
+85:         st=_c2_load(sp) if os.path.isfile(sp) else {}
+86:         if os.path.isfile(np):
+87:             navs=_c2_load(np)
+88:             if d not in navs: raise ValueError(f'净值缺目标日{d}')
+89:             cum=_c2_number((_c2_number(navs[d]['nav'])-1)*100)
+90:             if st.get('date')==d and st.get('累计pct') is not None:
+91:                 if abs(cum-_c2_number(st['累计pct']))>0.005:
+92:                     raise ValueError('同日状态与净值不一致')
+93:         else:
+94:             if st.get('date')!=d: raise ValueError(f'状态日期{st.get("date")}不是目标日{d}')
+95:             cum=_c2_number(st['累计pct'])
+96:     except Exception as exc:
+97:         FAIL.append(f'C2 {route} 目标日来源不可核验: {exc}');continue
+98:     h=open(f,encoding='utf-8').read()
+99:     i=h.find('PAPER TRADING')
+100:     if i<0: FAIL.append(f'C2 {pg}.html 无PAPERTRADE段');continue
+101:     seg=re.sub('<[^>]+>',' ',h[i:i+400])
+102:     m=re.search(r'累计\s*([+-]?[0-9.]+)%',seg)
+103:     if not m: FAIL.append(f'C2 {pg}.html 找不到累计%');continue
+104:     page_v=float(m.group(1))
+105:     if abs(page_v-float(cum))>0.005:
+106:         FAIL.append(f'C2 {route} 页面累计{page_v}% != 目标日{d}来源累计{cum}%')
+107: 
+108: # ---------- C3 看板新鲜度 vs bars_cache ----------
+109: bc=os.path.join(L,'_bars_cache')
+110: try:
+111:     cache_mtime=max(os.path.getmtime(os.path.join(bc,x)) for x in os.listdir(bc)[:400] if x.endswith('.csv'))
+112: except Exception:
+113:     cache_mtime=None
+114: if cache_mtime:
+115:     for route in PAGE:
+116:         kb=os.path.join(L,'_模拟盘',route,f'看板_{d}.html')
+117:         if os.path.isfile(kb) and os.path.getmtime(kb) < cache_mtime - 60:
+118:             FAIL.append(f'C3 {route} 历史版本证据不足：看板_{d}.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板')
+119: 
+120: # ---------- C4 关键股当日bar覆盖 ----------
+121: need=set()
+122: zp=os.path.join(R,d,'zt_pool.csv')
+123: if os.path.isfile(zp):
+124:     import csv as _csv
+125:     for row in _csv.DictReader(open(zp,encoding='utf-8-sig')):
+126:         need.add(str(row.get('代码','')).zfill(6))
+127: for f in glob.glob(os.path.join(L,f'*荐票_{d}.json'))+[os.path.join(L,f'竞价池发出_{d}.json')]:
+128:     try:
+129:         j=json.load(open(f,encoding='utf-8'))
+130:         for it in (j.get('荐票') or j.get('池') or []):
+131:             if isinstance(it,dict) and it.get('代码'): need.add(str(it['代码']).zfill(6))
+132:     except Exception: pass
+133: for route in PAGE:
+134:     sp=os.path.join(L,'_模拟盘',route,'state.json')
+135:     if os.path.isfile(sp):
+136:         try:
+137:             for pos in json.load(open(sp,encoding='utf-8')).get('positions',[]): need.add(pos['code'])
+138:         except Exception: pass
+139: _e=_EXPECT_D; dd=f'{_e[:4]}-{_e[4:6]}-{_e[6:]}';miss=[]
+140: for c in sorted(need):
+141:     f=os.path.join(bc,c+'.csv')
+142:     ok=False
+143:     if os.path.isfile(f):
+144:         try:
+145:             # Coverage means one unambiguous target-day row, not the final row.
+146:             # Strict decoding: corrupted bytes or duplicate target dates cannot pass.
+147:             import csv as _csv
+148:             with open(f,encoding='utf-8-sig',newline='') as fh:
+149:                 rows=list(_csv.DictReader(fh))
+150:             matches=[row for row in rows if str(row.get('date','')) in (dd,_e)]
+151:             ok=len(matches)==1
+152:         except Exception: pass
+153:     if not ok: miss.append(c)
+154: if miss:
+155:     lvl=FAIL if len(miss)>max(3,len(need)*0.05) else WARN
+156:     lvl.append(f'C4 关键股{len(need)}只中{len(miss)}只bars未到{_e}: {miss[:8]}{"…" if len(miss)>8 else ""}')
+157: 
+158: # ---------- C5 昨日结算有效性 ----------
+159: _c5_expired=True
+160: if dprev and _CAL and _LAST_TD:
+161:     _dn=next_trading_day(dprev,_CAL)
+162:     if _dn is None or _dn>_LAST_TD: _c5_expired=False  # ★2026-08-16: T+1未发生或尚未到期(如8/14荐票需8/17数据), 结算未到期, 跳过C5
+163: if dprev and _c5_expired:
+164:     empty=[]
+165:     for name in ['质量荐票结算','题材荐票结算','逻辑荐票结算','席位荐票结算']:
+166:         f=os.path.join(L,f'{name}_{dprev}.json')
+167:         if not os.path.isfile(f): empty.append(name+':缺文件');continue
+168:         try:
+169:             j=json.load(open(f,encoding='utf-8'));s=json.dumps(j.get('汇总',{}),ensure_ascii=False)
+170:             detail=j.get('明细')
+171:             if isinstance(detail,list) and len(detail)==0:
+172:                 continue  # 空仓(0荐票), 0/0 是合法结果非"bars没补齐"
+173:             if re.search(r'\"执行均收\":\s*null',s) and '0/0' in s: empty.append(name+':0/0全None')
+174:         except Exception as e: empty.append(name+':读失败')
+175:     if empty: FAIL.append(f'C5 {dprev}结算无效: {empty}(bars_cache没补齐就跑了结算?)')
+176: 
+177: # ---------- C6 HTML结构完好+时间线折叠(07-15晚: 孤立<与折叠失效事故) ----------
+178: for p in pages:
+179:     f=os.path.join(SITE,p+'.html')
+180:     if not os.path.isfile(f): continue
+---180-360---
+180:     if not os.path.isfile(f): continue
+181:     h=open(f,encoding='utf-8').read()
+182:     if '<</' in h or '><<' in h:
+183:         FAIL.append(f'C6 {p}.html 存在孤立<(HTML被切坏,查_rt/_fold_tl不平衡守卫)')
+184:     # 认知迭代tl条目>=2却没有tlfold=折叠失效
+185:     for m in re.finditer(r'<div class="tl">',h):
+186:         seg=h[m.start():m.start()+6000]
+187:         nitems=len(re.findall(r'<div class="tli[^"]*">',seg[:seg.find('</details>') if '</details>' in seg else len(seg)]))
+188:         if nitems>=2 and 'tlfold' not in h[max(0,m.start()-300):m.start()+6000]:
+189:             FAIL.append(f'C6 {p}.html 时间线{nitems}条未折叠(应最新1条外露+其余进tlfold)')
+190:         break
+191:     # ★2026-08-14 补三查: (1)div开闭配对平衡 (2)游离>字符 (3)rowA直接子元素=黄金契约
+192:     #   动机: lhb四组件没并排连续被用户抓3-4次, 根因=强档KPI卡</div>错位(div差1)+游离'>'在grid成匿名item,
+193:     #   C6旧查(孤立<)两样都漏。这三查覆盖"LLM手写HTML结构写坏"这一类。
+194:     o=h.count('<div'); c=h.count('</div>')
+195:     if o!=c:
+196:         FAIL.append(f'C6 {p}.html div开{o}闭{c}差{o-c}(有未闭合或多余闭合,查bodies.{p}的KPI卡</div>错位)')
+197:     if re.search(r'</(div|span|p|h[1-6]|li|td|th)>[ \t]*>', h):
+198:         FAIL.append(f'C6 {p}.html 存在游离>字符(闭合标签后跟裸>,在grid成匿名item会挤坏并排,查bodies.{p})')
+199:     _ri=h.find('class="rowA"')
+200:     if _ri>0:
+201:         _rj=h.find('<h2',_ri)
+202:         _seg=h[_ri:(_rj if _rj>0 else _ri+3000)]
+203:         # cycle 黄金壳允许“hero + 紧凑 kpis 容器(内含4张卡)”布局；
+204:         # 其他页面仍严格要求 hero + 4 张并列 KPI。
+205:         _compact_cycle = (p == 'cycle' and '<section id="' not in h
+206:                           and '<div class="kpis">' in _seg)
+207:         if _compact_cycle:
+208:             _items = ['hero', 'kpis']
+209:         else:
+210:             _items=[m.group(1) for m in re.finditer(r'<div class="(hero|kpi)"',_seg)]
+211:         _expected_items = ['hero', 'kpis'] if _compact_cycle else ['hero','kpi','kpi','kpi','kpi']
+212:         if _items != _expected_items:
+213:             FAIL.append(f'C6 {p}.html rowA直接子元素={_items}(应{_expected_items}，有KPI卡结构散落/游离grid item)')
+214: 
+215: # ---------- C7 脚本产出卡陈旧嵌入(07-15晚: 先行指标卡重生成但页面嵌旧版,溢价柱显∅) ----------
+216: # ★2026-08-12 口径更新: cycle 已模块化渲染(module_render_cycle, LEADIND区自渲染自数据源),
+217: #   不再嵌 先行指标卡_*.html 全文 → C7 改查 LEADIND 锚存在 + 当日涨停数_净 数字出现(数据源一致性)
+218: _card=os.path.join(L,f'先行指标卡_{d}.html')
+219: _cyc=os.path.join(SITE,'cycle.html')
+220: if os.path.isfile(_card) and os.path.isfile(_cyc):
+221:     _cc=open(_card,encoding='utf-8').read()
+222:     _ph=open(_cyc,encoding='utf-8').read()
+223:     _has_leadind = ('<!--LEADIND-->' in _ph)
+224:     _net_ok = False
+225:     try:
+226:         _lj=json.load(open(os.path.join(L,'_情绪先行指标.json'),encoding='utf-8'))
+227:         _net=str(((_lj.get(d) or {}).get('晋级') or {}).get('涨停数_净',''))
+228:         if _net: _net_ok = _net in _ph
+229:     except Exception:
+230:         pass
+231:     if not _net_ok:
+232:         FAIL.append('C7 cycle.html 当日涨停数_净(%s)未现(模块化渲染异常或先行指标卡陈旧)' % (_net or '?'))
+233: 
+234: # ---------- C8 改动登记核对(2026-07-16 改动三合一: 改了不登记=FAIL) ----------
+235: # 规则见 _链路地图.md 〇节: 正式.py/agent规格/四份规范 的mtime 不得晚于 _变更总账.md
+236: _ledger=os.path.join(R,'_变更总账.md')
+237: if not os.path.isfile(_ledger):
+238:     WARN.append('C8 _变更总账.md 不存在,登记核对跳过')
+239: else:
+240:     _lm=os.path.getmtime(_ledger)+60  # 60s宽限
+241:     _watch=[]
+242:     _PROD_UNDERSCORE={'_认知库渲染.py','_认知库蒸馏_五路.py','_jsonl_append.py'}  # ★2026-08-16 生产脚本白名单: 下划线开头但非一次性脚本(r_cog_lib来源/每晚蒸馏器/四结算脚本共享去重模块), 纳入登记核对不判残留
+243:     for _f in os.listdir(R):
+244:         _fp=os.path.join(R,_f)
+245:         if _f.endswith('.py') and os.path.isfile(_fp) and not _f.endswith('.bak'):
+246:             if _f.startswith('_'):
+247:                 if _f in _PROD_UNDERSCORE:
+248:                     _watch.append(_fp)  # 生产脚本: 不判残留, 纳入"改了没登记"核对
+249:                 else:
+250:                     WARN.append(f'C8 R根目录临时脚本残留 {_f}(规矩: 一次性脚本进 _tmp/,用完即弃)')
+251:             else:
+252:                 _watch.append(_fp)
+253:     for _pat in ('_agent规格/*.md',):
+254:         _watch+=glob.glob(os.path.join(R,_pat))
+255:     for _sf in ('_多agent重构_设计规范.md','_盯盘台组件规范.md','_模拟盘设计.md','_链路地图.md'):
+256:         _fp=os.path.join(R,_sf)
+257:         if os.path.isfile(_fp): _watch.append(_fp)
+258:     _dirty=[os.path.basename(x) for x in _watch if os.path.getmtime(x)>_lm]
+259:     if _dirty:
+260:         FAIL.append(f'C8 改了没登记: {_dirty[:10]}{"…" if len(_dirty)>10 else ""} mtime晚于_变更总账.md——按改动三合一SOP补登记(_链路地图.md 〇节)后重跑哨兵')
+261: 
+262: # ---------- C9 台账最新日块日期对账(2026-07-16 龙虎榜台账漏当日荐票卡事故) ----------
+263: # 根因: 台账脚本 --from-data 缺日期参数会静默跳过当日日块→页面停在昨日,肉眼难察。机器核对最新<summary>日块日期。
+264: _jf=os.path.join(L,'judgment_%s.json'%d)
+265: if not os.path.isfile(_jf):
+266:     WARN.append('C9 judgment缺,台账日块核对跳过')
+267: else:
+268:     _bd=json.load(open(_jf,encoding='utf-8')).get('bodies',{})
+269:     _md=d[4:6]+'-'+d[6:8]; _mp=(dprev[4:6]+'-'+dprev[6:8]) if dprev else None
+270:     # (页面,锚,应等于的MM-DD,口径说明): 涨停/龙虎榜=当日荐票卡口径→d; 竞价=昨日池今日结算口径→dprev
+271:     for _pg,_an,_exp,_ku in [('limitup','LEDGER',_md,'当日涨停归位'),('lhb','LHBLEDGER',_md,'当日席位荐票卡'),('auction','POOLLEDGER',_mp,'昨日池今日结算')]:
+272:         if _exp is None: continue
+273:         _b=_bd.get(_pg,''); _s=_b[_b.find('<!--%s-->'%_an):_b.find('<!--/%s-->'%_an)]
+274:         _ds=re.findall(r'<summary><b>(\d\d-\d\d)',_s); _new=_ds[0] if _ds else None
+275:         if _new!=_exp:
+276:             FAIL.append('C9 %s %s 最新日块=%s 应=%s(%s)——台账脚本 --from-data 可能漏了日期参数,当日日块没建;补跑"台账脚本 %s --from-data"+dashboard+生成盯盘台+inject'%(_pg,_an,_new,_exp,_ku,d))
+277: 
+278: # ---------- C10 池外候选链核对(2026-08-13 上线) ----------
+279: # 口径: candidates json 非空→池外候选卡必须已生成; json 缺/空→卡不应存在(生成函数空候选不落盘)
+280: _poolj=os.path.join(r'D:/股票数据/量价因子库/data/daily','candidates_%s.json'%d)
+281: _poolcard=os.path.join(L,'池外候选卡_%s.html'%d)
+282: if os.path.isfile(_poolj):
+283:     _n=json.load(open(_poolj,encoding='utf-8')).get('候选数') or 0
+284:     if _n>0 and not os.path.isfile(_poolcard):
+285:         FAIL.append('C10 池外候选%d个但池外候选卡_%s.html缺失——涨停质量荐票.py池外段没跑;补跑后重渲染limitup页'%(_n,d))
+286: elif os.path.isfile(_poolcard):
+287:     WARN.append('C10 candidates json缺但池外候选卡存在(昨日残留?)——确认A2扫描与卡生成链一致性')
+288: 
+289: # ---------- C11 交易计划六路文件当日存在性(2026-08-17 上线) ----------
+290: # 根因: 8/12契约修正把旧v3"★写第N路模拟盘计划"硬步骤压缩成模糊的"荐票/交易计划文件"→
+291: # 8/13起六路交易计划全断供, 引擎读不到时静默{}空仓无任何告警, 断供5日才被用户发现。
+292: # 修复: 契约⑪补硬要求(路径/schema/在持票逐票表态) + 本哨兵检查六路文件当日存在。
+293: _PLAN_ROUTES=['auction','lhb','theme','logic','limitup','master']
+294: _missing_plans=[]
+295: for _r in _PLAN_ROUTES:
+296:     _pf=os.path.join(L,'交易计划_%s_%s.json'%(_r,d))
+297:     if not os.path.isfile(_pf):
+298:         _missing_plans.append(_r)
+299:         continue
+300:     try:
+301:         _pj=json.load(open(_pf,encoding='utf-8'))
+302:         _pd=_pj.get('日期') if isinstance(_pj,dict) else None
+303:         if _pd!=d:
+304:             WARN.append('C11 %s交易计划 日期字段=%s 应=%s(发出版日期错位?)'%(_r,_pd,d))
+305:         # ★2026-08-17 schema契约校验: 引擎只读 buys/sells/notes(买卖指令), 8/11-12 limitup曾写"荐票/观察"格式
+306:         # → 文件在但引擎读不到任何指令=静默空仓, 存在性检查不够。合法形态=buys或sells存在(可为空列表)+notes, 或显式空仓理由。
+307:         if isinstance(_pj,dict) and not any(k in _pj for k in ('buys','sells','notes','持仓表态','空仓理由')):
+308:             FAIL.append('C11 %s交易计划 schema不符引擎契约(无 buys/sells/notes 键, 疑似误写荐票格式)——引擎读缺=静默空仓; 重写为 {日期,路,buys:[{代码,名称,权重,理由}],sells:[{代码,腿,理由}],notes} 后重跑哨兵'%_r)
+309:     except Exception as _e:
+310:         FAIL.append('C11 %s交易计划 json解析失败: %s'%(_r,_e))
+311: if _missing_plans:
+312:     FAIL.append('C11 交易计划断供: %s 缺 交易计划_{route}_%s.json(契约⑪每路必写,buys 0~5只空仓须写理由,在持票逐票表态;引擎读缺=静默空仓)——补写后重跑哨兵'%(','.join(_missing_plans),d))
+313: elif len(_missing_plans)==0:
+314:     pass
+315: 
+316: # ---------- C12 龙虎榜黄金页专属哨兵 ----------
+317: _lhb_checker = os.path.join(R, 'lhb数据核对.py')
+318: if os.path.isfile(_lhb_checker):
+319:     _cp = subprocess.run(
+320:         [r"D:\股票数据\.venv312\Scripts\python.exe" if os.path.isfile(r"D:\股票数据\.venv312\Scripts\python.exe") else sys.executable, _lhb_checker, d],
+321:         cwd=R, env=dict(os.environ, LHB_SITE_ROOT=SITE, PYTHONUTF8='1', PYTHONIOENCODING='utf-8'), capture_output=True, text=True, encoding='utf-8', errors='replace',
+322:     )
+323:     if _cp.returncode != 0:
+324:         _tail = ' '.join(_cp.stdout.strip().splitlines()[-3:])
+325:         FAIL.append(f'C12 龙虎榜专属核对失败: {_tail[:500]}')
+326: else:
+327:     FAIL.append('C12 龙虎榜专属核对脚本缺失: lhb数据核对.py')
+328: 
+329: # ---------- C13 主题页同日冻结哈希 ----------
+330: _theme_freeze = os.path.join(SITE, '.theme_page_freeze.json')
+331: _theme_check_site = os.environ.get('REVIEW_STAGE', SITE)
+332: if os.path.isfile(_theme_freeze):
+333:     try:
+334:         with open(_theme_freeze, encoding='utf-8') as fh:
+335:             _tf = json.load(fh)
+336:         if _tf.get('schema_version') != 1 or not re.fullmatch(r'[0-9]{8}', str(_tf.get('d', ''))):
+337:             raise ValueError('冻结元数据 schema/date 非法')
+338:         if _tf.get('d') == d:
+339:             _theme_page = os.path.join(_theme_check_site, 'theme.html')
+340:             if not os.path.isfile(_theme_page):
+341:                 raise ValueError('冻结期 theme.html 不存在')
+342:             _h = hashlib.sha256()
+343:             with open(_theme_page, 'rb') as fh:
+344:                 for _block in iter(lambda: fh.read(1024 * 1024), b''):
+345:                     _h.update(_block)
+346:             if _h.hexdigest() != _tf.get('theme_sha256'):
+347:                 raise ValueError('theme.html 与冻结哈希不一致')
+348:     except Exception as _e:
+349:         FAIL.append('C13 主题页冻结校验失败: %s' % _e)
+350: 
+351: # ---------- C14 两块标准能力模块(五路+概览)齐备(2026-09-22 用户指令修复) ----------
+352: # 故障背景: 只有主题页被统一替换, 概览/竞价/产业逻辑/涨停页长期缺这两块, 龙虎榜页与旧
+353: # 『自主深挖/我的认知迭代』并存, 而旧哨兵只管"机器卡缺席"→缺块可静默发布。此处逐页比对
+354: # 唯一真源(能力进化模块.py 当日产出)的数量/编号/位置/样式/残留旧标题/字节, 现站缺块即 FAIL。
+355: _cap_src = os.path.join(R, '能力进化模块.py')
+356: if not os.path.isfile(_cap_src):
+357:     FAIL.append('C14 能力模块唯一真源缺失: 能力进化模块.py')
+358: else:
+359:     try:
+360:         import importlib.util as _ilu
+---360-520---
+360:         import importlib.util as _ilu
+361:         _spec = _ilu.spec_from_file_location('capability_module_sentinel', _cap_src)
+362:         _cap = _ilu.module_from_spec(_spec)
+363:         _spec.loader.exec_module(_cap)
+364:         _cap_site = os.environ.get('REVIEW_STAGE', SITE)
+365:         for _r in _cap.ROUTES:
+366:             _p = os.path.join(_cap_site, _r + '.html')
+367:             if not os.path.isfile(_p):
+368:                 FAIL.append('C14 %s.html 不存在' % _r)
+369:                 continue
+370:             with open(_p, encoding='utf-8') as _fh:
+371:                 _html = _fh.read()
+372:             for _prob in _cap.verify_page(_html, _r, R, d):
+373:                 FAIL.append('C14 %s.html 能力模块不合契约: %s' % (_r, _prob))
+374:     except Exception as _e:
+375:         FAIL.append('C14 能力模块齐备性核对失败: %s' % _e)
+376: 
+377: # ---------- C15 概览页黄金骨架(2026-09-23 用户拍板: 每次复盘样式不得漂移) ----------
+378: # 故障背景: 概览页是七页里唯一没有视觉锁的页面——段落与卡片由总审正文和判断卡数量决定,
+379: # 连跑两天体量从 113KB/78卡 涨到 240KB/279卡。此处按契约(_契约/页面契约.v1.json
+380: # routes.index.sections)核对段序/段标记/组件形态/判断卡不上页/原文留痕, 任一项不符即 FAIL。
+381: try:
+382:     _ov = os.path.join(os.environ.get('REVIEW_STAGE', SITE), 'index.html')
+383:     if not os.path.isfile(_ov):
+384:         FAIL.append('C15 概览页不存在: %s' % _ov)
+385:     else:
+386:         _oh = open(_ov, encoding='utf-8').read()
+387:         _oc = json.load(open(os.path.join(R, '_契约', '页面契约.v1.json'), encoding='utf-8'))
+388:         _sids = [x['id'] for x in _oc['routes']['index']['sections']]
+389:         if _sids != ['recommendations', 'turning', 'routes', 'verdict']:
+390:             FAIL.append('C15 契约里概览段序被改了(%s)——黄金骨架锁与契约不一致' % _sids)
+391:         _pos = []
+392:         for _sid in _sids:
+393:             _mark = '<!--GOLDEN-INDEX:%s-->' % _sid
+394:             if _oh.count(_mark) != 1:
+395:                 FAIL.append('C15 概览缺段标记 %s(出现%d次)' % (_sid, _oh.count(_mark)))
+396:             else:
+397:                 _pos.append(_oh.index(_mark))
+398:         if len(_pos) == len(_sids) and _pos != sorted(_pos):
+399:             FAIL.append('C15 概览段序错位: 段标记顺序与契约不符')
+400:         if _oh.count('<h2>') < len(_sids):
+401:             FAIL.append('C15 概览 h2 数(%d) < 契约段数(%d)' % (_oh.count('<h2>'), len(_sids)))
+402:         if 'class="citem"' in _oh:
+403:             FAIL.append('C15 概览页又出现判断卡(class="citem")——结果层只留黄金组件')
+404:         if 'class="reading-spine"' in _oh:
+405:             FAIL.append('C15 概览页又出现阅读条(class="reading-spine")')
+406:         if 'claim-anchor-bank' not in _oh:
+407:             FAIL.append('C15 概览页无痕原文库缺失(claim 原文必须留痕, 一条不删)')
+408:         for _cid in ('CROSSPICK', 'IDXTEMP', 'IDXLEAD', 'IDXVOTE', 'ENGINEBOOKS'):
+409:             if _oh.count('<!--%s-->' % _cid) != _oh.count('<!--/%s-->' % _cid):
+410:                 FAIL.append('C15 概览机器锚点不成对: %s' % _cid)
+411:         if _oh.count('class="obs"') > 5:
+412:             FAIL.append('C15 概览 .obs 卡 %d 张 > 5(Top5 上限)' % _oh.count('class="obs"'))
+413:         # 2026-09-23 用户指正(图1/图4/图5): 机器数据核对层/来源审计折叠/页内导航退出概览结果层;
+414:         # 走马灯必须有当日读数(此前空条); obs 卡必须带票名与身位(此前被去噪规则隐藏)。
+415:         for _bad, _why in (('机器数据核对层', '机器数据核对层折叠'),
+416:                            ('id="audit-fold"', '来源审计折叠'),
+417:                            ("map.className='page-map'", '页内导航(本页阅读)')):
+418:             if _bad in _oh:
+419:                 FAIL.append('C15 概览页又出现%s(2026-09-23 已退出结果层)' % _why)
+420:         _tk = ''
+421:         if '<div class="ticker">' in _oh:
+422:             _tk = _oh.split('<div class="ticker">', 1)[1].split('</div></div></div>', 1)[0]
+423:         if len(_tk) < 60:
+424:             FAIL.append('C15 概览走马灯为空或过短(%d 字符)——黄金版是当日读数条带' % len(_tk))
+425:         if 'class="obs-nm"' not in _oh:
+426:             FAIL.append('C15 概览 .obs 卡缺票名(.obs-nm)——黄金版卡头是「名称+代码」')
+427:         if '.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}' in _oh:
+428:             FAIL.append('C15 概览页内又写入隐藏票名/身位的去噪规则')
+429: except Exception as _e:
+430:     FAIL.append('C15 概览黄金骨架核对失败: %s' % _e)
+431: 
+432: print(f'== 复盘一致性哨兵 {d} ==')
+433: for w in WARN: print('  WARN',w)
+434: if FAIL:
+435:     for x in FAIL: print('  FAIL',x)
+436:     print(f'结论: {len(FAIL)}项FAIL——不要通知完成,先修复再重跑哨兵');sys.exit(1)
+437: print(f'结论: 全过({len(WARN)}警告)');sys.exit(0)
+438: 
+439: 
+440: 

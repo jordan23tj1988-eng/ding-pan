@@ -12,7 +12,7 @@ ROOT = TASK / "root"
 sys.path.insert(0, str(ROOT))
 ROUTES = ("index", "cycle", "auction", "lhb", "theme", "logic", "limitup")
 EXPECTED = {
- "index": ["recommendations", "observations", "routes", "turning", "verdict", "master"],
+ "index": ["recommendations", "turning", "routes", "verdict"],  # 2026-09-23 黄金骨架锁: 段序冻结(module_golden_index.py)
  "cycle": ["volume", "leading", "stages", "ladder", "position", "research", "cognition"],
  "auction": ["pool", "settlement", "temperature", "winrate", "research", "cognition"],
  "lhb": ["seats", "temperature", "ledger", "tiers", "research", "cognition"],

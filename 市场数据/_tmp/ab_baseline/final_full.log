@@ -1,0 +1,96 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0
+cachedir: _tmp\.pytest_cache
+rootdir: D:\股票数据\市场数据
+configfile: pytest.ini
+plugins: anyio-4.12.1, asyncio-1.3.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 375 items / 1 deselected / 374 selected
+
+tests\test_browser_port_readiness.py .......                             [  1%]
+tests\test_capability_adapters.py ....                                   [  2%]
+tests\test_cognition_full_update.py ....                                 [  4%]
+tests\test_consistency_c2_date_source.py ..............                  [  7%]
+tests\test_consistency_c3_diagnostic.py .                                [  8%]
+tests\test_consistency_c4_historical.py ....                             [  9%]
+tests\test_cycle_display_contract.py ......                              [ 10%]
+tests\test_gate_repair_followup.py ...FF.                                [ 12%]
+tests\test_gate_repair_scoped.py .....                                   [ 13%]
+tests\test_historical_input_manifest.py .                                [ 13%]
+tests\test_jsonl去重门禁.py .......................                      [ 20%]
+tests\test_leading_card.py .....                                         [ 21%]
+tests\test_leading_component_readonly.py .                               [ 21%]
+tests\test_lhb_dual_source_and_risk_source.py ....                       [ 22%]
+tests\test_lhb_page_restore.py .....                                     [ 24%]
+tests\test_master指派承接防复发.py ....                                  [ 25%]
+tests\test_no_data_boundary_route.py ...                                 [ 25%]
+tests\test_p1_p2_capability_gate.py ..                                   [ 26%]
+tests\test_p2_entrypoints.py ..                                          [ 27%]
+tests\test_p3_production_gate.py ..                                      [ 27%]
+tests\test_release_deploy.py ..                                          [ 28%]
+tests\test_release_entrypoint.py ....                                    [ 29%]
+tests\test_review_auxiliary.py .                                         [ 29%]
+tests\test_review_eval_calibration.py ....................               [ 34%]
+tests\test_review_eval_compare.py .....................                  [ 40%]
+tests\test_review_eval_freeze.py ...............                         [ 44%]
+tests\test_review_eval_hardening.py .............                        [ 47%]
+tests\test_review_eval_prompt.py .                                       [ 48%]
+tests\test_review_eval_runner.py ................                        [ 52%]
+tests\test_review_learning_cognition.py .....                            [ 53%]
+tests\test_review_learning_consumers.py ....                             [ 54%]
+tests\test_review_learning_contract.py ....                              [ 55%]
+tests\test_review_learning_legacy.py ......                              [ 57%]
+tests\test_review_learning_predictions.py ....                           [ 58%]
+tests\test_review_learning_responses.py ..                               [ 59%]
+tests\test_review_learning_safety.py ........                            [ 61%]
+tests\test_review_pages.py ....                                          [ 62%]
+tests\test_review_pages_0831.py ...                                      [ 63%]
+tests\test_review_pages_facts.py ......                                  [ 64%]
+tests\test_review_pages_hero_golden.py ........                          [ 66%]
+tests\test_review_pages_layout.py ........                               [ 68%]
+tests\test_review_pages_legacy.py .......                                [ 70%]
+tests\test_review_pages_reco_wiring.py .F.F....                          [ 72%]
+tests\test_review_pages_review.py ...............                        [ 77%]
+tests\test_review_pages_structured.py ........                           [ 79%]
+tests\test_review_pages_v42_production.py ...                            [ 79%]
+tests\test_review_publish.py ........................                    [ 86%]
+tests\test_review_publish_r1.py ................                         [ 90%]
+tests\test_review_publish_sync.py .........                              [ 93%]
+tests\test_review_publish_watch_r1.py ...                                [ 93%]
+tests\test_stability_history_gates.py ..                                 [ 94%]
+tests\test_theme_freeze.py ....                                          [ 95%]
+tests\test_串行拉取.py ....                                              [ 96%]
+tests\test_交易计划断供防复发.py .....                                   [ 97%]
+tests\test_席位反思jsonl.py ....                                         [ 98%]
+tests\test_席位荐票结算链路.py ....                                      [100%]
+
+================================== FAILURES ===================================
+_________________ test_cycle_missing_judgment_remains_honest __________________
+tests\test_gate_repair_followup.py:32: in test_cycle_missing_judgment_remains_honest
+    assert result['status']=='pass',result['errors']
+E   AssertionError: ['sentinel exit=1, baseline_ok=False, checks=24', 'missing component VOTEBOARD']
+E   assert 'fail' == 'pass'
+E     
+E     - pass
+E     + fail
+__________ test_cycle_body_day_omits_machine_components_and_anchors ___________
+tests\test_gate_repair_followup.py:47: in test_cycle_body_day_omits_machine_components_and_anchors
+    assert {c['id'] for c in model.get('components',[])}.isdisjoint({'VOLSTEP','LEADIND','VOTEBOARD','LADDER'})
+E   AssertionError: assert False
+E    +  where False = <built-in method isdisjoint of set object at 0x000002D78AA5BA00>({'LADDER', 'LEADIND', 'VOLSTEP', 'VOTEBOARD'})
+E    +    where <built-in method isdisjoint of set object at 0x000002D78AA5BA00> = {'LADDER', 'LEADIND', 'MACHVOTE', 'VOLSTEP'}.isdisjoint
+________________ test_theme_reco_rule_follows_published_schema ________________
+tests\test_review_pages_reco_wiring.py:59: in test_theme_reco_rule_follows_published_schema
+    assert src == '题材荐票_%s.json' % d
+E   AssertionError: assert None == ('题材荐票_%s.json' % '20260922')
+_____________ test_theme_candidate_rule_matches_published_source ______________
+tests\test_review_pages_reco_wiring.py:89: in test_theme_candidate_rule_matches_published_source
+    assert src == path.name
+E   AssertionError: assert None == '题材荐票_20260922.json'
+E    +  where '题材荐票_20260922.json' = WindowsPath('D:/股票数据/市场数据/_学习/题材荐票_20260922.json').name
+=========================== short test summary info ===========================
+FAILED tests/test_gate_repair_followup.py::test_cycle_missing_judgment_remains_honest
+FAILED tests/test_gate_repair_followup.py::test_cycle_body_day_omits_machine_components_and_anchors
+FAILED tests/test_review_pages_reco_wiring.py::test_theme_reco_rule_follows_published_schema
+FAILED tests/test_review_pages_reco_wiring.py::test_theme_candidate_rule_matches_published_source
+=========== 4 failed, 370 passed, 1 deselected in 407.12s (0:06:47) ===========

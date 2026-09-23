@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-24T07:07:38.471320+08:00",
+  "target_date": "20260924",
+  "settlement_date": "20260923",
+  "status": "fail",
+  "gate": {
+    "continuity_pass": false,
+    "coverage_gate": "fail",
+    "threshold": 0.9
+  },
+  "continuity": {
+    "target": "20260924",
+    "artifacts": {
+      "总审": false,
+      "推演": false,
+      "盯盘台归档": false
+    },
+    "release_dirs": 0,
+    "pass": false
+  },
+  "coverage": {
+    "issued_count": 28,
+    "matched_count": 0,
+    "ratio": 0.0,
+    "routes": {
+      "auction": {
+        "status": "fail",
+        "issue_day": "20260923",
+        "source": "D:\\股票数据\\市场数据\\_学习\\竞价池发出_20260923.json",
+        "source_basis": "竞价池发出_20260923.json",
+        "issued_count": 11,
+        "settlement": null,
+        "settled_rows": 0,
+        "matched_count": 0,
+        "coverage": 0.0,
+        "duplicate_settlement_rows": 0,
+        "missing_codes": [
+          "000560",
+          "000850",
+          "000910",
+          "001234",
+          "002238",
+          "002614",
+          "600743",
+          "600825",
+          "600843",
+          "601811",
+          "603636"
+        ]
+      },
+      "lhb": {
+        "status": "fail",
+        "issue_day": "20260923",
+        "source": "D:\\股票数据\\市场数据\\_学习\\席位荐票_20260923.json",
+        "source_basis": "席位荐票_20260923.json",
+        "issued_count": 5,
+        "settlement": null,
+        "settled_rows": 0,
+        "matched_count": 0,
+        "coverage": 0.0,
+        "duplicate_settlement_rows": 0,
+        "missing_codes": [
+          "000560",
+          "000993",
+          "301150",
+          "600371",
+          "600503"
+        ]
+      },
+      "theme": {
+        "status": "empty_issued",
+        "issue_day": "20260923",
+        "source": "D:\\股票数据\\市场数据\\_学习\\题材荐票_20260923.json",
+        "source_basis": "题材荐票_20260923.json",
+        "issued_count": 0,
+        "settlement": null,
+        "settled_rows": 0,
+        "matched_count": 0,
+        "coverage": null,
+        "duplicate_settlement_rows": 0,
+        "missing_codes": []
+      },
+      "logic": {
+        "status": "fail",
+        "issue_day": "20260923",
+        "source": "D:\\股票数据\\市场数据\\_学习\\logic判断_20260923.json",
+        "source_basis": "logic判断_20260923.json",
+        "issued_count": 7,
+        "settlement": null,
+        "settled_rows": 0,
+        "matched_count": 0,
+        "coverage": 0.0,
+        "duplicate_settlement_rows": 0,
+        "missing_codes": [
+          "001339",
+          "002937",
+          "300184",
+          "603124",
+          "603328",
+          "603803",
+          "605058"
+        ]
+      },
+      "limitup": {
+        "status": "fail",
+        "issue_day": "20260923",
+        "source": "D:\\股票数据\\市场数据\\_学习\\涨停质量荐票_20260923.json",
+        "source_basis": "涨停质量荐票_20260923.json",
+        "issued_count": 5,
+        "settlement": null,
+        "settled_rows": 0,
+        "matched_count": 0,
+        "coverage": 0.0,
+        "duplicate_settlement_rows": 0,
+        "missing_codes": [
+          "000560",
+          "002614",
+          "600503",
+          "600825",
+          "603636"
+        ]
+      }
+    },
+    "missing_source_routes": [],
+    "failed_routes": [
+      "auction",
+      "lhb",
+      "logic",
+      "limitup"
+    ]
+  },
+  "policy": "缺源=缺口告警；缺少结算不可视为无荐票；不补写历史收益；只对明确发出版逐票计覆盖率"
+}

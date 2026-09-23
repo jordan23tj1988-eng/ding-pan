@@ -1,0 +1,727 @@
+---1-180---
+1: """Fail-closed release builder. All roots explicit; legacy records are read-only.
+2: 
+3: build_site receives an isolated root containing frozen inputs, not the live root.
+4: Optional review_pages.input_files(root, d) declares extra relative consumed files.
+5: No legacy page writer or HTTP daemon is invoked here. See IMPLEMENTATION.md.
+6: """
+7: from __future__ import annotations
+8: 
+9: import argparse
+10: import ast
+11: import base64
+12: import builtins
+13: import csv
+14: import functools
+15: import html as html_module
+16: import socket
+17: import struct
+18: import stat
+19: import tempfile
+20: import time
+21: import urllib.request
+22: import contextlib
+23: import datetime as dt
+24: import hashlib
+25: from html.parser import HTMLParser
+26: import io
+27: import json
+28: import os
+29: from pathlib import Path
+30: import re
+31: import shutil
+32: import subprocess
+33: import sys
+34: import types
+35: import threading
+36: from urllib.parse import unquote, urlsplit
+37: import uuid
+38: 
+39: from review_contract import TOTAL_AUDIT_KEYS, ROUTE_AUDIT_KEYS, validate_schema_version
+40: 
+41: ROUTES = ("index", "cycle", "auction", "lhb", "theme", "logic", "limitup")
+42: ANCHOR_PAIRS = {
+43:     "auction": ("SCORECARD", "POOLLEDGER"),
+44:     "lhb": ("FUNDTEMP", "LHBLEDGER"),
+45:     "limitup": ("LEDGER",),
+46: }
+47: 
+48: def anchor_errors(route, body):
+49:     """机器锚必须成对且唯一；不再让缺闭锚静默丢整段。"""
+50:     errors = []
+51:     for token in ANCHOR_PAIRS.get(route, ()):
+52:         op, cl = f"<!--{token}-->", f"<!--/{token}-->"
+53:         n_open, n_close = body.count(op), body.count(cl)
+54:         if n_open != n_close or n_open > 1:
+55:             errors.append(f"{route}: {token}锚点不成对 open={n_open} close={n_close}")
+56:     return errors
+57: 
+58: REQUIRED_CHECKS = ("cycle", "auction", "lhb", "theme", "limitup", "logic", "consistency", "browser")
+59: SAFE_SENTINELS = ("cycle", "auction", "lhb", "theme", "limitup")
+60: _IMPORT_LOCK = threading.RLock()
+61: 
+62: 
+63: def valid_date(d):
+64:     if not isinstance(d, str) or not re.fullmatch(r"[0-9]{8}", d):
+65:         raise ValueError("date must be strict YYYYMMDD")
+66:     dt.datetime.strptime(d, "%Y%m%d")
+67:     return d
+68: 
+69: 
+70: def fail(d, errors):
+71:     return {"schema_version": 1, "status": "fail", "errors": [str(x) for x in errors], "d": d}
+72: 
+73: 
+74: def digest(path):
+75:     h = hashlib.sha256()
+76:     with Path(path).open("rb") as f:
+77:         for block in iter(lambda: f.read(1024 * 1024), b""):
+78:             h.update(block)
+79:     return h.hexdigest()
+80: 
+81: 
+82: def _optional_digest(path):
+83:     path = Path(path)
+84:     return digest(path) if path.is_file() else None
+85: 
+86: 
+87: def theme_freeze_record(root):
+88:     """Read the accepted live theme freeze, if one exists."""
+89:     path = Path(root) / "复盘" / "盯盘台" / ".theme_page_freeze.json"
+90:     if not path.is_file():
+91:         return None
+92:     record = read_json(path)
+93:     if not isinstance(record, dict) or record.get("schema_version") != 1:
+94:         raise ValueError("theme freeze metadata invalid")
+95:     if not re.fullmatch(r"[0-9]{8}", str(record.get("d", ""))):
+96:         raise ValueError("theme freeze date invalid")
+97:     if not re.fullmatch(r"[0-9a-f]{64}", str(record.get("theme_sha256", ""))):
+98:         raise ValueError("theme freeze hash invalid")
+99:     return record
+100: 
+101: 
+102: def validate_theme_freeze(root, stage, d):
+103:     """Same-day theme pages must remain byte-identical to the accepted page."""
+104:     record = theme_freeze_record(root)
+105:     if not record or record.get("d") != d:
+106:         return []
+107:     target = Path(stage) / "theme.html"
+108:     if not target.is_file():
+109:         return ["theme freeze target missing"]
+110:     actual = digest(target)
+111:     if actual != record["theme_sha256"]:
+112:         return ["theme freeze violation: same-day candidate theme.html differs from accepted freeze"]
+113:     return []
+114: 
+115: 
+116: def contained(base, value):
+117:     """Reject traversal, Windows drives/ADS, symlinks and junction escapes."""
+118:     base = Path(base).resolve()
+119:     raw = str(value).replace("\\", "/")
+120:     p = Path(value)
+121:     if not p.is_absolute():
+122:         if any(part in ("..", "") for part in raw.split("/")) or ":" in raw:
+123:             raise ValueError(f"unsafe path: {value}")
+124:         p = base / p
+125:     resolved = p.resolve()
+126:     if not resolved.is_relative_to(base) or resolved == base:
+127:         raise ValueError(f"path escapes root: {value}")
+128:     cursor = p
+129:     while cursor != base and cursor != cursor.parent:
+130:         try:
+131:             info = cursor.lstat()
+132:         except FileNotFoundError:
+133:             info = None
+134:         if info is not None and (stat.S_ISLNK(info.st_mode) or
+135:                 getattr(info, "st_file_attributes", 0) & 0x400):
+136:             # Windows reparse points include junctions, even when their target
+137:             # stays inside root. lstat never traverses the link being checked.
+138:             raise ValueError(f"linked path forbidden: {value}")
+139:         cursor = cursor.parent
+140:     return resolved
+141: 
+142: 
+143: def read_json(path):
+144:     def reject(value):
+145:         raise ValueError(f"invalid JSON number {value}")
+146:     return json.loads(Path(path).read_text(encoding="utf-8-sig"), parse_constant=reject)
+147: 
+148: 
+149: def write_json(path, value):
+150:     path = Path(path)
+151:     with path.open("x", encoding="utf-8", newline="\n") as f:
+152:         json.dump(value, f, ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False)
+153:         f.write("\n")
+154:         f.flush()
+155:         os.fsync(f.fileno())
+156: 
+157: 
+158: def atomic_json(path, value):
+159:     path = Path(path)
+160:     temp = path.with_name(path.name + "." + uuid.uuid4().hex + ".tmp")
+161:     try:
+162:         write_json(temp, value)
+163:         os.replace(temp, path)
+164:     finally:
+165:         if temp.exists():
+166:             temp.unlink()
+167: 
+168: 
+169: @contextlib.contextmanager
+170: def exclusive(root, name=".review_publish.lock"):
+171:     lock = contained(root, name)
+172:     meta = lock / "owner.json"
+173:     stale_after = 2 * 60 * 60
+174: 
+175:     def pid_alive(pid):
+176:         try:
+177:             os.kill(int(pid), 0)
+178:             return True
+179:         except (OSError, ValueError, TypeError):
+180:             return False
+---180-360---
+180:             return False
+181: 
+182:     def stale():
+183:         try:
+184:             age = max(0.0, time.time() - lock.stat().st_mtime)
+185:         except OSError:
+186:             return False
+187:         owner = {}
+188:         try:
+189:             owner = json.loads(meta.read_text(encoding="utf-8")) if meta.is_file() else {}
+190:         except (OSError, ValueError, TypeError):
+191:             owner = {}
+192:         pid = owner.get("pid")
+193:         # 有存活 owner 时绝不抢锁；无 owner 的旧锁只按 TTL 清理。
+194:         return bool(pid is not None and not pid_alive(pid)) or (pid is None and age > stale_after)
+195: 
+196:     try:
+197:         lock.mkdir()
+198:     except FileExistsError as exc:
+199:         if stale():
+200:             shutil.rmtree(lock, ignore_errors=False)
+201:             lock.mkdir()
+202:         else:
+203:             raise ValueError(f"lock busy: {lock}") from exc
+204:     try:
+205:         meta.write_text(json.dumps({
+206:             "pid": os.getpid(),
+207:             "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+208:             "root": str(root),
+209:         }, ensure_ascii=False, indent=2), encoding="utf-8")
+210:         yield
+211:     finally:
+212:         shutil.rmtree(lock, ignore_errors=True)
+213: 
+214: 
+215: @contextlib.contextmanager
+216: def isolated_imports(frozen, source_root):
+217:     """Import declared local dependencies from frozen bytes, without cache leaks."""
+218:     with _IMPORT_LOCK:
+219:         local_names = {p.stem for p in Path(source_root).glob("*.py")}
+220:         local_names.update(p.stem for p in Path(frozen).glob("*.py"))
+221:         saved = {name: sys.modules[name] for name in local_names if name in sys.modules}
+222:         old_path, old_bytecode = sys.path[:], sys.dont_write_bytecode
+223:         try:
+224:             for name in local_names:
+225:                 sys.modules.pop(name, None)
+226:             source_root = Path(source_root).resolve()
+227:             publisher_root = Path(__file__).resolve().parent
+228:             sys.path[:] = [str(frozen)] + [entry for entry in old_path
+229:                 if Path(entry or os.getcwd()).resolve() not in (source_root, publisher_root)]
+230:             sys.dont_write_bytecode = True
+231:             yield
+232:         finally:
+233:             for name in local_names:
+234:                 sys.modules.pop(name, None)
+235:             sys.modules.update(saved)
+236:             sys.path[:] = old_path
+237:             sys.dont_write_bytecode = old_bytecode
+238: 
+239: 
+240: def load_module(path):
+241:     # Executing compiled source avoids .pyc writes and stale same-second caches.
+242:     module = types.ModuleType("_review_" + uuid.uuid4().hex)
+243:     module.__file__ = str(path)
+244:     exec(compile(Path(path).read_bytes(), str(path), "exec"), module.__dict__)
+245:     return module
+246: 
+247: 
+248: def input_files(root, d):
+249:     # Narrow legacy adapter: only inputs consumed by P0/P1 and audited checks.
+250:     names = {"review_pages.py", f"_学习/judgment_{d}.json", f"_学习/fact_{d}.json"}
+251:     for route in SAFE_SENTINELS:
+252:         names.add(f"{route}数据核对.py")
+253:     for name in ("_市场温度表.json", "_情绪先行指标.json", "_周期投票台账.jsonl",
+254:                  "_竞价池结算.jsonl", "_逻辑荐票结算.jsonl", "_资金温度.json", "_席位分档.json", "_席位分档快照.jsonl", "_题材四维.json"):
+255:         names.add("_学习/" + name)
+256:     for prefix in ("竞价池发出", "竞价池结算", "席位荐票", "题材归位", "涨停对链条",
+257:                    "主流题材6有", "题材生命周期判断", "题材龙头判断", "review_view"):
+258:         names.add(f"_学习/{prefix}_{d}.json")
+259:     names.update({f"{d}/zt_pool.csv", f"{d}/lhb.csv", f"_学习/_席位动向/{d}.csv",
+260:                   f"_学习/席位荐票卡_{d}.html", f"_学习/龙虎榜复盘存档/{d}.json"})
+261:     names.update({"_契约/页面契约.v1.json", f"_学习/页面判断_{d}.json",
+262:                   "复盘一致性哨兵.py", "module_render_limitup.py", "_认知库渲染.py", "trading_calendar.py",
+263:                   "_学习/_交易日历.json", "_学习/_ths_zt_pool.json", "_变更总账.md"})
+264:     names.update({'module_render_'+route+'.py' for route in ROUTES})
+265:     names.add('logic_pool.py')
+266:     names.update('_学习/'+name for name in ('链条纵深库.json',f'中报预增雷达_{d}.json',
+267:         f'竞价评分_{d}.json',f'题材生命周期_{d}.json'))
+268:     names.update(f'_学习/{prefix}_{d}.html' for prefix in ('先行指标灯','周期投票牌','先行指标卡',
+269:         '竞价评分卡','竞价评分库卡','资金温度卡','涨停质量荐票卡','市场温度卡','质量库折叠',
+270:         '跨路荐票卡'))
+271:     for prefix in ("总审", "cycle判断", "auction判断", "lhb判断", "theme判断", "logic判断", "limitup判断",
+272:                    "涨停质量荐票", "先行指标卡", "池外候选卡"):
+273:         names.add(f"_学习/{prefix}_{d}.{'html' if prefix.endswith('卡') else 'json'}")
+274:     for route in ("master", "auction", "lhb", "theme", "logic", "limitup"):
+275:         names.update({f"_学习/_模拟盘/{route}/{name}" for name in ("状态.json", "state.json", "净值.json", "账本.jsonl", f"看板_{d}.html")})
+276:         names.add(f"_学习/交易计划_{route}_{d}.json")
+277:     names.update(f"复盘/盯盘台/{name}.html" for name in ("intraday", "history"))
+278:     freeze = root / "复盘" / "盯盘台" / ".theme_page_freeze.json"
+279:     if freeze.is_file():
+280:         names.add("复盘/盯盘台/.theme_page_freeze.json")
+281:     theme_template = root / "_学习" / "主题页能力进化模板.html"
+282:     if theme_template.is_file():
+283:         names.add("_学习/主题页能力进化模板.html")
+284:     # 两块标准能力模块(五路+概览公共能力)的唯一真源消费面(2026-09-22)：
+285:     # 快照(只取 <=d 最近一日) + 两个能力库账本 + 当日产出档。冻结它们，回放复算才能
+286:     # 与门禁/哨兵比对基准同源(否则冻结缺失→复算全 0→"字节与唯一真源不一致")。
+287:     capability_learn = root / "_学习"
+288:     for ledger in ("能力进化库_自主拓展.json", "能力进化库_认知迭代.json"):
+289:         if (capability_learn / ledger).is_file():
+290:             names.add("_学习/" + ledger)
+291:     capability_snapshots = sorted(
+292:         p for p in capability_learn.glob("能力进化快照_*.json")
+293:         if re.fullmatch(r"能力进化快照_[0-9]{8}\.json", p.name)
+294:         and p.name.rsplit("_", 1)[-1][:-5] <= d)
+295:     if capability_snapshots:
+296:         names.add(capability_snapshots[-1].relative_to(root).as_posix())
+297:     capability_artifact = capability_learn / f"能力进化模块_{d}.html"
+298:     if capability_artifact.is_file():
+299:         names.add(f"_学习/能力进化模块_{d}.html")
+300:     runtime_lib = root / "复盘" / "盯盘台" / "lib"
+301:     if runtime_lib.exists():
+302:         names.update(p.relative_to(root).as_posix() for p in runtime_lib.rglob("*") if p.is_file())
+303:     for folder in ("archive",):
+304:         base = root / "复盘" / "盯盘台" / folder
+305:         if base.exists():
+306:             names.update(p.relative_to(root).as_posix() for p in base.rglob("*") if p.is_file())
+307:     names.add(f'_external/candidates/candidates_{d}.json')
+308:     # C4 reads every recommendation; C8 audits registration of all root scripts/specs.
+309:     for pattern in ('*.py','_agent规格/*.md',f'_学习/*荐票_{d}.json'):
+310:         names.update(p.relative_to(root).as_posix() for p in root.glob(pattern) if p.is_file())
+311:     names.update(('_多agent重构_设计规范.md','_盯盘台组件规范.md','_模拟盘设计.md','_链路地图.md'))
+312:     for path in (root/'_学习').glob('链条位置_*_????????.json'):
+313:         date=path.stem.rsplit('_',1)[-1]
+314:         if re.fullmatch(r'[0-9]{8}',date) and date<=d:names.add(path.relative_to(root).as_posix())
+315:     prior = sorted(p.name for p in root.iterdir() if p.is_dir() and re.fullmatch(r"[0-9]{8}",p.name) and p.name < d)
+316:     if prior:
+317:         previous = prior[-1]
+318:         names.add(f"{previous}/zt_pool.csv")
+319:         names.update(f"_学习/{prefix}_{previous}.json" for prefix in ("质量荐票结算","题材荐票结算","逻辑荐票结算","席位荐票结算"))
+320:     extra_bars = root / "_学习" / "_模拟盘" / "_bars_extra"
+321:     if extra_bars.exists():
+322:         names.update(p.relative_to(root).as_posix() for p in extra_bars.glob("*.csv") if p.is_file())
+323:     cache = root / "_学习" / "_bars_cache"
+324:     if cache.exists():
+325:         # C3 enumerates the cache; C4 reads exact dates. Freeze its actual inputs.
+326:         names.update(p.relative_to(root).as_posix() for p in cache.glob("*.csv"))
+327:     structured = root / "_学习" / f"页面判断_{d}.json"
+328:     if structured.exists():
+329:         for evidence in read_json(structured).get("evidence", []):
+330:             name = evidence.get("source", "").split("#",1)[0]
+331:             if name:
+332:                 names.add(name if "/" in name else "_学习/"+name)
+333:     builder = contained(root, "review_pages.py")
+334:     if builder.is_file():
+335:         with isolated_imports(root, root):
+336:             m = load_module(builder)
+337:             extra = m.input_files(root, d) if hasattr(m, "input_files") else None
+338:         if extra is not None:
+339:             if not isinstance(extra, (list, tuple)) or not all(isinstance(x, str) for x in extra):
+340:                 raise ValueError("input_files must return relative path strings")
+341:             for name in extra:
+342:                 if Path(name).is_absolute():
+343:                     raise ValueError("input_files must be relative")
+344:                 contained(root, name)
+345:                 if any(token > d for token in re.findall(r"(?<![0-9])[0-9]{8}(?![0-9])", name)):
+346:                     raise ValueError(f"future input: {name}")
+347:                 names.add(name)
+348:     return sorted(names)
+349: 
+350: 
+351: def hashes(root, names):
+352:     result = {}
+353:     for name in names:
+354:         path = contained(root, name)
+355:         if path.exists() and not path.is_file():
+356:             raise ValueError(f"input is not a file: {name}")
+357:         result[name] = digest(path) if path.is_file() else None
+358:     return result
+359: 
+360: 
+---760-940---
+760:             judgment = contained(root, '_学习') / ('judgment_' + d + '.json')
+761:             if judgment.exists():
+762:                 cycle_body = read_json(judgment).get('bodies', {}).get('cycle', '') or ''
+763:         cycle_body_mode = route == 'cycle' and bool(cycle_body and '<h2>一' in cycle_body)
+764:         if cycle_body_mode:
+765:             # 展示完整性契约(2026-09-12 用户定向"按黄金页把展示内容还原到工程里, 并保证不再错位"):
+766:             # 旧规则=有 body 日机器卡必须缺席 → 一旦 body 段没自带组件(9/10 起出现), 页面就只剩文字, 黄金版展示消失。
+767:             # 新规则=按段判定: body 段落自带该组件则保真不动; 缺件的段必须由机器卡补齐(真源直出, 与黄金版同套 markup)。
+768:             def _cseg(a, b):
+769:                 i = cycle_body.find(a)
+770:                 if i < 0:
+771:                     return ''
+772:                 k = cycle_body.find(b, i + 1)
+773:                 return cycle_body[i:k] if k > i else cycle_body[i:]
+774:             need = []
+775:             if 'class="steps"' not in _cseg('一 量能台阶', '二 先行指标'):
+776:                 need.append(('VOLSTEP', 'volume'))
+777:             if '<svg' not in _cseg('二 先行指标', '三 情绪'):
+778:                 need.append(('LEADIND', 'leading'))
+779:             if '<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板'):
+780:                 need.append(('MACHVOTE', 'stages'))
+781:             if 'class="cols"' not in _cseg('四 连板', '五 攻防'):
+782:                 need.append(('LADDER', 'ladder'))
+783:             for key, section in need:
+784:                 comp = components.get(key)
+785:                 node = dom.ids.get('component-' + key)
+786:                 if not comp or comp.get('status') != 'ok' or not comp.get('sources') or node is None:
+787:                     errors.append('missing display component ' + key)
+788:                     continue
+789:                 if comp.get('section') != section or not any(n['tag'] == 'section' and n['attrs'].get('id') == section for n in node['ancestors']):
+790:                     errors.append('wrong component section ' + key)
+791:                 if any(n['tag'] == 'details' for n in node['ancestors']):
+792:                     errors.append('display component folded ' + key)
+793:                 if raw.count('<!--' + key + '-->') != 1 or raw.count('<!--/' + key + '-->') != 1:
+794:                     errors.append('display anchor not paired ' + key)
+795:             if 'details class="chain"' in raw:
+796:                 # The page-level audit fold is allowed; only a machine fold is
+797:                 # forbidden.  A machine fold has the explicit source summary.
+798:                 if re.search(r'<details[^>]*class="chain"[^>]*>\s*<summary>\s*<b>机器数据源', raw):
+799:                     errors.append('body-day must omit machine fold')
+800:             dimensions.append('cycle body-day display completeness: 台阶块/先行指标图卡/投票块/梯队条 各段在位(body自带或机器卡)')
+801:             required = {k: s for k, s in (('VOLSTEP', 'volume'), ('LEADIND', 'leading'), ('MACHVOTE', 'stages'), ('LADDER', 'ladder')) if k in components}
+802:         for key,section in required.items():
+803:             comp=components.get(key);node=dom.ids.get('component-'+key)
+804:             if not comp or comp.get('status')!='ok' or not comp.get('sources') or node is None:errors.append('missing component '+key);continue
+805:             if comp.get('section')!=section or not any(n['tag']=='section' and n['attrs'].get('id')==section for n in node['ancestors']):errors.append('wrong component section '+key)
+806:             if any(n['tag']=='details' for n in node['ancestors']):errors.append('extra machine fold '+key)
+807:             for source in comp.get('sources',[]):
+808:                 if digest(contained(root,source['path']))!=source['sha256']:errors.append('source hash '+key)
+809:             rendered=canonical_text(expanded_dom_text(node,dom))
+810:             if key=='SEATLIB':
+811:                 row=seat_snapshot(root,d)
+812:                 if not row:raise ValueError('missing dated seat snapshot')
+813:                 window=row.get('窗口','');counts=row.get('档分布',{})
+814:                 bounds=window.split('~')
+815:                 if len(bounds)!=2:raise ValueError('invalid snapshot window')
+816:                 for bound in bounds:valid_date(bound)
+817:                 if not bounds[0]<=bounds[1]<=d:raise ValueError('future snapshot window')
+818:                 if type(row.get('笔数')) is not int or any(type(counts.get(k)) is not int or counts[k]<0 for k in 'SABCP'):raise ValueError('missing snapshot counts')
+819:                 expected_window='窗口'+window+str(row['笔数'])+'笔'
+820:                 expected_counts='/'.join((k if k!='P' else '预备')+str(counts[k]) for k in 'SABCP')
+821:                 if expected_window not in rendered:errors.append('dated seat window/count mismatch')
+822:                 if expected_counts not in rendered:errors.append('dated seat tier counts mismatch')
+823:                 if comp.get('window_id')!=window or comp.get('as_of')!=d:errors.append('seat as-of mismatch')
+824:                 if '_学习/_席位分档快照.jsonl' not in {v['path'] for v in comp['sources']}:errors.append('missing snapshot provenance')
+825:             else:
+826:                 original=component_source_text(root,d,route,comp)
+827:                 strip=lambda text:re.sub(r'更早存档[0-9]+条','',text)
+828:                 actual=strip(rendered);source=strip(original)
+829:                 if actual!=source:
+830:                     prefix=source[:-len(actual)] if actual and source.endswith(actual) else None
+831:                     if key!='POOLLEDGER' or prefix is None or prefix not in canonical_text(raw):errors.append('producer content mismatch '+key)
+832:                 anchors={'VOLSTEP':['VOLSTEP'],'LEADIND':['LEADIND'],'VOTEBOARD':['MACHVOTE','VOTEBOARD'],'LADDER':['LADDER'],'POOLLEDGER':['POOLLEDGER','MACHPOOL']}[key]
+833:                 # Check anchor placement in the exact named section as well as totals.
+834:                 start=raw.find('<section id="'+section+'">');end=raw.find('</section>',start)
+835:                 part=raw[start:end]
+836:                 for anchor in anchors:
+837:                     for token in ('<!--'+anchor+'-->','<!--/'+anchor+'-->'):
+838:                         if raw.count(token)!=1 or part.count(token)!=1:errors.append('anchor pair/placement '+anchor)
+839:         dimensions.append('dated source hashes, producer content, exact component positions and anchors')
+840:     except Exception as exc:errors.append(str(exc))
+841:     return {'status':'fail' if errors else 'pass','errors':errors,'contract':'gate-repair/p1.2-v1','dimensions':dimensions}
+842: 
+843: 
+844: def _check_one(frozen, stage, d, route):
+845:     """Child process: audited read-only legacy main, explicit isolated --page."""
+846:     if route not in SAFE_SENTINELS:
+847:         raise ValueError("unaudited check")
+848:     if route == "limitup":
+849:         with isolated_imports(frozen, frozen):
+850:             dep = load_module(frozen / "module_render_limitup.py")
+851:         dep.BASE = dep.CD = str(frozen)
+852:         dep.L = str(frozen / "_学习")
+853:         sys.modules["module_render_limitup"] = dep
+854:     module = load_module(frozen / f"{route}数据核对.py")
+855:     module.R = str(frozen)
+856:     module.BASE = str(frozen)
+857:     module.L = str(frozen / "_学习")
+858:     module.SITE = str(stage)
+859:     sys.argv = [module.__file__, d, "--page", str(stage / f"{route}.html")]
+860:     view = None
+861:     replacement_labels = set()
+862:     active_html = ['']
+863:     if route == 'cycle' and (stage/'models'/'cycle.json').is_file():
+864:         contract = page_contract(frozen)
+865:         if contract.get('template_version') == 'p1.1':
+866:             view = view_check(frozen,stage,d,route)
+867:             replacement_labels = {'机器锚'+a+'应缺席(有body黄金版形态)' for a in ('VOLSTEP','LEADIND','LADDER','MACHVOTE')}
+868:             replacement_labels.add('无机器折叠区(黄金版形态)')
+869:             original_check_page = module.check_page
+870:             def checked_page(h,day):
+871:                 active_html[0]=h
+872:                 return original_check_page(h,day)
+873:             module.check_page=checked_page
+874:     bindings = []
+875:     if route in ('lhb','limitup') and (stage/'models'/(route+'.json')).is_file():
+876:         if page_contract(frozen).get('template_version') == 'p1.1':
+877:             view=view_check(frozen,stage,d,route)
+878:             active_html[0]=(stage/(route+'.html')).read_text(encoding='utf-8')
+879:             if route=='limitup':
+880:                 find_block=module.find_block
+881:                 def contract_block(h,start,end,start_from=0):
+882:                     if (start,end)==('一 涨停复盘','<h2>二'):
+883:                         bindings.append({'legacy_section':start,'p1_section':'recommendations','assertions':'unchanged Top5 name/rate against dated source'})
+884:                         opening='<section id="recommendations">'
+885:                         i=h.find(opening)
+886:                         j=h.find('<section id=',i+len(opening)) if i>=0 else -1
+887:                         return (h[i:j if j>=0 else len(h)] if i>=0 and view['status']=='pass' else None),i
+888:                     return find_block(h,start,end,start_from)
+889:                 module.find_block=contract_block
+890:     settlement=None
+891:     if route=='auction' and (stage/'models'/'auction.json').is_file():
+892:         if page_contract(frozen).get('template_version')=='p1.1':
+893:             view=view_check(frozen,stage,d,route)
+894:             settlement=previous_pool_check(frozen,stage,d)
+895:     scoped=None
+896:     scoped_versions = {'p1.2', 'p1.3'}
+897:     if route in ('cycle','auction','lhb') and (stage/'models'/(route+'.json')).is_file() and page_contract(frozen).get('template_version') in scoped_versions:
+898:         scoped=scoped_p12_check(frozen,stage,d,route)
+899:         if route=='cycle':
+900:             original_check_page=module.check_page
+901:             def checked_p12(h,day):
+902:                 active_html[0]=h
+903:                 return original_check_page(h,day)
+904:             module.check_page=checked_p12
+905:             replacement_labels={'机器锚'+a+'应缺席(有body黄金版形态)' for a in ('VOLSTEP','LEADIND','LADDER','MACHVOTE')}
+906:             replacement_labels.add('无机器折叠区(黄金版形态)')
+907:         if route=='auction':settlement=previous_pool_check(frozen,stage,d)
+908:     # Capturing every actual chk call exposes empty or skipped check runs.
+909:     rows = []
+910:     first_issues = []
+911:     original = module.chk
+912:     def record(issues, ok, label, detail=""):
+913:         if not first_issues:
+914:             first_issues.append(issues)
+915:         row = {"ok": bool(ok), "label": label, "detail": str(detail), "negative_injection": issues is not first_issues[0]}
+916:         if scoped is not None and label in replacement_labels:
+917:             validation=scoped_p12_check(frozen,stage,d,route,raw=active_html[0])
+918:             ok=validation['status']=='pass'
+919:             row.update(legacy_ok=row['ok'],ok=ok,replacement_contract=validation['contract'],errors=validation['errors'])
+920:         elif label in replacement_labels:
+921:             # Explicit dual contract: old absent anchors -> source-verified P1.1
+922:             # components, unique paired anchors and named sections. No content
+923:             # assertion is replaced; each injected check uses its own HTML.
+924:             h=active_html[0]
+925:             anchors=('VOLSTEP','LEADIND','LADDER','MACHVOTE','VOTEBOARD')
+926:             ok=view['status']=='pass' and all(h.count('<!--'+a+'-->')==1 and h.count('<!--/'+a+'-->')==1 for a in anchors)
+927:             row.update(legacy_ok=row['ok'],ok=bool(ok),replacement_contract='p1.1: source-verified components and exactly paired anchors')
+928:         if route=='lhb' and view is not None and label=='Top5卡在页面':
+929:             # Sanitization may change harmless tags/attributes. The entire card
+930:             # text must still occupy its named component, with frozen provenance.
+931:             dom=_DOM(active_html[0]);node=dom.ids.get('component-SEATCARD')
+932:             card=(frozen/'_学习'/f'席位荐票卡_{d}.html').read_text(encoding='utf-8-sig')
+933:             ok=view['status']=='pass' and node is not None and canonical_text(card)==''.join(''.join(node['text']).split())
+934:             row.update(legacy_ok=row['ok'],ok=bool(ok),replacement_contract='p1.1: exact normalized source card in component-SEATCARD')
+935:         if settlement is not None and (label.startswith('结算·') or label=='结算(未到结算日)'):
+936:             ok=settlement['status']=='pass'
+937:             row.update(legacy_ok=row['ok'],ok=bool(ok),replacement_contract=('gate-repair/p1.2-v1' if scoped is not None else 'p1.1')+'/C9: previous trading pool settled on d',pool_date=settlement['pool_date'])
+938:         if scoped is not None and route=='cycle' and label=='断档卡存在':
+939:             gap=read_json(stage/'models/cycle.json')
+940:             cp=frozen/'_学习'/f'cycle判断_{d}.json'; jp=frozen/'_学习'/f'judgment_{d}.json'
+---940-1120---
+940:             cp=frozen/'_学习'/f'cycle判断_{d}.json'; jp=frozen/'_学习'/f'judgment_{d}.json'
+941:             source_absent=not (cp.exists() and read_json(cp)) and not (jp.exists() and read_json(jp).get('bodies',{}).get('cycle'))
+942:             ok=scoped['status']=='pass' and gap.get('judgment_complete') is False and source_absent and gap.get('hero',{}).get('text')=='当日判断缺失' and '当日判断缺失' in active_html[0] and '当日周期判断缺失' in active_html[0]
+943:             row.update(legacy_ok=row['ok'],ok=ok,replacement_contract=scoped['contract']+'/explicit missing judgment')
+944:         if scoped is not None and route=='lhb' and label.startswith(('分档库','分档表新鲜度')):
+945:             ok=scoped['status']=='pass'
+946:             row.update(legacy_ok=row['ok'],ok=ok,replacement_contract=scoped['contract'],errors=scoped['errors'])
+947:         rows.append(row)
+948:         return original(issues, ok, label, detail)
+949:     module.chk = record
+950:     log = io.StringIO()
+951:     with readonly_files(frozen,stage) as (reads,denied), contextlib.redirect_stdout(log), contextlib.redirect_stderr(log):
+952:         code = module.main()
+953:     # cycle/auction main also execute negative self-tests; their deliberate FAIL
+954:     # rows are not a production failure when main itself returns zero.
+955:     baseline_ok = bool(rows) and all(r["ok"] for r in rows if not r["negative_injection"])
+956:     passed = code == 0 and baseline_ok and (scoped is None or scoped['status']=='pass') and not denied and (view is None or view["status"] == "pass") and (settlement is None or settlement["status"] == "pass")
+957:     return {"name": route, "status": "pass" if passed else "fail",
+958:             "errors": [] if passed else [f"sentinel exit={code}, baseline_ok={baseline_ok}, checks={len(rows)}"] + ((view or {}).get("errors",[])) + ((settlement or {}).get("errors",[])) + ((scoped or {}).get("errors",[])),
+959:             "scoped_validation": scoped, "exit_code": code, "log": log.getvalue(), "view_verification": view, "section_bindings": bindings, "settlement_validation": settlement, "observed_checks": rows, "read_files": sorted(reads), "denied_operations": denied}
+960: 
+961: 
+962: def run_checks(frozen, stage, d):
+963:     results = []
+964:     for route in REQUIRED_CHECKS:
+965:         try:
+966:             env = dict(os.environ, PYTHONUTF8="1", PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1",
+967:                        REVIEW_STAGE=str(stage), LHB_SITE_ROOT=str(stage / "site"))
+968:             r = subprocess.run([sys.executable, "-B", str(Path(__file__).resolve()), "_check", d,
+969:                                 "--root", str(frozen), "--stage", str(stage), "--route", route],
+970:                                cwd=frozen, env=env, capture_output=True, text=True, encoding="utf-8", timeout=180)
+971:             row = json.loads(r.stdout)
+972:             if r.returncode != 0:
+973:                 row["status"] = "fail"
+974:                 row.setdefault("errors", []).append(f"check process exit={r.returncode}")
+975:             results.append(row)
+976:         except Exception as exc:
+977:             results.append({"name": route, "status": "fail", "errors": [str(exc)]})
+978:     return results
+979: 
+980: 
+981: def check_errors(checks):
+982:     errors = []
+983:     if not isinstance(checks, list):
+984:         return ["checks must be list"]
+985:     seen = set()
+986:     for check in checks:
+987:         if not isinstance(check, dict):
+988:             errors.append("check record invalid")
+989:             continue
+990:         name = check.get("name")
+991:         if not isinstance(name, str) or name in seen:
+992:             errors.append("check name invalid/duplicate")
+993:             continue
+994:         seen.add(name)
+995:         if check.get("status") != "pass" or check.get("errors") != []:
+996:             errors.append(f"check {name}: {check.get('status')} {check.get('errors')}")
+997:     errors.extend(f"check {name}: not_run" for name in REQUIRED_CHECKS if name not in seen)
+998:     return errors
+999: 
+1000: 
+1001: def tree_hashes(directory):
+1002:     result = {}
+1003:     for p in sorted(directory.rglob("*")):
+1004:         contained(directory, p)
+1005:         if p.is_file():
+1006:             result[p.relative_to(directory).as_posix()] = digest(p)
+1007:     return result
+1008: 
+1009: 
+1010: def _postprocess_stage(root, stage, d):
+1011:     """候选站点统一后处理(2026-09-12)：门禁检查前先跑与到站完全相同的一套处理。
+1012: 
+1013:     背景：到站(_deploy_site)原先在门禁之后才做"能力模块同步 + cycle/lhb 黄金视觉锁"，
+1014:     导致门禁检查的是发布页、部署的是黄金页——检查与实际产物不同源，龙虎榜/周期页
+1015:     的结构化哨兵必然假阴性。此处把同一函数(生成盯盘台.py::_postprocess_site)提前到
+1016:     门禁之前跑在候选站点上，从而使"被检查的页面" == "被部署的页面"。
+1017:     失败即返回 ok=False，由调用方阻断发布(不制造 page_hashes 之后的漂移)。
+1018:     """
+1019:     script = Path(root) / "生成盯盘台.py"
+1020:     if not script.is_file():
+1021:         # 最小发布单元测试夹具可能不带页面后处理器；真正到站时由
+1022:         # _deploy_site 将此标记视为硬失败，不能绕过生产门禁。
+1023:         return {"ok": True, "skipped": "generator missing in isolated fixture"}
+1024:     if not (Path(stage) / "lhb.html").is_file():
+1025:         return {"ok": True, "skipped": "no lhb page in stage"}
+1026:     env = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}
+1027:     # 能力模块数据根 = 本次发布的冻结 inputs(与发布门禁/哨兵复算基准同源)：
+1028:     # 「被检查的页面 == 被部署的页面」这条不变量要求字节同源，否则回放复算报"字节不一致"。
+1029:     frozen = Path(stage).parent / "inputs"
+1030:     env.pop("POST_BASE", None)
+1031:     if (frozen / "能力进化模块.py").is_file():
+1032:         env["POST_BASE"] = str(frozen)
+1033:     cp = subprocess.run(
+1034:         [sys.executable, str(script), "--stage-postprocess", str(stage), d],
+1035:         cwd=str(root), capture_output=True, text=True, encoding="utf-8", env=env,
+1036:     )
+1037:     if cp.returncode != 0:
+1038:         return {"ok": False, "error": (cp.stdout[-1500:] + cp.stderr[-1500:])}
+1039:     return {"ok": True, "stdout": cp.stdout[-800:], "capability_root": env.get("POST_BASE", str(root))}
+1040: 
+1041: 
+1042: def validate_capability_blocks(root, stage, d):
+1043:     """两块标准能力模块(五路+概览)齐备性门禁(2026-09-22 用户指令修复)。
+1044: 
+1045:     故障背景：历史实现只把主题页统一替换成两块标准能力模块，概览/竞价/产业逻辑/涨停页
+1046:     长期缺块、龙虎榜页与旧『自主深挖/我的认知迭代』并存，而门禁只校验"机器卡缺席"，
+1047:     于是缺块可以静默发布(用户看到的正是"有的路有，有的路还没有改过来")。
+1048:     此处逐页比对唯一真源(能力进化模块.py 当日产出)的数量/编号/位置/样式/残留旧标题/字节，
+1049:     任一不符即阻断发布 —— 保证下次复盘不可能再漏、再并存、再退回冻结字节。
+1050:     """
+1051:     errors = []
+1052:     producer = Path(root) / "能力进化模块.py"
+1053:     if not producer.is_file():
+1054:         return ["capability block gate: 能力进化模块.py missing"]
+1055:     try:
+1056:         module = load_module(producer)
+1057:         routes = tuple(module.ROUTES)
+1058:     except Exception as exc:  # noqa: BLE001
+1059:         return ["capability block gate: source unavailable: %s" % exc]
+1060:     for route in routes:
+1061:         path = Path(stage) / (route + ".html")
+1062:         if not path.is_file():
+1063:             errors.append("capability block gate: missing page %s.html" % route)
+1064:             continue
+1065:         html = path.read_text(encoding="utf-8")
+1066:         try:
+1067:             problems = module.verify_page(html, route, Path(root), d)
+1068:         except Exception as exc:  # noqa: BLE001
+1069:             problems = ["verify_page failed: %s" % exc]
+1070:         errors.extend("capability block gate: %s.html -> %s" % (route, p) for p in problems)
+1071:     return errors
+1072: 
+1073: 
+1074: def _build(root, d, publish, allow_degraded):
+1075:     staging = contained(root, ".review_staging")
+1076:     releases = contained(root, "releases")
+1077:     staging.mkdir(exist_ok=True)
+1078:     releases.mkdir(exist_ok=True)
+1079:     revision = 1 + max([int(p.name.split("-")[1]) for p in releases.iterdir()
+1080:                         if re.fullmatch(d + r"-[0-9]+-[0-9a-f]{32}", p.name)] or [0])
+1081:     build_id = f"{d}-{revision}-{uuid.uuid4().hex}"
+1082:     work = staging / build_id
+1083:     work.mkdir()
+1084:     frozen = work / "inputs"
+1085:     frozen.mkdir()
+1086:     stage = work / "site"
+1087:     stage.mkdir()
+1088:     manifest = {"schema_version": 1, "d": d, "build_id": build_id, "revision": revision,
+1089:                 "source_hashes": {}, "template_version": None, "page_hashes": {},
+1090:                 "checks": [{"name": n, "status": "not_run", "errors": ["build has not reached checks"]} for n in REQUIRED_CHECKS],
+1091:                 "status": "fail", "errors": [], "published": False,
+1092:                 "created_at": dt.datetime.now(dt.timezone.utc).isoformat()}
+1093:     live_theme = root / "复盘" / "盯盘台" / "theme.html"
+1094:     live_theme_before = _optional_digest(live_theme)
+1095:     manifest["live_theme_guard"] = {"path": "复盘/盯盘台/theme.html", "before": live_theme_before}
+1096:     errors = manifest["errors"]
+1097:     try:
+1098:         names = input_files(root, d)
+1099:         before = hashes(root, names)
+1100:         manifest["source_hashes"] = before
+1101:         manifest["publisher_sha256"] = digest(Path(__file__))
+1102:         for name, sha in before.items():
+1103:             if sha is None:
+1104:                 continue
+1105:             target = contained(frozen, name)
+1106:             target.parent.mkdir(parents=True, exist_ok=True)
+1107:             shutil.copy2(contained(root, name), target)
+1108:         if hashes(frozen, names) != before or hashes(root, names) != before:
+1109:             raise ValueError("source changed while freezing")
+1110:         errors.extend(validate_inputs(frozen, d))
+1111:         result = None
+1112:         # Render even invalid/missing body input to retain an honest failed preview.
+1113:         try:
+1114:             with isolated_imports(frozen, root):
+1115:                 # These pure dependencies must bind before legacy renderers insert
+1116:                 # their historical production path into sys.path.
+1117:                 for dependency in ('logic_pool','_认知库渲染'):
+1118:                     path=frozen/(dependency+'.py')
+1119:                     if path.exists():sys.modules[dependency]=load_module(path)
+1120:                 builder = load_module(frozen / "review_pages.py")

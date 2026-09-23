@@ -1,0 +1,189 @@
+
+=== auction数据核对.py ===
+171:     #   → 只查渲染链路新注入区(PAPERTRADE 看板/首屏 hero 前 shell 区), body 原文宽容。
+
+=== K线本地导出.py ===
+2: """K线本地导出.py [批量N] —— 从百度网盘年度zip(全A日K raw)批量导出涨停股K线到 _bars_cache。
+9: CDIR=os.path.join(L,"_bars_cache")
+
+=== limitup数据核对.py ===
+18:   - 维度6 模拟盘看板: 持仓 vs 状态.json + 买入计划 vs 交易计划_{d}.json
+97:     """手写判断区 = ticker起点(走马灯) 到 板块一h2之前. 含ticker/hero/kpi/pill/看板前.
+334:     # ========== 维度6: 模拟盘看板 ==========
+344:             chk(issues, bool(hit), f'持仓 {nm} {sh}股', '看板未显示' if not hit else '')
+353:                     chk(issues, bool(hit), f'买入计划 {nm}', '看板未显示' if not hit else '')
+
+=== module_render_auction.py ===
+437:         paper = os.path.join(L, '_模拟盘', 'auction', '看板_%s.html' % d)
+441:             print('PAPERTRADE看板已嵌入:', os.path.basename(paper))
+443:             print('⚠ 无看板_%s.html, PAPERTRADE留空锚' % d)
+
+=== module_render_cycle.py ===
+407:     """完整页 body(头部区 + 机器数据折叠区 + 模拟盘看板 + 七板块) → S2 接线用
+411:       首屏=头部→模拟盘看板→七板块叙事流, 机器数字作核对层展开可见。
+463:         paper = os.path.join(L, '_模拟盘', 'cycle', '看板_%s.html' % d)
+467:             print('PAPERTRADE看板已嵌入:', os.path.basename(paper))
+469:             print('⚠ 无看板_%s.html, PAPERTRADE留空锚' % d)
+
+=== module_render_index.py ===
+326:         out.append('<div class="card"><b>线索跟踪看板</b>')
+388:     """完整页 body(头部区 + 机器数据折叠区(仅断档日) + 模拟盘看板 + 五板块) → S2 接线用
+444:         paper = os.path.join(L, '_模拟盘', 'master', '看板_%s.html' % d)
+448:             print('PAPERTRADE看板已嵌入:', os.path.basename(paper))
+450:             print('⚠ 无看板_%s.html, PAPERTRADE留空锚' % d)
+
+=== module_render_lhb.py ===
+388:         # PAPERTRADE 模拟盘看板: 有看板_{d}.html 则嵌入(引擎成品, 位置=h2一前), 无则留空锚
+390:         paper = os.path.join(L, '_模拟盘', 'lhb', '看板_%s.html' % d)
+396:                 print('PAPERTRADE看板已嵌入:', os.path.basename(paper))
+399:                 print('⚠ 无看板_%s.html, PAPERTRADE留空锚' % d)
+
+=== module_render_limitup.py ===
+618:     PAPERTRADE 锚点必须输出 — 模拟盘引擎 inject 靠它替换注入看板(黄金版同构)。"""
+
+=== module_render_logic.py ===
+487:         锚内有内容=历史注入卡, 保真铁律不动) + PAPERTRADE 看板(插 h2一 前)
+569:         paper = os.path.join(L, '_模拟盘', 'logic', '看板_%s.html' % d)
+573:             print('PAPERTRADE看板已嵌入:', os.path.basename(paper))
+575:             print('⚠ 无看板_%s.html, PAPERTRADE留空锚' % d)
+
+=== module_render_theme.py ===
+746:     """完整页 body(头部区 + 模拟盘看板 + 五板块 + 图表化核对层) → S2 接线用
+753:     锚点(THEMEBATTLE/6YOU/FOURDIM 在图1, LIFECYCLE 在图2, PAPERTRADE 在模拟盘看板)成对保留供哨兵;
+754:     模拟盘看板(paper_block)=内容非核对层, 折叠外、h2一 前直接可见(8/12 规范)。"""
+772:     # 模拟盘看板: 折叠外、h2一 前、直接可见 — ★2026-08-12 用户否"模拟实盘板块都丢了":
+773:     # 看板是内容非核对层, 不能收进机器折叠(对齐 lhb 验收基准: hero→看板展开→h2一)
+810:         # PAPERTRADE 模拟盘看板: 有看板_{d}.html 则嵌入(进机器数据折叠区), 无则空锚
+811:         paper = os.path.join(L, '_模拟盘', 'theme', '看板_%s.html' % d)
+815:             print('PAPERTRADE看板已嵌入:', os.path.basename(paper))
+817:             print('⚠ 无看板_%s.html, PAPERTRADE留空锚' % d)
+
+=== p3_production_bridge.py ===
+5: when independent provenance, exchange calendar, and an externally-created
+27:     provenance_ok = isinstance(prov_obj, dict) and bool(prov_obj.get('sources') or prov_obj.get('provenance'))
+32:     if not provenance_ok: missing.append('independent_provenance')
+39:                   'independent_provenance': provenance_ok, 'exchange_calendar': calendar_ok,
+45:         'policy': '桥已安装；不制造provenance/交易，不把controlled证据升级为production',
+
+=== p3_production_gate.py ===
+5: the call site is installed, but it cannot manufacture provenance or a real
+13: REQUIRED = ['independent_provenance', 'exchange_calendar', 'real_registration_transaction', 'production_call_site']
+26:         'independent_provenance': bool(bflags.get('independent_provenance')) if bridge else 'independent_provenance' not in old_remaining,
+
+=== restore_lhb_page.py ===
+91:     paper = BASE / "_学习/_模拟盘/lhb" / f"看板_{d}.html"
+153:             key=lambda p: p.stat().st_mtime,
+
+=== review_eval.py ===
+189:                 "missing_as_of": missing, "replay_status": "engineering_only" if missing else "requires_independent_provenance_review"},
+419:                             "metrics_provenance": "reported_by_external_file_not_independently_attested"})
+454:     Caller-supplied timestamp provenance still needs independent archival attestation.
+566:                 "provenance_status": "timestamps_and_hashes_checked_independent_attestation_pending",
+
+=== review_pages.py ===
+1331:     path = root / '_学习' / '_模拟盘' / route / ('看板_'+model['d']+'.html')
+1335:             raise ValueError('引擎看板含主动内容，须核查源产物: '+path.name)
+1346:         model['limitations'].append('当日引擎看板缺失；收益与持仓显示 —，未手算。')
+1727:         body += '<div class="card">模拟盘当日引擎看板缺失：—</div>'
+
+=== review_publish.py ===
+184:             age = max(0.0, time.time() - lock.stat().st_mtime)
+275:         names.update({f"_学习/_模拟盘/{route}/{name}" for name in ("状态.json", "state.json", "净值.json", "账本.jsonl", f"看板_{d}.html")})
+323:     cache = root / "_学习" / "_bars_cache"
+824:                 if '_学习/_席位分档快照.jsonl' not in {v['path'] for v in comp['sources']}:errors.append('missing snapshot provenance')
+930:             # text must still occupy its named component, with frozen provenance.
+1089:                 "source_hashes": {}, "template_version": None, "page_hashes": {},
+1100:         manifest["source_hashes"] = before
+1228:         sources = m.get("source_hashes")
+1230:             raise ValueError("manifest source_hashes invalid")
+1293:         values = read_json(p) if p.exists() else cal._build(str(root / "_学习" / "_bars_cache"))
+
+=== trading_calendar.py ===
+2: """trading_calendar.py —— 连续交易日序列(含停机期),源=_bars_cache 日线 date 并集,缓存 _学习/_交易日历.json。
+15:     cd = os.path.join(L, "_bars_cache")
+25:             # 过期判断:bars_cache 最新 mtime 是否晚于缓存 mtime(有新 bar 就重建)
+27:                 newest = max((os.path.getmtime(f) for f in glob.glob(os.path.join(cd, "*.csv"))), default=0)
+28:                 if os.path.getmtime(fp) >= newest:
+
+=== 中报预增雷达.py ===
+17: - 行情 = _学习/_bars_cache 优先(不复权), 不新鲜则sina补拉并回写缓存。
+28: CACHE = os.path.join(LEARN, "_bars_cache")
+
+=== 复盘一致性哨兵.py ===
+7:   C3 看板_{d}.html mtime >= bars_cache最新mtime(旧价看板被inject=07-15事故根因)
+11:   C8 改动登记核对(正式.py/规格/规范mtime晚于_变更总账.md=改了没登记;2026-07-16改动三合一)
+108: # ---------- C3 看板新鲜度 vs bars_cache ----------
+109: bc=os.path.join(L,'_bars_cache')
+111:     cache_mtime=max(os.path.getmtime(os.path.join(bc,x)) for x in os.listdir(bc)[:400] if x.endswith('.csv'))
+113:     cache_mtime=None
+114: if cache_mtime:
+116:         kb=os.path.join(L,'_模拟盘',route,f'看板_{d}.html')
+117:         if os.path.isfile(kb) and os.path.getmtime(kb) < cache_mtime - 60:
+118:             FAIL.append(f'C3 {route} 历史版本证据不足：看板_{d}.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板')
+235: # 规则见 _链路地图.md 〇节: 正式.py/agent规格/四份规范 的mtime 不得晚于 _变更总账.md
+240:     _lm=os.path.getmtime(_ledger)+60  # 60s宽限
+258:     _dirty=[os.path.basename(x) for x in _watch if os.path.getmtime(x)>_lm]
+260:         FAIL.append(f'C8 改了没登记: {_dirty[:10]}{"…" if len(_dirty)>10 else ""} mtime晚于_变更总账.md——按改动三合一SOP补登记(_链路地图.md 〇节)后重跑哨兵')
+
+=== 市场温度.py ===
+16: CDIR=os.path.join(L,"_bars_cache")
+
+=== 席位动向库.py ===
+13: DIR=os.path.join(L,"_席位动向"); CDIR=os.path.join(L,"_bars_cache")
+210:     """补拉缺失K线进 _bars_cache(sina,与涨停质量训练同缓存)"""
+
+=== 席位荐票结算.py ===
+11: CDIR=os.path.join(L,"_bars_cache")
+
+=== 模拟盘引擎.py ===
+84:     for base in [os.path.join(learn(),'_bars_cache'), os.path.join(simdir(),'_bars_extra')]:
+458:         out = os.path.join(simdir(route),'看板_%s.html'%d)
+465:         kb = os.path.join(simdir(route),'看板_%s.html'%d)
+467:             print('缺看板',route); continue
+479:                 # → 回退注入到 hero div 配平闭合处(hero 之后), 保证 PAPERTRADE 看板不丢
+
+=== 涨停原因.py ===
+21:             fb=datetime.datetime.fromtimestamp(int(ts)).strftime("%H:%M") if ts else None
+
+=== 涨停甜点.py ===
+13:   数据缺失  = _bars_cache 无当日行                        ← 零编造, 标 null
+15: 数据源: {d}/zt_pool.csv(连板数/炸板次数) + _学习/_bars_cache/{code}.csv(open/high/low/close)
+25: CDIR = os.path.join(LEARN, '_bars_cache')
+46:     """读 _bars_cache 当日行, 返回 dict(open/high/low/close/volume) 或 None。兼容列数不一致。"""
+
+=== 涨停甜点结算.py ===
+12: 数据源: _学习/_bars_cache/{code}.csv(open/high/low/close/volume) + 涨停甜点_{dprev}.json
+20: CDIR = os.path.join(LEARN, '_bars_cache')
+
+=== 涨停质量训练.py ===
+21: CDIR=os.path.join(L,"_bars_cache"); os.makedirs(CDIR,exist_ok=True)
+124:     try: return _dt.datetime.fromtimestamp(int(ts),tz=_dt.timezone(_dt.timedelta(hours=8))).strftime('%H:%M')
+
+=== 竞价池分桶回填.py ===
+5:   接 _bars_cache 算T+1执行收益(T+1开→T+1收),叠 _市场温度表 温度档,
+16: CDIR=os.path.join(L,"_bars_cache")
+25:     try: return datetime.fromtimestamp(int(ts),CST).strftime("%H:%M")
+
+=== 竞价池结算.py ===
+16: CDIR=os.path.join(L,"_bars_cache")
+
+=== 竞价闸门.py ===
+13: CDIR=os.path.join(L,"_bars_cache")
+
+=== 质量荐票结算.py ===
+19: CDIR=os.path.join(L,"_bars_cache")
+
+=== 资金结构因子.py ===
+12: DIR=os.path.join(L,"_席位动向"); CDIR=os.path.join(L,"_bars_cache")
+
+=== 逻辑荐票结算.py ===
+6: bars: _bars_cache 优先,缺票akshare stock_zh_a_daily(sina)兜底;拿不到标null不编。"""
+13: CDIR=os.path.join(L,"_bars_cache")
+
+=== 题材荐票结算.py ===
+6: bars: _bars_cache 优先,缺票akshare stock_zh_a_daily(sina)兜底;拿不到标null不编。"""
+12: CDIR=os.path.join(L,"_bars_cache")
+
+=== 龙虎榜质量训练.py ===
+6: - ★执行口径为主: 执1=T+1开买→T+1收, 执2=T+1开买→T+2收(信号T1=T收→T+1收仅参考)。K线=_学习/_bars_cache(与涨停库共用)。
+16: L=os.path.join(BASE,"_学习"); CDIR=os.path.join(L,"_bars_cache")

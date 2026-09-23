@@ -1,0 +1,904 @@
+{
+  "schema_version": 1,
+  "d": "20260923",
+  "route": "cycle",
+  "template_version": "p1.3",
+  "complete": false,
+  "status": "degraded",
+  "errors": [],
+  "title": "周期情绪",
+  "hero": {
+    "text": "当日判断缺失",
+    "claim_refs": []
+  },
+  "kpis": [
+    {
+      "display": "17650.0",
+      "sparkline": {
+        "source": "_学习/_市场温度表.json",
+        "points": [
+          {
+            "d": "20260917",
+            "value": 21356.0
+          },
+          {
+            "d": "20260921",
+            "value": 20315.0
+          },
+          {
+            "d": "20260922",
+            "value": 21356.0
+          },
+          {
+            "d": "20260923",
+            "value": 17650.0
+          }
+        ],
+        "svg_points": "0.0,6.0 60.0,14.99 120.0,6.0 180.0,38.0"
+      },
+      "id": "slot-0",
+      "label": "两市量能 · 亿",
+      "value": 17650.0,
+      "evidence_refs": [
+        "kpi-source-0-0",
+        "kpi-source-0-1"
+      ],
+      "gauge": null,
+      "gauge_labels": null,
+      "sub": "当日真源读数",
+      "chip": "09-23",
+      "big_html": null
+    },
+    {
+      "display": "—",
+      "sparkline": null,
+      "id": "slot-1",
+      "label": "周期投票主判",
+      "value": null,
+      "evidence_refs": [
+        "kpi-source-1-0",
+        "kpi-source-1-1"
+      ],
+      "gauge": null,
+      "gauge_labels": null,
+      "sub": "当日该口径数据缺失，未填补",
+      "chip": "09-23",
+      "big_html": null
+    },
+    {
+      "display": "20.5",
+      "sparkline": null,
+      "id": "slot-2",
+      "label": "市场温度 · 250日分位",
+      "value": 20.5,
+      "evidence_refs": [
+        "kpi-source-2-0",
+        "kpi-source-2-1"
+      ],
+      "gauge": 20.5,
+      "gauge_labels": null,
+      "sub": "当日真源读数",
+      "chip": "09-23",
+      "big_html": null
+    },
+    {
+      "display": "—",
+      "sparkline": null,
+      "id": "slot-3",
+      "label": "执行仓位上限",
+      "value": null,
+      "evidence_refs": [
+        "kpi-source-3-0",
+        "kpi-source-3-1"
+      ],
+      "gauge": null,
+      "gauge_labels": null,
+      "sub": "当日该口径数据缺失，未填补",
+      "chip": "09-23",
+      "big_html": null
+    }
+  ],
+  "sections": [
+    {
+      "id": "volume",
+      "title": "量能台阶 · 我站在哪一阶",
+      "claim_refs": [
+        "cycle-0978997fd8613c5e"
+      ]
+    },
+    {
+      "id": "leading",
+      "title": "先行指标 · 三窗触发器",
+      "claim_refs": [
+        "cycle-e1b7b728117c8af1",
+        "cycle-732b5f0fa96e8277",
+        "cycle-314dba36e0dbfd80",
+        "cycle-ae248c0a01403138",
+        "cycle-5bfdf7f82af1691b",
+        "cycle-0fa4ed597fe0ba3e",
+        "cycle-051f004d5d4b3ce2",
+        "cycle-f470ac350f31e930",
+        "cycle-5642e8e533c564e3",
+        "cycle-14f8efe75d4786ca",
+        "cycle-b14173a26db9fc5a",
+        "cycle-8e9050388a46652d",
+        "cycle-5d8c815ef6b6036a"
+      ]
+    },
+    {
+      "id": "stages",
+      "title": "情绪五阶段 · 五路周期投票",
+      "claim_refs": []
+    },
+    {
+      "id": "ladder",
+      "title": "连板梯队",
+      "claim_refs": [
+        "cycle-e968064e65b9aa95",
+        "cycle-9866f956257798fe",
+        "cycle-2462d5524b293422",
+        "cycle-57cb9b658710cac2"
+      ]
+    },
+    {
+      "id": "position",
+      "title": "攻防 · 仓位总开关",
+      "claim_refs": []
+    },
+    {
+      "id": "research",
+      "title": "自主深挖 · 指标与阈值孵化",
+      "claim_refs": []
+    },
+    {
+      "id": "cognition",
+      "title": "我的认知迭代 · 最新",
+      "claim_refs": []
+    }
+  ],
+  "claims": [
+    {
+      "id": "cycle-0978997fd8613c5e",
+      "role": "evidence",
+      "text": "当日成交额：17650.0 亿",
+      "section": "volume",
+      "evidence_refs": [
+        "ev-cycle-0978997fd8613c5e"
+      ],
+      "source": "fact_20260923.json",
+      "source_pointer": "/facts/成交额亿/value"
+    },
+    {
+      "id": "cycle-e1b7b728117c8af1",
+      "role": "evidence",
+      "text": "local",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-e1b7b728117c8af1"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/来源"
+    },
+    {
+      "id": "cycle-732b5f0fa96e8277",
+      "role": "evidence",
+      "text": "51",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-732b5f0fa96e8277"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/涨停数_净",
+      "component_ref": "LEADIND"
+    },
+    {
+      "id": "cycle-314dba36e0dbfd80",
+      "role": "evidence",
+      "text": "39",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-314dba36e0dbfd80"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/首板",
+      "component_ref": "LEADIND"
+    },
+    {
+      "id": "cycle-ae248c0a01403138",
+      "role": "evidence",
+      "text": "2",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-ae248c0a01403138"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/二连板",
+      "component_ref": "LEADIND"
+    },
+    {
+      "id": "cycle-5bfdf7f82af1691b",
+      "role": "evidence",
+      "text": "7",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-5bfdf7f82af1691b"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/三连板",
+      "component_ref": "LEADIND"
+    },
+    {
+      "id": "cycle-0fa4ed597fe0ba3e",
+      "role": "evidence",
+      "text": "0.061",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-0fa4ed597fe0ba3e"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/一进二率"
+    },
+    {
+      "id": "cycle-051f004d5d4b3ce2",
+      "role": "evidence",
+      "text": "0.7",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-051f004d5d4b3ce2"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/二进三率"
+    },
+    {
+      "id": "cycle-f470ac350f31e930",
+      "role": "evidence",
+      "text": "0.6",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-f470ac350f31e930"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/晋级/高度晋级率"
+    },
+    {
+      "id": "cycle-5642e8e533c564e3",
+      "role": "evidence",
+      "text": "48",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-5642e8e533c564e3"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/核按钮/昨日涨停数",
+      "component_ref": "LEADIND"
+    },
+    {
+      "id": "cycle-14f8efe75d4786ca",
+      "role": "evidence",
+      "text": "1",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-14f8efe75d4786ca"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/核按钮/今日跌停回杀",
+      "component_ref": "LEADIND"
+    },
+    {
+      "id": "cycle-b14173a26db9fc5a",
+      "role": "evidence",
+      "text": "0.021",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-b14173a26db9fc5a"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/核按钮/核按钮率"
+    },
+    {
+      "id": "cycle-8e9050388a46652d",
+      "role": "evidence",
+      "text": "null",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-8e9050388a46652d"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/昨日涨停溢价"
+    },
+    {
+      "id": "cycle-5d8c815ef6b6036a",
+      "role": "evidence",
+      "text": "[]",
+      "section": "leading",
+      "evidence_refs": [
+        "ev-cycle-5d8c815ef6b6036a"
+      ],
+      "source": "_情绪先行指标.json",
+      "source_pointer": "/20260923/触发器"
+    },
+    {
+      "id": "cycle-e968064e65b9aa95",
+      "role": "evidence",
+      "text": "1板39家",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-e968064e65b9aa95"
+      ],
+      "source": "_市场温度表.json",
+      "source_pointer": "/20260923/梯队/1"
+    },
+    {
+      "id": "cycle-9866f956257798fe",
+      "role": "evidence",
+      "text": "3板7家",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-9866f956257798fe"
+      ],
+      "source": "_市场温度表.json",
+      "source_pointer": "/20260923/梯队/3"
+    },
+    {
+      "id": "cycle-2462d5524b293422",
+      "role": "evidence",
+      "text": "2板3家",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-2462d5524b293422"
+      ],
+      "source": "_市场温度表.json",
+      "source_pointer": "/20260923/梯队/2"
+    },
+    {
+      "id": "cycle-57cb9b658710cac2",
+      "role": "evidence",
+      "text": "4板2家",
+      "section": "ladder",
+      "evidence_refs": [
+        "ev-cycle-57cb9b658710cac2"
+      ],
+      "source": "_市场温度表.json",
+      "source_pointer": "/20260923/梯队/4"
+    }
+  ],
+  "limitations": [
+    "当日周期判断缺失；仅呈现当日事实，不从其他日期重造决策。",
+    "当日机器组件未齐：MACHVOTE"
+  ],
+  "content_coverage": {
+    "total": 18,
+    "covered": 18,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "cycle-0978997fd8613c5e",
+        "sections": [
+          "volume"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-e1b7b728117c8af1",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-732b5f0fa96e8277",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-314dba36e0dbfd80",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-ae248c0a01403138",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-5bfdf7f82af1691b",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-0fa4ed597fe0ba3e",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-051f004d5d4b3ce2",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-f470ac350f31e930",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-5642e8e533c564e3",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-14f8efe75d4786ca",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-b14173a26db9fc5a",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-8e9050388a46652d",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-5d8c815ef6b6036a",
+        "sections": [
+          "leading"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-e968064e65b9aa95",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-9866f956257798fe",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-2462d5524b293422",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "cycle-57cb9b658710cac2",
+        "sections": [
+          "ladder"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "fact_20260923.json",
+        "pointer": "/facts/成交额亿/value",
+        "claim_id": "cycle-0978997fd8613c5e",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/来源",
+        "claim_id": "cycle-e1b7b728117c8af1",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/涨停数_净",
+        "claim_id": "cycle-732b5f0fa96e8277",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/首板",
+        "claim_id": "cycle-314dba36e0dbfd80",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/二连板",
+        "claim_id": "cycle-ae248c0a01403138",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/三连板",
+        "claim_id": "cycle-5bfdf7f82af1691b",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/一进二率",
+        "claim_id": "cycle-0fa4ed597fe0ba3e",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/二进三率",
+        "claim_id": "cycle-051f004d5d4b3ce2",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/晋级/高度晋级率",
+        "claim_id": "cycle-f470ac350f31e930",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/核按钮/昨日涨停数",
+        "claim_id": "cycle-5642e8e533c564e3",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/核按钮/今日跌停回杀",
+        "claim_id": "cycle-14f8efe75d4786ca",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/核按钮/核按钮率",
+        "claim_id": "cycle-b14173a26db9fc5a",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/昨日涨停溢价",
+        "claim_id": "cycle-8e9050388a46652d",
+        "status": "displayed"
+      },
+      {
+        "source": "_情绪先行指标.json",
+        "pointer": "/20260923/触发器",
+        "claim_id": "cycle-5d8c815ef6b6036a",
+        "status": "displayed"
+      },
+      {
+        "source": "_市场温度表.json",
+        "pointer": "/20260923/梯队/1",
+        "claim_id": "cycle-e968064e65b9aa95",
+        "status": "displayed"
+      },
+      {
+        "source": "_市场温度表.json",
+        "pointer": "/20260923/梯队/3",
+        "claim_id": "cycle-9866f956257798fe",
+        "status": "displayed"
+      },
+      {
+        "source": "_市场温度表.json",
+        "pointer": "/20260923/梯队/2",
+        "claim_id": "cycle-2462d5524b293422",
+        "status": "displayed"
+      },
+      {
+        "source": "_市场温度表.json",
+        "pointer": "/20260923/梯队/4",
+        "claim_id": "cycle-57cb9b658710cac2",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 18
+  },
+  "role_overlap": [],
+  "editorial_notes": [
+    "量能、先行指标、阶段投票和梯队各自承担一类证据。",
+    "攻防区集中呈现仓位条件，缺周期判断时只回源事实。",
+    "深挖保留新问题，认知保留新验证和下次证伪，历史另行链接。"
+  ],
+  "evidence": [
+    {
+      "id": "fact-0",
+      "d": "20260923",
+      "source": "fact_20260923.json",
+      "pointer": "/facts/涨停数",
+      "value": 51
+    },
+    {
+      "id": "fact-1",
+      "d": "20260923",
+      "source": "fact_20260923.json",
+      "pointer": "/facts/温度",
+      "value": 20.5
+    },
+    {
+      "id": "fact-2",
+      "d": "20260923",
+      "source": "fact_20260923.json",
+      "pointer": "/facts/最高连板",
+      "value": 4
+    },
+    {
+      "id": "fact-3",
+      "d": "20260923",
+      "source": "fact_20260923.json",
+      "pointer": "/facts/成交额亿",
+      "value": 17650.0
+    },
+    {
+      "id": "ev-cycle-0978997fd8613c5e",
+      "d": "20260923",
+      "source": "fact_20260923.json",
+      "pointer": "/facts/成交额亿/value"
+    },
+    {
+      "id": "ev-cycle-e1b7b728117c8af1",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/来源"
+    },
+    {
+      "id": "ev-cycle-732b5f0fa96e8277",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/涨停数_净"
+    },
+    {
+      "id": "ev-cycle-314dba36e0dbfd80",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/首板"
+    },
+    {
+      "id": "ev-cycle-ae248c0a01403138",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/二连板"
+    },
+    {
+      "id": "ev-cycle-5bfdf7f82af1691b",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/三连板"
+    },
+    {
+      "id": "ev-cycle-0fa4ed597fe0ba3e",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/一进二率"
+    },
+    {
+      "id": "ev-cycle-051f004d5d4b3ce2",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/二进三率"
+    },
+    {
+      "id": "ev-cycle-f470ac350f31e930",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/晋级/高度晋级率"
+    },
+    {
+      "id": "ev-cycle-5642e8e533c564e3",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/核按钮/昨日涨停数"
+    },
+    {
+      "id": "ev-cycle-14f8efe75d4786ca",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/核按钮/今日跌停回杀"
+    },
+    {
+      "id": "ev-cycle-b14173a26db9fc5a",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/核按钮/核按钮率"
+    },
+    {
+      "id": "ev-cycle-8e9050388a46652d",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/昨日涨停溢价"
+    },
+    {
+      "id": "ev-cycle-5d8c815ef6b6036a",
+      "d": "20260923",
+      "source": "_情绪先行指标.json",
+      "pointer": "/20260923/触发器"
+    },
+    {
+      "id": "ev-cycle-e968064e65b9aa95",
+      "d": "20260923",
+      "source": "_市场温度表.json",
+      "pointer": "/20260923/梯队/1"
+    },
+    {
+      "id": "ev-cycle-9866f956257798fe",
+      "d": "20260923",
+      "source": "_市场温度表.json",
+      "pointer": "/20260923/梯队/3"
+    },
+    {
+      "id": "ev-cycle-2462d5524b293422",
+      "d": "20260923",
+      "source": "_市场温度表.json",
+      "pointer": "/20260923/梯队/2"
+    },
+    {
+      "id": "ev-cycle-57cb9b658710cac2",
+      "d": "20260923",
+      "source": "_市场温度表.json",
+      "pointer": "/20260923/梯队/4"
+    },
+    {
+      "id": "kpi-source-0-0",
+      "d": "20260923",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "448e1f2ab3c7404e4a041923f3a4998c2d35c3bca9306ad5cab62ba53b78d89a",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-0-1",
+      "d": "20260923",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "0b3dd3550966c072191be9cfb87fee9d6ec9f2fdd53ec741e608f9cd02a7563a",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-1-0",
+      "d": "20260923",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "448e1f2ab3c7404e4a041923f3a4998c2d35c3bca9306ad5cab62ba53b78d89a",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-1-1",
+      "d": "20260923",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "0b3dd3550966c072191be9cfb87fee9d6ec9f2fdd53ec741e608f9cd02a7563a",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-2-0",
+      "d": "20260923",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "448e1f2ab3c7404e4a041923f3a4998c2d35c3bca9306ad5cab62ba53b78d89a",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-2-1",
+      "d": "20260923",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "0b3dd3550966c072191be9cfb87fee9d6ec9f2fdd53ec741e608f9cd02a7563a",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-3-0",
+      "d": "20260923",
+      "source": "_学习/_市场温度表.json",
+      "sha256": "448e1f2ab3c7404e4a041923f3a4998c2d35c3bca9306ad5cab62ba53b78d89a",
+      "verification": "file_hash"
+    },
+    {
+      "id": "kpi-source-3-1",
+      "d": "20260923",
+      "source": "_学习/_周期投票台账.jsonl",
+      "sha256": "0b3dd3550966c072191be9cfb87fee9d6ec9f2fdd53ec741e608f9cd02a7563a",
+      "verification": "file_hash"
+    }
+  ],
+  "sources": [],
+  "paper": null,
+  "ticker": "<span class=\"source-ticker\">量能1.76万亿·弱修｜最高4板·新华文轩</span>",
+  "components": [
+    {
+      "id": "VOLSTEP",
+      "section": "volume",
+      "producer": "module_render_cycle.py:r_mach_volstep",
+      "status": "ok",
+      "sources": [
+        {
+          "path": "_学习/_市场温度表.json",
+          "sha256": "448e1f2ab3c7404e4a041923f3a4998c2d35c3bca9306ad5cab62ba53b78d89a"
+        }
+      ],
+      "html": "\n<div class=\"card\"><h3 style=\"margin:0 0 8px\">量能台阶 <span class=\"hint\">机器核对 · 米开换算表(手册V2 §2.3) · 温度表权威</span></h3><div class=\"steps\"><div class=\"step dim\"><span class=\"sr\">≥3.8</span><span class=\"sn\">主升2确认<small>放量突破</small></span><span class=\"sd\"></span></div>\n<div class=\"step dim\"><span class=\"sr\">3.5~3.8</span><span class=\"sn\">突破压力<small>需增量</small></span><span class=\"sd\"></span></div>\n<div class=\"step dim\"><span class=\"sr\">3.3~3.5</span><span class=\"sn\">强修<small>量能承接</small></span><span class=\"sd\"></span></div>\n<div class=\"step dim\"><span class=\"sr\">3.0~3.3</span><span class=\"sn\">过渡<small>量能中枢</small></span><span class=\"sd\"></span></div>\n<div class=\"step cur\"><span class=\"sr\"><3.0</span><span class=\"sn\">弱修<small>缩量分歧</small></span><span class=\"sd\"><span class=\"dayc\">09-21 2.03</span><span class=\"dayc\">09-22 2.14</span><span class=\"dayc now\">09-23 1.76</span></span></div>\n</div><div class=\"hint\">量能 1.76 万亿落\"弱修\"档 —— 米开量能台阶换算(手册V2 §2.3 A档, 腾讯替代源); 当日涨停51/温度20.5(冰点), 档位与温度档冰点联动判读。</div></div>\n\n",
+      "anchors": [
+        "VOLSTEP"
+      ],
+      "issue": null,
+      "allow_missing": false,
+      "producer_sha256": "4d55b8a3441bd51c6b9a9be3ef81746f66a266e52cf9c92042379ab09fda70d5"
+    },
+    {
+      "id": "LEADIND",
+      "section": "leading",
+      "producer": "情绪先行指标.py",
+      "status": "ok",
+      "sources": [
+        {
+          "path": "_学习/先行指标卡_20260923.html",
+          "sha256": "686c2c3eda623fd2e126eed5447ca7ec598f071344719d4eab4f5dcf00745a00"
+        }
+      ],
+      "html": "<div class=\"card\"><p style=\"font-weight:700;margin-bottom:2px\">情绪先行指标 · 近20日 <span class=\"mut\" style=\"font-weight:400\">(脚本段A档 · 情绪先行指标.py --card · 当日温度 —,阈值冰点&lt;25/过热≥85)</span></p><div data-metric=\"涨停数_净\" style=\"font-size:11px;color:#6b7683\">涨停数_净=51</div><svg viewBox=\"0 0 880 196\" style=\"width:100%;height:auto;display:block\"><line x1=\"46\" y1=\"172\" x2=\"866\" y2=\"172\" stroke=\"#3a3f46\"/><line x1=\"46\" y1=\"143.0\" x2=\"866\" y2=\"143.0\" stroke=\"#8a6d2f\" stroke-dasharray=\"4 4\" stroke-width=\"0.8\"/><text x=\"866\" y=\"140.0\" font-size=\"8.5\" fill=\"#8a6d2f\" text-anchor=\"end\">1进2率10%=接力冰点参考线</text><rect x=\"55.8\" y=\"55.4\" width=\"21.3\" height=\"116.6\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"66.5\" y=\"52\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">79</text><rect x=\"96.8\" y=\"92.3\" width=\"21.3\" height=\"79.7\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"107.5\" y=\"89\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">54</text><rect x=\"137.8\" y=\"104.1\" width=\"21.3\" height=\"67.9\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"148.5\" y=\"101\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">46</text><rect x=\"178.8\" y=\"76.1\" width=\"21.3\" height=\"95.9\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"189.5\" y=\"73\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">65</text><rect x=\"219.8\" y=\"95.3\" width=\"21.3\" height=\"76.7\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"230.5\" y=\"92\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">52</text><rect x=\"260.8\" y=\"58.4\" width=\"21.3\" height=\"113.6\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"271.5\" y=\"55\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">77</text><rect x=\"301.8\" y=\"51.0\" width=\"21.3\" height=\"121.0\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"312.5\" y=\"48\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">82</text><rect x=\"342.8\" y=\"42.1\" width=\"21.3\" height=\"129.9\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"353.5\" y=\"39\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">88</text><rect x=\"383.8\" y=\"49.5\" width=\"21.3\" height=\"122.5\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"394.5\" y=\"47\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">83</text><rect x=\"424.8\" y=\"95.3\" width=\"21.3\" height=\"76.7\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"435.5\" y=\"92\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">52</text><rect x=\"465.8\" y=\"107.1\" width=\"21.3\" height=\"64.9\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"476.5\" y=\"104\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">44</text><rect x=\"506.8\" y=\"114.4\" width=\"21.3\" height=\"57.6\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"517.5\" y=\"111\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">39</text><rect x=\"547.8\" y=\"34.8\" width=\"21.3\" height=\"137.2\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"558.5\" y=\"32\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">93</text><rect x=\"588.8\" y=\"64.3\" width=\"21.3\" height=\"107.7\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"599.5\" y=\"61\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">73</text><rect x=\"629.8\" y=\"101.2\" width=\"21.3\" height=\"70.8\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"640.5\" y=\"98\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">48</text><rect x=\"670.8\" y=\"120.3\" width=\"21.3\" height=\"51.7\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"681.5\" y=\"117\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">35</text><rect x=\"711.8\" y=\"113.0\" width=\"21.3\" height=\"59.0\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"722.5\" y=\"110\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">40</text><rect x=\"752.8\" y=\"20.0\" width=\"21.3\" height=\"152.0\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"763.5\" y=\"17\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">103</text><rect x=\"793.8\" y=\"79.0\" width=\"21.3\" height=\"93.0\" rx=\"1.5\" fill=\"#4a5666\"/><text x=\"804.5\" y=\"76\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">63</text><rect x=\"834.8\" y=\"96.7\" width=\"21.3\" height=\"75.3\" rx=\"1.5\" fill=\"#7d5a63\"/><text x=\"845.5\" y=\"94\" font-size=\"8\" fill=\"#6b7683\" text-anchor=\"middle\">51</text><polyline points=\"66.5,154.3 107.5,118.5 148.5,131.3 189.5,148.2 230.5,118.5 271.5,112.4 312.5,124.6 353.5,135.7 394.5,118.5 435.5,140.6 476.5,142.4 517.5,136.6 558.5,93.9 599.5,128.4 640.5,172.0 681.5,119.1 722.5,138.6 763.5,84.0 804.5,39.8 845.5,154.3\" fill=\"none\" stroke=\"#d9a441\" stroke-width=\"1.8\"/><circle cx=\"66.5\" cy=\"154.3\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"107.5\" cy=\"118.5\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"148.5\" cy=\"131.3\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"189.5\" cy=\"148.2\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"230.5\" cy=\"118.5\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"271.5\" cy=\"112.4\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"312.5\" cy=\"124.6\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"353.5\" cy=\"135.7\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"394.5\" cy=\"118.5\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"435.5\" cy=\"140.6\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"476.5\" cy=\"142.4\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"517.5\" cy=\"136.6\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"558.5\" cy=\"93.9\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"599.5\" cy=\"128.4\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"640.5\" cy=\"172.0\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"681.5\" cy=\"119.1\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"722.5\" cy=\"138.6\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"763.5\" cy=\"84.0\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"804.5\" cy=\"39.8\" r=\"3\" fill=\"#d9a441\"/><circle cx=\"845.5\" cy=\"154.3\" r=\"3\" fill=\"#d9a441\"/><text x=\"845.5\" y=\"147.3\" font-size=\"10\" font-weight=\"700\" fill=\"#d9a441\" text-anchor=\"end\">6.1%</text><text x=\"107.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-21</text><text x=\"189.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-25</text><text x=\"271.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-27</text><text x=\"353.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-31</text><text x=\"435.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-02</text><text x=\"517.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-04</text><text x=\"599.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-08</text><text x=\"681.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-10</text><text x=\"763.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-21</text><text x=\"845.5\" y=\"185\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-23</text><text x=\"46\" y=\"12\" font-size=\"9\" fill=\"#98a0ab\">灰柱=净涨停数(剔ST,峰103) · 金线=1进2率(右满刻度52%)</text></svg><svg viewBox=\"0 0 880 182\" style=\"width:100%;height:auto;display:block\"><line x1=\"46\" y1=\"88\" x2=\"866\" y2=\"88\" stroke=\"#3a3f46\"/><rect x=\"55.8\" y=\"88.0\" width=\"21.3\" height=\"3.3\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"96.8\" y=\"88.0\" width=\"21.3\" height=\"4.6\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"137.8\" y=\"30.0\" width=\"21.3\" height=\"58.0\" rx=\"1.5\" fill=\"#d64541\"/><text x=\"148.5\" y=\"26.0\" font-size=\"8.5\" fill=\"#98a0ab\" text-anchor=\"middle\">+16.1</text><rect x=\"178.8\" y=\"88.0\" width=\"21.3\" height=\"1.1\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"219.8\" y=\"85.8\" width=\"21.3\" height=\"2.2\" rx=\"1.5\" fill=\"#d64541\"/><rect x=\"260.8\" y=\"81.5\" width=\"21.3\" height=\"6.5\" rx=\"1.5\" fill=\"#d64541\"/><rect x=\"301.8\" y=\"88.0\" width=\"21.3\" height=\"1.0\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"342.8\" y=\"85.8\" width=\"21.3\" height=\"2.2\" rx=\"1.5\" fill=\"#d64541\"/><rect x=\"383.8\" y=\"88.0\" width=\"21.3\" height=\"1.2\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"424.8\" y=\"88.0\" width=\"21.3\" height=\"6.3\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"465.8\" y=\"88.0\" width=\"21.3\" height=\"3.5\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"506.8\" y=\"88.0\" width=\"21.3\" height=\"7.7\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"547.8\" y=\"85.5\" width=\"21.3\" height=\"2.5\" rx=\"1.5\" fill=\"#d64541\"/><rect x=\"588.8\" y=\"88.0\" width=\"21.3\" height=\"1.0\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"629.8\" y=\"88.0\" width=\"21.3\" height=\"2.4\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"670.8\" y=\"88.0\" width=\"21.3\" height=\"9.3\" rx=\"1.5\" fill=\"#2f9e6e\"/><rect x=\"711.8\" y=\"88.0\" width=\"21.3\" height=\"1.8\" rx=\"1.5\" fill=\"#2f9e6e\"/><text x=\"763.5\" y=\"84\" font-size=\"8\" fill=\"#4a5666\" text-anchor=\"middle\">∅</text><text x=\"804.5\" y=\"84\" font-size=\"8\" fill=\"#4a5666\" text-anchor=\"middle\">∅</text><text x=\"845.5\" y=\"84\" font-size=\"8\" fill=\"#4a5666\" text-anchor=\"middle\">∅</text><circle cx=\"476.5\" cy=\"155\" r=\"2.6\" fill=\"#d9a441\"/><circle cx=\"517.5\" cy=\"155\" r=\"2.6\" fill=\"#d9a441\"/><circle cx=\"681.5\" cy=\"155\" r=\"2.6\" fill=\"#d9a441\"/><circle cx=\"722.5\" cy=\"155\" r=\"2.6\" fill=\"#d9a441\"/><text x=\"107.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-21</text><text x=\"189.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-25</text><text x=\"271.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-27</text><text x=\"353.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">08-31</text><text x=\"435.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-02</text><text x=\"517.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-04</text><text x=\"599.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-08</text><text x=\"681.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-10</text><text x=\"763.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-21</text><text x=\"845.5\" y=\"168\" font-size=\"8.5\" fill=\"#6b7683\" text-anchor=\"middle\">09-23</text><text x=\"46\" y=\"12\" font-size=\"9\" fill=\"#98a0ab\">昨停溢价=昨日涨停池今日开盘买→收盘均收(执行口径,%);红正绿负;金点=连负≥3日(洗出反弹窗条件)</text></svg><div style=\"display:flex;gap:8px;margin-top:10px;flex-wrap:wrap\"><div style=\"flex:1;min-width:190px;border:1px solid #33383f;border-radius:8px;padding:8px 10px\"><div style=\"font-weight:700;font-size:13px;color:#5b636d\">❄ 冰点进攻窗 · —</div><div style=\"font-size:11px;color:#5b636d\">温度<25</div></div><div style=\"flex:1;min-width:190px;border:1px solid #33383f;border-radius:8px;padding:8px 10px\"><div style=\"font-weight:700;font-size:13px;color:#5b636d\">☢ 过热禁追窗 · —</div><div style=\"font-size:11px;color:#5b636d\">温度≥85</div></div><div style=\"flex:1;min-width:190px;border:1px solid #33383f;border-radius:8px;padding:8px 10px\"><div style=\"font-weight:700;font-size:13px;color:#5b636d\">♨ 洗出反弹窗 · —</div><div style=\"font-size:11px;color:#5b636d\">溢价连负3日</div></div></div><div style=\"font-size:11px;color:#6b7683;margin-top:8px\">读法:柱线剪刀口张开(涨停创高而金线趴地)=数量繁荣×接力冰点;三窗战绩=2025-07~2026-07单牛市周期回测,小样本,给环境判断不给指令。已证伪:复合\"冰点+≥2转机分量\"硬条件。</div></div>",
+      "anchors": [
+        "LEADIND"
+      ],
+      "issue": null,
+      "allow_missing": false,
+      "preserve_html": true
+    },
+    {
+      "id": "MACHVOTE",
+      "section": "stages",
+      "producer": "周期投票.py",
+      "status": "missing",
+      "sources": [],
+      "html": null,
+      "anchors": [
+        "MACHVOTE",
+        "VOTEBOARD"
+      ],
+      "issue": "当日权威机器源缺失",
+      "allow_missing": false,
+      "preserve_html": true
+    },
+    {
+      "id": "LADDER",
+      "section": "ladder",
+      "producer": "module_render_cycle.py:r_mach_ladder",
+      "status": "ok",
+      "sources": [
+        {
+          "path": "_学习/_市场温度表.json",
+          "sha256": "448e1f2ab3c7404e4a041923f3a4998c2d35c3bca9306ad5cab62ba53b78d89a"
+        },
+        {
+          "path": "20260923/zt_pool.csv",
+          "sha256": "5f24ef6f16943d814ed742f51f4e630f04253bc6b8bf8a49b09d735a77922342"
+        }
+      ],
+      "html": "\n<div class=\"card\"><h3 style=\"margin:0 0 8px\">连板梯队 <span class=\"hint\">机器核对 · 涨停池连板数分布(涨停池 51 只(zt_pool全口径,含ST))</span></h3><div class=\"cols\"><div class=\"col hotc\"><i style=\"height:5%\"></i><b>2</b><span>4板</span></div>\n<div class=\"col\"><i style=\"height:17%\"></i><b>7</b><span>3板</span></div>\n<div class=\"col\"><i style=\"height:7%\"></i><b>3</b><span>2板</span></div>\n<div class=\"col\"><i style=\"height:100%\"></i><b>39</b><span>1板</span></div>\n</div><div class=\"colsub\"><span>最高4板=新华文轩 出版(4/4,093016首封)</span><span>腰部: 2板3只 / 3板7只 / 4板+2只</span><span>首板39占76% · 涨停池 51 只(zt_pool全口径,含ST)</span></div>\n<p style=\"margin:6px 0 0\" class=\"mut\">温度表涨停51只 · 炸板率33.8%</p></div>\n\n",
+      "anchors": [
+        "LADDER"
+      ],
+      "issue": null,
+      "allow_missing": false,
+      "producer_sha256": "4d55b8a3441bd51c6b9a9be3ef81746f66a266e52cf9c92042379ab09fda70d5"
+    }
+  ],
+  "judgment_complete": false,
+  "machine_complete": false,
+  "paper_applicable": false,
+  "paper_complete": true,
+  "machine_anchors": {
+    "VOLSTEP": "volume",
+    "LEADIND": "leading",
+    "LADDER": "ladder"
+  },
+  "shared_definitions": []
+}

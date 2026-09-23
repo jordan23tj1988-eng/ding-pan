@@ -1,0 +1,81 @@
+1450:         if isinstance(node,_Node) and node.tag=='comment':return '<!--'+node.attrs['text']+'-->'
+1451:         if isinstance(node,str):return escape(node)
+1452:         if node.tag=='root':return ''.join(emit(c) for c in node.children)
+1453:         shell=_safe_html(_Node(node.tag,node.attrs.items()))
+1454:         tag='h3' if node.tag in ('h1','h2') else node.tag
+1455:         closing='</'+tag+'>'
+1456:         if shell.endswith(closing):return shell[:-len(closing)]+''.join(emit(c) for c in node.children)+closing
+1457:         return shell
+1458:     return emit(root)
+1459: 
+1460: 
+1461: def _claim_label(claim):
+1462:     pointer = claim.get('source_pointer','')
+1463:     parts = [p.replace('~1','/').replace('~0','~') for p in pointer.split('/') if p and not p.isdigit()]
+1464:     if pointer.startswith('/bodies/'):
+1465:         return '旧版原文补充'
+1466:     return ' · '.join(parts[-2:]) or claim['role']
+1467: 
+1468: def _fold_cognition(html,d,claim_ids):
+1469:     """Organize only the cognition section; preserve every claim and its source order."""
+1470:     tree=_Tree(html).root
+1471:     units=[]
+1472:     def collect(node):
+1473:         if not isinstance(node,_Node):return
+1474:         if node.attrs.get('id') in claim_ids:
+1475:             units.append(node);return
+1476:         for child in node.children:collect(child)
+1477:     collect(tree)
+1478:     if len(units)<2:return '<div class="tl">'+html+'</div>'
+1479:     # Sources already order equal-date entries newest first. Explicit dates can
+1480:     # move a newer historical item ahead without changing any financial text.
+1481:     def date(node):
+1482:         m=re.search(r'(20[0-9]{2})-?([0-9]{2})-?([0-9]{2})',node.text()[:35])
+1483:         if m:return ''.join(m.groups())
+1484:         m=re.search(r'([0-9]{2})-([0-9]{2})',node.text()[:15])
+1485:         return d[:4]+''.join(m.groups()) if m else d
+1486:     ordered=sorted(units,key=date,reverse=True)
+1487:     unit_ids={id(n) for n in units}
+1488:     def remove(node):
+1489:         if not isinstance(node,_Node):return
+1490:         node.children=[c for c in node.children if id(c) not in unit_ids]
+1491:         for c in node.children:remove(c)
+1492:     remove(tree)
+1493:     # Flatten pre-existing timeline folds inside source claims, retaining their
+1494:     # summary wording as ordinary text, so the section owns exactly one fold.
+1495:     def flatten(node):
+1496:         if not isinstance(node,_Node):return
+1497:         if node.tag=='details' and 'tlfold' in node.attrs.get('class','').split():
+1498:             node.tag='div';node.attrs.pop('class',None)
+1499:             for c in node.children:
+1500:                 if isinstance(c,_Node) and c.tag=='summary':c.tag='p'
+1501:         for c in node.children:flatten(c)
+1502:     for node in ordered:flatten(node)
+1503:     return ('<div class="tl">'+_safe_html(tree)+_safe_html(ordered[0])+
+1504:         '<details class="chain tlfold"><summary><b>其余认知与原文证据</b><span class="chip">'+str(len(ordered)-1)+
+1505:         '条</span></summary><div class="inner">'+''.join(_safe_html(n) for n in ordered[1:])+'</div></details></div>')
+1506: 
+1507: 
+1508: def _render(model,contract,root=None):
+1509:     e = lambda v: escape(str(v), quote=True)
+1510:     d, route = model["d"], model["route"]
+1511:     nav = '<nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills">'
+1512:     nav += ''.join('<a class="' + ('on' if h == route + '.html' else '') + '" href="' + e(h) + '">' + e(t) + '</a>' for h, t in contract["visual"]["nav"])
+1513:     nav += '</div><span class="upd">更新 ' + d + '</span></nav>'
+1514:     # 概览页的阅读层仍单独控制；黄金版 hero 结构对七页统一生效。
+1515:     READABILITY_ROUTES = ('index',)   # v4.3 概览可读层；其余页面逐页迁移正文版式
+1516:     IS_INDEX = route in READABILITY_ROUTES
+1517:     IS_GOLDEN_HERO = route in GOLDEN_HERO_ROUTES
+1518:     # 概览黄金骨架开关(2026-09-23): 由契约段序决定, 而非仅仅 route==index。
+1519:     GOLDEN_INDEX_ON = (route in GOLDEN_INDEX_ROUTES
+1520:                        and tuple(x['id'] for x in model['sections']) == GOLDEN_INDEX_SECTIONS)
+1521:     _absorbed = ()  # 黄金骨架中被并入其它段的段(仅 GOLDEN_INDEX_ON 时可能非空)
+1522:     # 概览黄金骨架的唯一真源: 段序/卡片形态/走马灯/段二点评都从这里出。
+1523:     import module_golden_index as _golden_index
+1524:     claims = {c["id"]: c for c in model["claims"]}
+1525:     evidence_by_id = {x['id']: x for x in model['evidence']}
+1526:     shown = set()
+1527:     shown_tables = {}
+1528:     shared_definitions = {}
+1529:     def hide_theme_supplement(claim):
+1530:         """Hide redundant theme-page wrappers without deleting source claims."""

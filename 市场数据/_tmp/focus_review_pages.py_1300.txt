@@ -1,0 +1,72 @@
+---review_pages.py:1300-1370---
+1300:     if route=='cycle':
+1301:         amount=market.get('成交额亿')
+1302:         if isinstance(amount,(int,float)):
+1303:             wan=('%0.2f'%(amount/10000)).rstrip('0').rstrip('.')
+1304:             tier=next((nm for th,nm in [(3.8,'主升2确认'),(3.5,'突破压力'),(3.3,'强修'),(3.0,'过渡'),(0.0,'弱修')] if amount/10000>=th),'弱修')
+1305:             facts.append('量能%s万亿·%s'%(wan,tier))
+1306:         try:
+1307:             with (root/d/'zt_pool.csv').open(encoding='utf-8-sig',newline='') as fh:
+1308:                 rows=list(csv.DictReader(fh))
+1309:             top=max(rows,key=lambda r:(int(float(r.get('连板数',1) or 1)),str(r.get('涨停统计','')))) if rows else None
+1310:             if top: facts.append('最高%s板·%s'%(top.get('连板数','—'),top.get('名称','—')))
+1311:         except (OSError,ValueError,TypeError): pass
+1312:         vote=next((x for x in reversed(get('_周期投票台账.jsonl') or []) if x.get('d')==d),{})
+1313:         z=vote.get('主判') or {}
+1314:         if z.get('stage') and z.get('direction'): facts.append('主判=%s·%s'%(z['stage'],z['direction']))
+1315:     elif route=='limitup':
+1316:         names=[]
+1317:         try:
+1318:             with (root/d/'zt_pool.csv').open(encoding='utf-8-sig',newline='') as fh:
+1319:                 rows=list(csv.DictReader(fh))
+1320:             hi=max((int(float(r.get('连板数',1) or 1)) for r in rows),default=None)
+1321:             names=[str(r.get('名称','')) for r in rows if int(float(r.get('连板数',1) or 1))==hi]
+1322:             if hi is not None: facts.append('最高%s板·%s'%(hi,'/'.join(names[:5])))
+1323:         except (OSError,ValueError,TypeError): pass
+1324:         if market.get('涨停数') is not None: facts.append('涨停%s'%market['涨停数'])
+1325:         if market.get('温度') is not None: facts.append('温度%s'%market['温度'])
+1326:     if facts:
+1327:         model['ticker']=(model.get('ticker') or '')+'<span class="source-ticker">'+'｜'.join(escape(str(x)) for x in facts)+'</span>'
+1328: 
+1329: def _paper(model,root):
+1330:     route = 'master' if model['route']=='index' else model['route']
+1331:     path = root / '_学习' / '_模拟盘' / route / ('看板_'+model['d']+'.html')
+1332:     if path.exists():
+1333:         raw = path.read_text(encoding='utf-8-sig')
+1334:         if re.search(r'<(?:script|iframe|object|embed)\b|\bon[a-z]+\s*=|javascript\s*:',raw,re.I):
+1335:             raise ValueError('引擎看板含主动内容，须核查源产物: '+path.name)
+1336:         # Trusted engine artifact, kept byte-for-byte. Never calculate its financial values here.
+1337:         model['paper'] = {'source':path.relative_to(root).as_posix(),'sha256':sha256(raw.encode()).hexdigest(),'html':raw}
+1338:     else:
+1339:         model['paper'] = None
+1340: 
+1341: def _finish(model):
+1342:     model['paper_applicable']=model['route']!='cycle'
+1343:     model['paper_complete']=not model['paper_applicable'] or model.get('paper') is not None
+1344:     if not model['paper_complete']:
+1345:         model['complete']=False
+1346:         model['limitations'].append('当日引擎看板缺失；收益与持仓显示 —，未手算。')
+1347:     if model.get('data_conflicts'):model['complete']=False
+1348:     claims = {c["id"]: c for c in model["claims"]}
+1349:     placements = {key: [] for key in claims}
+1350:     for s in model["sections"]:
+1351:         for key in s["claim_refs"]:
+1352:             placements[key].append(s["id"])
+1353:     missing = [key for key, locations in placements.items() if not locations]
+1354:     model["content_coverage"] = {"total": len(claims), "covered": len(claims) - len(missing),
+1355:         "unmapped": missing, "items": [{"id": key, "sections": places, "status": "displayed_or_referenced" if places else "unmapped"} for key, places in placements.items()]}
+1356:     model["role_overlap"] = [{"id": key, "sections": places, "warning": "同一 claim 多槽位引用；不截断判断。"} for key, places in placements.items() if len(places)>1]
+1357:     for c in model['claims']:
+1358:         expected = 'master' if model['route']=='index' else c['role']
+1359:         if c['role'] in ('cognition','research') and c['section']!=expected:
+1360:             model['role_overlap'].append({'id':c['id'],'sections':[c['section']],
+1361:                 'warning':'角色与栏目职责重叠，保留原文并提示编辑复核。'})
+1362:     model["editorial_notes"] = EDITORIAL[model["route"]]
+1363:     source_items = []
+1364:     for c in model['claims']:
+1365:         pointers = [c.get('source_pointer',c['id'])] + c.get('source_occurrences',[])
+1366:         for n, pointer in enumerate(pointers):
+1367:             source_items.append({'source':c.get('source'), 'pointer':pointer,'claim_id':c['id'],
+1368:                 'status':'referenced' if n or c.get('history_ref') else 'displayed'})
+1369:     model['content_coverage']['source_items'] = source_items
+1370:     model['content_coverage']['source_total'] = len(source_items)

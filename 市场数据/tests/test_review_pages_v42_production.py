@@ -26,17 +26,30 @@ def test_v42_reading_spine_claim_roles_and_proof_links():
         assert result["status"] in {"ok", "degraded"}
         html = Path(result["pages"]["index"]).read_text(encoding="utf-8")
         assert 'data-template-version="p1.3"' in html
-        assert html.count('class="reading-spine"') == 1
-        assert 'class="claim-role role-' in html
-        assert 'class="claim-proof"' in html
-        assert 'href="#evidence-' in html
-        for label in ("结论", "来源审计"):
-            assert label in html
-        # v4.3：静态"阅读顺序 01结论/02指标/03分段证据/04来源审计"改为真实栏目锚点，
-        # 原"分段证据"并入各栏目依据组，故此处改为校验锚点齐全（合同变更见 _变更总账.md）
-        for sid in ("observations", "routes", "turning", "verdict", "master"):
-            assert 'href="#%s"' % sid in html
-        assert 'href="#audit-fold"' in html
+        # 2026-09-23 用户拍板: 概览页回归黄金组件体系, 段序/形态由 module_golden_index.py 冻结,
+        # 每次复盘不得漂移(此前连跑两天即从113KB/78卡涨到240KB/279卡)。合同变更见 _变更总账.md。
+        SIDS = ("recommendations", "turning", "routes", "verdict")
+        assert html.count('<h2>') == len(SIDS)
+        for sid in SIDS:
+            assert '<!--GOLDEN-INDEX:%s-->' % sid in html, sid
+        # 2026-09-23 用户指正(图1): 概览页内导航(page-map JS 运行时注入)与
+        # 机器数据核对层折叠一并退出结果层; 黄金版本来就没有这两样。
+        assert "map.className='page-map'" not in html, '概览页内导航已撤(2026-09-23)'
+        assert '机器数据核对层' not in html, '机器数据核对层退出概览结果层(2026-09-23)'
+        assert 'class="reading-spine"' not in html, '概览阅读条已撤(2026-09-23)'
+        assert 'class="citem"' not in html, '概览结果层不再铺判断卡'
+        # 证据不删(用户口径: 页面不展示, 体系内部保留): claim 原文进页尾无痕原文库,
+        # 隐藏证据锚点仍在; 来源审计折叠本身退出概览结果层(图4/图5)。
+        assert 'claim-anchor-bank' in html, 'claim 原文必须留痕(无痕原文库)'
+        assert 'id="evidence-' in html, '隐藏证据锚点必须保留'
+        assert 'id="audit-fold"' not in html, '来源审计折叠退出概览结果层(2026-09-23)'
+        assert '结论' in html
+        # 用户指正: 概览走马灯此前是空条; obs 卡此前不显示票名与身位(被 v4.4 去噪规则吃掉)。
+        if 'class="obs"' in html:
+            assert 'class="obs-nm"' in html, '概览 obs 卡必须带票名(黄金版形态)'
+        assert '.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}' not in html, \
+            '概览页不得再隐藏票名/身位'
+        assert 'class="ticker"' in html
 
 
 def test_v42_contract_hash_matches_css_snapshot():

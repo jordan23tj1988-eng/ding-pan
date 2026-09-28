@@ -646,13 +646,17 @@ def _sync_capability_blocks(site_dir, date, routes=None, root=None):
     data_root = Path(root) if root else None
     if data_root is None or not (data_root / '能力进化模块.py').is_file():
         data_root = Path(BASE)
-    payload = mod.build(data_root, date)
-    sections, css = payload['sections'], payload['css']
-    if len(sections) != 2 or not css:
-        raise RuntimeError('能力模块产出异常: sections=%d css=%d' % (len(sections), len(css)))
+    payload = mod.build(data_root, date)          # 全库口径: 只取 CSS(样式七页唯一)
+    css = payload['css']
+    if not css:
+        raise RuntimeError('能力模块产出异常: css=%d' % (len(css),))
     style = '<style id="overview-evolution-sync">' + css + '</style>'
     report = []
     for route in routes:
+        # 2026-09-28 用户口径: 每页注入"本路"的能力板块(记录+统计按本路筛), 不再七页同一份字节
+        sections = mod.build(data_root, date, route)['sections']
+        if len(sections) != 2:
+            raise RuntimeError('能力模块产出异常(route=%s): sections=%d' % (route, len(sections)))
         path = site / (route + '.html')
         if not path.is_file():
             raise RuntimeError('能力模块统一目标缺页: ' + str(path))
@@ -670,12 +674,14 @@ def _sync_capability_blocks(site_dir, date, routes=None, root=None):
             raise RuntimeError('页面业务段数与契约不符，拒绝注入能力模块: %s (max=%s expect=%d)'
                                % (path.name, max(nums) if nums else None, expected))
         start = expected + 1
-        local = [mod.renumber(sec, start + i) for i, sec in enumerate(sections)]
+        source = dict(zip(('自主拓展', '认知迭代'), sections))
+        wanted = mod.ROUTE_CAPABILITIES[route]
+        local = [mod.renumber(source[title], start + i) for i, title in enumerate(wanted)]
         s = s.replace('</head>', style + '</head>', 1)
         pos = s.rfind('<div class="foot">')
         if pos < 0:
             raise RuntimeError('page foot anchor missing: ' + str(path))
-        block = ('\n\n' + CAPABILITY_SYNC_START + '\n' + local[0] + '\n' + local[1] + '\n'
+        block = ('\n\n' + CAPABILITY_SYNC_START + '\n' + '\n'.join(local) + '\n'
                  + CAPABILITY_SYNC_END + '\n')
         s = s[:pos].rstrip('\n') + block + s[pos:]
         # 注入后自检走唯一契约实现(与发布门禁/现站哨兵同一份判定)，不再各写一套。
@@ -684,8 +690,9 @@ def _sync_capability_blocks(site_dir, date, routes=None, root=None):
         if problems:
             raise RuntimeError('能力模块注入自检失败: %s -> %s' % (path, '; '.join(problems)))
         path.write_text(s, encoding='utf-8', newline='\n')
-        report.append('%s(%s/%s%s)' % (path.name, _CAPABILITY_CN[start - 1], _CAPABILITY_CN[start],
-                                       '，清旧%d' % removed if removed else ''))
+        numbers = '/'.join(_CAPABILITY_CN[start - 1 + i] for i in range(len(local)))
+        report.append('%s(%s%s)' % (path.name, numbers,
+                                    '，清旧%d' % removed if removed else ''))
     return report
 
 

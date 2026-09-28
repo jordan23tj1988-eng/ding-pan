@@ -92,6 +92,57 @@ def _ledger_records(root: Path, kind: str):
     return [r for r in (records or []) if isinstance(r, dict)]
 
 
+# 各页"本路"口径别名(2026-09-28 用户口径: 不限于周期/龙虎榜, 所有路都是各自的能力板块)。
+# index(概览)承载 master(总审)类记录; 五路各取自己 route 的记录;
+# 无 route 标注的记录视为跨路共用 → 任何页都展示(否则未标注的历史条目会整批丢失)。
+ROUTE_ALIASES = {
+    "index": ("master", "index", "overview"),
+    "cycle": ("cycle",),
+    "auction": ("auction",),
+    "lhb": ("lhb",),
+    "theme": ("theme",),
+    "logic": ("logic",),
+    "limitup": ("limitup",),
+}
+ROUTE_LABELS = {
+    "index": "概览·总审", "cycle": "周期情绪", "auction": "竞价", "lhb": "龙虎榜",
+    "theme": "主线题材", "logic": "产业逻辑", "limitup": "涨停复盘",
+}
+SHARED_ROUTE_VALUES = ("", "all", "global", "shared")
+
+
+def _route_of(record):
+    value = record.get("route")
+    return "" if value is None else str(value).strip().lower()
+
+
+def route_records(records, route):
+    """按本路筛记录: 本路别名 + 无 route 标注的共用条目。"""
+    want = set(ROUTE_ALIASES.get(route, (str(route).lower(),)))
+    out = []
+    for record in records:
+        got = _route_of(record)
+        if got in want or got in SHARED_ROUTE_VALUES:
+            out.append(record)
+    return out
+
+
+def _stats(rows):
+    """与 自我进化闭环.py 内 stats(rows) 同源同式(口径必须一致, 勿改字段含义)。"""
+    return {
+        "total": len(rows), "inherited": len(rows),
+        "experiences": sum(r.get("kind") == "认知迭代" or r.get("state") == "experience" for r in rows),
+        "tracking": sum(r.get("state") == "tracking" for r in rows),
+        "shelved": sum(r.get("state") == "shelved" for r in rows),
+        "validated": sum(r.get("validation") == "validated" or r.get("state") == "validated" for r in rows),
+        "refuted": sum(r.get("validation") == "refuted" or r.get("state") == "refuted" for r in rows),
+        "capabilities": sum(r.get("capitalized") is True or r.get("state") == "capability" for r in rows),
+        "hits": sum((r.get("hit_count") or 0) for r in rows),
+        "reused": sum((r.get("reused_count") or 0) for r in rows),
+        "tracking_events": sum(len(r.get("tracking_log") or []) for r in rows),
+        "review_events": sum(len(r.get("review_log") or []) for r in rows),
+    }
+
 def _has_result(record):
     """只算明确验证/证伪/能力化结果；审计日志本身不等于结果。"""
     return bool(
@@ -113,7 +164,8 @@ def _row_html(record):
     )
 
 
-def _panel_html(title, stats, records):
+def _panel_html(title, stats, records, route=None):
+    route_chip = ('<span class="chip">本路 · %s</span>' % _esc(ROUTE_LABELS.get(route, route))) if route else ''
     pills = "".join(
         '<span class="evo-stat"><b>%s</b><small>%s</small></span>' % (stats.get(key, 0), label)
         for key, label in STAT_LABELS
@@ -129,32 +181,45 @@ def _panel_html(title, stats, records):
     return (
         '<section class="evolution"><h2>%s · 能力进化<span class="hint">%s</span></h2>'
         '<div class="evo-stats">%s</div>'
-        '<details open><summary>已沉淀与验证明细 <span class="chip">%d条有结果记录</span></summary>'
+        '<details open><summary>已沉淀与验证明细 <span class="chip">%d条有结果记录</span>%s</summary>'
         '<div class="evo-list">%s</div></details></section>'
-        % (title, HINT, pills, len(rows), body)
+        % (title, HINT, pills, len(rows), route_chip, body)
     )
 
 
-def build(root, d):
-    """产出当日两块标准能力模块(未编号) + CSS + 溯源信息。"""
+def build(root, d, route=None):
+    """产出当日两块标准能力模块(未编号) + CSS + 溯源信息。
+
+    route=None → 全库口径(兼容整库审计/旧调用); route=<页面route> → 本路口径:
+    两块模块只列本路记录(含无 route 标注的共用条目), 8 位统计按同式重算。
+    2026-09-28 用户口径: 不限于周期/龙虎榜, 所有路都是各自的能力板块。
+    """
     root = Path(root)
     if not re.fullmatch(r"\d{8}", str(d)):
         raise ValueError("date must be YYYYMMDD: %r" % (d,))
+    if route is not None and route not in ROUTE_ALIASES:
+        raise ValueError("unknown route: %r" % (route,))
     as_of, snapshot = _read_snapshot(root, d)
     snapshot = snapshot if isinstance(snapshot, dict) else {}
     stats = {}
-    for key, title in (("自主拓展", "自主拓展"), ("认知迭代", "认知迭代")):
-        block = snapshot.get(key)
-        stats[key] = block if isinstance(block, dict) else {}
     ext_records = _ledger_records(root, "自主拓展")
     cog_records = _ledger_records(root, "认知迭代")
+    if route is None:
+        for key in ("自主拓展", "认知迭代"):
+            block = snapshot.get(key)
+            stats[key] = block if isinstance(block, dict) else {}
+    else:
+        ext_records = route_records(ext_records, route)
+        cog_records = route_records(cog_records, route)
+        stats = {"自主拓展": _stats(ext_records), "认知迭代": _stats(cog_records)}
     sections = [
-        _panel_html("自主拓展", stats["自主拓展"], ext_records),
-        _panel_html("认知迭代", stats["认知迭代"], cog_records),
+        _panel_html("自主拓展", stats["自主拓展"], ext_records, route),
+        _panel_html("认知迭代", stats["认知迭代"], cog_records, route),
     ]
     return {
         "d": d,
         "as_of": as_of,
+        "route": route,
         "source": {
             "snapshot": ("_学习/能力进化快照_%s.json" % as_of) if as_of else None,
             "自主拓展": "_学习/能力进化库_自主拓展.json",
@@ -177,9 +242,9 @@ def renumber(section_html, n):
     return fixed
 
 
-def renumbered(root, d, start):
+def renumbered(root, d, start, route=None):
     """构建并把两块模块编号为 start / start+1。"""
-    payload = build(root, d)
+    payload = build(root, d, route)
     payload["sections"] = [renumber(sec, start + i) for i, sec in enumerate(payload["sections"])]
     payload["html"] = "\n".join(payload["sections"])
     payload["start"] = start
@@ -189,14 +254,18 @@ def renumbered(root, d, start):
 def artifact_text(payload):
     """当日产物: 两块模块(带编号) + 唯一 CSS, 供门禁/审计直接复读。"""
     return (
-        "<!-- 能力进化模块 (五路+概览共用唯一真源) d=%s as_of=%s -->\n"
+        "<!-- 能力进化模块 (唯一真源 d=%s as_of=%s route=%s) -->\n"
         "<style id=\"overview-evolution-sync\">%s</style>\n%s\n"
-        % (payload["d"], payload.get("as_of") or "—", payload["css"], payload["html"])
+        % (payload["d"], payload.get("as_of") or "—", payload.get("route") or "全库",
+           payload["css"], payload["html"])
     )
 
 
 def write_artifact(root, payload):
-    path = Path(root) / "_学习" / ("能力进化模块_%s.html" % payload["d"])
+    name = "能力进化模块_%s.html" % payload["d"]
+    if payload.get("route"):
+        name = "能力进化模块_%s_%s.html" % (payload["d"], payload["route"])
+    path = Path(root) / "_学习" / name
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(artifact_text(payload), encoding="utf-8", newline="\n")
     tmp.replace(path)
@@ -204,7 +273,8 @@ def write_artifact(root, payload):
 
 
 def summary(payload):
-    out = {"d": payload["d"], "as_of": payload.get("as_of"), "start": payload.get("start"),
+    out = {"d": payload["d"], "as_of": payload.get("as_of"), "route": payload.get("route"),
+           "start": payload.get("start"),
            "source": payload["source"], "stats": payload["stats"],
            "sections": len(payload["sections"]), "bytes": len(payload["html"])}
     return out
@@ -218,6 +288,9 @@ ROUTES = ("index", "cycle", "auction", "lhb", "theme", "logic", "limitup")
 # 各页"业务段"数(不含两块标准能力模块); 与页面实际段数不符 = 编号漂移, 必须报错
 BUSINESS_SECTIONS = {"index": 4, "cycle": 5, "auction": 4, "lhb": 4,
                      "theme": 3, "logic": 5, "limitup": 4}
+# 各页展示的能力模块清单(当前七页一致, 留按路由扩展位: 某页只展示其中一块时
+# 在此声明, 编号=业务段数顺延, 不出现断号)。能力库与判断层不受展示口径影响。
+ROUTE_CAPABILITIES = {route: ("自主拓展", "认知迭代") for route in ROUTES}
 # 展示层历史模块标题(自主深挖/我的认知迭代); 内容在判断层与能力库, 展示层只留两块标准模块
 LEGACY_RE = re.compile(r"自主深挖|我的认知迭代|认知迭代")
 FOOT_ANCHOR = '<div class="foot">'
@@ -239,7 +312,7 @@ def _h2_numerals(html):
 
 
 def verify_page(html, route, root=None, d=None):
-    """校验一页的两块标准能力模块是否符合契约; 返回问题列表(空=通过)。
+    """校验一页的标准能力模块是否符合契约; 返回问题列表(空=通过)。
 
     单一契约实现: 生成链自检、发布门禁(review_publish)、现站哨兵(复盘一致性哨兵)共用。
     route/root/d 给全时追加"与该路唯一真源逐字节一致"的比对。
@@ -248,9 +321,10 @@ def verify_page(html, route, root=None, d=None):
     if route not in BUSINESS_SECTIONS:
         return ["unknown route: %s" % route]
     expected = BUSINESS_SECTIONS[route]
+    expected_titles = ROUTE_CAPABILITIES[route]
     count = html.count('<section class="evolution">')
-    if count != 2:
-        problems.append("能力模块数量!=2 (%d)" % count)
+    if count != len(expected_titles):
+        problems.append("能力模块数量!=%d (%d)" % (len(expected_titles), count))
     if html.count(SYNC_START) != 1 or html.count(SYNC_END) != 1:
         problems.append("同步锚点不唯一 (start=%d end=%d)" % (html.count(SYNC_START), html.count(SYNC_END)))
     if len(re.findall(r'<style\b[^>]*\bid=["\']%s["\']' % STYLE_ID, html, flags=re.I)) != 1:
@@ -261,12 +335,16 @@ def verify_page(html, route, root=None, d=None):
     if left:
         problems.append("残留旧模块标题: %s" % " / ".join(left))
     blocks = re.findall(r'<section class="evolution">.*?</section>', html, re.S)
-    if len(blocks) == 2:
-        if blocks[0].find("自主拓展") < 0 or blocks[1].find("认知迭代") < 0:
-            problems.append("两块模块顺序错(应先自主拓展后认知迭代)")
+    if len(blocks) == len(expected_titles):
+        actual_titles = []
+        for block in blocks:
+            match = re.search(r'<h2>\s*(?:[一二三四五六七八九十]+\s*)?(自主拓展|认知迭代)', block)
+            actual_titles.append(match.group(1) if match else "")
+        if tuple(actual_titles) != tuple(expected_titles):
+            problems.append("能力模块顺序错 (got=%s want=%s)" % (actual_titles, list(expected_titles)))
         if FOOT_ANCHOR in html and html.index(blocks[0]) > html.rindex(FOOT_ANCHOR):
             problems.append("能力模块位置在页脚之后")
-        want = [NUMERALS[expected], NUMERALS[expected + 1]]
+        want = [NUMERALS[expected + i] for i in range(len(expected_titles))]
         got = []
         for sec in blocks:
             m = re.search(r"<h2>\s*([一二三四五六七八九十])?\s*(自主拓展|认知迭代)", sec)
@@ -280,7 +358,7 @@ def verify_page(html, route, root=None, d=None):
             problems.append("页面业务段数与契约不符 (max=%s expect=%d)" % (max(business) if business else None, expected))
     else:
         problems.append("页面无编号段落")
-    if root is not None and d is not None and len(blocks) == 2:
+    if root is not None and d is not None and len(blocks) == len(expected_titles):
         want_sections = canonical_sections(root, d, route)
         if blocks != want_sections:
             problems.append("能力模块字节与当日唯一真源不一致")
@@ -288,12 +366,14 @@ def verify_page(html, route, root=None, d=None):
 
 
 def canonical_sections(root, d, route):
-    """该路当日的两块标准模块(按该路段数编号)——门禁比对基准。"""
+    """该路当日的标准模块(按该路段数编号)——门禁比对基准。"""
     if route not in BUSINESS_SECTIONS:
         raise ValueError("unknown route: %s" % route)
-    payload = build(root, d)
+    payload = build(root, d, route)
+    source = dict(zip(("自主拓展", "认知迭代"), payload["sections"]))
     start = BUSINESS_SECTIONS[route] + 1
-    return [renumber(sec, start + i) for i, sec in enumerate(payload["sections"])]
+    return [renumber(source[title], start + i)
+            for i, title in enumerate(ROUTE_CAPABILITIES[route])]
 
 
 def main(argv=None):
@@ -302,8 +382,9 @@ def main(argv=None):
     ap.add_argument("--root", default=str(DEFAULT_ROOT))
     ap.add_argument("--start", type=int, default=1, help="起始段序号(默认1, 不编号)")
     ap.add_argument("--no-artifact", action="store_true", help="只打印不落盘")
+    ap.add_argument("--route", default=None, help="本路口径(index/cycle/auction/lhb/theme/logic/limitup); 缺省=全库")
     args = ap.parse_args(argv)
-    payload = renumbered(args.root, args.d, args.start)
+    payload = renumbered(args.root, args.d, args.start, args.route)
     if not args.no_artifact:
         path = write_artifact(args.root, payload)
         print(str(path), file=sys.stderr)

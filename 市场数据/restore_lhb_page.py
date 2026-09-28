@@ -14,6 +14,7 @@ import re
 import shutil
 import subprocess
 import sys
+import json
 import os
 from pathlib import Path
 
@@ -110,19 +111,57 @@ def _render_dynamic(d: str) -> str:
     return dynamic
 
 
+def fix_nav_update_date(html, root, d):
+    """导航“更新 …”行改写为当日 更新label。
+
+    根因: 黄金壳(D:/黄金对照版717/*.html)头部自带
+    “更新 2026-07-16 18:00 傍晚复盘(冰点·多agent)”, 恢复器整段搬壳时把黄金版日期带到当日页面。
+    零编造: label 只取当日 judgment 的 更新label, 缺省 f"{d} 复盘"; 读不到文件不报错。
+    改写后必须断言黄金版日期已消失, 否则 raise(宁可不发, 不发错日期页)。
+    同源复制: 与 restore_cycle_page.py 同名函数保持一致。
+    """
+    label = None
+    jf = Path(root) / '_学习' / ('judgment_' + str(d) + '.json')
+    if jf.is_file():
+        try:
+            label = (json.loads(jf.read_text(encoding='utf-8')) or {}).get('更新label') or None
+        except Exception:
+            label = None
+    label = label or (str(d) + ' 复盘')
+    out, n = re.subn(r'(<span class="upd">.*?<span class="txt">)更新[^<]*',
+                     lambda m: m.group(1) + '更新 ' + label, html, count=1, flags=re.S)
+    if n != 1:
+        raise RuntimeError('导航更新时间行未命中: ' + str(d))
+    if '2026-07-16' in out:
+        raise RuntimeError('导航日期改写失败(仍含黄金版日期): ' + str(d))
+    if ('更新 ' + label) not in out:
+        raise RuntimeError('导航日期改写失败(未写入 label): ' + str(d))
+    return out
+
+
+def _capability_module():
+    """加载能力模块唯一真源(能力进化模块.py)。"""
+    import importlib.util
+    path = BASE / "能力进化模块.py"
+    if not path.is_file():
+        raise RuntimeError(f"能力进化模块.py 缺失: {path}")
+    spec = importlib.util.spec_from_file_location("capability_module_source", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
 def build_page(d: str, current_html: str | None = None) -> str:
     if not GOLDEN.exists(): raise RuntimeError(f"黄金版不存在: {GOLDEN}")
     if not SOURCE.exists(): raise RuntimeError(f"当前页不存在: {SOURCE}")
     golden = GOLDEN.read_text(encoding="utf-8")
     current = current_html if current_html is not None else SOURCE.read_text(encoding="utf-8")
-    evo = _evolution_sections(current)
-    index_src = SOURCE.parent / "index.html" if SOURCE != SITE else INDEX
-    if len(evo) < 2 and index_src.exists(): evo = _evolution_sections(index_src.read_text(encoding="utf-8"))
-    if len(evo) < 2 and ABILITY_FALLBACK is not None:
-        if not ABILITY_FALLBACK.is_file():
-            raise RuntimeError(f"能力模块回退源缺失: {ABILITY_FALLBACK}")
-        evo = _evolution_sections(ABILITY_FALLBACK.read_text(encoding="utf-8"))
-    evo = _renumber_evolution(evo[:2])
+    # 能力模块 = 本路唯一真源直出(能力进化模块.py, route=lhb); 编号已按本路段数顺延。
+    # 不再从现站/概览搬运同一份字节 —— 2026-09-28 用户口径: 所有路都是各自的能力板块。
+    _mod = _capability_module()
+    evo = _mod.canonical_sections(BASE, d, "lhb")
+    if len(evo) != 2:
+        raise RuntimeError(f"能力模块产出异常: {len(evo)}")
 
     dynamic = _render_dynamic(d)
     # 渲染器历史兼容段可能先输出“五/六”再输出“四”；按标题抽取
@@ -189,11 +228,17 @@ def build_page(d: str, current_html: str | None = None) -> str:
     page = golden[:wrap_end] + body + "\n" + "\n".join(evo) + "\n" + golden[foot:]
 
     style_source = current
+    index_src = SOURCE.parent / "index.html" if SOURCE != SITE else INDEX
     if '<style id="overview-evolution-sync">' not in style_source and index_src.exists():
         style_source = index_src.read_text(encoding="utf-8")
-    if '<style id="overview-evolution-sync">' not in style_source and ABILITY_FALLBACK is not None:
+    if ('<style id="overview-evolution-sync">' not in style_source
+            and ABILITY_FALLBACK is not None and ABILITY_FALLBACK.is_file()):
         style_source = ABILITY_FALLBACK.read_text(encoding="utf-8")
-    style = _evolution_style(style_source)
+    if '<style id="overview-evolution-sync">' not in style_source:
+        # 候选站点各页都还没注入样式时(发布候选流程), 直接取唯一真源 CSS, 不再依赖任何页面。
+        style = '<style id="overview-evolution-sync">' + _mod.CSS + '</style>'
+    else:
+        style = _evolution_style(style_source)
     page = re.sub(r'\n*<!--EVOLUTION_STYLE_SYNC_START-->.*?<!--EVOLUTION_STYLE_SYNC_END-->\n*', "\n", page, flags=re.S)
     page = re.sub(r'<style id="overview-evolution-sync">.*?</style>', "", page, flags=re.S)
     head_pos = page.find("</head>")
@@ -224,6 +269,7 @@ def build_page(d: str, current_html: str | None = None) -> str:
         raise RuntimeError("LHBLEDGER 锚点不成对")
     if "数据边界" in page:
         raise RuntimeError("输出仍含“数据边界”模块：黄金版龙虎榜工程不允许，已阻断发布")
+    page = fix_nav_update_date(page, BASE, d)
     return page
 
 

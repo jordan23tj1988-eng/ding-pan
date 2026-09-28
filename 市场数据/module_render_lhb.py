@@ -19,11 +19,14 @@ CD = BASE
 def load_body(d):
     """LLM 组件提取源: judgment_{d}.json bodies['lhb']"""
     p = os.path.join(L, 'judgment_%s.json' % d)
-    if not os.path.exists(p): return ''
-    try:
-        return json.load(open(p, encoding='utf-8'))['bodies']['lhb']
-    except Exception:
-        return ''
+    if os.path.exists(p):
+        try:
+            body = json.load(open(p, encoding='utf-8'))['bodies'].get('lhb') or ''
+            if body: return body
+        except Exception:
+            pass
+    fallback = os.path.join(L, 'lhb_body_%s.html' % d)
+    return open(fallback, encoding='utf-8').read() if os.path.exists(fallback) else ''
 
 # ============ 通用 HTML 工具 ============
 def _esc(s):
@@ -191,6 +194,28 @@ def r_ledger(body):
     else:
         le = body.find('<h2>四', ls)
         seg = body[ls:le if le > 0 else len(body)]
+    if '<!--LHBLEDGER-->' not in seg:
+        # 标准正文给出业务段但未携带机器锚时，保留原文并补成对锚点；
+        # 不新增席位数字，C12 仍由专属核对脚本逐项验证。
+        seg = '<!--LHBLEDGER-->\n' + seg + '\n<!--/LHBLEDGER-->'
+    # 有些 LLM 正文只保留台账观察/过滤说明，未带当日机器日块；
+    # 从同日龙虎榜复盘存档注入唯一机器事实，避免“有池无日块”。
+    if not re.search(r'<summary><b>\d\d-\d\d</b> <span class="chip(?: cold)?">最新</span> 上榜\d+', seg):
+        ap = os.path.join(L, '龙虎榜复盘存档', '%s.json' % d)
+        if os.path.isfile(ap):
+            try:
+                ar = json.load(open(ap, encoding='utf-8'))
+                dd = str(d)[4:6] + '-' + str(d)[6:]
+                sm = str(ar.get('summary') or '')
+                ah = str(ar.get('html') or '')
+                if sm and ah:
+                    block = ('<details class="chain" open><summary><b>%s</b> '
+                             '<span class="chip">最新</span> %s</summary><div class="inner">%s</div></details>\n'
+                             % (dd, sm, ah))
+                    pos = seg.find('<!--LHBLEDGER-->') + len('<!--LHBLEDGER-->')
+                    seg = seg[:pos] + '\n' + block + seg[pos:]
+            except Exception as ex:
+                print('!!!龙虎榜日块存档注入失败:', ex)
     # ★2026-08-13: 当日日块SEATCARD段(含前导p)已在板块一展示 → 台账内移除防重复(历史日块不动)
     s1 = seg.find('<!--SEATCARD-->')
     if s1 >= 0:

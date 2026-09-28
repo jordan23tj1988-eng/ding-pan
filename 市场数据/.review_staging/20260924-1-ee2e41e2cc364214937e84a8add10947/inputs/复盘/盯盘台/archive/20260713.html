@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>复盘存档 20260713</title><style>
+:root{color-scheme:dark;
+--bg:#0c0f15;--panel:#131824;--panel2:#0f141d;--line:#222a3a;--line2:#2d3850;
+--ink:#dbe2ee;--sub:#8b93a4;--dim:#5d6678;
+--accent:#d9a84e;--accent-dim:#8a6d3b;
+--up:#e5484d;--down:#2fbc75;
+--hit:#39c0a3;--half:#d8a03d;--miss:#e5484d;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2d3850 var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(217,168,78,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+.hero{position:relative;background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px;padding:26px 30px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(600px 180px at 85% -20%,rgba(217,168,78,.08),transparent);pointer-events:none}
+.hero .kick{font-size:11.5px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:750;letter-spacing:-.3px}
+.hero p{color:var(--sub);font-size:13.6px;max-width:680px}
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(229,72,77,.1);border-color:rgba(229,72,77,.35);color:#f0b6b4}
+/* ── section head ── */
+h2{font-size:15.5px;margin:34px 0 4px;padding-left:12px;border-left:3px solid var(--accent);font-weight:700;letter-spacing:.3px}
+h2.hot{border-left-color:var(--up)}
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(229,72,77,.35);background:linear-gradient(135deg,var(--panel),rgba(229,72,77,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(57,192,163,.14);color:var(--hit)}.t-watch{background:rgba(216,160,61,.14);color:var(--half)}.t-avoid{background:rgba(229,72,77,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#1b2230;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(229,72,77,.07);border-style:dashed;border-color:rgba(229,72,77,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(217,168,78,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(57,192,163,.14);color:var(--hit)}.bC{background:rgba(216,160,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(217,168,78,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(217,168,78,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(57,192,163,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(57,192,163,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(229,72,77,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(57,192,163,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(57,192,163,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(217,168,78,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(229,72,77,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(57,192,163,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(229,72,77,.75),rgba(229,72,77,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(47,188,117,.75),rgba(47,188,117,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(217,168,78,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#1b2230;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(229,72,77,.13);color:#f0a5a3}.tj-branch{background:rgba(216,160,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(217,168,78,.8),rgba(217,168,78,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(229,72,77,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(229,72,77,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(217,168,78,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(217,168,78,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(217,168,78,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+@media (prefers-reduced-motion: no-preference){
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+}
+</style></head><body><div class="nav"><span class="brand">情绪盯盘台 · 存档</span><a href="../index.html">← 返回概览</a><a href="../history.html">历史列表</a><span class="upd">冻结于 2026-07-13 收盘 · 冰点:172跌停流动性踩踏,医药独线承接</span></div><div class="wrap"><div class="hero"><div class="kick">Archive · 2026-07-13</div><h1>复盘存档 · 冰点:172跌停流动性踩踏,医药独线承接</h1><div class="stance"><span class="pill warn">温度 8.7 冰点</span><span class="pill">涨停27/跌停172</span><span class="pill">量2.82万亿</span></div></div><!--PAPERTRADE-->
+<div style="background:#14171e;border:1px solid #2a2f3a;border-left:3px solid #d9a441;border-radius:14px;padding:20px 24px;margin:18px 0;color:#d8dee9;font-size:13px">
+<div style="font-size:11.5px;letter-spacing:3px;color:#d9a441;font-family:monospace">PAPER TRADING · 模拟实盘 · 总·情绪总裁决</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#aab3c0"><span>累计 <b style="color:#4caf7d;font-family:ui-monospace,monospace">-0.95%</b></span> <span>本周 <b style="color:#4caf7d;font-family:ui-monospace,monospace">-0.95%</b></span> <span>基准本周 <span style="color:#8892a0">--</span></span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="31.2" x2="620" y2="31.2" stroke="#3a4150" stroke-dasharray="3 4"/><polyline points="20.0,118.8" fill="none" stroke="#8892a0" stroke-width="1.2" stroke-dasharray="5 4" opacity=".8"/><polyline points="20.0,54.3" fill="none" stroke="#d9a441" stroke-width="2.2"/><text x="20" y="12" fill="#8892a0" font-size="10" font-family="monospace">20260713~20260713  金=本账净值  灰虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="49.3" fill="#d9a441" font-size="11" font-family="monospace" text-anchor="end">0.9905</text></svg>
+<div style="margin-top:12px;color:#d9a441;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8892a0"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>
+<tr style="border-top:1px solid #2a2f3a"><td>600118 中国卫星</td><td style="font-family:monospace">1200</td><td style="font-family:monospace">93.50</td><td><b style="color:#4caf7d;font-family:ui-monospace,monospace">-2.44%</b></td><td style="font-family:monospace">1</td><td><b style="color:#d9a441">明日卖·开盘</b></td></tr>
+<tr style="border-top:1px solid #2a2f3a"><td>000818 航锦科技</td><td style="font-family:monospace">7100</td><td style="font-family:monospace">14.04</td><td><b style="color:#4caf7d;font-family:ui-monospace,monospace">-6.81%</b></td><td style="font-family:monospace">1</td><td><b style="color:#d9a441">明日卖·开盘</b></td></tr>
+</table>
+<div style="margin-top:12px;color:#d9a441;font-size:12px">今晚指令单(20260713发出,明日固定价执行)</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8892a0"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>
+<tr style="border-top:1px solid #2a2f3a"><td style="color:#e05d5d">买</td><td>600664 哈药股份</td><td style="font-family:monospace">8%·闸门高开≥5弃</td><td style="color:#aab3c0">医药=今日唯一承接线(宽度8·抗缩-27%),三路交叉:题材路业绩锚荐票+12号归位A档(中报预增公告)+医药2板梯队;冰点进攻窗试错标的中身位最稳</td></tr>
+<tr style="border-top:1px solid #2a2f3a"><td style="color:#e05d5d">买</td><td>300534 陇神戎发</td><td style="font-family:monospace">7%·闸门高开≥6弃</td><td style="color:#aab3c0">lhb路A档席位荐票(中信杭州延安路59.5%⚠n=20净买1338万)×医药线内=席位+题材两维交叉;gate对齐lhb路</td></tr>
+<tr style="border-top:1px solid #2a2f3a"><td style="color:#4caf7d">卖</td><td>600118 中国卫星</td><td>开盘</td><td style="color:#aab3c0">商业航天28→4急缩-86%线级衰竭,0710'主流确立'条件未触发(宽度4<10);裁决认错不留修复幻想</td></tr>
+<tr style="border-top:1px solid #2a2f3a"><td style="color:#4caf7d">卖</td><td>000818 航锦科技</td><td>开盘</td><td style="color:#aab3c0">AI算力+商业航天双急缩,logic路自己的雷达在场性核查判'不埋伏';master不与自家A档核查对赌,开盘出</td></tr>
+</table>
+<div style="margin-top:10px;border-left:2px solid #3a4150;padding:6px 10px;color:#aab3c0;font-size:12.3px"><span style="color:#d9a441">交易心得</span> · 裁决实验A/B(入master-裁决对照账):今晚只上医药单线(theme+logic+lhb三路共荐交叉),拒绝商业航天残余接力(auction评分Top1晋亿/Top2中信重工 vs theme线级否决——明晚结算谁对)。冰点档总开关0-2成→总仓15%合规;两买单均挂gate防冰点次日高开陷阱;172跌停踩踏次日惯性低开风险由gate下侧免疫(低开照买=冰点进攻窗纪律)。昨裁决归因:信共振弃资金面=倒数第二,今晚信源权重向'线唯一承接+席位真金'倾斜。</div>
+<div style="margin-top:10px;color:#5c6674;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<h2>当日完整复盘</h2><div class="card"><b>2026-07-13 完整复盘存档。</b>冰点8.7(37.7→8.7单日砸穿):量能28178亿跌破3.0弱修档,涨停27/跌停172(6.4倍)/炸板32.5%/最高3板/封板额15亿=流动性踩踏出清日,无主线。两代主线单日衰竭(商业航天28→4急缩-86%/AI算力42→15→3缩圈),医药8只顶宽唯一承接升格大分支;高低切预判=医药(明晚结算)。席位:游资-65%出清,机构29买1卖净买27.67亿捡筹(拓荆16.84亿);资金温度93→30。竞价:池12→8但一字占62.5%,昨池结算+0.38%增益+3.74pp首转正,评分半区首验同向。0710观察点结算1✓1◐4✗1规避打脸(恒尚回封9板);三元剧本又被"系统性beta杀"绕开=剧本库新增第四档。❄冰点进攻窗首触发(n=15,+0.30%/60%):窗内只试医药独线,总仓锁0-2成。周期投票首夜:冰点/升×3+退潮×2,加权反对0.40不复议。模拟盘六账首结算全胜基准(-3.61%):lhb 1.0041最佳/limitup空仓1.0000=最优决策/master 0.9905立项裁决对照账。孵化:外资共现提请拍板(中信上海×高盛+12.1pp)/医药形升格/高低切接棒库+裁决对照账立项/线名归一表明晚验收。事故记账:孵化区json并发写截断(已修复重建)→应答改总agent串行合并;基准净值首算覆盖1/74(bars滞后)→引擎重算70/74。明日最高共振观察点=哈药股份(3路交叉,医药宽度≥8存续判据)。</div></div><script>
+(function(){
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var els=document.querySelectorAll('.card,.obs,.routes .rt,.kv,.hero,details.chain,.tli,.cols,.gauge,.trow');
+els.forEach(function(e){e.classList.add('rv')});
+var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{threshold:.12});
+els.forEach(function(e){io.observe(e)});
+})();
+</script></body></html>

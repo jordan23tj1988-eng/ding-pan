@@ -58,6 +58,32 @@ def load_lead(d):
     days = sorted(k for k in t if re.fullmatch(r'\d{8}', str(k)) and str(k) <= str(d))
     return t, days
 
+def lead_baseline_date(d, lead=None):
+    """返回先行指标晋级率基准日；字段缺失时回到温度表最近有效日。"""
+    lead = lead if isinstance(lead, dict) else (load_json('_情绪先行指标.json') or {})
+    row = lead.get(str(d)) if isinstance(lead, dict) else None
+    found = []
+
+    def walk(value):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if str(key) in ('基准日', '基准日期', 'baseline_date', 'baseline'):
+                    match = re.search(r'(?<!\d)(\d{8})(?!\d)', str(item))
+                    if match:
+                        found.append(match.group(1))
+                walk(item)
+        elif isinstance(value, list):
+            for item in value:
+                walk(item)
+
+    walk(row)
+    if found:
+        return found[-1]
+    # 零编造: 温度表"最近有效日"就是当日自身, 不是涨停池基准日; 本文件历史行未记录基准日,
+    # 且用 二连板(d)/首板(d-1) 复核无法还原文件里的晋级率(9/24: 8/39=0.205 vs 文件 0.242),
+    # 故不推断日期, 返回 None 交由调用方退化为静态口径文本。
+    return None
+
 def load_votes(d):
     """_周期投票台账.jsonl → 最新一日(d<=目标) 主判+五路投票; 无= (None,None)"""
     p = os.path.join(L, '_周期投票台账.jsonl')
@@ -231,6 +257,9 @@ def r_mach_leadind(d):
     hb = cur.get('核按钮') or {}
     pm = cur.get('昨日涨停溢价') or {}
     tr = cur.get('触发器') or []
+    baseline = lead_baseline_date(d, t)
+    baseline_label = ('%s-%s-%s' % (baseline[:4], baseline[4:6], baseline[6:8])) if baseline else None
+    baseline_note = ('THS 最近前一交易日(%s)' % baseline_label) if baseline_label else 'THS 最近前一交易日(未记录基准日)'
     trig = ''.join('<li>%s</li>' % _esc(x) for x in tr) or '<li class="mut">三窗均未触发(冰点<25/过热≥85/溢价连负3日)</li>'
     rows = ('<tr><td class="l">晋级</td><td>涨停数_净 %s · 首板%s / 二连板%s / 三连板%s</td><td>1进2率 %s · 2进3率 %s · 高度晋级率 %s</td></tr>\n'
             '<tr><td class="l">核按钮</td><td>昨日涨停 %s</td><td>核按钮率 %s</td></tr>\n'
@@ -241,13 +270,15 @@ def r_mach_leadind(d):
                pm.get('样本', '—'),
                ('%+.2f%%' % pm['执行均收']) if pm.get('执行均收') is not None else '—',
                _pct(pm.get('执行胜率'), 1), _pct(pm.get('大面率'), 1)))
+    tt, tdays = load_temp(d)
+    trow = (tt.get(tdays[-1]) if (tt and tdays) else None) or {}
+    tnote = ('%s·%s' % (_esc(str(trow.get('温度'))), _esc(str(trow.get('温度档'))))) if trow.get('温度') is not None else '—'
     head = ('<div class="card"><h3 style="margin:0 0 8px">情绪先行指标 · 近20日 <span class="hint">(脚本段A档 · 情绪先行指标.py --card · 当日温度 %s%s)</span></h3>'
-            '<p class="mut" style="margin:0 0 6px">口径: THS 涨停池(无ST) · 晋级率基准=THS 最近前一交易日(8/10池缺→按8/7) · 与梯队卡 zt_pool 全口径并存为体系既有设计</p>'
+            '<p class="mut" style="margin:0 0 6px">口径: THS 涨停池(无ST) · 晋级率基准=%s · 与梯队卡 zt_pool 全口径并存为体系既有设计</p>'
             '%s'
             '<table class="p2"><tr><th class="l">指标</th><th>口径</th><th>读数</th></tr>%s</table>'
             '<p style="margin:8px 0 4px"><b>触发器</b></p><ul class="obs-watch" style="margin:0;padding-left:18px">%s</ul></div>\n'
-            % (('温度 %s·%s' % (_esc(str(t.get('温度'))), _esc(str(t.get('温度档'))))) if (t.get('温度') is not None) else '—',
-               stale, svg, rows, trig))
+            % (tnote, stale, baseline_note, svg, rows, trig))
     return '<!--LEADIND-->\n%s<!--/LEADIND-->\n' % head
 
 # ============ 机器区: 连板梯队卡 ============
@@ -354,8 +385,43 @@ def r_mach_vote(d):
 # ============ LLM 区: 七板块原文(逐字节保真) ============
 def r_vol(body):  return _h2_seg(body, '<h2>一', '<h2>二')
 def r_lead(body): return _h2_seg(body, '<h2>二', '<h2>三')
-def r_stage(body):return _h2_seg(body, '<h2>三', '<h2>四')
-def r_ladder_llm(body): return _h2_seg(body, '<h2>四', '<h2>五')
+def _cycle_stage_visual(d):
+    """当日判断正文没有黄金视觉组件时，只补事实性缺口壳，不补造阶段/仓位数值。
+
+    2026-09-24 的 cycle body 由降级生产器生成，仅有 h2+card，不能把历史黄金正文
+    搬回来。机器数据与周期主判仍可显示；阶段/仓位未提供的字段保持“—”。
+    """
+    stage = direction = '—'
+    p = os.path.join(L, '周期主判_%s.json' % d)
+    try:
+        row = json.load(open(p, encoding='utf-8'))
+        stage = row.get('stage') or row.get('主判', {}).get('stage') or '—'
+        direction = row.get('direction') or row.get('主判', {}).get('direction') or '—'
+    except Exception:
+        pass
+    stages = ''.join(
+        '<div class="st%s"><b>%s</b><small>%s</small></div>' %
+        (' on' if name == stage else '', name, '当前主判' if name == stage else '—')
+        for name in ('冰点', '启动', '发酵·主升', '高潮', '退潮')
+    )
+    return ('<div class="card cycle-stage-fallback">'
+            '<div class="stages">%s</div>'
+            '<div class="posmeter" aria-label="仓位数值缺失"><i></i></div>'
+            '<p class="mut">周期主判：%s · 方向：%s；仓位比例未在当日周期源提供，保持—。</p>'
+            '</div>' % (stages, _esc(stage), _esc(direction)))
+
+def r_stage(body, d=None):
+    seg = _h2_seg(body, '<h2>三', '<h2>四')
+    if seg and 'class="stages"' not in seg:
+        seg += _cycle_stage_visual(d)
+    return seg
+
+def r_ladder_llm(body, d=None):
+    seg = _h2_seg(body, '<h2>四', '<h2>五')
+    if seg and 'class="cols"' not in seg:
+        seg += ('<div class="cols"><div class="col"><b>—</b><span>梯队视觉字段缺失</span>'
+                '<small>当日梯队数字见机器卡，未补造黄金样式数据。</small></div></div>')
+    return seg
 def r_attack(body):return _h2_seg(body, '<h2>五', '<h2>六')
 def r_scan(body): return _h2_seg(body, '<h2>六', '<h2>七')
 
@@ -400,8 +466,8 @@ def build_page(d):
     body = load_body(d)
     if not body:
         return r_gap_card(d)
-    return ''.join([r_vol(body), r_lead(body), r_stage(body),
-                    r_ladder_llm(body), r_attack(body), r_scan(body), r_cog(body, d) + r_cog_lib('cycle', d)])
+    return ''.join([r_vol(body), r_lead(body), r_stage(body, d),
+                    r_ladder_llm(body, d), r_attack(body), r_scan(body), r_cog(body, d) + r_cog_lib('cycle', d)])
 
 def build_page_full(d, paper_block=''):
     """完整页 body(头部区 + 机器数据折叠区 + 模拟盘看板 + 七板块) → S2 接线用
@@ -427,7 +493,7 @@ def build_page_full(d, paper_block=''):
     mach = ''.join([r_mach_volstep(d), r_mach_leadind(d), r_mach_ladder(d), r_mach_vote(d)])
     # 有 body 日也必须补齐当日机器组件：body 只负责判断正文，机器卡负责真实数据展示；避免复盘后退化为纯文字
     if body and mach.strip():
-        mach = '<div class="cycle-machine-inline">\\n' + mach + '</div>\\n'
+        mach = '<div class="cycle-machine-inline">\n' + mach + '</div>\n'
     elif not body and mach.strip():
         chips = '<span class="chip">%d卡</span>' % mach.count('class="card"')
         mach = ('<details class="chain"><summary><b>机器数据源</b> %s '

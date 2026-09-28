@@ -66,15 +66,17 @@ def test_all_seven_pages_get_exactly_two_modules(tmp_path):
     assert len(report) == len(evo.ROUTES) == 7
     for route, expected in evo.BUSINESS_SECTIONS.items():
         html = (site / (route + '.html')).read_text(encoding='utf-8')
-        assert html.count('<section class="evolution"') == 2, route
+        wanted = evo.ROUTE_CAPABILITIES[route]
+        assert html.count('<section class="evolution"') == len(wanted), route
         assert html.count('id="overview-evolution-sync"') == 1, route
         assert html.count(evo.SYNC_START) == 1 and html.count(evo.SYNC_END) == 1, route
         assert not evo.legacy_headings(html), route
         assert evo.verify_page(html, route, BASE, '20260921') == [], route
         blocks = re.findall(r'<section class="evolution">.*?</section>', html, re.S)
         cn = evo.NUMERALS
-        assert '<h2>%s 自主拓展' % cn[expected] in blocks[0], route
-        assert '<h2>%s 认知迭代' % cn[expected + 1] in blocks[1], route
+        for i, title in enumerate(wanted):
+            assert '<h2>%s %s' % (cn[expected + i], title) in blocks[i], route
+        assert len(wanted) == 2, route
         assert html.index(blocks[0]) < html.rindex(FOOT), route
 
 

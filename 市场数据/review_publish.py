@@ -268,6 +268,9 @@ def input_files(root, d):
     names.update(f'_学习/{prefix}_{d}.html' for prefix in ('先行指标灯','周期投票牌','先行指标卡',
         '竞价评分卡','竞价评分库卡','资金温度卡','涨停质量荐票卡','市场温度卡','质量库折叠',
         '跨路荐票卡'))
+    # 路由标准正文可能独立于 judgment.bodies 生成；发布冻结必须带上同日正文，
+    # review_pages 才能在候选环境重放出完整业务段。
+    names.update(f'_学习/{route}_body_{d}.html' for route in ROUTES)
     for prefix in ("总审", "cycle判断", "auction判断", "lhb判断", "theme判断", "logic判断", "limitup判断",
                    "涨停质量荐票", "先行指标卡", "池外候选卡"):
         names.add(f"_学习/{prefix}_{d}.{'html' if prefix.endswith('卡') else 'json'}")
@@ -1400,6 +1403,11 @@ def source_value(root, source, pointer):
     if '/' not in rel and '\\' not in rel:
         rel = '_学习/' + rel
     path = contained(root, rel)
+    # 独立路由正文是已冻结的 HTML 证据源；其 /bodies/<route>/...
+    # 指针表示正文边界而不是 JSON Pointer。返回整段原文供 claim 文本回源，
+    # 不把 HTML 当 JSON 解析，也不改写证据内容。
+    if path.suffix.lower() == '.html' and pointer.startswith('/bodies/'):
+        return path.read_text(encoding='utf-8-sig')
     value = read_json(path)
     for token in pointer.strip('/').split('/') if pointer.strip('/') else []:
         token = token.replace('~1','/').replace('~0','~')

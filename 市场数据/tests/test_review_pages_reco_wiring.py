@@ -37,6 +37,18 @@ def _comp(model, cid):
     return next((c for c in model.get('components', []) if c['id'] == cid), None)
 
 
+def test_theme_render_contract_has_no_generic_nav_or_empty_ticker():
+    """题材页只保留真实业务段，不注入错误阅读条或空走马灯壳。"""
+    model = api.build_page_model(ROOT, '20260923', 'theme')
+    rendered = api._render(model, api._contract(), ROOT)
+    assert 'class="reading-spine"' not in rendered
+    assert 'class="page-map"' not in rendered
+    assert '<div class="grp"></div>' not in rendered
+    assert '</head><meta' not in rendered
+    assert rendered.index('<meta name="review-date"') < rendered.index('</head>')
+    assert rendered.index('<meta name="review-schema-version"') < rendered.index('</head>')
+
+
 def test_logic_reco_rule_matches_logic_pool():
     """两条读取口必须同源同规则(新增 review_pages 读取口不得偏离 logic_pool)。"""
     import logic_pool
@@ -57,8 +69,12 @@ def test_theme_reco_rule_follows_published_schema():
         data = json.loads(path.read_text(encoding='utf-8'))
         picks, src = api._theme_picks(ROOT, d)
         assert src == '题材荐票_%s.json' % d
-        base = [x for x in (data.get('标的') or []) if isinstance(x, dict)]
-        pool = base or [x for x in (data.get('荐票') or []) if isinstance(x, dict)]
+        if isinstance(data, list):
+            base = [x for x in data if isinstance(x, dict)]
+            pool = base
+        else:
+            base = [x for x in (data.get('标的') or []) if isinstance(x, dict)]
+            pool = base or [x for x in (data.get('荐票') or []) if isinstance(x, dict)]
         for x in picks:
             assert any(y.get('名称') == x.get('名称') and y.get('代码') == x.get('代码') for y in pool), (d, x)
         if base:
@@ -87,9 +103,13 @@ def test_theme_candidate_rule_matches_published_source():
         data = json.loads(path.read_text(encoding='utf-8'))
         candidates, src = api._theme_candidates(ROOT, d)
         assert src == path.name
-        base = [x for x in (data.get('标的') or []) if isinstance(x, dict)]
-        pool = ([x for x in base if str(x.get('类型') or '') == '观察']
-                if base else [x for x in (data.get('观察') or []) if isinstance(x, dict)])
+        if isinstance(data, list):
+            base = [x for x in data if isinstance(x, dict)]
+            pool = [x for x in base if str(x.get('类型') or '') == '观察']
+        else:
+            base = [x for x in (data.get('标的') or []) if isinstance(x, dict)]
+            pool = ([x for x in base if str(x.get('类型') or '') == '观察']
+                    if base else [x for x in (data.get('观察') or []) if isinstance(x, dict)])
         assert {(x.get('代码'), x.get('名称')) for x in candidates} == {(x.get('代码'), x.get('名称')) for x in pool}
 
 

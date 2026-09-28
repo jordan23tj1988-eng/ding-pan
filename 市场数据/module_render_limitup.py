@@ -64,11 +64,14 @@ def load_reflect():
 def load_body(d):
     """LLM 组件提取源: judgment_{d}.json bodies['limitup']"""
     p = os.path.join(L, 'judgment_%s.json' % d)
-    if not os.path.exists(p): return ''
-    try:
-        return json.load(open(p, encoding='utf-8'))['bodies']['limitup']
-    except Exception:
-        return ''
+    if os.path.exists(p):
+        try:
+            body = json.load(open(p, encoding='utf-8'))['bodies'].get('limitup') or ''
+            if '<h2' in body: return body
+        except Exception:
+            pass
+    fallback = os.path.join(L, 'limitup_body_%s.html' % d)
+    return open(fallback, encoding='utf-8').read() if os.path.exists(fallback) else ''
 
 # ============ 通用 HTML 工具 ============
 def _esc(s):
@@ -306,6 +309,16 @@ def r_ledger_day(d, guiban, settle, body, day, ztpool=None, is_newest=False):
     if ls < 0: return ''
     le = body.find('<h2>四', ls)
     seg = body[ls:le if le > 0 else len(body)]
+    # 新版正文可能只有“结构样本”摘要表，没有旧版 details 日块。
+    # 此时不能把板块三渲染成空壳：用同日唯一真源的归位映射+THS池生成完整
+    # 52 行机器台账，缺字段仍由 r_ledger_detail 显示“—”。
+    if '<details class="chain" open>' not in seg:
+        detail = r_ledger_detail(day, guiban, ztpool or load_zt_pool())
+        return ('<h2>三 归位台账</h2>'
+                '<p class="hint">同日完整台账由题材归位映射与涨停池机器生成；摘要正文保留在判断源，缺失字段不补造。</p>'
+                '<!--LEDGER--><details class="chain" open><summary><b>%s</b> '
+                '<span class="chip">当日机器明细</span></summary><div class="inner">%s</div></details><!--/LEDGER-->'
+                % (day[4:6] + '-' + day[6:8], detail))
     # 模拟 _fold_ledger: 若 bodies 无 foldarchive 且含 >1 个日块, 则注入
     if 'foldarchive' not in seg:
         # 找第一个日块 details(open) 的结束, 与后续日块
@@ -585,7 +598,7 @@ def build_components(d):
     # 板块二: 全卡 = 市场温度.py 权威生成器(含 strip/温度卡/梯队/成绩单/规则榜/胜率库)
     comps['C2'] = r_temp_full(d)
     # 板块三: 整块 = bodies <!--LEDGER--> 原文(含最新日open+历史折叠, 黄金版逐字节)
-    comps['C3'] = r_ledger_day(d, load_guiban(d), settle, body, d)
+    comps['C3'] = r_ledger_day(d, load_guiban(d), settle, body, d, load_zt_pool())
     comps['_days'] = _ledger_days(d)
     # 板块四/五/六
     comps['C4.1'] = r_factor_table(q, body)

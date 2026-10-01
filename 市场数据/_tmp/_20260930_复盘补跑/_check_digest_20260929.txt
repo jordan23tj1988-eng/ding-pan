@@ -1,0 +1,47 @@
+===== lhb rc=1 status=fail
+   ERR sentinel exit=1, baseline_ok=False, checks=33
+   ERR conflicting dated seat snapshots
+   FAIL 黄金页结构模式 | 未进入龙虎榜黄金结构 | null
+   FAIL 无发布页section壳 | 黄金版 h2 直连 | null
+   FAIL 能力进化位于前四段之后 | 四段@427343 evo@-1 foot@536278 | null
+   FAIL 分档库窗口 | 页面20260401~20260928 vs 源20260401~20260928 | ["conflicting dated seat snapshots"]
+   FAIL 分档库笔数 | 页面17758 vs 源17758 | ["conflicting dated seat snapshots"]
+   FAIL 分档库档数S | 页面19 vs 源19 | ["conflicting dated seat snapshots"]
+   FAIL 分档库档数A | 页面45 vs 源45 | ["conflicting dated seat snapshots"]
+   FAIL 分档库档数B | 页面132 vs 源132 | ["conflicting dated seat snapshots"]
+   FAIL 分档库档数C | 页面76 vs 源76 | ["conflicting dated seat snapshots"]
+   FAIL 分档库档数P | 页面165 vs 源165 | ["conflicting dated seat snapshots"]
+   FAIL 分档表新鲜度 | 窗口末日20260928 vs 核对日20260929(容忍20260929-5日) | ["conflicting dated seat snapshots"]
+===== theme rc=1 status=fail
+   ERR sentinel exit=1, baseline_ok=False, checks=48
+   FAIL h2 业务段+能力模块齐全 | 期望5个/实际3个 | null
+   FAIL 能力进化模块恰为2组 | 实际0组 | null
+   FAIL 能力模块样式ID唯一 | 实际0 | null
+===== consistency rc=1 status=fail
+   ERR C8 改了没登记: ['review_contract.py', 'review_pages.py'] mtime晚于_变更总账.md——按改动三合一SOP补登记(_链路地图.md 〇节)后重跑哨兵
+   ERR C12 龙虎榜专属核对失败:   ✓ 分档库档数P  [页面165 vs 源165]   ✓ 分档表新鲜度  [窗口末日20260928 vs 核对日20260929(容忍20260929-5日)] FAIL 3 项 — 页面数字与数据源不一致, 禁止出页
+   ERR C14 index.html 能力模块不合契约: 能力模块数量!=2 (0)
+   ERR C14 index.html 能力模块不合契约: 同步锚点不唯一 (start=0 end=0)
+   ERR C14 index.html 能力模块不合契约: 能力模块样式不唯一/缺失 (id=overview-evolution-sync)
+   ERR C14 cycle.html 能力模块不合契约: 同步锚点不唯一 (start=0 end=0)
+   ERR C14 cycle.html 能力模块不合契约: 能力模块样式不唯一/缺失 (id=overview-evolution-sync)
+   ERR C14 cycle.html 能力模块不合契约: 残留旧样式 id=evolution-style-sync
+   ERR C14 auction.html 能力模块不合契约: 能力模块数量!=2 (0)
+   ERR C14 auction.html 能力模块不合契约: 同步锚点不唯一 (start=0 end=0)
+   ERR C14 auction.html 能力模块不合契约: 能力模块样式不唯一/缺失 (id=overview-evolution-sync)
+   ERR C14 auction.html 能力模块不合契约: 残留旧模块标题: 五 自主深挖 · 信号孵化 / 六 我的认知迭代 · 最新
+   ERR C14 lhb.html 能力模块不合契约: 能力模块数量!=2 (0)
+   ERR C14 lhb.html 能力模块不合契约: 同步锚点不唯一 (start=0 end=0)
+   ERR C14 lhb.html 能力模块不合契约: 能力模块样式不唯一/缺失 (id=overview-evolution-sync)
+   ERR C14 lhb.html 能力模块不合契约: 残留旧模块标题: 五 自主深挖 · 席位孵化 / 六 我的认知迭代 · 最新
+   ERR C14 theme.html 能力模块不合契约: 能力模块数量!=2 (0)
+   ERR C14 theme.html 能力模块不合契约: 同步锚点不唯一 (start=0 end=0)
+   ERR C14 theme.html 能力模块不合契约: 能力模块样式不唯一/缺失 (id=overview-evolution-sync)
+   ERR C14 logic.html 能力模块不合契约: 能力模块数量!=2 (0)
+   ERR C14 logic.html 能力模块不合契约: 同步锚点不唯一 (start=0 end=0)
+   ERR C14 logic.html 能力模块不合契约: 能力模块样式不唯一/缺失 (id=overview-evolution-sync)
+   ERR C14 logic.html 能力模块不合契约: 残留旧模块标题: 六 自主深挖 · 专题孵化 / 七 我的认知迭代 · 最新
+   ERR C14 limitup.html 能力模块不合契约: 能力模块数量!=2 (0)
+   ERR C14 limitup.html 能力模块不合契约: 同步锚点不唯一 (start=0 end=0)
+   ERR C14 limitup.html 能力模块不合契约: 能力模块样式不唯一/缺失 (id=overview-evolution-sync)
+   ERR C14 limitup.html 能力模块不合契约: 残留旧模块标题: 五 自主深挖 · 因子与归位孵化 / 六 我的认知迭代 · 最新

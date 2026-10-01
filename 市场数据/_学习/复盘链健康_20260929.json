@@ -1,72 +1,54 @@
 {
   "schema_version": 1,
-  "checked_at": "2026-09-29T08:26:48.613605+08:00",
+  "checked_at": "2026-09-30T19:33:11.378546+08:00",
   "target_date": "20260929",
   "settlement_date": "20260928",
-  "status": "fail",
+  "status": "pass",
   "gate": {
-    "continuity_pass": false,
-    "coverage_gate": "fail",
+    "continuity_pass": true,
+    "coverage_gate": "pass",
     "threshold": 0.9
   },
   "continuity": {
     "target": "20260929",
     "artifacts": {
-      "总审": false,
-      "推演": false,
-      "盯盘台归档": false
+      "总审": true,
+      "推演": true,
+      "盯盘台归档": true
     },
-    "release_dirs": 0,
-    "pass": false
+    "release_dirs": 1,
+    "pass": true
   },
   "coverage": {
     "issued_count": 21,
-    "matched_count": 0,
-    "ratio": 0.0,
+    "matched_count": 21,
+    "ratio": 1.0,
     "routes": {
       "auction": {
-        "status": "fail",
+        "status": "pass",
         "issue_day": "20260928",
         "source": "D:\\股票数据\\市场数据\\_学习\\竞价池发出_20260928.json",
         "source_basis": "竞价池发出_20260928.json",
         "issued_count": 11,
-        "settlement": null,
-        "settled_rows": 0,
-        "matched_count": 0,
-        "coverage": 0.0,
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\竞价池结算_20260928.json",
+        "settled_rows": 11,
+        "matched_count": 11,
+        "coverage": 1.0,
         "duplicate_settlement_rows": 0,
-        "missing_codes": [
-          "000503",
-          "000678",
-          "001330",
-          "002242",
-          "002640",
-          "002912",
-          "600825",
-          "601579",
-          "603278",
-          "603396",
-          "603949"
-        ]
+        "missing_codes": []
       },
       "lhb": {
-        "status": "fail",
+        "status": "pass",
         "issue_day": "20260928",
         "source": "D:\\股票数据\\市场数据\\_学习\\席位荐票_20260928.json",
         "source_basis": "席位荐票_20260928.json",
         "issued_count": 5,
-        "settlement": null,
-        "settled_rows": 0,
-        "matched_count": 0,
-        "coverage": 0.0,
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\席位荐票结算_20260928.json",
+        "settled_rows": 5,
+        "matched_count": 5,
+        "coverage": 1.0,
         "duplicate_settlement_rows": 0,
-        "missing_codes": [
-          "300291",
-          "301190",
-          "600293",
-          "600540",
-          "600825"
-        ]
+        "missing_codes": []
       },
       "theme": {
         "status": "empty_issued",
@@ -74,7 +56,7 @@
         "source": "D:\\股票数据\\市场数据\\_学习\\题材荐票_20260928.json",
         "source_basis": "题材荐票_20260928.json",
         "issued_count": 0,
-        "settlement": null,
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\题材荐票结算_20260928.json",
         "settled_rows": 0,
         "matched_count": 0,
         "coverage": null,
@@ -87,7 +69,7 @@
         "source": "D:\\股票数据\\市场数据\\_学习\\logic判断_20260928.json",
         "source_basis": "logic判断_20260928.json",
         "issued_count": 0,
-        "settlement": null,
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\逻辑荐票结算_20260928.json",
         "settled_rows": 0,
         "matched_count": 0,
         "coverage": null,
@@ -95,31 +77,21 @@
         "missing_codes": []
       },
       "limitup": {
-        "status": "fail",
+        "status": "pass",
         "issue_day": "20260928",
         "source": "D:\\股票数据\\市场数据\\_学习\\涨停质量荐票_20260928.json",
         "source_basis": "涨停质量荐票_20260928.json",
         "issued_count": 5,
-        "settlement": null,
-        "settled_rows": 0,
-        "matched_count": 0,
-        "coverage": 0.0,
+        "settlement": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260928.json",
+        "settled_rows": 5,
+        "matched_count": 5,
+        "coverage": 1.0,
         "duplicate_settlement_rows": 0,
-        "missing_codes": [
-          "000503",
-          "002242",
-          "600825",
-          "601579",
-          "603396"
-        ]
+        "missing_codes": []
       }
     },
     "missing_source_routes": [],
-    "failed_routes": [
-      "auction",
-      "lhb",
-      "limitup"
-    ]
+    "failed_routes": []
   },
   "policy": "缺源=缺口告警；缺少结算不可视为无荐票；不补写历史收益；只对明确发出版逐票计覆盖率"
 }

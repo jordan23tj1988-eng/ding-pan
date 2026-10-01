@@ -1,0 +1,12 @@
+inject auction -> auction.html OK
+inject lhb -> lhb.html OK
+inject theme -> theme.html OK
+inject logic -> logic.html OK
+inject limitup -> limitup.html OK
+inject master -> index.html OK
+!未找到锚点 .\复盘\盯盘台\archive\20260929.html
+inject rc=0
+== 复盘一致性哨兵 20260929 ==
+  FAIL C13 主题页冻结校验失败: theme.html 与冻结哈希不一致
+结论: 1项FAIL——不要通知完成,先修复再重跑哨兵
+sentinel rc=1

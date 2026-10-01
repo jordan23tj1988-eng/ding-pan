@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>20260929 竞价命门判断</title>
+<style>
+:root{--bg:#101522;--card:#182235;--line:#2c3b55;--text:#e9eef7;--muted:#9eabc0;--red:#ff7a90;--amber:#f2c66d;--green:#77d6ae;--blue:#7db7ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.65 system-ui,"Microsoft YaHei",sans-serif}.wrap{max-width:1180px;margin:0 auto;padding:24px}.hero{border:1px solid var(--line);background:linear-gradient(135deg,#1b2941,#151c2c);padding:22px;border-radius:14px;margin-bottom:16px}.hero h1{margin:0 0 6px;font-size:24px}.meta{color:var(--muted)}.badge{display:inline-block;padding:2px 10px;border-radius:99px;background:#54313a;color:#ffb5bd;margin-left:8px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px}.block{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}.block h2{font-size:17px;margin:0 0 10px;color:#cfe0ff}.block h3{font-size:14px;color:var(--amber);margin:14px 0 5px}.block p{margin:6px 0}.block ul{margin:6px 0 0 20px;padding:0}.negative{border-color:#70404a}.negative h2{color:var(--red)}.positive{border-color:#335c54}.positive h2{color:var(--green)}.metric{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}.metric div{background:#111a2b;border:1px solid #273854;border-radius:8px;padding:8px}.metric b{display:block;font-size:19px;color:var(--blue)}.metric span{color:var(--muted);font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{color:var(--muted);font-weight:500}.small{color:var(--muted);font-size:12px}.flag{color:var(--amber)}.source{word-break:break-all;color:var(--muted);font-size:12px}.footer{margin-top:16px;color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="hero">
+  <h1>20260929 · 竞价命门 auction <span class="badge">C档防守 · 空仓</span></h1>
+  <div class="meta">as-of=20260929 · 数据状态：partial · 评分仅池内排序，不是买入指令</div>
+</div>
+<div class="grid">
+  <section class="block">
+    <h2>一、当日证据总览</h2>
+    <div class="metric"><div><b>43.0</b><span>温度 / 偏冷</span></div><div><b>57</b><span>涨停家数</span></div><div><b>8</b><span>炸板 / 12.3%</span></div><div><b>10</b><span>跌停家数</span></div></div>
+    <p>summary与温度表的同日硬事实：两市成交额14092亿，最高6板，二板加10，梯队47/7/1/1/1（1/2/3/4/6板）。相较20260928冰点18.1有所修复，但仍为偏冷环境。</p>
+    <p class="small">当日先行指标：一进二率18.2%、二进三率10.0%、高度晋级率20.0%；20260929昨日涨停溢价尚未生成，保持null。</p>
+  </section>
+  <section class="block">
+    <h2>二、米开第一式与竞价池</h2><!--POOLLEDGER--><!--/POOLLEDGER-->
+    <p>冻结池13只：一字7、秒板6；连板分布为首板5、2板5、3板1、4板1、6板1。评分池基准38.0，最高分600657信达地产50.3，600032浙江新能50.2。</p>
+    <table><thead><tr><th>09:25可匹配池</th><th>数量</th><th>结果</th></tr></thead><tbody>
+      <tr><td>轨迹覆盖</td><td>8/13</td><td>61.5%，缺5只</td></tr>
+      <tr><td>高开≥5%</td><td>7/8</td><td class="flag">闸门弃置</td></tr>
+      <tr><td>高开0~5%</td><td>1/8</td><td>600032 +3.36%</td></tr>
+      <tr><td>匹配池09:25均值</td><td>+8.52%</td><td>不代表全池</td></tr>
+    </tbody></table>
+    <p class="small">缺失：601238、605303、603200、600657、600982。不得用其他票、连续竞价或收盘字段补齐。</p>
+  </section>
+  <section class="block negative">
+    <h2>三、负面过滤与数据边界</h2>
+    <ul>
+      <li>全市场竞价快照20260929.csv.gz缺失，竞价额全市场排名、竞价换手代理无法核验。</li>
+      <li>历史库n=3181：高开≥5% n=1513，胜率21.9%，执行均涨-1.77%；高开0~5 n=829，胜率54.8%，执行均涨+0.25%。</li>
+      <li>_竞价池结算.jsonl最新池日为20260928：3/11，执行均收-0.92%；20260929池T+1尚未发生。</li>
+      <li>撤单差分pass仅表示33票具备前后轨迹位移代理，不等于逐笔撤单量。</li>
+      <li>开盘验证文件的源realtime_ticks首条09:31:04且pool_date=20260928，不作为20260929 9:25或T+1证据。</li>
+    </ul>
+  </section>
+  <section class="block positive">
+    <h2>四、荐票与空仓</h2>
+    <p><strong>正式荐票：0只；买入：0只。</strong>当前模拟盘状态date=20260928、持仓为空，故无卖出腿；观察不进入正式荐票分母。</p>
+    <table><thead><tr><th>代码 / 名称</th><th>类型</th><th>真实竞价与历史对照</th></tr></thead><tbody>
+      <tr><td>600032<br>浙江新能</td><td>观察</td><td>09:25 +3.36%、额3002、评分50.2；2板|高开0~5 n=219，胜率53.0%，均收+0.25%；秒板|2板 n=513，40.9%，-0.45%。</td></tr>
+      <tr><td>603949<br>雪龙集团</td><td>观察</td><td>09:25 +10.01%、额3043、4板一字；3板+|高开≥5 n=520，21.0%，-1.94%；一字|3板+ n=592，31.8%，-0.82%。</td></tr>
+      <tr><td>600825<br>新华传媒</td><td>观察</td><td>09:25 +10.06%、额4236、6板一字；封单≥4% n=452，19.2%，-1.08%；3板+|高开≥5 n=520，21.0%，-1.94%。</td></tr>
+    </tbody></table>
+    <p class="small">三只均不是买入指令；高开≥5%自动放弃，缺轨迹或缺右侧承接也放弃。</p>
+  </section>
+  <section class="block">
+    <h2>五、可证伪与机械结算</h2>
+    <p>下一真实交易日复核本判断，必须同时满足：冻结池13/13逐票9:25覆盖；高开≥5%占比&lt;50%；全市场快照可核验；对应T+1执行胜率&gt;50%且执行均收&gt;0；温度≥45、炸板率&lt;15%、跌停≤5。缺任一项维持C档。</p>
+    <p>本日不提前写20260929池T+1。后续按T+1开盘→收盘逐票结算，输出整体胜率/均收及低开≤0、0~5、≥5三桶；当日结算文件未发生前，所有结果保持待验证。</p>
+  </section>
+  <section class="block">
+    <h2>六、认知迭代与Master承接</h2>
+    <h3>轨迹恢复不等于池覆盖完成</h3><p>今日比昨日多出09:15~09:25:54共33个竞价时点，但冻结池仍为8/13可匹配，结论只能是“8只可核验子样本+5只缺口”。</p>
+    <h3>高开闸门优先于评分</h3><p>600657与600032分数相近，真正可匹配池仍7/8高开≥5%；历史高开档负期望未被分数覆盖。</p>
+    <h3>承接 MA-20260928-01</h3><p>已核验auction_traj：补齐到33票时点，但逐票仍缺601238、605303、603200、600657、600982；T+1与四桶结算按as-of规则留空，不伪造完成。</p>
+  </section>
+  <section class="block">
+    <h2>七、文件缺口与来源</h2>
+    <p>缺失且已如实记录：领域手册auction_v1、20260929认知库、昨日复盘、作战包、全市场竞价快照。已使用最近可用认知库20260928、总审20260928、竞价评分/评分库卡、竞价池发出、auction_traj、撤单差分、开盘验证、summary、温度表、先行指标、分桶库、_竞价池结算及模拟盘状态。</p>
+    <p class="source">主判断：D:/股票数据/市场数据/_学习/auction判断_20260929.json<br>发出版：D:/股票数据/市场数据/_学习/竞价池发出_20260929.json（只读，未覆盖）</p>
+  </section>
+</div>
+<div class="footer">本页仅呈现as-of=20260929已落盘证据；观察≠荐票，历史桶均值≠个股预言，未来条件不等于已发生事实。</div>
+</div>
+</body>
+</html>

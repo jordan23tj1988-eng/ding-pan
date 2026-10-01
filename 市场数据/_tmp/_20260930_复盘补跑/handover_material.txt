@@ -1,0 +1,112 @@
+===== daily-review(c4d23047161f) prompt 全文 =====
+model=gpt-5.6-sol provider=openai-codex schedule=0 18 * * 1-5
+   1 | 运行A股情绪复盘傍晚完整流程（深度模式·真多agent协作·五路战绩闭环·子agent能力增强·推演-校准训练回路·盘中作战接线·iFind数据面升级·环境情景化·领域专家化·P1/P2数据面版）。今天是{今日}，昨日={昨日}（用 python -c 从温度表日历算：`cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" -c "import json; t=json.load(open(chr(95)+chr(23398)+chr(20064)+chr(47)+chr(95)+chr(24066)+chr(22330)+chr(24230)+chr(34920)+chr(34920)+chr(46)+chr(106)+chr(115)+chr(111)+chr(110),encoding=chr(117)+chr(116)+chr(102)+chr(45)+chr(56)); ks=sorted(t); d=[x for x in ks if x<chr(123)+chr(20170)+chr(26085)+chr(125)]; print(d[-1] if d else chr(19981))"`）。
+   2 | 
+   3 | ★执行环境铁律（必须遵守）：
+   4 | - 本机脚本必须用项目venv：D:\股票数据\.venv312\Scripts\python.exe（装有 iFinDPy+akshare+pandas；hermes python 无 iFinDPy）
+   5 | - Hermes 会话注入的 PYTHONPATH 会污染 .venv312（加载 hermes venv 的 cp311 numpy 崩溃），每次调用前必须清空
+   6 | - 统一调用模板（bash 侧清 PYTHONPATH）：cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" <脚本和参数>
+   7 | - ★所有卡生成/训练/台账/画像/结算脚本一律用 .venv312 跑（sentiment_system 包本机不存在）
+   8 | 
+   9 | - ★模型分工铁律(2026-08-13拍板): 机械操作(取数/卡生成/台账/出页=纯脚本,无LLM,比Flash更省)一律脚本执行; 需LLM的机械(盘中哨兵)用Flash; 推理(五路判断/总审/推演/策略/自主拓展=delegate_task)统一用GPT-6 Astra，请求级provider transient失败才对当前路降GPT-5.6-sol；禁止DS模型兜底
+  10 | 
+  11 | 执行步骤（严格按顺序，全链路不可乱——生成器重跑会冲掉台账注入和五路判断注入）：
+  12 | 1. ★取数建本地日目录(8/11首跑验证路径; sentiment_system 包本机不存在勿用旧路径): cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" 市场数据下载.py {今日}（akshare EM池: zt_pool/dt_pool/zb_pool/strong_pool/lhb/summary; 已存在可跳过）
+  13 | 2. 补齐先行指标: 检查 _学习/_情绪先行指标.json 是否含当日日期，若无则用 python -c 脚本补齐（晋级数据从当日 summary.json 涨停池计算，一进二率=当日2板数/上交易日首板数）；随后 cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" 情绪先行指标.py --card {今日}
+  14 | 3. ★题材归位(唯一真源, agent必做): 写 _学习/题材归位_{今日}.json（映射: 代码→大方向/环节/催化/来源档 A公告>B THS原因>C搭车；全部涨停股逐只归位，THS原因缺失标B行业兜底）。随后按序跑: 涨停对链条.py {今日} → 题材四维.py {今日} → 主流题材6有.py {今日}（均用 .venv312，cd 市场数据）
+  15 | 4. ★卡生成链(用 .venv312, cd 市场数据, 顺序不可乱——温度与bars先更新，再做T+1结算):
+  16 |    b. 市场温度.py {今日}
+  17 |    c. 涨停质量训练.py --fetch {今日}   ←先刷新当日bars/质量训练输入，禁止被早于4c的T+1结算抢读旧缓存
+  18 |    a. 质量荐票结算.py {昨日} → 题材荐票结算.py {昨日} → 逻辑荐票结算.py {昨日} → 席位荐票结算.py {昨日}   ←五路T+1结算(质量先跑=全场均收基准, 题材/逻辑读其基准; 竞价池结算在第4f步; 幂等)
+  19 |    a2. 预判结算.py {昨日}      ←推演-校准回路(幂等)
+  20 |    a3. ★预判结算.py --preread {昨日}  ←P2条件决断校准(预读场"若9:25落X→A案"兑现率, 幂等: 无决断文件自动跳过)
+  21 |    d. 涨停质量荐票.py {今日}
+  22 |    e. 市场温度.py --card {今日}
+  23 |    f. 竞价池结算.py {昨日}
+  24 |    g. 竞价评分.py {今日}
+  25 |    h. 席位动向库.py rank
+  26 |    i. 席位荐票.py {今日}
+  27 |    j. 资金温度.py
+  28 |    k. 中报预增雷达.py {今日}   ←P1双源交叉内建(iwencai业绩预告存档 vs 东财, 输出"双源交叉"字段)
+  29 |    k2. ★龙虎榜双源校验.py {今日}
+  30 |    k3. ★风险日历.py {今日}
+  31 |    k4. ★竞价撤单差分.py {今日}
+  32 |    k5. ★开盘验证维.py {今日}   ←P1开盘验证维(分时库5分钟K: 开盘5分钟强度+弱转强/强转弱, 回填中缺数据如实提示)
+  33 |    k6. ★日内温度曲线.py {今日} ←P2日内退潮时点(pulse序列留档, 数据自管道首跑起攒)
+  34 |    k7. ★日内轮动图谱.py {今日} ←P2题材日内轮动(早盘vs午后领涨→高低切去向)
+  35 |    l. 横切面扫描.py {今日}
+  36 |    m. 自主拓展扫描.py scan {今日} → tick {今日}
+  37 |    n. ★五路战绩画像.py {今日}   ←画像v3(环境档+理由质量拆解) + 昨日复盘记忆（★2026-08-14已落地: 读五路结算jsonl聚合, 输出 _学习/子agent增强/战绩画像_{route}_{今日}.json + _战绩画像汇总_{今日}.json, 零后视镜=只统计判断日≤今日且已结算）
+  38 |    o. ★认知库打包.py {今日} （★脚本本机缺失: 若不存在跳过, 子agent直接读 _学习/_认知库_{route}.json 或 子agent增强/认知库_{route}_最新.json）
+  39 |    p. ★领域手册.py             ←领域专家知识底座(幂等重生成) （★脚本本机缺失: 若不存在跳过, 子agent方法论底座改用 _agent规格/10_题材命门agent.md 等对应命门文件）
+  40 |    q. ★作战包.py {今日}        ←每路今日战场全貌 （★脚本本机缺失: 若不存在跳过, 子agent用归位/对链条/6有/四维数据自行组装战场全貌）
+  41 | 5. ★建judgment骨架(生成器脚本缺失, 8/11首跑模式): cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" -c "import json,os; p=chr(114)+chr(39)+chr(95)+chr(23398)+chr(20064)+chr(47)+chr(106)+chr(117)+chr(100)+chr(103)+chr(109)+chr(101)+chr(110)+chr(116)+chr(95)+chr(123)+chr(20170)+chr(26085)+chr(125)+chr(46)+chr(106)+chr(115)+chr(111)+chr(110)+chr(39); json.dump({'date':'{今日}','更新label':'{今日} 复盘','一句话':'','ticker':'','bodies':{},'archive_body':''},open(p,'w',encoding='utf-8'),ensure_ascii=False,indent=1); print('judgment骨架已建')"（★先建骨架再跑资金温度.py/涨停复盘台账.py 等注入类脚本, 否则注进旧文件! ticker/一句话/archive_body 由后续步骤或宿主补齐; 五路子agent bodies 由第9步宿主注入）
+  42 | 6. ★真多agent五路独立判断(delegate_task并行, 每批≤3个, 独立上下文, 全部约束内联在context里——子agent看不到本prompt!):
+  43 |    先并行3路: 竞价命门(auction)/席位命门(lhb)/题材命门(theme) → 再并行2路: 产业逻辑(logic)/涨停复盘(limitup)
+  44 |    每路 context 必须内联(★专家化v4规格要点): ①输入文件表(按路给; 题材路见 _agent规格/10_题材命门agent.md, 涨停路见技能 sentiment-limitup-route, 其余路参考 _agent规格/0X_XX命门agent.md 对应文件) ②★必读五件套: 战绩画像_{route}_{今日}.json(含环境档拆解, 陷阱环境降级) + 认知库_{route}_{今日}.json + 昨日复盘_{route}_{今日}.json(自我记忆: 被打脸先反思同类错误) + 领域手册_{route}_v1.md(★领域专家知识底座: 米开框架原文带章节号+历史规律带日期——判断必须先按框架推理再核对数据, 引用标注章节/日期) + 作战包_{route}_{今日}.json(★今日战场全貌) + 总审_{昨日}.json(★Master指派清单承接源, 2026-08-17补: 指派给=本路且截止≤今日的必须承接, 第五段自主深挖响应格式"承接Master指派[ID]: 深挖任务 → 深挖结果:{结论, 带可结算判定条件}"; 无指派如实声明"无指派可承接"不沉默; 8/17事故=五件套无总审致各路只回8/14旧总审) ③★主动查证(ifind查.py): 需要补充数据时可跑 `env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" ifind查.py "iwencai问句"` 或 kline/spot——每路每次≤3次, 查询前先想清楚问什么, 结果必须引用进证据, 失败如实标注 ④荐票铁律: 对照画像荐票(理由写"同类历史 n=.. 胜率..% 均收..%")/空仓合法/类型诚实(荐票|观察,荐票≤3)/证据质量: 理由必须含量化证据/认知引用必须当日数据验证 ⑤找因子用因子快检: python 因子快检.py {今日} "条件" ⑥★负面过滤: lhb路读 龙虎榜双源校验_{今日}.json 复核清单; logic路读 风险日历_{今日}.json+中报预增雷达_{今日}.json双源交叉字段; 回填数据引用必须带窗口标注 ⑦★P1/P2数据(若已生成): 开盘验证维_{今日}.json(竞价强+开盘验证强组合可作荐票证据)/日内温度曲线/日内轮动图谱 ⑧schema: 判断{结论/证据/档位/置信度0-100/可证伪条件/独立盲区声明}+荐票{结论/标的[{代码,名称,类型,历史对照,理由}]}+认知迭代+深挖 ⑨零后视镜(只用≤{今日}数据)/零编造/独立判断 ⑩输出路径(★2026-08-17契约修正): _学习/{route}判断_{今日}.json (UTF-8, 五路判断schema) + _学习/{route}_body_{今日}.html (bodies HTML六板块, 题材路=theme_body_{今日}.html) + 题材路另写 题材荐票_{今日}.json(发出版不可覆盖) + 题材龙头判断_{今日}.json(龙头标的[{名称,身位}]+判断{题材:句}) + 题材生命周期判断_{今日}.json(逐线判断{题材:{定性,判据}}+高低切, 判据必可证伪) ⑪★交易计划硬要求(2026-08-17补回, 模拟盘六账本唯一输入源=引擎读 _学习/交易计划_{route}_{今日}.json, 缺=账本静默空仓无告警=8/13起断供5日事故): 每路必须写 _学习/交易计划_{route}_{今日}.json, schema={日期,路,buys:[{代码,名称,权重%,理由,可选buy_gate:{min_gap_pct|max_gap_pct}}],sells:[{代码,腿:open|close,理由,可选sell_switch}],notes}, buys 0~5只, 空仓合法但必须写理由; ★读本路 _学习/_模拟盘/{route}/状态.json, 在持票逐票表态(卖单或notes持有理由, 禁漏票); 发出版不可覆盖; 旧契约 _学习/五路判断_{今日}/ 目录本机不存在勿用
+  45 | 7. ★总审独立spawn: delegate_task 串行再spawn 1个leaf当对抗总审(读五路产物(_学习/{route}判断_{今日}.json 五份)+当日数据+_学习/子agent增强/_战绩画像汇总_{今日}.json(★环境加权: 当前温度档下各路历史胜率, 分歧处采信历史更优的路, n<5不参与), 按 _agent规格/07_总审agent.md 写 _学习/总审_{今日}.json(★2026-09-10校正: 原引用的 总审agent规格_v2.md 本机不存在→规格指向悬空, 是 0908/0909 总审漏写字段的根因; 现指向实际存在的 07_总审agent.md); ★总审 JSON 必须含「指派清单」[{指派ID,指派给,深挖任务,理由,截止,状态}](指派给=auction|lhb|theme|logic|limitup; 无指派写 [] 并写明理由; 字段名固定, 禁止改用「推演指派」等别名——07规格第43/52行原有要求) + 含回填窗口标注+环境加权依据)。若delegate失败, 回退会话内总审并注明"回退模式"
+  46 | 7.5 ★推演(深度推理, 模型=gpt-6-astra): delegate_task 串行再spawn 1个leaf当推演推理员——子agent看不到本prompt, context必须内联: ①必读(绝对路径): D:\股票数据\市场数据\_学习\*判断_{今日}.json(五份) + D:\股票数据\市场数据\_学习\总审_{今日}.json + D:\股票数据\市场数据\复盘\judgment_{今日}.json + D:\股票数据\市场数据\{今日}\summary.json + D:\股票数据\市场数据\_学习\_情绪先行指标.json ②输出: 写 D:\股票数据\市场数据\_学习\推演_{今日}.json, schema: {"日期","来源":"推演推理员(5.6):推演","情绪几度","明日攻防","主线站队","龙头接力","竞价强弱预判","次日可证伪预测":[{"项","预测","判定条件":{"指标","方向",">=","阈值"}}]}(≥5条, 每条必须带判定条件) ③指标白名单: 温度/温度档/涨停数/跌停数/炸板率/最高连板/二板加/两市成交额_亿/涨停家数_净/一进二率/二进三率/高度晋级率/昨停溢价/核按钮率/温度变化/代码封板或代码收红(加"代码"字段)——见 D:\股票数据\市场数据\_agent规格\推演与预判结算_v1.md ④铁律: 零后视镜(只用≤{今日}数据)/零编造/证据带来源路径/中文/UTF-8 ⑤若delegate失败, 回退主agent自己做并注明"回退模式" ⑥★master交易计划(2026-08-17补回, 契约⑪六路之一): 推演员同时写 _学习/交易计划_master_{今日}.json, schema=契约⑪同款(日期/路=master/buys 0~5只含权重理由/sells逐票表态/notes), 读 _学习/_模拟盘/master/状态.json 在持票逐票表态禁漏票, 空仓合法必须写理由, 发出版不可覆盖——依据=五路判断+总审+推演综合裁决
+  47 | 7.6 ★playbook预案单(盘中作战接线, 设计稿v2.0.2):  （★playbook生成.py 本机缺失: 若不存在则跳过该步并如实说明, 不阻塞主链）
+  48 |    a. cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" playbook生成.py {今日}  ←机械生成 route_watchlist(素材日=今日, 输出写 盘中/{明日next_td}/playbook.json; 5路各5槽, 不足留null+缺口登记)
+  49 |    b. ★策略部分(深度推理, 模型=gpt-6-astra): delegate_task 串行再spawn 1个leaf写策略——context内联: ①必读(绝对路径): D:\股票数据\市场数据\_学习\*判断_{今日}.json(五份) + 总审_{今日}.json + D:\股票数据\市场数据\_学习\推演_{今日}.json + D:\股票数据\市场数据\_学习\风险日历_{今日}.json + D:\股票数据\市场数据\盘中\{明日next_td}\playbook.json(7.6a生成, 只改策略字段) ②输出: 读现有playbook.json后只更新 buys/sells/watch/cash_pct/notes 字段 ★watch候选禁止包含素材日(当日)竞价复盘票: 竞价票由执行日早盘竞价池自动进入作战台(source=当日竞价), 晚间复盘watch只收席位/题材/逻辑/质量等隔夜逻辑荐票; 竞价路(auction)复盘结论只进认知/推演, 不进buys/sells/watch。(★route_watchlist字段不得改动), 写回 D:\股票数据\市场数据\盘中\{明日next_td}\playbook.json(目录已由7.6a建; ★发出版不可覆盖); buys每票 weight_pct/reason/trigger:open_range min_gap,max_gap/intraday:abort_if; sells=第七账在持票逐票表态(读 _学习/_模拟盘/intraday/状态.json 持仓, 卖预案必带 ref_px=该票buy_px成本价; 每票必须表态: 写卖出预案或显式"继续持有(理由)", 禁止漏票); 每票 leg/intraday:stop_pct需带ref_px或take_zt, 默认null=不启用; 依据=五路荐票+总审裁决+推演+风险日历踩窗 ③铁律: 止损类默认关闭, 启用必须显式声明+写理由; 零编造/中文/UTF-8 ④若delegate失败, 回退主agent自己做并注明"回退模式"
+  50 | 8. ★自主拓展应答(深度推理, 模型=gpt-6-astra): delegate_task 串行再spawn 1个leaf应答——context内联: ①必读(绝对路径): D:\股票数据\市场数据\_学习\自主拓展清单_{今日}.json + 当日复盘产物(judgment/五路/推演) ②输出: 逐项应答写 D:\股票数据\市场数据\_学习\自主拓展应答_{今日}.json(立项/并入/不深挖+可证伪理由)——C24依赖 ③铁律: 零编造/零后视镜/中文/UTF-8 ④若delegate失败, 回退主agent自己做并注明"回退模式"
+  51 | 9. ★五路判断注入(收集器脚本本机缺失, 宿主替代): 逐路验证子agent产物 _学习/{route}判断_{今日}.json（五路判断schema: 日期/路/判断{结论/证据/档位/置信度/可证伪条件/独立盲区声明}/荐票/认知迭代/深挖; 零后视镜=只用≤{今日}数据; 荐票标的必须∈当日zt_pool）后, 把 _学习/{route}_body_{今日}.html 注入 judgment_{今日}.json bodies[{route}]（锚点契约: 头部区洞察(agent)卡必写/<!--LEDGER-->成对/h2六板块齐全/div配平）; 题材路=题材命门, 输出 题材荐票_{今日}.json(发出版不可覆盖) + theme_body_{今日}.html(标准六段: 一荐票卡/二三级判定/三主流生命周期/四龙头识别/五深挖/六认知) + 题材龙头判断_{今日}.json + 题材生命周期判断_{今日}.json, 详见技能 sentiment-theme-route
+  52 | 9b. ★fact事实快照(fact层v1, 涨停路域): cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" 涨停fact.py {今日}（多源→单一权威值+来源+质量枚举, 写 _学习/fact_{今日}.json; conflicted/missing=exit 1 点名; 五路子agent与出页哨兵共享此文件省token; 题材路核对: 题材线数=对链条/归位ABC=来源档计数）9c. ★v4影子重放(门槛加速): cd "D:\股票数据\sentiment_review_v4" && env -u PYTHONPATH PYTHONPATH="D:\股票数据\sentiment_review_v4\src" "D:\股票数据\.venv312\Scripts\python.exe" -m sentiment_v4.cli {今日}（只读shadow: 写 build/facts-{今日}.json+audit-{今日}.json, 归档日+forward日累计20日门槛; exit=2=门禁阻断是预期非失败, 缺输入如实报错不硬造）
+  53 | 10. ★台账三件套注入: 涨停复盘台账.py {今日} --from-data → 龙虎榜台账.py {今日} --from-data → 竞价池结算归档.py --inject
+  54 | 11. ★认知迭代全量更新: 认知迭代全量更新.py {今日} （★认知迭代全量更新.py 本机缺失: 若不存在则跳过并如实说明, 不阻塞主链）
+  55 | 11b. ★周期投票(认知阶段⑥, 2026-08-07补回: 7/28精简prompt时条款丢失致投票台账停更在7/27):
+  56 |   cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" 周期投票.py settle {今日}(结算昨晚方向票)→写主判json→五路各写 周期投票_{route}_{今日}.json(direction只许"升/平/降"枚举,禁自由文本;隔离禁看他路票)→tally(≥3/5或加权≥0.60当晚复议,改判/维持都写理由)→board产 周期投票牌_{今日}.html
+  57 | 11c. ★认知迭代写作纪律(2026-08-07用户验收): 当日认知必须写入 cycle 页"七 我的认知迭代"时间线tli顶部(最新在上); 禁止把认知条目写在竞价池段/观察点区等非认知位置——违规会被出页目检与哨兵C6拦截。
+  58 | 12. ★第七账结算: cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" 盘中账本结算.py settle {今日}（幂等done守卫） （★盘中账本结算.py 本机缺失: 若不存在则跳过并如实说明, 不阻塞主链）
+  59 | 12c. ★概览页 Top5 荐票卡(2026-09-11新增: index页首段「一 Top5 荐票 · 跨路筛选」, 位置=模拟视盘看板正下方): cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" 跨路荐票.py {今日}  ←读五路发出版(竞价池评分/席位荐票/题材荐票/逻辑荐票/涨停质量荐票)并集去重→按"被几路同时选中(共振路数)→路内位置→执行期望"排序取前5, 每行标注来源路+该路核心指标; 产出 _学习/跨路荐票_{今日}.json + 跨路荐票卡_{今日}.html。★必须在步骤13 生成盯盘台.py 之前跑完, 否则概览荐票段为空; 空仓时如实输出"空仓: 本日不荐票"不凑票。★概览不自行荐票(只做跨路筛选汇总)。(注: theme/logic 两页荐票卡由 module_render_theme/logic.py 的 r_reco_table 从各自发出版直渲, 不需另跑脚本)
+  60 | 13. 生成盯盘台HTML: 生成盯盘台.py {今日}（内置模拟盘inject+六页PAPERTRADE自检; intraday作战台读warboard; ★logic页自动追加风险日历踩窗卡——P1入页）
+  61 | 13b. ★盘中作战台重建(2026-08-25用户验收根治19:30-21:00空窗): cd \"D:\股票数据\市场数据\" && env -u PYTHONPATH \"D:\股票数据\.venv312\Scripts\python.exe\" warboard_build.py {今日}（五路判断标的+总裁决依据→盘中/{今日}/warboard.json→重渲 复盘/盯盘台/intraday.html; 幂等: 已存在跳过, 可加 --force 重跑; 完成后验证 intraday.html mtime 晚于本次运行即成功）
+  62 | 14. ★出页检查: ①题材路专属核对: 若 theme数据核对.py 存在则跑 theme数据核对.py {今日}（唯一真源互证/6有回源/四维null显式/荐票∈zt_pool/fact一致, ★2026-08-12接入管道）——FAIL 查3-13题材路步骤; ①b周期情绪路专属核对: 若 cycle数据核对.py 存在则跑 cycle数据核对.py {今日}（量能回源+米开档位/先行指标断档或读数/连板梯队分布+最高板个股/五路投票主判+断档标注/LLM七板块或断档卡/负面注入, ★2026-08-12接入管道）——FAIL 查11b周期投票+先行指标补跑+cycle body; ②复盘一致性哨兵.py {今日}——FAIL 必须逐条处置: 台账/注入类=查9-12是否漏跑; C24=查第8步应答+tick; C22盘中场次=查7个cron enabled; C29配额水位=查回填预算; 剩余宿主回填白名单(C5 bars_cache/C11 THS池/C17分桶库)如实登记
+  63 | 14b. ★master结算(T+1对账, 2026-08-17接线): cd "D:\股票数据\市场数据" && env -u PYTHONPATH "D:\股票数据\.venv312\Scripts\python.exe" master结算.py {昨日}（读 总审_{昨日}.json 指派清单/线索跟踪/认知迭代, 按指派截止日查 judgment_{截止日}.json bodies 是否含"承接Master指派[ID]"响应→写 _master结算.jsonl; ★时序铁律: 总审第7步晚于五路第6步, 昨日指派由今日五路承接, 脚本已按截止日查证; 若 delegation 五路 context 未收到昨日总审指派清单=承接缺失, 如实登记不补造）
+  64 | 15. 如果 D:\股票数据\市场数据\复盘\latest.html 不是跳转页，更新为跳转到 盯盘台/index.html
+  65 | 
+  66 | 每一步失败则报错终止。生成完成后报告：生成完成后报告：五路独立判断摘要(各路档位+置信度+荐票数+框架引用+主动查证记录+负面过滤处置)+总审对抗结论(分歧裁决+置信度+环境加权依据+昨日战绩验收)、昨日五路战绩结算+昨日预判结算(推演命中率)+昨日条件决断校准(兑现率)、今日推演摘要、playbook预案单摘要(买/卖/watch票数+槽位占用+踩窗处置)、第七账净值、龙虎榜双源复核、风险日历踩窗、开盘验证维样本、日内图谱状态、情景判定、温度、仓位、7页是否齐全、哨兵FAIL清单及处置。
+  67 | 
+  68 | ★2026-09-09抗过载与断点续跑门（正式契约，不得省略）：
+  69 | - 五路 delegate_task 分批错峰：第一批 auction/lhb，第二批 theme/logic，第三批 limitup；每批最多2路，上一批只对成功路写完成标记后才进入下一批。
+  70 | - 每路独立状态写入 _学习/_运行状态/{route}_{今日}.json，字段 status=running|pass|retrying|fail、attempts、model、provider、error_class、updated_at、artifact_paths；已有 pass 且产物schema/日期/mtime通过核验的路不得重跑。
+  71 | - provider transient 仅对当前路指数退避重试；仍失败才把当前路切GPT-5.6-sol并重试一次。429/overloaded/420秒超时属于provider transient；JSON/schema/数据缺失/source changed while freezing/权限错误属于业务或数据阻断，不得换模型掩盖。
+  72 | - 单路失败不得伪造完成、不得整批假成功；可独立继续的非依赖机械步骤照实写 unavailable/timeout，依赖步骤停止并报告真实错误。
+  73 | - 总审只在五路产物全部通过日期/as-of/schema核验后运行；推演只在总审通过后运行；已完成的取数、五路、总审、推演、台账和判断输入只复用，不重复每日链。
+  74 | - 最终放行必须同时核验总审、推演、review.json、archive/{今日}.html、专属核对与C1-C28哨兵；cron completed/ok 不能替代产物验收，任何FAIL都不得通知完成。
+
+===== 20260930 产物存在性(按 mtime) =====
+OK        09-30 18:22  judgment_20260930.json  134B
+MISSING  总审_20260930.json
+MISSING  推演_20260930.json
+MISSING  周期投票_*20260930.json
+MISSING  周期主判_20260930.json
+MISSING  playbook.json
+OK        09-30 19:37  风险事件_20260930.json  22739B
+OK        09-30 19:37  风险日历_20260930.json  808B
+OK        09-30 18:22  涨停质量荐票_20260930.json  55364B
+OK        09-30 18:23  席位荐票_20260930.json  3475B
+OK        09-30 18:12  题材归位_20260930.json  40147B
+OK        09-30 18:22  市场温度卡_20260930.html  27442B
+OK        09-30 18:22  竞价评分_20260930.json  11330B
+OK        09-30 18:22  质量库折叠_20260930.html  9352B
+MISSING  涨停复盘台账_20260930.json
+MISSING  龙虎榜台账_20260930.json
+
+===== 20260930 目录/盘中/模拟盘 =====
+D:\股票数据\市场数据\20260930 exists=True
+D:\股票数据\市场数据\盘中\20260930 exists=True
+D:\股票数据\市场数据\复盘\盯盘台\_history exists=False
+D:\股票数据\市场数据\.review_staging exists=True
+盘中/20260930/playbook.json exists=False
+judgment_20260930.json 内容: {
+ "date": "20260930",
+ "更新label": "20260930 复盘",
+ "一句话": "",
+ "ticker": "",
+ "bodies": {},
+ "archive_body": ""
+}
+
+===== 最近一次 9/30 stage(review_staging) =====
+staging dirs: 无

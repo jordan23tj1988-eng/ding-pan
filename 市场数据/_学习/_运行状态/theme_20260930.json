@@ -1,13 +1,25 @@
 {
   "route": "theme",
   "date": "20260930",
+  "as_of": "20260930",
   "status": "pass",
   "attempts": 1,
   "model": "gpt-6-astra",
-  "provider": "openai-codex",
-  "error_class": null,
-  "updated_at": "2026-09-30T18:12:20+08:00",
-  "artifact_paths": [
-    "D:/股票数据/市场数据/_学习/题材归位_20260930.json"
+  "outputs": [
+    "D:/股票数据/市场数据/_学习/theme判断_20260930.json",
+    "D:/股票数据/市场数据/_学习/theme_body_20260930.html",
+    "D:/股票数据/市场数据/_学习/交易计划_theme_20260930.json",
+    "D:/股票数据/市场数据/_学习/_运行状态/theme_20260930.json"
+  ],
+  "errors": [],
+  "checks": [
+    "judgment:json",
+    "plan:json",
+    "date/as_of",
+    "html:h2=6",
+    "html:no-em-dash",
+    "html:no-future-date",
+    "observations:3-in-zt_pool",
+    "sources:9-exist"
   ]
 }

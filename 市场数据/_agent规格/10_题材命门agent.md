@@ -94,3 +94,6 @@
 - 在当日第五段「自主深挖」里响应, 格式 `承接Master指派[指派ID]: {深挖任务} → 深挖结果:{结论}`;
 - 若指派给本路但本路判断不成立, 也须应答(说明为何不接/证伪), 不得沉默;
 - 深挖结论必须带可结算判定条件(次日可机械化验证), 守 A/C 档纪律。
+
+## ★能力预加载与消费回执（强制）
+判断前读取 `_学习/能力预加载_{d}.json` 的 `routes.theme`。逐条回应 `records`：采用写入 `applied`（必须有 `effect`、`source_locator`），不采用写入 `rejected`（必须有 `reason`）；无记录也必须写 `status=no_eligible_capabilities`。结果汇入 `_学习/能力使用回执_{d}.json`，不得用未验证的 capability 状态改判。

@@ -1,0 +1,83 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>能力进化闭环 · 证据卡 2026-10-01</title>
+<style>
+body{background:#0f1216;color:#e6e9ee;font-family:"Microsoft YaHei",system-ui,sans-serif;margin:0;padding:28px 30px 60px;line-height:1.65}
+h1{font-size:22px;margin:0 0 6px} h2{font-size:16px;margin:28px 0 10px;color:#9ad0ff;border-left:3px solid #2f6ea8;padding-left:9px}
+.sub{color:#8b949e;font-size:12.5px;margin-bottom:18px}
+.grid{display:flex;gap:12px;flex-wrap:wrap}
+.stat{background:#161b22;border:1px solid #232a34;border-radius:9px;padding:11px 15px;min-width:126px}
+.stat b{display:block;font-size:20px} .stat small{color:#8b949e;font-size:11.5px}
+.chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:4px 0 0}
+.step{background:#12181f;border:1px solid #2b3644;border-radius:8px;padding:9px 12px;font-size:12.5px;max-width:250px}
+.step b{display:block;color:#9ad0ff;font-size:12.5px;margin-bottom:3px}
+.arrow{color:#5b6b7d}
+.card{background:#141a21;border:1px solid #232a34;border-radius:10px;padding:14px 16px;margin:12px 0}
+.card h3{margin:0 0 8px;font-size:15px}
+.meta{margin-bottom:8px} .tag{display:inline-block;background:#1c2632;border:1px solid #2b3644;border-radius:6px;padding:1.5px 7px;font-size:11px;margin:0 5px 5px 0;color:#c7d2de}
+.tag.ok{border-color:#2f6b46;color:#8ee0a8} .tag.warn{border-color:#6b5a2f;color:#e8d18a}
+table{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:12.5px}
+th,td{border:1px solid #232a34;padding:5px 8px;text-align:left} th{background:#1a2129;color:#9fb3c8;font-weight:600}
+code{background:#1c2632;border-radius:4px;padding:1px 5px;font-size:12px}
+.dim{color:#8b949e;font-size:12px;margin:6px 0 0}
+.honest{background:#1b1710;border:1px solid #6b5a2f;border-radius:9px;padding:12px 15px;font-size:13px}
+.honest b{color:#e8d18a}
+</style></head><body>
+<h1>能力进化闭环 · 证据卡</h1>
+<div class="sub">生成时间 2026-10-01（含 #220 方案A C14 边界固化）· 数据全部现读自 <code>D:\股票数据\市场数据\_学习</code>，无任何手工填写数字</div>
+
+<h2>一、闭环链路（每次复盘强制走完）</h2>
+<div class="chain">
+<div class="step"><b>① 先验加载</b>能力进化接线.py prepare {'meta': {'updated': '2026-10-01', 'rule': '任何升级（Hermes 软件升级/变更总账新登记/驾驶舱功能升级/层能力升级）后必须同步 bump 本台账对应版本：改版本号 + 把该层 last_change 更新为触发它的变更总账号。每个新登记号审阅：涉及升级→bump+该层last_change=该号；不涉及→仅推进 meta.last_change=该号。驾驶舱自动对比 hermes --version 与变更总账最新号，台账滞后会黄条提醒。建立日基线：全部层 v1.0。', 'last_change': '219'}, 'system': {'hermes_app': 'v0.20.0', 'note': 'Hermes Agent 本体版本（探测 hermes --version，与台账不符会黄条提醒）', 'review_prod': 'v1.40', 'note_prod': '复盘生产=市场数据/ 生产脚本(真在跑)；v1.39→v1.40(#219) 能力进化闭环接线(发现—验证—能力化—复用—命中)：新增 `能力进化接线.py`(prepare/consume/validate, 七域回执 fail-closed, 可复用池门槛=validation=validated 且 capitalized=True 且带能力规则, ACTIVATION_DATE=20261001) 与 `能力验证闭环.py`(T+1 机械验证→能力化; `认知验证闭环.py` 改为同源转发, 禁第二份验证逻辑)；`自我进化闭环.py` 重建引入 CARRY_FIELDS/TERMINAL_STATES 承接验证字段(不承接=次日断链)；`review_learning.py` 审计段新增 capability_consumption 校验 + 总审缺 `能力承接` 即 FAIL；总审/七路 agent 规格与 cron prompt 同步强制；`review_contract.TOTAL_AUDIT_KEYS` 增 `能力承接`。复盘生产=市场数据/ 生产脚本(真在跑)；v1.38→v1.39(#201) 补强三件：新增 `复盘链健康检查.py`(连续性 + 上一交易日发出版逐票结算覆盖率≥90% 门禁, 缺源告警/缺结算≠无荐票, 不补写历史收益) 与 `认知验证闭环.py`(只写 review_log 审计, 不自动判命中)，`认知迭代全量更新.py` 收尾自动调用验证闭环，`能力进化模块._has_result` 收紧(审计日志≠结果)；调度恢复(daily-review/failover/offline-replay/closeout 重新 ARM)+ 新增健康 watchdog `a62c2a1837a1`(交易日 23:15)；`hermes gateway install` 补回登录自启项。v1.37→v1.38(#200) review_pages.py 展示层去噪 v4.4。v1.36→v1.37(#199) 两块公共能力唯一真源 `能力进化模块.py` + 发布门禁 validate_capability_blocks + 哨兵 C14 逐字节同源比对。v1.35 是 _链路地图.md 文档版本戳(非系统语义化版本)，系统演进靠变更总账 #N', 'review_v4': '4.0.0-alpha.2', 'note_v4': 'v4 候选=sentiment_review_v4/ 新系统(只读shadow 未接管生产)；语义化版本取 README Version 行', 'cockpit': 'v2.9', 'note_cockpit': 'Hermes 软件驾驶舱自身版本（v2.5 版本台账区; v2.6 项目能力版本聚合卡; v2.7 复盘生产双徽章; v2.8 布局整理; v2.9 项目能力版本卡三列分组 每项一行）'}, 'layers': [{'key': 'surface', 'name': '🖥 表面层', 'version': 'v1.0', 'note': '桌面 app / CLI / 消息网关（微信·Telegram）', 'last_change': '121'}, {'key': 'core', 'name': '🧭 核心层', 'version': 'v1.0', 'note': '模型路由 · 工具循环 · 会话管理（state.db）', 'last_change': '124'}, {'key': 'knowledge', 'name': '🧠 知识层', 'version': 'v1.0', 'note': '记忆（MEMORY/USER）· 技能（skills/）', 'last_change': '121'}, {'key': 'orchestration', 'name': '⏰ 编排层', 'version': 'v1.3', 'note': 'cron 任务 · scripts · hooks · webhooks；v1.1 复盘 prompt 真源治理：总审必出『指派清单』硬要求写进 jobs.json 内嵌 prompt、规格指向由不存在的 总审agent规格_v2.md 校正为 07_总审agent.md（#158）；v1.2(#201) 调度连续性修复：daily-review/failover/offline-replay/closeout 重新 ARM（此前 enabled=false + 补偿式 catch-up），新增 no-agent 健康 watchdog `a62c2a1837a1`（交易日 23:15，仅失败告警），`hermes gateway install` 补回登录自启项——**网关不在线时全部 cron 静默不触发**，这是 0914–0918 断档的结构性根因；v1.3(#219) 能力进化闭环硬门禁写进 jobs.json 内嵌 prompt：派判断 agent 前先 `能力进化接线.py prepare {今日}`，七域写回执，收尾 `consume {今日}`，失败则总审/出页 FAIL', 'last_change': '219'}, {'key': 'execution', 'name': '🔧 执行层', 'version': 'v1.0', 'note': '文件 / 终端 / 网络 / 代理服务（8899·8902）', 'last_change': '121'}, {'key': 'external', 'name': '📁 外部域', 'version': 'v1.6', 'note': '项目文件（股票数据）· 产物 · 临时区；v1.1 产物/临时区；v1.2 复盘审计口径：源日断言（在册日缺 指派清单 即 FAIL）+ 历史欠账豁免台账 + master结算.py 用法防呆（#159）；v1.3(#199) 两块公共能力唯一真源节点 + 发布冻结输入面收口；v1.4(#200) review_pages.py 展示层去噪 v4.4(徽章/来源/证据回链字与旧版碎片卡退出展示层，仅改可见性)；v1.5(#201) 市场数据/ 新增两个生产节点 `复盘链健康检查.py`(结算覆盖率门禁) 与 `认知验证闭环.py`(认知到期审计)，_链路地图 v1.13；v1.6(#219) 市场数据/ 新增 `能力进化接线.py`+`能力验证闭环.py` 两个生产节点并把能力闭环接入日链，_链路地图 v1.18', 'last_change': '219'}]}<br>只放行 validated+capitalized+带规则</div><div class="arrow">→</div>
+<div class="step"><b>② 七域承接</b>各路写 能力使用回执_{'meta': {'updated': '2026-10-01', 'rule': '任何升级（Hermes 软件升级/变更总账新登记/驾驶舱功能升级/层能力升级）后必须同步 bump 本台账对应版本：改版本号 + 把该层 last_change 更新为触发它的变更总账号。每个新登记号审阅：涉及升级→bump+该层last_change=该号；不涉及→仅推进 meta.last_change=该号。驾驶舱自动对比 hermes --version 与变更总账最新号，台账滞后会黄条提醒。建立日基线：全部层 v1.0。', 'last_change': '219'}, 'system': {'hermes_app': 'v0.20.0', 'note': 'Hermes Agent 本体版本（探测 hermes --version，与台账不符会黄条提醒）', 'review_prod': 'v1.40', 'note_prod': '复盘生产=市场数据/ 生产脚本(真在跑)；v1.39→v1.40(#219) 能力进化闭环接线(发现—验证—能力化—复用—命中)：新增 `能力进化接线.py`(prepare/consume/validate, 七域回执 fail-closed, 可复用池门槛=validation=validated 且 capitalized=True 且带能力规则, ACTIVATION_DATE=20261001) 与 `能力验证闭环.py`(T+1 机械验证→能力化; `认知验证闭环.py` 改为同源转发, 禁第二份验证逻辑)；`自我进化闭环.py` 重建引入 CARRY_FIELDS/TERMINAL_STATES 承接验证字段(不承接=次日断链)；`review_learning.py` 审计段新增 capability_consumption 校验 + 总审缺 `能力承接` 即 FAIL；总审/七路 agent 规格与 cron prompt 同步强制；`review_contract.TOTAL_AUDIT_KEYS` 增 `能力承接`。复盘生产=市场数据/ 生产脚本(真在跑)；v1.38→v1.39(#201) 补强三件：新增 `复盘链健康检查.py`(连续性 + 上一交易日发出版逐票结算覆盖率≥90% 门禁, 缺源告警/缺结算≠无荐票, 不补写历史收益) 与 `认知验证闭环.py`(只写 review_log 审计, 不自动判命中)，`认知迭代全量更新.py` 收尾自动调用验证闭环，`能力进化模块._has_result` 收紧(审计日志≠结果)；调度恢复(daily-review/failover/offline-replay/closeout 重新 ARM)+ 新增健康 watchdog `a62c2a1837a1`(交易日 23:15)；`hermes gateway install` 补回登录自启项。v1.37→v1.38(#200) review_pages.py 展示层去噪 v4.4。v1.36→v1.37(#199) 两块公共能力唯一真源 `能力进化模块.py` + 发布门禁 validate_capability_blocks + 哨兵 C14 逐字节同源比对。v1.35 是 _链路地图.md 文档版本戳(非系统语义化版本)，系统演进靠变更总账 #N', 'review_v4': '4.0.0-alpha.2', 'note_v4': 'v4 候选=sentiment_review_v4/ 新系统(只读shadow 未接管生产)；语义化版本取 README Version 行', 'cockpit': 'v2.9', 'note_cockpit': 'Hermes 软件驾驶舱自身版本（v2.5 版本台账区; v2.6 项目能力版本聚合卡; v2.7 复盘生产双徽章; v2.8 布局整理; v2.9 项目能力版本卡三列分组 每项一行）'}, 'layers': [{'key': 'surface', 'name': '🖥 表面层', 'version': 'v1.0', 'note': '桌面 app / CLI / 消息网关（微信·Telegram）', 'last_change': '121'}, {'key': 'core', 'name': '🧭 核心层', 'version': 'v1.0', 'note': '模型路由 · 工具循环 · 会话管理（state.db）', 'last_change': '124'}, {'key': 'knowledge', 'name': '🧠 知识层', 'version': 'v1.0', 'note': '记忆（MEMORY/USER）· 技能（skills/）', 'last_change': '121'}, {'key': 'orchestration', 'name': '⏰ 编排层', 'version': 'v1.3', 'note': 'cron 任务 · scripts · hooks · webhooks；v1.1 复盘 prompt 真源治理：总审必出『指派清单』硬要求写进 jobs.json 内嵌 prompt、规格指向由不存在的 总审agent规格_v2.md 校正为 07_总审agent.md（#158）；v1.2(#201) 调度连续性修复：daily-review/failover/offline-replay/closeout 重新 ARM（此前 enabled=false + 补偿式 catch-up），新增 no-agent 健康 watchdog `a62c2a1837a1`（交易日 23:15，仅失败告警），`hermes gateway install` 补回登录自启项——**网关不在线时全部 cron 静默不触发**，这是 0914–0918 断档的结构性根因；v1.3(#219) 能力进化闭环硬门禁写进 jobs.json 内嵌 prompt：派判断 agent 前先 `能力进化接线.py prepare {今日}`，七域写回执，收尾 `consume {今日}`，失败则总审/出页 FAIL', 'last_change': '219'}, {'key': 'execution', 'name': '🔧 执行层', 'version': 'v1.0', 'note': '文件 / 终端 / 网络 / 代理服务（8899·8902）', 'last_change': '121'}, {'key': 'external', 'name': '📁 外部域', 'version': 'v1.6', 'note': '项目文件（股票数据）· 产物 · 临时区；v1.1 产物/临时区；v1.2 复盘审计口径：源日断言（在册日缺 指派清单 即 FAIL）+ 历史欠账豁免台账 + master结算.py 用法防呆（#159）；v1.3(#199) 两块公共能力唯一真源节点 + 发布冻结输入面收口；v1.4(#200) review_pages.py 展示层去噪 v4.4(徽章/来源/证据回链字与旧版碎片卡退出展示层，仅改可见性)；v1.5(#201) 市场数据/ 新增两个生产节点 `复盘链健康检查.py`(结算覆盖率门禁) 与 `认知验证闭环.py`(认知到期审计)，_链路地图 v1.13；v1.6(#219) 市场数据/ 新增 `能力进化接线.py`+`能力验证闭环.py` 两个生产节点并把能力闭环接入日链，_链路地图 v1.18', 'last_change': '219'}]}.json<br>采用须有 effect+源定位；拒绝须有理由</div><div class="arrow">→</div>
+<div class="step"><b>③ 回写命中</b>consume {'meta': {'updated': '2026-10-01', 'rule': '任何升级（Hermes 软件升级/变更总账新登记/驾驶舱功能升级/层能力升级）后必须同步 bump 本台账对应版本：改版本号 + 把该层 last_change 更新为触发它的变更总账号。每个新登记号审阅：涉及升级→bump+该层last_change=该号；不涉及→仅推进 meta.last_change=该号。驾驶舱自动对比 hermes --version 与变更总账最新号，台账滞后会黄条提醒。建立日基线：全部层 v1.0。', 'last_change': '219'}, 'system': {'hermes_app': 'v0.20.0', 'note': 'Hermes Agent 本体版本（探测 hermes --version，与台账不符会黄条提醒）', 'review_prod': 'v1.40', 'note_prod': '复盘生产=市场数据/ 生产脚本(真在跑)；v1.39→v1.40(#219) 能力进化闭环接线(发现—验证—能力化—复用—命中)：新增 `能力进化接线.py`(prepare/consume/validate, 七域回执 fail-closed, 可复用池门槛=validation=validated 且 capitalized=True 且带能力规则, ACTIVATION_DATE=20261001) 与 `能力验证闭环.py`(T+1 机械验证→能力化; `认知验证闭环.py` 改为同源转发, 禁第二份验证逻辑)；`自我进化闭环.py` 重建引入 CARRY_FIELDS/TERMINAL_STATES 承接验证字段(不承接=次日断链)；`review_learning.py` 审计段新增 capability_consumption 校验 + 总审缺 `能力承接` 即 FAIL；总审/七路 agent 规格与 cron prompt 同步强制；`review_contract.TOTAL_AUDIT_KEYS` 增 `能力承接`。复盘生产=市场数据/ 生产脚本(真在跑)；v1.38→v1.39(#201) 补强三件：新增 `复盘链健康检查.py`(连续性 + 上一交易日发出版逐票结算覆盖率≥90% 门禁, 缺源告警/缺结算≠无荐票, 不补写历史收益) 与 `认知验证闭环.py`(只写 review_log 审计, 不自动判命中)，`认知迭代全量更新.py` 收尾自动调用验证闭环，`能力进化模块._has_result` 收紧(审计日志≠结果)；调度恢复(daily-review/failover/offline-replay/closeout 重新 ARM)+ 新增健康 watchdog `a62c2a1837a1`(交易日 23:15)；`hermes gateway install` 补回登录自启项。v1.37→v1.38(#200) review_pages.py 展示层去噪 v4.4。v1.36→v1.37(#199) 两块公共能力唯一真源 `能力进化模块.py` + 发布门禁 validate_capability_blocks + 哨兵 C14 逐字节同源比对。v1.35 是 _链路地图.md 文档版本戳(非系统语义化版本)，系统演进靠变更总账 #N', 'review_v4': '4.0.0-alpha.2', 'note_v4': 'v4 候选=sentiment_review_v4/ 新系统(只读shadow 未接管生产)；语义化版本取 README Version 行', 'cockpit': 'v2.9', 'note_cockpit': 'Hermes 软件驾驶舱自身版本（v2.5 版本台账区; v2.6 项目能力版本聚合卡; v2.7 复盘生产双徽章; v2.8 布局整理; v2.9 项目能力版本卡三列分组 每项一行）'}, 'layers': [{'key': 'surface', 'name': '🖥 表面层', 'version': 'v1.0', 'note': '桌面 app / CLI / 消息网关（微信·Telegram）', 'last_change': '121'}, {'key': 'core', 'name': '🧭 核心层', 'version': 'v1.0', 'note': '模型路由 · 工具循环 · 会话管理（state.db）', 'last_change': '124'}, {'key': 'knowledge', 'name': '🧠 知识层', 'version': 'v1.0', 'note': '记忆（MEMORY/USER）· 技能（skills/）', 'last_change': '121'}, {'key': 'orchestration', 'name': '⏰ 编排层', 'version': 'v1.3', 'note': 'cron 任务 · scripts · hooks · webhooks；v1.1 复盘 prompt 真源治理：总审必出『指派清单』硬要求写进 jobs.json 内嵌 prompt、规格指向由不存在的 总审agent规格_v2.md 校正为 07_总审agent.md（#158）；v1.2(#201) 调度连续性修复：daily-review/failover/offline-replay/closeout 重新 ARM（此前 enabled=false + 补偿式 catch-up），新增 no-agent 健康 watchdog `a62c2a1837a1`（交易日 23:15，仅失败告警），`hermes gateway install` 补回登录自启项——**网关不在线时全部 cron 静默不触发**，这是 0914–0918 断档的结构性根因；v1.3(#219) 能力进化闭环硬门禁写进 jobs.json 内嵌 prompt：派判断 agent 前先 `能力进化接线.py prepare {今日}`，七域写回执，收尾 `consume {今日}`，失败则总审/出页 FAIL', 'last_change': '219'}, {'key': 'execution', 'name': '🔧 执行层', 'version': 'v1.0', 'note': '文件 / 终端 / 网络 / 代理服务（8899·8902）', 'last_change': '121'}, {'key': 'external', 'name': '📁 外部域', 'version': 'v1.6', 'note': '项目文件（股票数据）· 产物 · 临时区；v1.1 产物/临时区；v1.2 复盘审计口径：源日断言（在册日缺 指派清单 即 FAIL）+ 历史欠账豁免台账 + master结算.py 用法防呆（#159）；v1.3(#199) 两块公共能力唯一真源节点 + 发布冻结输入面收口；v1.4(#200) review_pages.py 展示层去噪 v4.4(徽章/来源/证据回链字与旧版碎片卡退出展示层，仅改可见性)；v1.5(#201) 市场数据/ 新增两个生产节点 `复盘链健康检查.py`(结算覆盖率门禁) 与 `认知验证闭环.py`(认知到期审计)，_链路地图 v1.13；v1.6(#219) 市场数据/ 新增 `能力进化接线.py`+`能力验证闭环.py` 两个生产节点并把能力闭环接入日链，_链路地图 v1.18', 'last_change': '219'}]}<br>显式 adopted 才 +reused_count</div><div class="arrow">→</div>
+<div class="step"><b>④ T+1 机械验证</b>能力验证闭环.py<br>读绑定证据；不通过→refuted</div><div class="arrow">→</div>
+<div class="step"><b>⑤ 能力化&次日复用</b>重建须承接验证字段<br>否则次日断链</div>
+</div>
+
+<h2>二、今日真实状态（两能力库）</h2>
+<div class="grid">
+<div class="stat"><b>21</b><small>自主拓展 · 总条目</small></div>
+<div class="stat"><b>2</b><small>已机械验证</small></div>
+<div class="stat"><b>2</b><small>已能力化</small></div>
+<div class="stat"><b>2</b><small>可复用(进次日判断层)</small></div>
+<div class="stat"><b>2</b><small>命中次数</small></div>
+<div class="stat"><b>0</b><small>被复用次数</small></div>
+<div class="stat"><b>1</b><small>已证伪</small></div>
+</div>
+<div class="grid" style="margin-top:10px">
+<div class="stat"><b>2011</b><small>认知迭代 · 总条目</small></div>
+<div class="stat"><b>0</b><small>已机械验证</small></div>
+<div class="stat"><b>0</b><small>可复用</small></div>
+<div class="stat"><b>0</b><small>命中次数</small></div>
+</div>
+
+<h2>三、当前可复用能力池（2 条）— 次日判断层会先加载它们</h2>
+<div class="card"><h3>涨停质量库·换手率因子有效（选票保留换手率维度）</h3>
+<div class="meta"><span class="tag">limitup</span><span class="tag">extension:cap-limitup-turnover-valid</span>
+<span class="tag ok">validation=validated</span><span class="tag ok">capitalized=True</span>
+<span class="tag">hit_count=1</span><span class="tag warn">reused_count=None</span></div>
+<p><b>能力规则</b>：质量分选票时保留换手率维度；该因子在质量库中状态=有效即可用</p>
+<p><b>适用边界</b>：窗口20250701~20260930，样本≥2000；因子状态被淘汰即失效</p>
+<p><b>可证伪条件</b>：若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效</p>
+<table><thead><tr><th>证据文件</th><th>字段路径</th><th>判据</th><th>实际值(现读)</th><th>结果</th><th>证据日</th></tr></thead><tbody><tr><td>_涨停质量库.json</td><td><code>因子.换手率.状态</code></td><td>eq 有效</td><td><b>有效</b></td><td>✅通过</td><td>20260930</td></tr><tr><td>_涨停质量库.json</td><td><code>样本</code></td><td>ge 2000</td><td><b>18907</b></td><td>✅通过</td><td>20260930</td></tr></tbody></table>
+<p class="dim">交叉核对：证据日 20261001 不晚于结算日；字段由 <code>能力验证闭环.py</code> 机械读取，非人工填写。</p></div><div class="card"><h3>龙虎榜质量库·净买占比因子有效（席位判读纳入净买占比）</h3>
+<div class="meta"><span class="tag">lhb</span><span class="tag">extension:cap-lhb-netbuy-valid</span>
+<span class="tag ok">validation=validated</span><span class="tag ok">capitalized=True</span>
+<span class="tag">hit_count=1</span><span class="tag warn">reused_count=None</span></div>
+<p><b>能力规则</b>：席位判读纳入净买占比维度；该因子在龙虎榜质量库中状态=有效即可用</p>
+<p><b>适用边界</b>：窗口20260401~20260708，样本≥2000；因子状态被淘汰即失效</p>
+<p><b>可证伪条件</b>：若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效</p>
+<table><thead><tr><th>证据文件</th><th>字段路径</th><th>判据</th><th>实际值(现读)</th><th>结果</th><th>证据日</th></tr></thead><tbody><tr><td>_龙虎榜质量库.json</td><td><code>因子.净买占比.状态</code></td><td>eq 有效</td><td><b>有效</b></td><td>✅通过</td><td>20260710</td></tr><tr><td>_龙虎榜质量库.json</td><td><code>样本</code></td><td>ge 2000</td><td><b>4607</b></td><td>✅通过</td><td>20260710</td></tr></tbody></table>
+<p class="dim">交叉核对：证据日 20261001 不晚于结算日；字段由 <code>能力验证闭环.py</code> 机械读取，非人工填写。</p></div>
+
+<h2>四、诚实边界（未闭环的部分，不掩饰）</h2>
+<div class="honest">
+<p><b>① 认知迭代侧可复用能力 = 0。</b>2011 条仍全是"经验/待验证"。改为"只有认知路在判断时写出结构化验证规格，且 T+1 证据机械通过"才晋升——系统不替它编造命中。</p>
+<p><b>② 复用次数(reused_count)目前 =0。</b>要等 2026-10-02 真实复盘跑完 ②③步才会计数（今天做的是链路接通与 T+1 验证，不是伪造一次复用）。</p>
+<p><b>③ C14 历史日边界已按方案A固化成哨兵行为（#220）</b>：`复盘一致性哨兵.py` C14 用机械判据分流——"
+"能力账本 mtime 晚于页面 mtime ⇒ 该页发布后账本又被写过、本路基准随活账本前移，"
+"唯一受影响判据『能力模块字节与当日唯一真源不一致』<b>降 WARN 并打印两个时间戳</b>；"
+"账本不晚于页面（正常发布顺序：先写账本后出页）<b>仍 FAIL</b>，真回归不被 WARN 掩盖；"
+"结构性缺块（数量/同步锚/样式/旧标题/编号/段数）一律 FAIL 不受降级影响。"
+"回归锁 <code>tests/test_consistency_c14_historical.py</code> 3/3 passed；哨兵 20260930 现为 <b>0 FAIL / 2 WARN</b>（真实时间戳：账本 10-01 21:18:45 &gt; 页面 13:38:18/19）。"
+"根因早在 #219 用接线前账本备份反向验证过：同账本状态可逐字节复现历史页（848/848、853/853），故失配系账本前移、非代码回归。</p>
+</body></html>

@@ -14,7 +14,7 @@
   C11 交易计划六路文件当日存在性(2026-08-17 上线: 契约⑪硬要求, 引擎静默空仓无告警=8/13起断供5日事故)
   C12 龙虎榜黄金页结构+数据专属哨兵(恢复器闭环后接入)
   C13 主题页同日冻结哈希(2026-09-13 上线: 复盘期间主题页不可改写)
-  C14 两块标准能力模块(五路+概览)齐备
+  C14 两块标准能力模块(五路+概览)齐备(2026-10-01 #219: 账本晚于页面的"字节失配"降 WARN=历史日边界, 结构缺块仍 FAIL)
   C15 概览页黄金骨架(2026-09-23 上线: 概览页此前无视觉锁, 连跑两天体量翻倍/判断卡+201)
 退出码: 0=全过 1=有FAIL(打印明细,流水线应停下重看)
 """
@@ -353,6 +353,15 @@ if os.path.isfile(_theme_freeze):
 # 『自主深挖/我的认知迭代』并存, 而旧哨兵只管"机器卡缺席"→缺块可静默发布。此处逐页比对
 # 唯一真源(能力进化模块.py 当日产出)的数量/编号/位置/样式/残留旧标题/字节, 现站缺块即 FAIL。
 _cap_src = os.path.join(R, '能力进化模块.py')
+# 2026-10-01 #219 起: 只有"能力模块字节与当日唯一真源不一致"这一条会随账本前移而历史性失配。
+# 判据(机械,零猜测): 能力账本 mtime 晚于页面 mtime ⇒ 该页发布后账本又被写过(新增能力/写命中/重建),
+# 基准能力块随活账本前移属预期; 此时降为 WARN 并注明边界。账本不晚于页面(正常发布顺序: 先写账本后出页)
+# 仍按 FAIL 处理, 避免真回归被 WARN 掩盖。结构性缺块(数量/锚/样式/旧标题/编号/段数)一律 FAIL 不受影响。
+_BYTE_PROB = '能力模块字节与当日唯一真源不一致'
+def _fmt_mtime(_t):
+    return datetime.datetime.fromtimestamp(_t).strftime('%Y-%m-%d %H:%M:%S') if _t else 'N/A'
+_ledgers = [os.path.join(L, _n) for _n in ('能力进化库_自主拓展.json', '能力进化库_认知迭代.json')]
+_led_m = max([os.path.getmtime(_x) for _x in _ledgers if os.path.isfile(_x)] or [0])
 if not os.path.isfile(_cap_src):
     FAIL.append('C14 能力模块唯一真源缺失: 能力进化模块.py')
 else:
@@ -369,8 +378,15 @@ else:
                 continue
             with open(_p, encoding='utf-8') as _fh:
                 _html = _fh.read()
+            _pg_m = os.path.getmtime(_p)
             for _prob in _cap.verify_page(_html, _r, R, d):
-                FAIL.append('C14 %s.html 能力模块不合契约: %s' % (_r, _prob))
+                if _prob == _BYTE_PROB and _led_m > _pg_m:
+                    WARN.append('C14(历史日边界) %s.html %s — 能力账本晚于页面(%s>%s): 页面发布后账本已前移, '
+                                '该路基准随活账本重算导致历史日失配, 属预期边界(见 _链路地图.md C14 注记); '
+                                '发布当日页面与账本同态, 仍为 FAIL。若页面需与现账本一致请重出页。'
+                                % (_r, _prob, _fmt_mtime(_led_m), _fmt_mtime(_pg_m)))
+                else:
+                    FAIL.append('C14 %s.html 能力模块不合契约: %s' % (_r, _prob))
     except Exception as _e:
         FAIL.append('C14 能力模块齐备性核对失败: %s' % _e)
 

@@ -72,6 +72,10 @@ def _record_to_legacy(record: dict) -> dict:
         "类型": "结构化认知" if record.get("origin") == "structured" else "历史认知",
         "来源": record.get("source"),
         "可证伪条件": record.get("falsifier"),
+        # 能力闭环字段：只原样透传收集器已给出的结构化证据，不在投影层补造
+        "能力规则": record.get("capability_rule"),
+        "适用边界": record.get("boundary"),
+        "验证规格": record.get("validation_spec"),
         "状态": record.get("status"),
     }
 
@@ -205,7 +209,13 @@ def main(argv=None) -> int:
         if evo.exists() and result.get("status") == "pass":
             p = subprocess.run([sys.executable, str(evo), target], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
             result["evolution_ledger"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
-        verifier = root / "认知验证闭环.py"
+        wiring = root / "能力进化接线.py"
+        if wiring.exists() and target >= "20261001" and result.get("status") == "pass":
+            p = subprocess.run([sys.executable, str(wiring), "consume", target, "--root", str(root)], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
+            result["capability_consumption"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
+            if p.returncode != 0:
+                result["status"] = "fail"
+        verifier = root / "能力验证闭环.py"
         if verifier.exists() and result.get("status") == "pass":
             p = subprocess.run([sys.executable, str(verifier), "--as-of", target], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
             result["cognition_verification"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}

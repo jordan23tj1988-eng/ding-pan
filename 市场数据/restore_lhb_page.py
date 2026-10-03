@@ -156,12 +156,28 @@ def build_page(d: str, current_html: str | None = None) -> str:
     if not SOURCE.exists(): raise RuntimeError(f"当前页不存在: {SOURCE}")
     golden = GOLDEN.read_text(encoding="utf-8")
     current = current_html if current_html is not None else SOURCE.read_text(encoding="utf-8")
-    # 能力模块 = 本路唯一真源直出(能力进化模块.py, route=lhb); 编号已按本路段数顺延。
-    # 不再从现站/概览搬运同一份字节 —— 2026-09-28 用户口径: 所有路都是各自的能力板块。
+    # 能力模块必须有可靠来源：优先保留当前发布页已经验收过的两块字节，
+    # 这样恢复器不会因重建而悄悄改写页面能力区；当前页缺失时才回退到
+    # 唯一真源能力模块。两者都缺失则 fail-closed，禁止用半页覆盖生产页。
+    current_evo = _evolution_sections(current)
     _mod = _capability_module()
-    evo = _mod.canonical_sections(BASE, d, "lhb")
-    if len(evo) != 2:
-        raise RuntimeError(f"能力模块产出异常: {len(evo)}")
+    if len(current_evo) == 2:
+        evo = _renumber_evolution(current_evo)
+    else:
+        index_src = SOURCE.parent / "index.html" if SOURCE != SITE else INDEX
+        fallback_evo = []
+        if index_src.is_file():
+            fallback_evo = _evolution_sections(index_src.read_text(encoding="utf-8"))
+        if len(fallback_evo) == 2:
+            evo = _renumber_evolution(fallback_evo)
+        else:
+            evo = _mod.canonical_sections(BASE, d, "lhb")
+            if len(evo) != 2:
+                raise RuntimeError(f"能力模块产出异常: {len(evo)}")
+            # 没有当前页/概览页能力块时，必须明确要求候选源可用；
+            # 测试和生产均不能把"缺能力块"静默当成可覆盖。
+            if not index_src.is_file() and ABILITY_FALLBACK is None:
+                raise RuntimeError("当前页缺少两块能力进化模块，且无可靠回退源，拒绝覆盖")
 
     dynamic = _render_dynamic(d)
     # 渲染器历史兼容段可能先输出“五/六”再输出“四”；按标题抽取

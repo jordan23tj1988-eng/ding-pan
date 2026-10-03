@@ -468,11 +468,17 @@ def _cognition_record(raw, route, d, source, index, origin, path):
         valid_d = False
     payload = json.dumps(raw, ensure_ascii=False, sort_keys=True)
     key = obj.get("id") or f"cognition:{route}:{entry_d}:" + hashlib.sha256((source + str(index) + payload).encode()).hexdigest()[:16]
+    # 能力闭环字段只承接原始条目明确提供的值；旧条目缺失时保持 None，
+    # 不把“写入认知库”误判成能力化，也不替后续验证器补造证据。
+    validation_spec = obj.get("validation_spec", obj.get("验证规格"))
+    capability_rule = obj.get("capability_rule", obj.get("能力规则"))
+    boundary = obj.get("boundary", obj.get("适用边界"))
     return {"schema_version": 1, "id": key, "d": entry_d if valid_d else d,
             "route": route, "source": source, "claim": claim, "falsifier": falsifier,
             "evidence": [_evidence(path, d, source.split("#")[-1])],
             "basis": obj.get("evidence", obj.get("依据")), "original": raw,
-            "status": "unverified" if isinstance(claim, str) and claim.strip() and valid_d else "unknown",
+            "validation_spec": validation_spec, "capability_rule": capability_rule,
+            "boundary": boundary, "status": "unverified" if isinstance(claim, str) and claim.strip() and valid_d else "unknown",
             "origin": origin}
 
 
@@ -618,6 +624,10 @@ def settle_master(root: Path, d: str, out: Path) -> dict:
             if not re.fullmatch(r"[0-9]{8}", issued) or issued > d:
                 continue
             obj = _load(path); _check_date(obj, issued)
+            # 能力进化闭环强制：总审必须留下机器可读的承接账（昨日能力→今日判断），
+            # 否则"历史能力有没有真的改变今天判断"无法被审计，门禁 FAIL。
+            if issued >= "20261001" and not isinstance(obj.get("能力承接"), (dict, list)):
+                errors.append(f"{path.name}: 缺 能力承接 字段（能力闭环强制，见 _agent规格/07_总审agent.md）")
             source_count += 1
             for index, task in enumerate(obj.get("指派清单", [])):
                 if not isinstance(task, dict) or not task.get("指派ID"):
@@ -872,6 +882,15 @@ def audit_learning(root: Path, d: str, out: Path) -> dict:
                     errors.append(f"{path.name}: {exc}")
         cognition = collect_cognition(root, d, out)
         master = settle_master(root, d, out)
+        capability_consumption = {"status": "not_enforced", "as_of": d,
+                                  "policy": "能力接线启用日前的历史审计不追溯改判"}
+        if d >= "20261001":
+            try:
+                from 能力进化接线 import validate as validate_capability_consumption
+                capability_consumption = validate_capability_consumption(root, d)
+            except (OSError, ValueError, TypeError, KeyError, ImportError) as exc:
+                errors.append(f"能力消费闭环: {exc}")
+                capability_consumption = {"status": "fail", "as_of": d, "errors": [str(exc)]}
         for kind, result in (("cognition", cognition), ("master", master)):
             if result["status"] == "fail":
                 errors.extend(f"{kind}: {x}" for x in result["errors"])
@@ -914,6 +933,7 @@ def audit_learning(root: Path, d: str, out: Path) -> dict:
                       publication="new_audit_not_historical_publication", coverage=coverage,
                       prediction_coverage=prediction_coverage, learning_closure=closure,
                       items=items, predictions=predictions, cognition=cognition, master=master,
+                      capability_consumption=capability_consumption,
                       calibration={"formal_source_exists": (root / "_学习" / f"校准_{d}.json").exists(),
                                    "kind": "new_audit_settlement", "historical_publication_modified": False})
         return _save_run(out, "audit", result)

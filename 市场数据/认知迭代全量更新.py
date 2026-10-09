@@ -19,6 +19,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -203,22 +204,40 @@ def main(argv=None) -> int:
         root = args.root.resolve()
         out = (args.out or root.parent / f"review_run_{target}_cognition").resolve()
         result = run(target, root, out)
-        # 在认知库更新后同步能力进化账本：承接历史、去重、保留验证/命中证据
-        import subprocess, sys
+        # 收尾顺序：先结算T+1证据，再重建账本承接验证字段，再记消费，最后做全链路门禁。
+        # 不能先重建再验证，否则当日快照统计会落后且验证字段不在重建快照中。
+        verifier = root / "能力验证闭环.py"
+        if verifier.exists() and result.get("status") == "pass":
+            p = subprocess.run([sys.executable, str(verifier), "--as-of", target], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
+            result["cognition_verification"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
+            if p.returncode != 0:
+                result["status"] = "fail"
+        wiring = root / "能力进化接线.py"
+        hit_source = root / "_学习" / f"能力命中候选_{target}.json"
+        if wiring.exists() and target >= "20261001" and result.get("status") == "pass":
+            if hit_source.exists():
+                p = subprocess.run([sys.executable, str(wiring), "record-hit", target, "--root", str(root), "--events", str(hit_source)], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
+                result["hit_recording"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
+                if p.returncode != 0:
+                    result["status"] = "fail"
+            else:
+                # 没有候选命中事件不等于命中；但必须把“本日无事件”显式写入结果，不能静默跳过。
+                result["hit_recording"] = {"status": "no_events", "source": str(hit_source)}
         evo = root / "自我进化闭环.py"
         if evo.exists() and result.get("status") == "pass":
             p = subprocess.run([sys.executable, str(evo), target], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
             result["evolution_ledger"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
-        wiring = root / "能力进化接线.py"
+            if p.returncode != 0:
+                result["status"] = "fail"
         if wiring.exists() and target >= "20261001" and result.get("status") == "pass":
             p = subprocess.run([sys.executable, str(wiring), "consume", target, "--root", str(root)], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
             result["capability_consumption"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
             if p.returncode != 0:
                 result["status"] = "fail"
-        verifier = root / "能力验证闭环.py"
-        if verifier.exists() and result.get("status") == "pass":
-            p = subprocess.run([sys.executable, str(verifier), "--as-of", target], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
-            result["cognition_verification"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
+        auditor = root / "能力进化全链路审计.py"
+        if auditor.exists() and target >= "20261001" and result.get("status") == "pass":
+            p = subprocess.run([sys.executable, str(auditor), target, "--root", str(root), "--require-daily"], cwd=str(root), capture_output=True, text=True, encoding="utf-8")
+            result["evolution_full_audit"] = {"status": "pass" if p.returncode == 0 else "fail", "output": p.stdout[-2000:]}
             if p.returncode != 0:
                 result["status"] = "fail"
     except (OSError, ValueError, TypeError, KeyError, ImportError) as exc:

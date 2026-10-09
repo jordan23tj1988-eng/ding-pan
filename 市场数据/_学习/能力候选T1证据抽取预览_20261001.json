@@ -1,0 +1,575 @@
+{
+  "generated_at": "2026-10-03",
+  "source_as_of": "20261001",
+  "scope": "16个P1候选组现有T+1结算资产抽取预览；只读，不作规则通过/失败结论",
+  "summary": {
+    "groups": 16,
+    "with_settlement": 14,
+    "missing_settlement": 2,
+    "promotion_eligible": 0
+  },
+  "groups": [
+    {
+      "candidate_group_id": "cog-candidate-001",
+      "route": "auction",
+      "source_date": "20260929",
+      "rule": "同一温度档、连续足够样本下，高开≥5%执行均收与胜率持续优于高开0~5，且闸门内外差异反转。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\竞价池结算_20260929.json",
+          "exists": true,
+          "settlement_date": "20260930",
+          "summary": {
+            "执行胜率": "4/13",
+            "执行均收": 2.02,
+            "次日封板": "7/13",
+            "全场涨停均收": -0.22,
+            "增益pp": 2.24,
+            "池家数": 13,
+            "按高开档": {},
+            "闸门对账": {}
+          },
+          "raw_top_keys": [
+            "池日",
+            "结算日",
+            "明细",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-004",
+      "route": "auction",
+      "source_date": "20260930",
+      "rule": "未来真实交易日同温度档连续样本中，完整9:25覆盖且高开≥5%占比下降，同时T+1执行胜率与均收持续转正。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\竞价池结算_20260930.json",
+          "exists": false
+        }
+      ],
+      "settlement_artifact_count": 0,
+      "settlement_status": "missing"
+    },
+    {
+      "candidate_group_id": "cog-candidate-009",
+      "route": "lhb",
+      "source_date": "20260929",
+      "rule": "后续出现回撤≥10%后重新放量、源1净买持续为正且双源一致，才复核‘高位观察’是否转为低吸候选。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\席位荐票结算_20260929.json",
+          "exists": true,
+          "settlement_date": null,
+          "summary": {
+            "执行胜率": "2/3",
+            "均收": 1.76
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "Top5",
+            "汇总",
+            "反思"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-011",
+      "route": "lhb",
+      "source_date": "20260929",
+      "rule": "连续两日出现至少2只非高位、源1净买正、双源一致、多席S/A共振且T+1执1均收≥0。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\席位荐票结算_20260929.json",
+          "exists": true,
+          "settlement_date": null,
+          "summary": {
+            "执行胜率": "2/3",
+            "均收": 1.76
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "Top5",
+            "汇总",
+            "反思"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-017",
+      "route": "limitup",
+      "source_date": "20260923",
+      "rule": "后续同类环境中规则命中票实测执1胜率持续≥50%且均收转正。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260923.json",
+          "exists": true,
+          "settlement_date": "20260924",
+          "summary": {
+            "执行胜率": "1/5",
+            "执行均收": 0.1,
+            "次日封板": "2/5",
+            "全场均收": -0.47,
+            "选股增益pp": 0.57
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-018",
+      "route": "limitup",
+      "source_date": "20260924",
+      "rule": "连续可结算样本中规则榜命中票达到执1胜率≥55%且均收≥0%，并在非一字可成交样本保持稳定，才可考虑恢复执行层权重。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260924.json",
+          "exists": true,
+          "settlement_date": "20260928",
+          "summary": {
+            "执行胜率": "2/5",
+            "执行均收": 0.24,
+            "次日封板": "1/5",
+            "全场均收": -2.06,
+            "选股增益pp": 2.3
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-019",
+      "route": "limitup",
+      "source_date": "20260924",
+      "rule": "下一交易日质量池T+1实测执1均收≥0、有效3板扩宽且跌停/炸板继续收敛时，修复观察约束需降权。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260924.json",
+          "exists": true,
+          "settlement_date": "20260928",
+          "summary": {
+            "执行胜率": "2/5",
+            "执行均收": 0.24,
+            "次日封板": "1/5",
+            "全场均收": -2.06,
+            "选股增益pp": 2.3
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-022",
+      "route": "limitup",
+      "source_date": "20260928",
+      "rule": "连续可结算样本中质量规则命中票非一字可成交样本达到执1胜率≥55%且均收≥0%，才考虑恢复执行层权重。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260928.json",
+          "exists": true,
+          "settlement_date": "20260929",
+          "summary": {
+            "执行胜率": "2/5",
+            "执行均收": -1.81,
+            "次日封板": "2/5",
+            "全场均收": 0.73,
+            "选股增益pp": -2.54
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-023",
+      "route": "limitup",
+      "source_date": "20260928",
+      "rule": "若后续真实交易日出现有效4/5板承载、clean 1→2率持续>25%且封板率≥85%，则该边界可降权。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260928.json",
+          "exists": true,
+          "settlement_date": "20260929",
+          "summary": {
+            "执行胜率": "2/5",
+            "执行均收": -1.81,
+            "次日封板": "2/5",
+            "全场均收": 0.73,
+            "选股增益pp": -2.54
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-027",
+      "route": "limitup",
+      "source_date": "20260929",
+      "rule": "本日质量池T+1实测执1均收≥0且温度≥45、跌停≤5时复核。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260929.json",
+          "exists": true,
+          "settlement_date": "20260930",
+          "summary": {
+            "执行胜率": "3/5",
+            "执行均收": 5.02,
+            "次日封板": "2/5",
+            "全场均收": -0.22,
+            "选股增益pp": 5.24
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-029",
+      "route": "limitup",
+      "source_date": "20260930",
+      "rule": "若明日真实执1均收≥0且封板率继续≥80%，再复核该阈值在偏冷环境的解释力。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260930.json",
+          "exists": false
+        }
+      ],
+      "settlement_artifact_count": 0,
+      "settlement_status": "missing"
+    },
+    {
+      "candidate_group_id": "cog-candidate-032",
+      "route": "logic",
+      "source_date": "20260910",
+      "rule": "若后续模板链内出现≥2只同链涨停且最高连板≥2，且非单纯行业兜底，则上调“业绩背书优先”权重。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\逻辑荐票结算_20260910.json",
+          "exists": true,
+          "settlement_date": "20260911",
+          "summary": {
+            "执行胜率": "0/0",
+            "执行均收": null,
+            "全场涨停均收": null,
+            "增益pp": null,
+            "按类型": {}
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "明细",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-039",
+      "route": "master",
+      "source_date": "20260923",
+      "rule": "封板率、1进2率、有效2板数量、炸板率和T+1实测收益同时达到闸门，才允许撤销该约束。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\竞价池结算_20260923.json",
+          "exists": true,
+          "settlement_date": "20260924",
+          "summary": {
+            "执行胜率": "3/11",
+            "执行均收": 0.02,
+            "次日封板": "7/11",
+            "全场涨停均收": -0.47,
+            "增益pp": 0.49,
+            "池家数": 11,
+            "按高开档": {},
+            "闸门对账": {}
+          },
+          "raw_top_keys": [
+            "池日",
+            "结算日",
+            "明细",
+            "汇总",
+            "口径"
+          ]
+        },
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260923.json",
+          "exists": true,
+          "settlement_date": "20260924",
+          "summary": {
+            "执行胜率": "1/5",
+            "执行均收": 0.1,
+            "次日封板": "2/5",
+            "全场均收": -0.47,
+            "选股增益pp": 0.57
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        },
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\席位荐票结算_20260923.json",
+          "exists": true,
+          "settlement_date": null,
+          "summary": {
+            "执行胜率": "0/4",
+            "均收": -7.31
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "Top5",
+            "汇总",
+            "反思"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 3,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-042",
+      "route": "master",
+      "source_date": "20260924",
+      "rule": "真实T+1执1均收≥0、有效3板扩宽、跌停≤5、温度≥45且炸板率<15%同时成立。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\竞价池结算_20260924.json",
+          "exists": true,
+          "settlement_date": "20260928",
+          "summary": {
+            "执行胜率": "1/12",
+            "执行均收": -4.85,
+            "次日封板": "2/12",
+            "全场涨停均收": -2.06,
+            "增益pp": -2.79,
+            "池家数": 12,
+            "按高开档": {},
+            "闸门对账": {}
+          },
+          "raw_top_keys": [
+            "池日",
+            "结算日",
+            "明细",
+            "汇总",
+            "口径"
+          ]
+        },
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260924.json",
+          "exists": true,
+          "settlement_date": "20260928",
+          "summary": {
+            "执行胜率": "2/5",
+            "执行均收": 0.24,
+            "次日封板": "1/5",
+            "全场均收": -2.06,
+            "选股增益pp": 2.3
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        },
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\席位荐票结算_20260924.json",
+          "exists": true,
+          "settlement_date": null,
+          "summary": {
+            "执行胜率": "1/3",
+            "均收": -1.73
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "Top5",
+            "汇总",
+            "反思"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 3,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-043",
+      "route": "master",
+      "source_date": "20260928",
+      "rule": "下一真实交易日环境、接力、质量三组闸门同时通过，且真实T+1执1均收≥0。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\竞价池结算_20260928.json",
+          "exists": true,
+          "settlement_date": "20260929",
+          "summary": {
+            "执行胜率": "3/11",
+            "执行均收": -0.92,
+            "次日封板": "5/11",
+            "全场涨停均收": 0.73,
+            "增益pp": -1.65,
+            "池家数": 11,
+            "按高开档": {},
+            "闸门对账": {}
+          },
+          "raw_top_keys": [
+            "池日",
+            "结算日",
+            "明细",
+            "汇总",
+            "口径"
+          ]
+        },
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\质量荐票结算_20260928.json",
+          "exists": true,
+          "settlement_date": "20260929",
+          "summary": {
+            "执行胜率": "2/5",
+            "执行均收": -1.81,
+            "次日封板": "2/5",
+            "全场均收": 0.73,
+            "选股增益pp": -2.54
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "Top5",
+            "汇总",
+            "口径"
+          ]
+        },
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\席位荐票结算_20260928.json",
+          "exists": true,
+          "settlement_date": null,
+          "summary": {
+            "执行胜率": "1/2",
+            "均收": 7.58
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "Top5",
+            "汇总",
+            "反思"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 3,
+      "settlement_status": "available"
+    },
+    {
+      "candidate_group_id": "cog-candidate-054",
+      "route": "theme",
+      "source_date": "20260923",
+      "rule": "明日同一聚类线宽度≥15且出现4板梯队并有A档公告催化。",
+      "promotion_eligible": false,
+      "settlements": [
+        {
+          "file": "D:\\股票数据\\市场数据\\_学习\\题材荐票结算_20260923.json",
+          "exists": true,
+          "settlement_date": "20260924",
+          "summary": {
+            "执行胜率": "0/3",
+            "执行均收": -2.96,
+            "全场涨停均收": -0.47,
+            "增益pp": -2.49,
+            "按身位": {}
+          },
+          "raw_top_keys": [
+            "荐票日",
+            "结算日",
+            "明细",
+            "汇总",
+            "口径"
+          ]
+        }
+      ],
+      "settlement_artifact_count": 1,
+      "settlement_status": "available"
+    }
+  ],
+  "discipline": [
+    "抽取的是已落盘结算字段，不是当日判断事实",
+    "单个结算文件不等于连续样本验证",
+    "缺失文件保持missing，不以预测字段替代实测",
+    "promotion_eligible固定为false"
+  ]
+}

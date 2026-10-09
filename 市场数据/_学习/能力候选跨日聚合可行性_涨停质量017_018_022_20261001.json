@@ -1,0 +1,22 @@
+{
+  "generated_at": "2026-10-03",
+  "source_as_of": "20261001",
+  "scope": "质量候选017/018/022跨日聚合可行性审计；只读",
+  "settlement_files": 37,
+  "date_range": [
+    "20260708",
+    "20260929"
+  ],
+  "top5_rows": 180,
+  "full_pool_detail_rows": 0,
+  "top5_rows_with_rule_field": 170,
+  "top5_rows_with_execution_field": 180,
+  "top5_rows_missing_rule_field": 10,
+  "candidate_implications": {
+    "cog-candidate-017": "blocked_for_full_pool_rule_hit_denominator",
+    "cog-candidate-018": "blocked_for_full_pool_rule_hit_and_non_one_word_sample",
+    "cog-candidate-022": "blocked_for_full_pool_rule_hit_and_non_one_word_sample"
+  },
+  "finding": "结算文件主体是Top5而非全池逐票；不能把Top5结果当作规则命中票全池分母。",
+  "promotion_eligible": false
+}

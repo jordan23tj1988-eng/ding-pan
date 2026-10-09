@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "as_of": "20261002",
+  "activation_date": "20261001",
+  "scope": "自我深挖与认知迭代发现→验证→能力化→预加载→七路消费→结算命中全链路只读审计",
+  "status": "fail",
+  "errors": [
+    "启用日缺少能力链产物: preload -> D:\\股票数据\\市场数据\\_学习\\能力预加载_20261002.json",
+    "启用日缺少能力链产物: receipt -> D:\\股票数据\\市场数据\\_学习\\能力使用回执_20261002.json",
+    "启用日缺少能力链产物: consumption_audit -> D:\\股票数据\\市场数据\\_学习\\能力消费审计_20261002.json"
+  ],
+  "warnings": [
+    "记录extension:cap-limitup-turnover-valid已有hit_count但缺hit_log/reuse_log，历史口径不完整",
+    "记录extension:cap-lhb-netbuy-valid已有hit_count但缺hit_log/reuse_log，历史口径不完整"
+  ],
+  "routes": [
+    "auction",
+    "lhb",
+    "theme",
+    "logic",
+    "limitup",
+    "cycle",
+    "master"
+  ],
+  "ledger_summary": {
+    "自主拓展": {
+      "records": 21,
+      "strict_reusable": 2,
+      "validation_passes": 0,
+      "reused": 0,
+      "hits": 2,
+      "missing_boundary": 19,
+      "missing_validation_spec": 19
+    },
+    "认知迭代": {
+      "records": 2011,
+      "strict_reusable": 0,
+      "validation_passes": 0,
+      "reused": 0,
+      "hits": 0,
+      "missing_boundary": 2011,
+      "missing_validation_spec": 2011
+    }
+  },
+  "strict_reusable_total": 2,
+  "daily": {
+    "required": true,
+    "files": {
+      "preload": "D:\\股票数据\\市场数据\\_学习\\能力预加载_20261002.json",
+      "receipt": "D:\\股票数据\\市场数据\\_学习\\能力使用回执_20261002.json",
+      "consumption_audit": "D:\\股票数据\\市场数据\\_学习\\能力消费审计_20261002.json"
+    },
+    "exists": {
+      "preload": false,
+      "receipt": false,
+      "consumption_audit": false
+    }
+  },
+  "policy": {
+    "validation_pass_is_not_hit": true,
+    "hit_requires_followup_object_date_result": true,
+    "missing_evidence_is_not_success": true,
+    "candidate_pool_cannot_enter_preload": true
+  }
+}

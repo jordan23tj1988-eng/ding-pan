@@ -27,6 +27,7 @@ ACTIVATION_DATE = "20261001"
 PRELOAD_NAME = "能力预加载_{d}.json"
 RECEIPT_NAME = "能力使用回执_{d}.json"
 AUDIT_NAME = "能力消费审计_{d}.json"
+HIT_AUDIT_NAME = "能力命中审计_{d}.json"
 LEDGER_NAMES = {
     "自主拓展": "能力进化库_自主拓展.json",
     "认知迭代": "能力进化库_认知迭代.json",
@@ -88,6 +89,9 @@ def _is_reusable(row: dict, as_of: str) -> bool:
         row.get("validation") == "validated"
         and row.get("capitalized") is True
         and bool(row.get("capability_rule") or row.get("falsifiable_rule"))
+        and bool(row.get("boundary"))
+        and isinstance(row.get("validation_spec"), dict)
+        and bool(row.get("validation_spec"))
     )
 
 
@@ -302,11 +306,72 @@ def consume(root: Path, d: str, write: bool = True) -> dict:
     return audit
 
 
+def record_hits(root: Path, d: str, events_path: Path | None = None, write: bool = True) -> dict:
+    """写入“实际复用后的命中”反馈；不把验证通过当作命中。
+
+    每个命中必须绑定：能力ID、路由、对象/日期、结果和证据定位，且该能力
+    先在相同或更早日期被真实消费过。重复提交按完整事件幂等处理。
+    """
+    d = _date(d)
+    root = Path(root).resolve()
+    learn = _learn(root)
+    source = Path(events_path) if events_path else learn / f"能力命中候选_{d}.json"
+    doc = _load(source)
+    events = doc.get("events") if isinstance(doc, dict) else None
+    if not isinstance(events, list):
+        raise ValueError(f"命中事件必须是对象中的events列表: {source}")
+    ledger_docs = {kind: _load(learn / filename, {}) for kind, filename in LEDGER_NAMES.items()}
+    by_id = {}
+    for kind, ledger in ledger_docs.items():
+        for row in _records(ledger):
+            if row.get("id"):
+                by_id[str(row["id"])] = (kind, row)
+    accepted = []
+    for event in events:
+        if not isinstance(event, dict):
+            raise ValueError("命中事件必须为对象")
+        ident = str(event.get("id") or "")
+        route = str(event.get("route") or "")
+        object_date = str(event.get("object_date") or "").replace("-", "")
+        if ident not in by_id:
+            raise ValueError(f"命中引用未知能力: {ident}")
+        if route not in ROUTES:
+            raise ValueError(f"命中事件路由非法: {route}")
+        if not re.fullmatch(r"\d{8}", object_date) or object_date > d:
+            raise ValueError(f"命中事件object_date非法或晚于结算日: {object_date}")
+        if not event.get("object_id") or not event.get("result") or not event.get("source_locator"):
+            raise ValueError("命中事件必须有object_id、result、source_locator")
+        kind, row = by_id[ident]
+        reuse_log = row.get("reuse_log") if isinstance(row.get("reuse_log"), list) else []
+        if not any(isinstance(x, dict) and x.get("route") == route and str(x.get("as_of", "")).replace("-", "") <= d for x in reuse_log):
+            raise ValueError(f"能力{ident}没有该路由的先行消费记录，不能记hit")
+        hit = dict(event)
+        hit.update({"id": ident, "route": route, "object_date": object_date, "as_of": d, "ledger_kind": kind})
+        accepted.append((row, hit))
+    applied = []
+    for row, hit in accepted:
+        log = row.get("hit_log") if isinstance(row.get("hit_log"), list) else []
+        fingerprint = json.dumps(hit, ensure_ascii=False, sort_keys=True)
+        if not any(json.dumps(x, ensure_ascii=False, sort_keys=True) == fingerprint for x in log if isinstance(x, dict)):
+            log.append(hit)
+            row["hit_log"] = log
+            row["hit_count"] = int(row.get("hit_count") or 0) + 1
+            row["last_hit_at"] = d
+            applied.append({"id": hit["id"], "route": hit["route"], "object_id": hit["object_id"]})
+    audit = {"schema_version": 1, "as_of": d, "source": str(source), "status": "pass", "applied_hits": applied, "applied_count": len(applied), "policy": "只有先消费、再绑定对象/日期/结果/证据的事件才增加hit_count"}
+    if write:
+        for kind, filename in LEDGER_NAMES.items():
+            _atomic(learn / filename, ledger_docs[kind])
+        _atomic(learn / HIT_AUDIT_NAME.format(d=d), audit)
+    return audit
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=("prepare", "validate", "consume"))
+    ap.add_argument("command", choices=("prepare", "validate", "consume", "record-hit"))
     ap.add_argument("d")
     ap.add_argument("--root", type=Path, default=Path(__file__).resolve().parent)
+    ap.add_argument("--events", type=Path, help="record-hit使用的命中事件JSON")
     args = ap.parse_args(argv)
     try:
         d = _date(args.d)
@@ -315,8 +380,10 @@ def main(argv: list[str] | None = None) -> int:
             result = prepare(root, d, write=True)
         elif args.command == "validate":
             result = validate(root, d)
-        else:
+        elif args.command == "consume":
             result = consume(root, d, write=True)
+        else:
+            result = record_hits(root, d, args.events, write=True)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     except (OSError, ValueError, TypeError, KeyError) as exc:

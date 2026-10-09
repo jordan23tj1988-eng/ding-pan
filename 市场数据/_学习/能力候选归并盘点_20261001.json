@@ -1,0 +1,1833 @@
+{
+  "generated_at": "2026-10-03",
+  "source_as_of": "20261001",
+  "scope": "认知迭代库中已有 falsifiable_rule 的半成品候选；只读归并盘点，不回写账本",
+  "raw_candidate_records": 180,
+  "unique_candidate_groups": 59,
+  "normalized_duplicate_extra_records": 121,
+  "raw_by_route": {
+    "logic": 21,
+    "master": 60,
+    "theme": 27,
+    "lhb": 19,
+    "limitup": 44,
+    "auction": 9
+  },
+  "unique_groups_by_route": {
+    "auction": 6,
+    "lhb": 9,
+    "limitup": 15,
+    "logic": 4,
+    "master": 18,
+    "theme": 7
+  },
+  "groups": [
+    {
+      "candidate_group_id": "cog-candidate-001",
+      "route": "auction",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:auction:2026-09-29:2:今日评分最高的600657与次高600032分数接近，但可匹配池",
+        "cognition:auction:2026-09-29:5:今日评分最高的600657与次高600032分数接近，但可匹配池"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "今日评分最高的600657与次高600032分数接近，但可匹配池中7/8高开≥5%；历史高开≥5% n=1513、胜率21.9%、均涨-1.77%，而高开0~5 n=829、胜率54.8%、均涨+0.25%。评分只能排序，不能覆盖开盘档位。",
+      "falsifiable_rule": "同一温度档、连续足够样本下，高开≥5%执行均收与胜率持续优于高开0~5，且闸门内外差异反转。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\auction判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-002",
+      "route": "auction",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:auction:2026-09-29:1:相较20260928完全缺9:25轨迹，今日auction_tr",
+        "cognition:auction:2026-09-29:4:相较20260928完全缺9:25轨迹，今日auction_tr"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "相较20260928完全缺9:25轨迹，今日auction_traj已覆盖09:15~09:25:54共33个时点；但冻结池13只仅8只可匹配，覆盖率8/13=61.5%，缺5只。竞价结论必须从‘无轨迹’升级为‘8只可核验子样本+5只缺口’，不能把33票轨迹冒充全市场快照。",
+      "falsifiable_rule": "后续同一池逐票13/13有独立9:25记录，且缺口不再影响高开档分布与竞价额排名。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\auction判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-003",
+      "route": "auction",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:auction:2026-09-29:0:竞价撤单差分status=pass的真实含义是33票有前后轨迹，",
+        "cognition:auction:2026-09-29:3:竞价撤单差分status=pass的真实含义是33票有前后轨迹，"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "竞价撤单差分status=pass的真实含义是33票有前后轨迹，可计算价格/匹配位移代理；它不等于逐笔撤单量。开盘验证status=pass的源数据pool_date=20260928且首条09:31:04，也不能回填20260929的9:25或T+1。",
+      "falsifiable_rule": "原始源能提供同一代码9:20/9:25逐笔撤单与当日池日一致的开盘窗口，并通过逐票时间与代码对账。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\auction判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需从自然语言拆解"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-004",
+      "route": "auction",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:auction:2026-09-30:2:当日冻结池一字6/14，米开第一式只确认结构强度；轨迹可匹配9/"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "当日冻结池一字6/14，米开第一式只确认结构强度；轨迹可匹配9/14，高开≥5%在可核验样本占88.9%，全市场快照缺失时不能把结构强度升级为执行优势。",
+      "falsifiable_rule": "未来真实交易日同温度档连续样本中，完整9:25覆盖且高开≥5%占比下降，同时T+1执行胜率与均收持续转正。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\auction判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-005",
+      "route": "auction",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:auction:2026-09-30:1:当日评分池基准38.0，最高分44.6；观察票仍需先过高开闸门，"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "当日评分池基准38.0，最高分44.6；观察票仍需先过高开闸门，不能由评分名次替代竞价覆盖和开盘承接。",
+      "falsifiable_rule": "同温度、同高开档下，评分高分组连续足够样本显著优于低分组且不依赖高开档差异。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\auction判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-006",
+      "route": "auction",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:auction:2026-09-30:0:撤单差分status=pass且有56只前后轨迹，含义是位移代理"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "撤单差分status=pass且有56只前后轨迹，含义是位移代理；开盘验证status=pass且采样56只，均不等于逐笔撤单量或今日池T+1结算。",
+      "falsifiable_rule": "同一池日提供逐票9:20至9:25原始撤单与完整T+1执行字段，并能通过时间、代码逐项对账。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\auction判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-007",
+      "route": "lhb",
+      "record_count": 5,
+      "record_ids": [
+        "cognition:lhb:2026-09-23:0:今日机器Top5中，000993是跌停中的S档逆势接筹，0005",
+        "cognition:lhb:2026-09-23:2:今日机器Top5中，000993是跌停中的S档逆势接筹，0005",
+        "cognition:lhb:2026-09-23:3:今日机器Top5中，000993是跌停中的S档逆势接筹，0005",
+        "cognition:lhb:2026-09-23:7:今日机器Top5中，000993是跌停中的S档逆势接筹，0005",
+        "cognition:lhb:2026-09-23:10:今日机器Top5中，000993是跌停中的S档逆势接筹，0005"
+      ],
+      "dates": [
+        "2026-09-23"
+      ],
+      "title": "今日机器Top5中，000993是跌停中的S档逆势接筹，000560是股票级净卖与席位买侧正数冲突，301150/600371/600503虽双源方向一致但都处涨停或高波动位置。新增规则：冰点温度≤25时，正式荐票必须同时满足股票级净买为正、至少一席非小样本S/A或两席S/A共振、且次日接力风险未被涨停拥挤放大；仅满足机器席位分和买侧净额的票一律降为观察。可证伪条件：次日市场温度回升至45以上、两只以上非高位一致票继续收红并维持正净买，且S/A净买明显扩张，才允许撤销本条的C档限制。",
+      "falsifiable_rule": "次日市场温度回升至45以上、两只以上非高位一致票继续收红并维持正净买，且S/A净买明显扩张，才允许撤销本条的C档限制。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260923.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-008",
+      "route": "lhb",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:lhb:2026-09-28:0:20260928机器Top5中，600293三峡新材仅有区间累计",
+        "cognition:lhb:2026-09-28:4:20260928机器Top5中，600293三峡新材仅有区间累计",
+        "cognition:lhb:2026-09-28:7:20260928机器Top5中，600293三峡新材仅有区间累计"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "20260928机器Top5中，600293三峡新材仅有区间累计榜口径，不能作为当日股票级净买；600540新赛股份虽源1为正但源2约为源1的3.54倍，按打折读；301190善水科技与600825新华传媒虽双源一致，却分别处于20cm涨停新高和低换手一字板。结合温度18.1冰点、S/A净买1.7272亿元显著低于B档35.2141亿元，正式荐票继续保持0。规则可证伪条件：出现至少两只非高位标的同时满足股票级净买为正、双源一致、两席以上有效S/A共振和位置可核验，才可上修C档防守。",
+      "falsifiable_rule": "出现至少两只非高位标的同时满足股票级净买为正、双源一致、两席以上有效S/A共振和位置可核验，才可上修C档防守。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-009",
+      "route": "lhb",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:lhb:2026-09-29:3:S档小样本必须叠加位置门禁；新高20cm不因S档自动升级。",
+        "cognition:lhb:2026-09-29:6:S档小样本必须叠加位置门禁；新高20cm不因S档自动升级。"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "S档小样本必须叠加位置门禁；新高20cm不因S档自动升级。",
+      "falsifiable_rule": "后续出现回撤≥10%后重新放量、源1净买持续为正且双源一致，才复核‘高位观察’是否转为低吸候选。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-010",
+      "route": "lhb",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:lhb:2026-09-29:2:区间累计榜不能替代当日榜；区间大净买不进入当日荐票排序。",
+        "cognition:lhb:2026-09-29:5:区间累计榜不能替代当日榜；区间大净买不进入当日荐票排序。"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "区间累计榜不能替代当日榜；区间大净买不进入当日荐票排序。",
+      "falsifiable_rule": "下一轮同类标的存在可回溯的源1当日榜记录且源2一致，才解除无源1过滤。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-011",
+      "route": "lhb",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:lhb:2026-09-29:1:双源pass不是交易许可，必须拆分源1真实性、双源关系、位置和多",
+        "cognition:lhb:2026-09-29:4:双源pass不是交易许可，必须拆分源1真实性、双源关系、位置和多"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "双源pass不是交易许可，必须拆分源1真实性、双源关系、位置和多席共振。",
+      "falsifiable_rule": "连续两日出现至少2只非高位、源1净买正、双源一致、多席S/A共振且T+1执1均收≥0。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-012",
+      "route": "lhb",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:lhb:2026-09-29:0:承接必须显式带指派ID，不能用同主题叙述冒充完成。",
+        "cognition:lhb:2026-09-29:3:承接必须显式带指派ID，不能用同主题叙述冒充完成。"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "承接必须显式带指派ID，不能用同主题叙述冒充完成。",
+      "falsifiable_rule": "下一总审逐字段扫描到该ID、对应过滤清单和T+1结算；缺任何一项均不记完成。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-013",
+      "route": "lhb",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:lhb:2026-09-30:2:双源status=pass，但一致16只、分歧18只、打折18只"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "双源status=pass，但一致16只、分歧18只、打折18只，源2买侧金额不能翻转源1净卖或替代位置门禁。",
+      "falsifiable_rule": "明日连续出现至少两只非高位、源1正净买、双源一致、两席以上S/A且位置可核验的标的。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-014",
+      "route": "lhb",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:lhb:2026-09-30:1:机器Top5中的603230内蒙新华对应连续三个交易日累计榜，已"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "机器Top5中的603230内蒙新华对应连续三个交易日累计榜，已从当日共振中剔除；源2买侧金额仅作线索。",
+      "falsifiable_rule": "明日同类标的出现当日榜源1正净买、源2一致且位置可核验。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-015",
+      "route": "lhb",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:lhb:2026-09-30:0:温度分位12，有效S/A共6笔但无标的同时具备至少两席并通过双源"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "温度分位12，有效S/A共6笔但无标的同时具备至少两席并通过双源与位置门禁，正式荐票保持0。",
+      "falsifiable_rule": "明日温度分位达到45以上且至少两只非高位一致票通过两席S/A和位置门禁。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\lhb判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-016",
+      "route": "limitup",
+      "record_count": 5,
+      "record_ids": [
+        "cognition:limitup:2026-09-23:1:20260923最高板由6板降至4板但4板扩为2只、3板有7只，",
+        "cognition:limitup:2026-09-23:5:20260923最高板由6板降至4板但4板扩为2只、3板有7只，",
+        "cognition:limitup:2026-09-23:8:20260923最高板由6板降至4板但4板扩为2只、3板有7只，",
+        "cognition:limitup:2026-09-23:11:20260923最高板由6板降至4板但4板扩为2只、3板有7只，",
+        "cognition:limitup:2026-09-23:14:20260923最高板由6板降至4板但4板扩为2只、3板有7只，"
+      ],
+      "dates": [
+        "2026-09-23"
+      ],
+      "title": "20260923最高板由6板降至4板但4板扩为2只、3板有7只，表面高度仍在；同时首板39只、2板仅3只，一进二率源0.061（×100=6.1%），封板率66.2%、跌停13。新判据：冰点日只有“4板+数量”而无2板宽度与封板率同步修复，仍按孤高高度处理，不上修档位。可证伪条件：若20260924一进二率>20%且封板率≥80%且出现≥3只有效2板，则该边界需降权。",
+      "falsifiable_rule": "若20260924一进二率>20%且封板率≥80%且出现≥3只有效2板，则该边界需降权。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260923.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "含明确阈值",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-017",
+      "route": "limitup",
+      "record_count": 5,
+      "record_ids": [
+        "cognition:limitup:2026-09-23:0:当日新华传媒命中6条规则、抓龙率26.0%居前，但一字≤9:25",
+        "cognition:limitup:2026-09-23:4:当日新华传媒命中6条规则、抓龙率26.0%居前，但一字≤9:25",
+        "cognition:limitup:2026-09-23:7:当日新华传媒命中6条规则、抓龙率26.0%居前，但一字≤9:25",
+        "cognition:limitup:2026-09-23:10:当日新华传媒命中6条规则、抓龙率26.0%居前，但一字≤9:25",
+        "cognition:limitup:2026-09-23:13:当日新华传媒命中6条规则、抓龙率26.0%居前，但一字≤9:25"
+      ],
+      "dates": [
+        "2026-09-23"
+      ],
+      "title": "当日新华传媒命中6条规则、抓龙率26.0%居前，但一字≤9:25历史桶n=1633执1胜率30.9%、执1均涨-0.77%，当日个股预测执1均涨-0.73%；全池预测执1均涨均值-0.32%。规则命中与执行可买性必须分层：规则票可作活体观察，负期望环境下不转成荐票。可证伪条件：后续同类环境中规则命中票实测执1胜率持续≥50%且均收转正。",
+      "falsifiable_rule": "后续同类环境中规则命中票实测执1胜率持续≥50%且均收转正。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260923.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-018",
+      "route": "limitup",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:limitup:2026-09-24:3:当前16因子v6框架仅8个因子活跃；全池52只预测执1均值42.",
+        "cognition:limitup:2026-09-24:6:当前16因子v6框架仅8个因子活跃；全池52只预测执1均值42.",
+        "cognition:limitup:2026-09-24:9:当前16因子v6框架仅8个因子活跃；全池52只预测执1均值42.",
+        "cognition:limitup:2026-09-24:12:当前16因子v6框架仅8个因子活跃；全池52只预测执1均值42."
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "当前16因子v6框架仅8个因子活跃；全池52只预测执1均值42.694%/-0.339%，基准为43.2%/-0.31%，唯一规则命中票的执1均涨仍为负。质量分与抓龙率只能做相对减损和观察排序。",
+      "falsifiable_rule": "连续可结算样本中规则榜命中票达到执1胜率≥55%且均收≥0%，并在非一字可成交样本保持稳定，才可考虑恢复执行层权重。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-019",
+      "route": "limitup",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:limitup:2026-09-24:2:本日封板率83.9%、炸板率16.1%、1进2率24.2%、2板",
+        "cognition:limitup:2026-09-24:5:本日封板率83.9%、炸板率16.1%、1进2率24.2%、2板",
+        "cognition:limitup:2026-09-24:8:本日封板率83.9%、炸板率16.1%、1进2率24.2%、2板",
+        "cognition:limitup:2026-09-24:11:本日封板率83.9%、炸板率16.1%、1进2率24.2%、2板"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "本日封板率83.9%、炸板率16.1%、1进2率24.2%、2板8只，较昨日结构明显改善；但温度35偏冷、二进三10.0%、跌停13、质量预测执1均涨-0.339%。新增规则：封板率与低位宽度只可把C档从‘崩坏’上调为‘修复观察’，只有T+1实测转正才能进入交易层。",
+      "falsifiable_rule": "下一交易日质量池T+1实测执1均收≥0、有效3板扩宽且跌停/炸板继续收敛时，修复观察约束需降权。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-020",
+      "route": "limitup",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:limitup:2026-09-24:1:本次按可检索输入未找到四美D组的定义、样本和历史n/胜率/均收，",
+        "cognition:limitup:2026-09-24:4:本次按可检索输入未找到四美D组的定义、样本和历史n/胜率/均收，",
+        "cognition:limitup:2026-09-24:7:本次按可检索输入未找到四美D组的定义、样本和历史n/胜率/均收，",
+        "cognition:limitup:2026-09-24:10:本次按可检索输入未找到四美D组的定义、样本和历史n/胜率/均收，"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "本次按可检索输入未找到四美D组的定义、样本和历史n/胜率/均收，状态为null；不把缺失当利空，也不把任何当日股票强行归入D组。",
+      "falsifiable_rule": "出现带日期、来源、字段定义和可回源样本的四美D组文件后，按同类历史n/胜率/均收重新结算。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-021",
+      "route": "limitup",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:limitup:2026-09-24:0:通用设备6家、汽车零部4家、出版3家，但题材归位52只全部B档行",
+        "cognition:limitup:2026-09-24:3:通用设备6家、汽车零部4家、出版3家，但题材归位52只全部B档行",
+        "cognition:limitup:2026-09-24:6:通用设备6家、汽车零部4家、出版3家，但题材归位52只全部B档行",
+        "cognition:limitup:2026-09-24:9:通用设备6家、汽车零部4家、出版3家，但题材归位52只全部B档行"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "通用设备6家、汽车零部4家、出版3家，但题材归位52只全部B档行业兜底，THS原因、环节、催化缺失。行业数量只能描述真实样本，不可升格为主线或四美D组验证。",
+      "falsifiable_rule": "补齐当日THS原因/环节/催化并出现A档或可回溯B档聚类、宽度和梯队同步，才可上修主线判断。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-022",
+      "route": "limitup",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:limitup:2026-09-28:2:当日质量池33只预测执1均涨均值-0.317%，最高执1胜率45",
+        "cognition:limitup:2026-09-28:5:当日质量池33只预测执1均涨均值-0.317%，最高执1胜率45",
+        "cognition:limitup:2026-09-28:8:当日质量池33只预测执1均涨均值-0.317%，最高执1胜率45"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "当日质量池33只预测执1均涨均值-0.317%，最高执1胜率45.2%，规则命中仅1只、可执行true为0只；质量Top5全部不转正式荐票。",
+      "falsifiable_rule": "连续可结算样本中质量规则命中票非一字可成交样本达到执1胜率≥55%且均收≥0%，才考虑恢复执行层权重。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-023",
+      "route": "limitup",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:limitup:2026-09-28:1:新华传媒为唯一5板，梯队缺4板，前一真实交易日到本日clean ",
+        "cognition:limitup:2026-09-28:4:新华传媒为唯一5板，梯队缺4板，前一真实交易日到本日clean ",
+        "cognition:limitup:2026-09-28:7:新华传媒为唯一5板，梯队缺4板，前一真实交易日到本日clean "
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "新华传媒为唯一5板，梯队缺4板，前一真实交易日到本日clean 1→2仅7.7%，最高板不能单独上修周期投票。",
+      "falsifiable_rule": "若后续真实交易日出现有效4/5板承载、clean 1→2率持续>25%且封板率≥85%，则该边界可降权。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-024",
+      "route": "limitup",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:limitup:2026-09-28:0:本日温度18.1为冰点，但跌停56>33、炸板率25.0%、封板",
+        "cognition:limitup:2026-09-28:3:本日温度18.1为冰点，但跌停56>33、炸板率25.0%、封板",
+        "cognition:limitup:2026-09-28:6:本日温度18.1为冰点，但跌停56>33、炸板率25.0%、封板"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "本日温度18.1为冰点，但跌停56>33、炸板率25.0%、封板率75.0%低于80%，因此不套用冰点加分，C档防守。",
+      "falsifiable_rule": "若下一真实交易日温度和封板质量同步修复并且质量池实测执1均收转正，则本条边界需降权。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-025",
+      "route": "limitup",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:limitup:2026-09-29:2:6板新华传媒、4板雪龙集团、3板襄阳轴承存在，但题材归位A/B/",
+        "cognition:limitup:2026-09-29:5:6板新华传媒、4板雪龙集团、3板襄阳轴承存在，但题材归位A/B/"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "6板新华传媒、4板雪龙集团、3板襄阳轴承存在，但题材归位A/B/C=0/57/0，出版仅3家、汽车零部4家；高度与真实催化/宽度未同步。",
+      "falsifiable_rule": "出现可回溯A档催化、同一聚类宽度与梯队同步扩张且开板质量收敛。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-026",
+      "route": "limitup",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:limitup:2026-09-29:1:新华传媒命中9条但预测执1胜率34.9%、均涨-0.67%；全池",
+        "cognition:limitup:2026-09-29:4:新华传媒命中9条但预测执1胜率34.9%、均涨-0.67%；全池"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "新华传媒命中9条但预测执1胜率34.9%、均涨-0.67%；全池规则命中≥1仅1/57，执行口径优先于信号强度。",
+      "falsifiable_rule": "下一真实结算中规则命中票执1均收转正且胜率达到执行闸门，再恢复执行层权重。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-027",
+      "route": "limitup",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:limitup:2026-09-29:0:温度18.1→43.0、跌停56→10、炸板率25.0%→12.",
+        "cognition:limitup:2026-09-29:3:温度18.1→43.0、跌停56→10、炸板率25.0%→12."
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "温度18.1→43.0、跌停56→10、炸板率25.0%→12.3%，但质量预测执1均涨仍为-0.3604%，故只上修为生态修复观察，不上修交易档位。",
+      "falsifiable_rule": "本日质量池T+1实测执1均收≥0且温度≥45、跌停≤5时复核。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-028",
+      "route": "limitup",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:limitup:2026-09-30:2:新华传媒7板、首封09:25、封单比18.386%、命中9条，但"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "新华传媒7板、首封09:25、封单比18.386%、命中9条，但本日机械预测执1胜率34.6%、均涨-0.68%；高标强封的信号收益与T+1开盘可执行收益必须分开，不能用封单强度替代买入后的实测。可证伪：明日真实执1均收转正且不只依赖单一高标，才削弱该判断。",
+      "falsifiable_rule": "明日真实执1均收转正且不只依赖单一高标，才削弱该判断。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-029",
+      "route": "limitup",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:limitup:2026-09-30:1:本日封板率81.25%刚过米开80%分化阈值，但质量池预测执1均"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "本日封板率81.25%刚过米开80%分化阈值，但质量池预测执1均涨-0.3788%、正值0/52；因此封板率只能作为生态分化观察信号，不能单独把负执行期望升为可参与。可证伪：若明日真实执1均收≥0且封板率继续≥80%，再复核该阈值在偏冷环境的解释力。",
+      "falsifiable_rule": "若明日真实执1均收≥0且封板率继续≥80%，再复核该阈值在偏冷环境的解释力。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-030",
+      "route": "limitup",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:limitup:2026-09-30:0:质量分最高两只的预测执1均涨均值-0.115%、胜率均值45.3"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "质量分最高两只的预测执1均涨均值-0.115%、胜率均值45.35%（n=2），虽相对全池预测均值-0.379%略优，仍为负；质量分是历史桶排序，不是个股预言。可证伪：明日T+1实测显示高分组均值转正且相对基准稳定增益，才可上修。",
+      "falsifiable_rule": "明日T+1实测显示高分组均值转正且相对基准稳定增益，才可上修。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\limitup判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-031",
+      "route": "logic",
+      "record_count": 8,
+      "record_ids": [
+        "cognition:logic:2026-09-10:1:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+        "cognition:logic:2026-09-10:3:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+        "cognition:logic:2026-09-10:6:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+        "cognition:logic:2026-09-10:8:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+        "cognition:logic:2026-09-10:9:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+        "cognition:logic:2026-09-10:10:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+        "cognition:logic:2026-09-10:11:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+        "cognition:logic:2026-09-10:12:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业"
+      ],
+      "dates": [
+        "2026-09-10"
+      ],
+      "title": "当日：行业兜底造成宽度幻觉，20260910为35/35 B行业兜底。可证伪：若THS/公告催化恢复并有≥3只同题材跨环节承载，则重新计算题材纯度。",
+      "falsifiable_rule": "若THS/公告催化恢复并有≥3只同题材跨环节承载，则重新计算题材纯度。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\logic判断_20260910.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "含明确阈值",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-032",
+      "route": "logic",
+      "record_count": 8,
+      "record_ids": [
+        "cognition:logic:2026-09-10:0:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+        "cognition:logic:2026-09-10:2:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+        "cognition:logic:2026-09-10:5:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+        "cognition:logic:2026-09-10:7:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+        "cognition:logic:2026-09-10:8:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+        "cognition:logic:2026-09-10:9:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+        "cognition:logic:2026-09-10:10:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+        "cognition:logic:2026-09-10:11:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只"
+      ],
+      "dates": [
+        "2026-09-10"
+      ],
+      "title": "当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只同链涨停且最高连板≥2，且非单纯行业兜底，则上调“业绩背书优先”权重。",
+      "falsifiable_rule": "若后续模板链内出现≥2只同链涨停且最高连板≥2，且非单纯行业兜底，则上调“业绩背书优先”权重。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\logic判断_20260910.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-033",
+      "route": "logic",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:logic:2026-09-24:0:20260924：行业兜底全覆盖时，A/B/C计数不能被当作产业",
+        "cognition:logic:2026-09-24:1:20260924：行业兜底全覆盖时，A/B/C计数不能被当作产业",
+        "cognition:logic:2026-09-24:2:20260924：行业兜底全覆盖时，A/B/C计数不能被当作产业",
+        "cognition:logic:2026-09-24:3:20260924：行业兜底全覆盖时，A/B/C计数不能被当作产业"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "20260924：行业兜底全覆盖时，A/B/C计数不能被当作产业纯度。题材归位A/B/C=0/52/0且环节、催化、THS原因全缺失，只能说明当日产业来源不可核验，不能推出产业逻辑不存在。预增雷达A共振池89只与涨停池交集为0，且全文无双源交叉字段，预增数量不能替代资金与产业链共振。情绪质量改善（炸板率16.1%，昨日33.8%）也不能补造订单、客户、出货或公告。可证伪：后续同日来源恢复、至少2个模板环节同步承载、双源字段完整且风险窗口通过时，本条仅保留为缺失源日规则。",
+      "falsifiable_rule": "后续同日来源恢复、至少2个模板环节同步承载、双源字段完整且风险窗口通过时，本条仅保留为缺失源日规则。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\logic判断_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "先补证据/数据链",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-034",
+      "route": "logic",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:logic:2026-09-30:0:20260930当日迭代：①52/52行业兜底且A/B/C=0/"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "20260930当日迭代：①52/52行业兜底且A/B/C=0/52/0时，B档计数只能说明盘面行业聚集，不能说明产业纯度；②电池的早封承载和出版的7板高度属于盘面事实，缺A源环节/催化仍不得升级为产业主线；③A共振池与当日涨停零交集受“未发酵”定义约束，不能单独当作预增线失效证据，应以后续T-1交叉、双源字段和跨环节承载验证；④刚点火3只、已发酵对照2只进入涨停池只说明末端/对照信号，不足以替代A档产业实锤；⑤风险日历pass但未覆盖三类维度，仍需保持风险盲区。可证伪：补齐A源、双源、目标日位置和未接入风险维度，且同链跨环节承载恢复时，本条缺失源规则上修。",
+      "falsifiable_rule": "补齐A源、双源、目标日位置和未接入风险维度，且同链跨环节承载恢复时，本条缺失源规则上修。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\logic判断_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-035",
+      "route": "master",
+      "record_count": 7,
+      "record_ids": [
+        "cognition:master:2026-09-10:1:冰点中单一路B档不足以推翻四路C档",
+        "cognition:master:2026-09-10:5:冰点中单一路B档不足以推翻四路C档",
+        "cognition:master:2026-09-10:8:冰点中单一路B档不足以推翻四路C档",
+        "cognition:master:2026-09-10:11:冰点中单一路B档不足以推翻四路C档",
+        "cognition:master:2026-09-10:14:冰点中单一路B档不足以推翻四路C档",
+        "cognition:master:2026-09-10:17:冰点中单一路B档不足以推翻四路C档",
+        "cognition:master:2026-09-10:21:冰点中单一路B档不足以推翻四路C档"
+      ],
+      "dates": [
+        "2026-09-10"
+      ],
+      "title": "冰点中单一路B档不足以推翻四路C档",
+      "falsifiable_rule": "封板率与题材宽度同步修复且席位强度跨票形成多档共振",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260910.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需从自然语言拆解"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-036",
+      "route": "master",
+      "record_count": 7,
+      "record_ids": [
+        "cognition:master:2026-09-10:0:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+        "cognition:master:2026-09-10:4:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+        "cognition:master:2026-09-10:7:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+        "cognition:master:2026-09-10:10:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+        "cognition:master:2026-09-10:13:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+        "cognition:master:2026-09-10:16:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+        "cognition:master:2026-09-10:20:缺失盘中数据只能降低置信度，不能被解释为方向信号"
+      ],
+      "dates": [
+        "2026-09-10"
+      ],
+      "title": "缺失盘中数据只能降低置信度，不能被解释为方向信号",
+      "falsifiable_rule": "补齐同一决策时点的多时点数据并完成回放校验",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260910.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-037",
+      "route": "master",
+      "record_count": 5,
+      "record_ids": [
+        "cognition:master:2026-09-23:2:冰点日必须把研究层B级雷达与交易层C级执行分开。",
+        "cognition:master:2026-09-23:5:冰点日必须把研究层B级雷达与交易层C级执行分开。",
+        "cognition:master:2026-09-23:8:冰点日必须把研究层B级雷达与交易层C级执行分开。",
+        "cognition:master:2026-09-23:11:冰点日必须把研究层B级雷达与交易层C级执行分开。",
+        "cognition:master:2026-09-23:15:冰点日必须把研究层B级雷达与交易层C级执行分开。"
+      ],
+      "dates": [
+        "2026-09-23"
+      ],
+      "title": "冰点日必须把研究层B级雷达与交易层C级执行分开。",
+      "falsifiable_rule": "后续至少两个环节同步强势并有A源订单/公告、量价承接和合法zt_pool标的，才可将该规则上修。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260923.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-038",
+      "route": "master",
+      "record_count": 5,
+      "record_ids": [
+        "cognition:master:2026-09-23:1:正式荐票先过股票池契约，再讨论基本面和位置。",
+        "cognition:master:2026-09-23:4:正式荐票先过股票池契约，再讨论基本面和位置。",
+        "cognition:master:2026-09-23:7:正式荐票先过股票池契约，再讨论基本面和位置。",
+        "cognition:master:2026-09-23:10:正式荐票先过股票池契约，再讨论基本面和位置。",
+        "cognition:master:2026-09-23:14:正式荐票先过股票池契约，再讨论基本面和位置。"
+      ],
+      "dates": [
+        "2026-09-23"
+      ],
+      "title": "正式荐票先过股票池契约，再讨论基本面和位置。",
+      "falsifiable_rule": "只有在目标日zt_pool可回源、来源证据齐全且满足当日其他门槛时，才可恢复正式荐票资格。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260923.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-039",
+      "route": "master",
+      "record_count": 5,
+      "record_ids": [
+        "cognition:master:2026-09-23:0:高标存续、竞价高开和单席位净买都不能替代接力宽度与可执行收益。",
+        "cognition:master:2026-09-23:3:高标存续、竞价高开和单席位净买都不能替代接力宽度与可执行收益。",
+        "cognition:master:2026-09-23:6:高标存续、竞价高开和单席位净买都不能替代接力宽度与可执行收益。",
+        "cognition:master:2026-09-23:9:高标存续、竞价高开和单席位净买都不能替代接力宽度与可执行收益。",
+        "cognition:master:2026-09-23:13:高标存续、竞价高开和单席位净买都不能替代接力宽度与可执行收益。"
+      ],
+      "dates": [
+        "2026-09-23"
+      ],
+      "title": "高标存续、竞价高开和单席位净买都不能替代接力宽度与可执行收益。",
+      "falsifiable_rule": "封板率、1进2率、有效2板数量、炸板率和T+1实测收益同时达到闸门，才允许撤销该约束。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260923.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-040",
+      "route": "master",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:master:2026-09-24:2:B档行业兜底全覆盖时，A/B/C计数不是产业纯度",
+        "cognition:master:2026-09-24:5:B档行业兜底全覆盖时，A/B/C计数不是产业纯度",
+        "cognition:master:2026-09-24:8:B档行业兜底全覆盖时，A/B/C计数不是产业纯度",
+        "cognition:master:2026-09-24:12:B档行业兜底全覆盖时，A/B/C计数不是产业纯度"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "B档行业兜底全覆盖时，A/B/C计数不是产业纯度",
+      "falsifiable_rule": "同日来源恢复并出现至少两个明确产业环节同步承载、A档公告/订单可回溯、风险窗口通过，才可撤销本条缺源约束。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-041",
+      "route": "master",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:master:2026-09-24:1:双源通过是校验状态，不是全量荐票许可",
+        "cognition:master:2026-09-24:4:双源通过是校验状态，不是全量荐票许可",
+        "cognition:master:2026-09-24:7:双源通过是校验状态，不是全量荐票许可",
+        "cognition:master:2026-09-24:11:双源通过是校验状态，不是全量荐票许可"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "双源通过是校验状态，不是全量荐票许可",
+      "falsifiable_rule": "连续可结算样本中至少两只非高位标的满足源1净买正、双源一致、多席有效S/A共振并稳定收盘，才考虑放宽单席和位置约束。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "本质为边界解除条件"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-042",
+      "route": "master",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:master:2026-09-24:0:结构修复只能解除崩坏，不能自动解除交易防守",
+        "cognition:master:2026-09-24:3:结构修复只能解除崩坏，不能自动解除交易防守",
+        "cognition:master:2026-09-24:6:结构修复只能解除崩坏，不能自动解除交易防守",
+        "cognition:master:2026-09-24:10:结构修复只能解除崩坏，不能自动解除交易防守"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "结构修复只能解除崩坏，不能自动解除交易防守",
+      "falsifiable_rule": "真实T+1执1均收≥0、有效3板扩宽、跌停≤5、温度≥45且炸板率<15%同时成立。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-043",
+      "route": "master",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:master:2026-09-28:2:冰点环境下，局部高度和宽度只能进入观察层，不能自动解除C档。",
+        "cognition:master:2026-09-28:5:冰点环境下，局部高度和宽度只能进入观察层，不能自动解除C档。",
+        "cognition:master:2026-09-28:9:冰点环境下，局部高度和宽度只能进入观察层，不能自动解除C档。"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "冰点环境下，局部高度和宽度只能进入观察层，不能自动解除C档。",
+      "falsifiable_rule": "下一真实交易日环境、接力、质量三组闸门同时通过，且真实T+1执1均收≥0。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-044",
+      "route": "master",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:master:2026-09-28:1:双源校验通过是数据质量状态，不是交易许可。",
+        "cognition:master:2026-09-28:4:双源校验通过是数据质量状态，不是交易许可。",
+        "cognition:master:2026-09-28:8:双源校验通过是数据质量状态，不是交易许可。"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "双源校验通过是数据质量状态，不是交易许可。",
+      "falsifiable_rule": "连续样本中至少两只非高位标的满足源1正净买、双源一致、多席有效S/A共振、位置可核验并稳定收盘。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-045",
+      "route": "master",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:master:2026-09-28:0:题材归位全覆盖不等于产业纯度，A/B/C计数必须与来源档绑定。",
+        "cognition:master:2026-09-28:3:题材归位全覆盖不等于产业纯度，A/B/C计数必须与来源档绑定。",
+        "cognition:master:2026-09-28:7:题材归位全覆盖不等于产业纯度，A/B/C计数必须与来源档绑定。"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "题材归位全覆盖不等于产业纯度，A/B/C计数必须与来源档绑定。",
+      "falsifiable_rule": "A档公告/订单等可回溯来源出现，且至少两个模板环节同步承载并通过风险窗口。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-046",
+      "route": "master",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:master:2026-09-29:2:全B档行业兜底时，强度只能产生观察候选，不能定主线或A档",
+        "cognition:master:2026-09-29:6:全B档行业兜底时，强度只能产生观察候选，不能定主线或A档"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "全B档行业兜底时，强度只能产生观察候选，不能定主线或A档",
+      "falsifiable_rule": "出现可追溯A档催化并完成宽度、梯队、开板质量同步改善。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需从自然语言拆解"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-047",
+      "route": "master",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:master:2026-09-29:1:生态修复不是交易层修复",
+        "cognition:master:2026-09-29:5:生态修复不是交易层修复"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "生态修复不是交易层修复",
+      "falsifiable_rule": "环境四项、clean一进二和质量T+1实测同时通过。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-048",
+      "route": "master",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:master:2026-09-29:0:跨路趋同必须扣除共享来源和共同缺口",
+        "cognition:master:2026-09-29:4:跨路趋同必须扣除共享来源和共同缺口"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "跨路趋同必须扣除共享来源和共同缺口",
+      "falsifiable_rule": "存在独立来源、独立时间窗口和通过T+1实测的多路交叉证据。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-049",
+      "route": "master",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:master:2026-09-30:3:全B档行业兜底只能产生观察候选"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "全B档行业兜底只能产生观察候选",
+      "falsifiable_rule": "A档催化、宽度/跨环节、梯队和开板质量同步达标。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需从自然语言拆解"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-050",
+      "route": "master",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:master:2026-09-30:2:封板率过80%不等于可交易性修复"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "封板率过80%不等于可交易性修复",
+      "falsifiable_rule": "环境和质量T+1实测同时达标。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-051",
+      "route": "master",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:master:2026-09-30:1:缺失必须保持partial/null"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "缺失必须保持partial/null",
+      "falsifiable_rule": "对应原始产物可回源并完成字段级校验。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "先补证据/数据链"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-052",
+      "route": "master",
+      "record_count": 1,
+      "record_ids": [
+        "cognition:master:2026-09-30:0:跨路重复票必须扣除共享底座"
+      ],
+      "dates": [
+        "2026-09-30"
+      ],
+      "title": "跨路重复票必须扣除共享底座",
+      "falsifiable_rule": "重复票同时通过独立资金、产业和T+1执行门禁。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\总审_20260930.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-053",
+      "route": "theme",
+      "record_count": 6,
+      "record_ids": [
+        "cognition:theme:2026-09-22:0:家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/",
+        "cognition:theme:2026-09-22:2:家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/",
+        "cognition:theme:2026-09-22:4:家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/",
+        "cognition:theme:2026-09-22:6:家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/",
+        "cognition:theme:2026-09-22:9:家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/",
+        "cognition:theme:2026-09-22:12:家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/"
+      ],
+      "dates": [
+        "2026-09-22"
+      ],
+      "title": "家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/63；在来源档未升级且宽度未过主流门槛前，必须把高标抱团与题材主线分开。可证伪条件：明日出现A档催化并同时完成宽度与梯队扩散。",
+      "falsifiable_rule": "明日出现A档催化并同时完成宽度与梯队扩散。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\theme判断_20260922.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-054",
+      "route": "theme",
+      "record_count": 5,
+      "record_ids": [
+        "cognition:theme:2026-09-23:1:今日4板两只、出版3只且封板干净，AI硬件链多环节扩散，但6有最",
+        "cognition:theme:2026-09-23:3:今日4板两只、出版3只且封板干净，AI硬件链多环节扩散，但6有最",
+        "cognition:theme:2026-09-23:5:今日4板两只、出版3只且封板干净，AI硬件链多环节扩散，但6有最",
+        "cognition:theme:2026-09-23:8:今日4板两只、出版3只且封板干净，AI硬件链多环节扩散，但6有最",
+        "cognition:theme:2026-09-23:11:今日4板两只、出版3只且封板干净，AI硬件链多环节扩散，但6有最"
+      ],
+      "dates": [
+        "2026-09-23"
+      ],
+      "title": "今日4板两只、出版3只且封板干净，AI硬件链多环节扩散，但6有最高仅3/6、聚类主流为无；固化规则：B档催化下，高标强度只给观察锚，数量扩散只给大分支候选，必须同时满足宽度、容量、梯队和A档催化才可升级主流。可证伪条件：明日同一聚类线宽度≥15且出现4板梯队并有A档公告催化。",
+      "falsifiable_rule": "明日同一聚类线宽度≥15且出现4板梯队并有A档公告催化。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\theme判断_20260923.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需要后续/T+1",
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-055",
+      "route": "theme",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:theme:2026-09-24:1:出版3家、最高5板、早封占比1.0只能证明局部强度；在A档催化为",
+        "cognition:theme:2026-09-24:3:出版3家、最高5板、早封占比1.0只能证明局部强度；在A档催化为",
+        "cognition:theme:2026-09-24:6:出版3家、最高5板、早封占比1.0只能证明局部强度；在A档催化为",
+        "cognition:theme:2026-09-24:9:出版3家、最高5板、早封占比1.0只能证明局部强度；在A档催化为"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "出版3家、最高5板、早封占比1.0只能证明局部强度；在A档催化为0/52、6有最高3/6且宽度仅3的情况下，继续定义为强分支观察，不把高标抱团升级为主流。可证伪条件：同一聚类出现A档催化并同时完成宽度、容量、梯队。",
+      "falsifiable_rule": "同一聚类出现A档催化并同时完成宽度、容量、梯队。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\theme判断_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需从自然语言拆解"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-056",
+      "route": "theme",
+      "record_count": 4,
+      "record_ids": [
+        "cognition:theme:2026-09-24:0:汽车零部4家、早封占比0.75、开板占比0.25优于通用设备6家",
+        "cognition:theme:2026-09-24:2:汽车零部4家、早封占比0.75、开板占比0.25优于通用设备6家",
+        "cognition:theme:2026-09-24:5:汽车零部4家、早封占比0.75、开板占比0.25优于通用设备6家",
+        "cognition:theme:2026-09-24:8:汽车零部4家、早封占比0.75、开板占比0.25优于通用设备6家"
+      ],
+      "dates": [
+        "2026-09-24"
+      ],
+      "title": "汽车零部4家、早封占比0.75、开板占比0.25优于通用设备6家但开板占比1.0；这只支持汽车零部进入低位观察，不支持主线确认。可证伪条件：汽车零部出现3板以上并继续扩宽、催化来源升级且开板不恶化。",
+      "falsifiable_rule": "汽车零部出现3板以上并继续扩宽、催化来源升级且开板不恶化。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\theme判断_20260924.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-057",
+      "route": "theme",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:theme:2026-09-28:1:出版传媒仅1家却有5板、09:25封板和高封单比，局部强度成立；",
+        "cognition:theme:2026-09-28:4:出版传媒仅1家却有5板、09:25封板和高封单比，局部强度成立；",
+        "cognition:theme:2026-09-28:7:出版传媒仅1家却有5板、09:25封板和高封单比，局部强度成立；"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "出版传媒仅1家却有5板、09:25封板和高封单比，局部强度成立；但宽度1且来源档B，继续执行“高标强度只给观察锚”。可证伪条件：同一聚类宽度与梯队同步扩散，并出现A档催化。",
+      "falsifiable_rule": "同一聚类宽度与梯队同步扩散，并出现A档催化。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\theme判断_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需从自然语言拆解"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-058",
+      "route": "theme",
+      "record_count": 3,
+      "record_ids": [
+        "cognition:theme:2026-09-28:0:机器人为聚类最宽线且有3板，但5家全线开板占比1.0、6有仅2/",
+        "cognition:theme:2026-09-28:3:机器人为聚类最宽线且有3板，但5家全线开板占比1.0、6有仅2/",
+        "cognition:theme:2026-09-28:6:机器人为聚类最宽线且有3板，但5家全线开板占比1.0、6有仅2/"
+      ],
+      "dates": [
+        "2026-09-28"
+      ],
+      "title": "机器人为聚类最宽线且有3板，但5家全线开板占比1.0、6有仅2/6；本日将其固化为虚胖分支而非主流。可证伪条件：同一聚类宽度至少15、出现4板以上梯队、开板质量收敛并有A档催化。",
+      "falsifiable_rule": "同一聚类宽度至少15、出现4板以上梯队、开板质量收敛并有A档催化。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\theme判断_20260928.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "含明确阈值"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    },
+    {
+      "candidate_group_id": "cog-candidate-059",
+      "route": "theme",
+      "record_count": 2,
+      "record_ids": [
+        "cognition:theme:2026-09-29:2:57只涨停全部来源档B，THS原因产物缺失；即使电池6家/2板/",
+        "cognition:theme:2026-09-29:5:57只涨停全部来源档B，THS原因产物缺失；即使电池6家/2板/"
+      ],
+      "dates": [
+        "2026-09-29"
+      ],
+      "title": "57只涨停全部来源档B，THS原因产物缺失；即使电池6家/2板/早封占比0.67、汽车零部4家/4板/开板占比0.25，也只能分别保留大分支观察，不能把行业口径包装成A档题材主线。可证伪条件：同聚类出现A档催化并完成宽度、梯队和开板质量同步改善。",
+      "falsifiable_rule": "同聚类出现A档催化并完成宽度、梯队和开板质量同步改善。",
+      "sources": [
+        "D:\\股票数据\\市场数据\\_学习\\theme判断_20260929.json"
+      ],
+      "source_files_existing": 1,
+      "source_files_total": 1,
+      "mechanical_tags": [
+        "需从自然语言拆解"
+      ],
+      "blockers": [
+        "boundary_missing",
+        "validation_spec_missing",
+        "validation_evidence_missing",
+        "state_not_validated_or_capitalized"
+      ],
+      "promotion_action": "不得直接晋升；先做证据字段映射，再决定进入T+1验证队列"
+    }
+  ],
+  "important_boundary": "归并仅生成候选组，不修改原始record id/fingerprint，不改变validation/state/capitalized，不进入下一次先验池。"
+}

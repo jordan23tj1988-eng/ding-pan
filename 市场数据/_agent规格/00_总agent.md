@@ -89,14 +89,17 @@
 - 边界: 本 agent"分派"=调度层兜底(盲区立项+分派对口路+记账验收, 不写深挖结论); Master(07)的"指派清单/线索跟踪/综合深挖"=深造层判断。协同: 本 agent 分派的盲区可汇入 Master 指派清单, 深挖结论归 Master 产出。
 - index 页: 本 agent 写 index body 时不再写"认知迭代"(改由总审 Master"认知迭代"字段驱动, 渲染层收编), 只写 一~四 板块。
 
-## ★★能力进化闭环强制接线（2026-10-01）
+## ★★能力进化闭环强制接线（2026-10-03 全链路收口）
 从本日开始，任何傍晚场在派发第一条判断前必须执行：
 `python 能力进化接线.py prepare {d} --root D:/股票数据/市场数据`。
 该快照是七域的共同输入，决策截止日严格等于 d；不能读取盘中域或 d 之后文件。
-历史账本中只有 `validation=validated`、`capitalized=true` 且有 `capability_rule`/`falsifiable_rule` 的记录才是可复用能力；旧的 `state=capability` 但无验证证据的记录必须显示为“待验证”，不得影响判断。
+历史账本中只有同时满足 `validation=validated`、`capitalized=true`、有 `capability_rule`/`falsifiable_rule`、有 `boundary`、有非空结构化 `validation_spec` 的记录才是可复用能力；旧的 `state=capability` 但缺任一证据的记录必须显示为“待验证”，不得影响判断。
 
 每路判断必须先消费本路快照，再把采用/拒绝逐条写入 `_学习/能力使用回执_{d}.json`：
 `considered_ids` 必须覆盖本路全部可复用能力；采用项必须有 `effect` 与 `source_locator`，拒绝项必须有 `reason`；无能力时必须明确 `no_eligible_capabilities`，不能省略字段。
 七域为 `auction/lhb/theme/logic/limitup/cycle/master`，缺任一域回执，总审和发布门禁必须 FAIL。
+
 判断完成后仅执行 `python 能力进化接线.py consume {d} --root D:/股票数据/市场数据`；该程序才允许增加 `reused_count`，不得手工改账本。
-此接线保证顺序为：历史能力加载→本日判断改变/明确不改变→T+1 验证→能力化→下一日复用→命中记账；没有验证证据的条目永远不得提前升级。
+T+1结算时由唯一验证器执行 `能力验证闭环.py --as-of {d}`：验证通过只增加 `validation_pass_count`，不得增加 `hit_count`；实际命中必须另有 `能力命中候选_{d}.json`，并经 `能力进化接线.py record-hit {d}` 绑定能力、路由、对象、日期、结果和证据定位后才增加 `hit_count`。
+随后必须执行 `自我进化闭环.py {d}` 重建并承接字段，最后执行 `能力进化全链路审计.py {d} --require-daily`。任一步失败都不得继续发布，禁止以“文件存在”“代码被引用”或单日验证代替真实复用/命中证据。
+

@@ -16,7 +16,7 @@ LEARN=ROOT/'_学习'
 
 # 只由验证器/消费器写入；重建时只能承接，不允许重置为 None。
 CARRY_FIELDS=('validation','validation_evidence','validated_at','refuted_at',
-              'hit_count','capitalized','reused_count','reuse_log','last_reused_at',
+              'hit_count','validation_pass_count','capitalized','reused_count','reuse_log','last_reused_at',
               'feedback_routes','review_log','review_status','last_reviewed_at',
               'capability_rule','boundary','validation_spec','last_validated_at')
 # 终态证据：不允许被条目原始文本重新降级
@@ -119,10 +119,15 @@ def build(d):
     out_ext={'version':2,'as_of':d,'updated':d,'source':'既有孵化区 + 能力账本历史；缺证据不推断；验证/能力化字段原样承接','records':list(ext.values())}
     save(LEARN/'能力进化库_自主拓展.json',out_ext); save(LEARN/'能力进化库_认知迭代.json',out_cog)
     def stats(rows):
-        return {'total':len(rows),'inherited':len(rows),'experiences':sum(r.get('kind')=='认知迭代' or r.get('state')=='experience' for r in rows),'tracking':sum(r.get('state')=='tracking' for r in rows),'shelved':sum(r.get('state')=='shelved' for r in rows),'validated':sum(r.get('validation')=='validated' or r.get('state')=='validated' for r in rows),'refuted':sum(r.get('validation')=='refuted' or r.get('state')=='refuted' for r in rows),'capabilities':sum(r.get('capitalized') is True or r.get('state')=='capability' for r in rows),
-                # eligible = 真正进入次日判断层的能力（能力进化接线.py 的同一条门槛）
-                'eligible_capabilities':sum(r.get('validation')=='validated' and r.get('capitalized') is True and bool(r.get('capability_rule') or r.get('falsifiable_rule')) for r in rows),
-                'hits':sum((r.get('hit_count') or 0) for r in rows),'reused':sum((r.get('reused_count') or 0) for r in rows),'tracking_events':sum(len(r.get('tracking_log') or []) for r in rows),'review_events':sum(len(r.get('review_log') or []) for r in rows)}
+        def eligible(r):
+            return (r.get('validation') == 'validated' and r.get('capitalized') is True
+                    and bool(r.get('capability_rule') or r.get('falsifiable_rule'))
+                    and bool(r.get('boundary'))
+                    and isinstance(r.get('validation_spec'), dict)
+                    and bool(r.get('validation_spec')))
+        return {'total':len(rows),'inherited':len(rows),'experiences':sum(r.get('kind')=='认知迭代' or r.get('state')=='experience' for r in rows),'tracking':sum(r.get('state')=='tracking' for r in rows),'shelved':sum(r.get('state')=='shelved' for r in rows),'validated':sum(r.get('validation')=='validated' or r.get('state')=='validated' for r in rows),'refuted':sum(r.get('validation')=='refuted' or r.get('state')=='refuted' for r in rows),'capabilities':sum(eligible(r) for r in rows),
+                'eligible_capabilities':sum(eligible(r) for r in rows),
+                'validation_passes':sum((r.get('validation_pass_count') or 0) for r in rows),'hits':sum((r.get('hit_count') or 0) for r in rows),'reused':sum((r.get('reused_count') or 0) for r in rows),'tracking_events':sum(len(r.get('tracking_log') or []) for r in rows),'review_events':sum(len(r.get('review_log') or []) for r in rows)}
     snap={'as_of':d,'自主拓展':stats(out_ext['records']),'认知迭代':stats(out_cog['records']),'规则':'只有存在明确验证、命中、能力化字段时才计数；null表示既有数据没有证据'}
     save(LEARN/f'能力进化快照_{d}.json',snap)
     print(json.dumps(snap,ensure_ascii=False,indent=2))

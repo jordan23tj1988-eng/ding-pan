@@ -35,7 +35,8 @@ class CapabilityWiringTests(unittest.TestCase):
         (self.root / "_学习").mkdir()
         self._write("能力进化库_认知迭代.json", {"records": [
             {"id": "c-good", "route": "auction", "state": "capability", "validation": "validated",
-             "capitalized": True, "capability_rule": "高开>=2%", "hit_count": 1, "reused_count": 0},
+             "capitalized": True, "capability_rule": "高开>=2%", "boundary": "fixture window",
+             "validation_spec": {"evidence": [{"target_d": "20261001"}]}, "hit_count": 1, "reused_count": 0},
             {"id": "c-phantom", "route": "auction", "state": "capability", "validation": "unverifiable",
              "capitalized": None, "capability_rule": "不能进池"},
         ]})
@@ -160,7 +161,8 @@ class CapabilityValidatorTests(unittest.TestCase):
         self.assertEqual(event["status"], "validated")
         self.assertTrue(row["capitalized"])
         self.assertEqual(row["state"], "capability")
-        self.assertEqual(row["hit_count"], 1)
+        self.assertEqual(row["validation_pass_count"], 1)
+        self.assertEqual(row.get("hit_count", 0), 0)
 
     def test_no_spec_stays_unverifiable(self):
         row = {"id": "y", "route": "lhb", "falsifiable_rule": "封板率>=80%"}

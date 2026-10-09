@@ -105,7 +105,10 @@ def review_one(r: dict, as_of: str) -> dict | None:
     event = {"reviewed_at": f"{as_of[:4]}-{as_of[4:6]}-{as_of[6:]}T00:00:00+08:00", "as_of": as_of, "status": status, "reason": reason, "evidence": refs, "rule_snapshot": text_of(r, "falsifiable_rule", "可证伪条件", "可证伪规则")}
     logs.append(event); r["review_log"] = logs; r["review_status"] = status; r["last_reviewed_at"] = event["reviewed_at"]; r["validation_evidence"] = refs
     if status == "validated":
-        r["validation"] = "validated"; r["validated_at"] = as_of; r["hit_count"] = int(r.get("hit_count") or 0) + 1
+        # 验证通过只记录 validation_pass_count；不能冒充“实际复用后命中”。
+        # hit_count 只有消费后绑定到具体对象/结果的闭环才允许增加。
+        r["validation"] = "validated"; r["validated_at"] = as_of
+        r["validation_pass_count"] = int(r.get("validation_pass_count") or 0) + 1
         if r.get("capability_rule") or r.get("能力规则"):
             r["state"] = "capability"; r["capitalized"] = True; r["last_validated_at"] = as_of
     elif status == "falsified":

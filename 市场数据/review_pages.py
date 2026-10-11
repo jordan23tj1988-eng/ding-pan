@@ -284,6 +284,43 @@ def _read_json(path):
         raise ValueError("非法 JSON 非有限数: " + value)
     return json.loads(path.read_text(encoding="utf-8-sig"), parse_constant=reject)
 
+def _asof_json_text(path, d):
+    """Return a date-keyed JSON prefix through d without reading any future value."""
+    if not isinstance(d, str) or not re.fullmatch(r"20[0-9]{6}", d):
+        raise ValueError("as-of 日期格式非法")
+    key_re = re.compile(r'^\s*"(20[0-9]{6})"\s*:')
+    lines = []
+    future_boundary = False
+    with Path(path).open("r", encoding="utf-8-sig") as stream:
+        for line in stream:
+            match = key_re.match(line)
+            if match and match.group(1) > d:
+                future_boundary = True
+                break
+            lines.append(line)
+    raw = "".join(lines).rstrip()
+    if future_boundary:
+        raw = raw.rstrip(",").rstrip() + "\n}"
+    return raw
+
+def _read_json_asof(path, d):
+    """Read a date-keyed JSON object only through d; future values are never read or parsed."""
+    def reject(value):
+        raise ValueError("非法 JSON 非有限数: " + value)
+    doc = json.loads(_asof_json_text(path, d), parse_constant=reject)
+    if not isinstance(doc, dict):
+        raise ValueError("as-of 日期表必须是 object")
+    dated = {}
+    for key, value in doc.items():
+        if not re.fullmatch(r"20[0-9]{6}", str(key)):
+            continue  # 非日期 CLI/辅助键不能作为行情记录进入卡片或KPI。
+        if str(key) > d:
+            raise ValueError("as-of 日期表含越界键")
+        if isinstance(value, dict) and value.get("日") is not None and str(value["日"]) > d:
+            raise ValueError("as-of 日期表含未来记录")
+        dated[str(key)] = value
+    return dated
+
 def _keys(obj, allowed, context):
     if not isinstance(obj, dict):
         raise ValueError(context + " 必须是 object")
@@ -303,11 +340,12 @@ def _verify_evidence(root,item,d):
     path=(root/source).resolve()
     if not path.is_relative_to(root.resolve()):
         raise ValueError('证据路径越界')
-    raw=path.read_bytes()
+    scoped=path.name in {'_市场温度表.json','_情绪先行指标.json'}
+    raw=_asof_json_text(path,d).encode('utf-8') if scoped else path.read_bytes()
     digest=sha256(raw).hexdigest()
     if item.get('sha256') is not None and item['sha256']!=digest:
         raise ValueError('证据文件哈希不匹配')
-    doc=_read_json(path)
+    doc=_read_json_asof(path,d) if scoped else _read_json(path)
     dates=[]
     def remember(value):
         if isinstance(value,dict):
@@ -552,7 +590,7 @@ def _facts(model, root):
     facts = fact.get('facts',{}) if fact else {}
     if not fact:
         table_path = root / '_学习' / '_市场温度表.json'
-        table = _read_json(table_path) if table_path.exists() else {}
+        table = _read_json_asof(table_path,d) if table_path.exists() else {}
         row = table.get(d, {})
         aliases = {'最高连板':'最高板','成交额亿':'成交额亿'}
         facts = {k: {'value': row.get(k, row.get(aliases.get(k,k))), 'source':'_市场温度表.json#/'+d} for k in [x['id'] for x in model['kpis']]}
@@ -574,12 +612,12 @@ def _facts(model, root):
             _add(model,'当日成交额：'+str(volume)+' 亿','volume','evidence',filename,'/facts/成交额亿/value' if fact else '/'+d+'/成交额亿')
         lead_path = root/'_学习'/'_情绪先行指标.json'
         if lead_path.exists():
-            lead = _read_json(lead_path).get(d)
+            lead = _read_json_asof(lead_path,d).get(d)
             if lead is not None:
                 for pointer,value in _leaf_items(lead,'/'+d):
                     _add(model,value,'leading','evidence',lead_path.name,pointer)
         temp_path = root/'_学习'/'_市场温度表.json'
-        temp = _read_json(temp_path).get(d,{}) if temp_path.exists() else {}
+        temp = _read_json_asof(temp_path,d).get(d,{}) if temp_path.exists() else {}
         for level,count in temp.get('梯队',{}).items():
             _add(model,str(level)+'板'+str(count)+'家','ladder','evidence',temp_path.name,'/'+d+'/梯队/'+str(level))
         model['limitations'] = ['当日周期判断缺失；仅呈现当日事实，不从其他日期重造决策。']
@@ -681,7 +719,7 @@ def _legacy(model, root):
             if top in ('日期','date','路','来源','schema_version','昨日战绩验收','环境加权依据','页面合同'):
                 continue
             if route=='index':
-                section = {'结论':'verdict','五路裁决':'routes','总裁决':'verdict','检查四项':'turning','发布门禁':'turning','推演指派':'verdict','分歧裁决':'turning','分歧点':'turning','综合深挖':'verdict','认知迭代':'verdict','线索跟踪':'verdict','指派清单':'verdict','回填窗口标注':'turning','独立盲区声明':'turning'}[top]
+                section = {'结论':'verdict','五路裁决':'routes','总裁决':'verdict','检查四项':'turning','发布门禁':'turning','推演指派':'verdict','分歧裁决':'turning','分歧点':'turning','综合深挖':'verdict','认知迭代':'verdict','线索跟踪':'verdict','指派清单':'verdict','回填窗口标注':'turning','独立盲区声明':'turning','能力承接':'verdict'}[top]
                 role = 'cognition' if top=='认知迭代' else 'research' if top=='综合深挖' else 'counterevidence' if top in ('分歧裁决','分歧点') else 'verdict' if top in ('结论','总裁决') else 'evidence'
             else:
                 section = 'cognition' if (top.startswith('认知迭代') or top=='独立盲区声明') else 'research' if top=='深挖' else first if top=='荐票' else evidence_section
@@ -773,8 +811,16 @@ def _theme(model, root):
                 for pointer,value in _leaf_items(life[top],'/'+top):
                     _add(model,value,'lifecycle','condition' if '判据' in pointer else 'evidence','题材生命周期判断_'+d+'.json',pointer)
 
-def _source_record(path,root):
-    return {'path':path.relative_to(root).as_posix(),'sha256':sha256(path.read_bytes()).hexdigest()}
+def _source_record(path,root,d=None):
+    # 零后视镜: 温度表/先行指标表按目标日截断后再入内容视图; 但 sha256 必须记**整文件**哈希,
+    # 与发布器(review_publish 证据校验: digest(contained(root,source))==e['sha256'])及契约口径一致。
+    # 视图口径另以 hash_scope/as_of 标注, 消费者可按 _asof_json_text 复算, 不许把视图哈希当文件指纹。
+    scoped=bool(d and path.name in {'_市场温度表.json','_情绪先行指标.json'})
+    raw=path.read_bytes()
+    rec={'path':path.relative_to(root).as_posix(),'sha256':sha256(raw).hexdigest()}
+    if scoped:
+        rec.update({'hash_scope':'asof_prefix','as_of':d})
+    return rec
 
 def _pure_renderer(route,root,d):
     path=Path(__file__).resolve().parent/('module_render_'+route+'.py')
@@ -801,6 +847,8 @@ def _pure_renderer(route,root,d):
         path=root/'_学习'/filename
         if not path.exists():return None
         if path not in reads:reads.append(path)
+        if filename in {'_市场温度表.json','_情绪先行指标.json'}:
+            return _read_json_asof(path,d)
         data=_read_json(path)
         if isinstance(data,dict):
             if filename=='链条纵深库.json':
@@ -881,17 +929,16 @@ def _logic_candidates(root,d):
 
 def _leading_lights(root,d):
     """Re-render dated source facts in a disposable output dir; never rewrite frozen inputs."""
-    import os, tempfile, shutil
+    import os, tempfile
     learn=root/'_学习';source=root/'情绪先行指标.py'
     paths=[learn/'_情绪先行指标.json',learn/'_市场温度表.json',source]
-    data=_read_json(paths[0])
-    data={k:v for k,v in data.items() if k<=d}
+    data=_read_json_asof(paths[0],d)
     if d not in data:raise ValueError('当日先行指标缺失')
     tree=ast.parse(source.read_text(encoding='utf-8-sig'))
     body=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name in ('card','triggers')]
     if {n.name for n in body}!={'card','triggers'}:raise ValueError('先行指标卡接口缺失')
     with tempfile.TemporaryDirectory(prefix='review-leading-') as tmp:
-        shutil.copy2(paths[1],Path(tmp)/paths[1].name)
+        (Path(tmp)/paths[1].name).write_text(json.dumps(_read_json_asof(paths[1],d),ensure_ascii=False),encoding='utf-8')
         ns={'os':os,'json':json,'L':tmp,'__name__':'review_leading_readonly'}
         exec(compile(ast.Module(body=body,type_ignores=[]),str(source),'exec'),ns)
         from contextlib import redirect_stdout
@@ -906,7 +953,7 @@ def _components(model,root):
     d,route=model['d'],model['route'];learn=root/'_学习'
     model['components']=[]
     def record(key,section,producer,paths,html,anchors=None,issue=None,allow_missing=False):
-        sources=[_source_record(p,root) for p in paths if p.exists()]
+        sources=[_source_record(p,root,d) for p in paths if p.exists()]
         valid=bool(html and sources) and not issue
         if valid and re.search(r'<(?:script|iframe|object|embed)\b|\bon[a-z]+\s*=|javascript\s*:',html,re.I):
             valid=False;issue='机器片段包含主动内容'
@@ -991,7 +1038,7 @@ def _components(model,root):
         # 概览 Top5 荐票卡(跨路筛选, 2026-09-11 用户拍板口径"跨路共识优先"): 五路候选去重→共振→路内位置→执行期望。
         # 机器权威组件, 由 跨路荐票.py 按当日真源生成; 该 section 无 LLM claim(_legacy 内 machine-only 白名单)。
         artifact('CROSSPICK','recommendations','跨路荐票卡_'+d+'.html','跨路荐票.py')
-        table=_read_json(learn/'_市场温度表.json') if (learn/'_市场温度表.json').exists() else {}
+        table=_read_json_asof(learn/'_市场温度表.json',d) if (learn/'_市场温度表.json').exists() else {}
         if d in table:generated('IDXTEMP','turning','index','r_mach_temp',['_市场温度表.json'])
         else:record('IDXTEMP','turning','module_render_index.r_mach_temp',[],None)
         if (root/'情绪先行指标.py').exists() and (learn/'_情绪先行指标.json').exists() and (learn/'_市场温度表.json').exists():
@@ -1034,12 +1081,23 @@ def _components(model,root):
         need_vote = ('<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板')
                      and '<!--MACHVOTE-->' not in cycle_body)
         need_ladder = 'class="cols"' not in _cseg('四 连板', '五 攻防')
-        table=_read_json(learn/'_市场温度表.json') if (learn/'_市场温度表.json').exists() else {}
+        table=_read_json_asof(learn/'_市场温度表.json',d) if (learn/'_市场温度表.json').exists() else {}
         if need_vol:
             if d in table:generated('VOLSTEP','volume','cycle','r_mach_volstep',['_市场温度表.json'])
             else:record('VOLSTEP','volume','module_render_cycle.r_mach_volstep',[],None)
         if need_lead:
-            artifact('LEADIND','leading','先行指标卡_'+d+'.html','情绪先行指标.py')
+            lead_path=learn/'_情绪先行指标.json'
+            try:
+                has_target=lead_path.exists() and d in _read_json_asof(lead_path,d)
+            except (ValueError,OSError) as exc:
+                record('LEADIND','leading','情绪先行指标.py', [lead_path] if lead_path.exists() else [], None,
+                       issue='先行指标 as-of 读取失败: '+str(exc))
+            else:
+                if has_target:
+                    artifact('LEADIND','leading','先行指标卡_'+d+'.html','情绪先行指标.py')
+                else:
+                    record('LEADIND','leading','情绪先行指标.py',[lead_path] if lead_path.exists() else [],None,
+                           issue='目标日先行指标缺失；阻断旧日图形回填')
         if need_vote:
             artifact('MACHVOTE','stages','周期投票牌_'+d+'.html','周期投票.py',['MACHVOTE','VOTEBOARD'])
         if need_ladder:
@@ -1195,6 +1253,7 @@ def _route_kpis(model,root):
         try:
             if not p.exists():return None
             if p.suffix=='.jsonl':return [json.loads(line) for line in p.read_text(encoding='utf-8-sig').splitlines() if line.strip()]
+            if name in {'_市场温度表.json','_情绪先行指标.json'}:return _read_json_asof(p,d)
             return _read_json(p)
         except (ValueError,OSError):return None
     market=(get('_市场温度表.json') or {}).get(d,{})
@@ -1241,7 +1300,11 @@ def _route_kpis(model,root):
             p=learn/name
             if p.exists():
                 key='kpi-source-'+str(index)+'-'+str(len(refs))
-                model['evidence'].append({'id':key,'d':d,'source':'_学习/'+name,'sha256':sha256(p.read_bytes()).hexdigest(),'verification':'file_hash'})
+                source_meta=_source_record(p,root,d)
+                evidence_item={'id':key,'d':d,'source':'_学习/'+name,'sha256':source_meta['sha256'],'verification':'file_hash'}
+                if source_meta.get('hash_scope'):
+                    evidence_item.update({'hash_scope':source_meta['hash_scope'],'as_of':source_meta['as_of']})
+                model['evidence'].append(evidence_item)
                 refs.append(key)
         sparkline=None
         if '量能' in label:
@@ -1692,7 +1755,7 @@ def _render(model,contract,root=None):
                 # 数字直接读取当日权威快照，不接受手写常量。
                 mt_path = root / '_学习' / '_市场温度表.json'
                 rm_path = root / '_学习' / f'题材归位_{d}.json'
-                mt_all = _read_json(mt_path) if mt_path.exists() else {}
+                mt_all = _read_json_asof(mt_path,d) if mt_path.exists() else {}
                 mt = mt_all.get(d, {}) if isinstance(mt_all, dict) else {}
                 ladder = mt.get('梯队') if isinstance(mt, dict) else {}
                 ladder = ladder if isinstance(ladder, dict) else {}

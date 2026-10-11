@@ -1,0 +1,6069 @@
+{
+  "schema_version": 1,
+  "d": "20261009",
+  "route": "index",
+  "legacy_bodies": [
+    {
+      "source": "judgment_20261009.json",
+      "pointer": "/bodies/index",
+      "raw": "<section><h2>总判断</h2><p>20261009：五路C、C、C、C、C；正式荐票0只；空仓。</p></section><section><h2>盘面事实</h2><p>涨停69，炸板14，跌停8，封板率83.13%，炸板率16.90%，成交额19005.0亿元，封板总额61.6亿元，市场温度49.6（中性），最高连板9板，题材线数40，回封26，二板加12。</p></section><section><h2>环境</h2><p>量能：两市成交额19005.0亿元，约1.9005万亿元；未达到2万亿元档，也明显高于3万亿元退潮线所指的3万亿口径。按规则表处于1.7至2.0万亿元之间，但非2万亿以上；支持有承载，不满足3.3万亿看多或3.5万亿主升门槛。相邻前一记录20261008的温度表成交额为null，量能序列只有目标日可用值， 温度档：中性。缺口：昨日涨停溢价为null，三窗触发器为空数组，不能据此判定洗出反弹窗/过热禁追窗。；题材归位来源档A=0；题材四维中多数字段为空，不能外推缺失主题趋势。；二进三率为0%，当日没有三连板梯队，梯队中位连续性偏弱。。</p></section><section><h2>每路独立核算</h2><p>竞价C档（置信度94，正式荐票0只），席位C档（置信度34，正式荐票0只），题材C档（置信度86，正式荐票0只，观察2只），产业逻辑C档（置信度82，正式荐票0只），涨停C档（置信度75，正式荐票0只）。</p></section><section><h2>题材树</h2><p>题材归位69只：A档0、B档69、C档0。</p></section><section><h2>周期与攻防</h2><p>周期主判：阶段启动、方向平、置信度67；攻防=B档审慎参与；仓位上限=总仓位上限4成。</p></section><section><h2>五路看牌</h2><p>竞价=弃权；席位=弃权；题材=启动/平（票平）；产业逻辑=启动/平（票平）；涨停=高潮/降（票降）。</p></section><section><h2>明日验证</h2><p>推演落盘7条可机械结算预测（温度、宽度、梯队、竞价承接等），T+1结果尚未发生，不倒灌。</p></section><section><h2>分歧与盲区</h2><p>全市场9:25竞价快照与撤单差分缺失，仅有腾讯源52只局部轨迹；风险事件源缺失（风险日历rc=1）；题材四维等以null保持公开。均不补造。</p></section><section><h2>发布门禁</h2><p>页面必须通过一致性哨兵与链健康检查后才视为完成。本概览体由宿主在 20261011 补跑时按 总审_20261009.json、推演_20261009.json、周期主判_20261009.json、五路judgment body 与 fact_20261009.json 归档原文组装，数字程序化取自事实层，未新增判断；五路正文为各路判断原文归档。</p></section><section><h2>推演指派</h2><p>总审落盘指派2条：MA-20261009-01→auction（截止20261012）；MA-20261009-02→lhb（截止20261012）。</p></section><section><h2>总裁决</h2><p>档位=C防守，置信度=78。C档防守、空仓优先，正式荐票并集0只；但当日温度为49.6中性、封板率83.13%、涨停69、炸板14、跌停8，不能描述为偏冷/恐慌。防守理由应落在缺乏可核验主线、竞价全市场证据缺口、产业原件门禁和质量模型执行预期未达证伪门槛，而非套用低温市场标签。</p><p>依据：fact目标日各项quality=ok；与20261009/summary.json交叉吻合：涨停69、炸板14、跌停8、温度49.6中性、炸板率16.9%、封板率83.13%、最高9板、题材线40、归位69且A0/B69/C0、成交额19005亿元。题材来源档为THS原因文本，不等于公告A档。多路共用温度/涨停池，按同一证据计一次，不当独立投票。</p></section><section><h2>五路裁决</h2><p>auction：C档／打回（置信度88） 结论方向可接受：全市场快照缺失，只有09:25:49腾讯源52只局部轨迹，不能外推全市场，0荐票合理。反证检查发现判断与验证注记把_学习/开盘验证维_20261009.json写成缺失，但该文件实际存在且status=pass、验证52代码且每代码至少2个样本；它只覆盖已采集tick，不替代全市场竞价快照。故打回的是缺失清单和可溯源性，不是据此强行改成看多。置信度由94下调；可证伪条件本身可核验。</p><p>lhb：C档／打回（置信度25） 0荐票与防守可暂维持，但核心缺口陈述不实：_学习/_席位动向/20261009.csv存在，_学习/龙虎榜双源校验_20261009.json也存在且status=pass；58只可比为一致23、分歧22、强矛盾4、打折9、仅源2为15。判断称两文件缺失，无法接受其未核票推理；也不得把程序status=pass等同票级无冲突。</p><p>theme：C档／接受（置信度86） 归位69/69且A0/B69/C0；聚类6有最高3/6，候选宽度/梯队未达主线确认，行业电池合并不能代替聚类；观察候选不冒充荐票。可证伪条件以公告A档、宽度、梯队、开板率和6有组合给出，具备机械性。</p><p>logic：C档／接受（置信度82） 模板153与涨停代码交集2，但绿盟科技、振华股份都未证明模板环节与目标题材/已兑现订单闭环；雷达A池交集0；风险日历partial且原件级公告/订单缺失。未用代码交集或雷达自动初判冒充产业实证。可证伪条件列出可定位原件及窗口要求，基本可机械复核。</p><p>limitup：C档／接受（置信度75） 预测池69只，预测执1均值胜率43.31%、均涨-0.283%且69只预测均涨为负；这些是预测字段，不是实绩。上一日冻结43只实际T+1结算18/43胜、均收+0.61%，未满足胜率>50%与均收>0的双重证伪条件，故不能用正均收翻转结论，但应避免把预测标签写成实际负收益。市场封板率83.13%、温度49.6中性，故本路C防守作为风险控制而非市场恐慌成立。</p></section><section><h2>深挖</h2><p>自主拓展应答14项：不深挖3、并入11。</p></section><section><h2>认知</h2><p>认知迭代全量更新 pass（T+1验证→账本重建→能力消费→全链路审计），能力消费回执绑定当日预加载快照，applied 1 项；在数据缺口与T+1未发生条件下维持 fail-closed。</p></section>"
+    }
+  ],
+  "claims": [
+    {
+      "id": "index-6bd6fde9e4d4fe12",
+      "role": "evidence",
+      "text": "PASS",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-6bd6fde9e4d4fe12"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/零编造/状态"
+    },
+    {
+      "id": "index-a25218463dccbeae",
+      "role": "evidence",
+      "text": "逐值引用归档；缺失保留null或unknown。已识别auction与lhb两路对目标日文件存在性的错误陈述，不沿用其缺口叙述。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-a25218463dccbeae"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/零编造/结论"
+    },
+    {
+      "id": "index-f03b1c8219104487",
+      "role": "evidence",
+      "text": "PASS",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-f03b1c8219104487"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/零后视镜/状态"
+    },
+    {
+      "id": "index-6fe05b5d586519d7",
+      "role": "evidence",
+      "text": "目标日裁决只用目标日收盘前信息。昨日推演结算只使用目标日收盘后的结算窗口，属于昨日结果验收，不用于倒改五路目标日决策。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-6fe05b5d586519d7"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/零后视镜/结论"
+    },
+    {
+      "id": "index-565850196d612f69",
+      "role": "evidence",
+      "text": "PASS",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-565850196d612f69"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/荐票纪律/状态"
+    },
+    {
+      "id": "index-7fff5107f7e20735",
+      "role": "evidence",
+      "text": "五路正式荐票均为0；theme观察票未转成执行票。lhb虽然双源数据存在但逐票裁决材料不足，维持门禁。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-7fff5107f7e20735"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/荐票纪律/结论"
+    },
+    {
+      "id": "index-6846a9b10193d19c",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-6846a9b10193d19c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/题材一致/状态"
+    },
+    {
+      "id": "index-1acb7a2e689a9cc1",
+      "role": "evidence",
+      "text": "按题材归位作为唯一逐股映射；主题候选都来源B，不提升公告A档。跨路全体候选一致性仍需逐票完成。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-1acb7a2e689a9cc1"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/题材一致/结论"
+    },
+    {
+      "id": "index-db6666f5373de8b0",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-db6666f5373de8b0"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/承接缺口/状态"
+    },
+    {
+      "id": "index-36dbbff0f82ea7ba",
+      "role": "evidence",
+      "text": "auction/lhb判断冻结于18:09，目标文件中未写入MA-20261008-01/02承接段；登记缺口，不补造承接结果。theme/logic/limitup文件分别可见MA-20261008-03/04/05承接内容。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-36dbbff0f82ea7ba"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/承接缺口/结论"
+    },
+    {
+      "id": "index-849e9c1c80f4585a",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-849e9c1c80f4585a"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/昨日战绩与推演/状态"
+    },
+    {
+      "id": "index-b9a2430755dc6a47",
+      "role": "evidence",
+      "text": "五路昨日结算文件存在，但lhb仅2/5部分已结算，theme/logic为0/0；推演6项已逐条核算。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-b9a2430755dc6a47"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/昨日战绩与推演/结论"
+    },
+    {
+      "id": "index-f8ea056bd962854b",
+      "role": "evidence",
+      "text": "BLOCK",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-f8ea056bd962854b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/环境加权/状态"
+    },
+    {
+      "id": "index-529140ac898d9318",
+      "role": "evidence",
+      "text": "画像汇总没有温度档拆分，不能满足按中性档加权；总体聚合不得冒充中性历史胜率。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-529140ac898d9318"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/环境加权/结论"
+    },
+    {
+      "id": "index-2c16b124861500ae",
+      "role": "evidence",
+      "text": "BLOCK",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-2c16b124861500ae"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/双源~1文件核验/状态"
+    },
+    {
+      "id": "index-3b54c9e8e56e7742",
+      "role": "evidence",
+      "text": "lhb判断将实际存在的目标日席位源与双源校验称为缺失；auction判断将实际存在的开盘验证维称为缺失。两项影响可溯源性及判断证据，已打回。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-3b54c9e8e56e7742"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/双源~1文件核验/结论"
+    },
+    {
+      "id": "index-45666fddd695a837",
+      "role": "evidence",
+      "text": "BLOCK",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-45666fddd695a837"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/能力消费审计/状态"
+    },
+    {
+      "id": "index-1c5924a11bbfb3c6",
+      "role": "evidence",
+      "text": "能力预加载显示eligible_total=2，lhb与limitup各1；回执文件只含auction与lhb域，六域缺theme/logic/limitup/cycle回执；能力消费审计文件不存在，进化快照reused=0，但lhb回执声称applied 1。不能确认实际复用总数或影响字段。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-1c5924a11bbfb3c6"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/能力消费审计/结论"
+    },
+    {
+      "id": "index-2b17177ac91abe47",
+      "role": "evidence",
+      "text": "PASS",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-2b17177ac91abe47"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/模型门禁/状态"
+    },
+    {
+      "id": "index-0f90c9b84db47510",
+      "role": "evidence",
+      "text": "已如实填写模型及Provider，并注明拒绝astra的原始错误。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-0f90c9b84db47510"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/检查/模型门禁/结论"
+    },
+    {
+      "id": "index-a839209eac4418dd",
+      "role": "evidence",
+      "text": "1有据",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-a839209eac4418dd"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/0/项"
+    },
+    {
+      "id": "index-9658a888e993b767",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-9658a888e993b767"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/0/状态"
+    },
+    {
+      "id": "index-1e25bfcd366b51d9",
+      "role": "evidence",
+      "text": "事实与市场summary一致；auction/lhb存在性陈述错误，必须纠正。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-1e25bfcd366b51d9"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/0/发现"
+    },
+    {
+      "id": "index-2e79f0c07fbb3795",
+      "role": "evidence",
+      "text": "2可溯源",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-2e79f0c07fbb3795"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/1/项"
+    },
+    {
+      "id": "index-86a889bc50bc505d",
+      "role": "evidence",
+      "text": "BLOCK",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-86a889bc50bc505d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/1/状态"
+    },
+    {
+      "id": "index-f502ce4eca7c7eef",
+      "role": "evidence",
+      "text": "lhb双源校验与席位数据存在却在判断称缺失；auction开盘验证维存在却称缺失。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-f502ce4eca7c7eef"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/1/发现"
+    },
+    {
+      "id": "index-b497e2bc67ff56b0",
+      "role": "evidence",
+      "text": "3自洽",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-b497e2bc67ff56b0"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/2/项"
+    },
+    {
+      "id": "index-20b5c7c0929edb50",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-20b5c7c0929edb50"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/2/状态"
+    },
+    {
+      "id": "index-b3256e293e2612fd",
+      "role": "evidence",
+      "text": "五路均不荐票总体相容；主题观察与资金负面信号不构成正式买卖对撞；目标日指标中性而不能写成偏冷恐慌。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-b3256e293e2612fd"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/2/发现"
+    },
+    {
+      "id": "index-21b73de4e5d1e6bd",
+      "role": "evidence",
+      "text": "4缺料标null",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-21b73de4e5d1e6bd"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/3/项"
+    },
+    {
+      "id": "index-ab0a860a1b5c123b",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-ab0a860a1b5c123b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/3/状态"
+    },
+    {
+      "id": "index-6f10e35901909105",
+      "role": "evidence",
+      "text": "全市场竞价快照、风险事件源partial等确有缺口；但不得把存在的局部校验/双源文件说成缺失。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-6f10e35901909105"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/3/发现"
+    },
+    {
+      "id": "index-af1770eb46f81f83",
+      "role": "evidence",
+      "text": "5 A/C纪律",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-af1770eb46f81f83"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/4/项"
+    },
+    {
+      "id": "index-98987d4982aa78b0",
+      "role": "evidence",
+      "text": "PASS",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-98987d4982aa78b0"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/4/状态"
+    },
+    {
+      "id": "index-53d08a66c83d6d3b",
+      "role": "evidence",
+      "text": "五路均为C；未见凭空编造A档公告/历史C胜率。题材B档THS映射不升A。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-53d08a66c83d6d3b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/4/发现"
+    },
+    {
+      "id": "index-8b47fbced7a502cb",
+      "role": "evidence",
+      "text": "6后视镜",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-8b47fbced7a502cb"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/5/项"
+    },
+    {
+      "id": "index-9e1fc201e29ffd64",
+      "role": "evidence",
+      "text": "PASS",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-9e1fc201e29ffd64"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/5/状态"
+    },
+    {
+      "id": "index-9eeee7ddd88898d2",
+      "role": "evidence",
+      "text": "不以收盘结果回推竞价事实；仅在昨日结算段按目标日实绩结算前一日推演。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-9eeee7ddd88898d2"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/5/发现"
+    },
+    {
+      "id": "index-250c2b774c5a2986",
+      "role": "evidence",
+      "text": "7题材一致",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-250c2b774c5a2986"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/6/项"
+    },
+    {
+      "id": "index-1f9314314c42f145",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-1f9314314c42f145"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/6/状态"
+    },
+    {
+      "id": "index-a6526de143ee61c5",
+      "role": "evidence",
+      "text": "以题材归位_20261009唯一映射为准；观察项未正式荐票，全量逐票门禁未由Master独立重做。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-a6526de143ee61c5"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/6/发现"
+    },
+    {
+      "id": "index-f86183fe3539e383",
+      "role": "evidence",
+      "text": "8双源纪律",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-f86183fe3539e383"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/7/项"
+    },
+    {
+      "id": "index-d9a30ef2fe4a0843",
+      "role": "evidence",
+      "text": "BLOCK",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-d9a30ef2fe4a0843"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/7/状态"
+    },
+    {
+      "id": "index-444a211d0a465600",
+      "role": "evidence",
+      "text": "双源数据存在且可比58只，含22分歧及4强矛盾；lhb路未基于它完成目标日票级裁决。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-444a211d0a465600"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/7/发现"
+    },
+    {
+      "id": "index-44e8217bbfc9a789",
+      "role": "evidence",
+      "text": "9战绩验收",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-44e8217bbfc9a789"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/8/项"
+    },
+    {
+      "id": "index-08f66fa6d5590881",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-08f66fa6d5590881"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/8/状态"
+    },
+    {
+      "id": "index-ea54e2415aa07c55",
+      "role": "evidence",
+      "text": "逐路昨日结算均列明；lhb仅部分结算。推演命中率独立核算。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-ea54e2415aa07c55"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/8/发现"
+    },
+    {
+      "id": "index-baa7a43b298afce8",
+      "role": "evidence",
+      "text": "10风险与能力哨兵",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-baa7a43b298afce8"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/9/项"
+    },
+    {
+      "id": "index-bafe25e96cceb9b2",
+      "role": "evidence",
+      "text": "BLOCK",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-bafe25e96cceb9b2"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/9/状态"
+    },
+    {
+      "id": "index-855fcc6594ef2330",
+      "role": "evidence",
+      "text": "风险日历为partial，事件源不存在；能力消费审计缺失且回执/快照复用计数冲突。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-855fcc6594ef2330"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/检查四项/十项逐产出核验/9/发现"
+    },
+    {
+      "id": "index-363b150846abd975",
+      "role": "research",
+      "text": "中性市场温度与防守信号的边界",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-363b150846abd975"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/0/主题"
+    },
+    {
+      "id": "index-06bb4b20d2fcb45f",
+      "role": "research",
+      "text": "49.6中性、封板率83.13%、69涨停、8跌停说明不是低温恐慌；但票级主线和证据门禁仍未过，不等于风险偏好已可交易。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-06bb4b20d2fcb45f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/0/深挖结论"
+    },
+    {
+      "id": "index-2fc2dd4df2fcd5ea",
+      "role": "research",
+      "text": "若同一题材聚类出现可定位A档公告、宽度至少5、至少2只二板及以上且开板占比低于0.45并满足当日聚类门槛，才复核无主线结论。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-2fc2dd4df2fcd5ea"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/0/判定条件"
+    },
+    {
+      "id": "index-c32440697e8d9ca1",
+      "role": "research",
+      "text": "复核题材归位映射和聚类统计，不用行业集合替代。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-c32440697e8d9ca1"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/0/下次验证点"
+    },
+    {
+      "id": "index-efbaca7f76046bba",
+      "role": "research",
+      "text": "局部验证存在不等于全市场竞价存在",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-efbaca7f76046bba"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/1/主题"
+    },
+    {
+      "id": "index-659908c91f05ae31",
+      "role": "research",
+      "text": "auction的全市场快照/评分/冻结池缺失判断方向合理；但目标日开盘验证维已存在，52只采样不能替代也不应标为不存在。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-659908c91f05ae31"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/1/深挖结论"
+    },
+    {
+      "id": "index-8d1eeb26f078240a",
+      "role": "research",
+      "text": "将存在文件清单与覆盖代码/采样窗口逐项对齐；全市场快照仍缺则全市场结论维持不可判。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-8d1eeb26f078240a"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/1/判定条件"
+    },
+    {
+      "id": "index-e2f9de926fa8213c",
+      "role": "research",
+      "text": "仅补充校正记录，保留原始冻结判断，不覆盖旧文件。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-e2f9de926fa8213c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/1/下次验证点"
+    },
+    {
+      "id": "index-a47e34ab37dea70e",
+      "role": "research",
+      "text": "双源状态pass与票级矛盾并存",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-a47e34ab37dea70e"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/2/主题"
+    },
+    {
+      "id": "index-2083489f77e1152b",
+      "role": "research",
+      "text": "双源文件可比58只，一致23、分歧22、强矛盾4、打折9；pass只代表流程运行成功，不代表方向一致。lhb文本称来源文件缺失，与归档直接冲突。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-2083489f77e1152b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/2/深挖结论"
+    },
+    {
+      "id": "index-5a04b7a310c7dcb7",
+      "role": "research",
+      "text": "按代码逐票重算两源口径和有效S/A/位置条件，强矛盾禁入；完成后复核0荐票是否仍成立。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-5a04b7a310c7dcb7"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/2/判定条件"
+    },
+    {
+      "id": "index-3d4352ac146596d1",
+      "role": "research",
+      "text": "lhb独立重审目标日双源文件，不改旧判断文件。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-3d4352ac146596d1"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/原/2/下次验证点"
+    },
+    {
+      "id": "index-6f0725d1c530d412",
+      "role": "research",
+      "text": "002058 紫竹高科",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-6f0725d1c530d412"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/0/候选"
+    },
+    {
+      "id": "index-0a19830e952e7d17",
+      "role": "research",
+      "text": "theme",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0a19830e952e7d17"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/0/来源路/0"
+    },
+    {
+      "id": "index-c39dca5d067a4add",
+      "role": "research",
+      "text": "观察",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-c39dca5d067a4add"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/0/原始状态"
+    },
+    {
+      "id": "index-1e3f81d79a1c43c7",
+      "role": "research",
+      "text": "剔出执行",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-1e3f81d79a1c43c7"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/0/留~1剔"
+    },
+    {
+      "id": "index-581573a508c2b618",
+      "role": "research",
+      "text": "固态电池聚类宽3、来源档B，6有3/6分支，非公告A档。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-581573a508c2b618"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/0/理由"
+    },
+    {
+      "id": "index-c11d5a99573812b6",
+      "role": "research",
+      "text": "002242 九阳股份",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-c11d5a99573812b6"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/1/候选"
+    },
+    {
+      "id": "index-b1aa8c8698a4f4ea",
+      "role": "research",
+      "text": "theme",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-b1aa8c8698a4f4ea"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/1/来源路/0"
+    },
+    {
+      "id": "index-4712570dc5877612",
+      "role": "research",
+      "text": "观察",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-4712570dc5877612"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/1/原始状态"
+    },
+    {
+      "id": "index-639919938815c1a9",
+      "role": "research",
+      "text": "剔出执行",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-639919938815c1a9"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/1/留~1剔"
+    },
+    {
+      "id": "index-f01d390c9c5567a7",
+      "role": "research",
+      "text": "机器人归位宽度2且开板率1.0，未形成聚类主线。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-f01d390c9c5567a7"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/1/理由"
+    },
+    {
+      "id": "index-1e04f1e135a8d52c",
+      "role": "research",
+      "text": "logic模板交集2只",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-1e04f1e135a8d52c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/2/候选"
+    },
+    {
+      "id": "index-0b327a1f21d72d2e",
+      "role": "research",
+      "text": "logic",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0b327a1f21d72d2e"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/2/来源路/0"
+    },
+    {
+      "id": "index-0ff1dc03953b3fae",
+      "role": "research",
+      "text": "交集非荐票",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0ff1dc03953b3fae"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/2/原始状态"
+    },
+    {
+      "id": "index-214a39bdc421e508",
+      "role": "research",
+      "text": "剔出执行",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-214a39bdc421e508"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/2/留~1剔"
+    },
+    {
+      "id": "index-8eb54910633c0987",
+      "role": "research",
+      "text": "绿盟科技与振华股份均无模板环节与目标题材、已兑现订单/业绩原件闭环。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-8eb54910633c0987"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/2/理由"
+    },
+    {
+      "id": "index-abfdc521ff1d1f74",
+      "role": "research",
+      "text": "LHB目标日候选池",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-abfdc521ff1d1f74"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/3/候选"
+    },
+    {
+      "id": "index-a270116d8f1819a9",
+      "role": "research",
+      "text": "lhb",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-a270116d8f1819a9"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/3/来源路/0"
+    },
+    {
+      "id": "index-6d5a6ccf6e0c362d",
+      "role": "research",
+      "text": "待票级审查",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-6d5a6ccf6e0c362d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/3/原始状态"
+    },
+    {
+      "id": "index-11579e0535ef3808",
+      "role": "research",
+      "text": "暂不执行",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-11579e0535ef3808"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/3/留~1剔"
+    },
+    {
+      "id": "index-483685e2a7f3ba87",
+      "role": "research",
+      "text": "双源及席位资料存在但路判断漏读，4强矛盾、22分歧等须按代码复审；不臆造票级名单。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-483685e2a7f3ba87"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选清单/3/理由"
+    },
+    {
+      "id": "index-0f6fecaeedd9bea4",
+      "role": "research",
+      "text": "[]",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0f6fecaeedd9bea4"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/综合深挖/筛选后执行清单"
+    },
+    {
+      "id": "index-112af584eead55ea",
+      "role": "limitation",
+      "text": "BLOCK：lhb及auction错误报告现存文件缺失，能力消费审计缺失且能力回执字段不完整；目标温度档画像缺失，未进行假加权。未改写任何旧判断。昨日五路实绩和推演命中分别列示；不将空仓写为胜率。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-112af584eead55ea"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/独立盲区声明/自审"
+    },
+    {
+      "id": "index-425d452186e98ffe",
+      "role": "evidence",
+      "text": "C",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-425d452186e98ffe"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/auction/档位"
+    },
+    {
+      "id": "index-125a6ae2ee45f5b3",
+      "role": "evidence",
+      "text": "88",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-125a6ae2ee45f5b3"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/auction/置信度"
+    },
+    {
+      "id": "index-2c91046d46319879",
+      "role": "evidence",
+      "text": "打回",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-2c91046d46319879"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/auction/裁决"
+    },
+    {
+      "id": "index-0136669e5920f546",
+      "role": "evidence",
+      "text": "结论方向可接受：全市场快照缺失，只有09:25:49腾讯源52只局部轨迹，不能外推全市场，0荐票合理。反证检查发现判断与验证注记把_学习/开盘验证维_20261009.json写成缺失，但该文件实际存在且status=pass、验证52代码且每代码至少2个样本；它只覆盖已采集tick，不替代全市场竞价快照。故打回的是缺失清单和可溯源性，不是据此强行改成看多。置信度由94下调；可证伪条件本身可核验。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-0136669e5920f546"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/auction/理由"
+    },
+    {
+      "id": "index-07dc07fadca67222",
+      "role": "evidence",
+      "text": "0只，缺全市场快照、评分、冻结池及撤单差分；不能执行。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-07dc07fadca67222"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/auction/荐票执行性"
+    },
+    {
+      "id": "index-bb48f3b51be01952",
+      "role": "evidence",
+      "text": "在独立补充记录中纠正开盘验证文件状态，区分已存在的52码tick验证与缺失的全市场竞价原始快照；不得用收盘涨停池补竞价。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-bb48f3b51be01952"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/auction/回派"
+    },
+    {
+      "id": "index-5b1687636fb85daf",
+      "role": "evidence",
+      "text": "C",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-5b1687636fb85daf"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/lhb/档位"
+    },
+    {
+      "id": "index-b6e4964ee2817726",
+      "role": "evidence",
+      "text": "25",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-b6e4964ee2817726"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/lhb/置信度"
+    },
+    {
+      "id": "index-fde0a9d9070dfdc2",
+      "role": "evidence",
+      "text": "打回",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-fde0a9d9070dfdc2"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/lhb/裁决"
+    },
+    {
+      "id": "index-b0c7fd3c6cd9c1e1",
+      "role": "evidence",
+      "text": "0荐票与防守可暂维持，但核心缺口陈述不实：_学习/_席位动向/20261009.csv存在，_学习/龙虎榜双源校验_20261009.json也存在且status=pass；58只可比为一致23、分歧22、强矛盾4、打折9、仅源2为15。判断称两文件缺失，无法接受其未核票推理；也不得把程序status=pass等同票级无冲突。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-b0c7fd3c6cd9c1e1"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/lhb/理由"
+    },
+    {
+      "id": "index-19f9b9cde959c32e",
+      "role": "evidence",
+      "text": "候选票未逐票完成双源、席位数、位置与风险窗门禁；正式荐票0暂不放行。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-19f9b9cde959c32e"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/lhb/荐票执行性"
+    },
+    {
+      "id": "index-ce8cfc332f7e943c",
+      "role": "evidence",
+      "text": "回读当日双源全量和席位源，逐票给出冲突过滤结果；对源1与源2口径差异保留；修正能力回执与数据缺失论证的不一致。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-ce8cfc332f7e943c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/lhb/回派"
+    },
+    {
+      "id": "index-3ece6948ccba7d63",
+      "role": "evidence",
+      "text": "C",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-3ece6948ccba7d63"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/theme/档位"
+    },
+    {
+      "id": "index-07ad9885060832e9",
+      "role": "evidence",
+      "text": "86",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-07ad9885060832e9"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/theme/置信度"
+    },
+    {
+      "id": "index-7659ca2278c5708c",
+      "role": "evidence",
+      "text": "接受",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-7659ca2278c5708c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/theme/裁决"
+    },
+    {
+      "id": "index-79e7dd71c9962f2a",
+      "role": "evidence",
+      "text": "归位69/69且A0/B69/C0；聚类6有最高3/6，候选宽度/梯队未达主线确认，行业电池合并不能代替聚类；观察候选不冒充荐票。可证伪条件以公告A档、宽度、梯队、开板率和6有组合给出，具备机械性。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-79e7dd71c9962f2a"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/theme/理由"
+    },
+    {
+      "id": "index-d342f84cf5056109",
+      "role": "evidence",
+      "text": "紫竹高科、九阳股份标注观察而非正式荐票，执行清单为空；无需放行。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-d342f84cf5056109"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/theme/荐票执行性"
+    },
+    {
+      "id": "index-382a5e8cd8663f30",
+      "role": "evidence",
+      "text": "C",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-382a5e8cd8663f30"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/logic/档位"
+    },
+    {
+      "id": "index-b60cd31c918acb17",
+      "role": "evidence",
+      "text": "82",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-b60cd31c918acb17"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/logic/置信度"
+    },
+    {
+      "id": "index-8c836fb35a3bbc62",
+      "role": "evidence",
+      "text": "接受",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-8c836fb35a3bbc62"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/logic/裁决"
+    },
+    {
+      "id": "index-c0594a56905876f2",
+      "role": "evidence",
+      "text": "模板153与涨停代码交集2，但绿盟科技、振华股份都未证明模板环节与目标题材/已兑现订单闭环；雷达A池交集0；风险日历partial且原件级公告/订单缺失。未用代码交集或雷达自动初判冒充产业实证。可证伪条件列出可定位原件及窗口要求，基本可机械复核。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-c0594a56905876f2"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/logic/理由"
+    },
+    {
+      "id": "index-3073d9409ec505f3",
+      "role": "evidence",
+      "text": "正式荐票0，证据门禁未过。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-3073d9409ec505f3"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/logic/荐票执行性"
+    },
+    {
+      "id": "index-939353751c4b025c",
+      "role": "evidence",
+      "text": "C",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-939353751c4b025c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/limitup/档位"
+    },
+    {
+      "id": "index-4a734a84cdcee4af",
+      "role": "evidence",
+      "text": "75",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-4a734a84cdcee4af"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/limitup/置信度"
+    },
+    {
+      "id": "index-7982c2e5656eea93",
+      "role": "evidence",
+      "text": "接受",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-7982c2e5656eea93"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/limitup/裁决"
+    },
+    {
+      "id": "index-757e5ed4803cba8f",
+      "role": "evidence",
+      "text": "预测池69只，预测执1均值胜率43.31%、均涨-0.283%且69只预测均涨为负；这些是预测字段，不是实绩。上一日冻结43只实际T+1结算18/43胜、均收+0.61%，未满足胜率>50%与均收>0的双重证伪条件，故不能用正均收翻转结论，但应避免把预测标签写成实际负收益。市场封板率83.13%、温度49.6中性，故本路C防守作为风险控制而非市场恐慌成立。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-757e5ed4803cba8f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/limitup/理由"
+    },
+    {
+      "id": "index-6ca006d0fcbaf3ac",
+      "role": "evidence",
+      "text": "质量模型观察榜不等于买入，正式荐票0；执行清单为空。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-6ca006d0fcbaf3ac"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/五路裁决/limitup/荐票执行性"
+    },
+    {
+      "id": "index-be8f6074751c7a5d",
+      "role": "verdict",
+      "text": "C档防守、空仓优先，正式荐票并集0只；但当日温度为49.6中性、封板率83.13%、涨停69、炸板14、跌停8，不能描述为偏冷/恐慌。防守理由应落在缺乏可核验主线、竞价全市场证据缺口、产业原件门禁和质量模型执行预期未达证伪门槛，而非套用低温市场标签。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-be8f6074751c7a5d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/结论"
+    },
+    {
+      "id": "index-6175e2c028c36c6c",
+      "role": "verdict",
+      "text": "C防守",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-6175e2c028c36c6c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/档位"
+    },
+    {
+      "id": "index-cbbc46c3fff378e1",
+      "role": "verdict",
+      "text": "78",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-cbbc46c3fff378e1"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/置信度"
+    },
+    {
+      "id": "index-0af5adf661a8dfd3",
+      "role": "verdict",
+      "text": "fact目标日各项quality=ok；与20261009/summary.json交叉吻合：涨停69、炸板14、跌停8、温度49.6中性、炸板率16.9%、封板率83.13%、最高9板、题材线40、归位69且A0/B69/C0、成交额19005亿元。题材来源档为THS原因文本，不等于公告A档。多路共用温度/涨停池，按同一证据计一次，不当独立投票。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0af5adf661a8dfd3"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/依据"
+    },
+    {
+      "id": "index-fffdb2a368a0666b",
+      "role": "verdict",
+      "text": "本文件只记录目标日可证伪门槛，不以之后结果回填本次判断。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-fffdb2a368a0666b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/次日验证点/0"
+    },
+    {
+      "id": "index-02a29f37bc56521d",
+      "role": "verdict",
+      "text": "下一次复核时，主题须同一归位聚类同时满足已核公告A档、宽度与梯队/开板率门槛；缺任何字段不算通过。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-02a29f37bc56521d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/次日验证点/1"
+    },
+    {
+      "id": "index-d3d77f69af33908f",
+      "role": "verdict",
+      "text": "auction须取得目标日对应完整9:25全市场快照或可逐票覆盖的原始轨迹；局部52只不能替代。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-d3d77f69af33908f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/次日验证点/2"
+    },
+    {
+      "id": "index-0132435217af0d55",
+      "role": "verdict",
+      "text": "lhb须逐票结合双源与席位数据做负面过滤、至少两笔有效S/A出手和目标日位置核验；双源程序pass不等于无分歧。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0132435217af0d55"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/次日验证点/3"
+    },
+    {
+      "id": "index-a38eff1f212c4abe",
+      "role": "verdict",
+      "text": "limitup须以冻结池实际结算验证胜率>50%且均收>0的双门槛，预测统计不代替结算。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-a38eff1f212c4abe"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/总裁决/次日验证点/4"
+    },
+    {
+      "id": "index-28b0f344cd5a38fc",
+      "role": "counterevidence",
+      "text": "无正式荐票方向对撞；存在观察与证据层冲突及同源趋同。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-28b0f344cd5a38fc"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/状态"
+    },
+    {
+      "id": "index-7a1051f41f992456",
+      "role": "counterevidence",
+      "text": "观察线索与资金事实",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-7a1051f41f992456"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/0/类型"
+    },
+    {
+      "id": "index-49d6c50c4f89ad94",
+      "role": "counterevidence",
+      "text": "002242 九阳股份",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-49d6c50c4f89ad94"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/0/票"
+    },
+    {
+      "id": "index-78fa424955868c5d",
+      "role": "counterevidence",
+      "text": "theme仅作观察，非荐票；limitup昨日冻结池实际T+1收益+5.8042%属于前一荐票结算，不证明今日可买或主题主线。保留观察不执行。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-78fa424955868c5d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/0/裁决"
+    },
+    {
+      "id": "index-335a3d84d1f0bcb9",
+      "role": "counterevidence",
+      "text": "观察线索与席位票级核查",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-335a3d84d1f0bcb9"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/1/类型"
+    },
+    {
+      "id": "index-ae0d5d363f4cee27",
+      "role": "counterevidence",
+      "text": "600241 时代万恒",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-ae0d5d363f4cee27"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/1/票"
+    },
+    {
+      "id": "index-d04604193771209c",
+      "role": "counterevidence",
+      "text": "theme未列为正式荐票；lhb判断未给票级建议。双源资料存在，故不得把缺数据当作无资金意见；要求lhb逐票重审，当前不执行。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-d04604193771209c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/1/裁决"
+    },
+    {
+      "id": "index-e39f49c138f3ce72",
+      "role": "counterevidence",
+      "text": "路间共同输入",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-e39f49c138f3ce72"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/2/类型"
+    },
+    {
+      "id": "index-cd0fcfb9d2ea2361",
+      "role": "counterevidence",
+      "text": "auction/theme/logic/limitup使用温度或涨停池共享背景，事实只计一次。温度中性、封板率高、跌停8，不支持称为极端恐慌；C防守仍可由个股质量与资料门禁支持。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-cd0fcfb9d2ea2361"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/2/裁决"
+    },
+    {
+      "id": "index-84ab9ff044c2a00b",
+      "role": "counterevidence",
+      "text": "结算与模型预测",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-84ab9ff044c2a00b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/3/类型"
+    },
+    {
+      "id": "index-117c1ebc20ceada6",
+      "role": "counterevidence",
+      "text": "limitup前一冻结池实绩18/43、胜率41.9%、均收+0.61%；胜率未过50%，仍不满足其双条件证伪门槛。预测均值和已实现均收不是同一变量。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-117c1ebc20ceada6"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/分歧裁决/事项/3/裁决"
+    },
+    {
+      "id": "index-9ea6281c795f4aa8",
+      "role": "cognition",
+      "text": "数据缺口声明本身也要按源清单验真",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-9ea6281c795f4aa8"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/认知迭代/0/认知点"
+    },
+    {
+      "id": "index-b603bde58c0f4510",
+      "role": "cognition",
+      "text": "auction称开盘验证维缺失但文件存在；lhb称席位动向与双源校验缺失但两者均存在。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-b603bde58c0f4510"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/认知迭代/0/依据"
+    },
+    {
+      "id": "index-86f5475ca09d6050",
+      "role": "condition",
+      "text": "若独立核验目标日相同路径文件实为不存在或无有效数据，则撤销本次存在性误判审计项。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-86f5475ca09d6050"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/认知迭代/0/可证伪条件"
+    },
+    {
+      "id": "index-7557d8054ca175ed",
+      "role": "cognition",
+      "text": "中性环境可以执行防守，但不得命名为恐慌环境",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-7557d8054ca175ed"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/认知迭代/1/认知点"
+    },
+    {
+      "id": "index-17f48ae6c6bfee9b",
+      "role": "cognition",
+      "text": "温度49.6中性、封板率83.13%、跌停8；主线和票级执行证据仍不足。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-17f48ae6c6bfee9b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/认知迭代/1/依据"
+    },
+    {
+      "id": "index-f2bda6e2c1e5e4a0",
+      "role": "condition",
+      "text": "以归档温度表重算温度档并核对涨停/炸板/跌停值；若温度档不是中性则此表述需修正。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-f2bda6e2c1e5e4a0"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/认知迭代/1/可证伪条件"
+    },
+    {
+      "id": "index-d344eecbc529dea7",
+      "role": "evidence",
+      "text": "20261009",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-d344eecbc529dea7"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/日期",
+      "component_ref": "ENGINEBOOKS"
+    },
+    {
+      "id": "index-14ad4c82cbcfdb77",
+      "role": "evidence",
+      "text": "2",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-14ad4c82cbcfdb77"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/可复用能力数",
+      "component_ref": "ENGINEBOOKS"
+    },
+    {
+      "id": "index-4b3dfff6c5b6c911",
+      "role": "evidence",
+      "text": "extension:cap-lhb-netbuy-valid",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-4b3dfff6c5b6c911"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/0/id"
+    },
+    {
+      "id": "index-975a12fb7d5ff7da",
+      "role": "evidence",
+      "text": "lhb",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-975a12fb7d5ff7da"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/0/路"
+    },
+    {
+      "id": "index-c2297bda3c0a6f2b",
+      "role": "evidence",
+      "text": "回执称采用，Master不确认实质复用",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-c2297bda3c0a6f2b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/0/采用或拒绝"
+    },
+    {
+      "id": "index-9eb9b6ed7b102e4a",
+      "role": "evidence",
+      "text": "回执仅称历史背景校准；判断正文反称双源及席位源缺失，故无法确认此能力改变了哪个判断字段。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-9eb9b6ed7b102e4a"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/0/影响到的当日判断字段"
+    },
+    {
+      "id": "index-810708193640e724",
+      "role": "evidence",
+      "text": "能力回执source_locator可定位预加载记录和质量库因子，但不证明对当日具体判断字段产生影响；消费审计缺失。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-810708193640e724"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/0/拒绝理由"
+    },
+    {
+      "id": "index-6c80be31859f3648",
+      "role": "evidence",
+      "text": "extension:cap-limitup-turnover-valid",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-6c80be31859f3648"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/1/id"
+    },
+    {
+      "id": "index-6e2202c2523a670d",
+      "role": "evidence",
+      "text": "limitup",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-6e2202c2523a670d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/1/路"
+    },
+    {
+      "id": "index-0c997ebfa4e5c72c",
+      "role": "evidence",
+      "text": "未核实，按拒绝记账",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0c997ebfa4e5c72c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/1/采用或拒绝"
+    },
+    {
+      "id": "index-f51b5535a0954e0b",
+      "role": "evidence",
+      "text": "无可验证影响字段。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-f51b5535a0954e0b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/1/影响到的当日判断字段"
+    },
+    {
+      "id": "index-b427584178fe95aa",
+      "role": "evidence",
+      "text": "目标日判断未提供消费回执定位到具体字段；不能把有效因子或回执存在视为已经改变判断。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-b427584178fe95aa"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/1/拒绝理由"
+    },
+    {
+      "id": "index-ed00aee31129fcfb",
+      "role": "evidence",
+      "text": "null",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-ed00aee31129fcfb"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/2/id"
+    },
+    {
+      "id": "index-5599b4fd76558f75",
+      "role": "evidence",
+      "text": "auction/theme/logic/cycle/master",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-5599b4fd76558f75"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/2/路"
+    },
+    {
+      "id": "index-4ef6828c78145d6f",
+      "role": "evidence",
+      "text": "无可复用能力",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-4ef6828c78145d6f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/2/采用或拒绝"
+    },
+    {
+      "id": "index-f7b559753e74fa1d",
+      "role": "evidence",
+      "text": "无",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-f7b559753e74fa1d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/2/影响到的当日判断字段"
+    },
+    {
+      "id": "index-3153504d4aac139f",
+      "role": "evidence",
+      "text": "预加载记录为空。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-3153504d4aac139f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/逐路/2/拒绝理由"
+    },
+    {
+      "id": "index-3ab9206650589a0c",
+      "role": "evidence",
+      "text": "1",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-3ab9206650589a0c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/复用合计",
+      "component_ref": "ENGINEBOOKS"
+    },
+    {
+      "id": "index-cbf90ebf0c332ba0",
+      "role": "evidence",
+      "text": "使用回执报告lhb applied 1条；能力进化快照reused=0且能力消费审计文件缺失，故1仅为回执自报，真实复用数无法确认。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-cbf90ebf0c332ba0"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/复用合计说明"
+    },
+    {
+      "id": "index-e949c02685f3d5d0",
+      "role": "evidence",
+      "text": "2",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-e949c02685f3d5d0"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/新增能力化",
+      "component_ref": "ENGINEBOOKS"
+    },
+    {
+      "id": "index-842a5d2b57b4562c",
+      "role": "evidence",
+      "text": "BLOCK：能力使用回执仅有auction与lhb；theme、logic、limitup、cycle四域回执缺失。消费审计缺文件。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-842a5d2b57b4562c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/能力承接/六域回执"
+    },
+    {
+      "id": "index-27638ba02820f54d",
+      "role": "evidence",
+      "text": "M-20261009-AU-01",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-27638ba02820f54d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/0/线索ID"
+    },
+    {
+      "id": "index-5c2be66db4df0acd",
+      "role": "evidence",
+      "text": "auction",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-5c2be66db4df0acd"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/0/来源路"
+    },
+    {
+      "id": "index-8a586408030c49d8",
+      "role": "evidence",
+      "text": "全市场竞价快照仍缺；开盘验证维文件存在但在路判断被错列为缺失。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-8a586408030c49d8"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/0/内容"
+    },
+    {
+      "id": "index-7a79bb6a84274fc1",
+      "role": "evidence",
+      "text": "待验证",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-7a79bb6a84274fc1"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/0/状态"
+    },
+    {
+      "id": "index-84aed2f8f7493c52",
+      "role": "evidence",
+      "text": "同日原始快照具备全市场覆盖、时间戳不晚于09:25:59且字段可复核时，才解除竞价输入缺口。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-84aed2f8f7493c52"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/0/判定条件"
+    },
+    {
+      "id": "index-27d3f909b1a20183",
+      "role": "evidence",
+      "text": "核对补充记录与文件清单，局部tick不算解除。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-27d3f909b1a20183"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/0/下次验证点"
+    },
+    {
+      "id": "index-0668d7c5df68432f",
+      "role": "evidence",
+      "text": "M-20261009-LH-01",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0668d7c5df68432f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/1/线索ID"
+    },
+    {
+      "id": "index-256a569adce56176",
+      "role": "evidence",
+      "text": "lhb",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-256a569adce56176"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/1/来源路"
+    },
+    {
+      "id": "index-70bbdc1cb0534a47",
+      "role": "evidence",
+      "text": "双源文件可比58只，其中4强矛盾、22分歧；席位动向文件存在。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-70bbdc1cb0534a47"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/1/内容"
+    },
+    {
+      "id": "index-0bfa20ad4de59fbe",
+      "role": "evidence",
+      "text": "待指派",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-0bfa20ad4de59fbe"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/1/状态"
+    },
+    {
+      "id": "index-a3055c30d71fd4fe",
+      "role": "evidence",
+      "text": "逐票完成双源过滤、席位有效出手和位置核验后，按正式荐票门槛重审。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-a3055c30d71fd4fe"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/1/判定条件"
+    },
+    {
+      "id": "index-317a25f562ea74eb",
+      "role": "evidence",
+      "text": "完成MA-20261009-02并给出逐票来源定位。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-317a25f562ea74eb"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/1/下次验证点"
+    },
+    {
+      "id": "index-f478f9256c10882c",
+      "role": "evidence",
+      "text": "M-20261009-TH-01",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-f478f9256c10882c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/2/线索ID"
+    },
+    {
+      "id": "index-505959d4872fde93",
+      "role": "evidence",
+      "text": "theme",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-505959d4872fde93"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/2/来源路"
+    },
+    {
+      "id": "index-7570629d5f66abd1",
+      "role": "evidence",
+      "text": "归位69只A0/B69/C0；聚类未确认主线，观察票不作为执行。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-7570629d5f66abd1"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/2/内容"
+    },
+    {
+      "id": "index-b4bd11f2d07eee39",
+      "role": "evidence",
+      "text": "观察中",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-b4bd11f2d07eee39"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/2/状态"
+    },
+    {
+      "id": "index-2504c3a5ec2d04ce",
+      "role": "evidence",
+      "text": "同一聚类公告A档、宽度及梯队、开板率和6有门槛同时满足则重审。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-2504c3a5ec2d04ce"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/2/判定条件"
+    },
+    {
+      "id": "index-e199cc361caf334b",
+      "role": "evidence",
+      "text": "下次同口径题材归位复核。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-e199cc361caf334b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/2/下次验证点"
+    },
+    {
+      "id": "index-7f40d775dc8a6425",
+      "role": "evidence",
+      "text": "M-20261009-LO-01",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-7f40d775dc8a6425"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/3/线索ID"
+    },
+    {
+      "id": "index-816a064e2d155aab",
+      "role": "evidence",
+      "text": "logic",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-816a064e2d155aab"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/3/来源路"
+    },
+    {
+      "id": "index-5d03d1515bd21d24",
+      "role": "evidence",
+      "text": "模板涨停交集2只，未形成环节与业绩/订单原件闭环；风险日历partial。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-5d03d1515bd21d24"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/3/内容"
+    },
+    {
+      "id": "index-674d1e14ecb82e05",
+      "role": "evidence",
+      "text": "待验证",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-674d1e14ecb82e05"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/3/状态"
+    },
+    {
+      "id": "index-67de5f10e401bfff",
+      "role": "evidence",
+      "text": "提供目标日前可定位公告/订单原件、匹配模板环节且风险事件源核验通过。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-67de5f10e401bfff"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/3/判定条件"
+    },
+    {
+      "id": "index-a68367d2b60ad325",
+      "role": "evidence",
+      "text": "补原件与事件源，不以代码重合替代。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-a68367d2b60ad325"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/3/下次验证点"
+    },
+    {
+      "id": "index-f4b5f56b4abc3ac3",
+      "role": "evidence",
+      "text": "M-20261009-LU-01",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-f4b5f56b4abc3ac3"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/4/线索ID"
+    },
+    {
+      "id": "index-36a438c4ce413e99",
+      "role": "evidence",
+      "text": "limitup",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-36a438c4ce413e99"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/4/来源路"
+    },
+    {
+      "id": "index-ce80ce12eee9e14b",
+      "role": "evidence",
+      "text": "目标日69只冻结预测池全为预测执1均涨负；前一日实结18/43胜、均收+0.61%。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-ce80ce12eee9e14b"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/4/内容"
+    },
+    {
+      "id": "index-dbb5d43aefd8ef12",
+      "role": "evidence",
+      "text": "待验证",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-dbb5d43aefd8ef12"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/4/状态"
+    },
+    {
+      "id": "index-d42ed22092a35720",
+      "role": "evidence",
+      "text": "严格T+1实际结算同时达到胜率>50%和均收>0才证伪防守门槛。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-d42ed22092a35720"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/4/判定条件"
+    },
+    {
+      "id": "index-8d01f73b13535923",
+      "role": "evidence",
+      "text": "使用目标日冻结池对应完整结算，当前不引用未来结果。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-8d01f73b13535923"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/线索跟踪/4/下次验证点"
+    },
+    {
+      "id": "index-bc17d40e540233a4",
+      "role": "evidence",
+      "text": "MA-20261009-01",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-bc17d40e540233a4"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/0/指派ID"
+    },
+    {
+      "id": "index-1832ada6ad5a3075",
+      "role": "evidence",
+      "text": "auction",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-1832ada6ad5a3075"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/0/指派给"
+    },
+    {
+      "id": "index-7c8de35396ea9361",
+      "role": "evidence",
+      "text": "提交独立补充核验：更正开盘验证维文件存在性，分清52码tick采样与全市场竞价快照、评分、冻结池和撤单差分缺口；注明覆盖、时间戳和不可恢复项，不改写旧判断文件。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-7c8de35396ea9361"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/0/深挖任务"
+    },
+    {
+      "id": "index-5b6e1d3eda7f4311",
+      "role": "evidence",
+      "text": "原判断将已存在的开盘验证维列为缺失，虽不改变全市场快照不足的结论，却影响事实可溯源和缺口清单可信度。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-5b6e1d3eda7f4311"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/0/理由"
+    },
+    {
+      "id": "index-fc40dd363a63c7c6",
+      "role": "evidence",
+      "text": "20261012",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-fc40dd363a63c7c6"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/0/截止"
+    },
+    {
+      "id": "index-4636ceb92fc0e743",
+      "role": "evidence",
+      "text": "待承接",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-4636ceb92fc0e743"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/0/状态"
+    },
+    {
+      "id": "index-59a3a59b2a0552a4",
+      "role": "evidence",
+      "text": "MA-20261009-02",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-59a3a59b2a0552a4"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/1/指派ID"
+    },
+    {
+      "id": "index-ab04a62e6aa621ca",
+      "role": "evidence",
+      "text": "lhb",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-ab04a62e6aa621ca"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/1/指派给"
+    },
+    {
+      "id": "index-6352e4279222260d",
+      "role": "evidence",
+      "text": "按目标日现存_席位动向/20261009.csv及龙虎榜双源校验_20261009.json逐代码重审；列出强矛盾、分歧、打折及可执行候选的源1/源2、有效S/A席位和位置证据；更正文件缺失陈述，并对能力应用回执影响字段给可定位证据，不修改旧判断文件。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-6352e4279222260d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/1/深挖任务"
+    },
+    {
+      "id": "index-00a983f604a5dd01",
+      "role": "evidence",
+      "text": "判断将两个实际存在文件称为缺失，未据58只可比票中4强矛盾、22分歧等实况裁决；回执applied与复用审计也未闭环。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-00a983f604a5dd01"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/1/理由"
+    },
+    {
+      "id": "index-99b8664a1123d5e8",
+      "role": "evidence",
+      "text": "20261012",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-99b8664a1123d5e8"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/1/截止"
+    },
+    {
+      "id": "index-8b512384b82289d7",
+      "role": "evidence",
+      "text": "待承接",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-8b512384b82289d7"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/指派清单/1/状态"
+    },
+    {
+      "id": "index-93cbebd7e6dc6798",
+      "role": "evidence",
+      "text": "PARTIAL",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-93cbebd7e6dc6798"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/状态"
+    },
+    {
+      "id": "index-4bb3d7036c7bf435",
+      "role": "evidence",
+      "text": "区分目标日横截面、历史训练画像和实际T+1结算；历史总样本不冒充目标温度档表现。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-4bb3d7036c7bf435"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/规则"
+    },
+    {
+      "id": "index-1b73d25f14e6305c",
+      "role": "evidence",
+      "text": "_学习/子agent增强/_战绩画像汇总_20261009.json#五路.theme",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-1b73d25f14e6305c"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/0/来源"
+    },
+    {
+      "id": "index-e20c2a4948f0a401",
+      "role": "evidence",
+      "text": "按日记录20260710至20261008；总体10/27，均收+0.03%；未按温度档拆分。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-e20c2a4948f0a401"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/0/窗口"
+    },
+    {
+      "id": "index-12640c96bcfe9522",
+      "role": "evidence",
+      "text": "同文件#五路.lhb",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-12640c96bcfe9522"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/1/来源"
+    },
+    {
+      "id": "index-d48ad43c353e7ce8",
+      "role": "evidence",
+      "text": "按日记录20260708至20261008；总体31/73，均收-0.13%；未按温度档拆分。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-d48ad43c353e7ce8"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/1/窗口"
+    },
+    {
+      "id": "index-4b2da2cbdf27314a",
+      "role": "evidence",
+      "text": "同文件#五路.limitup",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-4b2da2cbdf27314a"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/2/来源"
+    },
+    {
+      "id": "index-006689d80fd62ec4",
+      "role": "evidence",
+      "text": "按日记录20260708至20261008；总体24/65，均收+0.44%；未按温度档拆分。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-006689d80fd62ec4"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/2/窗口"
+    },
+    {
+      "id": "index-d84129b4e5ec54cf",
+      "role": "evidence",
+      "text": "同文件#五路.logic",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-d84129b4e5ec54cf"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/3/来源"
+    },
+    {
+      "id": "index-36f64d303b998838",
+      "role": "evidence",
+      "text": "按日记录20260710至20260923；总体3/14，均收-1.95%；样本小且未按温度档拆分。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-36f64d303b998838"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/3/窗口"
+    },
+    {
+      "id": "index-c7ab9c1e906a1829",
+      "role": "evidence",
+      "text": "同文件#五路.auction",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-c7ab9c1e906a1829"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/4/来源"
+    },
+    {
+      "id": "index-56fe932e51ebc09f",
+      "role": "evidence",
+      "text": "按日记录20260701至20261008；总体195/537，均收-0.74%；未按温度档拆分。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-56fe932e51ebc09f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/4/窗口"
+    },
+    {
+      "id": "index-54689e5b8863be4d",
+      "role": "evidence",
+      "text": "昨日冻结池结算文件",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-54689e5b8863be4d"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/5/来源"
+    },
+    {
+      "id": "index-e7b77529d761480f",
+      "role": "evidence",
+      "text": "荐票日20261008，执行结算日20261009；只作昨日验收，不混入目标日预测。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-e7b77529d761480f"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/已引用/5/窗口"
+    },
+    {
+      "id": "index-f0f8d123d964e0cd",
+      "role": "evidence",
+      "text": "数据中未发现可用中性温度档历史样本；不推断温度桶胜率。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-f0f8d123d964e0cd"
+      ],
+      "source": "总审_20261009.json",
+      "source_pointer": "/回填窗口标注/限制"
+    },
+    {
+      "id": "index-b7d1871c295c14b8",
+      "role": "evidence",
+      "text": "总判断",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-b7d1871c295c14b8"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/1"
+    },
+    {
+      "id": "index-768f8d2c7724dee8",
+      "role": "evidence",
+      "text": "20261009：五路C、C、C、C、C；正式荐票0只；空仓。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-768f8d2c7724dee8"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/2",
+      "legacy_html": "<p>20261009：五路C、C、C、C、C；正式荐票0只；空仓。</p>",
+      "context": "总判断"
+    },
+    {
+      "id": "index-3f281d4e07d20523",
+      "role": "evidence",
+      "text": "盘面事实",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-3f281d4e07d20523"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/3"
+    },
+    {
+      "id": "index-8b94bcd3a77b28dd",
+      "role": "evidence",
+      "text": "涨停69，炸板14，跌停8，封板率83.13%，炸板率16.90%，成交额19005.0亿元，封板总额61.6亿元，市场温度49.6（中性），最高连板9板，题材线数40，回封26，二板加12。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-8b94bcd3a77b28dd"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/4",
+      "legacy_html": "<p>涨停69，炸板14，跌停8，封板率83.13%，炸板率16.90%，成交额19005.0亿元，封板总额61.6亿元，市场温度49.6（中性），最高连板9板，题材线数40，回封26，二板加12。</p>",
+      "context": "盘面事实"
+    },
+    {
+      "id": "index-8f2c0b06140560e1",
+      "role": "evidence",
+      "text": "环境",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-8f2c0b06140560e1"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/5"
+    },
+    {
+      "id": "index-f3de1247f34c381c",
+      "role": "evidence",
+      "text": "量能：两市成交额19005.0亿元，约1.9005万亿元；未达到2万亿元档，也明显高于3万亿元退潮线所指的3万亿口径。按规则表处于1.7至2.0万亿元之间，但非2万亿以上；支持有承载，不满足3.3万亿看多或3.5万亿主升门槛。相邻前一记录20261008的温度表成交额为null，量能序列只有目标日可用值， 温度档：中性。缺口：昨日涨停溢价为null，三窗触发器为空数组，不能据此判定洗出反弹窗/过热禁追窗。；题材归位来源档A=0；题材四维中多数字段为空，不能外推缺失主题趋势。；二进三率为0%，当日没有三连板梯队，梯队中位连续性偏弱。。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-f3de1247f34c381c"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/6",
+      "legacy_html": "<p>量能：两市成交额19005.0亿元，约1.9005万亿元；未达到2万亿元档，也明显高于3万亿元退潮线所指的3万亿口径。按规则表处于1.7至2.0万亿元之间，但非2万亿以上；支持有承载，不满足3.3万亿看多或3.5万亿主升门槛。相邻前一记录20261008的温度表成交额为null，量能序列只有目标日可用值， 温度档：中性。缺口：昨日涨停溢价为null，三窗触发器为空数组，不能据此判定洗出反弹窗/过热禁追窗。；题材归位来源档A=0；题材四维中多数字段为空，不能外推缺失主题趋势。；二进三率为0%，当日没有三连板梯队，梯队中位连续性偏弱。。</p>",
+      "context": "环境"
+    },
+    {
+      "id": "index-4a7859c6bd7c7c10",
+      "role": "evidence",
+      "text": "每路独立核算",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-4a7859c6bd7c7c10"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/7"
+    },
+    {
+      "id": "index-f0ed4ab7d5535ded",
+      "role": "evidence",
+      "text": "竞价C档（置信度94，正式荐票0只），席位C档（置信度34，正式荐票0只），题材C档（置信度86，正式荐票0只，观察2只），产业逻辑C档（置信度82，正式荐票0只），涨停C档（置信度75，正式荐票0只）。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-f0ed4ab7d5535ded"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/8",
+      "legacy_html": "<p>竞价C档（置信度94，正式荐票0只），席位C档（置信度34，正式荐票0只），题材C档（置信度86，正式荐票0只，观察2只），产业逻辑C档（置信度82，正式荐票0只），涨停C档（置信度75，正式荐票0只）。</p>",
+      "context": "每路独立核算"
+    },
+    {
+      "id": "index-6ba94f2a90333605",
+      "role": "evidence",
+      "text": "题材树",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-6ba94f2a90333605"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/9"
+    },
+    {
+      "id": "index-6af976ed3f66f03a",
+      "role": "evidence",
+      "text": "题材归位69只：A档0、B档69、C档0。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-6af976ed3f66f03a"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/10",
+      "legacy_html": "<p>题材归位69只：A档0、B档69、C档0。</p>",
+      "context": "题材树"
+    },
+    {
+      "id": "index-5e565c1dccdc80af",
+      "role": "evidence",
+      "text": "周期与攻防",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-5e565c1dccdc80af"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/11"
+    },
+    {
+      "id": "index-2246a799e13adbb9",
+      "role": "evidence",
+      "text": "周期主判：阶段启动、方向平、置信度67；攻防=B档审慎参与；仓位上限=总仓位上限4成。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-2246a799e13adbb9"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/12",
+      "legacy_html": "<p>周期主判：阶段启动、方向平、置信度67；攻防=B档审慎参与；仓位上限=总仓位上限4成。</p>",
+      "context": "周期与攻防"
+    },
+    {
+      "id": "index-b079e37a89b0f31f",
+      "role": "evidence",
+      "text": "五路看牌",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-b079e37a89b0f31f"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/13"
+    },
+    {
+      "id": "index-f7542151f6ed2ba1",
+      "role": "evidence",
+      "text": "竞价=弃权；席位=弃权；题材=启动/平（票平）；产业逻辑=启动/平（票平）；涨停=高潮/降（票降）。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-f7542151f6ed2ba1"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/14",
+      "legacy_html": "<p>竞价=弃权；席位=弃权；题材=启动/平（票平）；产业逻辑=启动/平（票平）；涨停=高潮/降（票降）。</p>",
+      "context": "五路看牌"
+    },
+    {
+      "id": "index-3e911867768e41e0",
+      "role": "evidence",
+      "text": "明日验证",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-3e911867768e41e0"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/15"
+    },
+    {
+      "id": "index-bddedc3aab81a633",
+      "role": "evidence",
+      "text": "推演落盘7条可机械结算预测（温度、宽度、梯队、竞价承接等），T+1结果尚未发生，不倒灌。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-bddedc3aab81a633"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/16",
+      "legacy_html": "<p>推演落盘7条可机械结算预测（温度、宽度、梯队、竞价承接等），T+1结果尚未发生，不倒灌。</p>",
+      "context": "明日验证"
+    },
+    {
+      "id": "index-c63542b8b7c6c734",
+      "role": "evidence",
+      "text": "分歧与盲区",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-c63542b8b7c6c734"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/17"
+    },
+    {
+      "id": "index-129180d006d6268f",
+      "role": "evidence",
+      "text": "全市场9:25竞价快照与撤单差分缺失，仅有腾讯源52只局部轨迹；风险事件源缺失（风险日历rc=1）；题材四维等以null保持公开。均不补造。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-129180d006d6268f"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/18",
+      "legacy_html": "<p>全市场9:25竞价快照与撤单差分缺失，仅有腾讯源52只局部轨迹；风险事件源缺失（风险日历rc=1）；题材四维等以null保持公开。均不补造。</p>",
+      "context": "分歧与盲区"
+    },
+    {
+      "id": "index-050e62a060762479",
+      "role": "evidence",
+      "text": "发布门禁",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-050e62a060762479"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/19"
+    },
+    {
+      "id": "index-c12c303c2b4277f3",
+      "role": "evidence",
+      "text": "页面必须通过一致性哨兵与链健康检查后才视为完成。本概览体由宿主在 20261011 补跑时按 总审_20261009.json、推演_20261009.json、周期主判_20261009.json、五路judgment body 与 fact_20261009.json 归档原文组装，数字程序化取自事实层，未新增判断；五路正文为各路判断原文归档。",
+      "section": "turning",
+      "evidence_refs": [
+        "ev-index-c12c303c2b4277f3"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/20",
+      "legacy_html": "<p>页面必须通过一致性哨兵与链健康检查后才视为完成。本概览体由宿主在 20261011 补跑时按 总审_20261009.json、推演_20261009.json、周期主判_20261009.json、五路judgment body 与 fact_20261009.json 归档原文组装，数字程序化取自事实层，未新增判断；五路正文为各路判断原文归档。</p>",
+      "context": "发布门禁"
+    },
+    {
+      "id": "index-2f70b3d778dbca3e",
+      "role": "evidence",
+      "text": "推演指派",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-2f70b3d778dbca3e"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/21"
+    },
+    {
+      "id": "index-37fd5e427be0c278",
+      "role": "evidence",
+      "text": "总审落盘指派2条：MA-20261009-01→auction（截止20261012）；MA-20261009-02→lhb（截止20261012）。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-37fd5e427be0c278"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/22",
+      "legacy_html": "<p>总审落盘指派2条：MA-20261009-01→auction（截止20261012）；MA-20261009-02→lhb（截止20261012）。</p>",
+      "context": "推演指派"
+    },
+    {
+      "id": "index-260f23f80b215f6c",
+      "role": "evidence",
+      "text": "总裁决",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-260f23f80b215f6c"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/23"
+    },
+    {
+      "id": "index-97cfa4cb149f82ee",
+      "role": "evidence",
+      "text": "档位=C防守，置信度=78。C档防守、空仓优先，正式荐票并集0只；但当日温度为49.6中性、封板率83.13%、涨停69、炸板14、跌停8，不能描述为偏冷/恐慌。防守理由应落在缺乏可核验主线、竞价全市场证据缺口、产业原件门禁和质量模型执行预期未达证伪门槛，而非套用低温市场标签。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-97cfa4cb149f82ee"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/24",
+      "legacy_html": "<p>档位=C防守，置信度=78。C档防守、空仓优先，正式荐票并集0只；但当日温度为49.6中性、封板率83.13%、涨停69、炸板14、跌停8，不能描述为偏冷/恐慌。防守理由应落在缺乏可核验主线、竞价全市场证据缺口、产业原件门禁和质量模型执行预期未达证伪门槛，而非套用低温市场标签。</p>",
+      "context": "总裁决"
+    },
+    {
+      "id": "index-5d97bce41867392a",
+      "role": "evidence",
+      "text": "依据：fact目标日各项quality=ok；与20261009/summary.json交叉吻合：涨停69、炸板14、跌停8、温度49.6中性、炸板率16.9%、封板率83.13%、最高9板、题材线40、归位69且A0/B69/C0、成交额19005亿元。题材来源档为THS原因文本，不等于公告A档。多路共用温度/涨停池，按同一证据计一次，不当独立投票。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-5d97bce41867392a"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/25",
+      "legacy_html": "<p>依据：fact目标日各项quality=ok；与20261009/summary.json交叉吻合：涨停69、炸板14、跌停8、温度49.6中性、炸板率16.9%、封板率83.13%、最高9板、题材线40、归位69且A0/B69/C0、成交额19005亿元。题材来源档为THS原因文本，不等于公告A档。多路共用温度/涨停池，按同一证据计一次，不当独立投票。</p>",
+      "context": "总裁决"
+    },
+    {
+      "id": "index-893dc1ae1664b88e",
+      "role": "evidence",
+      "text": "五路裁决",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-893dc1ae1664b88e"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/26"
+    },
+    {
+      "id": "index-9ebda9659c0e4741",
+      "role": "evidence",
+      "text": "auction：C档／打回（置信度88） 结论方向可接受：全市场快照缺失，只有09:25:49腾讯源52只局部轨迹，不能外推全市场，0荐票合理。反证检查发现判断与验证注记把_学习/开盘验证维_20261009.json写成缺失，但该文件实际存在且status=pass、验证52代码且每代码至少2个样本；它只覆盖已采集tick，不替代全市场竞价快照。故打回的是缺失清单和可溯源性，不是据此强行改成看多。置信度由94下调；可证伪条件本身可核验。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-9ebda9659c0e4741"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/27",
+      "legacy_html": "<p>auction：C档／打回（置信度88） 结论方向可接受：全市场快照缺失，只有09:25:49腾讯源52只局部轨迹，不能外推全市场，0荐票合理。反证检查发现判断与验证注记把_学习/开盘验证维_20261009.json写成缺失，但该文件实际存在且status=pass、验证52代码且每代码至少2个样本；它只覆盖已采集tick，不替代全市场竞价快照。故打回的是缺失清单和可溯源性，不是据此强行改成看多。置信度由94下调；可证伪条件本身可核验。</p>",
+      "context": "五路裁决"
+    },
+    {
+      "id": "index-a9a671e5e5f6358d",
+      "role": "evidence",
+      "text": "lhb：C档／打回（置信度25） 0荐票与防守可暂维持，但核心缺口陈述不实：_学习/_席位动向/20261009.csv存在，_学习/龙虎榜双源校验_20261009.json也存在且status=pass；58只可比为一致23、分歧22、强矛盾4、打折9、仅源2为15。判断称两文件缺失，无法接受其未核票推理；也不得把程序status=pass等同票级无冲突。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-a9a671e5e5f6358d"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/28",
+      "legacy_html": "<p>lhb：C档／打回（置信度25） 0荐票与防守可暂维持，但核心缺口陈述不实：_学习/_席位动向/20261009.csv存在，_学习/龙虎榜双源校验_20261009.json也存在且status=pass；58只可比为一致23、分歧22、强矛盾4、打折9、仅源2为15。判断称两文件缺失，无法接受其未核票推理；也不得把程序status=pass等同票级无冲突。</p>",
+      "context": "五路裁决"
+    },
+    {
+      "id": "index-8cf06c33dd3a9666",
+      "role": "evidence",
+      "text": "theme：C档／接受（置信度86） 归位69/69且A0/B69/C0；聚类6有最高3/6，候选宽度/梯队未达主线确认，行业电池合并不能代替聚类；观察候选不冒充荐票。可证伪条件以公告A档、宽度、梯队、开板率和6有组合给出，具备机械性。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-8cf06c33dd3a9666"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/29",
+      "legacy_html": "<p>theme：C档／接受（置信度86） 归位69/69且A0/B69/C0；聚类6有最高3/6，候选宽度/梯队未达主线确认，行业电池合并不能代替聚类；观察候选不冒充荐票。可证伪条件以公告A档、宽度、梯队、开板率和6有组合给出，具备机械性。</p>",
+      "context": "五路裁决"
+    },
+    {
+      "id": "index-d7970a58c4129082",
+      "role": "evidence",
+      "text": "logic：C档／接受（置信度82） 模板153与涨停代码交集2，但绿盟科技、振华股份都未证明模板环节与目标题材/已兑现订单闭环；雷达A池交集0；风险日历partial且原件级公告/订单缺失。未用代码交集或雷达自动初判冒充产业实证。可证伪条件列出可定位原件及窗口要求，基本可机械复核。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-d7970a58c4129082"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/30",
+      "legacy_html": "<p>logic：C档／接受（置信度82） 模板153与涨停代码交集2，但绿盟科技、振华股份都未证明模板环节与目标题材/已兑现订单闭环；雷达A池交集0；风险日历partial且原件级公告/订单缺失。未用代码交集或雷达自动初判冒充产业实证。可证伪条件列出可定位原件及窗口要求，基本可机械复核。</p>",
+      "context": "五路裁决"
+    },
+    {
+      "id": "index-62e006f534238d44",
+      "role": "evidence",
+      "text": "limitup：C档／接受（置信度75） 预测池69只，预测执1均值胜率43.31%、均涨-0.283%且69只预测均涨为负；这些是预测字段，不是实绩。上一日冻结43只实际T+1结算18/43胜、均收+0.61%，未满足胜率>50%与均收>0的双重证伪条件，故不能用正均收翻转结论，但应避免把预测标签写成实际负收益。市场封板率83.13%、温度49.6中性，故本路C防守作为风险控制而非市场恐慌成立。",
+      "section": "routes",
+      "evidence_refs": [
+        "ev-index-62e006f534238d44"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/31",
+      "legacy_html": "<p>limitup：C档／接受（置信度75） 预测池69只，预测执1均值胜率43.31%、均涨-0.283%且69只预测均涨为负；这些是预测字段，不是实绩。上一日冻结43只实际T+1结算18/43胜、均收+0.61%，未满足胜率&gt;50%与均收&gt;0的双重证伪条件，故不能用正均收翻转结论，但应避免把预测标签写成实际负收益。市场封板率83.13%、温度49.6中性，故本路C防守作为风险控制而非市场恐慌成立。</p>",
+      "context": "五路裁决"
+    },
+    {
+      "id": "index-f8c162a5a5460e98",
+      "role": "evidence",
+      "text": "深挖",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-f8c162a5a5460e98"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/32"
+    },
+    {
+      "id": "index-1f43a7925078b943",
+      "role": "evidence",
+      "text": "自主拓展应答14项：不深挖3、并入11。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-1f43a7925078b943"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/33",
+      "legacy_html": "<p>自主拓展应答14项：不深挖3、并入11。</p>",
+      "context": "深挖"
+    },
+    {
+      "id": "index-6cfbc64ef91d5483",
+      "role": "evidence",
+      "text": "认知",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-6cfbc64ef91d5483"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/heading/34"
+    },
+    {
+      "id": "index-c2396c0335ce6e88",
+      "role": "cognition",
+      "text": "认知迭代全量更新 pass（T+1验证→账本重建→能力消费→全链路审计），能力消费回执绑定当日预加载快照，applied 1 项；在数据缺口与T+1未发生条件下维持 fail-closed。",
+      "section": "verdict",
+      "evidence_refs": [
+        "ev-index-c2396c0335ce6e88"
+      ],
+      "source": "judgment_20261009.json",
+      "source_pointer": "/bodies/index/block/35",
+      "legacy_html": "<p>认知迭代全量更新 pass（T+1验证→账本重建→能力消费→全链路审计），能力消费回执绑定当日预加载快照，applied 1 项；在数据缺口与T+1未发生条件下维持 fail-closed。</p>",
+      "context": "认知"
+    }
+  ],
+  "content_coverage": {
+    "total": 250,
+    "covered": 250,
+    "unmapped": [],
+    "items": [
+      {
+        "id": "index-6bd6fde9e4d4fe12",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a25218463dccbeae",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f03b1c8219104487",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6fe05b5d586519d7",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-565850196d612f69",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7fff5107f7e20735",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6846a9b10193d19c",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1acb7a2e689a9cc1",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-db6666f5373de8b0",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-36dbbff0f82ea7ba",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-849e9c1c80f4585a",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b9a2430755dc6a47",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f8ea056bd962854b",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-529140ac898d9318",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2c16b124861500ae",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3b54c9e8e56e7742",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-45666fddd695a837",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1c5924a11bbfb3c6",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2b17177ac91abe47",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0f90c9b84db47510",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a839209eac4418dd",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-9658a888e993b767",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1e25bfcd366b51d9",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2e79f0c07fbb3795",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-86a889bc50bc505d",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f502ce4eca7c7eef",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b497e2bc67ff56b0",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-20b5c7c0929edb50",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b3256e293e2612fd",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-21b73de4e5d1e6bd",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ab0a860a1b5c123b",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6f10e35901909105",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-af1770eb46f81f83",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-98987d4982aa78b0",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-53d08a66c83d6d3b",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8b47fbced7a502cb",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-9e1fc201e29ffd64",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-9eeee7ddd88898d2",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-250c2b774c5a2986",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1f9314314c42f145",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a6526de143ee61c5",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f86183fe3539e383",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d9a30ef2fe4a0843",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-444a211d0a465600",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-44e8217bbfc9a789",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-08f66fa6d5590881",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ea54e2415aa07c55",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-baa7a43b298afce8",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-bafe25e96cceb9b2",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-855fcc6594ef2330",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-363b150846abd975",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-06bb4b20d2fcb45f",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2fc2dd4df2fcd5ea",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c32440697e8d9ca1",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-efbaca7f76046bba",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-659908c91f05ae31",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8d1eeb26f078240a",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-e2f9de926fa8213c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a47e34ab37dea70e",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2083489f77e1152b",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5a04b7a310c7dcb7",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3d4352ac146596d1",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6f0725d1c530d412",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0a19830e952e7d17",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c39dca5d067a4add",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1e3f81d79a1c43c7",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-581573a508c2b618",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c11d5a99573812b6",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b1aa8c8698a4f4ea",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4712570dc5877612",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-639919938815c1a9",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f01d390c9c5567a7",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1e04f1e135a8d52c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0b327a1f21d72d2e",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0ff1dc03953b3fae",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-214a39bdc421e508",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8eb54910633c0987",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-abfdc521ff1d1f74",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a270116d8f1819a9",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6d5a6ccf6e0c362d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-11579e0535ef3808",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-483685e2a7f3ba87",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0f6fecaeedd9bea4",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-112af584eead55ea",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-425d452186e98ffe",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-125a6ae2ee45f5b3",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2c91046d46319879",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0136669e5920f546",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-07dc07fadca67222",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-bb48f3b51be01952",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5b1687636fb85daf",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b6e4964ee2817726",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-fde0a9d9070dfdc2",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b0c7fd3c6cd9c1e1",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-19f9b9cde959c32e",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ce8cfc332f7e943c",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3ece6948ccba7d63",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-07ad9885060832e9",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7659ca2278c5708c",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-79e7dd71c9962f2a",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d342f84cf5056109",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-382a5e8cd8663f30",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b60cd31c918acb17",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8c836fb35a3bbc62",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c0594a56905876f2",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3073d9409ec505f3",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-939353751c4b025c",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4a734a84cdcee4af",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7982c2e5656eea93",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-757e5ed4803cba8f",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6ca006d0fcbaf3ac",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-be8f6074751c7a5d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6175e2c028c36c6c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-cbbc46c3fff378e1",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0af5adf661a8dfd3",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-fffdb2a368a0666b",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-02a29f37bc56521d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d3d77f69af33908f",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0132435217af0d55",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a38eff1f212c4abe",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-28b0f344cd5a38fc",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7a1051f41f992456",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-49d6c50c4f89ad94",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-78fa424955868c5d",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-335a3d84d1f0bcb9",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ae0d5d363f4cee27",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d04604193771209c",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-e39f49c138f3ce72",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-cd0fcfb9d2ea2361",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-84ab9ff044c2a00b",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-117c1ebc20ceada6",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-9ea6281c795f4aa8",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b603bde58c0f4510",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-86f5475ca09d6050",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7557d8054ca175ed",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-17f48ae6c6bfee9b",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f2bda6e2c1e5e4a0",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d344eecbc529dea7",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-14ad4c82cbcfdb77",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4b3dfff6c5b6c911",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-975a12fb7d5ff7da",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c2297bda3c0a6f2b",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-9eb9b6ed7b102e4a",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-810708193640e724",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6c80be31859f3648",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6e2202c2523a670d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0c997ebfa4e5c72c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f51b5535a0954e0b",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b427584178fe95aa",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ed00aee31129fcfb",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5599b4fd76558f75",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4ef6828c78145d6f",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f7b559753e74fa1d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3153504d4aac139f",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3ab9206650589a0c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-cbf90ebf0c332ba0",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-e949c02685f3d5d0",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-842a5d2b57b4562c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-27638ba02820f54d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5c2be66db4df0acd",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8a586408030c49d8",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7a79bb6a84274fc1",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-84aed2f8f7493c52",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-27d3f909b1a20183",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0668d7c5df68432f",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-256a569adce56176",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-70bbdc1cb0534a47",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-0bfa20ad4de59fbe",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a3055c30d71fd4fe",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-317a25f562ea74eb",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f478f9256c10882c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-505959d4872fde93",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7570629d5f66abd1",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b4bd11f2d07eee39",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2504c3a5ec2d04ce",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-e199cc361caf334b",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7f40d775dc8a6425",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-816a064e2d155aab",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5d03d1515bd21d24",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-674d1e14ecb82e05",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-67de5f10e401bfff",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a68367d2b60ad325",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f4b5f56b4abc3ac3",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-36a438c4ce413e99",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ce80ce12eee9e14b",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-dbb5d43aefd8ef12",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d42ed22092a35720",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8d01f73b13535923",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-bc17d40e540233a4",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1832ada6ad5a3075",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-7c8de35396ea9361",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5b6e1d3eda7f4311",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-fc40dd363a63c7c6",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4636ceb92fc0e743",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-59a3a59b2a0552a4",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-ab04a62e6aa621ca",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6352e4279222260d",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-00a983f604a5dd01",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-99b8664a1123d5e8",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8b512384b82289d7",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-93cbebd7e6dc6798",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4bb3d7036c7bf435",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1b73d25f14e6305c",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-e20c2a4948f0a401",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-12640c96bcfe9522",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d48ad43c353e7ce8",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4b2da2cbdf27314a",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-006689d80fd62ec4",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d84129b4e5ec54cf",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-36f64d303b998838",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c7ab9c1e906a1829",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-56fe932e51ebc09f",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-54689e5b8863be4d",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-e7b77529d761480f",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f0f8d123d964e0cd",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b7d1871c295c14b8",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-768f8d2c7724dee8",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3f281d4e07d20523",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8b94bcd3a77b28dd",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8f2c0b06140560e1",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f3de1247f34c381c",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-4a7859c6bd7c7c10",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f0ed4ab7d5535ded",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6ba94f2a90333605",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6af976ed3f66f03a",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5e565c1dccdc80af",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2246a799e13adbb9",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-b079e37a89b0f31f",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f7542151f6ed2ba1",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-3e911867768e41e0",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-bddedc3aab81a633",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c63542b8b7c6c734",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-129180d006d6268f",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-050e62a060762479",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c12c303c2b4277f3",
+        "sections": [
+          "turning"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-2f70b3d778dbca3e",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-37fd5e427be0c278",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-260f23f80b215f6c",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-97cfa4cb149f82ee",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-5d97bce41867392a",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-893dc1ae1664b88e",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-9ebda9659c0e4741",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-a9a671e5e5f6358d",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-8cf06c33dd3a9666",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-d7970a58c4129082",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-62e006f534238d44",
+        "sections": [
+          "routes"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-f8c162a5a5460e98",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-1f43a7925078b943",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-6cfbc64ef91d5483",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      },
+      {
+        "id": "index-c2396c0335ce6e88",
+        "sections": [
+          "verdict"
+        ],
+        "status": "displayed_or_referenced"
+      }
+    ],
+    "source_items": [
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/零编造/状态",
+        "claim_id": "index-6bd6fde9e4d4fe12",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/零编造/结论",
+        "claim_id": "index-a25218463dccbeae",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/零后视镜/状态",
+        "claim_id": "index-f03b1c8219104487",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/零后视镜/结论",
+        "claim_id": "index-6fe05b5d586519d7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/荐票纪律/状态",
+        "claim_id": "index-565850196d612f69",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/荐票纪律/结论",
+        "claim_id": "index-7fff5107f7e20735",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/题材一致/状态",
+        "claim_id": "index-6846a9b10193d19c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/题材一致/结论",
+        "claim_id": "index-1acb7a2e689a9cc1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/承接缺口/状态",
+        "claim_id": "index-db6666f5373de8b0",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/承接缺口/结论",
+        "claim_id": "index-36dbbff0f82ea7ba",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/昨日战绩与推演/状态",
+        "claim_id": "index-849e9c1c80f4585a",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/昨日战绩与推演/结论",
+        "claim_id": "index-b9a2430755dc6a47",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/环境加权/状态",
+        "claim_id": "index-f8ea056bd962854b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/环境加权/结论",
+        "claim_id": "index-529140ac898d9318",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/双源~1文件核验/状态",
+        "claim_id": "index-2c16b124861500ae",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/双源~1文件核验/结论",
+        "claim_id": "index-3b54c9e8e56e7742",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/能力消费审计/状态",
+        "claim_id": "index-45666fddd695a837",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/能力消费审计/结论",
+        "claim_id": "index-1c5924a11bbfb3c6",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/模型门禁/状态",
+        "claim_id": "index-2b17177ac91abe47",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/检查/模型门禁/结论",
+        "claim_id": "index-0f90c9b84db47510",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/0/项",
+        "claim_id": "index-a839209eac4418dd",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/0/状态",
+        "claim_id": "index-9658a888e993b767",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/0/发现",
+        "claim_id": "index-1e25bfcd366b51d9",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/1/项",
+        "claim_id": "index-2e79f0c07fbb3795",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/1/状态",
+        "claim_id": "index-86a889bc50bc505d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/1/发现",
+        "claim_id": "index-f502ce4eca7c7eef",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/2/项",
+        "claim_id": "index-b497e2bc67ff56b0",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/2/状态",
+        "claim_id": "index-20b5c7c0929edb50",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/2/发现",
+        "claim_id": "index-b3256e293e2612fd",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/3/项",
+        "claim_id": "index-21b73de4e5d1e6bd",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/3/状态",
+        "claim_id": "index-ab0a860a1b5c123b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/3/发现",
+        "claim_id": "index-6f10e35901909105",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/4/项",
+        "claim_id": "index-af1770eb46f81f83",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/4/状态",
+        "claim_id": "index-98987d4982aa78b0",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/4/发现",
+        "claim_id": "index-53d08a66c83d6d3b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/5/项",
+        "claim_id": "index-8b47fbced7a502cb",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/5/状态",
+        "claim_id": "index-9e1fc201e29ffd64",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/5/发现",
+        "claim_id": "index-9eeee7ddd88898d2",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/6/项",
+        "claim_id": "index-250c2b774c5a2986",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/6/状态",
+        "claim_id": "index-1f9314314c42f145",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/6/发现",
+        "claim_id": "index-a6526de143ee61c5",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/7/项",
+        "claim_id": "index-f86183fe3539e383",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/7/状态",
+        "claim_id": "index-d9a30ef2fe4a0843",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/7/发现",
+        "claim_id": "index-444a211d0a465600",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/8/项",
+        "claim_id": "index-44e8217bbfc9a789",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/8/状态",
+        "claim_id": "index-08f66fa6d5590881",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/8/发现",
+        "claim_id": "index-ea54e2415aa07c55",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/9/项",
+        "claim_id": "index-baa7a43b298afce8",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/9/状态",
+        "claim_id": "index-bafe25e96cceb9b2",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/检查四项/十项逐产出核验/9/发现",
+        "claim_id": "index-855fcc6594ef2330",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/0/主题",
+        "claim_id": "index-363b150846abd975",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/0/深挖结论",
+        "claim_id": "index-06bb4b20d2fcb45f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/0/判定条件",
+        "claim_id": "index-2fc2dd4df2fcd5ea",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/0/下次验证点",
+        "claim_id": "index-c32440697e8d9ca1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/1/主题",
+        "claim_id": "index-efbaca7f76046bba",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/1/深挖结论",
+        "claim_id": "index-659908c91f05ae31",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/1/判定条件",
+        "claim_id": "index-8d1eeb26f078240a",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/1/下次验证点",
+        "claim_id": "index-e2f9de926fa8213c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/2/主题",
+        "claim_id": "index-a47e34ab37dea70e",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/2/深挖结论",
+        "claim_id": "index-2083489f77e1152b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/2/判定条件",
+        "claim_id": "index-5a04b7a310c7dcb7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/原/2/下次验证点",
+        "claim_id": "index-3d4352ac146596d1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/0/候选",
+        "claim_id": "index-6f0725d1c530d412",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/0/来源路/0",
+        "claim_id": "index-0a19830e952e7d17",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/0/原始状态",
+        "claim_id": "index-c39dca5d067a4add",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/0/留~1剔",
+        "claim_id": "index-1e3f81d79a1c43c7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/0/理由",
+        "claim_id": "index-581573a508c2b618",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/1/候选",
+        "claim_id": "index-c11d5a99573812b6",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/1/来源路/0",
+        "claim_id": "index-b1aa8c8698a4f4ea",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/1/原始状态",
+        "claim_id": "index-4712570dc5877612",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/1/留~1剔",
+        "claim_id": "index-639919938815c1a9",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/1/理由",
+        "claim_id": "index-f01d390c9c5567a7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/2/候选",
+        "claim_id": "index-1e04f1e135a8d52c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/2/来源路/0",
+        "claim_id": "index-0b327a1f21d72d2e",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/2/原始状态",
+        "claim_id": "index-0ff1dc03953b3fae",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/2/留~1剔",
+        "claim_id": "index-214a39bdc421e508",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/2/理由",
+        "claim_id": "index-8eb54910633c0987",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/3/候选",
+        "claim_id": "index-abfdc521ff1d1f74",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/3/来源路/0",
+        "claim_id": "index-a270116d8f1819a9",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/3/原始状态",
+        "claim_id": "index-6d5a6ccf6e0c362d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/3/留~1剔",
+        "claim_id": "index-11579e0535ef3808",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选清单/3/理由",
+        "claim_id": "index-483685e2a7f3ba87",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/综合深挖/筛选后执行清单",
+        "claim_id": "index-0f6fecaeedd9bea4",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/独立盲区声明/自审",
+        "claim_id": "index-112af584eead55ea",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/auction/档位",
+        "claim_id": "index-425d452186e98ffe",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/auction/置信度",
+        "claim_id": "index-125a6ae2ee45f5b3",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/auction/裁决",
+        "claim_id": "index-2c91046d46319879",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/auction/理由",
+        "claim_id": "index-0136669e5920f546",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/auction/荐票执行性",
+        "claim_id": "index-07dc07fadca67222",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/auction/回派",
+        "claim_id": "index-bb48f3b51be01952",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/lhb/档位",
+        "claim_id": "index-5b1687636fb85daf",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/lhb/置信度",
+        "claim_id": "index-b6e4964ee2817726",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/lhb/裁决",
+        "claim_id": "index-fde0a9d9070dfdc2",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/lhb/理由",
+        "claim_id": "index-b0c7fd3c6cd9c1e1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/lhb/荐票执行性",
+        "claim_id": "index-19f9b9cde959c32e",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/lhb/回派",
+        "claim_id": "index-ce8cfc332f7e943c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/theme/档位",
+        "claim_id": "index-3ece6948ccba7d63",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/theme/置信度",
+        "claim_id": "index-07ad9885060832e9",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/theme/裁决",
+        "claim_id": "index-7659ca2278c5708c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/theme/理由",
+        "claim_id": "index-79e7dd71c9962f2a",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/theme/荐票执行性",
+        "claim_id": "index-d342f84cf5056109",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/logic/档位",
+        "claim_id": "index-382a5e8cd8663f30",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/logic/置信度",
+        "claim_id": "index-b60cd31c918acb17",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/logic/裁决",
+        "claim_id": "index-8c836fb35a3bbc62",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/logic/理由",
+        "claim_id": "index-c0594a56905876f2",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/logic/荐票执行性",
+        "claim_id": "index-3073d9409ec505f3",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/limitup/档位",
+        "claim_id": "index-939353751c4b025c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/limitup/置信度",
+        "claim_id": "index-4a734a84cdcee4af",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/limitup/裁决",
+        "claim_id": "index-7982c2e5656eea93",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/limitup/理由",
+        "claim_id": "index-757e5ed4803cba8f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/五路裁决/limitup/荐票执行性",
+        "claim_id": "index-6ca006d0fcbaf3ac",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/结论",
+        "claim_id": "index-be8f6074751c7a5d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/档位",
+        "claim_id": "index-6175e2c028c36c6c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/置信度",
+        "claim_id": "index-cbbc46c3fff378e1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/依据",
+        "claim_id": "index-0af5adf661a8dfd3",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/次日验证点/0",
+        "claim_id": "index-fffdb2a368a0666b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/次日验证点/1",
+        "claim_id": "index-02a29f37bc56521d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/次日验证点/2",
+        "claim_id": "index-d3d77f69af33908f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/次日验证点/3",
+        "claim_id": "index-0132435217af0d55",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/总裁决/次日验证点/4",
+        "claim_id": "index-a38eff1f212c4abe",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/状态",
+        "claim_id": "index-28b0f344cd5a38fc",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/0/类型",
+        "claim_id": "index-7a1051f41f992456",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/0/票",
+        "claim_id": "index-49d6c50c4f89ad94",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/0/裁决",
+        "claim_id": "index-78fa424955868c5d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/1/类型",
+        "claim_id": "index-335a3d84d1f0bcb9",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/1/票",
+        "claim_id": "index-ae0d5d363f4cee27",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/1/裁决",
+        "claim_id": "index-d04604193771209c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/2/类型",
+        "claim_id": "index-e39f49c138f3ce72",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/2/裁决",
+        "claim_id": "index-cd0fcfb9d2ea2361",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/3/类型",
+        "claim_id": "index-84ab9ff044c2a00b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/分歧裁决/事项/3/裁决",
+        "claim_id": "index-117c1ebc20ceada6",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/认知迭代/0/认知点",
+        "claim_id": "index-9ea6281c795f4aa8",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/认知迭代/0/依据",
+        "claim_id": "index-b603bde58c0f4510",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/认知迭代/0/可证伪条件",
+        "claim_id": "index-86f5475ca09d6050",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/认知迭代/1/认知点",
+        "claim_id": "index-7557d8054ca175ed",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/认知迭代/1/依据",
+        "claim_id": "index-17f48ae6c6bfee9b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/认知迭代/1/可证伪条件",
+        "claim_id": "index-f2bda6e2c1e5e4a0",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/日期",
+        "claim_id": "index-d344eecbc529dea7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/可复用能力数",
+        "claim_id": "index-14ad4c82cbcfdb77",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/0/id",
+        "claim_id": "index-4b3dfff6c5b6c911",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/0/路",
+        "claim_id": "index-975a12fb7d5ff7da",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/0/采用或拒绝",
+        "claim_id": "index-c2297bda3c0a6f2b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/0/影响到的当日判断字段",
+        "claim_id": "index-9eb9b6ed7b102e4a",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/0/拒绝理由",
+        "claim_id": "index-810708193640e724",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/1/id",
+        "claim_id": "index-6c80be31859f3648",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/1/路",
+        "claim_id": "index-6e2202c2523a670d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/1/采用或拒绝",
+        "claim_id": "index-0c997ebfa4e5c72c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/1/影响到的当日判断字段",
+        "claim_id": "index-f51b5535a0954e0b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/1/拒绝理由",
+        "claim_id": "index-b427584178fe95aa",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/2/id",
+        "claim_id": "index-ed00aee31129fcfb",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/2/路",
+        "claim_id": "index-5599b4fd76558f75",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/2/采用或拒绝",
+        "claim_id": "index-4ef6828c78145d6f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/2/影响到的当日判断字段",
+        "claim_id": "index-f7b559753e74fa1d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/逐路/2/拒绝理由",
+        "claim_id": "index-3153504d4aac139f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/复用合计",
+        "claim_id": "index-3ab9206650589a0c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/复用合计说明",
+        "claim_id": "index-cbf90ebf0c332ba0",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/新增能力化",
+        "claim_id": "index-e949c02685f3d5d0",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/能力承接/六域回执",
+        "claim_id": "index-842a5d2b57b4562c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/0/线索ID",
+        "claim_id": "index-27638ba02820f54d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/0/来源路",
+        "claim_id": "index-5c2be66db4df0acd",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/0/内容",
+        "claim_id": "index-8a586408030c49d8",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/0/状态",
+        "claim_id": "index-7a79bb6a84274fc1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/0/判定条件",
+        "claim_id": "index-84aed2f8f7493c52",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/0/下次验证点",
+        "claim_id": "index-27d3f909b1a20183",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/1/线索ID",
+        "claim_id": "index-0668d7c5df68432f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/1/来源路",
+        "claim_id": "index-256a569adce56176",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/1/内容",
+        "claim_id": "index-70bbdc1cb0534a47",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/1/状态",
+        "claim_id": "index-0bfa20ad4de59fbe",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/1/判定条件",
+        "claim_id": "index-a3055c30d71fd4fe",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/1/下次验证点",
+        "claim_id": "index-317a25f562ea74eb",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/2/线索ID",
+        "claim_id": "index-f478f9256c10882c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/2/来源路",
+        "claim_id": "index-505959d4872fde93",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/2/内容",
+        "claim_id": "index-7570629d5f66abd1",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/2/状态",
+        "claim_id": "index-b4bd11f2d07eee39",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/2/判定条件",
+        "claim_id": "index-2504c3a5ec2d04ce",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/2/下次验证点",
+        "claim_id": "index-e199cc361caf334b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/3/线索ID",
+        "claim_id": "index-7f40d775dc8a6425",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/3/来源路",
+        "claim_id": "index-816a064e2d155aab",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/3/内容",
+        "claim_id": "index-5d03d1515bd21d24",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/3/状态",
+        "claim_id": "index-674d1e14ecb82e05",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/3/判定条件",
+        "claim_id": "index-67de5f10e401bfff",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/3/下次验证点",
+        "claim_id": "index-a68367d2b60ad325",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/4/线索ID",
+        "claim_id": "index-f4b5f56b4abc3ac3",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/4/来源路",
+        "claim_id": "index-36a438c4ce413e99",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/4/内容",
+        "claim_id": "index-ce80ce12eee9e14b",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/4/状态",
+        "claim_id": "index-dbb5d43aefd8ef12",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/4/判定条件",
+        "claim_id": "index-d42ed22092a35720",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/线索跟踪/4/下次验证点",
+        "claim_id": "index-8d01f73b13535923",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/0/指派ID",
+        "claim_id": "index-bc17d40e540233a4",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/0/指派给",
+        "claim_id": "index-1832ada6ad5a3075",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/0/深挖任务",
+        "claim_id": "index-7c8de35396ea9361",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/0/理由",
+        "claim_id": "index-5b6e1d3eda7f4311",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/0/截止",
+        "claim_id": "index-fc40dd363a63c7c6",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/0/状态",
+        "claim_id": "index-4636ceb92fc0e743",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/1/指派ID",
+        "claim_id": "index-59a3a59b2a0552a4",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/1/指派给",
+        "claim_id": "index-ab04a62e6aa621ca",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/1/深挖任务",
+        "claim_id": "index-6352e4279222260d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/1/理由",
+        "claim_id": "index-00a983f604a5dd01",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/1/截止",
+        "claim_id": "index-99b8664a1123d5e8",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/指派清单/1/状态",
+        "claim_id": "index-8b512384b82289d7",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/状态",
+        "claim_id": "index-93cbebd7e6dc6798",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/规则",
+        "claim_id": "index-4bb3d7036c7bf435",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/0/来源",
+        "claim_id": "index-1b73d25f14e6305c",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/0/窗口",
+        "claim_id": "index-e20c2a4948f0a401",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/1/来源",
+        "claim_id": "index-12640c96bcfe9522",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/1/窗口",
+        "claim_id": "index-d48ad43c353e7ce8",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/2/来源",
+        "claim_id": "index-4b2da2cbdf27314a",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/2/窗口",
+        "claim_id": "index-006689d80fd62ec4",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/3/来源",
+        "claim_id": "index-d84129b4e5ec54cf",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/3/窗口",
+        "claim_id": "index-36f64d303b998838",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/4/来源",
+        "claim_id": "index-c7ab9c1e906a1829",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/4/窗口",
+        "claim_id": "index-56fe932e51ebc09f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/5/来源",
+        "claim_id": "index-54689e5b8863be4d",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/已引用/5/窗口",
+        "claim_id": "index-e7b77529d761480f",
+        "status": "displayed"
+      },
+      {
+        "source": "总审_20261009.json",
+        "pointer": "/回填窗口标注/限制",
+        "claim_id": "index-f0f8d123d964e0cd",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/1",
+        "claim_id": "index-b7d1871c295c14b8",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/2",
+        "claim_id": "index-768f8d2c7724dee8",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/3",
+        "claim_id": "index-3f281d4e07d20523",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/4",
+        "claim_id": "index-8b94bcd3a77b28dd",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/5",
+        "claim_id": "index-8f2c0b06140560e1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/6",
+        "claim_id": "index-f3de1247f34c381c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/7",
+        "claim_id": "index-4a7859c6bd7c7c10",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/8",
+        "claim_id": "index-f0ed4ab7d5535ded",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/9",
+        "claim_id": "index-6ba94f2a90333605",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/10",
+        "claim_id": "index-6af976ed3f66f03a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/11",
+        "claim_id": "index-5e565c1dccdc80af",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/12",
+        "claim_id": "index-2246a799e13adbb9",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/13",
+        "claim_id": "index-b079e37a89b0f31f",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/14",
+        "claim_id": "index-f7542151f6ed2ba1",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/15",
+        "claim_id": "index-3e911867768e41e0",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/16",
+        "claim_id": "index-bddedc3aab81a633",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/17",
+        "claim_id": "index-c63542b8b7c6c734",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/18",
+        "claim_id": "index-129180d006d6268f",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/19",
+        "claim_id": "index-050e62a060762479",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/20",
+        "claim_id": "index-c12c303c2b4277f3",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/21",
+        "claim_id": "index-2f70b3d778dbca3e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/22",
+        "claim_id": "index-37fd5e427be0c278",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/23",
+        "claim_id": "index-260f23f80b215f6c",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/24",
+        "claim_id": "index-97cfa4cb149f82ee",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/25",
+        "claim_id": "index-5d97bce41867392a",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/26",
+        "claim_id": "index-893dc1ae1664b88e",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/27",
+        "claim_id": "index-9ebda9659c0e4741",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/28",
+        "claim_id": "index-a9a671e5e5f6358d",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/29",
+        "claim_id": "index-8cf06c33dd3a9666",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/30",
+        "claim_id": "index-d7970a58c4129082",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/31",
+        "claim_id": "index-62e006f534238d44",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/32",
+        "claim_id": "index-f8c162a5a5460e98",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/33",
+        "claim_id": "index-1f43a7925078b943",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/heading/34",
+        "claim_id": "index-6cfbc64ef91d5483",
+        "status": "displayed"
+      },
+      {
+        "source": "judgment_20261009.json",
+        "pointer": "/bodies/index/block/35",
+        "claim_id": "index-c2396c0335ce6e88",
+        "status": "displayed"
+      }
+    ],
+    "source_total": 250
+  },
+  "legacy_ticker": null
+}

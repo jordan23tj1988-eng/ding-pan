@@ -1,0 +1,89 @@
+{
+ "schema_version": 1,
+ "as_of": "20261009",
+ "日期": "20261009",
+ "preload": {
+  "path": "_学习/能力预加载_20261009.json",
+  "sha256": "9d51a026a874e95fe447a82ec3ffaaaab6ec290b3dbc3469524bf9648351901f"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "eligible_count": 0,
+   "applied": [],
+   "rejected": [],
+   "note": "依据_学习/能力预加载_20261009.json的routes.auction：eligible_count=0、records=[]。没有合格能力可采用或拒绝；未以未验证能力影响判断。",
+   "considered_ids": []
+  },
+  "lhb": {
+   "status": "applied",
+   "eligible_count": 1,
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "仅把验证状态为有效的净买占比因子作为历史背景校准；未扩展原窗口/样本边界，未用它替代目标日席位动向、双源污染过滤、位置门禁或单票预测。因目标日双源与席位源缺失，荐票维持0只。",
+     "source_locator": "_学习/能力预加载_20261009.json#/routes/lhb/records/0; _学习/_龙虎榜质量库.json#/因子/净买占比",
+     "验证证据": {
+      "validation": "validated",
+      "capitalized": true,
+      "状态": "有效",
+      "边界": "窗口20260401~20260708，样本≥2000；因子状态被淘汰即失效",
+      "样本": 4607
+     }
+    }
+   ],
+   "rejected": [],
+   "note": "目标日前已存在auction回执，原样保留；本次只增加lhb项，不覆盖其他域。"
+  },
+  "theme": {
+   "eligible_count": 0,
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "预加载theme域可复用能力为0条, 无能力可采用或拒绝。"
+  },
+  "logic": {
+   "eligible_count": 0,
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "预加载logic域可复用能力为0条, 无能力可采用或拒绝。"
+  },
+  "limitup": {
+   "eligible_count": 1,
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [],
+   "rejected": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "reason": "本路判断未引用该可复用能力(无引用证据), 按未采用如实记录, 不补造 effect。"
+    }
+   ],
+   "status": "rejected_all",
+   "note": "预加载提供1条合格能力, 按回执状态处理。"
+  },
+  "cycle": {
+   "eligible_count": 0,
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "预加载cycle域可复用能力为0条, 无能力可采用或拒绝。"
+  },
+  "master": {
+   "eligible_count": 0,
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "预加载master域可复用能力为0条, 无能力可采用或拒绝。"
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+  "status": "pass",
+  "attempts": 1,
+  "model": "gpt-6-luna",
+  "provider": "openai-codex",
+  "error_class": "input_gap_disclosed:missing_20261009_dual_source_and_seat_movement;stale_portfolio_state_20260930",
+  "updated_at": "2026-10-09T18:10:31+08:00",
+  "artifact_paths": [
+    "D:\\股票数据\\市场数据\\_学习\\lhb判断_20261009.json",
+    "D:\\股票数据\\市场数据\\_学习\\lhb_body_20261009.html",
+    "D:\\股票数据\\市场数据\\_学习\\交易计划_lhb_20261009.json",
+    "D:\\股票数据\\市场数据\\_学习\\能力使用回执_20261009.json",
+    "D:\\股票数据\\市场数据\\_学习\\_运行状态\\lhb_20261009.json"
+  ],
+  "input_status": {
+    "lhb_csv": "present_82_rows",
+    "seat_movement_20261009": "missing",
+    "dual_source_check_20261009": "missing",
+    "portfolio_state_date": "20260930_stale"
+  },
+  "verification": {
+    "json_date_and_schema": "pass",
+    "artifact_exists": "pass",
+    "html_six_sections_and_div_balance": "pass",
+    "dual_source_pollution_filter": "not_executable_missing_target_date_sources_no_recommendations",
+    "portfolio_target_date_coverage": "not_verified_stale_source"
+  },
+  "note": "PASS仅表示按契约完成保守判断、结构核验并交付产物；不表示双源复核或目标日持仓核验已通过。目标日荐票0只。"
+}

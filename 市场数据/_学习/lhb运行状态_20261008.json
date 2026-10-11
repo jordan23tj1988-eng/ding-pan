@@ -1,0 +1,40 @@
+{
+  "date": "20261008",
+  "route": "lhb",
+  "status": "completed_with_gaps",
+  "model": "gpt-6-luna",
+  "provider": "openai-codex",
+  "as_of": "20261008 close",
+  "as_of_policy": "No 20261009+ sources or returns used.",
+  "outputs": [
+    "_学习/lhb判断_20261008.json",
+    "_学习/lhb_body_20261008.html",
+    "_学习/交易计划_lhb_20261008.json",
+    "_学习/能力使用回执_20261008.json",
+    "_学习/lhb运行状态_20261008.json"
+  ],
+  "source_status": {
+    "dual_source_status": "pass",
+    "dual_source_as_of": "20261008",
+    "source_rows": 82,
+    "unique_same_day_codes": 58
+  },
+  "formal_recommendation_count": 0,
+  "observation_count": 3,
+  "portfolio_source_date": "20260930",
+  "portfolio_status": "stale_source_empty_holdings_not_verified_through_target_date",
+  "gaps": [
+    "market-wide turnover unavailable from allowed inputs",
+    "official 20261008 fund temperature/agency/northbound metrics unavailable",
+    "portfolio state only through 20260930; target-date position coverage unverified",
+    "some local bar caches stale"
+  ],
+  "self_checks": {
+    "acceptance_script": "lhb验收_20261008.py",
+    "hard_checks": "pass",
+    "portfolio_coverage": "blocked_stale_state",
+    "official_sentinel": "not_run"
+  },
+  "official_sentinel": "not_run",
+  "note": "Custom structural/source/as-of checks passed; portfolio target-date coverage blocked because source state is 20260930. This is not a formal all-sentinel pass."
+}

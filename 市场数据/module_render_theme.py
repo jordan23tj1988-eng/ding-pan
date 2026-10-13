@@ -303,13 +303,34 @@ def _core_stocks(d):
     return core
 
 
+def _lead_map(raw):
+    """龙头标的 形态容忍(20261008 补跑修复): 当前形态 dict={题材名:[龙头记录]};
+    旧形态为平铺 list(主题名字符串 或 [{名称,身位}] 记录)。平铺记录只有自带题材键
+    ('题材'/'题材名'/'矩阵题材名'/'聚类')时才归位; 无题材键的不臆测归属 → 渲染侧显示 —(零编造)。"""
+    if isinstance(raw, dict):
+        return raw
+    if isinstance(raw, (list, tuple)):
+        out = {}
+        for item in raw:
+            if isinstance(item, str) and item:
+                out.setdefault(item, [])
+            elif isinstance(item, dict):
+                key = next((item[k] for k in ('题材','题材名','矩阵题材名','聚类')
+                            if isinstance(item.get(k), str) and item.get(k)), None)
+                if key:
+                    out.setdefault(key, []).append(item)
+        return out
+    return {}
+
+
 def _leader_judge(d):
     """龙头标的 + 判断(LLM 语义判断, 源=题材龙头判断_{d}.json, 由题材命门 agent 结构化输出)
     返回 (龙头标的_map, 判断_map); 文件缺/字段缺 → 空 dict(零编造, 渲染侧显示 —)"""
     lj = load_json('题材龙头判断_%s.json', d)
     if not lj:
         return {}, {}
-    return (lj.get('龙头标的') or {}), (lj.get('判断') or {})
+    jdg = lj.get('判断')
+    return _lead_map(lj.get('龙头标的')), (jdg if isinstance(jdg, dict) else {})
 
 
 def _life_judge(d):

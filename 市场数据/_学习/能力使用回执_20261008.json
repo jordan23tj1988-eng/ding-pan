@@ -1,75 +1,76 @@
 {
-  "schema_version": 1,
-  "as_of": "20261008",
-  "preload": {
-    "path": "_学习/能力预加载_20261008.json",
-    "sha256": "3b4d634d971f61b0d4c9d6f0f0785b6ccb1e3e3047e0070e99c2514a4cdfd744"
+ "schema_version": 1,
+ "as_of": "20261008",
+ "preload": {
+  "path": "_学习/能力预加载_20261008.json",
+  "sha256": "3b4d634d971f61b0d4c9d6f0f0785b6ccb1e3e3047e0070e99c2514a4cdfd744"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
   },
-  "routes": {
-    "auction": {
-      "status": "no_eligible_capabilities",
-      "considered_ids": [],
-      "applied": [],
-      "rejected": []
-    },
-    "lhb": {
-      "status": "applied",
-      "considered_ids": [
-        "extension:cap-lhb-netbuy-valid"
-      ],
-      "applied": [
-        {
-          "id": "extension:cap-lhb-netbuy-valid",
-          "effect": "将有效净买占比因子作为整体背景校准，不用于单票预测或突破股票级净买/双源/位置门禁。",
-          "source_locator": "_学习/_龙虎榜质量库.json#/因子/净买占比"
-        }
-      ],
-      "rejected": []
-    },
-    "theme": {
-      "status": "no_eligible_capabilities",
-      "considered_ids": [],
-      "applied": [],
-      "rejected": []
-    },
-    "logic": {
-      "status": "completed_no_eligible_capabilities",
-      "considered_ids": [],
-      "applied": [],
-      "rejected": [],
-      "execution": {
-        "as_of": "20261008",
-        "model": "gpt-6-luna",
-        "provider": "openai-codex",
-        "used_capability": false,
-        "reason": "preload eligible_count=0"
-      }
-    },
-    "limitup": {
-      "status": "applied",
-      "considered_ids": [
-        "extension:cap-limitup-turnover-valid"
-      ],
-      "applied": [
-        {
-          "id": "extension:cap-limitup-turnover-valid",
-          "effect": "质量库换手率因子当前状态为有效（预测桶仅作模型解释，不推翻全池负期望）。",
-          "source_locator": "_学习/_涨停质量库.json#/因子/换手率；_学习/能力预加载_20261008.json#/routes/limitup/records/0"
-        }
-      ],
-      "rejected": []
-    },
-    "cycle": {
-      "status": "no_eligible_capabilities",
-      "considered_ids": [],
-      "applied": [],
-      "rejected": []
-    },
-    "master": {
-      "status": "no_eligible_capabilities",
-      "considered_ids": [],
-      "applied": [],
-      "rejected": []
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "将有效净买占比因子作为整体背景校准，不用于单票预测或突破股票级净买/双源/位置门禁。",
+     "source_locator": "_学习/_龙虎榜质量库.json#/因子/净买占比"
     }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "execution": {
+    "as_of": "20261008",
+    "model": "gpt-6-luna",
+    "provider": "openai-codex",
+    "used_capability": false,
+    "reason": "preload eligible_count=0"
+   },
+   "status_normalized_from": "completed_no_eligible_capabilities"
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "质量库换手率因子当前状态为有效（预测桶仅作模型解释，不推翻全池负期望）。",
+     "source_locator": "_学习/_涨停质量库.json#/因子/换手率；_学习/能力预加载_20261008.json#/routes/limitup/records/0"
+    }
+   ],
+   "rejected": []
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
   }
+ }
 }

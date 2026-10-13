@@ -778,15 +778,48 @@ def _theme(model, root):
         _keys(leaders,('日期','路','矩阵题材名','龙头标的','判断','说明','独立盲区声明'),'题材龙头判断')
         if leaders.get('独立盲区声明'):
             _add(model, str(leaders['独立盲区声明']), 'cognition', 'limitation', '题材龙头判断_'+d+'.json', '/独立盲区声明')
-        names = list(leaders.get('矩阵题材名') or [])
-        names += [n for n in leaders.get('判断',{}) if n not in names]
-        names += [n for n in leaders.get('龙头标的',{}) if n not in names]
+        # 龙头标的 形态容忍(20261008 补跑修复): 发出版历史上有两种形态——
+        #   dict      = {题材名: [龙头记录...]}(当前形态)
+        #   list/dict 混排 = 平铺记录 [{名称,身位...}] 或 题材名字符串(旧形态)
+        # 平铺 dict 记录只有在自带题材键时才归位; 无题材键的不臆测归属, 原文保留并记 limitation。
+        lead_map = {}
+        pending_lead = leaders.get('龙头标的')
+        if isinstance(pending_lead, dict):
+            lead_map = pending_lead
+        elif isinstance(pending_lead, (list, tuple)):
+            unkeyed = 0
+            for item in pending_lead:
+                if isinstance(item, str) and item:
+                    lead_map.setdefault(item, [])
+                elif isinstance(item, dict):
+                    key = next((item[k] for k in ('题材','题材名','矩阵题材名','聚类')
+                                if isinstance(item.get(k), str) and item.get(k)), None)
+                    if key:
+                        lead_map.setdefault(key, []).append(item)
+                    else:
+                        unkeyed += 1
+            if unkeyed:
+                model['limitations'].append(
+                    '题材龙头判断_%s.json 龙头标的 有 %d 条平铺记录未标注题材，未并入矩阵(不臆测归属，原文保留)。' % (d, unkeyed))
+        elif pending_lead:
+            raise ValueError('龙头标的 形态不支持: ' + type(pending_lead).__name__)
+        names = []
+        for cand in (leaders.get('矩阵题材名') or []):
+            if isinstance(cand, str) and cand not in names:
+                names.append(cand)
+        for cand in (leaders.get('判断') or {}):
+            if isinstance(cand, str) and cand not in names:
+                names.append(cand)
+        for cand in lead_map:
+            if isinstance(cand, str) and cand not in names:
+                names.append(cand)
         for name in names:
             row = {'name':name,'claim_refs':[], 'six_you':None,'data_scope':'原判断聚类名称；不自动等同归位行业'}
             for top in ('判断','龙头标的'):
-                if name not in leaders.get(top,{}):
+                container = leaders.get('判断') if top == '判断' else lead_map
+                if not isinstance(container, dict) or name not in container:
                     continue
-                for pointer,value in _leaf_items(leaders[top][name],'/'+top+'/'+name.replace('~','~0').replace('/','~1')):
+                for pointer,value in _leaf_items(container[name],'/'+top+'/'+name.replace('~','~0').replace('/','~1')):
                     row['claim_refs'].append(_add(model,value,'matrix','evidence','题材龙头判断_'+d+'.json',pointer))
             model['theme_matrix'].append(row)
     six_name = '主流题材6有_'+d+'.json'

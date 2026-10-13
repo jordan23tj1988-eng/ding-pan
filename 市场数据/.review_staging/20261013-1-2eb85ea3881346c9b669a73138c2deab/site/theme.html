@@ -1,0 +1,484 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>③主线题材</title><meta name="review-date" content="20261013"><meta name="review-schema-version" content="1"><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+
+/* ── v4.1 页面阅读路径与响应式增强 ── */
+:root{--route-accent:var(--accent)}
+body[data-route="cycle"]{--route-accent:#7b8cff}
+body[data-route="auction"]{--route-accent:#e8a33d}
+body[data-route="lhb"]{--route-accent:#b18aff}
+body[data-route="theme"]{--route-accent:#2fd3c5}
+body[data-route="logic"]{--route-accent:#63b3ff}
+body[data-route="limitup"]{--route-accent:#ff7b72}
+
+/* 内容宽度按信息密度自适应：宽表不再挤成一团，概览 bento 仍保持黄金版宽度。 */
+.wrap:has(>section){max-width:1180px}
+.wrap:has(.rowA){max-width:1440px}
+.wrap>section{scroll-margin-top:92px;margin-top:30px}
+.wrap>section>h2{margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid var(--line2);position:relative}
+.wrap>section>h2::before{background:var(--route-accent,var(--accent));box-shadow:0 0 14px color-mix(in srgb,var(--route-accent,var(--accent)) 35%,transparent)}
+.wrap>section:first-of-type{margin-top:24px}
+
+/* 页面阅读地图：显示板块职责，不复制正文事实。 */
+.page-map{position:sticky;top:78px;z-index:6;display:flex;align-items:center;gap:5px;overflow-x:auto;white-space:nowrap;margin:0 0 18px;padding:6px;background:rgba(18,20,28,.90);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(12px);scrollbar-width:none}
+.page-map::-webkit-scrollbar{display:none}
+.page-map-label{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:0 8px 0 5px;flex:0 0 auto}
+.page-map a{color:var(--sub);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:.16s;flex:0 0 auto}
+.page-map a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.page-map a.active{color:var(--route-accent,var(--accent));background:color-mix(in srgb,var(--route-accent,var(--accent)) 13%,transparent);box-shadow:inset 0 -2px 0 var(--route-accent,var(--accent));font-weight:700}
+.page-map a:focus-visible{outline:2px solid var(--route-accent,var(--accent));outline-offset:1px}
+
+/* 卡片层级：标题、来源提示、正文和长表分出视觉层。 */
+.card,.obs,.kpi,details.chain{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.card h3,.card h4{line-height:1.45}
+.card>h3:first-child,.card>h4:first-child{color:var(--ink)}
+.card .hint{display:inline-block;line-height:1.45}
+.card table{margin-top:10px}
+table tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+table tr:hover td{background:color-mix(in srgb,var(--route-accent,var(--accent)) 7%,transparent)}
+th{white-space:nowrap}
+pre{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:rgba(0,0,0,.16);font-family:var(--mono);font-size:11px;line-height:1.55}
+
+/* 触屏和窄屏：不缩小关键数字，改为卡内横向浏览，避免整页横溢出。 */
+@media(max-width:640px){
+    .navbar{display:block;top:6px;margin:6px 8px 0;max-width:calc(100% - 16px);padding:8px 10px;border-radius:14px}
+  .navbar .brand{font-size:13px;margin-bottom:6px}.navbar .logo{width:28px;height:28px;border-radius:8px}
+  .navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}
+  .navbar .pills::-webkit-scrollbar{display:none}
+  .navbar .pills a{font-size:12px;padding:6px 10px}
+  .navbar .upd{margin-left:auto;font-size:10px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap{padding:18px 10px 48px}.wrap:has(>section),.wrap:has(.rowA){max-width:none}
+  .page-map{top:65px;margin-bottom:14px}
+  .wrap>section{margin-top:24px}.wrap>section>h2{font-size:14.5px;padding-bottom:8px}
+  .card,.obs{padding-left:14px;padding-right:14px;border-radius:11px}
+  .card{overflow-x:auto}.card>h3,.card>h4,.card>p,.card>ul,.card>ol{min-width:0}
+  table{min-width:620px;font-size:12px}th,td{padding:7px 8px}
+  .routes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:19px 18px}.hero h1{font-size:21px}
+  .kpi .big{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.page-map a,.card,.obs,.kpi{transition:none!important}}
+
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}}
+
+/* ── v4.3 概览可读层 ── 只收敛版式与信息层级，不改判断内容 */
+.reading-spine a.rs-step{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-weight:600;white-space:nowrap}
+.reading-spine a.rs-step:hover{border-color:var(--line2);color:var(--ink)}
+.reading-spine a.rs-step b{color:var(--accent);font-family:var(--mono);font-size:10.5px;margin-right:6px;font-weight:800}
+.cgrp{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 20px 6px;margin-top:13px}
+.cgrp-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px dashed var(--line2)}
+.cgrp-head .cgrp-note{color:var(--dim);font-size:11.3px;font-family:var(--mono)}
+.cgrp-body{display:flex;flex-direction:column}
+.citem{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:2px 12px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:0;padding-bottom:2px}
+.citem>p{margin:0;line-height:1.62}
+.citem .citem-tag{color:var(--dim);font-size:11.1px;margin:2px 0 0;font-family:var(--mono);white-space:nowrap;text-align:right}
+.claim-proof{grid-column:2;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.claim-proof .proof-label{color:var(--dim);font-size:10.6px;font-weight:700}
+.claim-proof a{color:var(--sub);font-size:10.7px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--mono)}
+.claim-proof a:hover{border-color:var(--accent-dim);color:var(--ink)}
+.audit-fold{margin-top:13px}
+.audit-fold>summary{cursor:pointer;color:var(--sub);font-size:12.6px;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+.audit-fold>summary::-webkit-details-marker{display:none}
+.audit-fold>summary::before{content:'▸';color:var(--accent);font-family:var(--mono);font-size:12px}
+.audit-fold[open]>summary::before{content:'▾'}
+.audit-fold .inner{padding:2px 0 12px}
+.audit-fold .fold-note{color:var(--dim);font-size:11.6px;margin:0 0 10px}
+.audit-fold .inner-limit{margin:0 0 12px}
+.audit-fold .inner-limit b{color:var(--sub);font-size:12.2px}
+.audit-fold .inner-limit ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:11.8px}
+.machfold{margin-top:13px}
+.kpi .sub2{font-family:var(--mono);font-size:11px}
+.kpi .gauge .gl{font-size:10.4px;color:var(--dim)}
+.mx{width:100%;border-collapse:collapse;margin:2px 0 4px;table-layout:fixed}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mx thead th{color:var(--dim);font-size:11.1px;font-weight:700;font-family:var(--mono);white-space:nowrap}
+.mx tbody th{color:var(--sub);font-weight:600;font-size:11.6px;font-family:var(--mono);white-space:nowrap;width:66px}
+.mx td{font-size:12.2px;line-height:1.62}
+.mx td a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.mx td a:hover{border-bottom-color:var(--accent-dim)}
+.mx .mx-empty{color:var(--dim)}
+.mx tr:last-child th,.mx tr:last-child td{border-bottom:0}
+.chip2.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+section>h2{margin-top:32px}
+.chip2.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.chip2.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+</style></head><body data-route="theme" data-d="20261013" data-schema-version="1" data-template-version="p1.3"><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="on" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd">更新 20261013</span></nav><div class="wrap"><div class="rowA"><div class="hero"><div class="kick">③主线题材 · 我当前的判断 · 截至 2026-10-13 收盘</div><h1 aria-label="主线判定=全场无确认主线，维持分支轮动">主线判定=全场无确认主线，<em>维持分支轮动</em></h1><p>有聚类口径三级判定→生命周期→龙头识别；题材归属唯一真源为涨停复盘归位。</p><div class="stance"><span class="pill warn">主线 · <b class="s-weak">主线判定=全场无确认主线，维持分支轮动</b></span><span class="pill">警报 · <b>11</b></span><span class="pill hot"><b class="s-ok">新线 · 【新线】PCB 宽度11·高度1板(序列首日)；【缩圈】AI短剧 宽度4→3→1(-75%)且高度未抬升——高潮回落段特征,减仓位不是上车位</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">10-13</span></div><span class="lab">最强线宽度</span><span class="big">11</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">10-13</span></div><span class="lab">缩圈警报</span><span class="big">【新线】PCB 宽度11·高度1板(序列首日)；【缩圈】AI短剧 宽度4→3→1(-75%)且高度未抬升——高潮回落段特征,减仓位不是上车位</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">10-13</span></div><span class="lab">新增题材线数</span><span class="big">—</span><span class="sub2">当日该口径数据缺失，未填补</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">10-13</span></div><span class="lab">昨题材路结算 · 执1</span><span class="big">—</span><span class="sub2">当日该口径数据缺失，未填补</span></div></div><div class="card">模拟盘当日引擎看板缺失：—</div><section id="recommendations"><h2>一 荐票卡</h2><div id="component-RECOTHEME"><!--RECOTHEME--><div class="card"><div id="table-223ebcc003fe0904"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:104px"><col style="width:52px"><col><col style="width:170px"></colgroup><tr><th>#</th><th>标的</th><th>类型</th><th>荐票理由(身位·逻辑·执行口径)</th><th>历史对照</th></tr><tr><td>1</td><td style="white-space:nowrap"><b>慈文传媒</b><br><span class="mut">002343</span></td><td style="white-space:nowrap"><b>荐票</b></td><td style="word-break:break-word">AI漫剧=当日唯一保留高度的集群(3只全3板=全场最高连板即3板)，链条质量画像『家数3、最高3板、早封占比1.0、开板占比0.33、快判=早封为主=真主线承载』为当日唯一质量最优线；本票涨停统计3/3、09:25:00首封(=一字级)、炸板0次、封板资金2.52亿(线内最大，&gt;新经典2.17亿/龙版传媒0.52亿)、换手3.37%、流通34.86亿、现价7.36元，符合米开5.7『主动性=上板最早、封单最强』与选票要点(价&lt;20、流通&lt;50亿)。不确认龙头的理由：线内3只齐头无唯一性身位；催化为THS B档(无公告实锤)；机械阶段=退坡(缩圈)，属认知库『缩圈但高度续命』形态→只给5%最小仓并以 buy_gate 上限+5% 过滤一字追高。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px">同身位本路无直接样本 n=0；最近似身位档『封单质量龙』n=1 均收+6.60%、『新线首板龙』n=1 均收+3.93%、『业绩锚』n=4 均收+3.18%(本路最优档)；反向档『正统龙候选』n=3 均收-3.34%、『人气龙候选』n=2 均收-4.33%。本路合计胜率10/28=35.7%、均收+0.03%(37个交易日)。来源：_学习/子agent增强/战绩画像_theme_20261013.json。</span></td></tr><tr><td>2</td><td style="white-space:nowrap"><b>超声电子</b><br><span class="mut">000823</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">PCB为当日最大【新线】(11只/封板资金9.49亿=全场51.6亿的18.4%)，本票09:31:54首封、炸板0次、封板资金3.88亿=全场最大封单，催化含『三季报预增』属线内唯一业绩型催化。不升荐票的原因：PCB机械判『启动⚠宽度陷阱』(早封占比0.09、开板0.36=首板扩散、高度未立)、本票流通132.79亿属大盘(不符米开选票要点&lt;50亿)、宽度陷阱明日退坡概率50%(N=40)。观察判据：次日PCB宽度环比≥0且出现2板及以上≥2只→升大分支候选。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px">『业绩锚』n=4 均收+3.18%(本路最优档)、『新线首板龙』n=1 均收+3.93%；但本票催化来源档=B(非A档公告)，不满足业绩锚的公告级前提。来源：战绩画像_theme_20261013.json。</span></td></tr><tr><td>3</td><td style="white-space:nowrap"><b>丽人丽妆</b><br><span class="mut">605136</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">09:30:46首封、炸板0次、封板资金1.01亿、换手7.90%、流通45.73亿、价11.42元；机械底座=发酵(宽1、高3)，开板占比0.0为当日少见的干净封板。不升荐票的原因：线宽仅1只=无梯队承接(孤峰)。观察判据：次日若线内新增2板及以上≥1只或宽度≥3→升分支候选，否则维持观察。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px">跨线3板孤峰本路无同类样本 n=0；『正统龙候选』n=3 均收-3.34%不作外推。来源：战绩画像_theme_20261013.json。</span></td></tr><tr><td>4</td><td style="white-space:nowrap"><b>农心科技</b><br><span class="mut">001231</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">09:30:27一字封、炸板0次、封板资金2.96亿、换手19.18%、流通14.36亿、价28.17元；机械底座=发酵(宽1、高2、题材晋级率1.0)，符合米开5.2『2板定龙』节点(明日2进3)。不升荐票的原因：线宽仅1只=无梯队；高换手19.18%落10-20%桶(质量库执1均涨-0.14)=封板前有充分博弈、非缩量锁板。观察判据：次日农药宽度≥3或本票3板封住→升分支候选。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px">『新候选线身位(候选线唯一2板)』n=1 均收-5.41%、『梯队补涨』n=1 均收+4.64%；样本极小不外推。来源：战绩画像_theme_20261013.json。</span></td></tr></table></div></div>
+<div class="hint">发出版不可覆盖(题材荐票_20261013.json); 正式荐票来自本路发出版。 荐票=龙头候选可结算化≠确认; 结算=执行口径; 历史对照n=本路同类身位样本; 桶均值非个股预言 · 发出版结论：正式荐票1只(慈文传媒002343，权重5%)、观察3只(超声电子/丽人丽妆/农心科技)。理由：全场无确认主线(来源档A=0/67、6有聚类最高半导体材料3/6=分支、米开3.4攻击阵型断档：最高板从10坍塌至3板)、温度31.6偏冷(最差档口径=只上1只最强身位)、炸板率22.1%、跌停8只；今日形态=高位坍塌(新华传媒10板/九阳6板/华北制药3板/德才2板集体断板)+低位新线扩散(PCB11/冰雪经济8全首板)。按『高位坍塌日只认唯一高度集群的旗帜级质量锚、不荐补涨、不追孤高标』给最小可结算仓。</div><!--/RECOTHEME--></div></section><section id="matrix"><h2>二 三级判定 · 龙头矩阵</h2><div id="component-THEMEBATTLE"><!--THEMEBATTLE--><!--6YOU--><!--FOURDIM-->
+
+
+<div class="card" style="overflow-x:auto"><h3 style="margin:0 0 8px">三级判定矩阵 <span class="hint">梳理全面题材 → TOP5 → 六有(五问六有·6有客观) → 四维走势 · 聚类口径(题材≠行业,唯一真源=题材归位)</span></h3><p style="margin:4px 0 10px" class="mut">涨停总数 67 · 题材线 27 · 判断范围 13 线（数据口径：聚类与判断范围分列，未归位指标 —） · 5问(突发/大事件/万亿空间/预期持续/散户能懂)=盘前主观判断,无机器源,见判断原文</p><div id="table-8318e406bab6e26f"><table id="theme-judgment-matrix" style="table-layout:fixed;min-width:1180px;width:100%"><colgroup><col style="width:132px"><col style="width:44px"><col style="width:56px"><col style="width:88px"><col style="width:172px"><col style="width:96px"><col style="width:150px"><col style="width:150px"><col></colgroup><tr><th>题材(聚类)</th><th>涨停</th><th>TOP</th><th>六有</th><th>四维走势</th><th>判定</th><th>核心标的(连板前3)</th><th>龙头标的(LLM)</th><th>判断</th></tr><tr data-theme-name="PCB"><td style="white-space:nowrap"><b>PCB</b></td><td class="mut" style="text-align:center">11</td><td style="text-align:center"><span class="chip2 c-hot">Top1</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i></i><i></i><i class="on"></i><i></i><i class="on"></i></span></td><td>宽11·高1板 ·晋级— </td><td><span class="tjd tj-minor">2/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>超声电子</b><span class="mut">1板</span> · <b>中京电子</b><span class="mut">1板</span> · <b>澳弘电子</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="mut">—</span></td><td style="font-size:12px"><span class="jdx">11只全首板(高度1)、早封占比0.09、开板0.36，机械=[启动 ⚠宽度陷阱]；全首板扩散线=无龙头，键值=[]。</span></td></tr>
+<tr data-theme-name="冰雪经济"><td style="white-space:nowrap"><b>冰雪经济</b></td><td class="mut" style="text-align:center">8</td><td style="text-align:center"><span class="chip2 c-hot">Top2</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i></i><i></i><i class="on"></i><i></i><i class="on"></i></span></td><td>宽8·高1板 ·晋级— </td><td><span class="tjd tj-minor">2/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>大连圣亚</b><span class="mut">1板</span> · <b>元隆雅图</b><span class="mut">1板</span> · <b>中兴商业</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="mut">—</span></td><td style="font-size:12px"><span class="jdx">8只全首板(高度1)、早封占比0.0、开板0.5，机械=[启动 ⚠宽度陷阱]；全首板扩散线=无龙头，键值=[]。</span></td></tr>
+<tr data-theme-name="半导体材料"><td style="white-space:nowrap"><b>半导体材料</b></td><td class="mut" style="text-align:center">5</td><td style="text-align:center"><span class="chip2 c-hot">Top3</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i class="on"></i></span></td><td>宽5·高2板 ·晋级— </td><td><span class="tjd tj-minor">3/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>东百集团</b><span class="mut">2板</span> · <b>凯美特气</b><span class="mut">1板</span> · <b>杭氧股份</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="cor"><b>东百集团</b><span class="mut">2板·线内最高(炸4次分歧·换手19.7%)</span></span></td><td style="font-size:12px"><span class="jdx">5只、最高2板(东百集团)，开板占比0.6=分歧；东百集团虽09:25:01首封但炸板4次、末封09:57、换手19.74%、封单比1.21=封板质量差，机械=发酵但无质量锚，不确认龙头。</span></td></tr>
+<tr data-theme-name="染料化工"><td style="white-space:nowrap"><b>染料化工</b></td><td class="mut" style="text-align:center">5</td><td style="text-align:center"><span class="chip2 c-hot">Top4</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i></i><i></i><i class="on"></i><i></i><i class="on"></i></span></td><td>宽5·高2板 ·晋级— </td><td><span class="tjd tj-minor">2/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>醋化股份</b><span class="mut">2板</span> · <b>建新股份</b><span class="mut">1板</span> · <b>亚邦股份</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="cor"><b>醋化股份</b><span class="mut">2板·线内最高(炸2次分歧)</span></span></td><td style="font-size:12px"><span class="jdx">5只、最高2板(醋化股份)，开板占比0.8为当日最差质量之一；醋化股份09:36:33首封、炸2次、封单0.23亿=无承载，不确认龙头。</span></td></tr>
+<tr data-theme-name="AI应用"><td style="white-space:nowrap"><b>AI应用</b></td><td class="mut" style="text-align:center">5</td><td style="text-align:center"><span class="chip2 c-hot">Top5</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span></td><td>宽5·高1板 <span class="up">▲+25%</span>·晋级+0.0% </td><td><span class="tjd tj-minor">1/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>风语筑</b><span class="mut">1板</span> · <b>跨境通</b><span class="mut">1板</span> · <b>返利科技</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="mut">—</span></td><td style="font-size:12px"><span class="jdx">5只全首板、早封占比0.0、机械=退潮(宽5→消亡57%)，线内无2板及以上=无梯队，无龙头(该键值=[])。</span></td></tr>
+<tr data-theme-name="AI漫剧"><td style="white-space:nowrap"><b>AI漫剧</b></td><td class="mut" style="text-align:center">3</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i></span></td><td>宽3·高3板 <span class="dn">▼-25%</span>·晋级— </td><td><span class="tjd tj-minor">3/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>慈文传媒</b><span class="mut">3板</span> · <b>新经典</b><span class="mut">3板</span> · <b>龙版传媒</b><span class="mut">3板</span></span></td><td style="font-size:12px"><span class="cor"><b>慈文传媒</b><span class="mut">3板·线内封单最大/一字炸0(旗帜质量锚)</span> · <b>新经典</b><span class="mut">3板·一字缩量锁板(出版IP续命)</span> · <b>龙版传媒</b><span class="mut">3板·炸3次分歧(梯队末位)</span></span></td><td style="font-size:12px"><span class="jdx">当日唯一保留高度的集群=3只全3板(慈文传媒/新经典/龙版传媒)，链条质量画像早封占比1.0/开板占比0.33为全场最优，但3只齐头无唯一性高度(米开5.7龙头确认必要条件『次日唯一性高度』不满足)，故取慈文传媒(09:25:00一字+炸0+封单2.52亿线内最大)为线内第一身位，只登记候选不写确认龙；催化=THS B档无公告实锤。</span></td></tr>
+<tr data-theme-name="光通信"><td style="white-space:nowrap"><b>光通信</b></td><td class="mut" style="text-align:center">3</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span></td><td>宽3·高1板 <span class="up">▲+50%</span>·晋级+0.0% </td><td><span class="tjd tj-minor">1/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>华盛昌</b><span class="mut">1板</span> · <b>华脉科技</b><span class="mut">1板</span> · <b>魅视科技</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="mut">—</span></td><td style="font-size:12px"><span class="jdx">3只全首板、机械=萌发(宽3)，无龙头，键值=[]。</span></td></tr>
+<tr data-theme-name="医药"><td style="white-space:nowrap"><b>医药</b></td><td class="mut" style="text-align:center">3</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span></td><td>宽3·高2板 <span class="dn">▼-25%</span>·晋级+33.3% </td><td><span class="tjd tj-minor">1/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>海欣股份</b><span class="mut">2板</span> · <b>澳洋健康</b><span class="mut">1板</span> · <b>双成药业</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="cor"><b>海欣股份</b><span class="mut">2板·线内最高(炸3次分歧)</span></span></td><td style="font-size:12px"><span class="jdx">3只、最高2板(海欣股份)；机械=退潮(宽3→消亡57%)，海欣股份炸3次、封单0.21亿，线内无质量锚，不确认龙头(昨日3板华北制药今日断板，与生命周期结算『医药[发酵→退坡]兑现』一致)。</span></td></tr>
+<tr data-theme-name="数据中心温控"><td style="white-space:nowrap"><b>数据中心温控</b></td><td class="mut" style="text-align:center">3</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><i></i><i></i><i></i><i></i><i></i><i class="on"></i></span></td><td>宽3·高1板 ·晋级— </td><td><span class="tjd tj-minor">1/6 分支</span></td><td style="font-size:12px"><span class="cor"><b>雪人集团</b><span class="mut">1板</span> · <b>冰山冷热</b><span class="mut">1板</span> · <b>哈空调</b><span class="mut">1板</span></span></td><td style="font-size:12px"><span class="mut">—</span></td><td style="font-size:12px"><span class="jdx">3只全首板、机械=萌发(宽3)，无龙头，键值=[]。</span></td></tr>
+<tr data-theme-name="消费电商"><td style="white-space:nowrap"><b>消费电商</b></td><td class="mut" style="text-align:center">—</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span></span></td><td>宽1·高3板 <span class="up">▲+0%</span>·晋级— </td><td><span class="tjd tj-minor">—/6 —</span></td><td style="font-size:12px"><span class="cor"><b>丽人丽妆</b><span class="mut">3板</span></span></td><td style="font-size:12px"><span class="cor"><b>丽人丽妆</b><span class="mut">3板·线内唯一(开板占比0质量优)</span></span></td><td style="font-size:12px"><span class="jdx">线宽1只=孤峰(丽人丽妆3板、开板占比0.0)，无梯队承接，只登记身位不确认龙。</span></td></tr>
+<tr data-theme-name="水产养殖"><td style="white-space:nowrap"><b>水产养殖</b></td><td class="mut" style="text-align:center">—</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span></span></td><td>宽1·高3板 <span class="up">▲+0%</span>·晋级— </td><td><span class="tjd tj-minor">—/6 —</span></td><td style="font-size:12px"><span class="cor"><b>百洋股份</b><span class="mut">3板</span></span></td><td style="font-size:12px"><span class="cor"><b>百洋股份</b><span class="mut">3板·线内唯一</span></span></td><td style="font-size:12px"><span class="jdx">线宽1只=孤峰(百洋股份3板)，无梯队承接，只登记身位不确认龙。</span></td></tr>
+<tr data-theme-name="农药"><td style="white-space:nowrap"><b>农药</b></td><td class="mut" style="text-align:center">—</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span></span></td><td>宽1·高2板 <span class="up">▲+0%</span>·晋级+100.0% </td><td><span class="tjd tj-minor">—/6 —</span></td><td style="font-size:12px"><span class="cor"><b>农心科技</b><span class="mut">2板</span></span></td><td style="font-size:12px"><span class="cor"><b>农心科技</b><span class="mut">2板·线内唯一(一字炸0)</span></span></td><td style="font-size:12px"><span class="jdx">线宽1只=孤峰(农心科技2板一字)，无梯队承接，只登记身位不确认龙。</span></td></tr>
+<tr data-theme-name="AI短剧"><td style="white-space:nowrap"><b>AI短剧</b></td><td class="mut" style="text-align:center">—</td><td style="text-align:center"><span class="mut">—</span></td><td><span class="d6" title="宽·强·容·弹·高·换"><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span><span class="mut">—</span></span></td><td>宽1·高2板 <span class="dn">▼-67%</span>·晋级+100.0% <span class="chip2 c-warn">缩圈</span></td><td><span class="tjd tj-minor">—/6 —</span></td><td style="font-size:12px"><span class="cor"><b>广电网络</b><span class="mut">2板</span></span></td><td style="font-size:12px"><span class="cor"><b>广电网络</b><span class="mut">2板·线内唯一(缩圈兑现为退潮)</span></span></td><td style="font-size:12px"><span class="jdx">线宽1只(广电网络2板)，四维警报标【缩圈】『宽度4→3→1(-75%)且高度未抬升——高潮回落段特征』，机械=退坡→退潮，不确认龙头。</span></td></tr>
+</table></div><p style="margin:8px 0 0" class="mut">行业口径下界(题材≈行业,跨界未归并): 化学制品4分 · 元件2分 · 一般零售2分 · 旅游及景1分 · 通用设备1分 — 聚类口径为主,行业口径作下界对照</p></div>
+
+
+
+<!--/FOURDIM--><!--/6YOU--><!--/THEMEBATTLE--></div></section><section id="lifecycle"><h2>三 主流生命周期</h2><div id="component-LIFECYCLE"><!--LIFECYCLE-->
+<div class="card"><h3 style="margin:0 0 8px">主流生命周期·判断 <span class="hint">七段轴(机械阶段分布) + 逐线判断(LLM)融合 · 行与三级判定矩阵对齐(同聚类口径·同序) · 判据次日机械化结算</span></h3><div class="lifeaxis"><div class="lseg on"><div class="lt">萌发</div><span class="ll"><b>光通信</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>数据中心温控</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>基建水泥</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>消费</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>白酒</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>AI玩具</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>化工材料</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>商业零售</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>汽车零部件</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>航空发动机</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>贵金属回收</b> <span class="mut">→启动 10%</span></span><span class="ll"><b>重组</b> <span class="mut">→启动 10%</span></span></div>
+<div class="lseg on"><div class="lt">启动</div><span class="ll"><b>PCB</b> <span class="lwarn">⚠宽度陷阱</span> <span class="mut">→退坡 50%</span></span><span class="ll"><b>冰雪经济</b> <span class="lwarn">⚠宽度陷阱</span> <span class="mut">→退坡 50%</span></span></div>
+<div class="lseg on"><div class="lt">发酵</div><span class="ll"><b>半导体材料</b> <span class="mut">→退坡 20%</span></span><span class="ll"><b>染料化工</b> <span class="mut">→退坡 20%</span></span><span class="ll"><b>农药</b> <span class="mut">→退坡 20%</span></span><span class="ll"><b>水产养殖</b> <span class="mut">→退坡 20%</span></span><span class="ll"><b>消费电商</b> <span class="mut">→退坡 20%</span></span></div>
+<div class="lseg"><div class="lt">高潮</div><span class="ll mut">—</span></div>
+<div class="lseg on"><div class="lt">退坡</div><span class="ll"><b>AI漫剧</b> <span class="mut">→启动 21%</span></span><span class="ll"><b>AI短剧</b> <span class="mut">→启动 21%</span></span></div>
+<div class="lseg on"><div class="lt">退潮</div><span class="ll"><b>AI应用</b> <span class="mut">→消亡 57%</span></span><span class="ll"><b>医药</b> <span class="mut">→消亡 57%</span></span></div>
+<div class="lseg on"><div class="lt">消亡</div><span class="ll"><b>机器人</b> <span class="mut">→萌发 60%</span></span><span class="ll"><b>电网设备</b> <span class="mut">→萌发 60%</span></span><span class="ll"><b>算力基础设施</b> <span class="mut">→萌发 60%</span></span><span class="ll"><b>锂电池</b> <span class="mut">→萌发 60%</span></span></div>
+</div><div id="table-366ac5f1a9d75bf6"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:132px"><col style="width:126px"><col style="width:150px"><col><col style="width:92px"></colgroup><tr><th>题材(与矩阵对齐)</th><th>机械阶段(七段)</th><th>LLM定性判断</th><th>判据(可证伪)</th><th>预判(方向·概率)</th></tr><tr><td style="white-space:nowrap"><b>PCB</b></td><td>启动 <span class="lwarn">⚠宽度陷阱</span></td><td><b>新线爆量启动段·宽度陷阱待确认——机械=[启动 ⚠宽度陷阱](宽11、高度1板、序列首日)，四维警报标【新线】；强度证据(早封占比0.09、开板占比0.36、全首板)显示为首板扩散而非高标主线，宽度先行·高度未立。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度环比≥0且出现3板及以上≥1只 → 陷阱解除、升发酵/大分支候选；宽度环比≤-0.3(11→≤7.7) → 宽度陷阱确认、退坡(脚本确认条件[宽度环比&lt;=-0.3]/概率50%,N=40)。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→退坡 50%</td></tr>
+<tr><td style="white-space:nowrap"><b>冰雪经济</b></td><td>启动 <span class="lwarn">⚠宽度陷阱</span></td><td><b>新线爆量启动段·宽度陷阱待确认——机械=[启动 ⚠宽度陷阱](宽8、高度1板、序列首日)；早封占比0.0、开板占比0.5=质量最弱的新线，高度完全未立。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度环比≥0且出现3板及以上≥1只 → 陷阱解除、升发酵候选；宽度环比≤-0.3(8→≤5.6) → 宽度陷阱确认、退坡(概率50%,N=40)。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→退坡 50%</td></tr>
+<tr><td style="white-space:nowrap"><b>半导体材料</b></td><td>发酵</td><td><b>发酵段但质量差——机械=[发酵](宽5、最高2板)；开板占比0.6、早封占比0.2，线内最高2板(东百集团)炸4次、封单比1.21，属『宽而分歧』，不构成承载。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度环比≥0且出现3板及以上≥1只且开板占比&lt;0.45 → 升大分支候选；宽度环比≤-0.2 → 退坡(机械确认[宽度环比&lt;=-0.2]/概率20%,N=136)。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→退坡 20%</td></tr>
+<tr><td style="white-space:nowrap"><b>染料化工</b></td><td>发酵</td><td><b>发酵段但质量差——机械=[发酵](宽5、最高2板)；开板占比0.8为当日最高分歧度，线内最高2板(醋化股份)炸2次、封单0.23亿。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度环比≥0且出现3板及以上≥1只且开板占比&lt;0.45 → 升大分支候选；宽度环比≤-0.2 → 退坡(概率20%,N=136)。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→退坡 20%</td></tr>
+<tr><td style="white-space:nowrap"><b>AI应用</b></td><td>退潮</td><td><b>退潮段——机械=[退潮](宽5、高度1板、全首板)，早封占比0.0、开板0.4；虽近3日累计12只(待深挖清单★新)，但按归位唯一真源当日已是全首板扩散、无梯队。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度≤2 → 消亡(机械给退潮→消亡57%,N=7)；宽度环比≥1.0且出现3板及以上 → 反抽升级，须重估。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→消亡 57%</td></tr>
+<tr><td style="white-space:nowrap"><b>AI漫剧</b></td><td>退坡</td><td><b>缩圈续命段(第2日)——机械=[退坡](宽4→3、环比-0.25)，但3只全部由2板晋级3板(高度2→3续命)、链条早封占比1.0/开板占比0.33为当日质量最优，属认知库『缩圈但高度续命』形态；只认旗帜级质量锚，不认补涨。</b></td><td style="word-break:break-word"><span class="jdx">次日(20261014)宽度环比≥0且出现4板及以上唯一身位 → 升级为发酵段/主线候选；宽度环比≤-0.3或3只3板全断 → 缩圈兑现为退潮(机械给退坡→退潮7%,N=42)、本路清仓该线观察。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→启动 21%</td></tr>
+<tr><td style="white-space:nowrap"><b>光通信</b></td><td>萌发</td><td><span class="mut">—</span></td><td style="word-break:break-word"><span class="mut">—</span></td><td style="text-align:center;white-space:nowrap" class="mut">→启动 10%</td></tr>
+<tr><td style="white-space:nowrap"><b>医药</b></td><td>退潮</td><td><b>退潮段·质量差——机械=[退潮](宽4→3、最高2板)；昨日3板孤峰华北制药今日断板，昨日生命周期预判『医药[发酵→退坡]』已于当日结算=兑现，本日线内最高仅2板且炸3次。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度≤2 → 消亡(概率57%,N=7)；宽度环比≥1.0且出现3板及以上≥1只 → 反抽升级。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→消亡 57%</td></tr>
+<tr><td style="white-space:nowrap"><b>数据中心温控</b></td><td>萌发</td><td><span class="mut">—</span></td><td style="word-break:break-word"><span class="mut">—</span></td><td style="text-align:center;white-space:nowrap" class="mut">→启动 10%</td></tr>
+<tr><td style="white-space:nowrap"><b>消费电商</b></td><td>发酵</td><td><b>发酵段·孤峰(宽1、高3)——丽人丽妆3板、开板占比0.0为当日最干净封板，但线宽1只无梯队。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度≥3或本票4板封住 → 升分支候选；本票断板且宽度≤1 → 转退坡/消亡。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→退坡 20%</td></tr>
+<tr><td style="white-space:nowrap"><b>水产养殖</b></td><td>发酵</td><td><b>发酵段·孤峰(宽1、高3)——百洋股份3板、炸0，线内无梯队。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度≥3或本票4板封住 → 升分支候选；本票断板且宽度≤1 → 转退坡/消亡。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→退坡 20%</td></tr>
+<tr><td style="white-space:nowrap"><b>农药</b></td><td>发酵</td><td><b>发酵段·孤峰(宽1、高2)——线宽仅1只无梯队；农心科技一字2板、炸0、封单2.96亿、题材晋级率1.0，属单点强而非线强。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度≥3或本票3板封住 → 升分支候选；本票断板且宽度≤1 → 转退坡/消亡。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→退坡 20%</td></tr>
+<tr><td style="white-space:nowrap"><b>AI短剧</b></td><td>退坡</td><td><b>缩圈证伪段——机械=[退坡]、四维警报标【缩圈】(宽度4→3→1、-75%)，今日线内仅广电网络1只2板、高度未抬升，缩圈兑现而非续命，与AI漫剧形成对照。</b></td><td style="word-break:break-word"><span class="jdx">次日宽度环比≥0且出现3板及以上≥1只 → 反抽成立、升启动候选；宽度≤1且该2板断板 → 转消亡(机械给退坡→退潮7%,N=42)。</span></td><td style="text-align:center;white-space:nowrap" class="mut">→启动 21%</td></tr>
+</table></div><div style="margin-top:10px;padding:10px;border:1px solid rgba(232,163,61,.35);border-radius:10px;background:rgba(232,163,61,.05)"><b>高低切预判</b><br><span class="jdx">今日高低切=『高位连板整体退场→低位新线首板扩散』，但两条新线皆为宽度陷阱，承接有效性待验，本质是散点轮动：①高位端(下跌确认)：昨日最高标新华传媒(600825，10板)不在今日67只涨停池=断板，九阳股份(6板)、华北制药(3板)、德才股份(2板)同步断板，昨日46只涨停仅10只续板(36只断板)；②低位端(新承接候选)：PCB(11只/封板资金9.49亿=全场18.4%，最大线)与冰雪经济(8只)均为序列首日新线、全首板；③承接质量否决项：两条新线早封占比0.09/0.0、开板占比0.36/0.5，机械均判[启动 ⚠宽度陷阱]，且昨日『电池→媒体AI内容系』高低切已被证伪(族宽18→9只、封板资金占比50.6%→16.5%、新华传媒断板)。可证伪判据(次日20261014结算)：若PCB或冰雪经济宽度环比≥0且出现3板及以上≥1只 → 低位新线承接成立(陷阱解除)；若两条新线宽度环比均≤-0.3 → 高低切证伪，资金维持散点轮动(首板散支)、本路维持C档防守。</span></div><p style="margin:8px 0 0" class="mut">机械底座(题材生命周期.py); 预判=方向+概率, 次日 --settle 机械化结算(兑现/证伪/待定); 三级判定矩阵=事实描述(涨停/六有/四维/核心标的), 本表=判断性(阶段定性+判据+高低切), 两者行对齐互补。</p></div>
+
+<!--/LIFECYCLE--></div></section><div class="audit-anchor-bank" hidden aria-hidden="true"><span id="evidence-ev-theme-2df1e8d316abd3e8"></span><span id="evidence-ev-theme-0535b382a9595f8c"></span><span id="evidence-ev-theme-8d5fdbcbae99c05f"></span><span id="evidence-ev-theme-103066b1f1d3b55c"></span><span id="evidence-ev-theme-d0a94ca1bfe39e2e"></span><span id="evidence-ev-theme-19a18bebc47ac317"></span><span id="evidence-ev-theme-058e9fde20e6e5a9"></span><span id="evidence-ev-theme-8866b93e9dd31bec"></span><span id="evidence-ev-theme-4c4d05b4c1eea302"></span><span id="evidence-ev-theme-744a379ad7ed70d7"></span><span id="evidence-ev-theme-e08b08ee33988a16"></span><span id="evidence-ev-theme-c92e40d238b9968b"></span><span id="evidence-ev-theme-2a8f929c984a7053"></span><span id="evidence-ev-theme-b28be0ff081dbea9"></span><span id="evidence-ev-theme-e8355ffea7fa8d2c"></span><span id="evidence-ev-theme-fc0e27c9725f48f2"></span><span id="evidence-ev-theme-f69b63c2c16375f5"></span><span id="evidence-ev-theme-0ccfb51e2f212c66"></span><span id="evidence-ev-theme-cc832660356c2bd0"></span><span id="evidence-ev-theme-caa83cdc9394cbfb"></span><span id="evidence-ev-theme-9ffb20b11cbab8a5"></span><span id="evidence-ev-theme-b568f4c4b5bd71a2"></span><span id="evidence-ev-theme-2a3a0e5cde9ea91e"></span><span id="evidence-ev-theme-c84f6ea4f535d6fd"></span><span id="evidence-ev-theme-8a91360c19fa015a"></span><span id="evidence-ev-theme-2364126746ae4680"></span><span id="evidence-ev-theme-fb8cd9b8976d5b6d"></span><span id="evidence-ev-theme-3d92715fdf8ab4b4"></span><span id="evidence-ev-theme-89d742c7496059f3"></span><span id="evidence-ev-theme-3c113124ca03d2f3"></span><span id="evidence-ev-theme-2099dd6f0b5301ca"></span><span id="evidence-ev-theme-8b7e83c01843605c"></span><span id="evidence-ev-theme-64c67f292ae8b3c1"></span><span id="evidence-ev-theme-c812bf8c14bb0a9d"></span><span id="evidence-ev-theme-2fddd60740999531"></span><span id="evidence-ev-theme-3a30d8c9322a48cf"></span><span id="evidence-ev-theme-0c44f307642f865d"></span><span id="evidence-ev-theme-0a8434d6f92a5e0c"></span><span id="evidence-ev-theme-9f945333f09bd9e2"></span><span id="evidence-ev-theme-25e7ed6b93e530ad"></span><span id="evidence-ev-theme-27df586dfb56da92"></span><span id="evidence-ev-theme-035d5feca396f533"></span><span id="evidence-ev-theme-a0a9d46d90c7faed"></span><span id="evidence-ev-theme-b012148cbab7c671"></span><span id="evidence-ev-theme-217ff876380dfb55"></span><span id="evidence-ev-theme-f18312c7fa4bf6a1"></span><span id="evidence-ev-theme-e41b328f05c0dc2c"></span><span id="evidence-ev-theme-0e3dfdfdf283e7c6"></span><span id="evidence-ev-theme-255d83cb85bd6799"></span><span id="evidence-ev-theme-7084faeae28b477f"></span><span id="evidence-ev-theme-c249c0ca438d178c"></span><span id="evidence-ev-theme-637910e2a573a635"></span><span id="evidence-ev-theme-ae34de22528fb141"></span><span id="evidence-ev-theme-5ef50c6404b38c4f"></span><span id="evidence-ev-theme-490fa12c5c8437ce"></span><span id="evidence-ev-theme-2d0f0e53d0513813"></span><span id="evidence-ev-theme-fb018e31aeac603c"></span><span id="evidence-ev-theme-b48370cd6151a7a6"></span><span id="evidence-ev-theme-e2f02c8ec01cd40b"></span><span id="evidence-ev-theme-42aab5896099095a"></span><span id="evidence-ev-theme-336a20414cd72416"></span><span id="evidence-ev-theme-f02d2536cd55e053"></span><span id="evidence-ev-theme-fd69e64d998dd6ab"></span><span id="evidence-ev-theme-38aa80569d8f0bcc"></span><span id="evidence-ev-theme-66f6f2616ae29956"></span><span id="evidence-ev-theme-9f5e1de4f80a8b71"></span><span id="evidence-ev-theme-80890bfaca555424"></span><span id="evidence-ev-theme-01f20faacdefa296"></span><span id="evidence-ev-theme-fa99481abfe0cee2"></span><span id="evidence-ev-theme-e5cd3023c4a48d58"></span><span id="evidence-ev-theme-ba0843a3630ad801"></span><span id="evidence-ev-theme-44f835926726059d"></span><span id="evidence-ev-theme-331a904ab984d865"></span><span id="evidence-ev-theme-f730c22a12b337e0"></span><span id="evidence-ev-theme-227bff6ae915b4d6"></span><span id="evidence-ev-theme-3968c2085801c5a0"></span><span id="evidence-ev-theme-b3680bb424ab037f"></span><span id="evidence-ev-theme-8d872bf2e30ed08d"></span><span id="evidence-ev-theme-122e26b0b4351166"></span><span id="evidence-ev-theme-c6ad3e3f0e575abd"></span><span id="evidence-ev-theme-609e0d253ecbd26f"></span><span id="evidence-ev-theme-20d78790ad8cc74e"></span><span id="evidence-ev-theme-fdfbee606d8ac305"></span><span id="evidence-ev-theme-8e8a8d107d92f9a9"></span><span id="evidence-ev-theme-f6e8cfaf807a7910"></span><span id="evidence-ev-theme-6ce9ed94e9be76d2"></span><span id="evidence-ev-theme-8e4ad37ff038b477"></span><span id="evidence-ev-theme-40d4655806217bc7"></span><span id="evidence-ev-theme-ee1aaefb673d238d"></span><span id="evidence-ev-theme-6a0f96c4609d3dfd"></span><span id="evidence-ev-theme-c9114a6306230ecb"></span><span id="evidence-ev-theme-c672292950a00b35"></span><span id="evidence-ev-theme-4ea94ac44adcdf62"></span><span id="evidence-ev-theme-79de9ed1b8b70e07"></span><span id="evidence-ev-theme-4161571472728c78"></span><span id="evidence-ev-theme-cafd4188d10eaac4"></span><span id="evidence-ev-theme-a371ddab34e5d504"></span><span id="evidence-ev-theme-a73e6b997008eea5"></span><span id="evidence-ev-theme-92aec5381ed8d367"></span><span id="evidence-ev-theme-ebffcea11c2b0e39"></span><span id="evidence-ev-theme-29a5f19fef8430ec"></span><span id="evidence-ev-theme-4624b59188f81416"></span><span id="evidence-ev-theme-3f4c01a8c366abb0"></span><span id="evidence-ev-theme-1d7da7531c64826d"></span><span id="evidence-ev-theme-703b5198003ca1d5"></span><span id="evidence-ev-theme-0837cb01b350fcf5"></span><span id="evidence-ev-theme-ce3c9ddfb6c5810e"></span><span id="evidence-ev-theme-63b3c96350f33e24"></span><span id="evidence-ev-theme-8d7847035be80c35"></span><span id="evidence-ev-theme-0510705998d05dd5"></span><span id="evidence-ev-theme-46490fdaea68c60c"></span><span id="evidence-ev-theme-4c60170dea5da098"></span><span id="evidence-ev-theme-0ea8bfaf53119724"></span><span id="evidence-ev-theme-2c00f09397cb0d7f"></span><span id="evidence-ev-theme-6ec88a08f476de20"></span><span id="evidence-ev-theme-0959815491ffeca7"></span><span id="evidence-ev-theme-e30a451fd2a9763a"></span><span id="evidence-ev-theme-c288f3825d62a833"></span><span id="evidence-ev-theme-e442b949d416104b"></span><span id="evidence-ev-theme-672c64f1719743b4"></span><span id="evidence-ev-theme-4934b8dd4b5ede3b"></span><span id="evidence-ev-theme-964f2cad451ecad2"></span><span id="evidence-ev-theme-360978c179a89049"></span><span id="evidence-ev-theme-0525c95056c94f3e"></span><span id="evidence-ev-theme-ccd2bdf761b51207"></span><span id="evidence-ev-theme-58da643f8d511212"></span><span id="evidence-ev-theme-8b881880864698e7"></span><span id="evidence-ev-theme-35ac8356b4d99457"></span><span id="evidence-ev-theme-257d21bc0805c462"></span><span id="evidence-ev-theme-b8e7f9f0cf559530"></span><span id="evidence-ev-theme-8ce01b0c3e611820"></span><span id="evidence-ev-theme-413ea097c5285b5f"></span><span id="evidence-ev-theme-657447c39110949d"></span><span id="evidence-ev-theme-75fa755d711de4a2"></span><span id="evidence-ev-theme-9735856659baa3fe"></span><span id="evidence-ev-theme-68bbc26c5d294bce"></span><span id="evidence-ev-theme-656c7b8b644424ca"></span><span id="evidence-ev-theme-594163812fce0507"></span><span id="evidence-ev-theme-beb2aade726656b1"></span><span id="evidence-ev-theme-93a4d08d05cd2dba"></span><span id="evidence-ev-theme-6e4710c9d8ad1a0a"></span><span id="evidence-ev-theme-22e710edc3eb6f84"></span><span id="evidence-six-142"></span><span id="evidence-six-143"></span><span id="evidence-six-144"></span><span id="evidence-six-145"></span><span id="evidence-six-146"></span><span id="evidence-six-147"></span><span id="evidence-six-148"></span><span id="evidence-six-149"></span><span id="evidence-six-150"></span><span id="evidence-ev-theme-eff1e8b16f36c0a0"></span><span id="evidence-ev-theme-9e7980e46ff2c756"></span><span id="evidence-ev-theme-42d0ad46662f7b96"></span><span id="evidence-ev-theme-ee7a29784e10460a"></span><span id="evidence-ev-theme-edff8f129fb1bd37"></span><span id="evidence-ev-theme-6f8c026fd74993c7"></span><span id="evidence-ev-theme-85a432f2215d0245"></span><span id="evidence-ev-theme-5c63904ff6aee416"></span><span id="evidence-ev-theme-cce139c70af0ed8a"></span><span id="evidence-ev-theme-46a4e3bd6df8c2cc"></span><span id="evidence-ev-theme-ece35805fb6d1e9a"></span><span id="evidence-ev-theme-aca8f40feb027466"></span><span id="evidence-ev-theme-622576b378b52d5f"></span><span id="evidence-ev-theme-731acf9e4ca87bc0"></span><span id="evidence-ev-theme-896738bf73039d4e"></span><span id="evidence-ev-theme-7da1cd4715f2e013"></span><span id="evidence-ev-theme-bd4f30cb9d2ad862"></span><span id="evidence-ev-theme-dd68f393e01a20d6"></span><span id="evidence-ev-theme-822edd0d9819b023"></span><span id="evidence-ev-theme-6ff9120ea4239e4a"></span><span id="evidence-ev-theme-c67c815679d1a1e0"></span><span id="evidence-ev-theme-681d542049823caa"></span><span id="evidence-ev-theme-394ab96669d7c43e"></span><span id="evidence-fact-174"></span><span id="evidence-fact-175"></span><span id="evidence-fact-176"></span><span id="evidence-fact-177"></span><span id="evidence-kpi-source-0-0"></span><span id="evidence-kpi-source-1-0"></span><span id="evidence-kpi-source-2-0"></span><span id="evidence-kpi-source-3-0"></span></div><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div></body></html>

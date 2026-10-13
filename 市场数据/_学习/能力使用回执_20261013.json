@@ -1,0 +1,67 @@
+{
+ "schema_version": 1,
+ "as_of": "20261013",
+ "preload": {
+  "sha256": "3400a5da3c3bd2b3be2eb87d62a823906b1f47876c6da1b70021551eb5a12497"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "已真正纳入本日席位判读并改变排序结果：源1当日榜净买额第1的301660粤芯半导体(净买占比5.35%)与第2的002242九阳股份(6.45%)均落「5-10%」无肉桶(n=731/执1胜率46.0%/均涨-0.00%)，被独立降级为观察/剔除；而净买额第3、第4的002639雪人集团(10.28%)与002640跨境通(12.40%)落最优桶「10-20%」(n=454/50.0%/+0.26%)，成为本日两只正式荐票。同日落最差桶「>20%」的603188亚邦股份(27.00%)、600847万里股份(37.44%)被剔除。即：该因子在本日把「净买额排序」与「净买占比桶排序」错位，并直接决定了荐票名单(否则按净买额会推荐301660/002242)。",
+     "source_locator": "_学习/_龙虎榜质量库.json#因子.净买占比.状态=有效 (另见 区分度14.0、单调rho=-0.4、近窗rho=-0.5、权重0.1394、样本4607、窗口20260401~20260708；桶表见同文件#因子.净买占比.分桶)"
+    }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "采用『涨停质量库·换手率因子有效』能力，并落到具体字段：limitup判断_20261013.json#荐票.标的（观察名单成员与排序口径）。本日把质量观察位锚定在换手率正期望桶——600802福建水泥换手21.55%落≥20%桶（n=1871/执1胜率43.1%→本库口径+0.07%，库内唯一执1均涨为正的换手率桶）、605058澳弘电子12.95%与688655迅捷兴13.31%落10-20%桶（n=4168/45.4%/-0.14%）；同时把换手<3%桶（n=2327/33.9%/-0.91%，四桶最差）的一字扛出票排除出观察位（本日池内如603096新经典换手2.79%、002343慈文传媒3.37%落在最差桶，仅作结构读法不进观察名单）。即『荐票.标的』成员由规则榜命中票（本日全池0命中）改为高换手非一字票，期望从-0.91%抬升至-0.14%~+0.07%区间。仅改变观察名单成员与排序，不放行任何仓位（正式荐票仍0只），与C档空仓结论一致。",
+     "source_locator": "_学习/能力预加载_20261013.json#routes.limitup.records[0]（id=extension:cap-limitup-turnover-valid，validation=validated）；_学习/_涨停质量库.json#因子.换手率（状态=有效、区分度11.5pp、单调rho0.8、RankIC0.0363 t=3.55、权重0.1519）；应用落点=_学习/limitup判断_20261013.json#荐票.标的"
+    }
+   ],
+   "rejected": []
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  }
+ }
+}

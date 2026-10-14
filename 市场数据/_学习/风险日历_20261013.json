@@ -2,20 +2,28 @@
   "schema_version": 1,
   "capability": "risk_calendar",
   "date": "20261013",
-  "status": "partial",
+  "status": "pass",
   "sources": [
-    "_学习/_交易日历.json"
+    "_学习/_交易日历.json",
+    "_学习/风险事件_20261013.json",
+    "东财 RPT_LIFT_STAGE",
+    "东财 RPT_SHAREBONUS_DET"
   ],
   "metrics": {
     "is_trading_day": true,
-    "event_source_present": false,
-    "event_source_status": null,
-    "事件条数": null,
-    "覆盖维度": null,
-    "未接入维度": null
+    "event_source_present": true,
+    "event_source_status": "pass",
+    "事件条数": 25,
+    "覆盖维度": [
+      "限售解禁",
+      "分红除权"
+    ],
+    "未接入维度": [
+      "财报披露日历",
+      "股东大会",
+      "业绩预告"
+    ]
   },
-  "errors": [
-    "事件源缺失: _学习/风险事件_20261013.json 未生成(风险事件.py 未跑或失败)"
-  ],
-  "note": "事件源缺失/降级时保持partial；不把缺事件解释成无风险"
+  "errors": [],
+  "note": "事件源缺失/降级时保持partial；不把缺事件解释成无风险；未接入维度=财报披露日历/股东大会/业绩预告（不得据此声称无此类风险）"
 }

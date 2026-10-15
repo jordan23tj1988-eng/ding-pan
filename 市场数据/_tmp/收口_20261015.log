@@ -1,0 +1,76 @@
+
+===== 收口开始 20261015 =====
+[PREP] 归一化 _学习/_body_index_20261015.html -> _学习/index_body_20261015.html
+[PREP] 归一化 _学习/_body_cycle_20261015.html -> _学习/cycle_body_20261015.html
+[PREP] index    len=9328    h2=15 div=0/0 OK
+[PREP] auction  len=18737   h2=6  div=34/34 OK
+[PREP] lhb      len=20553   h2=7  div=18/18 OK
+[PREP] theme    len=15015   h2=6  div=22/22 OK
+[PREP] logic    len=20842   h2=6  div=24/24 OK
+[PREP] limitup  len=23143   h2=6  div=25/25 OK
+[PREP] cycle    len=7462    h2=7  div=19/19 OK
+[PREP] 一句话 = 温度22.8（前值17.9）、涨停36（前36）、炸板7、最高5板；五路C、C、C、B、C；总档C（置信度73）
+[PREP] 注入完成 bodies=['auction', 'cycle', 'index', 'lhb', 'limitup', 'logic', 'theme'] 总字符=115080
+[RUN] 资金温度(注入lhb FUNDTEMP) :: 资金温度.py 20261015
+[RC] 资金温度(注入lhb FUNDTEMP) = 0
+资金温度: 131日 今日22分位(冷) 机构30席/6.8亿 量化10席 游资123席 | ⚠lhb页无FUNDTEMP锚,未注入
+
+[RUN] 涨停复盘台账 :: 涨停复盘台账.py 20261015 --from-data
+[RC] 涨停复盘台账 = 0
+20261015日块(统一格式)已存: 涨停36 · 无主流·分支轮动
+台账组装注入 judgment_20261015.json | 存档日数 45
+
+[RUN] 龙虎榜台账 :: 龙虎榜台账.py 20261015 --from-data
+[RC] 龙虎榜台账 = 0
+20261015 lhb日块已存: 上榜60 · 机构在场36只 · S/A出手8笔
+lhb台账注入 judgment_20261015.json | 存档日数 44
+
+[RUN] 竞价池结算归档(--inject) :: 竞价池结算归档.py --inject
+[RC] 竞价池结算归档(--inject) = 0
+竞价池结算档.html 已生成
+已注入 judgment_20261015.json POOLLEDGER区(记得重跑生成盯盘台.py)
+
+[RUN] 模拟盘settle :: 模拟盘引擎.py settle 20261015
+[RC] 模拟盘settle = 0
+auction settle 20261015 nav=0.9664 持仓3 现金857384
+lhb settle 20261015 nav=1.0160 持仓2 现金855361
+theme settle 20261015 nav=1.0200 持仓0 现金1019994
+logic settle 20261015 nav=1.0144 持仓1 现金962670
+limitup settle 20261015 nav=0.9884 持仓0 现金988400
+master settle 20261015 nav=1.0023 持仓5 现金830301
+bench 20261015 {'nav': 0.817709, 'r': -5.207, 'n': 59, 'total': 67, 'cohort': '20261013'}
+
+[RUN] 模拟盘dashboard :: 模拟盘引擎.py dashboard 20261015
+[RC] 模拟盘dashboard = 0
+dashboard auction -> .\_学习\_模拟盘\auction\看板_20261015.html
+dashboard lhb -> .\_学习\_模拟盘\lhb\看板_20261015.html
+dashboard theme -> .\_学习\_模拟盘\theme\看板_20261015.html
+dashboard logic -> .\_学习\_模拟盘\logic\看板_20261015.html
+dashboard limitup -> .\_学习\_模拟盘\limitup\看板_20261015.html
+dashboard master -> .\_学习\_模拟盘\master\看板_20261015.html
+
+[RUN] 生成盯盘台(发布+存档) :: 生成盯盘台.py 20261015
+[RC] 生成盯盘台(发布+存档) = 1
+: \"20261016\", \"source\": \"总审_20261015.json#指派清单/5\", \"original\": {\"指派ID\": \"MA-20261015-06\", \"指派给\": \"logic\", \"深挖任务\": \"推动风险事件第3维度(股东/高管减持)落码验收：给出①落码生效的机械判据(风险事件_{d}.json metrics.覆盖维度含『股东减持』『高管减持』且 事件[] 类型='减持' 与直连filter逐条一致)；②『减持踩窗』对五路候选票的影响面清单模板(含触发即降级/不荐的档位规则)；③减持计划(预案)维度已判为不可接入的边界复述与替代方案。\", \"理由\": \"本日已直连实测交付口径(RPT_SHARE_HOLDER_INCREASE近30日499条/去重210只/∩涨停=003029吉大正元→强制降级)，但生产文件风险事件_20261015.json仍只有[限售解禁,分红除权]两维=落码未生效；缺维不等于无风险，属跨路门禁共同缺口。\", \"截止\": \"20261016\", \"状态\": \"未完成\"}, \"status\": \"pending\", \"evidence\": [], \"conclusion\": null, \"actual\": null}], \"artifact\": \"D:\\\\股票数据\\\\_复盘审计运行\\\\20261015\\\\master_ad571bbd973c456f9d80a40f3f4b99a7\\\\master.json\"}, \"capability_consumption\": {\"status\": \"pass\", \"as_of\": \"20261015\", \"applied_candidates\": 2, \"preload\": \"_学习\\\\能力预加载_20261015.json\", \"receipt\": \"_学习\\\\能力使用回执_20261015.json\"}, \"calibration\": {\"formal_source_exists\": false, \"kind\": \"new_audit_settlement\", \"historical_publication_modified\": false}, \"artifact\": \"D:\\\\股票数据\\\\_复盘审计运行\\\\20261015\\\\audit_4a9ccc851d684854a48aa0337efcf084\\\\audit.json\"}\n", "stderr_tail": "", "historical_inputs_modified": false, "policy": "独立run输出；失败原样保留，不覆盖历史发布物"}
+[P3 production bridge] {"schema_version": 1, "capability": "p3_production_bridge", "date": "20261015", "status": "blocked", "flags": {"integration_bridge_installed": true, "production_call_site": true, "independent_provenance": false, "exchange_calendar": true, "real_registration_transaction": false, "production_deployed": false, "production_preregistration_allowed": false}, "missing": ["independent_provenance", "real_registration_transaction"], "sources": [], "transaction_path": "_学习/production_registration_20261015.json", "production_action_taken": false, "policy": "桥已安装；不制造provenance/交易，不把controlled证据升级为production", "generated_at": "2026-10-15T12:36:25.583076+00:00"}
+[P3 production bridge] blocked: page-only release continues; no production transaction
+
+[STDERR] Traceback (most recent call last):
+  File "D:\股票数据\市场数据\生成盯盘台.py", line 945, in <module>
+    build(sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d'))
+  File "D:\股票数据\市场数据\生成盯盘台.py", line 934, in build
+    raise RuntimeError('release blocked: ' + json.dumps(result.get('errors', result), ensure_ascii=False))
+RuntimeError: release blocked: ["P1 reported fail", "index: model incomplete: []", "cycle: model incomplete: []", "auction: legacy claim absent from source: auction-1c7f18c7c9f9d360", "page index: status=degraded errors=[]", "page cycle: status=degraded errors=[]", "check cycle: fail ['sentinel exit=0, baseline_ok=True, checks=48', 'golden component source missing MACHVOTE', 'check process exit=1']", "check theme: fail ['sentinel exit=1, baseline_ok=False, checks=54', 'check process exit=1']", "check consistency: fail ['C1 cycle.html 残留\"null\\\\s*[\\\\(（]源\": …按钮率0.042（昨日涨停48只、今日跌停回杀2只，前值0.0）；昨日涨停溢价=null（源未产出，不补造）。三窗触发器…', 'check process exit=1']", "source changed during build"]
+
+[FATAL_STOP] 生成盯盘台(发布+存档)
+[PREP] 已存在, 不覆盖: _学习/index_body_20261015.html
+[PREP] 已存在, 不覆盖: _学习/cycle_body_20261015.html
+[PREP] index    len=9328    h2=15 div=0/0 OK
+[PREP] auction  len=18728   h2=6  div=34/34 OK
+[PREP] lhb      len=20553   h2=7  div=18/18 OK
+[PREP] theme    len=15045   h2=6  div=22/22 OK
+[PREP] logic    len=20842   h2=6  div=24/24 OK
+[PREP] limitup  len=23143   h2=6  div=25/25 OK
+[PREP] cycle    len=7453    h2=7  div=19/19 OK
+[PREP] 一句话 = 温度22.8（前值17.9）、涨停36（前36）、炸板7、最高5板；五路C、C、C、B、C；总档C（置信度73）
+[PREP] 注入完成 bodies=['auction', 'cycle', 'index', 'lhb', 'limitup', 'logic', 'theme'] 总字符=115092

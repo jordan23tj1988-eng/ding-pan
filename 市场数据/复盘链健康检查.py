@@ -53,7 +53,24 @@ def source_rows(path: Path, route: str) -> tuple[list[dict], str]:
     if route == "theme":
         return as_rows(d.get("荐票"), ("荐票", "明细", "top5")), "荐票"
     if route == "logic":
-        return as_rows(d.get("荐票", {}).get("标的") if isinstance(d.get("荐票"), dict) else d.get("荐票"), ("荐票", "明细")), "荐票.标的"
+        # 口径同源(20261015修): 与 逻辑荐票结算.py 共用 logic_pool.load_logic_picks ——
+        # 只有 类型=='荐票' 是发出版荐票; 类型=='观察' 是观察名单(不进结算/不进模拟盘)。
+        # 把观察名单当 issued 计算, 会把"正式荐票0只=合法空仓"的日子误判成覆盖率 fail
+        # (10/13: 3只观察 001229/000833/603042 被当已发荐票 → logic fail → 全链 coverage 0.875<0.90)。
+        import sys as _sys
+        if str(ROOT) not in _sys.path:
+            _sys.path.insert(0, str(ROOT))
+        m = re.search(r"(\d{8})", path.stem)
+        if m:
+            try:
+                from logic_pool import load_logic_picks
+                rows, _src = load_logic_picks(m.group(1), str(LEARN))
+                if rows:
+                    return rows, "荐票.标的(类型=荐票, 口径同源logic_pool)"
+            except Exception:
+                pass
+        rows = as_rows(d.get("荐票", {}).get("标的") if isinstance(d.get("荐票"), dict) else d.get("荐票"), ("荐票", "明细"))
+        return [x for x in rows if str(x.get("类型", "")).strip() in ("", "荐票")], "荐票.标的(类型=荐票)"
     if route == "auction":
         return as_rows(d.get("荐票") or d.get("池") or d.get("明细"), ("荐票", "池", "明细")), "荐票/池"
     return [], "unknown"

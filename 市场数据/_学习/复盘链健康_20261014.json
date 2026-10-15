@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "checked_at": "2026-10-15T09:07:10.499005+08:00",
+  "checked_at": "2026-10-15T18:35:59.044873+08:00",
   "target_date": "20261014",
   "settlement_date": "20261013",
-  "status": "fail",
+  "status": "pass",
   "gate": {
     "continuity_pass": true,
-    "coverage_gate": "fail",
+    "coverage_gate": "pass",
     "threshold": 0.9
   },
   "continuity": {
@@ -20,9 +20,9 @@
     "pass": true
   },
   "coverage": {
-    "issued_count": 24,
+    "issued_count": 21,
     "matched_count": 21,
-    "ratio": 0.875,
+    "ratio": 1.0,
     "routes": {
       "auction": {
         "status": "pass",
@@ -64,21 +64,17 @@
         "missing_codes": []
       },
       "logic": {
-        "status": "fail",
+        "status": "empty_issued",
         "issue_day": "20261013",
         "source": "D:\\股票数据\\市场数据\\_学习\\logic判断_20261013.json",
         "source_basis": "logic判断_20261013.json",
-        "issued_count": 3,
+        "issued_count": 0,
         "settlement": "D:\\股票数据\\市场数据\\_学习\\逻辑荐票结算_20261013.json",
         "settled_rows": 0,
         "matched_count": 0,
-        "coverage": 0.0,
+        "coverage": null,
         "duplicate_settlement_rows": 0,
-        "missing_codes": [
-          "000833",
-          "001229",
-          "603042"
-        ]
+        "missing_codes": []
       },
       "limitup": {
         "status": "pass",
@@ -95,9 +91,7 @@
       }
     },
     "missing_source_routes": [],
-    "failed_routes": [
-      "logic"
-    ]
+    "failed_routes": []
   },
   "policy": "缺源=缺口告警；缺少结算不可视为无荐票；不补写历史收益；只对明确发出版逐票计覆盖率"
 }

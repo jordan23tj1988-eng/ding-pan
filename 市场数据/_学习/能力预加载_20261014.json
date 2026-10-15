@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "as_of": "20261014",
+  "decision_cutoff": "20261014",
+  "created_at": "2026-10-14T12:38:57.943787+00:00",
+  "activation_date": "20261001",
+  "source": "能力进化库_自主拓展.json + 能力进化库_认知迭代.json",
+  "source_manifest": [
+    {
+      "path": "_学习\\能力进化库_自主拓展.json",
+      "status": "valid",
+      "sha256": "431e60ee028ffc9f2c6b668ebd593944435cfc4106a1f2a59ffd4469e60812a6"
+    },
+    {
+      "path": "_学习\\能力进化库_认知迭代.json",
+      "status": "valid",
+      "sha256": "158c704f2b459da40bba6493d9d083da03422afbbc34ec28695a525aaafc32cf"
+    }
+  ],
+  "policy": "仅 validation=validated 且 capitalized=true 且有能力规则的记录可进入判断层；其余保持待验证，不得冒充能力",
+  "routes": {
+    "auction": {
+      "eligible_count": 0,
+      "status": "no_eligible_capabilities",
+      "records": []
+    },
+    "lhb": {
+      "eligible_count": 1,
+      "status": "ready",
+      "records": [
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "kind": "自主拓展",
+          "route": "lhb",
+          "title": "龙虎榜质量库·净买占比因子有效（席位判读纳入净买占比）",
+          "capability_rule": "席位判读纳入净买占比维度；该因子在龙虎榜质量库中状态=有效即可用",
+          "boundary": "窗口20260401~20260708，样本≥2000；因子状态被淘汰即失效",
+          "validation": "validated",
+          "validation_evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "source": "_学习/_龙虎榜质量库.json",
+          "last_validated_at": "20261013"
+        }
+      ]
+    },
+    "theme": {
+      "eligible_count": 0,
+      "status": "no_eligible_capabilities",
+      "records": []
+    },
+    "logic": {
+      "eligible_count": 0,
+      "status": "no_eligible_capabilities",
+      "records": []
+    },
+    "limitup": {
+      "eligible_count": 1,
+      "status": "ready",
+      "records": [
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "kind": "自主拓展",
+          "route": "limitup",
+          "title": "涨停质量库·换手率因子有效（选票保留换手率维度）",
+          "capability_rule": "质量分选票时保留换手率维度；该因子在质量库中状态=有效即可用",
+          "boundary": "窗口20250701~20260930，样本≥2000；因子状态被淘汰即失效",
+          "validation": "validated",
+          "validation_evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19029,
+              "passed": true
+            }
+          ],
+          "source": "_学习/_涨停质量库.json",
+          "last_validated_at": "20261013"
+        }
+      ]
+    },
+    "cycle": {
+      "eligible_count": 0,
+      "status": "no_eligible_capabilities",
+      "records": []
+    },
+    "master": {
+      "eligible_count": 0,
+      "status": "no_eligible_capabilities",
+      "records": []
+    }
+  },
+  "eligible_total": 2,
+  "historical_record_count": 3028
+}

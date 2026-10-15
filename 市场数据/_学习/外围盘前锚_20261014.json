@@ -1,0 +1,13 @@
+{
+  "日期": "20261014",
+  "状态": "缺",
+  "原因": "iFinD 登录 THS_iFinDLogin 返回 rc=-2（登录被拒；2026-10-13 起持续，与 20260924 同一现象）。本次已核查进程：SuperCommand.exe 初始不在岗（仅 iFinDHelper.exe），手动拉起后 pid=6148 存活，随后 logout+login 连续重试 2 次仍恒为 rc=-2；8602 无监听（按 2026-08-13 认知 8602 非硬性条件）。三只合约均返回 errorcode=-208 'you have not done login operation'。按设计稿 8.5 不绕道第三方源，故记缺。",
+  "未取到": ["HSI.HK", "USDCNH.FX", "NDX.GI"],
+  "已尝试": [
+    "THS_RealtimeQuotes('HSI.HK,USDCNH.FX,NDX.GI','latest;preClose;open;changeRatio;time') → 未登录",
+    "THS_iFinDLogout() 后重登 2 次 → rc=-2",
+    "拉起 D:\\THSDataInterface_Windows\\SuperCommand.exe 后再登 → rc=-2"
+  ],
+  "口径": "只尝试 iFinD THS_RealtimeQuotes（RQ）；不补用第三方源、不给外围驱动的 gap context；今日外围方向与离岸人民币方向均为 null。",
+  "待办": "账号/授权侧问题，需用户处理（重启客户端并 GUI 登录校验凭据，或确认账号会话是否互斥）。"
+}

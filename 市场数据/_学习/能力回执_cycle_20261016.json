@@ -1,0 +1,27 @@
+{
+ "domain": "cycle",
+ "status": "no_eligible_capabilities",
+ "considered_ids": [],
+ "applied": [],
+ "reason": "能力预加载_20261016.json#routes.cycle 实读为 {\"eligible_count\": 0, \"status\": \"no_eligible_capabilities\", \"records\": []}，本日 cycle 域无任何 eligible 能力（records 为空数组，无可消费 ID）。故 considered_ids=[]、applied=[]；本路主判/七段 body 的全部方法均来自 sentiment-cycle-route 技能静态规则、米氏框架规则表与自建口径（量能台阶插值、三态硬阈值、50日窗口条件统计、k-NN 近邻），未借用其他域能力，也未以任何 ID 冒领能力消费。注：同批 routes 中 lhb(1)/limitup(1) 为 ready，auction/theme/logic/master 与 cycle 同为 no_eligible_capabilities，说明本日候选池只落在两路，非 cycle 单独缺件。",
+ "preload_source": "_学习/能力预加载_20261016.json#routes.cycle（as_of=20261016）",
+ "cross_check": {
+  "routes_status": {
+   "auction": "no_eligible_capabilities",
+   "lhb": "ready",
+   "theme": "no_eligible_capabilities",
+   "logic": "no_eligible_capabilities",
+   "limitup": "ready",
+   "cycle": "no_eligible_capabilities",
+   "master": "no_eligible_capabilities"
+  },
+  "eligible_total": 2,
+  "note": "eligible_total=2 是全局值（lhb 1 + limitup 1），cycle 域自身 eligible_count=0，故本域 considered_ids 为空"
+ },
+ "artifacts_affected": [
+  "_学习/周期主判_20261016.json",
+  "_学习/cycle判断_20261016.json",
+  "_学习/cycle_body_20261016.html"
+ ],
+ "checked_at": "20261016"
+}

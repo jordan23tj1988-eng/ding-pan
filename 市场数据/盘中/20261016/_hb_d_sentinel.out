@@ -1,0 +1,86 @@
+== hb-d 自审 ==
+ OK  C01 JSON 可解析 | got=None want=None
+ OK  C02 date/session | got=('20261016', 'hb-d') want=('20261016', 'hb-d')
+ OK  C03 决策截止=任务书口径 | got=2026-10-16 13:30:55 want=2026-10-16 13:30:55
+ OK  C04 executions.db 本场 started_at ∈ [13:30:00,13:31:00] | got=2026-10-16T13:30:55.628409+08:00 want=2026-10-16 13:30:55
+ OK  C05 场次名称含 hb-d | got=盘中作战心跳 hb-d(13:30 午后延续段) want=hb-d
+ OK  C06 决断窗帧数=240 | got=240 want=240
+ OK  C07 末帧=13:30:49 | got=2026-10-16 13:30:49 want=2026-10-16 13:30:49
+ OK  C08 剔除帧≥2 且均>截止, 且含文件所记帧 | got=['2026-10-16 13:31:49', '2026-10-16 13:32:49', '2026-10-16 13:33:49', '2026-10-16 13:34:50', '2026-10-16 13:35:50', '2026-10-16 13:36:50', '2026-10-16 13:37:50', '2026-10-16 13:38:50', '2026-10-16 13:39:50'] want=⊇文件所记帧(实盘实时追加, 帧数随写盘增长)
+ OK  C09 断更<600s(允许决策) | got=61.0 want=<600
+ OK  C10 池口径 | got=('20261015', 36, False) want=('20261015', 36, False)
+ OK  C10b 午休帧=90 且逐票冻结 | got=(90, 36) want=(90, 36)
+ OK  C10c 午休陈述已写入文件 | got=None want=True
+ OK  C11 焦点价复算:605189 | got=(16.76, -6.11) want=(16.76, -6.11)
+ OK  C11 焦点价复算:600668 | got=(8.79, 10.01) want=(8.79, 10.01)
+ OK  C11 焦点价复算:000530 | got=(7.62, 9.96) want=(7.62, 9.96)
+ OK  C12 600668 封板 | got=10.01 want=≥9.8
+ OK  C13 605189 未触涨停价(19.64)且非炸板 | got=17.97 want=<19.64
+ OK  C14 000530 涨停 | got=9.96 want=≥9.8
+ OK  C15 605189 相对成交价复算 | got=-6.73 want=-6.73
+ OK  C15b 相对成交价已写入文件 | got=-6.73 want=-6.73
+ OK  C16 605189 采样最低复算 | got=(16.28, '10:07:12') want=(16.28, '10:07:12')
+ OK  C17 605189 浮亏复算 | got=-1331.0 want=-1331.0
+ OK  C17b 浮亏已写入文件 | got=-1331.0 want=-1331.0
+ OK  C18 605189 增量窗位移复算 | got=1.33 want=1.33
+ OK  C18b 增量窗位移已写入文件 | got=None want=True
+ OK  C19 605189 增量窗最高=17.01@13:02:44 | got=(17.01, '13:02:44') want=(17.01, '13:02:44')
+ OK  C19b 增量窗最高已写入文件 | got=None want=True
+ OK  C19c 午后未创新低(增量窗最低=起点 16.54) | got=(16.54, '11:01:22') want=(16.54, '11:01:22')
+ OK  C19d 600668 相对成交价/浮盈复算 | got=(7.85, 3904.0) want=(7.85, 3904.0)
+ OK  C19e 600668 恒封帧复算=239 且写入文件 | got=239 want=239
+ OK  C20 master 未回写(仍 20261015 快照/持仓5/含已卖600693·605577) | got=['600693', '605577', '000601', '603968', '000823'] want=5 含600693/605577
+ OK  C20b master 账本 20261016 记录数=0 | got=0 want=0
+ OK  C21 第七账 positions=2 | got=2 want=2
+ OK  C22 次日卖出指令=[] | got=None want=[]
+ OK  C23 B级触发=True | got=True want=True
+ OK  C24 B级对象=605189(持仓) | got=605189 want=605189
+ OK  C25 B级=维持(非新增, 承 hb-b/hb-c) | got=持仓大幅回撤(延续 hb-b 触发、hb-c 维持, 本场复核后继续维持, 非新 want=维持/非新增
+ OK  C26 B级执行凭证=NULL(卖通道缺) | got=NULL — 卖通道不存在(引擎只买不卖 + p want=含NULL
+ OK  C27 no_action=False | got=False want=False
+ OK  C28 fills=[] 且无 sell/buy 记录(零编造) | got=[] want=[]
+ OK  C29 A级=0笔 | got=预案 buys=3 / sells=3 / wa want=含A级 0 笔
+ OK  C30 C级许可=False 且 0笔 | got=(False, '0 笔 C级动作') want=(False, '0笔')
+ OK  C31 watch 核对 9 只 | got=9 want=9
+ OK  C32 watch 集合=预案 watch 集合 | got=['001318', '002134', '002815', '002945', '300111', '301282', '600812', '603230', '605058'] want=['001318', '002134', '002815', '002945', '300111', '301282', '600812', '603230', '605058']
+ OK  C33 预案未改(playbook mtime=2026-10-15 19:59 且 date=20261015) | got=20261015 want=20261015
+ OK  C34 批量跳水主口径全窗=1组 | got=1 want=1
+ OK  C34b 唯一达阈组=09:31:06→09:32:06 | got=[('2026-10-16 09:31:06', '2026-10-16 09:32:06', 60, 3)] want=09:31→09:32
+ OK  C35 增量窗达阈=0组 | got=[] want=0
+ OK  C36 决断前2分钟=0组 | got=[] want=0
+ OK  C37 扫描结论已写入文件(1组/0组/0组) | got=None want=True
+ OK  C38 池截面复算(中位/均值/封板5/跌停3/炸板5) | got=(-2.87, -1.32, 5, 3, 5) want=(-2.87, -1.32, 5, 3, 5)
+ OK  C39 文件内池截面陈述一致 | got=None want=True
+ OK  C40 跌停首现复算 | got={'001225': '2026-10-16 13:20:47', '002696': '2026-10-16 13:24:48', '002134': '2026-10-16 13:26:48'} want=001225 13:20:47 / 002696 13:24:48 / 002134 13:26:48
+ OK  C40b 跌停首现已写入文件 | got=None want=True
+ OK  C41 缺件陈述与磁盘一致:pulse.json | got=False want=缺件
+ OK  C41 缺件陈述与磁盘一致:warboard.json | got=False want=缺件
+ OK  C41 缺件陈述与磁盘一致:执行流水.jsonl | got=False want=缺件
+ OK  C42 报警文件缺件陈述 | got=None want=True
+ OK  C43 交易日校验: 任务书命令不可用+替代源存在 | got=None want=True
+ OK  C44 交易日历 max=20261015(滞后, 已在文件注明) | got=20261015 want=20261015
+ OK  C45 报警条数=11 | got=11 want=11
+ OK  C46 含 sell_channel_absent_blocks_B_level | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C47 含 gate_opportunity_cost_registered | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C48 含 execution_receipt_missing | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C49 含 holdings_no_intraday_observability | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C50 含 afternoon_pool_decay_and_limitdown_cluster | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C51 含 lunch_session_frames_frozen | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C52 含 limit_threshold_band_blind | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C53 含 warboard_pulse_alarm_missing | got=['holdings_no_intraday_observability', 'execution_receipt_missing', 'sell_channel_absent_blocks_B_level', 'warboard_pulse_alarm_missing', 'gate_opportunity_cost_registered', 'pool_composition_hides_holdings_and_lines', 'prompt_command_drift', 'px_exec_caliber_gap', 'lunch_session_frames_frozen', 'limit_threshold_band_blind', 'afternoon_pool_decay_and_limitdown_cluster'] want=含
+ OK  C54 后读数仅引剔除帧且数值复算 | got=[('2026-10-16 13:37:50', {'latest': 16.84, 'pct': -5.66}), ('2026-10-16 13:38:50', {'latest': 16.84, 'pct': -5.66}), ('2026-10-16 13:39:50', {'latest': 16.7, 'pct': -6.44})] want=剔除帧读数(ts 逐条对上原始帧)
+ OK  C55 无网络取数(无 _hb_d_quote 文件) | got=[] want=[]
+ OK  C56 判定区不含晚于截止的读数(零后视镜) | got=None want=True
+ OK  C57 本日1330仅1个(新建) | got=['D:\\股票数据\\市场数据\\盘中\\20261016\\临盘决断_20261016_1330.json'] want=1
+ OK  C58 历史1330未被改(mtime<今日) | got=[('临盘决断_20260817_1330.json', '08-17'), ('临盘决断_20260819_1330.json', '08-19'), ('临盘决断_20260821_1330.json', '08-21'), ('临盘决断_20260825_1330.json', '08-25'), ('临盘决断_20260826_1330.json', '08-26'), ('临盘决断_20260827_1330.json', '08-27'), ('临盘决断_20260828_1330.json', '08-28'), ('临盘决断_20260831_1330.json', '08-31'), ('临盘决断_20260901_1330.json', '09-01'), ('临盘决断_20260904_1330.json', '09-04'), ('临盘决断_20260907_1330.json', '09-07'), ('临盘决断_20260910_1330.json', '09-10'), ('临盘决断_20260911_1330.json', '09-11'), ('临盘决断_20260915_1330.json', '09-15'), ('临盘决断_20260916_1330.json', '09-17'), ('临盘决断_20260917_1330.json', '09-17'), ('临盘决断_20260918_1330.json', '09-18'), ('临盘决断_20260921_1330.json', '09-21'), ('临盘决断_20260922_1330.json', '09-22'), ('临盘决断_20260923_1330.json', '09-23'), ('临盘决断_20260924_1330.json', '09-24'), ('临盘决断_20260929_1330.json', '09-29'), ('临盘决断_20261009_1330.json', '10-09'), ('临盘决断_20261012_1330.json', '10-12'), ('临盘决断_20261013_1330.json', '10-13'), ('临盘决断_20261014_1330.json', '10-14'), ('临盘决断_20261015_1330.json', '10-15'), ('临盘决断_20261016_1330.json', '10-16')] want=<20261016
+ OK  C59 本场文件 mtime=今日 | got={'临盘决断_20261016_0921.json': '2026-10-16 09:32:44', '临盘决断_20261016_0940.json': '2026-10-16 09:50:55', '临盘决断_20261016_1030.json': '2026-10-16 10:40:55', '临盘决断_20261016_1100.json': '2026-10-16 11:09:27', '临盘决断_20261016_1330.json': '2026-10-16 13:40:08'} want=2026-10-16
+ OK  C60 早前场次文件未被覆盖(mtime=原值) | got={'临盘决断_20261016_0921.json': '2026-10-16 09:32:44', '临盘决断_20261016_0940.json': '2026-10-16 09:50:55', '临盘决断_20261016_1030.json': '2026-10-16 10:40:55', '临盘决断_20261016_1100.json': '2026-10-16 11:09:27', '临盘决断_20261016_1330.json': '2026-10-16 13:40:08'} want=原值
+ OK  C61 v1/v2 草稿已归档(可追溯) | got=None want=True
+ OK  C62 染料印染线含605189 | got=['002748', '603172', '605189'] want=含605189
+ OK  C63 同线全绿 | got=[('002748', -5.2), ('603172', -2.87), ('605189', -6.11)] want=全负
+ OK  C64 池外持仓不在池 | got=[] want=[]
+ OK  C65 池外持仓标 NULL ≥6 处 | got=8 want=≥6
+ OK  C66 终稿无 %% 残留 | got=0 want=0
+ OK  C67 权限分级未越权(0笔A/C, 无 weight 记录) | got=None want=True
+  合计 OK=83 FAIL=0
+哨兵: PASS

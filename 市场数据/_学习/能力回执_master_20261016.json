@@ -1,0 +1,31 @@
+{
+ "domain": "master",
+ "status": "no_eligible_capabilities",
+ "considered_ids": [],
+ "applied": [],
+ "reason": "能力预加载_20261016.json#routes.master：eligible_count=0、status=no_eligible_capabilities、records=[] → 本域当日无已登记可复用能力，故无 adopted/rejected 条目可写；空 considered_ids 是数据事实而非遗漏。",
+ "context": {
+  "date": "20261016",
+  "eligible_total": 2,
+  "eligible_routes": {
+   "lhb": 1,
+   "limitup": 1
+  },
+  "source_locator": "_学习/能力预加载_20261016.json#/routes/master",
+  "upstream_receipts": [
+   "auction",
+   "lhb",
+   "theme",
+   "logic",
+   "limitup",
+   "cycle"
+  ]
+ },
+ "cross_check": {
+  "applied_count_total": 2,
+  "consistency": "lhb 1 + limitup 1 = 2 = 能力预加载.eligible_total(2)；_学习/能力消费审计_20261016.json 缺件，无法机械对账 → 发布门禁『能力消费』记 FAIL",
+  "new_capabilities_today": 0,
+  "capability_snapshot": "_学习/能力进化快照_20261016.json#/自主拓展/eligible_capabilities=2（与昨日同值，本日无新晋升）"
+ },
+ "notes": "master 域本日对两路能力的使用态度已在 总审_20261016.json#/能力承接/逐路 登记：lhb 净买占比能力『采用』但其库窗口停更98天，只用于排除最差桶；limitup 换手率能力『采用』但仅作<3%否决器，不作升权筛选，并因000530以n=48格入选而压缩其额度至2%。"
+}

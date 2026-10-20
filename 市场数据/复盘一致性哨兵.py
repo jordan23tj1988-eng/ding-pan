@@ -4,7 +4,7 @@
 检查项:
   C1 页面残留缺口叙述词(网络不可达/未刷新/沿用0714式旧标记/null溢价)
   C2 PAPERTRADE头部累计% == _模拟盘/{route}/状态.json 累计pct(数字必须出自引擎)
-  C3 看板_{d}.html mtime >= bars_cache最新mtime(旧价看板被inject=07-15事故根因)
+  C3 看板_{d}.html 新鲜度三档(2026-10-20改): 看板mtime日<目标日=旧页FAIL / 出页当日mtime<bars_cache=FAIL / 历史日缓存已前移=WARN(非当日不可复现)
   C4 bars_cache当日覆盖率(涨停池+荐票股+持仓股必须100%到{d})
   C5 发出版结算字段非全None(结算跑过且有效)
   C6 HTML结构完好+时间线折叠  C7 脚本产出卡陈旧嵌入
@@ -26,6 +26,13 @@ for g in glob.glob('/sessions/*/mnt/股票数据/市场数据'):
 if R is None and os.path.isdir(r'D:\股票数据\市场数据'): R=r'D:\股票数据\市场数据'
 L=os.path.join(R,'_学习');SITE=os.path.join(R,'复盘','盯盘台')
 d=sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime('%Y%m%d')
+# ★2026-10-20 历史日边界(用户批准A): 活站只代表当前发版日; 复核历史 d 一律读该日 release 的冻结 site。
+# 否则拿"今天的页面"比"历史日的数据源", C2/C12 必然全错——10/14~10/20 收口链连续4次FAIL的根因之一。
+if d != datetime.date.today().strftime('%Y%m%d'):
+    for _rr in sorted(glob.glob(os.path.join(R, 'releases', d + '-*')), reverse=True):
+        if os.path.isfile(os.path.join(_rr, 'site', 'index.html')):
+            SITE = os.path.join(_rr, 'site')
+            break
 dprev_dirs=sorted([x for x in os.listdir(R) if x.isdigit() and len(x)==8 and x<d])
 dprev=dprev_dirs[-1] if dprev_dirs else None
 # ★2026-08-16 周末口径: C4/C5 期望日期用最后交易日(bars最多到最近交易日), 非"今天"(周末/盘前 d 无交易数据)
@@ -113,10 +120,24 @@ except Exception:
     cache_mtime=None
     WARN.append('C3 bars_cache mtime 读取失败，历史版本证据检查已跳过')
 if cache_mtime:
+    _today=datetime.date.today().strftime('%Y%m%d')
     for route in PAGE:
         kb=os.path.join(L,'_模拟盘',route,f'看板_{d}.html')
         if os.path.isfile(kb) and os.path.getmtime(kb) < cache_mtime - 60:
-            FAIL.append(f'C3 {route} 历史版本证据不足：看板_{d}.html 的mtime早于缓存，但mtime不能证明目标日价格版本；需目标日来源绑定，禁止用最新状态重跑历史看板')
+            # ★2026-10-20 C3 口径修正(历史日边界, 用户批准A+B方案)
+            # 原规则拿"活bars_cache最新mtime"当基准, 而缓存每日盘后前移 → 任何非当日复核必然FAIL
+            # (10/14、10/16、10/18、10/20 收口链连续4次因历史日C3/C12失败, 见交接单_20261018③)。
+            # 修正后三档:
+            #   ①看板文件日期早于目标日d = 真旧页(旧价重跑/inject, 07-15事故形态) → FAIL
+            #   ②d==当日 = 出页当日强校验, 页面必须晚于当日取数 → FAIL
+            #   ③历史日且看板不早于d = 缓存前移所致, 非当日不可复现 → WARN(按C14先例, 不冒充通过)
+            _kbdate=datetime.date.fromtimestamp(os.path.getmtime(kb)).strftime('%Y%m%d')
+            if _kbdate < d:
+                FAIL.append(f'C3 {route} 看板_{d}.html mtime日={_kbdate} 早于目标日——疑似旧价看板被重跑/inject, 禁止出页')
+            elif d == _today:
+                FAIL.append(f'C3 {route} 看板_{d}.html 早于bars_cache最新mtime——出页当日页面须晚于当日取数, 禁止出页')
+            else:
+                WARN.append(f'C3(历史日边界) {route} 看板_{d}.html mtime早于bars_cache(缓存已前移)——非当日不可复现, 降WARN; 目标日价格证据见C4(关键股bars到{d})')
 
 # ---------- C4 关键股当日bar覆盖 ----------
 need=set()

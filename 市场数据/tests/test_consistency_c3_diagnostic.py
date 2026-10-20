@@ -1,5 +1,10 @@
-"""TEST ONLY timestamp fixture: C3 stays blocked, without unsafe replay advice."""
+"""TEST ONLY timestamp fixture: C3 stays blocked, without unsafe replay advice.
+
+2026-10-20 随 C3 历史日边界修正同步: 看板mtime日 < 目标日 ⇒ FAIL(旧页), 文案改为"早于目标日";
+"mtime 不能证明目标日价格版本 / 不得用最新状态重放历史看板"的原意不变。
+"""
 from pathlib import Path
+import datetime
 import os
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -9,8 +14,9 @@ def test_mtime_does_not_prescribe_latest_state_replay(tmp_path):
     kb=l/'_模拟盘/auction/看板_20260902.html';kb.parent.mkdir(parents=True);kb.write_text('TEST_ONLY',encoding='utf-8');os.utime(kb,(1999800,1999800))
     source=(ROOT/'复盘一致性哨兵.py').read_text(encoding='utf-8')
     a=source.index('# ---------- C3');b=source.index('# ---------- C4',a)
-    scope={'L':str(l),'PAGE':{'auction':'auction'},'d':'20260902','os':os,'FAIL':[]}
+    scope={'L':str(l),'PAGE':{'auction':'auction'},'d':'20260902','os':os,'datetime':datetime,'FAIL':[],'WARN':[]}
     exec(compile(source[a:b],str(ROOT/'复盘一致性哨兵.py'),'exec'),scope)
-    assert len(scope['FAIL'])==1
-    assert '证据不足' in scope['FAIL'][0]
+    assert len(scope['FAIL'])==1, scope
+    assert '早于目标日' in scope['FAIL'][0], scope['FAIL']
     assert 'dashboard 20260902' not in scope['FAIL'][0]
+    assert scope['WARN']==[], scope['WARN']

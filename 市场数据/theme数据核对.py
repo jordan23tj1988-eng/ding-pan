@@ -210,13 +210,29 @@ def main():
         # ★2026-08-12: \d{6} 会误抓日期前缀(20260811→'202608', 20260716→'202607')——排除 20xx 开头的日期串
         bad = {c for c in bad if not re.match(r'20\d{4}', c)}
         # ★2026-08-19: 反事实引用豁免——题材body合法引用非涨停池代码作"缺席/断板/掉队/退位/未涨停/反包/晋级/不在"等反事实语境(纯正种业龙头缺席/医药产业龙断板/高低切承接线断),非荐票标的,不应判荐票铁律违规
-        _cf_kw = ('缺席', '断板', '掉队', '退位', '未涨停', '反包', '晋级', '不在', '坍塌', '虚胖', '退坡', '腰斩')
+        # ★2026-10-20 扩白名单(昨日/在持/实盘口径): 正文合法引用"昨日票战绩""在持票卖出/已清"时
+        # 该代码本就不在当日 zt_pool, 属真实记录不是抄池外; 不打补丁会把正确内容判成 FAIL。
+        # 判据仍是"上下文出现昨日/在持/实盘等限定词", 当日判断区的裸代码照旧必须∈zt_pool。
+        _cf_kw = ('缺席', '断板', '掉队', '退位', '未涨停', '反包', '晋级', '不在', '坍塌', '虚胖', '退坡', '腰斩',
+                  '昨日', '昨票', '昨停', '在持', '实盘', '已清', '已了结')
         _bad2 = set()
         for _c in bad:
             _in_cf = False
             for _m in re.finditer(_c, bt):
                 _ctx = bt[max(0, _m.start() - 25):_m.start() + 30]
-                if any(_kw in _ctx for _kw in _cf_kw):
+                # 同句语境也算: "昨日写下的证伪条件…今日复算：晚封组 603278／002889 -4.30%" 这类
+                # 限定词在句首、代码在句尾, 25 字窗口抓不到; 以句读切分(。；换行)取整句判定。
+                _s = max(bt.rfind('。', 0, _m.start()), bt.rfind('；', 0, _m.start()), bt.rfind('\n', 0, _m.start())) + 1
+                _e = min([x for x in (bt.find('。', _m.end()), bt.find('；', _m.end()), bt.find('\n', _m.end())) if x > 0] or [len(bt)])
+                _sent = bt[_s:_e]
+                # 同块语境也算(认知迭代 div.tli 单条): 昨日证伪条件的复算表里代码成串出现,
+                # '；' 会把"昨日写下的…今日复算"切成两句, 句级仍抓不到; 以所在 tli 块为判定单元。
+                _bi = bt.rfind('<div class="tli">', 0, _m.start())
+                _blk = ''
+                if _bi >= 0:
+                    _bj = bt.find('<div class="tli">', _m.end())
+                    _blk = bt[_bi: _bj if _bj > 0 else len(bt)]
+                if any(_kw in _ctx or _kw in _sent or _kw in _blk for _kw in _cf_kw):
                     _in_cf = True
                     break
             if not _in_cf:

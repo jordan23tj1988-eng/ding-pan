@@ -38,6 +38,42 @@ def load_lib():
     if not os.path.exists(p): return None, '_席位分档.json 不存在'
     return json.load(open(p, encoding='utf-8')), None
 
+def load_snapshot(d):
+    """目标日分档库快照: _席位分档快照.jsonl 每日一行(日/窗口/笔数/档分布)。
+    分档库口径=d日重算、窗口止d-1、每晚重算净化 → 活库隔日必然前移, 历史页只能对目标日快照核。"""
+    p = os.path.join(L, '_席位分档快照.jsonl')
+    if not os.path.exists(p): return None
+    hit = None
+    bad = 0
+    try:
+        for line in open(p, encoding='utf-8'):
+            line = line.strip()
+            if not line: continue
+            try: r = json.loads(line)
+            except ValueError:
+                bad += 1
+                continue
+            if str(r.get('日')) == d: hit = r
+    except OSError as exc:
+        sys.stderr.write(f'[lhb核对] 分档快照不可读 {p}: {exc}\n')
+        return None
+    if bad:
+        sys.stderr.write(f'[lhb核对] 分档快照坏行 {bad} 条已跳过(不影响目标日选取): {p}\n')
+    return hit
+
+def pick_lib_baseline(lib, snap, d, today=None):
+    """分档库基准选择(2026-10-20 历史日边界): 活库每晚重算前移(窗口止d-1/掉档净化),
+    拿活库比历史页 = 页面正确也必FAIL。基准序:
+      活库更新==d 或 d>=今天 → 活库(当日强校验) / 活库已前移且有目标日快照 → 目标日快照 / 否则活库(仍严格)。
+    返回 (baseline, 基准说明)。"""
+    today = today or datetime.date.today().strftime('%Y%m%d')
+    _upd = str((lib or {}).get('更新') or '')
+    if lib and (_upd == d or d >= today):
+        return lib, '活库'
+    if snap and str(snap.get('窗口') or ''):
+        return {'窗口': snap.get('窗口'), '笔数': snap.get('笔数'), '档分布': snap.get('档分布') or {}}, '目标日快照' + d
+    return lib, '活库(无目标日快照,降级严格)'
+
 def load_temp():
     p = os.path.join(L, '_资金温度.json')
     if not os.path.exists(p): return None, '_资金温度.json 不存在'
@@ -150,7 +186,20 @@ def main():
     if err:
         chk(issues, False, 'Top5荐票卡', err)
     else:
-        chk(issues, card.strip() in h, 'Top5卡在页面', f'卡{len(card)}字符 页面含=OK')
+        _contained = card.strip() in h
+        if _contained:
+            chk(issues, True, 'Top5卡在页面', f'卡{len(card)}字符 页面含=OK')
+        else:
+            # ★2026-10-20 历史日边界: 席位荐票卡在 T+1 被回填"执行结果"列(开→收/赚亏), 活卡≠发版卡。
+            # 判据=文件mtime证据: 卡mtime晚于页面mtime ⇒ 卡在出页后被改写 → WARN; 否则 ⇒ 真漏嵌 → FAIL。
+            _cardp = os.path.join(L, f'席位荐票卡_{d}.html')
+            _pagep = os.environ.get('LHB_PAGE_PATH') or os.path.join(os.environ.get('LHB_SITE_ROOT', SITE), 'lhb.html')
+            _cm = os.path.getmtime(_cardp) if os.path.exists(_cardp) else 0
+            _pm = os.path.getmtime(_pagep) if os.path.exists(_pagep) else 0
+            if d < datetime.date.today().strftime('%Y%m%d') and _cm > _pm + 60:
+                chk(issues, 'warn', 'Top5卡在页面(历史日边界)', f'卡{len(card)}字符 页不含; 卡mtime晚于页{int((_cm - _pm) // 60)}分=次日回填执行结果, 活卡≠发版卡')
+            else:
+                chk(issues, False, 'Top5卡在页面', f'卡{len(card)}字符 页面不含——卡片漏嵌, 禁止出页')
         lhb_rows, lerr = load_lhb(d)
         if lerr:
             chk(issues, False, 'Top5回源', lerr)
@@ -199,32 +248,43 @@ def main():
                         if pv and ev and pv.split('/')[0] != ev:
                             chk(issues, False, f'FUNDTEMP行{i+1}第{j+1}列', f'页面{pv} vs 源{ev}')
 
-    # ===== 4. 分档库窗口+档数(页面 vs _席位分档.json) =====
+    # ===== 4. 分档库窗口+档数(页面 vs 目标日基准) =====
+    base = None
     lib, lerr = load_lib()
     if lerr:
         chk(issues, False, '分档库', lerr)
     else:
+        # ★2026-10-20 基准选择修正(历史日边界, 用户批准A+B): 活库每晚重算前移(窗口止d-1/掉档净化),
+        # 拿活库比历史页 = 页面正确也必FAIL(10/14~10/20 收口链连续4次, 见交接单_20261018③)。
+        # 基准序: 活库更新==d 或 d>=今天 → 活库(当日强校验) / 活库已前移且有目标日快照 → 目标日快照 / 否则活库(仍FAIL)
+        _today = datetime.date.today().strftime('%Y%m%d')
+        snap = load_snapshot(d)
+        base, _bnote = pick_lib_baseline(lib, snap, d, _today)
         m2 = re.search(r'窗口(\d+)~(\d+) (\d+)笔', h)
         if not m2:
             chk(issues, False, '分档库窗口', '页面无窗口标注')
         else:
-            w = lib.get('窗口', '')
-            w2 = (w or '').replace('~', '')
-            chk(issues, f'{m2.group(1)}~{m2.group(2)}' == w, '分档库窗口', f'页面{m2.group(1)}~{m2.group(2)} vs 源{w}')
-            chk(issues, int(m2.group(3)) == lib.get('笔数'), '分档库笔数', f'页面{m2.group(3)} vs 源{lib.get("笔数")}')
-        from collections import Counter
-        c = Counter(v['档'] for v in lib['席位'].values())
+            w = base.get('窗口', '')
+            chk(issues, f'{m2.group(1)}~{m2.group(2)}' == w, '分档库窗口', f'页面{m2.group(1)}~{m2.group(2)} vs 源{w}[基准={_bnote}]')
+            chk(issues, str(m2.group(3)) == str(base.get('笔数')), '分档库笔数', f'页面{m2.group(3)} vs 源{base.get("笔数")}[基准={_bnote}]')
+        if snap and base is not lib:
+            from collections import Counter as _Counter
+            c = _Counter(base.get('档分布') or {})
+        else:
+            from collections import Counter
+            c = Counter(v['档'] for v in lib['席位'].values())
         m3 = re.search(r'<span class="chip">S(\d+)/A(\d+)/B(\d+)/C(\d+)/预备(\d+)</span>', h)
         if not m3:
             chk(issues, False, '分档库档数', '页面无档数标注')
         else:
             got = {'S': int(m3.group(1)), 'A': int(m3.group(2)), 'B': int(m3.group(3)), 'C': int(m3.group(4)), 'P': int(m3.group(5))}
             for k in ('S', 'A', 'B', 'C', 'P'):
-                chk(issues, got[k] == c.get(k, 0), f'分档库档数{k}', f'页面{got[k]} vs 源{c.get(k, 0)}')
+                chk(issues, got[k] == c.get(k, 0), f'分档库档数{k}', f'页面{got[k]} vs 源{c.get(k, 0)}[基准={_bnote}]')
 
     # ===== 5. 分档表新鲜度(窗口末日 vs d) =====
-    if lib and lib.get('窗口'):
-        we = lib['窗口'].split('~')[-1]
+    _libw = ((base or {}).get('窗口') if isinstance(base, dict) else None) or (lib.get('窗口') if lib else None)
+    if _libw:
+        we = _libw.split('~')[-1]
         _cut = (datetime.datetime.strptime(d, '%Y%m%d') - datetime.timedelta(days=5)).strftime('%Y%m%d')
         chk(issues, we >= _cut, '分档表新鲜度', f'窗口末日{we} vs 核对日{d}(容忍{d}-5日)')
 
@@ -239,13 +299,14 @@ def main():
         if kw in htxt:
             chk(issues, False, f'负面验证·{kw}', '手写文本区出现禁词')
 
-    fails = sum(1 for ok, _, _ in issues if not ok)
+    fails = sum(1 for ok, _, _ in issues if ok is False)
     for ok, lab, det in issues:
-        print(('  ✓ ' if ok else '  ✗ ') + lab + (f'  [{det}]' if det else ''))
+        print(('  ✓ ' if ok is True else ('  ! ' if ok == 'warn' else '  ✗ ')) + lab + (f'  [{det}]' if det else ''))
     if fails:
         print(f'FAIL {fails} 项 — 页面数字与数据源不一致, 禁止出页')
         return 1
-    print(f'PASS 全部一致 ({len(issues)}项)')
+    _nwarn = sum(1 for ok, _, _ in issues if ok == 'warn')
+    print(f'PASS 全部一致 ({len(issues)}项' + (f', {_nwarn}项历史日边界WARN' if _nwarn else '') + ')')
     return 0
 
 if __name__ == '__main__':

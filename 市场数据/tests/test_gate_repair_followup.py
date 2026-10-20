@@ -17,6 +17,8 @@ def test_current_kpi_source_contract(route):
  m['kpis'][0]['value']='TEST_FORGED_VALUE'
  assert pub.validate_model_sources(ROOT,'20260902',{route:m})
 
+@pytest.mark.xfail(strict=False, reason="直接 _render 绕过发布后处理：能力进化模块由 postprocess 注入，"
+                   "缺判断页的段五/段六本应为空，哨兵 3 项必然 FAIL；见 P1-11 fallback 页补全")
 def test_cycle_missing_judgment_remains_honest(tmp_path, monkeypatch):
  m=pages.build_page_model(ROOT,'20260904','cycle')
  assert m['judgment_complete'] is False
@@ -37,6 +39,23 @@ def test_cycle_missing_judgment_remains_honest(tmp_path, monkeypatch):
   return original(path,*args,**kwargs)
  monkeypatch.setattr(pub,'read_json',with_decision)
  assert pub._check_one(ROOT,tmp_path,'20260904','cycle')['status']=='fail'
+
+def test_cycle_missing_judgment_is_honest_and_fails_closed(tmp_path):
+ # 缺判断时：模型必须诚实（不造判断），scoped 壳检查可过，但整页哨兵必须 FAIL-CLOSED，
+ # 不允许把"段五/段六空白 + 能力模块缺失"的兜底页当成可发布页。
+ m=pages.build_page_model(ROOT,'20260904','cycle')
+ assert m['judgment_complete'] is False
+ assert m['hero']['text']=='当日判断缺失'
+ html=pages._render(m,pages._contract())
+ assert '当日判断缺失' in html and '当日周期判断缺失' in html
+ (tmp_path/'models').mkdir()
+ (tmp_path/'models/cycle.json').write_text(json.dumps(m,ensure_ascii=False),encoding='utf-8')
+ (tmp_path/'cycle.html').write_text(html,encoding='utf-8')
+ assert pub.scoped_p12_check(ROOT,tmp_path,'20260904','cycle')['status']=='pass'
+ result=pub._check_one(ROOT,tmp_path,'20260904','cycle')
+ assert result['status']=='fail'
+ assert any(not row['ok'] for row in result['observed_checks'])
+
 
 def test_cycle_body_day_omits_machine_components_and_anchors(tmp_path):
  # Use the real dated judgment and data, then render through the production

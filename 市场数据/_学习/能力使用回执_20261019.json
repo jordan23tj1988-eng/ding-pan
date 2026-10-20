@@ -1,0 +1,76 @@
+{
+ "schema_version": 1,
+ "as_of": "20261019",
+ "preload": {
+  "path": "_学习/能力预加载_20261019.json",
+  "sha256": "b0e8d784728fd016ca319154d1fd1966063bea9053f3079407d83d3dac90ac1d"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本日该域无可复用能力"
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "席位路以『净买占比分桶』作为观察票唯一升格依据之一：002343 慈文传媒 净买占比10.27%落10-20%最优桶(n=454/50.0%/+0.26%) 才给观察；反之按净买绝对值排序会误抬高面广额小的票(当日80行净买+11.33亿但中位仅3953万)。",
+     "source_locator": "_学习/lhb判断_20261019.json#判断.证据 + _学习/交易计划_lhb_20261019.json"
+    }
+   ],
+   "rejected": [],
+   "note": "逐条回应本路全部可复用能力"
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本日该域无可复用能力"
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本日该域无可复用能力"
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "质量路选票保留换手率维度：301591 肯特股份(首板 换手34.21%)与002889 东方嘉盛(3板 换手20.48%)被列为可跟踪观察，而换手过低的003029(4.11%)仅作情绪标尺不作执行标的；最终因全池执1胜率max 45.6%仍空仓。",
+     "source_locator": "_学习/limitup判断_20261019.json#判断.证据 + _学习/涨停质量荐票_20261019.json"
+    }
+   ],
+   "rejected": [],
+   "note": "逐条回应本路全部可复用能力"
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本日该域无可复用能力"
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本日该域无可复用能力"
+  }
+ },
+ "note": "七域回执由宿主按五路子agent判断产物与能力预加载逐条对应生成；无能力的域显式写 no_eligible_capabilities"
+}

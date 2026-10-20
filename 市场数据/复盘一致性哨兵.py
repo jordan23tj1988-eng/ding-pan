@@ -111,6 +111,7 @@ try:
     cache_mtime=max(os.path.getmtime(os.path.join(bc,x)) for x in os.listdir(bc)[:400] if x.endswith('.csv'))
 except Exception:
     cache_mtime=None
+    WARN.append('C3 bars_cache mtime 读取失败，历史版本证据检查已跳过')
 if cache_mtime:
     for route in PAGE:
         kb=os.path.join(L,'_模拟盘',route,f'看板_{d}.html')
@@ -125,17 +126,21 @@ if os.path.isfile(zp):
     for row in _csv.DictReader(open(zp,encoding='utf-8-sig')):
         need.add(str(row.get('代码','')).zfill(6))
 for f in glob.glob(os.path.join(L,f'*荐票_{d}.json'))+[os.path.join(L,f'竞价池发出_{d}.json')]:
+    if not os.path.isfile(f):
+        continue
     try:
         j=json.load(open(f,encoding='utf-8'))
         for it in (j.get('荐票') or j.get('池') or []):
             if isinstance(it,dict) and it.get('代码'): need.add(str(it['代码']).zfill(6))
-    except Exception: pass
+    except Exception as exc:
+        WARN.append(f'C4 荐票文件读取失败 {os.path.basename(f)}: {exc}')
 for route in PAGE:
     sp=os.path.join(L,'_模拟盘',route,'state.json')
     if os.path.isfile(sp):
         try:
             for pos in json.load(open(sp,encoding='utf-8')).get('positions',[]): need.add(pos['code'])
-        except Exception: pass
+        except Exception as exc:
+            WARN.append(f'C4 模拟盘 {route} state 读取失败: {exc}')
 _e=_EXPECT_D; dd=f'{_e[:4]}-{_e[4:6]}-{_e[6:]}';miss=[]
 for c in sorted(need):
     f=os.path.join(bc,c+'.csv')
@@ -149,7 +154,8 @@ for c in sorted(need):
                 rows=list(_csv.DictReader(fh))
             matches=[row for row in rows if str(row.get('date','')) in (dd,_e)]
             ok=len(matches)==1
-        except Exception: pass
+        except Exception as exc:
+            WARN.append(f'C4 bars读取失败 {c}: {exc}')
     if not ok: miss.append(c)
 if miss:
     lvl=FAIL if len(miss)>max(3,len(need)*0.05) else WARN

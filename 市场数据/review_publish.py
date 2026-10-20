@@ -57,6 +57,8 @@ def anchor_errors(route, body):
 
 REQUIRED_CHECKS = ("cycle", "auction", "lhb", "theme", "limitup", "logic", "consistency", "browser")
 SAFE_SENTINELS = ("cycle", "auction", "lhb", "theme", "limitup")
+# 这些检查必须是真子进程，必须带回 exit_code；logic/browser 为进程内视图检查，无子进程返回码。
+SUBPROCESS_CHECKS = ("cycle", "auction", "lhb", "theme", "limitup", "consistency")
 _IMPORT_LOCK = threading.RLock()
 
 
@@ -82,6 +84,31 @@ def digest(path):
 def _optional_digest(path):
     path = Path(path)
     return digest(path) if path.is_file() else None
+
+
+ASOF_SOURCES = ("_市场温度表.json", "_情绪先行指标.json")
+
+
+def source_digest(root, source, d=None):
+    """统一证据/组件哈希口径：两张日期表按 as-of 前缀，其余按整文件。"""
+    path = contained(root, source)
+    if d and path.name in ASOF_SOURCES:
+        import review_pages
+        return hashlib.sha256(review_pages._asof_json_text(path, d).encode("utf-8")).hexdigest()
+    return digest(path)
+
+
+def source_digest_matches(root, source, d, expected):
+    """兼容旧快照：整文件哈希与 as-of 前缀哈希都认，新记录仍写前缀哈希。"""
+    if not expected:
+        return False
+    path = contained(root, source)
+    if digest(path) == expected:
+        return True
+    if d and path.name in ASOF_SOURCES:
+        import review_pages
+        return hashlib.sha256(review_pages._asof_json_text(path, d).encode("utf-8")).hexdigest() == expected
+    return False
 
 
 def theme_freeze_record(root):
@@ -726,7 +753,7 @@ def scoped_p12_check(root,stage,d,route,*,raw=None):
                 for source in comp.get('sources', []):
                     source_path = source.get('path')
                     try:
-                        if digest(contained(root, source_path)) != source.get('sha256'):
+                        if not source_digest_matches(root, source_path, d, source.get('sha256')):
                             errors.append('golden source hash ' + str(key))
                     except Exception as exc:
                         errors.append('golden source unavailable ' + str(key) + ': ' + str(exc))
@@ -755,8 +782,7 @@ def scoped_p12_check(root,stage,d,route,*,raw=None):
             node=dom.ids.get(sec['id'])
             if node is None or node['tag']!='section':errors.append('missing section '+sec['id'])
         dimensions.append('fixed complete sections, four KPI slots, unique IDs')
-        required={'cycle':{'VOLSTEP':'volume','LEADIND':'leading','VOTEBOARD':'stages','LADDER':'ladder'},
-                  'auction':{'POOLLEDGER':'settlement'},'lhb':{'SEATLIB':'tiers'}}[route]
+        required={'auction':{'POOLLEDGER':'settlement'},'lhb':{'SEATLIB':'tiers'}}.get(route,{})
         components={c['id']:c for c in model.get('components',[])}
         cycle_body = ''
         if route == 'cycle':
@@ -774,15 +800,24 @@ def scoped_p12_check(root,stage,d,route,*,raw=None):
                     return ''
                 k = cycle_body.find(b, i + 1)
                 return cycle_body[i:k] if k > i else cycle_body[i:]
+            def _has_block(seg, *classes):
+                if not seg:
+                    return False
+                if re.search(r'<svg|<table|class="(?:%s)"' % '|'.join(classes), seg):
+                    return True
+                return bool(re.search(r'class="card"', seg) and len(re.sub(r'<[^>]+>', '', seg)) >= 40)
+
             need = []
-            if 'class="steps"' not in _cseg('一 量能台阶', '二 先行指标'):
+            if not _has_block(_cseg('一 量能台阶', '二 先行指标'), 'steps'):
                 need.append(('VOLSTEP', 'volume'))
-            if '<svg' not in _cseg('二 先行指标', '三 情绪'):
+            if not _has_block(_cseg('二 先行指标', '三 情绪'), 'lead'):
                 need.append(('LEADIND', 'leading'))
-            if '<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板'):
+            if ('<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板')
+                    and not _has_block(_cseg('三 情绪', '四 连板'), 'stages')):
                 need.append(('MACHVOTE', 'stages'))
-            if 'class="cols"' not in _cseg('四 连板', '五 攻防'):
+            if not _has_block(_cseg('四 连板', '五 攻防'), 'cols', 'ladbar'):
                 need.append(('LADDER', 'ladder'))
+            required = dict(need)
             for key, section in need:
                 comp = components.get(key)
                 node = dom.ids.get('component-' + key)
@@ -801,14 +836,16 @@ def scoped_p12_check(root,stage,d,route,*,raw=None):
                 if re.search(r'<details[^>]*class="chain"[^>]*>\s*<summary>\s*<b>机器数据源', raw):
                     errors.append('body-day must omit machine fold')
             dimensions.append('cycle body-day display completeness: 台阶块/先行指标图卡/投票块/梯队条 各段在位(body自带或机器卡)')
-            required = {k: s for k, s in (('VOLSTEP', 'volume'), ('LEADIND', 'leading'), ('MACHVOTE', 'stages'), ('LADDER', 'ladder')) if k in components}
+        else:
+            if route == 'cycle':
+                required = {'VOLSTEP': 'volume', 'LEADIND': 'leading', 'MACHVOTE': 'stages', 'LADDER': 'ladder'}
         for key,section in required.items():
             comp=components.get(key);node=dom.ids.get('component-'+key)
             if not comp or comp.get('status')!='ok' or not comp.get('sources') or node is None:errors.append('missing component '+key);continue
             if comp.get('section')!=section or not any(n['tag']=='section' and n['attrs'].get('id')==section for n in node['ancestors']):errors.append('wrong component section '+key)
             if any(n['tag']=='details' for n in node['ancestors']):errors.append('extra machine fold '+key)
             for source in comp.get('sources',[]):
-                if digest(contained(root,source['path']))!=source['sha256']:errors.append('source hash '+key)
+                if not source_digest_matches(root,source['path'],d,source['sha256']):errors.append('source hash '+key)
             rendered=canonical_text(expanded_dom_text(node,dom))
             if key=='SEATLIB':
                 row=seat_snapshot(root,d)
@@ -832,7 +869,7 @@ def scoped_p12_check(root,stage,d,route,*,raw=None):
                 if actual!=source:
                     prefix=source[:-len(actual)] if actual and source.endswith(actual) else None
                     if key!='POOLLEDGER' or prefix is None or prefix not in canonical_text(raw):errors.append('producer content mismatch '+key)
-                anchors={'VOLSTEP':['VOLSTEP'],'LEADIND':['LEADIND'],'VOTEBOARD':['MACHVOTE','VOTEBOARD'],'LADDER':['LADDER'],'POOLLEDGER':['POOLLEDGER','MACHPOOL']}[key]
+                anchors={'VOLSTEP':['VOLSTEP'],'LEADIND':['LEADIND'],'MACHVOTE':['MACHVOTE','VOTEBOARD'],'VOTEBOARD':['MACHVOTE','VOTEBOARD'],'LADDER':['LADDER'],'POOLLEDGER':['POOLLEDGER','MACHPOOL']}[key]
                 # Check anchor placement in the exact named section as well as totals.
                 start=raw.find('<section id="'+section+'">');end=raw.find('</section>',start)
                 part=raw[start:end]
@@ -972,6 +1009,8 @@ def run_checks(frozen, stage, d):
                                 "--root", str(frozen), "--stage", str(stage), "--route", route],
                                cwd=frozen, env=env, capture_output=True, text=True, encoding="utf-8", timeout=180)
             row = json.loads(r.stdout)
+            row["sentinel_exit_code"] = row.pop("exit_code", None)
+            row["exit_code"] = r.returncode      # 检查进程自身的返回码，防止"打印了 pass 却崩了"
             if r.returncode != 0:
                 row["status"] = "fail"
                 row.setdefault("errors", []).append(f"check process exit={r.returncode}")
@@ -997,8 +1036,62 @@ def check_errors(checks):
         seen.add(name)
         if check.get("status") != "pass" or check.get("errors") != []:
             errors.append(f"check {name}: {check.get('status')} {check.get('errors')}")
+        # 2026-10-18 硬化：子进程检查缺 exit_code 不得视为通过；非零返回码必须失败。
+        # test_injection 是测试夹具的显式标记（模拟 run_checks），不参与该规则。
+        if name in SUBPROCESS_CHECKS and "exit_code" not in check and not check.get("test_injection"):
+            errors.append(f"check {name}: missing exit_code (cannot prove subprocess ran)")
+        if check.get("exit_code") not in (None, 0):
+            errors.append(f"check {name}: exit_code={check.get('exit_code')}")
+        if check.get("status") == "pass" and check.get("verified") is False:
+            errors.append(f"check {name}: verified=false")
     errors.extend(f"check {name}: not_run" for name in REQUIRED_CHECKS if name not in seen)
     return errors
+
+
+def tests_baseline_state(root, now=None):
+    """发布只读测试基线：36h 内且 0 失败才算 pass。不在此处跑 7 分钟全量。"""
+    path = Path(root) / "_学习" / "_测试基线.json"
+    if not path.is_file():
+        return {"state": "missing"}
+    try:
+        rec = read_json(path)
+        at = dt.datetime.fromisoformat(rec["at"])
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return {"state": "invalid", "reason": str(exc)}
+    age = ((now or dt.datetime.now()) - at).total_seconds() / 3600
+    if age > 36:
+        return {"state": "stale", "age_hours": round(age, 1), "summary": rec.get("summary")}
+    if rec.get("failed") != 0:
+        return {"state": "red", "summary": rec.get("summary")}
+    return {"state": "pass", "age_hours": round(age, 1), "summary": rec.get("summary")}
+
+
+def release_policy(root, d):
+    """总审发布口径 → 发布状态。
+
+    pass        总审门禁无 FAIL
+    conditional 有 FAIL，但总审明确写了“有条件放行”（允许发版，manifest 留痕）
+    blocked     总审明确不放行/阻断
+    unverified  总审缺件（不阻断预览，但 manifest 标记）
+    """
+    path = Path(root) / "_学习" / f"总审_{d}.json"
+    if not path.is_file():
+        return {"state": "unverified", "reasons": ["总审缺件"], "fail_items": []}
+    try:
+        obj = read_json(path)
+    except (OSError, ValueError) as exc:
+        return {"state": "unverified", "reasons": [f"总审不可读: {exc}"], "fail_items": []}
+    gate = obj.get("发布门禁") if isinstance(obj, dict) else None
+    if not isinstance(gate, dict):
+        return {"state": "unverified", "reasons": ["总审无发布门禁"], "fail_items": []}
+    fails = [k for k, v in gate.items() if isinstance(v, str) and v.strip().upper().startswith("FAIL")]
+    conclusion = str(gate.get("结论") or "")
+    if ("不放行" in conclusion or "阻断" in conclusion) and "有条件" not in conclusion:
+        return {"state": "blocked", "reasons": [conclusion], "fail_items": fails}
+    if fails:
+        return {"state": "conditional", "reasons": [conclusion] if conclusion else fails,
+                "fail_items": fails}
+    return {"state": "pass", "reasons": [], "fail_items": []}
 
 
 def tree_hashes(directory):
@@ -1074,7 +1167,7 @@ def validate_capability_blocks(root, stage, d):
     return errors
 
 
-def _build(root, d, publish, allow_degraded):
+def _build(root, d, publish, allow_degraded, require_clean=False):
     staging = contained(root, ".review_staging")
     releases = contained(root, "releases")
     staging.mkdir(exist_ok=True)
@@ -1151,6 +1244,20 @@ def _build(root, d, publish, allow_degraded):
         validated_pages = tree_hashes(stage)
         manifest["checks"] = run_checks(frozen, stage, d)
         errors.extend(check_errors(manifest["checks"]))
+        # 2026-10-18 发布口径：总审门禁不得"看不见"。blocked 一律阻断；
+        # conditional 默认允许发版但 manifest 必须留痕，require_clean 时升级为阻断。
+        policy = release_policy(root, d)
+        manifest["release_policy"] = policy
+        tests_state = tests_baseline_state(root)
+        manifest["tests_baseline"] = tests_state
+        if require_clean and tests_state.get("state") != "pass":
+            errors.append("require_clean: 测试基线 " + tests_state.get("state", "unknown"))
+        if policy["state"] == "blocked":
+            errors.append("release blocked by 总审: " + "；".join(policy["reasons"])[:400])
+        elif policy["state"] == "conditional" and require_clean:
+            errors.append("require_clean: 总审仍有 FAIL: " + ",".join(policy["fail_items"]))
+        elif policy["state"] == "unverified" and publish and require_clean:
+            errors.append("require_clean: 总审缺件，拒绝发版")
         if hashes(root, names) != before:
             errors.append("source changed during build")
         if hashes(frozen, names) != before:
@@ -1163,6 +1270,7 @@ def _build(root, d, publish, allow_degraded):
             errors.append("degraded cannot publish (allow_degraded is preview-only)")
         if not errors:
             manifest["status"] = "degraded" if degraded else "pass"
+            manifest["release_state"] = policy["state"]
         # Final checks occur before any immutable release or CURRENT change.
         if publish and manifest["status"] == "pass":
             manifest["published"] = True
@@ -1184,14 +1292,15 @@ def _build(root, d, publish, allow_degraded):
     return dict(manifest, preview_dir=str(work))
 
 
-def build_release(root: Path, d: str, *, publish: bool = False, allow_degraded: bool = False) -> dict:
+def build_release(root: Path, d: str, *, publish: bool = False, allow_degraded: bool = False,
+                  require_clean: bool = False) -> dict:
     try:
         valid_date(d)
         root = Path(root).resolve(strict=True)
         if not root.is_dir():
             raise ValueError("root must be directory")
         with exclusive(root):
-            return _build(root, d, publish, allow_degraded)
+            return _build(root, d, publish, allow_degraded, require_clean)
     except Exception as exc:
         return fail(d, [exc])
 
@@ -1491,7 +1600,7 @@ def validate_model_sources(root, d, models):
                 if e['d']>d:raise ValueError('future evidence')
                 if e.get('sha256'):
                     source=e['source'] if '/' in e['source'] else '_学习/'+e['source']
-                    if digest(contained(root,source))!=e['sha256']:raise ValueError('evidence hash mismatch: '+e['id'])
+                    if not source_digest_matches(root,source,d,e['sha256']):raise ValueError('evidence hash mismatch: '+e['id'])
                     continue
                 pointer=e.get('pointer','')
                 # Legacy /block indexes refer to the archived HTML import, not a
@@ -1605,9 +1714,13 @@ def component_source_text(root,d,route,comp):
             if not src:raise ValueError('logic reco source missing')
             with readonly_files(root,root):
                 return canonical_text(module.r_reco_table(d,body,picks,src,candidates))
-    functions={'index':{'IDXTEMP':'r_mach_temp'},'cycle':{'VOLSTEP':'r_mach_volstep','LADDER':'r_mach_ladder'},
+    functions={'index':{'IDXTEMP':'r_mach_temp'},'cycle':{'VOLSTEP':'r_mach_volstep','LEADIND':'r_mach_leadind','LADDER':'r_mach_ladder'},
         'theme':{'THEMEBATTLE':'r_chart_matrix','LIFECYCLE':'r_chart_lifeaxis','RECOTHEME':'r_reco_table'},
         'logic':{'MACHCHAIN':'r_mach_chain','MACHRADAR':'r_mach_radar','MACHHIST':'r_mach_hist'}}
+    if key == 'MACHVOTE' and comp.get('sources'):
+        # 投票牌是成品卡（带标题壳），源文本必须取成品卡本身，不能用 r_mach_vote 的裸表文本。
+        artifact = root / comp['sources'][0]['path']
+        return canonical_text(artifact.read_text(encoding='utf-8-sig'))
     function=functions.get(route,{}).get(key)
     if function is None:raise ValueError('unknown machine component '+key)
     with isolated_imports(root,root):
@@ -1967,6 +2080,8 @@ def main():
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--publish", action="store_true")
     parser.add_argument("--allow-degraded", action="store_true")
+    parser.add_argument("--require-clean", action="store_true",
+                        help="总审仍有 FAIL 时拒绝发版（默认：有条件放行但 manifest 留痕）")
     parser.add_argument("--stage", type=Path)
     parser.add_argument("--route")
     args = parser.parse_args()
@@ -1989,7 +2104,9 @@ def main():
     elif args.command == "verify":
         result = verify_release(args.root, args.d)
     else:
-        result = build_release(args.root, args.d, publish=args.publish, allow_degraded=args.allow_degraded)
+        result = build_release(args.root, args.d, publish=args.publish,
+                               allow_degraded=args.allow_degraded,
+                               require_clean=args.require_clean)
     print(json.dumps(result, ensure_ascii=False, allow_nan=False))
     return 0 if result["status"] == "pass" else 1
 

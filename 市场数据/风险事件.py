@@ -4,7 +4,10 @@
 覆盖维度(逐项实测可过滤):
   ① 限售解禁   RPT_LIFT_STAGE    filter=(FREE_DATE='YYYY-MM-DD')
   ② 分红除权   RPT_SHAREBONUS_DET filter=(EX_DIVIDEND_DATE='YYYY-MM-DD')
-未接入维度(实测过滤不可用/无端点): 财报披露日历、股东大会、业绩预告 —— 如实列进 未接入维度, 不声称无此类风险。
+  ③ 股东减持   RPT_SHARE_HOLDER_INCREASE  filter=(NOTICE_DATE>=d-30)(NOTICE_DATE<=d), DIRECTION='减持'(客户端过滤)
+  ④ 高管减持   RPT_EXECUTIVE_HOLD_DETAILS filter=(CHANGE_DATE>=d-30)(CHANGE_DATE<=d), CHANGE_SHARES<0(客户端过滤)
+  ★③④ 的 filter 里不能直接写中文 DIRECTION='减持'(东财 antlr 报 InputMismatchException), 故按日期窗口取数后客户端过滤。
+未接入维度(实测无报表端点): 财报披露日历、股东大会、业绩预告 —— 如实列进 未接入维度, 不声称无此类风险。
 
 直连三坑(与 席位动向库.py 同款): ①必须清代理(ProxyHandler({})) ②必须带 Referer data.eastmoney.com
 ③filter 值必须双引号包裹。产出 _学习/风险事件_{d}.json, 供 风险日历.py 消费。
@@ -25,9 +28,9 @@ def _dash(d: str) -> str:
     return f"{d[:4]}-{d[4:6]}-{d[6:]}"
 
 
-def _get(report: str, flt: str, page_size: int = 200):
+def _get(report: str, flt: str, page_size: int = 200, page: int = 1):
     """返回 (rows, error)。rows=None 表示取数失败。"""
-    url = (f"{EM}?reportName={report}&columns=ALL&pageSize={page_size}&pageNumber=1"
+    url = (f"{EM}?reportName={report}&columns=ALL&pageSize={page_size}&pageNumber={page}"
            f"&filter={urllib.parse.quote(flt)}")
     try:
         op = urllib.request.build_opener(
@@ -43,6 +46,28 @@ def _get(report: str, flt: str, page_size: int = 200):
     if not j.get("success"):
         return None, f"EM success=False msg={str(j.get('message'))[:80]}"
     return (j.get("result") or {}).get("data") or [], None
+
+
+def _get_all(report: str, flt: str, page_size: int = 500, max_pages: int = 6):
+    """窗口类取数(减持 30 日窗口可达数百条)需翻页; 上限保护 max_pages*page_size 条。"""
+    out, page = [], 1
+    while page <= max_pages:
+        rows, err = _get(report, flt, page_size, page)
+        if rows is None:
+            return None, err
+        out.extend(rows)
+        if len(rows) < page_size:
+            break
+        page += 1
+    return out, None
+
+
+def _shift(d: str, days: int) -> str:
+    from datetime import timedelta
+    return (datetime.strptime(d, "%Y%m%d") + timedelta(days=days)).strftime("%Y%m%d")
+
+
+REDUCE_WINDOW_DAYS = 30          # 减持公告回溯窗口(自然日); 荐票前踩窗过滤口径
 
 
 def fetch_lift(d: str):
@@ -85,8 +110,65 @@ def fetch_bonus(d: str):
     return out, None
 
 
+def fetch_holder_reduce(d: str):
+    """股东减持(近30自然日公告窗口)。DIRECTION 不能进 filter(antlr 报错) → 客户端过滤。
+    CHANGE_NUM_SYMBOL 负数=减持、正数=增持; 单位=万股(与解禁口径一致, 未逐项实测)。"""
+    start = _shift(d, -REDUCE_WINDOW_DAYS)
+    flt = f"(NOTICE_DATE>='{_dash(start)}')(NOTICE_DATE<='{_dash(d)}')"
+    rows, err = _get_all("RPT_SHARE_HOLDER_INCREASE", flt)
+    if rows is None:
+        return None, err
+    out = []
+    for x in rows:
+        if str(x.get("DIRECTION") or "") != "减持":
+            continue
+        out.append({
+            "类型": "减持",
+            "维度": "股东减持",
+            "代码": str(x.get("SECURITY_CODE") or ""),
+            "名称": x.get("SECURITY_NAME_ABBR"),
+            "公告日": str(x.get("NOTICE_DATE") or "")[:10],
+            "股东": x.get("HOLDER_NAME"),
+            "变动股数万股": x.get("CHANGE_NUM_SYMBOL"),
+            "变动后持股比例_pct": x.get("HOLD_RATIO"),
+            "变动起始日": str(x.get("START_DATE") or "")[:10],
+            "变动截止日": str(x.get("END_DATE") or "")[:10],
+        })
+    return out, None
+
+
+def fetch_exec_reduce(d: str):
+    """高管(含董监高及关联人)减持: CHANGE_SHARES<0 判为减持, 故按日期窗口取数后客户端过滤。
+    注意: CHANGE_DATE 为变动日; 记录系事后披露, 属『已发生』而非『计划中』风险。"""
+    start = _shift(d, -REDUCE_WINDOW_DAYS)
+    flt = f"(CHANGE_DATE>='{_dash(start)}')(CHANGE_DATE<='{_dash(d)}')"
+    rows, err = _get_all("RPT_EXECUTIVE_HOLD_DETAILS", flt)
+    if rows is None:
+        return None, err
+    out = []
+    for x in rows:
+        sh = x.get("CHANGE_SHARES")
+        if not isinstance(sh, (int, float)) or sh >= 0:
+            continue                                   # 只留减持(负), 增持不入风险事件
+        out.append({
+            "类型": "减持",
+            "维度": "高管减持",
+            "代码": str(x.get("SECURITY_CODE") or ""),
+            "名称": x.get("SECURITY_NAME"),
+            "变动日": str(x.get("CHANGE_DATE") or "")[:10],
+            "高管": x.get("PERSON_NAME"),
+            "职务": x.get("POSITION_NAME"),
+            "变动股数": sh,
+            "均价": x.get("AVERAGE_PRICE"),
+            "变动原因": x.get("CHANGE_REASON"),
+        })
+    return out, None
+
+
 SOURCES = [("限售解禁", fetch_lift, "东财 RPT_LIFT_STAGE"),
-           ("分红除权", fetch_bonus, "东财 RPT_SHAREBONUS_DET")]
+           ("分红除权", fetch_bonus, "东财 RPT_SHAREBONUS_DET"),
+           ("股东减持", fetch_holder_reduce, "东财 RPT_SHARE_HOLDER_INCREASE"),
+           ("高管减持", fetch_exec_reduce, "东财 RPT_EXECUTIVE_HOLD_DETAILS")]
 NOT_INTEGRATED = ["财报披露日历", "股东大会", "业绩预告"]
 
 
@@ -112,6 +194,8 @@ def build(root: Path, d: str):
         "schema_version": 1, "capability": "risk_events", "date": d, "status": status,
         "sources": ok_src,
         "metrics": {"事件条数": len(events), **{f"{k}条数": v for k, v in counts.items()},
+                    "减持条数": sum(1 for e in events if e.get("类型") == "减持"),
+                    "减持窗口": f"{_shift(d, -REDUCE_WINDOW_DAYS)}~{d}(自然日,公告/变动日)",
                     "覆盖维度": [x[0] for x in SOURCES if x[0] not in bad_src],
                     "未接入维度": NOT_INTEGRATED},
         "errors": errors,

@@ -1,0 +1,208 @@
+{
+ "range": [
+  "20260101",
+  "20261018"
+ ],
+ "kind": "all",
+ "min_n": 5,
+ "routes": {
+  "auction": {
+   "folds": 3,
+   "eligible_folds": 3,
+   "positive_folds": 1,
+   "consistency": 0.3333,
+   "pooled_n": 93
+  },
+  "lhb": {
+   "folds": 3,
+   "eligible_folds": 3,
+   "positive_folds": 2,
+   "consistency": 0.6667,
+   "pooled_n": 81
+  },
+  "limitup": {
+   "folds": 3,
+   "eligible_folds": 3,
+   "positive_folds": 1,
+   "consistency": 0.3333,
+   "pooled_n": 80
+  },
+  "logic": {
+   "folds": 3,
+   "eligible_folds": 3,
+   "positive_folds": 1,
+   "consistency": 0.3333,
+   "pooled_n": 55
+  },
+  "theme": {
+   "folds": 3,
+   "eligible_folds": 3,
+   "positive_folds": 1,
+   "consistency": 0.3333,
+   "pooled_n": 97
+  }
+ },
+ "folds": {
+  "auction": [
+   {
+    "month": "202608",
+    "n": 44,
+    "mean_pct": 0.2465,
+    "win_rate": 0.3409,
+    "ci95_mean": [
+     -1.4216,
+     2.0538
+    ]
+   },
+   {
+    "month": "202609",
+    "n": 34,
+    "mean_pct": -1.2577,
+    "win_rate": 0.2647,
+    "ci95_mean": [
+     -3.5118,
+     0.8722
+    ]
+   },
+   {
+    "month": "202610",
+    "n": 15,
+    "mean_pct": -0.2346,
+    "win_rate": 0.2667,
+    "ci95_mean": [
+     -4.0053,
+     3.6588
+    ]
+   }
+  ],
+  "lhb": [
+   {
+    "month": "202608",
+    "n": 36,
+    "mean_pct": 1.3365,
+    "win_rate": 0.4444,
+    "ci95_mean": [
+     -0.3601,
+     3.1945
+    ]
+   },
+   {
+    "month": "202609",
+    "n": 28,
+    "mean_pct": -0.9499,
+    "win_rate": 0.3571,
+    "ci95_mean": [
+     -3.2384,
+     1.4667
+    ]
+   },
+   {
+    "month": "202610",
+    "n": 17,
+    "mean_pct": 0.5933,
+    "win_rate": 0.3529,
+    "ci95_mean": [
+     -2.3849,
+     3.9282
+    ]
+   }
+  ],
+  "limitup": [
+   {
+    "month": "202608",
+    "n": 39,
+    "mean_pct": -0.0425,
+    "win_rate": 0.4872,
+    "ci95_mean": [
+     -2.2957,
+     2.1694
+    ]
+   },
+   {
+    "month": "202609",
+    "n": 29,
+    "mean_pct": 0.6318,
+    "win_rate": 0.4483,
+    "ci95_mean": [
+     -1.9697,
+     3.3169
+    ]
+   },
+   {
+    "month": "202610",
+    "n": 12,
+    "mean_pct": -1.0448,
+    "win_rate": 0.3333,
+    "ci95_mean": [
+     -3.2597,
+     1.3225
+    ]
+   }
+  ],
+  "logic": [
+   {
+    "month": "202608",
+    "n": 21,
+    "mean_pct": 0.7112,
+    "win_rate": 0.3333,
+    "ci95_mean": [
+     -1.2188,
+     2.8073
+    ]
+   },
+   {
+    "month": "202609",
+    "n": 19,
+    "mean_pct": -2.6742,
+    "win_rate": 0.2632,
+    "ci95_mean": [
+     -4.8747,
+     -0.4482
+    ]
+   },
+   {
+    "month": "202610",
+    "n": 15,
+    "mean_pct": -3.9446,
+    "win_rate": 0.2,
+    "ci95_mean": [
+     -6.4838,
+     -1.599
+    ]
+   }
+  ],
+  "theme": [
+   {
+    "month": "202608",
+    "n": 43,
+    "mean_pct": 0.4305,
+    "win_rate": 0.3488,
+    "ci95_mean": [
+     -1.3862,
+     2.1765
+    ]
+   },
+   {
+    "month": "202609",
+    "n": 33,
+    "mean_pct": -0.8529,
+    "win_rate": 0.2727,
+    "ci95_mean": [
+     -2.8864,
+     1.0173
+    ]
+   },
+   {
+    "month": "202610",
+    "n": 21,
+    "mean_pct": -2.5414,
+    "win_rate": 0.2381,
+    "ci95_mean": [
+     -4.9032,
+     -0.3035
+    ]
+   }
+  ]
+ },
+ "note": "按月切分，当月样本不参与任何参数选择；consistency=正收益月份占比"
+}

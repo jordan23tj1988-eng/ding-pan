@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 import argparse
+import csv
 import hashlib
 import json
 import math
@@ -238,6 +239,13 @@ def _legacy_op(item):
             other = float(conflict.group(1)) / (100 if conflict.group(2) else 1)
             if math.isclose(other, threshold, rel_tol=1e-9):
                 return None
+        try:
+            target = f"{float(threshold):g}"
+        except (TypeError, ValueError):
+            target = str(threshold)
+        for symbol in ("<=", "<"):
+            if re.search(re.escape(symbol) + r"\s*" + re.escape(target) + r"(?![0-9])", claim):
+                return "le" if symbol == "<=" else "lt"
         for m in re.finditer(r"(?:(低于|跌破|击穿)\s*)?([0-9]+(?:\.[0-9]+)?)(%?)(?:亿|家|只|板)?\s*(以下)?", claim):
             if not (m.group(1) or m.group(4)):
                 continue
@@ -253,7 +261,20 @@ def _legacy_op(item):
         if direction in (">=", ">") and re.search(r"(?<!不)低于|(?<!不)以下|(?<!不)跌破", primary):
             return None
         return explicit[direction]
-    if direction == "升" and re.search(r"以上|上方|≥|>=", claim):
+    # 文本里的显式比较符（如“涨停数<61”“炸板率>0.445”）优先于方向词
+    if threshold is not None:
+        try:
+            target = f"{float(threshold):g}"
+        except (TypeError, ValueError):
+            target = str(threshold)
+        for symbol, op in (("<=", "le"), (">=", "ge"), ("<", "lt"), (">", "gt")):
+            if re.search(re.escape(symbol) + r"\s*" + re.escape(target) + r"(?![0-9])", claim):
+                return op
+    if direction == "升":
+        # 方向字段已显式给出“升”，阈值字段名为 >=；只要主句没有反向词，按 >= 机械落地。
+        primary = re.split(r"[，,；;]|若", claim, maxsplit=1)[0]
+        if re.search(r"回落|下降|走低|跌破|低于|以下", primary):
+            return None
         return "ge"
     return None
 
@@ -323,6 +344,53 @@ def _prediction_rows(root, d):
     return result
 
 
+def _stock_actual(root, due_d, field, code):
+    """个股谓词只用可复现真源：封板=当日 zt_pool；收红=bars 收盘>前收。"""
+    if not code:
+        return None, []
+    if field == "代码封板":
+        path = Path(root) / due_d / "zt_pool.csv"
+        if not path.is_file():
+            return None, []
+        try:
+            codes = {str(r.get("代码") or "").strip().zfill(6)
+                     for r in csv.DictReader(path.open(encoding="utf-8-sig"))}
+        except (OSError, UnicodeDecodeError, csv.Error):
+            return None, []
+        return (1 if code in codes else 0), [{"path": str(path.relative_to(root)), "field": "代码"}]
+    if field == "代码收红":
+        path = Path(root) / "_学习" / "_bars_cache" / (code + ".csv")
+        if not path.is_file():
+            return None, []
+        try:
+            rows = list(csv.DictReader(path.open(encoding="utf-8-sig")))
+        except (OSError, UnicodeDecodeError, csv.Error):
+            return None, []
+        target = f"{due_d[:4]}-{due_d[4:6]}-{due_d[6:]}"
+        prior = None
+        for row in rows:
+            if (row.get("date") or "").strip() == target:
+                if prior is None:
+                    return None, []
+                try:
+                    return (1 if float(row["close"]) > float(prior["close"]) else 0), [
+                        {"path": str(path.relative_to(root)), "field": "close"}]
+                except (KeyError, TypeError, ValueError):
+                    return None, []
+            prior = row
+    return None, []
+
+
+def _given_code(row):
+    condition = row.get("condition") if isinstance(row.get("condition"), dict) else {}
+    code = condition.get("代码") or row.get("代码")
+    if not code:
+        match = re.search(r"(?<![0-9])([0-9]{6})(?![0-9])", str(row.get("claim") or ""))
+        code = match.group(1) if match else None
+    code = str(code or "").strip().zfill(6)
+    return code if code.strip("0") else None
+
+
 def _settle_rows(root, d, target_d):
     _date(d); _date(target_d)
     if target_d < d:
@@ -344,7 +412,15 @@ def _settle_rows(root, d, target_d):
             row.update(status="unverifiable", reason="到期日不在真实归档交易日历，禁止移日")
             continue
         if row.get("event_type") == "stock":
-            row.update(status="unverifiable", reason="缺可核验的完整个股行情/封板真源")
+            field = ALIASES.get(row.get("field"), row.get("field"))
+            actual, ev = _stock_actual(root, due, field, _given_code(row))
+            threshold = _number(row.get("threshold"), row.get("unit"))
+            if actual is None or row.get("op") not in OPS or threshold is None:
+                row.update(status="unverifiable", actual=actual, evidence=ev,
+                           reason="缺可核验的个股封板/收红真源")
+                continue
+            row.update(status="true" if OPS[row["op"]](actual, threshold) else "false",
+                       actual=actual, evidence=ev, reason="")
             continue
         if row["op"] not in OPS:
             row.update(status="ambiguous", reason="原文/方向/阈值无法无歧义转为比较条件")

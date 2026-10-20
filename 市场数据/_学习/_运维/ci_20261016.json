@@ -1,0 +1,79 @@
+{
+ "at": "2026-10-18T19:52:16",
+ "day": "20261016",
+ "mode": "quick",
+ "status": "pass",
+ "baseline": {
+  "state": "pass",
+  "at": "2026-10-18T19:41:48",
+  "failed": 0,
+  "age_hours": 0.2
+ },
+ "steps": [
+  {
+   "name": "compile",
+   "rc": 0,
+   "duration_s": 1.4,
+   "tail": []
+  },
+  {
+   "name": "exceptions",
+   "rc": 0,
+   "duration_s": 5.7,
+   "tail": [
+    "{\"total\": 151, \"production\": 115, \"baseline\": 151, \"new\": 0, \"fixed_or_removed\": 0}"
+   ]
+  },
+  {
+   "name": "pytest",
+   "rc": 0,
+   "duration_s": 0.0,
+   "tail": [
+    "skipped: fresh green baseline 2026-10-18T19:41:48 (age 0.2h)"
+   ]
+  },
+  {
+   "name": "sentinel",
+   "rc": 0,
+   "duration_s": 3.0,
+   "tail": [
+    "== 复盘一致性哨兵 20261016 ==",
+    "  WARN C4 关键股66只中1只bars未到20261016: ['600693']",
+    "结论: 全过(1警告)"
+   ]
+  },
+  {
+   "name": "guard",
+   "rc": 0,
+   "duration_s": 3.0,
+   "tail": [
+    "  \"gb\": 2.81,",
+    "  \"unit\": \"GiB\",",
+    "  \"size_is_lower_bound\": false,",
+    "  \"oldest_days\": 7.3",
+    " },",
+    " \"cron_failures\": [",
+    "  {",
+    "   \"job_id\": \"5d8760e7a962\",",
+    "   \"consecutive_failures\": 7,",
+    "   \"name\": \"ifind-keepalive\"",
+    "  }",
+    " ],",
+    " \"cron_stale_skipped\": [",
+    "  {",
+    "   \"job_id\": \"a62c2a1837a1\",",
+    "   \"consecutive_failures\": 8,",
+    "   \"name\": \"sentiment-review-health-watchdog\",",
+    "   \"fixed_after_failure\": true",
+    "  }",
+    " ],",
+    " \"assignments\": {",
+    "  \"critical\": 103,",
+    "  \"total\": 150",
+    " }",
+    "}"
+   ]
+  }
+ ],
+ "hard_fail": []
+}

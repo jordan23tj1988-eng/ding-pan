@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>运维可观测性 · 20261016</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--ok:#3fb950;--warn:#d29922;--bad:#f85149;--blue:#58a6ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:36px 26px 70px}h1{font-size:26px;margin:0 0 4px}
+h2{font-size:18px;margin:32px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.sub,.muted,.label{color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi{font-size:26px;font-weight:700;line-height:1.2}.kpi.warn{color:var(--warn)}.kpi.bad{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:6px 0}th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-size:12.5px;font-weight:600}tr:last-child td{border-bottom:none}
+.tag{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;border:1px solid}
+.tag.ok{color:var(--ok);border-color:#238636}.tag.warn{color:var(--warn);border-color:#9e6a03}.tag.bad{color:var(--bad);border-color:#da3633}.tag.muted{color:var(--muted);border-color:var(--line)}
+a{color:var(--blue)}code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:#c9d1d9}
+@media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.wrap{padding:22px 14px}}
+</style></head><body><div class="wrap">
+<h1>运维可观测性</h1>
+<div class="sub">交易日 20261016 · 生成 2026-10-18T18:40:10 · 数据源 <code>_学习/_运维/可观测性_最新.json</code></div>
+<div class="grid">
+<div class="card"><div class="kpi warn">2</div><div class="label">守卫告警</div><div class="sub">assignments_overdue / cron_failures</div></div>
+<div class="card"><div class="kpi bad">103</div><div class="label">critical 指派</div><div class="sub">共 150 条 · 来源 38 份总审</div></div>
+<div class="card"><div class="kpi warn">51.3%</div><div class="label">预测机器覆盖</div><div class="sub">可判定 48.1% · 439 行</div></div>
+<div class="card"><div class="kpi ">2.81 GiB</div><div class="label">staging</div><div class="sub">27 个构建 · 最早 7.3 天</div></div>
+</div>
+
+<h2>一、守卫告警</h2>
+<table><thead><tr><th>类型</th><th>详情</th><th>日期</th></tr></thead><tbody><tr><td><span class="tag bad">cron_failures</span></td><td>ifind-keepalive 最近连续失败 7 次</td><td>20261016</td></tr><tr><td><span class="tag bad">assignments_overdue</span></td><td>总审指派逾期(&gt;2天) 103 项，看板见 _学习/_任务看板/最新.json</td><td>20261016</td></tr></tbody></table>
+<p class="sub">守卫状态：<code>2026-10-18T18:40:09</code>；磁盘剩余 657.7 GB。</p>
+
+<h2>二、源新鲜度</h2>
+<table><thead><tr><th>对象</th><th>状态</th><th>最后修改</th></tr></thead><tbody><tr><td>总审</td><td><span class="tag ok">在位</span></td><td>2026-10-18T09:20:44</td></tr><tr><td>推演</td><td><span class="tag ok">在位</span></td><td>2026-10-18T09:27:28</td></tr><tr><td>复盘链健康</td><td><span class="tag ok">在位</span></td><td>2026-10-18T12:18:04</td></tr><tr><td>能力消费审计</td><td><span class="tag ok">在位</span></td><td>2026-10-18T09:28:31</td></tr><tr><td>当日目录</td><td><span class="tag ok">在位</span></td><td>6 个文件</td></tr></tbody></table>
+<p class="sub">距交付截止（20261016 20:00）已 46.7 小时；周末/节假日会自然拉长。</p>
+
+<h2>三、指派与逾期</h2>
+<div class="sub">critical 103 · warn 6 · open 31 · done 10</div>
+<table><thead><tr><th>owner</th><th>critical</th><th>warn</th><th>open</th><th>done</th></tr></thead><tbody><tr><td>auction</td><td>20</td><td>1</td><td>6</td><td>2</td></tr><tr><td>cycle</td><td>0</td><td>0</td><td>1</td><td>0</td></tr><tr><td>lhb</td><td>21</td><td>1</td><td>6</td><td>2</td></tr><tr><td>limitup</td><td>19</td><td>1</td><td>6</td><td>2</td></tr><tr><td>logic</td><td>20</td><td>2</td><td>6</td><td>2</td></tr><tr><td>master</td><td>3</td><td>0</td><td>0</td><td>0</td></tr><tr><td>theme</td><td>20</td><td>1</td><td>6</td><td>2</td></tr></tbody></table>
+
+<h2>四、认知清算</h2>
+<table><thead><tr><th>清算状态</th><th>条数</th></tr></thead><tbody><tr><td>archived</td><td>3271</td></tr><tr><td>expired</td><td>54</td></tr><tr><td>needs_spec</td><td>688</td></tr><tr><td>open</td><td>243</td></tr></tbody></table>
+<p class="sub">总计 4256 条；verified 必须同时有规格、到期日和 true/false 结果，当前为 0 不伪造。</p>
+
+<h2>五、预测覆盖（最差日期）</h2>
+<table><thead><tr><th>日期</th><th>行数</th><th>机器可判</th><th>覆盖率</th><th>可判定率</th><th>ambiguous</th></tr></thead><tbody><tr><td>20260907</td><td>12</td><td>0</td><td>0.0%</td><td>0.0%</td><td>4</td></tr><tr><td>20260911</td><td>10</td><td>0</td><td>0.0%</td><td>0.0%</td><td>9</td></tr><tr><td>20260813</td><td>12</td><td>3</td><td>25.0%</td><td>25.0%</td><td>6</td></tr><tr><td>20260812</td><td>15</td><td>4</td><td>26.7%</td><td>26.7%</td><td>6</td></tr><tr><td>20260814</td><td>13</td><td>5</td><td>38.5%</td><td>38.5%</td><td>7</td></tr><tr><td>20260817</td><td>13</td><td>5</td><td>38.5%</td><td>38.5%</td><td>7</td></tr><tr><td>20260909</td><td>5</td><td>2</td><td>40.0%</td><td>0.0%</td><td>3</td></tr><tr><td>20260831</td><td>11</td><td>5</td><td>45.5%</td><td>45.5%</td><td>5</td></tr></tbody></table>
+<p class="sub">coverage=机器行/全部行；judgeable=(true+false)/到期样本。新格式覆盖率 &lt;70% 由 <code>verify_tuiyan.py</code> 直接 FAIL。</p>
+
+<h2>六、发布</h2>
+<table><thead><tr><th>build</th><th>创建时间</th><th>状态</th><th>测试基线</th></tr></thead><tbody><tr><td>20261016-2-d13a9c41a8544f7cbdf6ad238f2d134d</td><td>2026-10-18T02:15:30</td><td><span class="tag muted">legacy</span></td><td>—</td></tr><tr><td>20261016-3-c2baf6a15f564dbfb80c9ed5e64e36f5</td><td>2026-10-18T02:21:37</td><td><span class="tag muted">legacy</span></td><td>—</td></tr><tr><td>20261016-4-0b0da5318b924fcd8a0435bc0eb9d932</td><td>2026-10-18T05:51:31</td><td><span class="tag warn">conditional</span></td><td>pass</td></tr></tbody></table>
+
+<h2>七、账本周统计</h2>
+<table><thead><tr><th>路</th><th>n</th><th>样本状态</th></tr></thead><tbody><tr><td>auction</td><td>6</td><td><span class="tag warn">insufficient</span></td></tr><tr><td>lhb</td><td>4</td><td><span class="tag warn">insufficient</span></td></tr><tr><td>limitup</td><td>0</td><td><span class="tag warn">insufficient</span></td></tr><tr><td>logic</td><td>2</td><td><span class="tag warn">insufficient</span></td></tr><tr><td>theme</td><td>4</td><td><span class="tag warn">insufficient</span></td></tr></tbody></table>
+<p class="sub">n&lt;10 一律 <code>insufficient</code>，不把 1–2 笔当周考核结论。</p>
+
+<h2>八、Cron 最近运行</h2>
+<table><thead><tr><th>任务</th><th>状态</th><th>开始</th><th>耗时(s)</th><th>错误</th></tr></thead><tbody><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T18:30:00</td><td>9.7</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T18:00:00</td><td>9.8</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T17:30:00</td><td>9.7</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T17:00:00</td><td>9.7</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T16:30:00</td><td>9.8</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T16:00:00</td><td>9.8</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T15:30:00</td><td>9.8</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T15:00:00</td><td>9.6</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T14:30:00</td><td>9.8</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T14:00:00</td><td>9.6</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T13:30:00</td><td>10.1</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T13:00:00</td><td>10.9</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T12:30:00</td><td>9.8</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T12:00:00</td><td>9.7</td><td></td></tr><tr><td>hermes-cockpit-refresh</td><td><span class="tag ok">completed</span></td><td>2026-10-18T11:30:00</td><td>9.7</td><td></td></tr></tbody></table>
+
+<p class="sub" style="margin-top:28px">相关：<a href="../复盘/盯盘台/index.html">今日盯盘台</a> ·
+<a href="修复验收_20261018.html">修复验收页</a> ·
+变更登记 <code>_变更总账.md #239</code></p>
+</div></body></html>

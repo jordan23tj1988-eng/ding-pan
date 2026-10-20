@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>复盘系统修复验收 · 20261018</title>
+<style>
+  :root{--bg:#0d1117;--card:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--ok:#3fb950;--warn:#d29922;--bad:#f85149;--blue:#58a6ff}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+  .wrap{max-width:1120px;margin:0 auto;padding:40px 28px 70px}
+  h1{font-size:28px;margin:0 0 6px}
+  h2{font-size:20px;margin:38px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h3{font-size:16px;margin:22px 0 8px}
+  .sub{color:var(--muted);font-size:13px}
+  .hero{background:linear-gradient(135deg,#12233a,#161b22);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin:18px 0 8px}
+  .hero b{color:var(--blue)}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi{font-size:26px;font-weight:700;line-height:1.2}
+  .kpi small{font-size:12px;font-weight:400;color:var(--muted)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;border:1px solid}
+  .ok{color:var(--ok);border-color:#238636;background:#0f2d1a}
+  .warn{color:var(--warn);border-color:#9e6a03;background:#2d2308}
+  .bad{color:var(--bad);border-color:#da3633;background:#2d1214}
+  .muted{color:var(--muted)}
+  table{width:100%;border-collapse:collapse;margin:8px 0 4px;font-size:14px}
+  th,td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:13px}
+  tr:last-child td{border-bottom:none}
+  code{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;background:#0b0f14;border:1px solid #21262d;border-radius:4px;padding:1px 5px}
+  .box{border-left:3px solid var(--bad);background:#1c1113;padding:12px 16px;border-radius:0 8px 8px 0;margin:10px 0}
+  .box.good{border-color:var(--ok);background:#0f1d14}
+  .box.warnbox{border-color:var(--warn);background:#1f1a0c}
+  ul{margin:6px 0 6px 20px;padding:0}
+  li{margin:4px 0}
+  a{color:var(--blue)}
+  @media(max-width:760px){.grid{grid-template-columns:repeat(2,1fr)}.wrap{padding:24px 16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>复盘系统修复验收</h1>
+  <div class="sub">基线交易日 20261016 · 验收时间 2026-10-18 · 只登记有真实命令输出的改动</div>
+
+  <div class="hero">
+    诊断结论是「认知生产能力远强于认知结算能力」。本轮没有再加分析模块，而是先修“能不能真实跑完、能不能被结算、能不能被证伪”。<br>
+    <b>P0 可靠性 + P1 账本/预测/认知/指派已落地并通过回归；距离行业顶级仍差三块：预测覆盖率、执行模型、外部数据凭据。</b>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="kpi">405 <small>passed</small></div><div class="sub">全量 pytest · 1 xfailed · 0 failed<br>481.72s</div></div>
+    <div class="card"><div class="kpi">429 <small>条</small></div><div class="sub">唯一结算账本当前记录<br>609 条结算版本</div></div>
+    <div class="card"><div class="kpi">150 <small>条</small></div><div class="sub">去重后总审指派<br><span class="tag bad">103 条逾期</span></div></div>
+    <div class="card"><div class="kpi">51.3<small>%</small></div><div class="sub">预测机器覆盖率<br>可判定率 48.1%</div></div>
+  </div>
+
+  <h2>一、修复前后对照</h2>
+  <table>
+    <thead><tr><th>维度</th><th>修复前（20261016 诊断）</th><th>修复后（本次实测）</th><th>判定</th></tr></thead>
+    <tbody>
+      <tr><td>全量测试</td><td>397 通过 / 3 失败 / 1 deselected，444s</td><td>405 通过 / 0 失败 / 1 xfailed，481.72s</td><td><span class="tag ok">已绿</span></td></tr>
+      <tr><td>发布门禁</td><td>子进程检查 <code>exit_code=None</code> 仍可 <code>published=true</code></td><td>8 项必需检查；子进程必须有真实返回码且非 0 即失败；测试基线纳入 <code>require_clean</code></td><td><span class="tag ok">已硬化</span></td></tr>
+      <tr><td>调度守护</td><td>watchdog 用日历日，周末必失败，<code>failure_streak=15</code></td><td>按真实交易日；OS 任务工作日 08:45/20:45；旧失败在脚本修复后自动归入 <code>cron_stale_skipped</code></td><td><span class="tag ok">已修</span></td></tr>
+      <tr><td>staging 体积</td><td>≥356,000 文件 / ≥7.3GB</td><td>124,312 文件 / 2.81GB（保留 27 个构建，周日 09:00 自动清理）</td><td><span class="tag ok">已降</span></td></tr>
+      <tr><td>结算真源</td><td>5 份 JSONL + 引擎各算一套，无唯一账本</td><td>SQLite 唯一账本；稳定键 + 幂等 + 版本替代；结算优先级和缺失原因可追溯</td><td><span class="tag ok">已统一</span></td></tr>
+      <tr><td>周考核</td><td>n=1–2 也能判“合格/不合格”</td><td>注入 <code>账本统计</code>；n&lt;10 标 <code>insufficient</code>，agent 增加 <code>账本样本</code>/<code>判定效力</code>（不篡改原判定）</td><td><span class="tag warn">已标注</span></td></tr>
+      <tr><td>预测可判定</td><td>230 条唯一预测，仅 62 条（27%）可机判；105 个 id 重复结算</td><td>机器覆盖 51.3%（225/439）；可判定率 48.1%；到期自动结算；新格式 &lt;70% 直接 FAIL</td><td><span class="tag warn">未达标</span></td></tr>
+      <tr><td>认知闭环</td><td>4,256 条迭代 → 0 验证 → 0 能力；478 条认知库 477 条无状态</td><td>4,256 条全部清算：3,271 归档 / 688 待补规格 / 54 超期 / 243 新经验 / <b>0 条 verified</b>（不伪造）</td><td><span class="tag ok">已清算</span></td></tr>
+      <tr><td>自指派</td><td>165 条，27 完成（16.4%），133 条“待承接”</td><td>38 份总审去重为 150 条；103 条 critical、6 warn、31 open、10 done</td><td><span class="tag bad">仍严重积压</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2>二、这轮真正改了什么</h2>
+  <h3>P0：先让系统“不会静默失败”</h3>
+  <ul>
+    <li><code>_ops/guard.py</code>：交易日口径、发布/总审/推演缺失、cron 连败、磁盘/staging、告警去重、保留策略、<code>--repair</code>。守护自身异常才返回 2。</li>
+    <li><code>review_health_watchdog.py</code>：不再用“今天”跑健康检查；改为调用 guard，周末/节假日不再制造假连败。</li>
+    <li><code>review_publish.py</code>：门禁不再接受“检查器自己说 pass”；子进程必须给出真实 <code>exit_code</code>；<code>blocked</code> 硬阻断；<code>conditional</code> 留痕；测试基线过期或红直接阻断。</li>
+    <li><code>_ops/test_baseline.py</code>：全量 pytest 写基线，36 小时内且 0 失败才算 pass；发布 manifest 记录 <code>tests_baseline</code>。</li>
+  </ul>
+
+  <h3>P1：让判断“可结算、可证伪、可追踪”</h3>
+  <ul>
+    <li><b>唯一账本</b>：<code>_ops/ledger.py</code> 以 SQLite 为真源；<code>normalize_kind</code> 只把明确含“荐”的算荐票，观察不升格；缺 T+1 记 <code>unsettled</code>，不补造。</li>
+    <li><b>统计层</b>：bootstrap 95% CI、t/p、跨路 Benjamini-Hochberg q、Brier、成本敏感性、盈亏平衡成本、按月 walk-forward；不再把单路 p 值当 alpha。</li>
+    <li><b>预测审计</b>：<code>_ops/prediction_audit.py</code> 分离 coverage 与 judgeable；<code>review_learning.py</code> 支持显式比较符、方向护栏、个股封板/收红真源；<code>verify_tuiyan.py</code> 用生产解析器复验，新格式覆盖率 &lt;70% 直接 FAIL。</li>
+    <li><b>认知清算</b>：<code>_ops/cognition.py</code> 只认“有规格 + 有到期 + 有 true/false”的 verified；<code>--apply</code> 只加清算字段并先备份，不改原 state、不删记录。</li>
+    <li><b>指派看板</b>：<code>_ops/assignments.py</code> 汇总 38 份总审、按 ID 去重；<code>_ops/observability.py</code> 聚合守卫/看板/账本/预测/源新鲜度/发布/cron。</li>
+  </ul>
+
+  <h2>三、账本给出的真实结论</h2>
+  <p class="sub">口径：20260101–20261018，只算明确“荐票”，收益=T+1 开盘买、T+1 收盘卖；q 值为四路多重检验后的 BH q。</p>
+  <table>
+    <thead><tr><th>路</th><th>n</th><th>胜率</th><th>均收</th><th>95% CI</th><th>BH q</th><th>盈亏平衡成本</th></tr></thead>
+    <tbody>
+      <tr><td>auction</td><td>12</td><td>41.7%</td><td>+2.52%</td><td>[-1.67, +6.84]</td><td>0.55</td><td>252bp</td></tr>
+      <tr><td>lhb</td><td>11</td><td>27.3%</td><td>+1.79%</td><td>[-2.06, +6.33]</td><td>0.58</td><td>179bp</td></tr>
+      <tr><td>theme</td><td>16</td><td>25.0%</td><td>-0.19%</td><td>[-3.33, +3.05]</td><td>0.91</td><td>0bp</td></tr>
+      <tr><td>logic</td><td>7</td><td>14.3%</td><td>-1.89%</td><td>[-4.49, +0.47]</td><td>0.55</td><td>0bp</td></tr>
+    </tbody>
+  </table>
+  <div class="box warnbox">
+    <b>没有任何一路在多重检验后显著。</b> 正均收只来自极少数大赢家（auction 均赢 +10.98%、均亏 -3.53%），样本 7–16 笔，不能当稳定 edge。周考核当前五路样本 n=0–6，全部 <code>insufficient</code>；原来的“合格”是小样本噪声。
+  </div>
+
+  <h2>四、仍未收尾 / 外部项</h2>
+  <div class="box warnbox">
+    <b>1. iFinD：按用户 20261018 决定跳过，不再作为本轮验收阻塞项。</b><br>
+    <code>SuperCommand</code> 与登录 <code>rc=-2</code> 保留现状；<code>ifind-keepalive</code> 任务和告警不删，避免掩盖真实断供。后续若要恢复，再按 <code>ifind-infra-ops</code> 处理凭据。
+  </div>
+  <div class="box">
+    <b>2. 微信告警通道上次实测未恢复。</b><br>
+    上一轮 <code>hermes send</code> 返回 <code>session not ready: ret=-2</code>；本轮未再向用户发测试消息，按未恢复处理。当前告警落 <code>_学习/_运维/alerts.jsonl</code>，guard 仍正常执行。
+  </div>
+  <div class="box">
+    <b>3. 预测覆盖率 51.3%，未达 70%。</b><br>
+    历史 legacy 不追改、不补造；新产物由 <code>verify_tuiyan.py</code> fail-closed 拦截。要达标必须让推演 agent 按“一行一个 field+op+threshold”生产，而不是继续写叙述段。
+  </div>
+  <div class="box">
+    <b>4. P2 只完成一部分。</b><br>
+    walk-forward、成本敏感性、盈亏平衡成本、可观测性只读面板已完成；成交概率/容量模型未做。
+  </div>
+  <div class="box">
+    <b>5. 工程治理三件（19:36 收口）。</b><br>
+    本地 CI：<code>_ops/ci.py</code>（编译→异常门禁→pytest→哨兵→guard），<code>ReviewCI</code> 每日 22:50；异常治理：AST 159→151（修 7 处生产处理器，36 处历史快照单独排除，裸 except=0），151 条逐项台账 + <code>--check</code> 基线防新增；死脚本：实际归档 5 个到 <code>_归档/未接线脚本_20261018/</code>，134 根脚本中 20 个零引用，剩 3 个强候选均为手工工具、明确保留。
+    报告：<a href="异常与死脚本治理_20261018.html">治理总页</a> · <a href="../_学习/_运维/异常治理台账.md">逐项台账</a> · <a href="../_学习/_运维/死脚本_最新.md">死脚本清单</a>。
+  </div>
+
+  <h2>五、当前发布状态</h2>
+  <table>
+    <tbody>
+      <tr><th>build_id</th><td><code>20261016-4-0b0da5318b924fcd8a0435bc0eb9d932</code></td></tr>
+      <tr><th>发布结果</th><td><span class="tag ok">published</span> · <code>release_state=conditional</code></td></tr>
+      <tr><th>门禁</th><td>8 项检查全 pass；测试基线 <code>pass</code>（405 passed）</td></tr>
+      <tr><th>哨兵</th><td>全过（1 警告）：<code>600693</code> bars 未到 20261016</td></tr>
+      <tr><th>条件放行原因</th><td>能力消费 / 台账结算 / 推演 三项上游仍未补齐；页面可看，<b>不得据此加仓</b></td></tr>
+    </tbody>
+  </table>
+
+  <h2>六、复现命令</h2>
+  <pre style="background:#0b0f14;border:1px solid #21262d;border-radius:8px;padding:14px;overflow:auto;font-size:12.5px"><code>cd D:\股票数据\市场数据
+D:\股票数据\.venv312\Scripts\python.exe _ops\test_baseline.py run
+D:\股票数据\.venv312\Scripts\python.exe _ops\ledger.py verify
+D:\股票数据\.venv312\Scripts\python.exe _ops\ledger.py stats --since 20260101 --until 20261018 --kind 荐票
+D:\股票数据\.venv312\Scripts\python.exe _ops\prediction_audit.py
+D:\股票数据\.venv312\Scripts\python.exe _ops\guard.py check
+D:\股票数据\.venv312\Scripts\python.exe 复盘一致性哨兵.py 20261016</code></pre>
+
+  <p class="sub" style="margin-top:26px">页面：<a href="../复盘/盯盘台/index.html">复盘/盯盘台/index.html</a> · <a href="运维可观测性_20261016.html">运维可观测性</a> · 数据快照：<code>_学习/_运维/可观测性_最新.json</code> · 变更登记：<code>_变更总账.md #239</code></p>
+</div>
+</body>
+</html>

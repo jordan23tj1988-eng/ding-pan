@@ -28,6 +28,16 @@ ROOT = None
 CAP = 1_000_000.0
 BUY_C, SELL_C = 0.0005, 0.0010
 ROUTES = ['auction','lhb','theme','logic','limitup','master']
+
+
+def ledger_weekly(d):
+    """读取唯一结算账本的周统计；失败不阻断周考核，只留痕。"""
+    import importlib.util
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '_ops', 'ledger.py')
+    spec = importlib.util.spec_from_file_location('review_ledger', path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.weekly(d)
 RNAME = {'auction':'第一路·竞价','lhb':'第二路·席位','theme':'第三路·题材',
          'logic':'第四路·产业逻辑','limitup':'第五路·涨停质量','master':'总·情绪总裁决'}
 PAGE = {'auction':'auction.html','lhb':'lhb.html','theme':'theme.html',
@@ -95,7 +105,8 @@ def load_bars(code):
                             except Exception: pass
                             out[dt] = (float(row['open']),float(row['high']),float(row['low']),float(row['close']),vol)
                         except Exception: pass
-        except Exception: pass
+        except Exception as exc:
+            print(f"[WARN] load_bars {code}: {type(exc).__name__}: {exc}", file=sys.stderr)
     _bcache[code] = out
     return out
 
@@ -573,6 +584,17 @@ def weekly(d):
                          '全T2开均pct':round(sum(ao)/len(ao),2),'全T2收均pct':round(sum(ac)/len(ac),2),
                          '跳过(顺延/缺bars)':skip,'口径':'反事实仅归因,非战绩'}
     out['卖腿反事实'] = cf
+    try:
+        out['账本统计'] = ledger_weekly(d)
+        for route, agent in (out.get('agents') or {}).items():
+            ls = (out['账本统计'].get('routes') or {}).get(route) or {}
+            agent['账本样本'] = ls.get('n')
+            if not ls:
+                agent['判定效力'] = 'no_ledger'
+            else:
+                agent['判定效力'] = 'insufficient' if ls.get('status') == 'insufficient' else 'ok'
+    except Exception as exc:
+        out['账本统计'] = {'error': type(exc).__name__ + ': ' + str(exc)[:200]}
     p = os.path.join(simdir(),'周考核_%s.json'%d); jsave(p,out)
     print('路内池基准:',json.dumps(pools,ensure_ascii=False))
     print('卖腿反事实:',json.dumps(cf,ensure_ascii=False))

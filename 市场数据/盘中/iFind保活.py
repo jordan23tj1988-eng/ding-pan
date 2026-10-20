@@ -35,9 +35,16 @@ def check_process():
         # 拉起
         r2 = subprocess.run(
             ["powershell", "-NoProfile", "-Command",
-             "Start-Process -FilePath '%s' -WindowStyle Hidden" % SC_PATH],
+             "Start-Process -FilePath '%s' -WorkingDirectory 'D:\\THSDataInterface_Windows' -WindowStyle Hidden" % SC_PATH],
             capture_output=True, text=True, timeout=30)
-        return True
+        import time
+        time.sleep(7)
+        r3 = subprocess.run(["tasklist", "/FI", "IMAGENAME eq SuperCommand.exe"],
+                            capture_output=True, text=True, encoding="gbk", timeout=30)
+        if "SuperCommand.exe" in r3.stdout:
+            return True
+        FAILS.append("SuperCommand 拉起后仍未在岗(可能需交互登录/授权)")
+        return False
     except Exception as e:
         FAILS.append("SuperCommand 检查异常: %s" % e)
         return False
@@ -72,7 +79,11 @@ except Exception as e:
         out = (r.stdout or "").strip()
         ok = "login_rc=0" in out and ("rt_ok" in out or "rt_fail" not in out)
         if not ok:
-            FAILS.append("login/取数失败: %s" % out[-300:])
+            if "login_rc=-2" in out:
+                FAILS.append("iFinD 登录被拒(rc=-2)：账号/密码错误或权限过期；"
+                             "请更新 D:\\股票数据\\_ifind_auth.json 后重跑")
+            else:
+                FAILS.append("login/取数失败: %s" % out[-300:])
         return out
     except Exception as e:
         FAILS.append("spawn 异常: %s" % e)

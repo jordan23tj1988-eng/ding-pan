@@ -738,6 +738,51 @@ def _write_theme_freeze(date, build_id, theme_path):
     return record
 
 
+def _fold_timelines_csv(site):
+    """C6 时间线折叠统一后处理(20261019): 每页首个/全部 <div class="tl"> 保留最新1条 tli 外露,
+    其余包进 <details class="chain tlfold">。幂等: 已含 tlfold 的块不动。
+    动机: auction/cycle/limitup 的认知时间线由各自模块渲染, 未做折叠 → 触发哨兵 C6。"""
+    from pathlib import Path as _P
+    import re as _r
+    for p in sorted(_P(site).glob('*.html')):
+        s = p.read_text(encoding='utf-8')
+        if '<div class="tl">' not in s:
+            continue
+        out, pos, changed = [], 0, False
+        while True:
+            i = s.find('<div class="tl">', pos)
+            if i < 0:
+                out.append(s[pos:])
+                break
+            depth, end = 0, None
+            for m in _r.finditer(r'<div\b|</div>', s[i:]):
+                if m.group(0) == '</div>':
+                    depth -= 1
+                    if depth == 0:
+                        end = i + m.end()
+                        break
+                else:
+                    depth += 1
+            if end is None:
+                out.append(s[pos:])
+                break
+            out.append(s[pos:i])
+            block = s[i:end]
+            inner = block[len('<div class="tl">'):-len('</div>')]
+            parts = _r.split(r'(?=<div class="tli)', inner)
+            items = [x for x in parts[1:] if x.strip()]
+            if 'tlfold' in block or len(items) < 2:
+                out.append(block)
+            else:
+                out.append('<div class="tl">' + parts[0] + items[0]
+                           + '<details class="chain tlfold"><summary><b>更早的认知迭代</b> %d条</summary><div class="inner">' % (len(items) - 1)
+                           + ''.join(items[1:]) + '</div></details></div>')
+                changed = True
+            pos = end
+        if changed:
+            p.write_text(''.join(out), encoding='utf-8')
+
+
 def _postprocess_site(site_dir, date):
     """页面发布统一后处理：只接受 staging/release 目录，禁止直接改现站 theme.html。
 
@@ -801,6 +846,7 @@ def _postprocess_site(site_dir, date):
     if cp.returncode != 0:
         raise RuntimeError('lhb visual repair failed: ' + str(lhb_repair) + '\n'
                            + cp.stdout[-2000:] + cp.stderr[-2000:])
+    _fold_timelines_csv(site)
     blocks = _sync_capability_blocks(site, date, root=data_root)
     print('统一后处理完成:', site, '| 标准能力模块(七页)', ' '.join(blocks), '| cycle/lhb 黄金视觉锁',
           '| 能力数据根', data_root)

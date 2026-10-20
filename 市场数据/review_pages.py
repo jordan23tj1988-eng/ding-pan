@@ -845,15 +845,17 @@ def _theme(model, root):
                     _add(model,value,'lifecycle','condition' if '判据' in pointer else 'evidence','题材生命周期判断_'+d+'.json',pointer)
 
 def _source_record(path,root,d=None):
-    # 零后视镜: 温度表/先行指标表按目标日截断后再入内容视图; 但 sha256 必须记**整文件**哈希,
-    # 与发布器(review_publish 证据校验: digest(contained(root,source))==e['sha256'])及契约口径一致。
-    # 视图口径另以 hash_scope/as_of 标注, 消费者可按 _asof_json_text 复算, 不许把视图哈希当文件指纹。
+    # 零后视镜: 温度表/先行指标表按目标日截断后再入内容视图。
+    # 哈希口径与 _verify_evidence 保持一致：这两个文件必须用 as-of 前缀哈希，
+    # 否则未来值一改，历史日的"证据指纹"就会漂移（20261018 修复）。
     scoped=bool(d and path.name in {'_市场温度表.json','_情绪先行指标.json'})
     raw=path.read_bytes()
-    rec={'path':path.relative_to(root).as_posix(),'sha256':sha256(raw).hexdigest()}
     if scoped:
-        rec.update({'hash_scope':'asof_prefix','as_of':d})
-    return rec
+        scoped_raw=_asof_json_text(path,d).encode('utf-8')
+        rec={'path':path.relative_to(root).as_posix(),'sha256':sha256(scoped_raw).hexdigest(),
+             'file_sha256':sha256(raw).hexdigest(),'hash_scope':'asof_prefix','as_of':d}
+        return rec
+    return {'path':path.relative_to(root).as_posix(),'sha256':sha256(raw).hexdigest()}
 
 def _pure_renderer(route,root,d):
     path=Path(__file__).resolve().parent/('module_render_'+route+'.py')
@@ -1109,11 +1111,20 @@ def _components(model,root):
             k = cycle_body.find(b, i + 1)
             return cycle_body[i:k] if k > i else cycle_body[i:]
 
-        need_vol = 'class="steps"' not in _cseg('一 量能台阶', '二 先行指标')
-        need_lead = '<svg' not in _cseg('二 先行指标', '三 情绪')
+        def _has_block(seg, *classes):
+            """段落是否已自带可视化块：认结构类名/图形，不再只认单一黄金版标记。"""
+            if not seg:
+                return False
+            if re.search(r'<svg|<table|class="(?:%s)"' % '|'.join(classes), seg):
+                return True
+            return bool(re.search(r'class="card"', seg) and len(re.sub(r'<[^>]+>', '', seg)) >= 40)
+
+        need_vol = not _has_block(_cseg('一 量能台阶', '二 先行指标'), 'steps')
+        need_lead = not _has_block(_cseg('二 先行指标', '三 情绪'), 'lead')
         need_vote = ('<!--VOTEBOARD-->' not in _cseg('三 情绪', '四 连板')
-                     and '<!--MACHVOTE-->' not in cycle_body)
-        need_ladder = 'class="cols"' not in _cseg('四 连板', '五 攻防')
+                     and '<!--MACHVOTE-->' not in cycle_body
+                     and not _has_block(_cseg('三 情绪', '四 连板'), 'stages'))
+        need_ladder = not _has_block(_cseg('四 连板', '五 攻防'), 'cols', 'ladbar')
         table=_read_json_asof(learn/'_市场温度表.json',d) if (learn/'_市场温度表.json').exists() else {}
         if need_vol:
             if d in table:generated('VOLSTEP','volume','cycle','r_mach_volstep',['_市场温度表.json'])

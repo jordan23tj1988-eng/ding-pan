@@ -1,0 +1,76 @@
+{
+ "at": "20261016",
+ "applied": true,
+ "total": 4256,
+ "counts": {
+  "archived": 3271,
+  "expired": 54,
+  "needs_spec": 688,
+  "open": 243
+ },
+ "routes": {
+  "auction": {
+   "archived": 544,
+   "needs_spec": 57,
+   "open": 75
+  },
+  "cycle": {
+   "archived": 30
+  },
+  "lhb": {
+   "archived": 647,
+   "needs_spec": 85,
+   "open": 66
+  },
+  "limitup": {
+   "archived": 1182,
+   "needs_spec": 192,
+   "open": 7
+  },
+  "logic": {
+   "expired": 28,
+   "archived": 507,
+   "needs_spec": 23,
+   "open": 70
+  },
+  "master": {
+   "expired": 26,
+   "archived": 48,
+   "needs_spec": 232
+  },
+  "theme": {
+   "archived": 313,
+   "needs_spec": 99,
+   "open": 25
+  }
+ },
+ "needs_spec_or_expired": 742,
+ "sample_ids": [
+  "cognition:logic:2026-09-10:0:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+  "cognition:logic:2026-09-10:1:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+  "cognition:master:2026-09-10:0:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+  "cognition:master:2026-09-10:1:冰点中单一路B档不足以推翻四路C档",
+  "cognition:logic:2026-09-10:2:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+  "cognition:logic:2026-09-10:3:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+  "cognition:logic:2026-09-10:5:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+  "cognition:logic:2026-09-10:6:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+  "cognition:master:2026-09-10:4:缺失盘中数据只能降低置信度，不能被解释为方向信号",
+  "cognition:master:2026-09-10:5:冰点中单一路B档不足以推翻四路C档",
+  "cognition:theme:2026-09-22:0:家居用品宽5高6、出版宽4高5形成盘面最强结构，但A档催化为0/",
+  "cognition:lhb:2026-09-23:0:今日机器Top5中，000993是跌停中的S档逆势接筹，0005",
+  "cognition:limitup:2026-09-23:0:当日新华传媒命中6条规则、抓龙率26.0%居前，但一字≤9:25",
+  "cognition:limitup:2026-09-23:1:20260923最高板由6板降至4板但4板扩为2只、3板有7只，",
+  "cognition:logic:2026-09-10:7:当日：预增线与涨停资金继续脱钩。可证伪：若后续模板链内出现≥2只",
+  "cognition:logic:2026-09-10:8:当日：行业兜底造成宽度幻觉，20260910为35/35 B行业",
+  "cognition:master:2026-09-23:0:高标存续、竞价高开和单席位净买都不能替代接力宽度与可执行收益。",
+  "cognition:master:2026-09-23:1:正式荐票先过股票池契约，再讨论基本面和位置。",
+  "cognition:master:2026-09-23:2:冰点日必须把研究层B级雷达与交易层C级执行分开。",
+  "cognition:master:2026-09-10:7:缺失盘中数据只能降低置信度，不能被解释为方向信号"
+ ],
+ "definitions": {
+  "verified": "review_log 有 true/false 或 validation 已判定",
+  "needs_spec": "有 falsifiable_rule，30 天内需补 metric/op/threshold/due_d",
+  "expired": "有规则但超 30 天未补规格，停止计入能力",
+  "archived": "无可证伪规则的纯经验，超 14 天归档（不删除）"
+ }
+}

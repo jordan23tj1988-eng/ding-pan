@@ -32,6 +32,7 @@ def rd(p):
 def fetch_tencent(codes):
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
     url = "https://qt.gtimg.cn/q=" + ",".join(codes)
+    last_err = None
     for att in range(3):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://gu.qq.com/"})
@@ -47,20 +48,25 @@ def fetch_tencent(codes):
                             "open": float(f[5]), "chg": float(f[32]), "high": float(f[33]),
                             "low": float(f[34]), "limitup": float(f[47]), "ts": f[30]}
             return out
-        except Exception:
-            pass
+        except Exception as exc:
+            last_err = exc
+    if last_err is not None:
+        print(f"[WARN] fetch_tencent: {type(last_err).__name__}: {last_err}", file=sys.stderr)
     return {}
 
 def ths_get(path, key):
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    last_err = None
     for att in range(3):
         try:
             req = urllib.request.Request("https://fuyao.aicubes.cn" + path, headers={"X-api-key": key})
             d = json.loads(opener.open(req, timeout=20).read().decode("utf-8"))
             if d.get("code") == 0:
                 return d["data"]
-        except Exception:
-            pass
+        except Exception as exc:
+            last_err = exc
+    if last_err is not None:
+        print(f"[WARN] ths_get {path}: {type(last_err).__name__}: {last_err}", file=sys.stderr)
     return None
 
 def ths_key():
@@ -237,8 +243,8 @@ def load_cog():
             for e in d.get("条目", []):
                 for k, tip in (e.get("锚") or {}).items():
                     _COG.append({"route": route, "键": k, "提示": tip})
-        except Exception:
-            pass
+        except Exception as exc:
+            print(f"[WARN] load_cog {route}/{fn}: {type(exc).__name__}: {exc}", file=sys.stderr)
     return _COG
 
 def cog_match(ctx):
@@ -255,8 +261,8 @@ def rd_lj(fn, default):
     if os.path.exists(p):
         try:
             return json.loads(rd(p))
-        except Exception:
-            pass
+        except Exception as exc:
+            print(f"[WARN] rd_lj {fn}: {type(exc).__name__}: {exc}", file=sys.stderr)
     return default
 
 def execute_trades(cards, q, trig, dry):

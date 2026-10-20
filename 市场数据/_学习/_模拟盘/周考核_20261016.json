@@ -1,48 +1,60 @@
 {
  "week_end": "20261016",
- "基准周收益pct": -8.41,
+ "基准周收益pct": -10.22,
  "agents": {
   "auction": {
    "名": "第一路·竞价",
-   "周收益pct": -0.7,
+   "周收益pct": -0.85,
    "判定": "不合格·须重训并写优化方向报告",
    "原因": [
     "绝对收益为负"
-   ]
+   ],
+   "账本样本": 6,
+   "判定效力": "insufficient"
   },
   "lhb": {
    "名": "第二路·席位",
-   "周收益pct": -0.13,
-   "判定": "不合格·须重训并写优化方向报告",
-   "原因": [
-    "绝对收益为负"
-   ]
+   "周收益pct": 0.19,
+   "判定": "合格·写简短周记",
+   "原因": [],
+   "账本样本": 4,
+   "判定效力": "insufficient"
   },
   "theme": {
    "名": "第三路·题材",
-   "周收益pct": 0.0,
-   "判定": "合格·写简短周记",
-   "原因": []
+   "周收益pct": -0.46,
+   "判定": "不合格·须重训并写优化方向报告",
+   "原因": [
+    "绝对收益为负"
+   ],
+   "账本样本": 4,
+   "判定效力": "insufficient"
   },
   "logic": {
    "名": "第四路·产业逻辑",
-   "周收益pct": 0.14,
+   "周收益pct": 0.02,
    "判定": "合格·写简短周记",
-   "原因": []
+   "原因": [],
+   "账本样本": 2,
+   "判定效力": "insufficient"
   },
   "limitup": {
    "名": "第五路·涨停质量",
    "周收益pct": 0.0,
    "判定": "合格·写简短周记",
-   "原因": []
+   "原因": [],
+   "账本样本": 0,
+   "判定效力": "insufficient"
   },
   "master": {
    "名": "总·情绪总裁决",
-   "周收益pct": -0.67,
+   "周收益pct": -0.83,
    "判定": "不合格·须重训并写优化方向报告",
    "原因": [
     "绝对收益为负"
-   ]
+   ],
+   "账本样本": null,
+   "判定效力": "ok"
   }
  },
  "路内池基准": {
@@ -90,5 +102,170 @@
    ]
   }
  },
- "卖腿反事实": {}
+ "卖腿反事实": {
+  "auction": {
+   "n": 1,
+   "实际均pct": 1.83,
+   "全T2开均pct": 1.83,
+   "全T2收均pct": -6.55,
+   "跳过(顺延/缺bars)": 0,
+   "口径": "反事实仅归因,非战绩"
+  },
+  "lhb": {
+   "n": 1,
+   "实际均pct": -1.19,
+   "全T2开均pct": -1.19,
+   "全T2收均pct": 1.67,
+   "跳过(顺延/缺bars)": 0,
+   "口径": "反事实仅归因,非战绩"
+  },
+  "master": {
+   "n": 1,
+   "实际均pct": 1.83,
+   "全T2开均pct": 1.83,
+   "全T2收均pct": -6.55,
+   "跳过(顺延/缺bars)": 0,
+   "口径": "反事实仅归因,非战绩"
+  }
+ },
+ "账本统计": {
+  "week_end": "20261016",
+  "week_start": "20261012",
+  "口径": "荐票口径；T+1开盘买→T+1收盘卖；n<10 不足样本，不参与合格判定",
+  "routes": {
+   "limitup": {
+    "n": 0,
+    "status": "insufficient"
+   },
+   "theme": {
+    "n": 4,
+    "win_rate": 0.25,
+    "mean_pct": -2.2175,
+    "median_pct": 0.0,
+    "std_pct": 4.6849,
+    "ci95_mean": [
+     -6.93,
+     0.2775
+    ],
+    "t_stat": -0.947,
+    "p_value": 0.3438,
+    "expectancy_pp": -2.2175,
+    "avg_win_pct": 0.37,
+    "avg_loss_pct": -3.08,
+    "profit_factor": 0.04,
+    "max_drawdown_pp": -9.24,
+    "mean_excess_pp": -0.8075,
+    "n_r": 0,
+    "mean_r": null,
+    "brier": null,
+    "n_brier": 0,
+    "cost_sensitivity": {
+     "0bp": -2.2175,
+     "10bp": -2.3175,
+     "20bp": -2.4175,
+     "30bp": -2.5175
+    },
+    "breakeven_cost_bps": 0.0,
+    "q_value_bh": 0.3438,
+    "status": "insufficient"
+   },
+   "logic": {
+    "n": 2,
+    "win_rate": 0.5,
+    "mean_pct": -2.655,
+    "median_pct": -2.655,
+    "std_pct": 7.9125,
+    "ci95_mean": [
+     -8.25,
+     2.94
+    ],
+    "t_stat": -0.475,
+    "p_value": 0.6351,
+    "expectancy_pp": -2.655,
+    "avg_win_pct": 2.94,
+    "avg_loss_pct": -8.25,
+    "profit_factor": 0.3564,
+    "max_drawdown_pp": -8.25,
+    "mean_excess_pp": -0.61,
+    "n_r": 0,
+    "mean_r": null,
+    "brier": null,
+    "n_brier": 0,
+    "cost_sensitivity": {
+     "0bp": -2.655,
+     "10bp": -2.755,
+     "20bp": -2.855,
+     "30bp": -2.955
+    },
+    "breakeven_cost_bps": 0.0,
+    "q_value_bh": 0.6351,
+    "status": "insufficient"
+   },
+   "auction": {
+    "n": 6,
+    "win_rate": 0.5,
+    "mean_pct": 4.5184,
+    "median_pct": 3.4335,
+    "std_pct": 7.8843,
+    "ci95_mean": [
+     -0.9254,
+     10.284
+    ],
+    "t_stat": 1.404,
+    "p_value": 0.1604,
+    "expectancy_pp": 4.5184,
+    "avg_win_pct": 11.2931,
+    "avg_loss_pct": -2.2563,
+    "profit_factor": 5.0051,
+    "max_drawdown_pp": -4.5161,
+    "mean_excess_pp": null,
+    "n_r": 0,
+    "mean_r": null,
+    "brier": null,
+    "n_brier": 0,
+    "cost_sensitivity": {
+     "0bp": 4.5184,
+     "10bp": 4.4184,
+     "20bp": 4.3184,
+     "30bp": 4.2184
+    },
+    "breakeven_cost_bps": 451.84,
+    "q_value_bh": 0.1604,
+    "status": "insufficient"
+   },
+   "lhb": {
+    "n": 4,
+    "win_rate": 0.25,
+    "mean_pct": -0.1101,
+    "median_pct": -1.6764,
+    "std_pct": 5.5788,
+    "ci95_mean": [
+     -3.8926,
+     5.2386
+    ],
+    "t_stat": -0.039,
+    "p_value": 0.9685,
+    "expectancy_pp": -0.1101,
+    "avg_win_pct": 7.8528,
+    "avg_loss_pct": -2.7644,
+    "profit_factor": 0.9469,
+    "max_drawdown_pp": -8.2933,
+    "mean_excess_pp": null,
+    "n_r": 0,
+    "mean_r": null,
+    "brier": null,
+    "n_brier": 0,
+    "cost_sensitivity": {
+     "0bp": -0.1101,
+     "10bp": -0.2101,
+     "20bp": -0.3101,
+     "30bp": -0.4101
+    },
+    "breakeven_cost_bps": 0.0,
+    "q_value_bh": 0.9685,
+    "status": "insufficient"
+   }
+  },
+  "path": "D:\\股票数据\\市场数据\\_学习\\_模拟盘\\周统计_20261016.json"
+ }
 }

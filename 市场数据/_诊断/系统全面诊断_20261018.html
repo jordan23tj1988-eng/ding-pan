@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>复盘系统全面诊断 · 2026-10-18</title>
+<style>
+:root{
+  --bg:#0b0f14; --card:#141a21; --card2:#10161d; --line:#27313d; --line2:#1b232c;
+  --txt:#e6edf3; --mut:#8b98a8; --dim:#5d6b7a;
+  --red:#ff6b6b; --amb:#f0b429; --grn:#3ddc97; --blu:#5aa9ff; --pur:#b58cff;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+ font:15px/1.75 -apple-system,"Segoe UI","Microsoft YaHei",system-ui,sans-serif;
+ -webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:34px 26px 80px}
+a{color:var(--blu);text-decoration:none}
+code{background:#0a0e13;border:1px solid var(--line2);border-radius:5px;padding:1px 6px;
+ font:12.5px/1.6 ui-monospace,Consolas,monospace;color:#c9d6e4}
+h1{font-size:30px;line-height:1.35;margin:0 0 6px;letter-spacing:-.4px}
+h2{font-size:20px;margin:44px 0 14px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;margin:26px 0 10px;color:#dfe8f2}
+p{margin:9px 0}
+.sub{color:var(--mut);font-size:13.5px}
+.tag{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:20px;border:1px solid var(--line);
+ color:var(--mut);margin-right:6px;vertical-align:2px}
+.hero{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;margin:22px 0 8px}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+.verdict{background:linear-gradient(160deg,#151d26,#11161d);border:1px solid var(--line);
+ border-radius:14px;padding:22px 24px}
+.score{display:flex;align-items:baseline;gap:10px;margin:2px 0 4px}
+.score b{font-size:46px;letter-spacing:-2px;line-height:1}
+.score span{color:var(--mut);font-size:13px}
+.gate{color:var(--amb);font-size:13px}
+.one{font-size:15.5px;color:#cfdae6;margin-top:12px;border-left:3px solid var(--red);padding-left:12px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+.kpi .n{font-size:24px;font-weight:650;letter-spacing:-.5px}
+.kpi .l{font-size:12px;color:var(--mut);margin-top:1px}
+.kpi .h{font-size:11.5px;color:var(--dim);margin-top:5px}
+.red{color:var(--red)}.amb{color:var(--amb)}.grn{color:var(--grn)}.blu{color:var(--blu)}.pur{color:var(--pur)}
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 4px}
+@media(max-width:860px){.findings{grid-template-columns:1fr}}
+.f{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 17px}
+.f .num{font-size:11px;color:var(--dim);letter-spacing:1.4px}
+.f b{display:block;font-size:15px;margin:6px 0 7px}
+.f p{font-size:13px;color:var(--mut);margin:0}
+table{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:13.5px}
+th{text-align:left;color:var(--mut);font-weight:500;font-size:12px;letter-spacing:.3px;
+ padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{height:6px;background:#0a0e13;border-radius:4px;overflow:hidden;margin-top:6px;min-width:80px}
+.bar i{display:block;height:100%;border-radius:4px}
+.s2{background:var(--red)}.s3{background:var(--amb)}.s4{background:var(--grn)}
+.note{background:var(--card2);border:1px solid var(--line2);border-left:3px solid var(--blu);
+ border-radius:8px;padding:12px 15px;color:#b9c7d6;font-size:13.5px;margin:12px 0}
+.warn{border-left-color:var(--amb)}
+.bad{border-left-color:var(--red)}
+.good{border-left-color:var(--grn)}
+ul,ol{margin:8px 0 8px 20px;padding:0}
+li{margin:5px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.grid2{grid-template-columns:1fr}}
+.road{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:4px 18px 14px;margin:14px 0}
+.road h3{display:flex;align-items:center;gap:9px;margin:16px 0 8px}
+.pill{font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600;letter-spacing:.5px}
+.p0{background:rgba(255,107,107,.12);color:var(--red);border:1px solid rgba(255,107,107,.35)}
+.p1{background:rgba(240,180,41,.12);color:var(--amb);border:1px solid rgba(240,180,41,.35)}
+.p2{background:rgba(90,169,255,.12);color:var(--blu);border:1px solid rgba(90,169,255,.35)}
+.item{display:grid;grid-template-columns:26px 1fr;gap:8px;padding:9px 0;border-bottom:1px dashed var(--line2)}
+.item:last-child{border-bottom:none}
+.item .idx{color:var(--dim);font-size:12px;padding-top:2px}
+.item b{font-size:14px}
+.item .acc{color:var(--mut);font-size:12.5px;margin-top:3px}
+.mono{font-family:ui-monospace,Consolas,monospace;font-size:12px;color:var(--dim)}
+.foot{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);color:var(--dim);font-size:12px}
+.chart{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.funnel{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+.funnel .row{display:grid;grid-template-columns:118px 1fr 96px;gap:10px;align-items:center;font-size:12.5px}
+.funnel .track{height:20px;background:#0a0e13;border-radius:5px;overflow:hidden}
+.funnel .fill{height:100%;display:flex;align-items:center;justify-content:flex-end;
+ padding-right:7px;font-size:11px;color:#08100c;font-weight:600}
+.ev{font-size:12px;color:var(--dim)}
+.kbd{font-size:11.5px;color:var(--mut);border:1px solid var(--line);border-radius:5px;padding:1px 6px;background:#0a0e13}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="sub">A股短线情绪复盘系统 · 只读诊断 · 数据截至 2026-10-16 收盘 · 诊断时间 2026-10-18</div>
+<h1>复盘系统全面诊断：判断层已是上游，度量层还在下游</h1>
+<p class="sub">范围：<code>D:\股票数据\市场数据</code>（139 个生产脚本 / 30,950 行）+ 30 个定时作业 + 5 路判断产物 + 结算账本 + 模拟盘。本次<b>未修改任何代码、配置或数据</b>。</p>
+
+<div class="hero">
+  <div class="verdict">
+    <div class="sub">综合成熟度</div>
+    <div class="score"><b class="amb">2.5</b><span>/ 5 · L3 流程化</span></div>
+    <div class="bar" style="max-width:320px"><i class="s3" style="width:50%"></i></div>
+    <div class="gate" style="margin-top:10px">行业顶级门槛 = 4.5 / 5（L5）· 当前差 1 个成熟度台阶</div>
+    <div class="one">判断与证据链已经比多数机构更严谨；但这套系统<b>还不能证明自己是对的</b>——度量层、可靠性层、统计协议没有跟上判断层。</div>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="n red">36.6%</div><div class="l">全系统荐票胜率</div><div class="h">301/823 笔 · 均收 −0.70%</div></div>
+    <div class="kpi"><div class="n red">27%</div><div class="l">预测可机判率</div><div class="h">230 条唯一预测，仅 62 条 true/false</div></div>
+    <div class="kpi"><div class="n red">0</div><div class="l">认知条目通过验证</div><div class="h">4,256 条认知迭代 · 0 验证 · 0 能力</div></div>
+    <div class="kpi"><div class="n amb">72%</div><div class="l">交易日有发布</div><div class="h">9/7 起 18/25 · 按时率仅 6/18</div></div>
+  </div>
+</div>
+
+<div class="findings">
+  <div class="f"><div class="num">FINDING 01</div><b>没有“可证明的 alpha”</b>
+  <p>五路合计 823 笔、胜率 36.6%、均收 −0.70%；唯一正均收是涨停质量 +0.16%（n=89）。系统有净值曲线，却没有 R 倍数、期望值、置信区间、基准相对——赚亏都说不清是能力还是运气。</p></div>
+  <div class="f"><div class="num">FINDING 02</div><b>可靠性是最大短板</b>
+  <p>9/7 以来 25 个交易日有 7 天没有可发布复盘（9/14–9/18 连续 5 日全断）；唯一 OS 级兜底调度 <code>StockDailyChain</code> 处于禁用；6 个 cron 停用；watchdog 连续失败 15 次。</p></div>
+  <div class="f"><div class="num">FINDING 03</div><b>门禁在“放行”而不是“拦截”</b>
+  <p>发布 manifest 8 项检查里 logic/browser 两项 <code>exit_code=None</code> 仍 published=true；总审 4 项发布门禁 FAIL（含 600668 无结算行的覆盖缺口），结论写的是“有条件放行、不得据此加仓”，但没有硬阻断；3 个测试红了没有 CI 接管。</p></div>
+</div>
+
+<h2>0. 结论先行</h2>
+<div class="grid2">
+  <div>
+    <h3>工程实现：2.3 / 5（L2.5）</h3>
+    <p class="sub">骨架完整、发布可追溯，但“靠人守”的成分仍然很高：调度单点、无 CI、无保留策略、生产目录无版本库、巨石文件 2,000 行。</p>
+    <ul>
+      <li><b class="grn">强</b>：release manifest + sha256 + 4,564 个 source hash，页面可追溯到源文件；数据契约与质量标记完整。</li>
+      <li><b class="red">弱</b>：<code>.review_staging</code> 已 ≥7.3GB / 35.6 万文件；95 处静默 <code>except</code>；执行历史只留 1,000 行（约 17 天）。</li>
+    </ul>
+  </div>
+  <div>
+    <h3>复盘能力：2.6 / 5（L3.5）</h3>
+    <p class="sub">“怎么想”已经成型：五路独立、总审裁决、盲区声明、结构化可证伪预测；短板在“怎么知道自己想对了”。</p>
+    <ul>
+      <li><b class="grn">强</b>：fact 卡 17/17 <code>quality=ok</code>；总审 D1–D4 分歧裁决 + 指派 + 盲区；预测带 <code>field/op/threshold</code>。</li>
+      <li><b class="red">弱</b>：预测 58% 不可判定或模糊；105 个预测 id 重复结算、49 个状态互相冲突；165 条自指派只有 27 条完成。</li>
+    </ul>
+  </div>
+</div>
+
+<div class="note bad"><b>一句话根因：</b>这套系统的“认知生产能力”远强于“认知结算能力”。每天产出大量判断、证据、任务，但没有一个强制闭环把它们变成可验证、可累计、可复利的资产——于是判断越来越精致，系统却没有变强。</div>
+
+<h2>1. “行业顶级”到底指什么</h2>
+<p class="sub">先把标准钉死，否则“顶级”只是形容词。以下 5 条硬门槛，任何一条不满足都不算顶级。</p>
+<table>
+<tr><th style="width:150px">硬门槛</th><th>定义</th><th style="width:300px">本系统现状</th><th style="width:70px">判定</th></tr>
+<tr><td><b>可复现</b></td><td>任一历史页面可由 manifest 逐字节重建；判断只使用决策时点前数据</td><td>release 有 page_hashes + source_hashes，本项接近达标；但 as-of 哈希测试当前为红，零后视镜只在注释层声明</td><td class="grn">接近</td></tr>
+<tr><td><b>可度量</b></td><td>每个判断都落到唯一、幂等、可结算的账本；有基准、有置信区间、有校准</td><td>账本分散在 7+ 个 jsonl；预测重复结算；无置信区间/校准曲线</td><td class="red">未达</td></tr>
+<tr><td><b>可靠</b></td><td>≥95% 交易日按时交付；失败必告警；无静默断链</td><td>按时率 6/18；7 个交易日无发布；6 个 cron 停用；失败靠人发现</td><td class="red">未达</td></tr>
+<tr><td><b>研究协议</b></td><td>样本外/holdout、多重比较校正、执行成本与容量模型</td><td>有 IC/t 值、19,163 样本质量库；无 walk-forward、无 BH 校正、无滑点模型</td><td class="red">未达</td></tr>
+<tr><td><b>能力复利</b></td><td>验证过的能力进入生产，未被验证的自动淘汰</td><td>自主拓展 2 项已验证并投用；认知迭代 4,256→0</td><td class="amb">半达</td></tr>
+</table>
+
+<h2>2. 工程实现：8 维评分</h2>
+<table>
+<tr><th style="width:150px">维度</th><th style="width:78px">得分</th><th>实测证据</th><th style="width:210px">关键差距</th></tr>
+<tr><td>架构与模块边界</td><td class="n"><span class="red">2.0</span><div class="bar"><i class="s2" style="width:40%"></i></div></td>
+<td>139 个根目录脚本 / 30,950 行；<code>review_pages.py</code> 2,148 行、<code>review_publish.py</code> 1,998 行；56 个脚本未被每日链 prompt/链路地图直接引用。</td>
+<td>无包边界与依赖注入，改一处渲染波及全链；死代码拉高认知成本。</td></tr>
+<tr><td>版本控制与变更治理</td><td class="n"><span class="red">2.0</span><div class="bar"><i class="s2" style="width:40%"></i></div></td>
+<td>生产目录不是 git 仓库；靠 robocopy 到 <code>ding-pan仓库</code> 后提交（当前镜像与生产 0 差异）；<code>_变更总账.md</code> 469KB / 274 条手工登记。</td>
+<td>无原子回滚、无分支评审、无 blame；变更正确性依赖“记得写总账”。</td></tr>
+<tr><td>测试</td><td class="n"><span class="amb">3.0</span><div class="bar"><i class="s3" style="width:60%"></i></div></td>
+<td><code>pytest</code> 401 项：397 通过、3 失败、1 deselected，耗时 444s。失败含 as-of 哈希、cycle 历史页、缺判断兜底 3 类。</td>
+<td>红灯无人管；无 CI；测试不进入发布门禁；7.4 分钟的套件没有夜间自动跑。</td></tr>
+<tr><td>发布与门禁</td><td class="n"><span class="amb">3.0</span><div class="bar"><i class="s3" style="width:60%"></i></div></td>
+<td>manifest 记 page_hashes、publisher hash、source_hashes，<code>errors=[]</code>；8 项检查中 logic/browser 的 <code>exit_code=None</code>，仍 <code>published=true</code>。</td>
+<td><code>None</code> 被当成通过；总审 4 项 FAIL 只写“有条件放行”，无硬阻断；健康检查在部署后 2 小时才跑。</td></tr>
+<tr><td>调度与可观测性</td><td class="n"><span class="red">1.5</span><div class="bar"><i class="s2" style="width:30%"></i></div></td>
+<td>30 个 cron，6 个停用；failure_streak：iFinD 18、watchdog 15、closeout 7、daily-review 4；<code>executions.db</code> 仅保留 1,000 行（约 17 天）；<code>StockDailyChain</code> 已禁用。</td>
+<td>唯一调度依赖 Hermes gateway；历史太短无法做季度可靠性复盘；失败无推送。</td></tr>
+<tr><td>数据工程</td><td class="n"><span class="grn">3.5</span><div class="bar"><i class="s4" style="width:70%"></i></div></td>
+<td>fact 17/17 <code>quality=ok</code>，每项带 value/source/quality/sources；龙虎榜双源校验；THS 涨停原因 &lt;80% 时东财公告兜底。</td>
+<td>主源 akshare 失败静默跳过；iFinD 长期 rc=−2；龙虎榜逐票账本停在 8/13（仅 5 日/35 行）。</td></tr>
+<tr><td>运维卫生</td><td class="n"><span class="red">1.0</span><div class="bar"><i class="s2" style="width:20%"></i></div></td>
+<td><code>.review_staging</code> ≥7.3GB / 356,187 文件（扫描 25s 超时，实际更大）；95 处静默 <code>except pass/continue</code>；<code>.bak</code>/<code>_tmp_*</code>/7 个并行运行目录。</td>
+<td>无保留策略/磁盘水位告警；备份靠复制，无校验与轮换。</td></tr>
+<tr><td>安全</td><td class="n"><span class="amb">2.5</span><div class="bar"><i class="s3" style="width:50%"></i></div></td>
+<td>凭据为本地明文 JSON（<code>_hithink_auth.json</code> / <code>_ifind_auth.json</code>），单机离线环境。</td>
+<td>单机风险可控；但无轮换、无权限审计、无密钥托管，迁移新机时是硬风险。</td></tr>
+</table>
+<div class="note warn"><b>工程侧最刺眼的一条：</b>系统已经有很好的“可追溯材料”（manifest、hash、变更总账、401 个测试），但这些材料没有变成“阻断力”。可追溯 ≠ 可控；门禁不拦人，等于没有门禁。</div>
+
+<h2>3. 复盘能力：8 维评分</h2>
+<table>
+<tr><th style="width:150px">维度</th><th style="width:78px">得分</th><th>实测证据</th><th style="width:210px">关键差距</th></tr>
+<tr><td>事实层可信度</td><td class="n"><span class="grn">4.5</span><div class="bar"><i class="s4" style="width:90%"></i></div></td>
+<td>20261016 fact 17 项全部 ok；涨停池/温度表/summary 三处口径对齐；每项标 source 与 quality；禁止把实时成交额写进历史日。</td>
+<td>仍以单一东财池为主源，主源挂掉时只能标记 partial，无法独立复算。</td></tr>
+<tr><td>判断框架与证据链</td><td class="n"><span class="grn">4.5</span><div class="bar"><i class="s4" style="width:90%"></i></div></td>
+<td>五路独立判断 + 总审；D1–D4 分歧用票数裁决（如“五路 4:1 支持盯 6111”）；盲区声明（同源风险、执行假设）；净执行清单精确到 1 只 2%。</td>
+<td>五路共享同一事实源，独立性是“视角独立”而非“数据独立”；总审自己已点出趋同盲区。</td></tr>
+<tr><td>可证伪性</td><td class="n"><span class="amb">3.0</span><div class="bar"><i class="s3" style="width:60%"></i></div></td>
+<td>预测结构化到 <code>field/op/threshold</code>，可机判；10/16 自检 6/8 命中；有 due_d 与 fail 记录。</td>
+<td>230 条唯一预测仅 62 条可判定（27%）；105 个 id 有多份结算（最多 4 份），49 个 id 状态冲突。</td></tr>
+<tr><td>统计严谨性</td><td class="n"><span class="red">1.5</span><div class="bar"><i class="s2" style="width:30%"></i></div></td>
+<td>质量库有 RankIC/ICIR/t 值、19,163 样本、双门淘汰；已知用执行口径区分 T+1 开盘与收盘。</td>
+<td>无 walk-forward/holdout；无多重比较校正（总审 MA-01 自认）；周考核只看绝对周收益，无显著性。</td></tr>
+<tr><td>绩效度量与归因</td><td class="n"><span class="red">1.5</span><div class="bar"><i class="s2" style="width:30%"></i></div></td>
+<td>五路逐票胜率/均收可算；模拟盘有净值、波动、回撤；基准净值完整（41 个日切点，−16.85%）。</td>
+<td>无 R 倍数/期望值/Sharpe/信息比率；平仓样本 n=8；无因子归因；战绩画像里 limitup/lhb 两路连逐日增益都没落盘。</td></tr>
+<tr><td>执行真实性</td><td class="n"><span class="red">2.0</span><div class="bar"><i class="s2" style="width:40%"></i></div></td>
+<td>已识别一字买不进（61.9%）、gap 闸门、封单比、开盘追买被套；推荐用执1/执2 双口径。</td>
+<td>无滑点、成交概率、容量模型；“T+1 开盘可成交”仍是系统性乐观，小盘票尤其失真。</td></tr>
+<tr><td>学习闭环</td><td class="n"><span class="red">2.0</span><div class="bar"><i class="s2" style="width:40%"></i></div></td>
+<td>自主拓展 21 条→2 项能力，12 次验证 2 次命中，确有投用回执（LHB 席位反证）；认知库 478 条、7 路齐备。</td>
+<td>认知迭代 4,256 条：0 验证、0 能力；<code>_验证台账.json</code> 停更在 7/7；165 条总审指派仅 27 条完成（16.4%）。</td></tr>
+<tr><td>连续交付</td><td class="n"><span class="red">2.0</span><div class="bar"><i class="s2" style="width:40%"></i></div></td>
+<td>9/7 起 25 个交易日，18 天有 release（72%）；中位滞后 15.2h；最好 +1.6h，最差 +96h。</td>
+<td>9/14–9/18 五个交易日只有原始数据、无任何判断产物；9/25 无数据；10/8 有判断无发布。</td></tr>
+</table>
+
+<h3>3.1 真实战绩：823 笔，没有一条路显著为正</h3>
+<table>
+<tr><th>路</th><th class="n">样本（笔/日）</th><th class="n">胜率</th><th class="n">均收</th><th class="n">相对全场</th><th>判读</th></tr>
+<tr><td>竞价池</td><td class="n">597 / 49</td><td class="n">36.2%</td><td class="n red">−0.78%</td><td class="n red">−0.35pp</td><td>样本最大，负 edge；是“覆盖广”不是“打得准”。</td></tr>
+<tr><td>龙虎榜席位</td><td class="n">90 / 43</td><td class="n">41.1%</td><td class="n amb">−0.03%</td><td class="n">—（未落盘）</td><td>胜率最高但均收≈0；逐日增益在战绩画像里缺失。</td></tr>
+<tr><td>涨停质量</td><td class="n">89 / 43</td><td class="n">37.1%</td><td class="n grn">+0.16%</td><td class="n grn">+0.95pp（n=18）</td><td>唯一正均收，t=1.66；<b>仍不显著</b>，只能算“有希望”。</td></tr>
+<tr><td>题材归位</td><td class="n">31 / 40</td><td class="n">35.5%</td><td class="n red">−0.72%</td><td class="n amb">+0.15pp</td><td>样本太小，40 天仅 31 笔，无法下结论。</td></tr>
+<tr><td>产业逻辑</td><td class="n">16 / 10</td><td class="n red">25.0%</td><td class="n red">−2.15%</td><td class="n red">−0.83pp</td><td>样本最小且最差；当前形态不具备荐票资格。</td></tr>
+<tr><td><b>合计</b></td><td class="n"><b>823</b></td><td class="n"><b class="red">36.6%</b></td><td class="n"><b class="red">−0.70%</b></td><td class="n">—</td><td>以“空仓=合格”为激励时，这个成绩被系统自己判为“合格”。</td></tr>
+</table>
+<div class="note bad"><b>口径警告：</b>模拟盘净值 −0.02%、波动 3.3%、MDD −0.6%，看起来“稳”；但那是 2% 单票小仓位 + 大量空仓的结果，<b>不能</b>当作策略 edge 的证据。真正该看的是逐票 R 与期望值——系统目前没有。</div>
+
+<h3>3.2 可证伪性漏斗：230 条预测，只有 62 条能判</h3>
+<div class="chart">
+<div class="funnel">
+  <div class="row"><span>唯一预测</span><div class="track"><div class="fill" style="width:100%;background:#5aa9ff">230</div></div><span class="ev">100%</span></div>
+  <div class="row"><span>可机判</span><div class="track"><div class="fill" style="width:27%;background:#f0b429">62</div></div><span class="ev">27.0%</span></div>
+  <div class="row"><span>判对</span><div class="track"><div class="fill" style="width:15.7%;background:#3ddc97">36</div></div><span class="ev">58.1% of 可判</span></div>
+  <div class="row"><span>判错</span><div class="track"><div class="fill" style="width:11.3%;background:#ff6b6b">26</div></div><span class="ev">41.9% of 可判</span></div>
+  <div class="row"><span>模糊 / 不可验证</span><div class="track"><div class="fill" style="width:63.5%;background:#5d6b7a">146</div></div><span class="ev">63.5%</span></div>
+</div>
+<p class="ev" style="margin:10px 0 0">另有 21 条 pending、1 条 not_triggered。重复结算：105 个 id 出现多份记录（最多 4 份），其中 49 个 id 在不同副本里状态冲突（如 unverifiable vs pending）。</p>
+</div>
+<p>这不是“预测写得不好”——预测模板本身是行业上游水平；问题在于<b>结算层不唯一、不幂等</b>。同一句话今天判 true、明天判 pending，历史命中率就无法作为能力证据。顶级做法是：一条预测一个不可变 ID，一次结算一个 canonical 结果，重算只能新增 version 并标 supersedes。</p>
+
+<h3>3.3 学习闭环：写得很多，结算很少</h3>
+<table>
+<tr><th>环节</th><th class="n">产出</th><th class="n">通过验证</th><th class="n">进入能力</th><th>状态</th></tr>
+<tr><td>自主拓展</td><td class="n">21</td><td class="n grn">2</td><td class="n grn">2</td><td>唯一真正闭环的一环；有使用回执与反向验证。</td></tr>
+<tr><td>认知迭代</td><td class="n">4,256</td><td class="n red">0</td><td class="n red">0</td><td>只写不读；没有验证规格，也没有淘汰机制。</td></tr>
+<tr><td>总审指派</td><td class="n">165</td><td class="n red">27</td><td class="n">—</td><td>完成率 16.4%；133 条“待承接”跨日堆积。</td></tr>
+<tr><td>认知库条目</td><td class="n">478</td><td class="n red">0</td><td class="n">—</td><td>250 条 unverified、227 条 status=null；1 条 unknown。</td></tr>
+<tr><td>验证台账</td><td class="n">40</td><td class="n">—</td><td class="n">—</td><td>最后更新 2026-07-07，已停更 103 天。</td></tr>
+</table>
+<div class="note warn"><b>这是“学习型系统”的最大幻觉：</b>库越大 ≠ 越强。4,256 条未验证认知是负债不是资产——它会让下一次判断引用一堆没人验证过的“经验”，并且无法区分哪条真的有用。</div>
+
+<h3>3.4 交付可靠性：72% 有发布，33% 按时</h3>
+<div class="chart">
+<div class="funnel">
+  <div class="row"><span>9/7 起交易日</span><div class="track"><div class="fill" style="width:100%;background:#5aa9ff">25</div></div><span class="ev">100%</span></div>
+  <div class="row"><span>有发布</span><div class="track"><div class="fill" style="width:72%;background:#f0b429">18</div></div><span class="ev">72%</span></div>
+  <div class="row"><span>按时（≤4h）</span><div class="track"><div class="fill" style="width:24%;background:#ff6b6b">6</div></div><span class="ev">24%</span></div>
+  <div class="row"><span>无发布</span><div class="track"><div class="fill" style="width:28%;background:#8b98a8">7</div></div><span class="ev">9/14–9/18, 9/25, 10/8</span></div>
+</div>
+<p class="ev" style="margin:10px 0 0">中位滞后 15.2h；最差 9/11 滞后 96h；10/16 周五的复盘在周日 10:21 才发布（+40.4h）。</p>
+</div>
+<p>对短线系统，<b>时效就是能力</b>。周五收盘的复盘周日才出，周一开盘前的决策价值已经衰减；连续 5 个交易日无判断产物，则直接造成认知断档——这 5 天的市场样本永久缺失。</p>
+
+<h2>4. 六个结构性根因</h2>
+<table>
+<tr><th style="width:34px">#</th><th style="width:190px">根因</th><th>为什么会导致上面的问题</th><th style="width:250px">证据</th></tr>
+<tr><td class="n">R1</td><td><b>调度单点 + 无告警</b></td><td>全部 cron 依附 Hermes gateway；gateway 不在则静默不触发；唯一 OS 兜底被禁用；失败靠翻库才发现。</td><td>9/14–9/18 五日无判断；StockDailyChain=已禁用；6 个 cron 停用；failure_streak 4/7/15/18。</td></tr>
+<tr><td class="n">R2</td><td><b>结算层不唯一</b></td><td>同一预测/荐票在多处账本重复落盘，重跑即多一份；无 canonical key、无幂等、无版本。</td><td>230 个 id / 385 条记录；105 个重复；49 个状态冲突；LHB 逐票账本停在 8/13。</td></tr>
+<tr><td class="n">R3</td><td><b>度量层缺失</b></td><td>只有胜率/均收，没有 R、期望值、置信区间、基准相对；无法判断 edge 是否真实，也无法做仓位。</td><td>周考核只看绝对周收益；平仓 n=8；无 Sharpe/Brier；limitup/lhb 无逐日增益。</td></tr>
+<tr><td class="n">R4</td><td><b>门禁不阻断</b></td><td>检查结果只写进报告，不阻断发布；<code>None</code> 当通过；FAIL 只转“有条件放行”；测试红了无 CI。</td><td>manifest 2 项 rc=None + published=true；总审 4 FAIL + 有条件放行；3 个测试失败。</td></tr>
+<tr><td class="n">R5</td><td><b>认知无结算</b></td><td>认知条目没有“验证规格/适用边界/到期日”，无法机械判定，于是只能堆积。</td><td>4,256→0；478 条中 477 条无有效状态；验证台账停更 103 天。</td></tr>
+<tr><td class="n">R6</td><td><b>生产无版本库</b></td><td>改动靠镜像同步 + 手工总账；无法 bisect、无法回滚、无法评审，重构风险高。</td><td>生产目录非 git；274 条手工变更；2,148/1,998 行巨石。</td></tr>
+</table>
+
+<h2>5. 改造路线图</h2>
+<p class="sub">按“先止血、再建度量、最后重构”排序。每项都给了可机械验收的标准；未获批准前不动手。</p>
+
+<div class="road">
+<h3><span class="pill p0">P0 · 48 小时</span>止血：让失败可见、让门禁真的拦</h3>
+<div class="item"><div class="idx">01</div><div><b>启用 OS 级兜底调度，修 watchdog 交易日口径</b>
+<div class="acc">验收：<code>StockDailyChain</code> 交易日 16:30 触发；watchdog 在周末/节假日不再 FAIL；连续 5 个交易日 0 静默失败。</div></div></div>
+<div class="item"><div class="idx">02</div><div><b>失败必告警</b>
+<div class="acc">验收：任一 cron 连续 2 次失败 → 微信/桌面推送，含 job 名、错误摘要、最后成功日；告警本身有心跳。</div></div></div>
+<div class="item"><div class="idx">03</div><div><b>门禁硬约束：<code>exit_code=None</code> 视为 FAIL；总审发布门禁含 FAIL 不得 publish</b>
+<div class="acc">验收：构造一次 rc=None 的发布，必须被拒绝；manifest 里不再出现 published=true + 非零/空 rc 并存。</div></div></div>
+<div class="item"><div class="idx">04</div><div><b>测试进发布链</b>
+<div class="acc">验收：发布前跑 <code>pytest -m "not network"</code>，3 个红灯先修或标 <code>xfail(reason)</code>；红则拒绝发布；夜间定时跑全量。</div></div></div>
+<div class="item"><div class="idx">05</div><div><b>清 staging + 保留策略</b>
+<div class="acc">验收：<code>.review_staging</code> 降到 &lt;500MB；保留最近 14 天；磁盘水位 &gt;80% 告警。</div></div></div>
+</div>
+
+<div class="road">
+<h3><span class="pill p1">P1 · 2 周</span>建度量：把“判断”变成“可结算资产”</h3>
+<div class="item"><div class="idx">06</div><div><b>唯一结算账本（canonical settlement ledger）</b>
+<div class="acc">验收：每条预测/荐票一个不可变 ID，一行 canonical 结果；重算写 version+supersedes；对 105 个重复 id 做一次性归并；给出“重复率=0、冲突率=0”的报告。</div></div></div>
+<div class="item"><div class="idx">07</div><div><b>统计层：R 倍数 / 期望值 / 置信区间 / Brier</b>
+<div class="acc">验收：每路输出 n、胜率、均收、R、期望值、bootstrap 95% CI、Brier；周考核改为“基准相对 + 最小样本 n≥30 才判合格”，空仓不计合格。</div></div></div>
+<div class="item"><div class="idx">08</div><div><b>预测可判定率 ≥70%</b>
+<div class="acc">验收：模板强制 field/op/threshold/容差；ambiguous+unverifiable 合计 ≤30%；每条预测在 due_d 后 1 个交易日内自动结算。</div></div></div>
+<div class="item"><div class="idx">09</div><div><b>认知清算：4,256 → 可验证子集</b>
+<div class="acc">验收：每条认知必须有“验证规格 + 适用边界 + 到期日”；无规格的归档不进判断；每周机械验证一次，产出“新增/淘汰/转能力”三张清单。</div></div></div>
+<div class="item"><div class="idx">10</div><div><b>总审指派看板</b>
+<div class="acc">验收：165 条指派全部有 owner/due/验收标准；逾期 3 日自动升级；完成率 ≥80%。</div></div></div>
+</div>
+
+<div class="road">
+<h3><span class="pill p2">P2 · 6 周</span>上台阶：从“能跑”到“顶级工程”</h3>
+<div class="item"><div class="idx">11</div><div><b>研究协议：walk-forward + holdout + 多重比较校正</b>
+<div class="acc">验收：因子/规则全部走时间切分样本外；BH 校正后仍显著的才进生产；因子库带版本号与失效日期。</div></div></div>
+<div class="item"><div class="idx">12</div><div><b>执行模型：滑点 / 成交概率 / 容量</b>
+<div class="acc">验收：结算价改为“可成交价”分布（一字=不可买、封单不足=部分成交）；输出容量上限；模拟盘与实盘口径一致。</div></div></div>
+<div class="item"><div class="idx">13</div><div><b>架构拆包 + 生产入 git</b>
+<div class="acc">验收：<code>review_pages</code>/<code>review_publish</code> 拆到 &lt;600 行/模块；删除 56 个死脚本；生产目录 git 化，pre-commit 跑测试与语法检查。</div></div></div>
+<div class="item"><div class="idx">14</div><div><b>可观测性面板</b>
+<div class="acc">验收：每源新鲜度/延迟、日链甘特、发布 SLA、失败 Top5；执行历史保留 ≥1 年；季度可靠性复盘有数据。</div></div></div>
+</div>
+
+<h2>6. 如果只做三件事</h2>
+<div class="grid2">
+<div class="note good"><b>1. 唯一结算账本 + 统计层</b><br>没有它，所有“胜率/命中率”都是自说自话。这是从 L3 到 L4 的分水岭。</div>
+<div class="note good"><b>2. 调度可靠性（OS 兜底 + 告警）</b><br>没有它，再好的判断也会随机消失；断档 5 天等于系统不存在 5 天。</div>
+</div>
+<div class="grid2">
+<div class="note good"><b>3. 门禁硬约束（None=FAIL，FAIL 不发布）</b><br>没有它，所有检查都是装饰；发布出去的页面会带着已知错误。</div>
+<div class="note warn"><b>暂时不要做</b><br>不要加第 6 路、不要加更多指标、不要用更长的报告替代度量。当前瓶颈不是“想得不够多”，是“算得不够准、跑得不够稳”。</div>
+</div>
+
+<h2>7. 值得保留的强项（别在改造中弄丢）</h2>
+<ul>
+<li><b>零后视镜纪律</b>：fact 卡标注 as-of、拒绝把实时成交额写进历史日、质量库只用 T 日收盘可知因子——这是很多机构都做不到的。</li>
+<li><b>总审的分歧裁决与盲区声明</b>：D1–D4 用票数和证据裁决，主动写“同源风险/执行假设”，比“一致看多”有价值得多。</li>
+<li><b>发布可追溯</b>：manifest + page_hashes + 4,564 source hashes，页面能回溯到源文件；这是重构时最该保留的资产。</li>
+<li><b>执行口径意识</b>：区分 T1/T2 信号口径与执1/执2 执行口径，承认一字买不进（61.9%）——这一点比大多数“回测年化 50%”的系统诚实。</li>
+<li><b>401 个测试</b>：规模已超过多数个人系统；补上 CI 就能变成真正的护城河。</li>
+</ul>
+
+<h2>8. 证据与复现</h2>
+<table>
+<tr><th style="width:230px">结论</th><th>复现方式 / 产物</th></tr>
+<tr><td>测试 397 过 / 3 败</td><td class="mono">D:\股票数据\.venv312\Scripts\python.exe -m pytest tests -q &nbsp;→&nbsp; 444s, 3 failed</td></tr>
+<tr><td>五路战绩 301/823</td><td class="mono">_学习/子agent增强/_战绩画像汇总_20261016.json → 五路.*.合计</td></tr>
+<tr><td>预测 230/62/36/26</td><td class="mono">D:\股票数据\**\predictions.json 去重（id 唯一）后统计</td></tr>
+<tr><td>认知 4,256→0</td><td class="mono">_学习/能力全链路审计_20261016.json → 认知迭代</td></tr>
+<tr><td>指派 165→27</td><td class="mono">_学习/总审_2026*.json → 指派清单[].状态</td></tr>
+<tr><td>发布 18/25，按时 6/18</td><td class="mono">releases/*/manifest.json → d, created_at</td></tr>
+<tr><td>staging ≥7.3GB / 356k</td><td class="mono">os.walk('.review_staging') 25s 超时截断（实际更大）</td></tr>
+<tr><td>cron 失败 18/15/7/4</td><td class="mono">profiles/a/cron/jobs.json → failure_streak</td></tr>
+<tr><td>StockDailyChain 禁用</td><td class="mono">schtasks /query /fo CSV → 已禁用</td></tr>
+<tr><td>9/14–9/18 无判断</td><td class="mono">2026091x/ 仅 6 个数据文件；_学习/ 无 judgment/theme</td></tr>
+</table>
+
+<div class="foot">
+本报告为只读诊断，未改动任何生产文件。评分口径：1=手工/不可复现，2=可运行但靠人守，3=有工程化骨架，4=自动化+门禁+度量闭环，5=行业顶级（可复现/可度量/可靠/研究协议/能力复利）。<br>
+生成时间 2026-10-18 · 基线交易日 20261016 · 证据强度：除 staging 为超时截断的下界外，其余均为实测或产物直读。
+</div>
+
+</div>
+</body>
+</html>

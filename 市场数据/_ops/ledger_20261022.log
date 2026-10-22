@@ -1,0 +1,44 @@
+### 跨路荐票
+  1 海洋王 002724 共振3 位置分11 来源①竞价,②席位,⑤质量 | 0.45
+  2 南矿集团 001360 共振2 位置分9 来源①竞价,③题材 | 0.45
+  3 三峡新材 600293 共振2 位置分7 来源①竞价,⑤质量 | 0.45
+  4 星光股份 002076 共振2 位置分6 来源①竞价,⑤质量 | 0.45
+  5 大业股份 603278 共振2 位置分5 来源①竞价,③题材 | 0.08
+  写入: 跨路荐票_20261022.json / 跨路荐票卡_20261022.html
+exit=0
+### 涨停复盘台账
+20261022日块(统一格式)已存: 涨停33 · 无主流·分支轮动
+台账组装注入 judgment_20261022.json | 存档日数 50
+exit=0
+### 龙虎榜台账
+20261022 lhb日块已存: 上榜66 · 机构在场30只 · S/A出手12笔
+⚠ lhb页无LHBLEDGER锚,未注入(先重构lhb页)
+exit=0
+### limitup ledger
+20261022日块(统一格式)已存: 涨停33 · 无主流·分支轮动
+台账组装注入 judgment_20261022.json | 存档日数 50
+### lhb ledger
+20261022 lhb日块已存: 上榜66 · 机构在场30只 · S/A出手12笔
+lhb台账注入 judgment_20261022.json | 存档日数 49
+### auction archive
+20261022竞价池终结算:池13只,次日封板0/13,执行胜率0/0,均收None%;按信号:{'一字': None, '秒板': None};按连板:{'首板': None, '2板+': None};按高开档:{'低开≤0': None, '高开0~5': None, '高开≥5': None}(验证'低开有肉高开套');闸门对账:{'闸门内均收': None, '闸门内只数': 0, '全池均收': None}。
+竞价池结算档.html 已生成
+已注入 judgment_20261022.json POOLLEDGER区(记得重跑生成盯盘台.py)
+### settle
+auction settle 20261022 nav=0.9589 持仓1 现金940476
+lhb settle 20261022 nav=1.0089 持仓1 现金948927
+theme settle 20261022 nav=1.0170 持仓0 现金1016954
+logic settle 20261022 nav=1.0136 持仓1 现金962155
+limitup settle 20261022 nav=0.9897 持仓1 现金965780
+master settle 20261022 nav=0.9901 持仓2 现金933752
+bench 20261022 {'nav': 0.753007, 'r': 0.235, 'n': 46, 'total': 54, 'cohort': '20261020'}
+### dashboard
+dashboard theme -> .\_学习\_模拟盘\theme\看板_20261022.html
+dashboard logic -> .\_学习\_模拟盘\logic\看板_20261022.html
+dashboard limitup -> .\_学习\_模拟盘\limitup\看板_20261022.html
+dashboard master -> .\_学习\_模拟盘\master\看板_20261022.html
+### inject
+inject theme -> theme.html OK
+inject logic -> logic.html OK
+inject limitup -> limitup.html OK
+inject master -> index.html OK

@@ -25,6 +25,21 @@ def exe_px(c,dprev):
     idx=b.index[b['date']==dprev]
     if not len(idx) or idx[0]+1>=len(b): return None,None
     i=idx[0]; return round(float(b.loc[i+1,'open']),3),round(float(b.loc[i+1,'close']),3)
+def feng_ratio(c,d):
+    """封单比双口径(%): 返回 (封单/当日成交额, 封单/流通市值)。缺源/不在涨停池→(None,None)。
+    MA-20261021-03③: 门槛一律用『成交』口径, 『流通』口径只作结构参考。"""
+    f=os.path.join(BASE,d,"zt_pool.csv")
+    if not os.path.isfile(f): return None,None
+    try:
+        z=pd.read_csv(f,dtype={"代码":str})
+        z["代码"]=z["代码"].astype(str).str.strip().str.zfill(6)
+        r=z[z["代码"]==str(c).strip().zfill(6)]
+        if not len(r): return None,None
+        r=r.iloc[0]
+        fg=float(r["封板资金"]); amt=float(r["成交额"]); cmv=float(r["流通市值"])
+        return (round(fg/amt*100,2) if amt else None, round(fg/cmv*100,3) if cmv else None)
+    except Exception:
+        return None,None
 def settle_formal(dprev):
     """正式荐票段: 条数==交易计划_lhb_{dprev}#buys; buy_px==执行日open; 落带外/无价→闸门未落,收益None不进分母"""
     tp=os.path.join(L,f"交易计划_lhb_{dprev}.json")
@@ -35,12 +50,16 @@ def settle_formal(dprev):
         ope,cls=exe_px(b["代码"],dprev)
         gate=b.get("buy_gate") or b.get("可选buy_gate") or {}
         ret=None if (ope is None or cls is None) else round((cls/ope-1)*100,2)
+        rb,tb=feng_ratio(b["代码"],dprev)
         out.append(dict(代码=b["代码"],名称=b.get("名称",""),权重=b.get("权重%"),
                         buy_px=ope,close_px=cls,执行收益=ret,
                         判定=("闸门未落" if ope is None else ("✓赚" if (ret or 0)>0 else "✗套")),
+                        封单比=dict(成交=rb,流通=tb),
+                        封单比门槛口径="封板质量三项门槛一律用『成交』口径(封单/当日成交额);『流通』口径仅作结构参考,不参与取舍",
                         gate=gate))
     return out
-def main(dprev):
+def main(dprev,dry=False):
+    """dry=True 只算不写(不落盘/不改jsonl/不重渲/不跑台账), 用于自检。"""
     jp=os.path.join(L,f"席位荐票_{dprev}.json")
     if not os.path.isfile(jp): print("无席位荐票,跳过"); return
     top=json.load(open(jp,encoding="utf-8"))["top5"]
@@ -59,17 +78,34 @@ def main(dprev):
       +(f";立功席位:{'、'.join(x[:24] for x in hero[:3])}" if hero else "")
       +(f";打脸席位:{'、'.join(x[:24] for x in flop[:3])}" if flop else "")
       +"。打脸笔已在事实表,今晚rank重算自动压档=净化;连续打脸席位由08提炼在五路裁决降权。") if n else f"{dprev}席位路Top5待T+1收盘结算(首期)。"
-    append_dedup(os.path.join(L,"_席位荐票反思.jsonl"), dict(
-        荐票日=dprev,执行胜率=f"{win}/{n}",均收=avg,立功=hero,打脸=flop,反思=refl), "荐票日")
     formal=settle_formal(dprev)
     fb=len(formal) if formal is not None else None
     fwin=sum(1 for x in (formal or []) if (x["执行收益"] or 0)>0)
     fnum=sum(1 for x in (formal or []) if x["执行收益"] is not None)
-    json.dump(dict(荐票日=dprev,Top5=res,
+    fdrop=sum(1 for x in (formal or []) if x["执行收益"] is None)
+    payload=dict(荐票日=dprev,Top5=res,
         正式荐票=(formal if formal is not None else []),
-        正式荐票汇总=dict(条数=fb,已结算=fnum,执行胜率=f"{fwin}/{fnum}",均收=(round(sum(x["执行收益"] for x in formal if x["执行收益"] is not None)/fnum,2) if fnum else None)),
-        正式荐票口径="来自 交易计划_lhb_{d}#buys;buy_px=执行日open(±0.001容差),执行收益=open→close;无价/落带外=闸门未落,收益null不进分母;空段(0==0)合法",
-        汇总=dict(执行胜率=f"{win}/{n}",均收=avg),反思=refl),
+        正式荐票汇总=dict(条数=fb,已结算=fnum,无执行价剔除数=fdrop,执行胜率=f"{fwin}/{fnum}",均收=(round(sum(x["执行收益"] for x in formal if x["执行收益"] is not None)/fnum,2) if fnum else None)),
+        正式荐票口径="来自 交易计划_lhb_{d}#buys;buy_px=执行日open(±0.001容差),执行收益=open→close;无价/落带外=闸门未落,收益null不进分母;空段(0==0)合法;封单比双值见每票『封单比』,门槛只用『成交』口径",
+        汇总=dict(执行胜率=f"{win}/{n}",均收=avg,样本数=len(top),已结算=n,无执行价剔除数=len(top)-n),反思=refl)
+    if dry:
+        print(json.dumps(dict(汇总=payload["汇总"],正式荐票汇总=payload["正式荐票汇总"],
+             正式荐票=[dict(代码=x["代码"],权重=x["权重"],执行收益=x["执行收益"],封单比=x["封单比"]) for x in (formal or [])]),
+             ensure_ascii=False,indent=1))
+        return payload
+    # ① 双段主键 MA-20261021-03①: (荐票日,段)=  d|发版 / d|正式  同日两段互不覆盖; 旧记录无『段』→键(d,None)不受影响
+    append_dedup(os.path.join(L,"_席位荐票反思.jsonl"), dict(
+        荐票日=dprev,段="发版",执行胜率=f"{win}/{n}",均收=avg,立功=hero,打脸=flop,反思=refl),
+        ("荐票日","段"))
+    if formal is not None:
+        append_dedup(os.path.join(L,"_席位荐票反思.jsonl"), dict(
+            荐票日=dprev,段="正式",执行胜率=f"{fwin}/{fnum}",
+            均收=(round(sum(x["执行收益"] for x in formal if x["执行收益"] is not None)/fnum,2) if fnum else None),
+            无执行价剔除数=fdrop,
+            标的=[dict(代码=x["代码"],权重=x["权重"],执行收益=x["执行收益"],封单比=x["封单比"]) for x in formal],
+            反思=f"{dprev}正式荐票{fb}条/已结算{fnum}/无执行价剔除{fdrop}"),
+            ("荐票日","段"))
+    json.dump(payload,
         open(os.path.join(L,f"席位荐票结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
     disp=dprev[4:6]+"-"+dprev[6:8]
     # ★原位重渲同一张荐票卡(合一结构,2026-07-10用户拍板"一种展示方式"):替换日块SEATCARD段

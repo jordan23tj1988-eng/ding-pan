@@ -1,0 +1,74 @@
+{
+ "schema_version": 1,
+ "as_of": "20261022",
+ "written_at": "20261022 复盘(宿主汇总)",
+ "preload": {
+  "path": "_学习/能力预加载_20261022.json",
+  "sha256": "2ea5c0ecb83c1dd7e370a9de117c38cc23440ef752ae6d38e9a38ca21cbe6aeb"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261022.json#routes.auction：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费，判断全部由当日原始数据直算，未用未验证 capability 改判。"
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "净买占比因子决定了本日『空仓』而非『荐 002307』：按 _龙虎榜质量库.json 分桶，『>20%』是最差桶（n=136/执1胜率36.0%/均收-0.59%），002307 净买 1.72 亿为全榜第一但净买占比落该桶 → 按桶否决，不进 buys；反向地用『10-20%』桶（库内唯一执1胜率≥50%的正桶）作为『无S/A席也可小仓』的必要条件，今日无一票同时满足『S/A 在场 ∧ 封板三项全过 ∧ 落正桶』，故 buys=[] 成立（空仓是交集为空，不是情绪选择）。若不采用该因子，本日会按『净买额全场第一』荐 002307，与其后的双源强矛盾（6只强矛盾之一）叠加，风险敞口从 0 变为 2%+。",
+     "source_locator": "_学习/lhb判断_20261022.json#/判断/证据"
+    }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261022.json#routes.theme：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费，判断全部由当日原始数据直算，未用未验证 capability 改判。"
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261022.json#routes.logic：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费，判断全部由当日原始数据直算，未用未验证 capability 改判。"
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "换手率维度直接决定了三票的权重排序与一条否决：冰点下换手正向最优桶从偏冷档 ≥20%（+1.663pp）降至 3-10%（+0.442pp）→ 603370 换手 9.99% 落该桶、给 2.0%（名义最高权重）；601091 换手 48.25% 为全场最高＝极端分歧、且落冰点反向区，故压到最低 1.0%；003021 换手 3.62% 在带内、配合炸2次给 1.5%；『换手<3%』保留为跨环境负向否决（-0.775/-0.868/-0.763pp），今日 33 只中落该档的一律不进 buys。若不采用换手维度，三票权重将变成按封单比排序，而封单比已被 M-04 判冰点失效（强封≥4% 超额从 +1.644pp 降至 +0.098pp），排序会完全失真。",
+     "source_locator": "_学习/limitup判断_20261022.json#/判断/证据"
+    }
+   ],
+   "rejected": []
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261022.json#routes.cycle：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费，判断全部由当日原始数据直算，未用未验证 capability 改判。"
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261022.json#routes.master：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费，判断全部由当日原始数据直算，未用未验证 capability 改判。"
+  }
+ }
+}

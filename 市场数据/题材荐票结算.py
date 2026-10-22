@@ -35,6 +35,10 @@ def main(dprev):
     if not os.path.isfile(jp): print("无题材荐票发出版,跳过"); return
     j=json.load(open(jp,encoding="utf-8")); picks=(j.get("荐票") if isinstance(j,dict) else j)  # 容错: 发出版可能为 list(空列表=当日无荐票)
     if picks is None: picks=[t for t in j.get("标的",[]) if t.get("类型")=="荐票"]
+    # 容错2(20260821): 发出版的"荐票"常为代码字符串列表，需按"标的"还原为dict再结算
+    if isinstance(picks,list) and picks and all(isinstance(x,str) for x in picks):
+        byc={str(t.get("代码","")).zfill(6):t for t in (j.get("标的") or []) if isinstance(t,dict)}
+        picks=[byc.get(str(x).zfill(6)) or {"代码":str(x).zfill(6),"名称":"","类型":"荐票"} for x in picks]
     days=sorted([os.path.basename(x) for x in glob.glob(os.path.join(BASE,"2026*")) if os.path.isdir(x)])
     dnext=next((x for x in days if x>dprev),None)
     ztset=set()

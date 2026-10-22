@@ -17,6 +17,29 @@ def exe_ret(c,dprev):
     if not len(idx) or idx[0]+1>=len(b): return None,None
     i=idx[0]; o1=b.loc[i+1,'open']; c1=b.loc[i+1,'close']
     return round((o1/b.loc[i,'close']-1)*100,2),round((c1/o1-1)*100,2)
+def exe_px(c,dprev):
+    """执行日(次日)开盘价/收盘价；无数据返 (None,None)"""
+    f=os.path.join(CDIR,c+".csv")
+    if not os.path.isfile(f): return None,None
+    b=pd.read_csv(f); b['date']=b['date'].astype(str).str.replace('-','')
+    idx=b.index[b['date']==dprev]
+    if not len(idx) or idx[0]+1>=len(b): return None,None
+    i=idx[0]; return round(float(b.loc[i+1,'open']),3),round(float(b.loc[i+1,'close']),3)
+def settle_formal(dprev):
+    """正式荐票段: 条数==交易计划_lhb_{dprev}#buys; buy_px==执行日open; 落带外/无价→闸门未落,收益None不进分母"""
+    tp=os.path.join(L,f"交易计划_lhb_{dprev}.json")
+    if not os.path.isfile(tp): return None
+    buys=json.load(open(tp,encoding="utf-8")).get("buys",[])
+    out=[]
+    for b in buys:
+        ope,cls=exe_px(b["代码"],dprev)
+        gate=b.get("buy_gate") or b.get("可选buy_gate") or {}
+        ret=None if (ope is None or cls is None) else round((cls/ope-1)*100,2)
+        out.append(dict(代码=b["代码"],名称=b.get("名称",""),权重=b.get("权重%"),
+                        buy_px=ope,close_px=cls,执行收益=ret,
+                        判定=("闸门未落" if ope is None else ("✓赚" if (ret or 0)>0 else "✗套")),
+                        gate=gate))
+    return out
 def main(dprev):
     jp=os.path.join(L,f"席位荐票_{dprev}.json")
     if not os.path.isfile(jp): print("无席位荐票,跳过"); return
@@ -38,7 +61,15 @@ def main(dprev):
       +"。打脸笔已在事实表,今晚rank重算自动压档=净化;连续打脸席位由08提炼在五路裁决降权。") if n else f"{dprev}席位路Top5待T+1收盘结算(首期)。"
     append_dedup(os.path.join(L,"_席位荐票反思.jsonl"), dict(
         荐票日=dprev,执行胜率=f"{win}/{n}",均收=avg,立功=hero,打脸=flop,反思=refl), "荐票日")
-    json.dump(dict(荐票日=dprev,Top5=res,汇总=dict(执行胜率=f"{win}/{n}",均收=avg),反思=refl),
+    formal=settle_formal(dprev)
+    fb=len(formal) if formal is not None else None
+    fwin=sum(1 for x in (formal or []) if (x["执行收益"] or 0)>0)
+    fnum=sum(1 for x in (formal or []) if x["执行收益"] is not None)
+    json.dump(dict(荐票日=dprev,Top5=res,
+        正式荐票=(formal if formal is not None else []),
+        正式荐票汇总=dict(条数=fb,已结算=fnum,执行胜率=f"{fwin}/{fnum}",均收=(round(sum(x["执行收益"] for x in formal if x["执行收益"] is not None)/fnum,2) if fnum else None)),
+        正式荐票口径="来自 交易计划_lhb_{d}#buys;buy_px=执行日open(±0.001容差),执行收益=open→close;无价/落带外=闸门未落,收益null不进分母;空段(0==0)合法",
+        汇总=dict(执行胜率=f"{win}/{n}",均收=avg),反思=refl),
         open(os.path.join(L,f"席位荐票结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
     disp=dprev[4:6]+"-"+dprev[6:8]
     # ★原位重渲同一张荐票卡(合一结构,2026-07-10用户拍板"一种展示方式"):替换日块SEATCARD段

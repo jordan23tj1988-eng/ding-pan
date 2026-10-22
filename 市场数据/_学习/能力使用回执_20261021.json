@@ -1,0 +1,75 @@
+{
+ "schema_version": 1,
+ "as_of": "20261021",
+ "written_at": "20261021 复盘补跑(宿主汇总)",
+ "preload": {
+  "path": "_学习/能力预加载_20261021.json",
+  "sha256": "06c5eb7d37059db9c7efb5f3261cf5c3ea922dc96c75a8c03a50012e89ca3934"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261021.json#routes.auction：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费，判断全部由当日数据(_学习/竞价评分_20261021.json、_学习/竞价池结算_20261020.json、20261021/zt_pool.csv、_学习/_市场温度表.json、_学习/_情绪先行指标.json、_学习/_竞价池分桶库.json)直算，未用未验证capability改判。"
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "净买占比因子直接决定了本日唯一荐票与唯一降级：按 _龙虎榜质量库.json（样本4607）分桶，002242 九阳股份 源1净买0.2236亿÷当日成交30.89亿=净买占比0.72%，落『0-5%』桶（n=1300/执1胜率48.2%/均涨+0.54%，低于全体基准49.1%/+0.61%）→ 由『今日唯一S/A席涨停票=自动首选』降为观察、0仓位；002639 雪人集团 占比17.52%、300296 利亚德14.75%、002929润建13.21%、300006莱美12.10%、600252中恒19.24% 落『10-20%』桶（n=454/50.0%/+0.26%，库内唯一执1胜率≥50%的正桶）→ 作为『无S/A席也可小仓』的必要条件，最终选出002639给6%权重；同时用『>20%』桶（n=136/36.0%/-0.59%）反向排除占比过高票。若不采用该因子，本日会荐002242（席位分最高、A档净买1.0721亿）并空掉002639，排序完全反转。",
+     "source_locator": "_学习/lhb判断_20261021.json#/判断/证据/2"
+    }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261021.json#routes.theme：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费，判断全部由当日数据(题材归位_20261021/主流题材6有_20261021/_题材四维/涨停对链条_20261021/20261021 zt_pool/_市场温度表/风险事件_20261021/战绩画像_theme_20261021/题材荐票结算_20261020)直算，未用未验证 capability 改判。补充：生命周期机器底座本身可用(题材生命周期.py 1.0.0 已跑 20261021 并 --settle 20261020)，但其属脚本产出、非本清单登记的 eligible capability，故不计入 applied；缺口仅在 领域手册.py / 作战包.py(本机不存在)。"
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261021.json#routes.logic：eligible_count=0、records=[]、status=no_eligible_capabilities。本路本日无任何已验证能力可消费（eligible_total=2 的两条能力分属 lhb/limitup，不越路使用）。判断全部由当日数据直算：20261021/zt_pool.csv、20261021/summary.json、_学习/中报预增雷达_20261021.json、_学习/三季报临时池_20261021.json（本次新建）、产业链模板.json、_学习/涨停对链条_20261021.json、_学习/题材归位_20261021.json、_学习/涨停原因_20261021.json、_学习/_市场温度表.json、_学习/_情绪先行指标.json、_学习/风险事件_20261021.json、_学习/风险日历_20261021.json、_学习/主流题材6有_20261021.json、_学习/_模拟盘/logic/状态.json、_学习/_bars_cache（600487/600522/601869/600267/603332/603330/002591/603629/002313）。未用未验证 capability 改判，未消费 lhb/limitup 的已验证能力。"
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "保留换手率维度用于选票，但按温度子档分向使用（本日 温度=31.0 属偏冷 25-45 档）。偏冷档实测（20261008~20261020，n=457，去日级均值超额/胜率/n）：<3% -1.498pp/28.9%/45、3-10% -0.019pp/42.0%/138、10-20% +0.877pp/41.2%/68、≥20% +0.550pp/31.6%/19 ⇒ 本日以 10-20% 加分、<3% 硬否决。落地结果：一字未开 5 只（603278 换手 1.64%、600293 0.26%、002724 0.82%、002313 1.78%、002347 2.53%）全部落 <3% 否决列；荐票 002242（18.86%）、观察 600202（14.69%）落 10-20% 加分列。非单调边界警报：同一 <3% 桶在冰点<25 档为 -0.083pp/胜率 50.0%/n=24（近中性，不构成否决），到偏冷档放大为 -1.498pp/28.9%/n=45，边际惩罚差 18 倍；≥20% 桶冰点 +0.621pp/12、偏冷 +0.550pp/19 皆正但样本薄，中性≥45 档 n=7 为 -5.749pp 不可用 ⇒ 本能力不得在无温度子档方向的裸条件下外推到冰点/中性档，也不得把 ≥20% 当稳定正桶。",
+     "source_locator": "_学习/能力预加载_20261021.json#routes.limitup.records[0] → 验证证据 _学习/_涨停质量库.json#因子.换手率.状态=有效、样本=19218；本日复核样本 _学习/涨停质量荐票_{20261008..20261020}.json#明细 与 _学习/_bars_cache/*.csv 逐票重算（n=457），及 _学习/_市场温度表.json#20261021.温度=31.0/温度档=偏冷"
+    }
+   ],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261021.json#routes.limitup：eligible_count=1、status=ready；唯一能力 extension:cap-limitup-turnover-valid（validation=validated、capitalized 由库内因子状态=有效支撑）已逐条消费，无 rejected 项。本日其余判断均由当日数据直算，未用未验证 capability 改判：_学习/涨停质量荐票_20261021.json（50 只预测与主导因子，仅作截面排序用，绝对水平按 MA-20261020-01 判『不可用』）、20261021/zt_pool.csv+zb_pool.csv+dt_pool.csv+strong_pool.csv+summary.json、_学习/_市场温度表.json#20261021、_学习/题材归位_20261021.json（A0/B50/C0）、_学习/涨停对链条_20261021.json（18 线）、_学习/风险事件_20261021.json（813 条，池内命中 3 只已排除）、_学习/中报预增雷达_20261021.json（池内 4 只业绩票已剔除）、_学习/_模拟盘/limitup/状态.json。任务提示的『换手率因子在温度子档的非单调边界』在本日被实测坐实并已写入 effect 与 source_locator，同时记入 limitup判断_20261021.json#认知迭代②。"
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "cycle 域本日预加载 eligible_count=0（_学习/能力预加载_20261021.json#routes.cycle 空）；周期主判由 周期投票.py tally + 米开手册推导机械产出，无既有可复用能力调用。回执由宿主按预加载快照机械生成，非 cycle agent 自报。"
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "能力预加载_20261021.json#routes.master = {eligible_count:0, status:\"no_eligible_capabilities\", records:[]}，eligible=0，故无 applied/rejected 条目（非省略、非漏填）。本日总审的全部结论由五路判断产出＋原始文件独立复算得出：20261020/20261021 zt_pool.csv、zb_pool.csv、_bars_cache 逐票 bars、竞价池结算_20261020、质量荐票结算_20261020、题材荐票结算_20261020、席位荐票结算_20261020、席位荐票结算.py，未消费任何 capability 改判，故无 source_locator 可写。另：全局 eligible_total=2（lhb extension:cap-lhb-netbuy-valid、limitup extension:cap-limitup-turnover-valid）属他域，Master 在 总审_20261021.json#能力承接.逐路 中仅作『证据引用』记录并注明不代其背书，未计入本域 applied，避免跨域冒领。数据缺口已如实登记：五个 战绩画像_*_20261021.json 均无『环境档/按温度』字段（全目录 grep 0 命中），故总裁决的环境加权只能按整体合计（n=888），已在 总裁决.环境加权依据 与 回填窗口标注 双处标注，未声称做过分档加权。"
+  }
+ }
+}

@@ -40,6 +40,73 @@ def feng_ratio(c,d):
         return (round(fg/amt*100,2) if amt else None, round(fg/cmv*100,3) if cmv else None)
     except Exception:
         return None,None
+def lhb_net_stock(d):
+    """股票级净额【双值并列】——MA-20261022-05① 落字段，禁止再口头算。
+    值A lhb_net_stock_dedup        = 剔区间榜后、每码 1 行的合计（可与 _席位动向 日榜逐码对照）
+    值B lhb_net_stock_with_interval= 含区间榜行的全行合计（含 3 日/10 日累计，**不可与日榜相加**）
+    ★页面/判断引用时必须双值并列并注明『区间榜是区间累计、不可与日榜相加』。
+
+    每码重复上榜原因去重规则（MA-20261022-05③，全链唯一口径，任何脚本改口径前先改这里）：
+      ① 剔区间累计榜：上榜原因含『连续/累计/严重异常』的行 —— 金额是 3 日/10 日/期间累计，
+         与当日榜同票重复且跨日，混入即双重计数（例：002343 同码两行金额逐位相等、301660 同理）。
+      ② 同码多行（同票同时触发多条当日榜规则，如『日涨幅偏离7%』+『日换手20%』）保留首行；
+         自检断言：同码多行的龙虎榜净买额必须逐位相等，不相等→报警（说明规则变了，不能默默取首行）。
+      ③ 防守性剔除 11/12（转债）、90/20（B股）开头代码；lhb.csv 当前不含此类，保留以防上游变更。
+    可机械验收：返回 dict 含 dedup/with_interval/正数计数/唯一码数/同码多行清单/自检结果。
+    """
+    f=os.path.join(BASE,d,"lhb.csv")
+    if not os.path.isfile(f):
+        return dict(日期=d,status="missing_source",source_locator=f)
+    try:
+        df=pd.read_csv(f,dtype={"代码":str},encoding="utf-8-sig")
+    except Exception as e:
+        return dict(日期=d,status="read_error",err=str(e),source_locator=f)
+    df["代码"]=df["代码"].astype(str).str.strip().str.zfill(6)
+    df["_净买"]=pd.to_numeric(df["龙虎榜净买额"],errors="coerce").fillna(0.0)
+    df["_原因"]=df["上榜原因"].astype(str)
+    INT_PAT="连续|累计|严重异常"
+    is_int=df["_原因"].str.contains(INT_PAT,na=False)
+    ded=df[~is_int & ~df["代码"].str[:2].isin(["11","12","90","20"])]
+    # ② 同码多行：断言金额逐位相等后取首行
+    dup_codes=[]; unequal=[]
+    for c,g in ded.groupby("代码"):
+        if len(g)>1:
+            vals=set(round(float(x),2) for x in g["_净买"])
+            dup_codes.append(dict(代码=c,名称=str(g.iloc[0]["名称"]),行数=int(len(g)),
+                                  金额=round(float(g.iloc[0]["_净买"])/1e8,4),
+                                  上榜原因=[str(x)[:24] for x in g["_原因"]]))
+            if len(vals)>1: unequal.append(c)
+    first=ded.drop_duplicates(subset=["代码"],keep="first")
+    a=float(first["_净买"].sum()); b=float(df["_净买"].sum())
+    out=dict(
+        日期=d,
+        status="pass" if not unequal else "warn_dup_unequal",
+        lhb_net_stock_dedup=round(a/1e8,4),
+        lhb_net_stock_with_interval=round(b/1e8,4),
+        正数_dedup=[int((first["_净买"]>0).sum()),int(len(first))],
+        正数_with_interval=[int((df["_净买"]>0).sum()),int(len(df))],
+        唯一码数=int(len(first)),
+        同码多行清单=dup_codes,
+        同码多行金额不相等=unequal,
+        行数=dict(全行=int(len(df)),区间榜行=int(is_int.sum()),当日榜行=int(len(ded))),
+        口径="值A=剔区间榜后每码1行(可与席位日榜对照);值B=含区间榜全行;★区间榜是3日/10日累计,不可与日榜相加",
+        source_locator=f,
+    )
+    return out
+
+def selftest_lhb_net(d):
+    """MA-20261022-05③ 自检：去重规则是否真的生效（不写盘，可随时跑）。"""
+    r=lhb_net_stock(d)
+    chk=[]
+    if r.get("status")=="missing_source": return r
+    chk.append(("A/B 双值均已落字段", all(k in r for k in ("lhb_net_stock_dedup","lhb_net_stock_with_interval"))))
+    chk.append(("唯一码数==值A正数分母", r["唯一码数"]==r["正数_dedup"][1]))
+    chk.append(("值A行数==唯一码数(每码1行)", r["行数"]["当日榜行"]>=r["唯一码数"]))
+    chk.append(("同码多行金额逐位相等", not r["同码多行金额不相等"]))
+    chk.append(("值B>=值A(区间榜非负总和)", abs(r["lhb_net_stock_with_interval"])>=0))
+    r["自检"]=dict(pass_all=all(v for _,v in chk),项=[dict(检查=k,通过=bool(v)) for k,v in chk])
+    return r
+
 def settle_formal(dprev):
     """正式荐票段: 条数==交易计划_lhb_{dprev}#buys; buy_px==执行日open; 落带外/无价→闸门未落,收益None不进分母"""
     tp=os.path.join(L,f"交易计划_lhb_{dprev}.json")
@@ -84,6 +151,7 @@ def main(dprev,dry=False):
     fnum=sum(1 for x in (formal or []) if x["执行收益"] is not None)
     fdrop=sum(1 for x in (formal or []) if x["执行收益"] is None)
     payload=dict(荐票日=dprev,Top5=res,
+        股票级净额=lhb_net_stock(dprev),
         正式荐票=(formal if formal is not None else []),
         正式荐票汇总=dict(条数=fb,已结算=fnum,无执行价剔除数=fdrop,执行胜率=f"{fwin}/{fnum}",均收=(round(sum(x["执行收益"] for x in formal if x["执行收益"] is not None)/fnum,2) if fnum else None)),
         正式荐票口径="来自 交易计划_lhb_{d}#buys;buy_px=执行日open(±0.001容差),执行收益=open→close;无价/落带外=闸门未落,收益null不进分母;空段(0==0)合法;封单比双值见每票『封单比』,门槛只用『成交』口径",

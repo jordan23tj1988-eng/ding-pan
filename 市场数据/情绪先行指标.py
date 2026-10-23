@@ -83,15 +83,15 @@ def promo(d, dprev, ths):
     if cur is None:
         return None
     n_first = sum(1 for c in cur if c[2] == 1)
-    n_2b = sum(1 for c in cur if c[2] == 2 and c[3])          # 2天2板(连续)
-    n_3b = sum(1 for c in cur if c[2] == 3 and c[3])          # 3天3板
-    n_hi2 = sum(1 for c in cur if c[2] >= 2 and c[3])
-    n_hi3 = sum(1 for c in cur if c[2] >= 3 and c[3])
+    n_2b = sum(1 for c in cur if c[2] == 2)                   # 2连板(当日连板数=2)
+    n_3b = sum(1 for c in cur if c[2] == 3)                   # 3连板
+    n_hi2 = sum(1 for c in cur if c[2] >= 2)
+    n_hi3 = sum(1 for c in cur if c[2] >= 3)
     blk = {"来源": src, "涨停数_净": len(cur), "首板": n_first, "二连板": n_2b, "三连板": n_3b}
     if prev is not None:
         p_first = sum(1 for c in prev if c[2] == 1)
-        p_2b = sum(1 for c in prev if c[2] == 2 and c[3])
-        p_hi2 = sum(1 for c in prev if c[2] >= 2 and c[3])
+        p_2b = sum(1 for c in prev if c[2] == 2)
+        p_hi2 = sum(1 for c in prev if c[2] >= 2)
         blk["一进二率"] = round(n_2b / p_first, 3) if p_first else None
         blk["二进三率"] = round(n_3b / p_2b, 3) if p_2b else None
         blk["高度晋级率"] = round(n_hi3 / p_hi2, 3) if p_hi2 else None
@@ -190,7 +190,12 @@ def settle_premium_backfill(t):
             t[nxt]["昨日涨停溢价"] = {"执行均收": v, "来源": "竞价池结算jsonl"}
 
 def run_day(d, ths, t, with_spot=True):
-    days = sorted(ths.keys())
+    # 交易日历必须并上本地 zt_pool 目录：THS 池快照常滞后若干交易日，
+    # 仅用 ths.keys() 会让 dprev 落到 3 天前（晋级率分子分母错位）。
+    days = sorted(set(ths.keys()) | {
+        x for x in os.listdir(BASE)
+        if len(x) == 8 and x.isdigit() and os.path.isfile(os.path.join(BASE, x, "zt_pool.csv"))
+    })
     if d in days:
         i = days.index(d)
         dprev = days[i - 1] if i > 0 else None

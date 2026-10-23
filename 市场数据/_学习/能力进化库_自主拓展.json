@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "as_of": "20261022",
-  "updated": "20261022",
+  "as_of": "20261023",
+  "updated": "20261023",
   "source": "既有孵化区 + 能力账本历史；缺证据不推断；验证/能力化字段原样承接",
   "records": [
     {
@@ -2577,7 +2577,7 @@
       "validation": "validated",
       "hit_count": 1,
       "capitalized": true,
-      "reused_count": 9,
+      "reused_count": 10,
       "discovered_at": "20261001",
       "last_tracked_at": "20261001",
       "tracking_log": [
@@ -2983,9 +2983,17 @@
           "as_of": "20261022",
           "route": "limitup",
           "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "本次判断与荐票保留换手率作为一级过滤并量化生效：003021 换手12.57%、300561 换手19.55% 均落中性正段(换手10-20% n=336/胜率48.2%/超额+0.698pp)，两票均入 buys；同时按本周新增交互证据对『换手≥20%×首封≤10:00(-0.835pp/35.3%/n=34)』执行反向扣分，002724(换手28.10%×首封09:53)因此从荐票降为观察(权重0)；判别力兑现：中性环境换手分档单调 <3% -1.043pp/40.1%(n=227) → 3-10% -0.120pp/43.4%(n=792) → 10-20% +0.698pp/48.2% → ≥20% +0.999pp/51.5%(n=97)，首尾区分度 2.04pp；冰点窗口①格内换手分档亦单调(3-5% +0.386pp/33.3% → 5-7% +1.194pp/53.1% → 7-10% +1.449pp/55.6%)，故因子有效但需『分段+与首封/炸板交互』使用。",
+          "source_locator": "_学习/_涨停质量库.json#因子.换手率.状态(=有效) + _学习/_涨停质量库.json#基准(执1胜率43.0/执1均涨-0.33,n=19342) + 本人 _学习/limitup判断_20261023.json#深挖[0][1] 自算桶表",
+          "as_of": "20261023",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
         }
       ],
-      "last_reused_at": "20261022"
+      "last_reused_at": "20261023"
     },
     {
       "id": "extension:cap-lhb-netbuy-valid",
@@ -3017,7 +3025,7 @@
       "validation": "validated",
       "hit_count": 1,
       "capitalized": true,
-      "reused_count": 10,
+      "reused_count": 11,
       "discovered_at": "20261001",
       "last_tracked_at": "20261001",
       "tracking_log": [
@@ -3438,9 +3446,17 @@
           "as_of": "20261022",
           "route": "lhb",
           "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "该能力直接改写了本日荐票的名单与权重，共 3 处可核：①300296 利亚德 净买占比 4.16% 落 0-5% 桶（n=1300/执1 48.2%/均收 +0.54%，仅略高于基准 48.0%/+0.37%，按昨日认知迭代②属『需另加两项强化证据』的弱桶）→ 补足两项强化（A 席江苏路 n=199 非小样本且连续三日净买 2.0314 亿、封板三项全过）后进正式荐票，但权重由档位上限 6% 压到 4%；②603721 中广天择 净买占比 6.71% 落 5-10% 桶（n=731/46.0%/-0.00%，低于基准约 2pp，四桶最弱之一）→ 与它 A 席 n=11 小样本叠加，权重压到 2%（档位上限的 1/3）；③002354 天娱数科 净买占比 21.17% 落 >20% 桶（n=136/36.0%/-0.59%，四桶中唯一胜率<40%）→ 尽管它是今日源1净买最大的票（+4.891 亿、封单比 14.16%、首封 09:37 早封），仍被判为『观察』、权重 0，不进 buys。若该能力不可用，本日会荐 3 只、总仓 9%（300296 6% + 603721 3% + 002354 0%→误入 3%），实际输出为 2 只、总仓 6%。",
+          "source_locator": "D:/股票数据/市场数据/_学习/_龙虎榜质量库.json#因子.净买占比.桶（样本 4607，target_d 20260710，状态=有效；桶：≤0/0-5% n=1300 48.2%/+0.54、5-10% n=731 46.0%/-0.00、10-20% n=454 50.0%/+0.26、>20% n=136 36.0%/-0.59）",
+          "as_of": "20261023",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
         }
       ],
-      "last_reused_at": "20261022"
+      "last_reused_at": "20261023"
     },
     {
       "id": "extension:limitup-换手率冰点反转",
@@ -3498,6 +3514,86 @@
       ],
       "review_status": "unverifiable",
       "last_reviewed_at": "2026-10-22T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:lhb-新席位扫描去重修复",
+      "kind": "自主拓展",
+      "route": "lhb",
+      "title": "自主拓展扫描.py 席位侧未按(日,票)去重 → 『新活跃席位』条目虚增（共现侧一直正确）",
+      "discovered_at": "20261021",
+      "last_tracked_at": "20261022",
+      "tracking_log": [
+        {
+          "d": "20261021",
+          "进展": "立项(_学习/自主拓展应答_20261021.json lhb_20261021_3)。根因定位：自主拓展扫描.py 第102-103行 seat_hits 直接 append 原始行、未做(t,code)去重；同函数 pair_hits(第105-109行) 用 by_ticket+set 有去重。★补录：立项当日未落孵化区登记，2026-10-22 由宿主按原应答原文回填。"
+        },
+        {
+          "d": "20261022",
+          "进展": "未修（今日无 lhb 对应项）。污染实例：20261019 东莞虎门×002343 共4行、涨幅偏离/换手/振幅三行净额同为5628.42万，按(日,票)去重 unique=1 笔，而清单记『×3次』。"
+        }
+      ],
+      "falsifiable_rule": "修复后连续5个交易日：清单 lhb 域『新活跃席位』条目无同(日,票)重复，且每条净买额=对应csv按(日,票)去重后净额 → 结案毕业；出现任一重复条目 → 判修复未生效、回滚并记录失败原因",
+      "due": "20261104",
+      "state": "experience",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": null,
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": null,
+      "review_status": null,
+      "last_reviewed_at": null,
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:limitup-套票因子口径修正",
+      "kind": "自主拓展",
+      "route": "limitup",
+      "title": "『套票主导』指标须改为『套票侧出现率-赚票侧出现率』超额口径后再判降权（原口径是映射反射：因子权重越大越同时出现在赚票与套票两侧）",
+      "discovered_at": "20261020",
+      "last_tracked_at": "20261022",
+      "tracking_log": [
+        {
+          "d": "20261020",
+          "进展": "立项(_学习/自主拓展应答_20261020.json limitup_20261020_8)。★补录：立项当日未落孵化区登记，2026-10-22 由宿主按原应答原文回填，判据未改一字。"
+        },
+        {
+          "d": "20261022",
+          "进展": "第3轮并入(_学习/自主拓展应答_20261022.json limitup_20261022_7)：五结算日(1015~1021)自算 开板次数 套票侧11/16=68.8% vs 赚票侧4/9=44.4%、超额+24.3pp，落判据的20-40pp处理区间上沿、未触40pp降权线；库区分度8.9pp/单调rho1.0/近窗rho-0.5(未与全窗反号)/RankIC 全窗+0.0792 近20日+0.0388 同号。"
+        }
+      ],
+      "falsifiable_rule": "超额口径下：开板次数 差值≥40pp 且 近窗RankIC≤0 → 降权50%；差值<20pp → 保留全权重并废弃『套票主导』式告警（同等复算 首封时间/封单比/股价档）",
+      "due": "补录未设(按判据逐结算日机械结算)",
+      "state": "experience",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": null,
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": null,
+      "review_status": null,
+      "last_reviewed_at": null,
       "capability_rule": null,
       "boundary": null,
       "validation_spec": null,

@@ -1,0 +1,13 @@
+import json
+d=json.load(open('_学习/总审_20261022.json',encoding='utf-8'))
+print('--- 筛选清单 ---'); print(json.dumps(d['筛选清单'],ensure_ascii=False,indent=1)[:2500])
+print('--- 检查四项 keys ---'); print(list(d['检查四项'].keys()))
+print(json.dumps(d['检查四项'],ensure_ascii=False,indent=1)[:2500])
+print('--- 矛盾捕获[0] ---'); print(json.dumps(d['矛盾捕获'][0],ensure_ascii=False,indent=1))
+print('n矛盾=',len(d['矛盾捕获']))
+print('--- 回填窗口标注 ---'); print(json.dumps(d['回填窗口标注'],ensure_ascii=False,indent=1)[:1800])
+print('--- 能力承接 ---'); print(json.dumps(d['能力承接'],ensure_ascii=False,indent=1)[:1800])
+print('--- 独立盲区声明 ---'); print(json.dumps(d['独立盲区声明'],ensure_ascii=False,indent=1)[:1200])
+print('--- 综合深挖[0] ---'); print(json.dumps(d['综合深挖'][0],ensure_ascii=False,indent=1))
+print('--- 认知迭代[0] ---'); print(json.dumps(d['认知迭代'][0],ensure_ascii=False,indent=1))
+print('--- 昨日战绩验收 keys ---'); print(list(d['昨日战绩验收'].keys()) if isinstance(d['昨日战绩验收'],dict) else type(d['昨日战绩验收']))

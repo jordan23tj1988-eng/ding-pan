@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>情绪盯盘台 · 龙虎榜·第二路</title><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+</style>
+<!--EVOLUTION_STYLE_SYNC_START-->
+
+<!--EVOLUTION_STYLE_SYNC_END-->
+<style id="overview-evolution-sync">.evolution{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}.evo-stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}.evo-stat{min-width:92px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.025)}.evo-stat b{display:block;font-size:20px;color:var(--accent)}.evo-stat small{color:var(--mut)}.evo-list{display:grid;gap:0;margin-top:10px}.evo-row{display:grid;grid-template-columns:72px minmax(0,1fr) 250px;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);line-height:1.55}.evo-row b{color:var(--accent)}.evo-row span{font-weight:700}.evo-row small{color:var(--mut)}.evo-empty{padding:14px 0;color:var(--mut);font-size:12px}.evo-row{grid-template-columns:1fr}.evo-row small{grid-column:1}</style><style id="display-noise-v44">.claim-head:not(.cgrp-head),.citem .citem-tag,.claim-proof .proof-label,.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}</style></head><body><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="on" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd"><i class="live"></i><span class="txt">更新 20261022 复盘</span></span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp"></div><div class="grp"></div></div></div><nav class="reading-spine" aria-label="阅读顺序"><span class="rs-title">阅读顺序</span><span class="rs-step"><b>01</b>结论</span><span class="rs-arrow">→</span><span class="rs-step"><b>02</b>指标</span><span class="rs-arrow">→</span><span class="rs-step"><b>03</b>分段证据</span><span class="rs-arrow">→</span><span class="rs-step"><b>04</b>来源审计</span></nav><div class="rowA"><div class="hero"><div class="kick">②龙虎榜 · 我当前的判断 · 截至 2026-10-22 收盘</div><h1 aria-label="C/68"><em>C/68</em></h1><p>席位综合判断→资金温度（FUNDTEMP）→龙虎榜台账（LHBLEDGER）→席位分档库；席位胜率一律收缩估计，K=10、n&lt;25 标记警告。</p><div class="stance"><span class="pill warn">席位 · <b class="s-weak">C/68</b></span><span class="pill">资金 · <b>3</b></span><span class="pill hot"><b class="s-ok">观察 · 24席 / 4.7亿</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">10-22</span></div><span class="lab">资金温度 · 分位</span><span class="big">3</span><div class="gauge"><div class="gtrack"><i class="gmark" style="left:3%"></i></div><div class="gl"><span>冷</span><span>中性</span><span>热</span></div></div><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">10-22</span></div><span class="lab">机构席次 / 金额亿</span><span class="big">24席 / 4.7亿</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">10-22</span></div><span class="lab">席位荐票Top1</span><span class="big">沈鼓集团</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">10-22</span></div><span class="lab">昨席位路结算 · 执1</span><span class="big">—</span><span class="sub2">当日该口径数据缺失，未填补</span></div></div><!--PAPERTRADE-->
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 第二路·席位</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+0.89%</b></span> <span>本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-1.01%</b></span> <span>基准本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-6.27%</b></span> <span>平仓胜率 <b style="font-family:monospace">42.9%</b>(n=14)</span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="68.7" x2="620" y2="68.7" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,75.7 33.6,68.9 47.3,70.6 60.9,74.3 74.5,32.1 88.2,31.2 101.8,31.2 115.5,36.5 129.1,42.8 142.7,40.2 156.4,45.4 170.0,54.6 183.6,57.9 197.3,62.3 210.9,64.3 224.5,62.0 238.2,57.0 251.8,60.9 265.5,59.8 279.1,61.7 292.7,65.5 306.4,69.9 320.0,73.1 333.6,70.1 347.3,69.7 360.9,70.7 374.5,77.4 388.2,75.3 401.8,72.4 415.5,73.1 429.1,78.2 442.7,80.4 456.4,87.9 470.0,87.0 483.6,87.8 497.3,89.4 510.9,89.7 524.5,94.8 538.2,95.3 551.8,104.0 565.5,107.1 579.1,115.3 592.7,118.8 606.4,116.9 620.0,116.5" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,67.9 33.6,66.1 47.3,66.7 60.9,67.1 74.5,63.8 88.2,63.8 101.8,61.7 115.5,61.4 129.1,60.2 142.7,61.0 156.4,62.8 170.0,62.4 183.6,62.4 197.3,62.4 210.9,62.8 224.5,62.6 238.2,62.6 251.8,62.6 265.5,63.1 279.1,63.6 292.7,63.0 306.4,63.0 320.0,63.0 333.6,63.0 347.3,63.0 360.9,63.0 374.5,63.0 388.2,63.0 401.8,63.8 415.5,64.2 429.1,64.2 442.7,65.3 456.4,65.3 470.0,65.3 483.6,65.3 497.3,65.3 510.9,65.3 524.5,65.3 538.2,65.7 551.8,65.6 565.5,64.9 579.1,65.7 592.7,66.9 606.4,67.1 620.0,66.9" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="66.9" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20261022  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="61.9" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">1.0089</text></svg></div>
+<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · 本日空仓（buys 0 只），与 _学习/lhb判断_20261022.json#荐票 的『正式荐票 0 只』一致。无在持仓，sells 亦为空。
+
+【为何 0 只（交集算术，非情绪）】①S/A 席在场 ∩ 封板三项（封单比≥5% ∧ 炸板≤3 ∧ 首封≤14:00）= 空集：5 只 S/A 涨停票中 601091 封单比 0.81%/炸9、002724 炸4、600202 封单比 0.30%/炸9、301023 封单比 3.82% 四只不过门槛，第 5 只属双源强矛盾（禁入且不列名）；反向路径 6 只封板三项全过的涨停票（300839/600261/603028/301502/000678/600192）无一只 S/A 席在场。②市场基准为负：昨日涨停票今日执1 均收 -1.69%（中位 -3.30%、胜率 34%、n=50），涨停 33/跌停 49，56 只当日榜股票级净额合计 -0.90 亿（净买为正仅 39.3%）。③本路冰点档无正期望证据：模拟盘累计 14 笔、胜率 42.9%、净值 1.0081。
+
+【观察池 3 只（权重 0，不下单）】000678 襄阳轴承 / 300839 博汇股份 / 600192 长城电工。三只均无 S/A 席，按今日恢复的布尔硬门槛不得进 buys。
+
+【明日（20261023）升荐闸门，缺一不执行】a) 该票买入前五出现 ≥1 席 S/A（档位取当晚重算后的 _学习/_席位分档.json）；b) 净买占比落 10-20% 桶（≥10% 且 <20%），>20% 一律不荐（>20% 桶 n=136/执1 36.0%/-0.59% 为最差桶，今日 002307 24.68% 已按桶否决）；c) 封单比≥5%（成交口径）∧ 炸板≤3 ∧ 首封≤14:00；d) 股票级净额 >0 且 席位净额−股票级净额 <1 亿（今日全榜该差为 4.88 亿，属污染）；e) 非双源强矛盾。
+
+【若升荐的仓位与闸门】单票 ≤3%、合计 ≤3%（冰点环境下上限 8% 只用其一半以下）；buy_gate: min_gap_pct=-2.0、max_gap_pct=+2.0（比昨日 -3/+3 收窄，理由：市场基准 -1.69%，300296 今日 gap +5.86% 后执1 仅 +2.35%，高开是卖压出口）；开盘即一字封涨停 → 记『闸门未落』，不成交、不计收益、不替补。
+
+【防守线】若 20261023 涨停 <25 或 跌停 ≥40 或 封板率 <0.50 任一成立，连续第 3 日空仓且不再讨论加仓；若涨停 ≥45 且 跌停 ≤10，视为宽度修复，权重上限可由 3% 提到 5%。
+
+【结算口径】buys 为空段属合法（0==0），20261023 跑 席位荐票结算.py 20261022 时正式荐票段应为 0 条、无执行价剔除数 0、均收 null 不进分母。</div>
+</div><div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">002639 雪人集团</td><td style="font-family:monospace">4000</td><td style="font-family:monospace">14.78</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+1.44%</b></td><td style="font-family:monospace">1</td><td>继续持有</td></tr>
+</table>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20261022发出,明日固定价执行)</div>
+<div style="color:#8d93a8;margin-top:4px">★今晚无买卖指令(在持票默认继续持有/或空仓)</div>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(5)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>001696 宗申动力</td><td style="font-family:monospace">20261019@16.00</td><td style="font-family:monospace">20261021@15.44</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-3.64%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600802 福建水泥</td><td style="font-family:monospace">20261019@6.88</td><td style="font-family:monospace">20261021@6.40</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-7.12%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600668 尖峰集团</td><td style="font-family:monospace">20261016@8.15</td><td style="font-family:monospace">20261019@8.48</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+3.89%</b></td><td>开·持1日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>000601 韶能股份</td><td style="font-family:monospace">20261015@6.68</td><td style="font-family:monospace">20261019@6.38</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-4.63%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>002640 跨境通</td><td style="font-family:monospace">20261014@3.84</td><td style="font-family:monospace">20261016@3.80</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-1.19%</b></td><td>开·持2日</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<h2>一 席位综合判断</h2>
+<div class="card"><b>洞察（agent）· 20261022 席位结构七条</b><p style="margin:6px 0 0">①<b>笔数回流、金额离场</b>：席位明细 330 行 → 剔除含连续/累计/严重异常的区间榜 58 行 → 按（代码,席位）去重 <b>255 笔 / 56 只</b>；S/A 合计 <b>24 笔（S=5、A=19）占 9.41%</b>，是昨日 8 笔的 3 倍，也是本路近月最高占比之一。但 S 档 5 笔买额合计只有 <b>0.55 亿</b>、单笔最大 <b>0.27 亿</b>（东财拉萨团结路第二 n=63 打 301718），无一笔 ≥0.5 亿；昨日仅华泰深圳彩田路一笔就 1.07 亿。②<b>买方前五与真实资金流反向</b>：56 只当日榜<span class="mut">（股票级 lhb.csv）</span>净额合计 <b>-0.90 亿</b>（净卖），净买为正仅 <b>22/56＝39.3%</b>；而席位（买五）净额合计 <b>+3.98 亿</b>，差额 <b>4.88 亿</b>全在未披露的卖榜里。买榜好看是结构性偏差，不是强势。③<b>S/A 涨停 5 只全部出局</b>：601091（封单比 0.81%、炸9）、002724（炸4）、600202（封单比 0.30%、炸9）、301023（封单比 3.82%）四只封板三项不过；第 5 只属双源强矛盾（按负面过滤禁入且不列名）。④<b>有质量的没有席位</b>：封板三项全过且源1净买&gt;0 的涨停票 <b>6 只</b>（300839/600261/603028/301502/000678/600192），<b>无一只有 S/A 席在场</b>。两条路都归零，故空仓。⑤<b>游资散化断链</b>：知名游资 163 席/29.5 亿（昨 116 席/25.8 亿），单笔均额 <b>1810 万 vs 2224 万＝-18.6%</b>——人数 +40.5%、每笔更小、总额只增 14.3%，是「小游资接大游资的货」的形态。⑥<b>机构在跌停票上出逃</b>：机构专用 24 笔净 +0.66 亿，但其中净卖 10 笔合计 <b>-1.01 亿</b>，集中在 002980（-0.32 亿）、002388（-0.11 亿）、301591（-0.08 亿）等跌停/大跌票；北向金额 <b>15.4→7.8 亿（-49.4%）</b>，深股通买 6.07/卖 5.61 亿属双向对冲。⑦<b>方向</b>：今日不是「席位买了什么」的问题，而是「卖的人是谁」的问题——56 只净卖、机构净卖 10 笔、北向腰斩、游资单笔缩 18.6%，四条同向，故本路不给仓位。</p></div>
+
+<div class="card"><b>漏斗：33 只涨停走到 0 只可荐</b><table><tr><th>关卡</th><th>剩余</th><th>说明</th></tr>
+<tr><td>当日涨停</td><td>33 只</td><td>跌停 49 · 炸板 23 · 炸板率 0.411 · 封板率 0.589 · 最高连板 5（002724 海洋王）</td></tr>
+<tr><td>∩ 上当日榜（剔区间榜）</td><td>15 只</td><td>覆盖率 45.5%（昨 32.0%），席位证据只覆盖不到一半涨停</td></tr>
+<tr><td>∩ 源1净买 ＞0</td><td>13 只</td><td>净卖 2 只剔除</td></tr>
+<tr><td>∩ 封板三项（封单比≥5% ∧ 炸板≤3 ∧ 首封≤14:00）</td><td>6 只</td><td>300839 / 600261 / 603028 / 301502 / 000678 / 600192</td></tr>
+<tr><td>∩ S/A 席在场（今日恢复为硬门槛）</td><td><b>0 只</b></td><td>六只全无 S/A 席；反向路径 5 只 S/A 涨停 → 过封板三项 0 只</td></tr>
+</table><p class="mut" style="margin:6px 0 0">两条路径同时归零：<b>有 S/A 没质量</b>（5 只）、<b>有质量没 S/A</b>（6 只）。空仓是交集结果，不是情绪选择。</p></div>
+
+<div class="card"><b>钱在哪：席位类型分布（_学习/_资金温度.json，20261022 vs 20261021）</b><table><tr><th>类型</th><th>今日席次/金额</th><th>昨日</th><th>变化</th></tr>
+<tr><td>知名游资</td><td>163 席 / 29.5 亿</td><td>116 席 / 25.8 亿</td><td>席次 <b>+40.5%</b>、金额 +14.3% → 单笔均额 1810 万（昨 2224 万，<b>-18.6%</b>）</td></tr>
+<tr><td>北向（沪深股通）</td><td>16 席 / 7.8 亿</td><td>17 席 / 15.4 亿</td><td>-5.9% / <b>-49.4%</b>（配置盘撤退最猛）</td></tr>
+<tr><td>机构专用</td><td>24 席 / 4.7 亿</td><td>21 席 / 6.4 亿</td><td>+14.3% / <b>-26.6%</b>（席次增、钱减）</td></tr>
+<tr><td>量化</td><td>11 席 / 4.3 亿</td><td>11 席 / 4.0 亿</td><td>0% / +7.5%</td></tr>
+<tr><td>营业部</td><td>41 席 / 3.2 亿</td><td>35 席 / 3.3 亿</td><td>+17.1% / -3.0%</td></tr>
+<tr><td><b>总额</b></td><td><b>49.5 亿</b></td><td>54.9 亿</td><td><b>-9.8%</b>，温度分位 <b>3</b>（昨 7，年内极低位）</td></tr>
+</table><p class="mut" style="margin:6px 0 0">环境侧同步读数：温度 <b>11.2（冰点）</b>、涨停 33（昨 50）/跌停 <b>49</b>（昨 5）、炸板 23、封板总额 21.8 亿（昨 42.3）、二板加 9（昨 16）、成交 15287 亿（昨 14293）。昨日涨停票今日执1 均收 <b>-1.69%</b>（中位 -3.30%、胜率 34%、n=50），一进二 14.7%，核按钮率 12%（6/50 昨涨停今跌停）。本路模拟盘累计 14 笔、胜率 42.9%、净值 1.0081。</p></div>
+
+
+<p style="font-weight:700;margin:8px 0 4px;border-left:3px solid var(--accent);padding-left:8px">当日席位路Top5荐票(S/A席位动向v3·第2路)</p>
+<!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></colgroup><tr><th>#</th><th>标的</th><th>综合分·共振</th><th>S/A席位(档·滚动执1胜率·净买)</th><th>资金结构</th><th>T+1结算(开买→收)</th></tr><tr><td>1</td><td style="white-space:nowrap"><b>沈鼓集团</b><br><span class="mut">601091 +10.0%</span></td><td style="white-space:nowrap"><b>5.28</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>国盛证券股份有限公司宁波桑田… <span class="mut">执1 55.3%/1.53%(n=55) 净买9189万</span></td><td style="white-space:nowrap">结构<b>40</b><br><span class="mut">机构0·量化1·游资1</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>2</td><td style="white-space:nowrap"><b>海洋王</b><br><span class="mut">002724 +10.0%</span></td><td style="white-space:nowrap"><b>4.68</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>华泰证券股份有限公司深圳彩田… <span class="mut">执1 57.7%/1.81%⚠小样本(n=21) 净买6694万</span></td><td style="white-space:nowrap">结构<b>50</b><br><span class="mut">机构0·量化0·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>3</td><td style="white-space:nowrap"><b>百洋股份</b><br><span class="mut">002696 -6.8%</span></td><td style="white-space:nowrap"><b>4.2</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>华泰证券股份有限公司深圳彩田… <span class="mut">执1 57.7%/1.81%⚠小样本(n=21) 净买5597万</span></td><td style="white-space:nowrap">结构<b>49</b><br><span class="mut">机构1·量化0·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>4</td><td style="white-space:nowrap"><b>通则康威</b><br><span class="mut">301718 +171.5%</span></td><td style="white-space:nowrap"><b>3.86</b><br><span class="mut">共振2</span></td><td style="word-break:break-word"><b>[A]</b>东方财富证券股份有限公司拉萨… <span class="mut">执1 56.4%/1.49%(n=82) 净买1834万</span><br><b>[S]</b>东方财富证券股份有限公司拉萨… <span class="mut">执1 62.9%/1.18%(n=63) 净买1804万</span></td><td style="white-space:nowrap">结构<b>51</b><br><span class="mut">机构0·量化0·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>5</td><td style="white-space:nowrap"><b>哈空调</b><br><span class="mut">600202 +10.1%</span></td><td style="white-space:nowrap"><b>2.98</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>国泰海通证券股份有限公司广州… <span class="mut">执1 58.2%/2.03%⚠小样本(n=7) 净买2557万</span></td><td style="white-space:nowrap">结构<b>49</b><br><span class="mut">机构0·量化1·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr></table></div><div class="hint">候选=当日S/A席位净买≥1000万(69个S/A,候选11只);席位胜率=滚动执行口径历史值(窗口20260401~20261021),非个股预言;结构分仅辅助。结算列次日由结算脚本原位回填,同一张表不换结构。</div><!--/SEATCARD--><!--FUNDTEMP--><h2>二 资金温度 · 日度统计(买侧席位明细)</h2><div class="hint">柱=当日出手席次(<span style="color:#2e6f5e">■机构</span> <span style="color:#7c5cbf">■量化</span> <span style="color:#c0392b">■游资=活跃(截至昨日累计上榜≥8次,数据驱动)∪知名名单</span>),虚线=买侧总金额(右轴);底部圆点=温度(红热≥67/黄温/蓝冷<34,当日总额在截至当日近60日的分位,零后视镜)。滚动窗口只显示最近20个交易日,日期增加不影响展示。★库实证(清洗后,区分度15.9pp,倒U型):<b>温和放量日(34-66分位)跟买61.6%最好,过热(≥67)仅45.7%,冷48.7%居中</b>=有钱进但不拥挤才有肉。<b>今日温度:3分位(冷)</b></div><div class="card"><svg viewBox="0 0 940 300" style="width:100%;height:auto;font-family:inherit"><line x1="46" y1="266" x2="930" y2="266" stroke="#e8e2d4" stroke-width="1"/><text x="40" y="270" text-anchor="end" font-size="10" fill="#8a8272">0</text><line x1="46" y1="204" x2="930" y2="204" stroke="#e8e2d4" stroke-width="1"/><text x="40" y="208" text-anchor="end" font-size="10" fill="#8a8272">49</text><line x1="46" y1="142" x2="930" y2="142" stroke="#e8e2d4" stroke-width="1"/><text x="40" y="146" text-anchor="end" font-size="10" fill="#8a8272">99</text><line x1="46" y1="80" x2="930" y2="80" stroke="#e8e2d4" stroke-width="1"/><text x="40" y="84" text-anchor="end" font-size="10" fill="#8a8272">148</text><line x1="46" y1="18" x2="930" y2="18" stroke="#e8e2d4" stroke-width="1"/><text x="40" y="22" text-anchor="end" font-size="10" fill="#8a8272">198</text><rect x="54.0" y="235.9" width="24.3" height="30.1" fill="#2e6f5e"/><rect x="54.0" y="229.7" width="24.3" height="6.3" fill="#7c5cbf"/><rect x="54.0" y="61.8" width="24.3" height="167.8" fill="#c0392b"/><text x="66" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/17</text><circle cx="66" cy="288" r="3" fill="#c8a24a"/><rect x="98.2" y="240.9" width="24.3" height="25.1" fill="#2e6f5e"/><rect x="98.2" y="223.4" width="24.3" height="17.5" fill="#7c5cbf"/><rect x="98.2" y="96.9" width="24.3" height="126.5" fill="#c0392b"/><text x="110" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/18</text><circle cx="110" cy="288" r="3" fill="#c8a24a"/><rect x="142.4" y="232.2" width="24.3" height="33.8" fill="#2e6f5e"/><rect x="142.4" y="214.6" width="24.3" height="17.5" fill="#7c5cbf"/><rect x="142.4" y="70.6" width="24.3" height="144.0" fill="#c0392b"/><text x="155" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/21</text><circle cx="155" cy="288" r="3" fill="#7f9db9"/><rect x="186.6" y="235.9" width="24.3" height="30.1" fill="#2e6f5e"/><rect x="186.6" y="222.2" width="24.3" height="13.8" fill="#7c5cbf"/><rect x="186.6" y="59.3" width="24.3" height="162.8" fill="#c0392b"/><text x="199" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/22</text><circle cx="199" cy="288" r="3" fill="#7f9db9"/><rect x="230.8" y="237.2" width="24.3" height="28.8" fill="#2e6f5e"/><rect x="230.8" y="223.4" width="24.3" height="13.8" fill="#7c5cbf"/><rect x="230.8" y="38.0" width="24.3" height="185.4" fill="#c0392b"/><text x="243" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/23</text><circle cx="243" cy="288" r="3" fill="#7f9db9"/><rect x="275.0" y="239.7" width="24.3" height="26.3" fill="#2e6f5e"/><rect x="275.0" y="225.9" width="24.3" height="13.8" fill="#7c5cbf"/><rect x="275.0" y="66.8" width="24.3" height="159.1" fill="#c0392b"/><text x="287" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/24</text><circle cx="287" cy="288" r="3" fill="#7f9db9"/><rect x="319.2" y="238.4" width="24.3" height="27.6" fill="#2e6f5e"/><rect x="319.2" y="228.4" width="24.3" height="10.0" fill="#7c5cbf"/><rect x="319.2" y="84.4" width="24.3" height="144.0" fill="#c0392b"/><text x="331" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/28</text><circle cx="331" cy="288" r="3" fill="#7f9db9"/><rect x="363.4" y="238.4" width="24.3" height="27.6" fill="#2e6f5e"/><rect x="363.4" y="224.7" width="24.3" height="13.8" fill="#7c5cbf"/><rect x="363.4" y="60.6" width="24.3" height="164.1" fill="#c0392b"/><text x="376" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/29</text><circle cx="376" cy="288" r="3" fill="#7f9db9"/><rect x="407.6" y="240.9" width="24.3" height="25.1" fill="#2e6f5e"/><rect x="407.6" y="234.7" width="24.3" height="6.3" fill="#7c5cbf"/><rect x="407.6" y="33.0" width="24.3" height="201.7" fill="#c0392b"/><text x="420" y="279" text-anchor="middle" font-size="9" fill="#8a8272">09/30</text><circle cx="420" cy="288" r="3" fill="#7f9db9"/><rect x="451.8" y="228.4" width="24.3" height="37.6" fill="#2e6f5e"/><rect x="451.8" y="213.4" width="24.3" height="15.0" fill="#7c5cbf"/><rect x="451.8" y="25.5" width="24.3" height="187.9" fill="#c0392b"/><text x="464" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/08</text><circle cx="464" cy="288" r="3" fill="#c0392b"/><rect x="496.0" y="230.9" width="24.3" height="35.1" fill="#2e6f5e"/><rect x="496.0" y="214.6" width="24.3" height="16.3" fill="#7c5cbf"/><rect x="496.0" y="24.3" width="24.3" height="190.4" fill="#c0392b"/><text x="508" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/09</text><circle cx="508" cy="288" r="3" fill="#7f9db9"/><rect x="540.2" y="238.4" width="24.3" height="27.6" fill="#2e6f5e"/><rect x="540.2" y="227.2" width="24.3" height="11.3" fill="#7c5cbf"/><rect x="540.2" y="59.3" width="24.3" height="167.8" fill="#c0392b"/><text x="552" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/12</text><circle cx="552" cy="288" r="3" fill="#7f9db9"/><rect x="584.4" y="230.9" width="24.3" height="35.1" fill="#2e6f5e"/><rect x="584.4" y="223.4" width="24.3" height="7.5" fill="#7c5cbf"/><rect x="584.4" y="36.8" width="24.3" height="186.6" fill="#c0392b"/><text x="597" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/13</text><circle cx="597" cy="288" r="3" fill="#7f9db9"/><rect x="628.6" y="234.7" width="24.3" height="31.3" fill="#2e6f5e"/><rect x="628.6" y="229.7" width="24.3" height="5.0" fill="#7c5cbf"/><rect x="628.6" y="35.5" width="24.3" height="194.1" fill="#c0392b"/><text x="641" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/14</text><circle cx="641" cy="288" r="3" fill="#7f9db9"/><rect x="672.8" y="228.4" width="24.3" height="37.6" fill="#2e6f5e"/><rect x="672.8" y="215.9" width="24.3" height="12.5" fill="#7c5cbf"/><rect x="672.8" y="61.8" width="24.3" height="154.1" fill="#c0392b"/><text x="685" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/15</text><circle cx="685" cy="288" r="3" fill="#7f9db9"/><rect x="717.0" y="234.7" width="24.3" height="31.3" fill="#2e6f5e"/><rect x="717.0" y="220.9" width="24.3" height="13.8" fill="#7c5cbf"/><rect x="717.0" y="33.0" width="24.3" height="187.9" fill="#c0392b"/><text x="729" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/16</text><circle cx="729" cy="288" r="3" fill="#c0392b"/><rect x="761.2" y="234.7" width="24.3" height="31.3" fill="#2e6f5e"/><rect x="761.2" y="227.2" width="24.3" height="7.5" fill="#7c5cbf"/><rect x="761.2" y="39.3" width="24.3" height="187.9" fill="#c0392b"/><text x="773" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/19</text><circle cx="773" cy="288" r="3" fill="#7f9db9"/><rect x="805.4" y="230.9" width="24.3" height="35.1" fill="#2e6f5e"/><rect x="805.4" y="224.7" width="24.3" height="6.3" fill="#7c5cbf"/><rect x="805.4" y="53.1" width="24.3" height="171.6" fill="#c0392b"/><text x="818" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/20</text><circle cx="818" cy="288" r="3" fill="#7f9db9"/><rect x="849.6" y="239.7" width="24.3" height="26.3" fill="#2e6f5e"/><rect x="849.6" y="225.9" width="24.3" height="13.8" fill="#7c5cbf"/><rect x="849.6" y="80.6" width="24.3" height="145.3" fill="#c0392b"/><text x="862" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/21</text><circle cx="862" cy="288" r="3" fill="#7f9db9"/><rect x="893.8" y="235.9" width="24.3" height="30.1" fill="#2e6f5e"/><rect x="893.8" y="222.2" width="24.3" height="13.8" fill="#7c5cbf"/><rect x="893.8" y="18.0" width="24.3" height="204.2" fill="#c0392b"/><text x="906" y="279" text-anchor="middle" font-size="9" fill="#8a8272">10/22</text><circle cx="906" cy="288" r="3" fill="#7f9db9"/><polyline points="66.1,61.9 110.3,63.4 154.5,73.8 198.7,90.9 242.9,108.7 287.1,101.6 331.3,111.2 375.5,110.7 419.7,123.6 463.9,23.1 508.1,100.2 552.3,122.4 596.5,115.5 640.7,132.9 684.9,114.8 729.1,18.0 773.3,142.1 817.5,106.8 861.7,132.1 905.9,145.3" fill="none" stroke="#1f2430" stroke-width="2" stroke-dasharray="4 3"/><text x="932" y="270" text-anchor="end" font-size="10" fill="#1f2430">0亿</text><text x="932" y="146" text-anchor="end" font-size="10" fill="#1f2430">51亿</text><text x="932" y="22" text-anchor="end" font-size="10" fill="#1f2430">102亿</text></svg></div><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:52px"><col><col><col><col><col style="width:70px"><col style="width:46px"></colgroup><tr><th>日</th><th>机构</th><th>量化</th><th>游资(活跃+知名)</th><th>北向</th><th>总额</th><th>温度</th></tr><tr><td style="white-space:nowrap">10-22</td><td>24<span class="mut">/4.7亿</span></td><td>11<span class="mut">/4.3亿</span></td><td>163<span class="mut">/29.5亿</span></td><td>16<span class="mut">/7.8亿</span></td><td><b>49.5亿</b></td><td><b>3</b></td></tr><tr><td style="white-space:nowrap">10-21</td><td>21<span class="mut">/6.4亿</span></td><td>11<span class="mut">/4.0亿</span></td><td>116<span class="mut">/25.8亿</span></td><td>17<span class="mut">/15.4亿</span></td><td><b>54.9亿</b></td><td><b>7</b></td></tr><tr><td style="white-space:nowrap">10-20</td><td>28<span class="mut">/9.6亿</span></td><td>5<span class="mut">/3.5亿</span></td><td>137<span class="mut">/24.0亿</span></td><td>23<span class="mut">/24.4亿</span></td><td><b>65.3亿</b></td><td><b>30</b></td></tr><tr><td style="white-space:nowrap">10-19</td><td>25<span class="mut">/7.3亿</span></td><td>6<span class="mut">/1.5亿</span></td><td>150<span class="mut">/36.2亿</span></td><td>0<span class="mut">/0.0亿</span></td><td><b>50.8亿</b></td><td><b>3</b></td></tr><tr><td style="white-space:nowrap">10-16</td><td>25<span class="mut">/8.1亿</span></td><td>11<span class="mut">/4.9亿</span></td><td>150<span class="mut">/42.0亿</span></td><td>16<span class="mut">/41.9亿</span></td><td><b>101.7亿</b></td><td><b>82</b></td></tr></table></div><!--/FUNDTEMP-->
+<!--LHBLEDGER-->
+<details class="chain" open><summary><b>10-22</b> <span class="chip">最新</span> 上榜66 · 机构在场30只 · S/A出手12笔</summary><div class="inner"><div class="strip"><div class="kv"><div class="l">上榜(买侧明细)</div><div class="v">66</div></div><div class="kv"><div class="l">机构在场</div><div class="v">30</div></div><div class="kv"><div class="l">S/A出手</div><div class="v">12笔</div></div></div><p style="font-weight:700;margin:14px 0 4px;border-left:3px solid var(--accent);padding-left:8px">今日S/A席位动向全表(出手12笔)</p><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col><col style="width:110px"><col style="width:96px"></colgroup><tr><th>S/A席位(滚动战绩)</th><th>买入标的</th><th>金额</th></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 东方财富证券股份有限公司拉萨团结路第二证券营…<br><span class="mut">滚动执1 65.1%/1.26% · n=63 · 营业部</span></td><td style="white-space:nowrap"><b>通则康威</b><br><span class="mut">301718</span></td><td style="white-space:nowrap">净买<b>0.18亿</b><br><span class="mut">买0.27亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国盛证券股份有限公司宁波桑田路证券营业部…<br><span class="mut">滚动执1 56.4%/1.69% · n=55 · 知名游资</span></td><td style="white-space:nowrap"><b>沈鼓集团</b><br><span class="mut">601091</span></td><td style="white-space:nowrap">净买<b>0.92亿</b><br><span class="mut">买0.92亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司深圳彩田路证券营业部…<br><span class="mut">滚动执1 61.9%/2.35% · n=21 · 营业部</span></td><td style="white-space:nowrap"><b>海洋王</b><br><span class="mut">002724</span></td><td style="white-space:nowrap">净买<b>0.67亿</b><br><span class="mut">买0.67亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司深圳彩田路证券营业部…<br><span class="mut">滚动执1 61.9%/2.35% · n=21 · 营业部</span></td><td style="white-space:nowrap"><b>百洋股份</b><br><span class="mut">002696</span></td><td style="white-space:nowrap">净买<b>0.56亿</b><br><span class="mut">买0.56亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国盛证券股份有限公司宁波桑田路证券营业部…<br><span class="mut">滚动执1 56.4%/1.69% · n=55 · 知名游资</span></td><td style="white-space:nowrap"><b>东安动力</b><br><span class="mut">600178</span></td><td style="white-space:nowrap">净买<b>0.31亿</b><br><span class="mut">买0.31亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司广州珠江新城证券营业…<br><span class="mut">滚动执1 71.4%/3.95% · n=7 · 营业部</span></td><td style="white-space:nowrap"><b>哈空调</b><br><span class="mut">600202</span></td><td style="white-space:nowrap">净买<b>0.26亿</b><br><span class="mut">买0.26亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司长宁区江苏路证券营业…<br><span class="mut">滚动执1 62.5%/2.88% · n=8 · 营业部</span></td><td style="white-space:nowrap"><b>天洋新材</b><br><span class="mut">603330</span></td><td style="white-space:nowrap">净买<b>0.21亿</b><br><span class="mut">买0.21亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东方财富证券股份有限公司拉萨东环路第一证券营…<br><span class="mut">滚动执1 57.3%/1.59% · n=82 · 营业部</span></td><td style="white-space:nowrap"><b>通则康威</b><br><span class="mut">301718</span></td><td style="white-space:nowrap">净买<b>0.18亿</b><br><span class="mut">买0.26亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司广州珠江新城证券营业…<br><span class="mut">滚动执1 71.4%/3.95% · n=7 · 营业部</span></td><td style="white-space:nowrap"><b>出版传媒</b><br><span class="mut">601999</span></td><td style="white-space:nowrap">净买<b>0.17亿</b><br><span class="mut">买0.17亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 广发证券股份有限公司成都新光路证券营业部…<br><span class="mut">滚动执1 80.0%/2.25% · n=5 · 营业部</span></td><td style="white-space:nowrap"><b>深桑达A</b><br><span class="mut">000032</span></td><td style="white-space:nowrap">净买<b>0.15亿</b><br><span class="mut">买0.15亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中信证券股份有限公司深圳分公司…<br><span class="mut">滚动执1 63.2%/3.0% · n=19 · 营业部</span></td><td style="white-space:nowrap"><b>近岸蛋白</b><br><span class="mut">688137</span></td><td style="white-space:nowrap">净买<b>0.12亿</b><br><span class="mut">买0.12亿</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东方财富证券股份有限公司昌都两江大道证券营业…<br><span class="mut">滚动执1 51.7%/1.87% · n=89 · 营业部</span></td><td style="white-space:nowrap"><b>吉大正元</b><br><span class="mut">003029</span></td><td style="white-space:nowrap">净买<b>0.01亿</b><br><span class="mut">买0.14亿</span></td></tr></table></div></div></details>
+
+<h2>三 龙虎榜台账</h2>
+<div class="card"><b>昨日五条可证伪条件逐条结算（口径统一：执1＝次日开盘买→次日收盘卖，_学习/_bars_cache）</b><table><tr><th>条件</th><th>实测</th><th>判定</th></tr>
+<tr><td>① 002639 执1 &gt;0 → B档抱团路径成立；≤-3% → 恢复 S/A 硬门槛</td><td>昨收 15.18 → 今开 <b>14.78</b>（gap -2.64%，落闸门 [-3,+3] 带内）→ 今收 15.00，执1 <b>+1.49%</b></td><td><b>成立</b>（路径有效，未触发失败分支）</td></tr>
+<tr><td>② 002242 执1 ≤0 → 封板三门槛否决正确；&gt;+3% → 门槛过严</td><td>昨收 22.62 → 今开 22.02（gap -2.65%）→ 今收 21.71，执1 <b>-1.41%</b>（较昨收 -4.02%）</td><td><b>成立</b>（否决正确，第 2 日验证）</td></tr>
+<tr><td>③ 300296 执1 &gt;+5% 且江苏路续列买入前五 → 承认单席可独立成信号</td><td>昨收 5.63 → 今开 5.96（gap +5.86%）→ 今收 6.10，执1 <b>+2.35%</b>；江苏路今日仍在 300296 买入榜（区间榜，净 +0.67 亿）</td><td><b>部分成立</b>（席位腿✓、收益腿✗，+2.35% &lt; +5%）→ 维持「≥2 席同向且封单比≥10%」</td></tr>
+<tr><td>④ S/A 笔数 ≥20（昨 8 笔的 2.5 倍）→ 撤回「S/A 稀薄日降门槛」口径</td><td>同日同口径 S/A＝5(S)+19(A)＝<b>24 笔</b></td><td><b>触发</b>→ 昨日口径整段撤回，今日「S/A 在场」恢复布尔硬门槛（这条直接决定今日空仓）</td></tr>
+<tr><td>⑤ 002639 若开盘即封涨停 → 记「闸门未落」不进分母</td><td>今开 14.78 ≠ 涨停价 16.70，盘中未封</td><td>未触发（已结算，进分母）</td></tr>
+</table><p class="mut" style="margin:6px 0 0">昨日正式荐票 1 只（002639 6%）结算 <b>1/1、+1.49%</b>，同日全市场基准（昨涨停票今日执1）为 <b>-1.69%</b>，超额 <b>+3.18pp</b>；发版 Top5 结算 1/4、均收 -0.18%（920157 无执行价被剔除，不计入分母）。</p></div>
+
+<div class="card"><b>与总审的两处交叉裁决：谁对（反事实逐笔算）</b><table><tr><th>项</th><th>本席原案</th><th>总审修正</th><th>今日实测</th><th>结算</th></tr>
+<tr><td>002639 权重</td><td>6%</td><td>改为 <b>4%</b>（理由：偏冷档 15/39＝38.5%/-0.31%、紫阳东路近 5 笔 2/5、二进三 12.5%）</td><td>执1 <b>+1.49%</b>（正）</td><td>4% 比 6% 少赚 2%×1.49%＝<b>0.0298pp</b>，<b>本席原案对</b></td></tr>
+<tr><td>002242 定性</td><td>观察（0%，依据封板三项全负）</td><td>改为 <b>正式荐票 2.0%</b>（依据：净买占比 17.52% 落唯一 ≥50% 正桶；封单比存在两套口径）</td><td>执1 <b>-1.41%</b>（收 21.71，较昨收 -4.02%），收红＝0</td><td>2.0%×(-1.41%)＝<b>-0.0282pp</b>，<b>本席原案对</b></td></tr>
+<tr><td colspan="3"><b>合计（反事实）</b>：本席原案 6%×1.49%＝+0.0894pp；总审案 4%×1.49% + 2.0%×(-1.41%)＝+0.0596−0.0282＝+0.0314pp</td><td colspan="2">差额 <b>-0.058pp</b> → <b>总审两条腿都错，本路读法胜出</b></td></tr>
+</table>
+<p style="margin:8px 0 4px"><b>错在哪（口径级，不是态度级）</b>：①总审引用的「净买占比 17.52%」是 <b>002639</b> 的数字，002242 当日榜真实占比是 <b>0.72%</b>，落『0-5%』桶（n=1300/48.2%/+0.54%，低于基准 49.0%）——这是一次跨票数字错配，把一个低于基准的票当成落在最优桶；②「封单比存在两套口径」不成立为翻案理由：同日实测 002242 封单 3952.8 万÷成交 30.89 亿＝<b>1.28%</b>、÷流通 172.3 亿＝<b>0.229%</b>，<b>两套口径都远低于 5% 门槛</b>，口径之争不改变否决结论；③总审还否掉了本路「封单比 1.28%&lt;5%」这一条否决依据（依据 C-01 认为强封为正的命题被别的库反号）——本日 002242 的 -1.41% 是对该否决的反证。</p>
+<p class="mut" style="margin:6px 0 0">工程侧同步：MA-20261021-03 给的三项已在 席位荐票结算.py 落地并自检——①反思 jsonl 主键改 (荐票日,段) 双段（scratch 自检：写发版 True／写正式 True／重复发版 False，落盘 2 行）；②汇总新增『无执行价剔除数』（dry-run 20261021：汇总 1/4、-0.18%、剔除 1；正式荐票汇总 1/1、+1.49%、剔除 0）；③封单比双值（002639＝16.3/1.951、002242＝1.28/0.229，与总审验收条件逐位一致）。未做：整脚本非 dry 重跑（会重渲 20261021 卡片并触发台账重排，与并发写页冲突），如实标注未验证。</p></div>
+
+
+<!--/LHBLEDGER--><h2>四 全市场席位分档库</h2>
+<details class="chain"><summary><b>全市场席位分档库(自我净化)</b> <span class="chip">S18/A51/B131/C89/预备162</span> 窗口20260401~20261021 19046笔 <span class="chip cold">10-22动向已入库·待T+1结算入窗</span></summary><div class="inner"><div class="hint">一笔=席位净买&gt;0且买额≥1000万;执1=T+1开买→T+1收,执2=→T+2收(跟随执行口径);零后视镜=只用已有前向的笔;每晚重算=掉档自动净化;★分档用收缩胜率(向全体基准收缩K=10),n&lt;25标小样本。S=n≥5且执1胜率≥60%且均涨>1%;A=胜率≥55%或(≥50%且均涨>1.5%);B=45-55%;C=<45%;每晚重算,掉档自动降级。</div><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col><col style="width:92px"><col style="width:92px"><col style="width:36px"><col style="width:52px"><col style="width:170px"></colgroup><tr><th>席位</th><th>执1胜率/均涨</th><th>执2</th><th>n</th><th>通道</th><th>近3笔</th></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 东方财富证券股份有限公司江苏分公司…</td><td style="white-space:nowrap">88.9%/6.65%</td><td style="white-space:nowrap">77.8%/7.24%</td><td>9</td><td>营业部</td><td style="word-break:break-word"><span class="mut">万邦医药+6.9、万邦医药+7.0、百花医药+7.1</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 华泰证券股份有限公司上海黄浦区来福士广场证券营业…</td><td style="white-space:nowrap">88.9%/4.79%</td><td style="white-space:nowrap">88.9%/7.61%</td><td>9</td><td>营业部</td><td style="word-break:break-word"><span class="mut">国力电子+2.6、普联软件+6.1、长裕集团+4.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 开源证券股份有限公司浙江分公司…</td><td style="white-space:nowrap">85.7%/7.29%</td><td style="white-space:nowrap">71.4%/8.73%</td><td>7</td><td>营业部</td><td style="word-break:break-word"><span class="mut">近岸蛋白+22.6、键凯科技+6.6、龙头股份+3.6</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 东亚前海证券有限责任公司浙江第二分公司…</td><td style="white-space:nowrap">83.3%/3.0%</td><td style="white-space:nowrap">83.3%/1.46%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">闽东电力+7.3、吉鑫科技+2.8、海峡创新+6.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 中信证券股份有限公司北京总部证券营业部…</td><td style="white-space:nowrap">83.3%/2.22%</td><td style="white-space:nowrap">50.0%/-1.18%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">杰瑞股份+3.8、嘉立创+1.9、国恩股份+8.4</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 中国银河证券股份有限公司北京安贞门证券营业部…</td><td style="white-space:nowrap">83.3%/3.51%</td><td style="white-space:nowrap">66.7%/3.42%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">隆鑫通用+0.9、新亚强+8.6、甘咨询+8.7</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 国泰海通证券股份有限公司连云港苍梧路证券营业部…</td><td style="white-space:nowrap">83.3%/2.86%</td><td style="white-space:nowrap">83.3%/6.37%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">翠微股份+1.5、至纯科技+4.7、恒银科技+2.4</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 华鑫证券有限责任公司上海分公司…</td><td style="white-space:nowrap">75.0%/2.89%</td><td style="white-space:nowrap">58.3%/1.17%</td><td>12</td><td>营业部</td><td style="word-break:break-word"><span class="mut">万向德农-12.3、华瓷股份+8.3、新华文轩+12.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 中国中金财富证券有限公司南昌红谷中大道证券营业部…</td><td style="white-space:nowrap">75.0%/3.07%</td><td style="white-space:nowrap">75.0%/6.76%</td><td>8</td><td>营业部</td><td style="word-break:break-word"><span class="mut">信达地产+11.3、爱仕达-0.6、善水科技+8.2</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 国海证券股份有限公司上海世纪大道证券营业部…</td><td style="white-space:nowrap">75.0%/4.84%</td><td style="white-space:nowrap">62.5%/-1.27%</td><td>8</td><td>营业部</td><td style="word-break:break-word"><span class="mut">红板科技+11.1、华亚智能-5.0、万讯自控-8.1</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 中信证券股份有限公司四川分公司…</td><td style="white-space:nowrap">72.7%/5.75%</td><td style="white-space:nowrap">54.5%/6.38%</td><td>11</td><td>营业部</td><td style="word-break:break-word"><span class="mut">德明利+3.5、展芯股份-4.2、鸿博股份+7.0</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 中国中金财富证券有限公司湖南分公司…</td><td style="white-space:nowrap">72.7%/2.46%</td><td style="white-space:nowrap">45.5%/1.4%</td><td>11</td><td>营业部</td><td style="word-break:break-word"><span class="mut">哈药股份+2.0、百花医药-5.5、百花医药+2.1</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 华泰证券股份有限公司岳阳岳阳大道证券营业部…</td><td style="white-space:nowrap">71.4%/1.82%</td><td style="white-space:nowrap">57.1%/0.99%</td><td>14</td><td>营业部</td><td style="word-break:break-word"><span class="mut">德明利-10.1、通宇通讯+1.7、锦龙股份+11.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 国泰海通证券股份有限公司成都龙腾东路营业部…</td><td style="white-space:nowrap">70.6%/3.37%</td><td style="white-space:nowrap">50.0%/3.12%</td><td>17</td><td>营业部</td><td style="word-break:break-word"><span class="mut">我爱我家-5.4、新华制药-2.6、贝瑞基因+12.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 东方证券股份有限公司上海松江区沪亭北路证券营业部…</td><td style="white-space:nowrap">69.2%/2.46%</td><td style="white-space:nowrap">61.5%/1.72%</td><td>13</td><td>营业部</td><td style="word-break:break-word"><span class="mut">中光防雷+7.8、光力科技+2.2、麒麟信安+4.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 平安证券股份有限公司深圳分公司…</td><td style="white-space:nowrap">66.7%/1.53%</td><td style="white-space:nowrap">52.9%/3.48%</td><td>18</td><td>营业部</td><td style="word-break:break-word"><span class="mut">陇神戎发+1.0、神农种业+0.9、神农种业+5.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 中信建投证券股份有限公司福州东街证券营业部…</td><td style="white-space:nowrap">65.2%/3.77%</td><td style="white-space:nowrap">68.2%/6.53%</td><td>23</td><td>营业部</td><td style="word-break:break-word"><span class="mut">九阳股份-2.8、莱美药业-6.3、冰山冷热+7.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-ok">[S]</b> 东方财富证券股份有限公司拉萨团结路第二证券营业部…</td><td style="white-space:nowrap">65.1%/1.26%</td><td style="white-space:nowrap">55.7%/0.03%</td><td>63</td><td>营业部</td><td style="word-break:break-word"><span class="mut">新力金融-7.2、桂林旅游+11.2、天顺风能+8.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华源证券股份有限公司深圳分公司…</td><td style="white-space:nowrap">100.0%/0.95%</td><td style="white-space:nowrap">80.0%/5.86%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">诺德股份+0.4、浪潮信息+3.6、新赛股份+0.2</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东方证券股份有限公司张家港东环路证券营业部…</td><td style="white-space:nowrap">80.0%/0.29%</td><td style="white-space:nowrap">25.0%/-5.32%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">欧莱新材-16.6、中谷物流+6.4、大晟文化+1.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中信证券股份有限公司海宁海昌南路证券营业部…</td><td style="white-space:nowrap">80.0%/4.37%</td><td style="white-space:nowrap">80.0%/5.83%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">风范股份+12.4、百花医药+7.1、百花医药-4.7</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 广发证券股份有限公司成都新光路证券营业部…</td><td style="white-space:nowrap">80.0%/2.25%</td><td style="white-space:nowrap">40.0%/-3.16%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">托伦斯+0.8、东材科技+1.4、传艺科技+10.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 民生证券股份有限公司上海自贸试验区分公司…</td><td style="white-space:nowrap">80.0%/7.7%</td><td style="white-space:nowrap">80.0%/17.44%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">鸿仕达+6.3、锐翔智能+6.4、深圳华强-7.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 长江证券股份有限公司安徽分公司…</td><td style="white-space:nowrap">80.0%/5.84%</td><td style="white-space:nowrap">80.0%/9.27%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">东方锆业+10.8、宝鼎科技-8.2、超声电子+3.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 长江证券股份有限公司长江证券上海分公司…</td><td style="white-space:nowrap">80.0%/11.21%</td><td style="white-space:nowrap">100.0%/31.52%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">鸿仕达+6.3、鸿仕达+3.7、腾信精密-10.6</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中国银河证券股份有限公司蚌埠东海大道证券营业部…</td><td style="white-space:nowrap">71.4%/2.47%</td><td style="white-space:nowrap">42.9%/1.89%</td><td>7</td><td>营业部</td><td style="word-break:break-word"><span class="mut">美诺华+6.0、裕太微+8.6、聚和材料+5.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司广州珠江新城证券营业部…</td><td style="white-space:nowrap">71.4%/3.95%</td><td style="white-space:nowrap">83.3%/4.65%</td><td>7</td><td>营业部</td><td style="word-break:break-word"><span class="mut">大晟文化+0.0、翠微股份+3.1、金健米业+2.1</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 平安证券股份有限公司江苏分公司…</td><td style="white-space:nowrap">71.4%/0.2%</td><td style="white-space:nowrap">14.3%/-1.83%</td><td>7</td><td>营业部</td><td style="word-break:break-word"><span class="mut">金禄电子-4.7、长缆科技+3.5、名家汇-5.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 招商证券股份有限公司上海世纪大道证券营业部…</td><td style="white-space:nowrap">71.4%/4.16%</td><td style="white-space:nowrap">71.4%/4.74%</td><td>7</td><td>营业部</td><td style="word-break:break-word"><span class="mut">杭钢股份+7.0、托伦斯+11.9、英特科技+5.0</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国联民生证券股份有限公司宁波分公司…</td><td style="white-space:nowrap">70.0%/2.79%</td><td style="white-space:nowrap">50.0%/3.97%</td><td>10</td><td>营业部</td><td style="word-break:break-word"><span class="mut">宏桥控股-3.4、金健米业+3.8、百利电气+0.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国联民生证券股份有限公司宁波财神殿南路证券营业部…</td><td style="white-space:nowrap">70.0%/3.97%</td><td style="white-space:nowrap">77.8%/4.19%</td><td>10</td><td>营业部</td><td style="word-break:break-word"><span class="mut">神奇制药+16.9、盈新发展+4.8、肯特催化-1.6</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中国银河证券股份有限公司桂林中山中路证券营业部…</td><td style="white-space:nowrap">66.7%/2.87%</td><td style="white-space:nowrap">77.8%/6.67%</td><td>9</td><td>营业部</td><td style="word-break:break-word"><span class="mut">九阳股份+11.7、慈文传媒-3.3、九阳股份+6.1</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司上海黄浦区黄陂南路证券营业部…</td><td style="white-space:nowrap">66.7%/2.89%</td><td style="white-space:nowrap">55.6%/4.0%</td><td>9</td><td>营业部</td><td style="word-break:break-word"><span class="mut">超声电子+10.4、普源精电+1.1、金安国纪+1.0</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 招商证券股份有限公司北京建国路证券营业部…</td><td style="white-space:nowrap">66.7%/3.06%</td><td style="white-space:nowrap">22.2%/-1.41%</td><td>9</td><td>营业部</td><td style="word-break:break-word"><span class="mut">光迅科技+10.4、中瓷电子-1.3、有研新材+3.0</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司武汉新华路证券营业部…</td><td style="white-space:nowrap">66.7%/5.33%</td><td style="white-space:nowrap">66.7%/11.75%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">百合花+16.2、欣天科技-5.0、名家汇-5.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华福证券股份有限公司上海浦明路证券营业部…</td><td style="white-space:nowrap">66.7%/-0.34%</td><td style="white-space:nowrap">50.0%/3.69%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">信濠光电-12.6、宏柏新材-1.6、和远气体+7.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华鑫证券有限责任公司深圳分公司…</td><td style="white-space:nowrap">66.7%/0.28%</td><td style="white-space:nowrap">66.7%/1.56%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">风范股份+0.1、三峡新材+1.6、新华传媒+0.0</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司成都顺城大街证券营业部…</td><td style="white-space:nowrap">66.7%/1.86%</td><td style="white-space:nowrap">40.0%/-2.18%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">万科A+6.7、我爱我家+3.2、我爱我家+0.0</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 方正证券股份有限公司慈溪人和路证券营业部…</td><td style="white-space:nowrap">66.7%/2.7%</td><td style="white-space:nowrap">33.3%/-2.06%</td><td>6</td><td>营业部</td><td style="word-break:break-word"><span class="mut">博云新材+3.4、顺灏股份+1.3、意华股份-1.7</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中国国际金融股份有限公司北京建国门外大街证券营业…</td><td style="white-space:nowrap">65.4%/1.0%</td><td style="white-space:nowrap">57.7%/0.57%</td><td>26</td><td>营业部</td><td style="word-break:break-word"><span class="mut">哈森股份+5.6、赤天化+2.6、华脉科技+1.6</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中国银河证券股份有限公司庄河世纪大街证券营业部…</td><td style="white-space:nowrap">64.7%/3.07%</td><td style="white-space:nowrap">64.7%/5.26%</td><td>17</td><td>营业部</td><td style="word-break:break-word"><span class="mut">永杉锂业+3.0、九阳股份+0.0、新华都-3.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 长城证券股份有限公司西北分公司…</td><td style="white-space:nowrap">64.7%/4.26%</td><td style="white-space:nowrap">68.8%/4.4%</td><td>17</td><td>营业部</td><td style="word-break:break-word"><span class="mut">世联行+1.6、峆一药业+5.5、东方嘉盛-4.4</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司成都龙腾东路证券营业部…</td><td style="white-space:nowrap">63.6%/1.78%</td><td style="white-space:nowrap">68.2%/4.62%</td><td>22</td><td>营业部</td><td style="word-break:break-word"><span class="mut">内蒙新华-6.0、沈鼓集团-2.0、天马科技-5.1</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东海证券股份有限公司福州长乐北路证券营业部…</td><td style="white-space:nowrap">63.6%/-0.23%</td><td style="white-space:nowrap">72.7%/2.45%</td><td>11</td><td>营业部</td><td style="word-break:break-word"><span class="mut">九安医疗-16.8、富瀚微+1.9、爱丽家居-3.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华创证券有限责任公司北京西直门证券营业部…</td><td style="white-space:nowrap">63.6%/2.5%</td><td style="white-space:nowrap">54.5%/2.84%</td><td>11</td><td>营业部</td><td style="word-break:break-word"><span class="mut">大北农-3.3、兴瑞科技+1.4、中京电子-5.9</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中信证券股份有限公司深圳分公司…</td><td style="white-space:nowrap">63.2%/3.0%</td><td style="white-space:nowrap">50.0%/1.21%</td><td>19</td><td>营业部</td><td style="word-break:break-word"><span class="mut">浪潮信息-1.0、万邦医药-2.0、国芳集团+13.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司上海普陀区大渡河路证券营…</td><td style="white-space:nowrap">63.2%/2.19%</td><td style="white-space:nowrap">31.6%/0.17%</td><td>19</td><td>营业部</td><td style="word-break:break-word"><span class="mut">福建水泥+1.0、天马科技-1.5、日盈电子+7.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华宝证券股份有限公司上海东大名路证券营业部…</td><td style="white-space:nowrap">62.5%/3.25%</td><td style="white-space:nowrap">37.5%/0.43%</td><td>8</td><td>营业部</td><td style="word-break:break-word"><span class="mut">佰维存储+0.1、拓荆科技+3.8、天马科技-1.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司上海武定路证券营业部…</td><td style="white-space:nowrap">62.5%/1.49%</td><td style="white-space:nowrap">75.0%/1.61%</td><td>8</td><td>营业部</td><td style="word-break:break-word"><span class="mut">返利科技-0.5、盛达资源+1.6、赛微电子+1.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司长宁区江苏路证券营业部…</td><td style="white-space:nowrap">62.5%/2.88%</td><td style="white-space:nowrap">42.9%/-0.95%</td><td>8</td><td>营业部</td><td style="word-break:break-word"><span class="mut">掌阅科技-6.7、索辰科技+13.7、安记食品+8.2</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司深圳彩田路证券营业部…</td><td style="white-space:nowrap">61.9%/2.35%</td><td style="white-space:nowrap">60.0%/3.47%</td><td>21</td><td>营业部</td><td style="word-break:break-word"><span class="mut">天融信+0.0、万丰奥威+0.7、九阳股份-1.4</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中信证券股份有限公司杭州延安路证券营业部…</td><td style="white-space:nowrap">61.5%/1.69%</td><td style="white-space:nowrap">50.0%/0.32%</td><td>26</td><td>营业部</td><td style="word-break:break-word"><span class="mut">晶华新材+2.7、国投中鲁-2.9、国恩股份-5.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 联储证券股份有限公司杭州环城北路证券营业部…</td><td style="white-space:nowrap">61.5%/2.52%</td><td style="white-space:nowrap">69.2%/4.93%</td><td>13</td><td>营业部</td><td style="word-break:break-word"><span class="mut">光迅科技+1.7、中材科技-5.2、凡拓数创+8.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 上海证券有限责任公司上海分公司…</td><td style="white-space:nowrap">60.0%/5.93%</td><td style="white-space:nowrap">70.0%/4.69%</td><td>10</td><td>营业部</td><td style="word-break:break-word"><span class="mut">博汇科技+0.0、博汇科技+16.7、博汇科技+5.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东方证券股份有限公司重庆金州大道证券营业部…</td><td style="white-space:nowrap">60.0%/8.37%</td><td style="white-space:nowrap">60.0%/3.05%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">风语筑-1.6、益坤电气+13.3、腾信精密+24.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国泰海通证券股份有限公司岳阳南湖大道证券营业部…</td><td style="white-space:nowrap">60.0%/4.36%</td><td style="white-space:nowrap">60.0%/3.03%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">怡达股份-1.0、宇新股份-0.3、恒坤新材+6.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 广发证券股份有限公司上海玉兰路证券营业部…</td><td style="white-space:nowrap">60.0%/4.54%</td><td style="white-space:nowrap">40.0%/1.99%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">和远气体-0.9、亿田智能+11.5、美盈森+2.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 长城证券股份有限公司长沙五一中路证券营业部…</td><td style="white-space:nowrap">60.0%/4.46%</td><td style="white-space:nowrap">60.0%/2.78%</td><td>5</td><td>营业部</td><td style="word-break:break-word"><span class="mut">大普微-6.0、王子新材+8.7、莱美药业-2.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国信证券股份有限公司深圳红岭中路证券营业部…</td><td style="white-space:nowrap">59.2%/3.72%</td><td style="white-space:nowrap">52.1%/6.53%</td><td>49</td><td>营业部</td><td style="word-break:break-word"><span class="mut">长鹰硬科+0.0、森合高科+0.6、流金科技+3.1</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司北京月坛南街证券营业部…</td><td style="white-space:nowrap">58.8%/1.15%</td><td style="white-space:nowrap">52.9%/0.77%</td><td>17</td><td>营业部</td><td style="word-break:break-word"><span class="mut">万邦医药+3.7、沈鼓集团+2.8、沈鼓集团-7.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东方财富证券股份有限公司拉萨东环路第一证券营业部…</td><td style="white-space:nowrap">57.3%/1.59%</td><td style="white-space:nowrap">53.2%/1.23%</td><td>82</td><td>营业部</td><td style="word-break:break-word"><span class="mut">澳洋健康-4.1、新华传媒+1.6、善水科技+3.0</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中信建投证券股份有限公司杭州庆春路证券营业部…</td><td style="white-space:nowrap">57.1%/1.81%</td><td style="white-space:nowrap">60.7%/3.63%</td><td>28</td><td>营业部</td><td style="word-break:break-word"><span class="mut">芒果超媒-4.6、华宝股份-9.0、慈文传媒-3.3</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 华泰证券股份有限公司上海普陀区江宁路证券营业部…</td><td style="white-space:nowrap">57.1%/2.14%</td><td style="white-space:nowrap">57.1%/1.63%</td><td>14</td><td>营业部</td><td style="word-break:break-word"><span class="mut">惠科股份-2.6、皖仪科技-2.8、华曙高科+1.8</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东吴证券股份有限公司苏州石路证券营业部…</td><td style="white-space:nowrap">57.1%/3.6%</td><td style="white-space:nowrap">85.7%/8.01%</td><td>7</td><td>营业部</td><td style="word-break:break-word"><span class="mut">长进光子-1.9、博济医药+6.9、九州一轨+12.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 国盛证券股份有限公司宁波桑田路证券营业部…</td><td style="white-space:nowrap">56.4%/1.69%</td><td style="white-space:nowrap">50.0%/-0.46%</td><td>55</td><td>知名游资</td><td style="word-break:break-word"><span class="mut">博纳影业-4.5、莱美药业-2.3、沈鼓集团+10.2</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 中信建投证券股份有限公司北京东城分公司…</td><td style="white-space:nowrap">55.6%/3.08%</td><td style="white-space:nowrap">50.0%/7.56%</td><td>18</td><td>营业部</td><td style="word-break:break-word"><span class="mut">长鹰硬科+10.4、长鹰硬科+2.5、航天电器-9.5</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 广发证券股份有限公司西安南广济街证券营业部…</td><td style="white-space:nowrap">55.6%/2.89%</td><td style="white-space:nowrap">77.8%/4.22%</td><td>9</td><td>营业部</td><td style="word-break:break-word"><span class="mut">香江控股-3.1、金健米业+3.8、青山纸业+8.4</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 长江证券股份有限公司上海分公司…</td><td style="white-space:nowrap">52.2%/2.0%</td><td style="white-space:nowrap">59.1%/2.26%</td><td>23</td><td>营业部</td><td style="word-break:break-word"><span class="mut">中京电子-5.9、鸿富诚-1.9、澳弘电子+9.2</span></td></tr><tr><td style="white-space:nowrap"><b class="s-mid">[A]</b> 东方财富证券股份有限公司昌都两江大道证券营业部…</td><td style="white-space:nowrap">51.7%/1.87%</td><td style="white-space:nowrap">47.7%/0.99%</td><td>89</td><td>营业部</td><td style="word-break:break-word"><span class="mut">新华文轩+16.5、丽人丽妆-2.1、冰山冷热+14.8</span></td></tr></table></div></div></details>
+
+<!--OVERVIEW_EVOLUTION_SYNC_START-->
+<section class="evolution"><h2>五 自主拓展 · 能力进化<span class="hint">发现 → 追踪 → 验证 → 经验 → 能力 → 后续命中</span></h2><div class="evo-stats"><span class="evo-stat"><b>5</b><small>历史承接</small></span><span class="evo-stat"><b>0</b><small>经验/教训/信号</small></span><span class="evo-stat"><b>2</b><small>已沉淀能力</small></span><span class="evo-stat"><b>1</b><small>后续命中</small></span><span class="evo-stat"><b>1</b><small>验证成功</small></span><span class="evo-stat"><b>0</b><small>已证伪</small></span><span class="evo-stat"><b>0</b><small>追踪中</small></span><span class="evo-stat"><b>3</b><small>已搁置</small></span></div><details open><summary>已沉淀与验证明细 <span class="chip">2条有结果记录</span><span class="chip">本路 · 龙虎榜</span></summary><div class="evo-list"><div class="evo-row"><b>lhb</b><span>龙虎榜质量库·净买占比因子有效（席位判读纳入净买占比）</span><small>验证：validated · 命中：1 · 资金化：是</small></div><div class="evo-row"><b>lhb</b><span>高盛×瑞银×国泰总部共现组合</span><small>验证：待验证 · 命中：— · 资金化：—</small></div></div></details></section>
+<section class="evolution"><h2>六 认知迭代 · 能力进化<span class="hint">发现 → 追踪 → 验证 → 经验 → 能力 → 后续命中</span></h2><div class="evo-stats"><span class="evo-stat"><b>1159</b><small>历史承接</small></span><span class="evo-stat"><b>1159</b><small>经验/教训/信号</small></span><span class="evo-stat"><b>0</b><small>已沉淀能力</small></span><span class="evo-stat"><b>0</b><small>后续命中</small></span><span class="evo-stat"><b>0</b><small>验证成功</small></span><span class="evo-stat"><b>0</b><small>已证伪</small></span><span class="evo-stat"><b>0</b><small>追踪中</small></span><span class="evo-stat"><b>0</b><small>已搁置</small></span></div><details open><summary>已沉淀与验证明细 <span class="chip">0条有结果记录</span><span class="chip">本路 · 龙虎榜</span></summary><div class="evo-list"><div class="evo-empty">当前历史资料没有明确的能力化、后续命中或验证证据，暂不计数。</div></div></details></section>
+<!--OVERVIEW_EVOLUTION_SYNC_END-->
+<div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+var RM=false; /*2026-07-15用户拍板:私用盯盘台动画常开,不跟随系统'减少动态效果';要恢复无障碍降级,把false改回 matchMedia('(prefers-reduced-motion: reduce)').matches */
+/* 旧机制:IO进场(全站沿用,无依赖) */
+function legacy(){
+  if(RM)return;
+  var els=document.querySelectorAll('.card,.obs,.routes .rt,.kv,.hero,details.chain,.tli,.cols,.gauge,.trow,.kpi,.ticker,.steps .step');
+  els.forEach(function(e){e.classList.add('rv')});
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('on');io.unobserve(en.target)}})},{threshold:.12});
+  els.forEach(function(e){io.observe(e)});
+}
+/* v4增强:GSAP计数器/sparkline画入(渐进增强;无gsap/RM=静态终态,数字已内联写死) */
+function v4(){
+  if(RM||typeof gsap==='undefined')return;
+  document.querySelectorAll('[data-v]').forEach(function(el){
+    var v=parseFloat(el.dataset.v),d=parseInt(el.dataset.dec||'0',10);
+    var pre=el.dataset.pre||'',suf=el.dataset.suf||'';
+    gsap.to({n:0},{n:v,duration:1.3,ease:'power2.out',onUpdate:function(){
+      el.textContent=pre+this.targets()[0].n.toFixed(d)+suf;}});
+  });
+  document.querySelectorAll('polyline.drawin').forEach(function(p,i){
+    var len=p.getTotalLength();p.style.strokeDasharray=len;p.style.strokeDashoffset=len;
+    gsap.to(p,{strokeDashoffset:0,duration:1.4,ease:'power2.out',delay:.3+i*.15});
+  });
+  gsap.from('.kpi .chip2',{scale:.5,opacity:0,duration:.45,ease:'back.out(1.7)',stagger:.05,delay:.4});
+}
+legacy();
+var s=document.createElement('script');
+s.src=(location.pathname.indexOf('/archive/')>-1?'../':'')+'lib/gsap.min.js';
+s.onload=v4;s.onerror=function(){};
+document.head.appendChild(s);
+})();
+</script></body></html>

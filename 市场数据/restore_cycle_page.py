@@ -197,13 +197,21 @@ if _old_ability >= 0:
 # 黄金页头部要求 rowA 容器；将动态 hero 保持原文包入 rowA，不改数据正文。
 # 仅当正文只给 hero、且没有自带 KPI 卡时注入当日真值四卡;
 # 若正文已自带 rowA+4卡(如 9/24 重写版)则跳过, 避免 8 张卡与 rowA 契约破坏。
+_kpi_n = len(re.findall(r'class="kpi"', dynamic))
 if (dynamic.lstrip().startswith('<div class="hero">')
         and '<div class="cycle-machine-inline">' in dynamic
-        and 'class="kpi"' not in dynamic):
+        and _kpi_n == 0):
     dynamic = dynamic.replace('<div class="hero">', '<div class="rowA"><div class="hero">', 1)
     kpis = build_cycle_kpis(BASE, date)
     # 关闭紧凑 KPI 容器、hero 与 rowA 三层；此前少关一层导致 C6 div 差1。
     dynamic = dynamic.replace('</div>\n<div class="cycle-machine-inline">', '</div><div class="kpis">'+kpis+'</div></div>\n<div class="cycle-machine-inline">', 1)
+elif _kpi_n not in (0, 4):
+    # 手写头部区缺卡是静默失败源：旧条件 `'class="kpi"' not in dynamic`
+    # 让 1~3 张卡的部分缺失整段跳过注入，页面永远补不齐。改为 fail-fast，
+    # 发布前必须人工补齐或整块删除交给渲染器注入权威四卡。
+    raise RuntimeError(
+        f'cycle KPI 卡数异常: 正文手写区 {_kpi_n} 张，契约要求 0 张(由渲染器注入权威四卡) 或 4 张；'
+        '请补齐缺失卡或删除整块 kpi 区')
 if dynamic.count('<h2>') < 5:
     raise RuntimeError('target cycle body incomplete')
 # 黄金版 head 到 wrap 内容起点；动态 body 自带 hero+七段；页脚沿用黄金版

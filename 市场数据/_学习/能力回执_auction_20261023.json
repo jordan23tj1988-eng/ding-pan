@@ -1,0 +1,21 @@
+{
+ "日期": "20261023",
+ "路": "auction",
+ "status": "no_eligible_capabilities",
+ "eligible_count": 0,
+ "records": [],
+ "来源": "_学习/能力预加载_20261023.json#routes.auction",
+ "预加载原值": {
+  "eligible_count": 0,
+  "status": "no_eligible_capabilities",
+  "records": []
+ },
+ "已核查来源": [
+  "routes.auction 的 eligible_count=0、records=[] 直读预加载文件本体，未做任何推测",
+  "_学习/_竞价池分桶库.json：为聚合桶库（无 per-record），今日所有桶值均由 _tmp/auction_dig_20261023.py / _tmp/auction_dig2_20261023.py 直接 import 竞价池分桶回填.py 现算，不依赖任何 capability",
+  "_学习/_市场温度表.json、_情绪先行指标.json、20261023/summary.json、zt_pool.csv：均按字段直读，无 capability 封装",
+  "_学习/竞价快照存档/20261023.csv.gz + meta：采集时点≤09:30（A档），竞价额排名/分位为自算，非 capability",
+  "_学习/_竞价池反思.jsonl：池日20261022 一行为废行（结算日null/胜率0-0），已知并绕过，未使用任何 capability 修复"
+ ],
+ "说明": "本路 20261023 无任何 eligible capability；judgment 中不存在由 capability 产出或被 capability 改判的证据条。唯一的能力类产出（925竞价额排名 C档→A档首验）是本路自建脚本回测，未进 capability 注册表。"
+}

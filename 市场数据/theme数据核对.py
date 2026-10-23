@@ -205,8 +205,19 @@ def main():
     if jud and zt and (jud.get('bodies') or {}).get('theme'):
         bt = jud['bodies']['theme']
         codes = set(str(r.get('代码', '')).zfill(6) for r in zt)
+        # ★2026-10-23: 题材正文合法引用「今日跌停股」作反面证据(出版/传媒子行业跌停群),
+        # 只认 zt_pool 会把真实记录判成越界。跌停池代码一并纳入合法引用集,
+        # 但两条池子分开统计, 越界提示里标明来源。
+        _dtp = os.path.join(BASE, d, 'dt_pool.csv')
+        codes_dt = set()
+        if os.path.exists(_dtp):
+            try:
+                _dt = pd.read_csv(_dtp, dtype={'代码': str})
+                codes_dt = set(_dt['代码'].astype(str).str.zfill(6))
+            except Exception:
+                codes_dt = set()
         rec_codes = set(re.findall(r'(\d{6})', bt))
-        bad = rec_codes - codes
+        bad = rec_codes - codes - codes_dt
         # ★2026-08-12: \d{6} 会误抓日期前缀(20260811→'202608', 20260716→'202607')——排除 20xx 开头的日期串
         bad = {c for c in bad if not re.match(r'20\d{4}', c)}
         # ★2026-08-19: 反事实引用豁免——题材body合法引用非涨停池代码作"缺席/断板/掉队/退位/未涨停/反包/晋级/不在"等反事实语境(纯正种业龙头缺席/医药产业龙断板/高低切承接线断),非荐票标的,不应判荐票铁律违规
@@ -238,7 +249,7 @@ def main():
             if not _in_cf:
                 _bad2.add(_c)
         bad = _bad2
-        chk(issues, not bad, 'bodies.theme 内代码∈zt_pool', ';'.join(sorted(bad)[:5]) or '全在池内')
+        chk(issues, not bad, 'bodies.theme 内代码∈zt_pool∪dt_pool(跌停回引合法)', ';'.join(sorted(bad)[:5]) or '全在池内')
 
     # ===== 7. 机器组件回源(页面 vs 数据源, 抽查) =====
     if gui and chain:

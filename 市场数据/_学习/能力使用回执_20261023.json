@@ -1,0 +1,76 @@
+{
+ "schema_version": 1,
+ "as_of": "20261023",
+ "written_at": "20261023 复盘(宿主汇总，源=五路能力回执+能力预加载；cycle/master 按预加载状态登记)",
+ "preload": {
+  "path": "_学习/能力预加载_20261023.json",
+  "sha256": "0b33d15c27df8ccd2c6a06f7881c5df6440567f88036500dfd1439b37141c7f8"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": null
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "该能力直接改写了本日荐票的名单与权重，共 3 处可核：①300296 利亚德 净买占比 4.16% 落 0-5% 桶（n=1300/执1 48.2%/均收 +0.54%，仅略高于基准 48.0%/+0.37%，按昨日认知迭代②属『需另加两项强化证据』的弱桶）→ 补足两项强化（A 席江苏路 n=199 非小样本且连续三日净买 2.0314 亿、封板三项全过）后进正式荐票，但权重由档位上限 6% 压到 4%；②603721 中广天择 净买占比 6.71% 落 5-10% 桶（n=731/46.0%/-0.00%，低于基准约 2pp，四桶最弱之一）→ 与它 A 席 n=11 小样本叠加，权重压到 2%（档位上限的 1/3）；③002354 天娱数科 净买占比 21.17% 落 >20% 桶（n=136/36.0%/-0.59%，四桶中唯一胜率<40%）→ 尽管它是今日源1净买最大的票（+4.891 亿、封单比 14.16%、首封 09:37 早封），仍被判为『观察』、权重 0，不进 buys。若该能力不可用，本日会荐 3 只、总仓 9%（300296 6% + 603721 3% + 002354 0%→误入 3%），实际输出为 2 只、总仓 6%。",
+     "source_locator": "D:/股票数据/市场数据/_学习/_龙虎榜质量库.json#因子.净买占比.桶（样本 4607，target_d 20260710，状态=有效；桶：≤0/0-5% n=1300 48.2%/+0.54、5-10% n=731 46.0%/-0.00、10-20% n=454 50.0%/+0.26、>20% n=136 36.0%/-0.59）"
+    }
+   ],
+   "rejected": [],
+   "note": "本路另有一个自建信号『连续加仓席（江苏路三日加仓 300296）』，仅在深挖段作为待观察候选登记，明确未进入荐票权重计算——它不是预加载能力，按铁律不得用于改判，已写入 lhb判断_20261023.json#深挖[2] 的 5 日观察条件。"
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261023.json 的 routes.theme 字段：eligible_count=0、status=no_eligible_capabilities、records=[]（空数组），即今日预加载清单中本路无任何登记为 eligible 的能力可消费，故 considered_ids=[]、applied=[]、rejected=[]，status 沿用预加载原值 no_eligible_capabilities。已核查动作：①读 能力预加载_20261023.json 全文并单独打印 routes.theme；②确认 records 为空，无 candidate 需按门槛重验；③未用任何未验证 capability 改判任何结论。本路判断全部由当日数据直算：题材归位_20261023／涨停对链条_20261023／主流题材6有_20261023／_题材四维／题材生命周期_20261023（+ --settle 20261022）／20261023 zt_pool·zb_pool·summary.json／_市场温度表／_情绪先行指标／风险事件_20261023／题材归位门禁_20261023／待深挖清单_20261023／_涨停质量库／_题材荐票结算.jsonl／_学习/_模拟盘/theme/状态.json。补充：①本路自建判据 题材质量跃迁.py 已按要求落盘（承接 MA-20261022-03③），属本路自有脚本产出，不计入 applied（非预加载登记能力）；②生命周期机器底座 题材生命周期.py 已跑 20261023 并经 --settle 20261022 结算（兑现6/证伪18/待定0），同样属脚本产出而非 eligible capability；③本机 ifind查.py 仍不存在（D:/股票数据 全盘 find 已确认），本路今日 iFinD 外部查证 0 次，已写入 theme判断_20261023 盲区⑦。"
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261023.json 的 routes.logic 字段：eligible_count=0、status=no_eligible_capabilities、records=[]（空数组），即今日预加载清单中本路无任何登记为 eligible 的能力可消费，故 considered_ids=[]、applied=[]、rejected=[]，status 沿用预加载原值 no_eligible_capabilities。已核查动作：①读 能力预加载_20261023.json 全文（schema_version/as_of/decision_cutoff/activation_date/policy/routes/eligible_total/historical_record_count），单独打印 routes.logic 确认三个字段（eligible_count=0、status=no_eligible_capabilities、records=[]）；②确认 records 为空数组，无 candidate 需按门槛重验，故 applied/rejected 均为空且不需要填 effect/source_locator 或 reason；③未用任何未验证 capability 改判任何结论——本路今日全部数字由当日文件直算：题材归位_20261023／涨停对链条_20261023／主流题材6有_20261023／中报预增雷达_20261023／风险日历_20261023／风险事件_20261023／20261023/zt_pool.csv·summary.json·涨停原因_20261023／产业链模板.json／链条纵深库.json／_学习/_模拟盘/logic/状态.json／_学习/_逻辑荐票反思.jsonl／_学习/_认知库_logic.json／_学习/子agent增强/战绩画像_logic_20261023.json／_学习/盘中尾盘复盘_20261023.md／总审_20261022.json（指派清单 MA-20261022-04）／logic判断_20261022.json（含昨日可证伪条件）。补充：①本路自建脚本属自有产出、不计入 applied：_ops/卡位纯度复算.py（→_学习/卡位纯度_20261023.json，37只/取数37/真卡位6只16.22%，并用20261022回归出3/13=23.08%与昨日手工一致）、_ops/纯度涨停历史.py（→_学习/纯度涨停历史_20261023.json，n=16/50.0%/+1.28%）、_ops/身位分桶.py（→_学习/身位分桶_20261023.json，n=4783基准）、_ops/三季报池日序列.py（→_学习/三季报池日序列_20261023.json，5日 2/2/0/0/3）；②iFinD 外部查证 0 次：本机 D:/股票数据 全盘 find 未发现 ifind查.py（近5日一致），故未调用、也未把『ifind可用』写入任何判据；③能力缺口登记（与能力回执同口径，不改判）：三季报预告『双源交叉（iwencai 存档 vs 东财）』所需 iwencai 存档本机不存在，中报预增雷达_20261023.json 全文检索『双源』0次/『iwencai』0次/『交叉』0次＝该字段不存在，本日已改用东财单源＋风险日历交叉并在判断盲区⑤中声明。"
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "本次判断与荐票保留换手率作为一级过滤并量化生效：003021 换手12.57%、300561 换手19.55% 均落中性正段(换手10-20% n=336/胜率48.2%/超额+0.698pp)，两票均入 buys；同时按本周新增交互证据对『换手≥20%×首封≤10:00(-0.835pp/35.3%/n=34)』执行反向扣分，002724(换手28.10%×首封09:53)因此从荐票降为观察(权重0)；判别力兑现：中性环境换手分档单调 <3% -1.043pp/40.1%(n=227) → 3-10% -0.120pp/43.4%(n=792) → 10-20% +0.698pp/48.2% → ≥20% +0.999pp/51.5%(n=97)，首尾区分度 2.04pp；冰点窗口①格内换手分档亦单调(3-5% +0.386pp/33.3% → 5-7% +1.194pp/53.1% → 7-10% +1.449pp/55.6%)，故因子有效但需『分段+与首封/炸板交互』使用。",
+     "source_locator": "_学习/_涨停质量库.json#因子.换手率.状态(=有效) + _学习/_涨停质量库.json#基准(执1胜率43.0/执1均涨-0.33,n=19342) + 本人 _学习/limitup判断_20261023.json#深挖[0][1] 自算桶表"
+    }
+   ],
+   "rejected": [],
+   "note": "预加载 1 条 ready 记录已逐条回应，无 rejected。校验证据链(因子.换手率.状态=有效/样本19309≥2000)由预加载自带 validation_evidence 复核通过，本次未改动质量库文件。"
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261023.json#routes.cycle：eligible_count=0、status=no_eligible_capabilities，本路本日无可消费已验证能力；本路未写独立回执文件，按预加载状态登记，判断由当日原始数据直算。"
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "来源=_学习/能力预加载_20261023.json#routes.master：eligible_count=0、status=no_eligible_capabilities，本路本日无可消费已验证能力；本路未写独立回执文件，按预加载状态登记，判断由当日原始数据直算。"
+  }
+ }
+}

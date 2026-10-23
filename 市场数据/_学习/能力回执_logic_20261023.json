@@ -1,0 +1,11 @@
+{
+ "schema_version": 1,
+ "as_of": "20261023",
+ "route": "logic",
+ "status": "no_eligible_capabilities",
+ "eligible_count": 0,
+ "considered_ids": [],
+ "applied": [],
+ "rejected": [],
+ "note": "来源=_学习/能力预加载_20261023.json 的 routes.logic 字段：eligible_count=0、status=no_eligible_capabilities、records=[]（空数组），即今日预加载清单中本路无任何登记为 eligible 的能力可消费，故 considered_ids=[]、applied=[]、rejected=[]，status 沿用预加载原值 no_eligible_capabilities。已核查动作：①读 能力预加载_20261023.json 全文（schema_version/as_of/decision_cutoff/activation_date/policy/routes/eligible_total/historical_record_count），单独打印 routes.logic 确认三个字段（eligible_count=0、status=no_eligible_capabilities、records=[]）；②确认 records 为空数组，无 candidate 需按门槛重验，故 applied/rejected 均为空且不需要填 effect/source_locator 或 reason；③未用任何未验证 capability 改判任何结论——本路今日全部数字由当日文件直算：题材归位_20261023／涨停对链条_20261023／主流题材6有_20261023／中报预增雷达_20261023／风险日历_20261023／风险事件_20261023／20261023/zt_pool.csv·summary.json·涨停原因_20261023／产业链模板.json／链条纵深库.json／_学习/_模拟盘/logic/状态.json／_学习/_逻辑荐票反思.jsonl／_学习/_认知库_logic.json／_学习/子agent增强/战绩画像_logic_20261023.json／_学习/盘中尾盘复盘_20261023.md／总审_20261022.json（指派清单 MA-20261022-04）／logic判断_20261022.json（含昨日可证伪条件）。补充：①本路自建脚本属自有产出、不计入 applied：_ops/卡位纯度复算.py（→_学习/卡位纯度_20261023.json，37只/取数37/真卡位6只16.22%，并用20261022回归出3/13=23.08%与昨日手工一致）、_ops/纯度涨停历史.py（→_学习/纯度涨停历史_20261023.json，n=16/50.0%/+1.28%）、_ops/身位分桶.py（→_学习/身位分桶_20261023.json，n=4783基准）、_ops/三季报池日序列.py（→_学习/三季报池日序列_20261023.json，5日 2/2/0/0/3）；②iFinD 外部查证 0 次：本机 D:/股票数据 全盘 find 未发现 ifind查.py（近5日一致），故未调用、也未把『ifind可用』写入任何判据；③能力缺口登记（与能力回执同口径，不改判）：三季报预告『双源交叉（iwencai 存档 vs 东财）』所需 iwencai 存档本机不存在，中报预增雷达_20261023.json 全文检索『双源』0次/『iwencai』0次/『交叉』0次＝该字段不存在，本日已改用东财单源＋风险日历交叉并在判断盲区⑤中声明。"
+}

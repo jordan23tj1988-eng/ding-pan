@@ -123,14 +123,16 @@ def main(dprev):
     rows="".join(f'<tr><td style="white-space:nowrap"><b>{r["名称"]}</b> <span class="mut">{r["代码"]}</span></td><td>{r["信号"]}{("·炸"+str(r["炸板"])) if r.get("炸板") else ""}</td>'
         +(f'<td>{"—" if r.get("竞价分") is None else r["竞价分"]}</td>' if has_sc else '')
         +f'<td>{"" if r["T1高开"] is None else format(r["T1高开"],"+.1f")+"%"}</td>'
-        f'<td>{"null" if r["执行收益"] is None else format(r["执行收益"],"+.2f")+"%"}</td>'
+        f'<td>{"—" if r["执行收益"] is None else format(r["执行收益"],"+.2f")+"%"}</td>'
         f'<td>{r["判定"]}</td></tr>' for r in res)
-    card=(f'<div class="card"><b>{disp}竞价池终结算(T+1执行口径):次日封板{seal}/{len(pool)},胜率{out["汇总"]["执行胜率"]},均收{top_avg}%'
+    _P=lambda v: ("—" if v is None else f"{v:g}")
+    card=(f'<div class="card"><b>{disp}竞价池终结算(T+1执行口径):次日封板{seal}/{len(pool)},胜率{out["汇总"]["执行胜率"]},均收{_P(top_avg)}%'
       +(f' vs 全场涨停{mkt_avg}%(增益{edge:+.2f}pp)' if edge is not None else '')+'</b>'
       +'<table><tr><th>票</th><th>信号</th>'+('<th>竞价分</th>' if has_sc else '')+'<th>T+1高开</th><th>执行收益</th><th>判定</th></tr>'+rows+'</table>'
-      +f'<p><b>归因(A档):</b>按信号 一字{bysig["一字"]}% / 秒板{bysig["秒板"]}%;按连板 首板{bylb["首板"]}% / 2板+{bylb["2板+"]}%;按高开档 低开≤0:{bygk["低开≤0"]}% / 0~5:{bygk["高开0~5"]}% / ≥5:{bygk["高开≥5"]}%'
-      +(f';评分半区 高分半{byscore["高分半"]}% / 低分半{byscore["低分半"]}%' if byscore else '')
-      +f';闸门内(高开&lt;5){bygate["闸门内均收"]}%×{bygate["闸门内只数"]}只 vs 全池{top_avg}%。</p></div>')
+      +f'<p><b>归因(A档):</b>按信号 一字{_P(bysig["一字"])}% / 秒板{_P(bysig["秒板"])}%;按连板 首板{_P(bylb["首板"])}% / 2板+{_P(bylb["2板+"])}%;按高开档 低开≤0:{_P(bygk["低开≤0"])}% / 0~5:{_P(bygk["高开0~5"])}% / ≥5:{_P(bygk["高开≥5"])}%'
+      +(f';评分半区 高分半{_P(byscore["高分半"])}% / 低分半{_P(byscore["低分半"])}%' if byscore else '')
+      +f';闸门内(高开&lt;5){_P(bygate["闸门内均收"])}%×{bygate["闸门内只数"]}只 vs 全池{_P(top_avg)}%。</p></div>')
+    card=card.replace("—%","—")  # 空样本桶：None/(—)不带百分号
     open(os.path.join(L,f"竞价池结算卡_{dprev}.html"),"w",encoding="utf-8").write(card)
     backfill_missing_mkt_avg()  # ★B(2026-08-16):当日复盘补缺(回补历史 null 的 全场涨停均收)
     print(refl)

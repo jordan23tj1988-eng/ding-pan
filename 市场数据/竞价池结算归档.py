@@ -23,7 +23,7 @@ def build():
         ip=os.path.join(L,f"竞价池洞察_{d}.html")  # agent按日洞察card,自动嵌该日折叠内(跟着当天走)
         if os.path.isfile(ip): card+=open(ip,encoding="utf-8").read()
         z=json.load(open(os.path.join(L,f"竞价池结算_{d}.json"),encoding="utf-8")).get("汇总",{})
-        brief=f'池{z.get("池家数","?")}只 · 封板{z.get("次日封板","?")} · 胜率{z.get("执行胜率","?")} · 均收{z.get("执行均收","?")}%'
+        brief=f'池{z.get("池家数","?")}只 · 封板{z.get("次日封板","?")} · 胜率{z.get("执行胜率","?")} · 均收{"—" if z.get("执行均收") is None else str(z.get("执行均收"))+"%"}'
         op=' open' if i==0 else ''
         tag='最新' if i==0 else '存档'
         blocks.append(f'<details class="chain"{op}><summary><b>{disp}池终结算</b> <span class="chip">{tag}</span> '

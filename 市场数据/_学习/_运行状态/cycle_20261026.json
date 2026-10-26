@@ -1,0 +1,45 @@
+{
+ "date": "20261026",
+ "route": "cycle",
+ "完成时间": "2026-10-26",
+ "产物": {
+  "主判": "_学习/周期主判_20261026.json",
+  "五路投票": [
+   "_学习/周期投票_auction_20261026.json",
+   "_学习/周期投票_lhb_20261026.json",
+   "_学习/周期投票_theme_20261026.json",
+   "_学习/周期投票_logic_20261026.json",
+   "_学习/周期投票_limitup_20261026.json",
+   "_学习/周期投票_cycle_20261026.json（本路汇总留痕，不参与表决）"
+  ],
+  "body": "_学习/cycle_body_20261026.html",
+  "judgment注入": "_学习/judgment_20261026.json#bodies.cycle",
+  "周期投票牌": "_学习/周期投票牌_20261026.html",
+  "tally结果": "_学习/周期投票结果_20261026.json",
+  "方向回测": "_学习/研究_周期方向_20261026.json",
+  "台账": "_学习/_周期投票台账.jsonl"
+ },
+ "命令": [
+  "env -u PYTHONPATH D:/股票数据/.venv312/Scripts/python.exe 周期投票.py settle 20261026 → 裁判=降(投票日20261023): [(cycle主判, 降, 1)]（本次未重跑，避免准确率重复计数；_周期投票准确率.json 已含该笔 n=41/hits=20）",
+  "env -u PYTHONPATH D:/股票数据/.venv312/Scripts/python.exe 周期投票.py tally 20261026 → {\"当日复议\": true, \"反对路\": [\"auction\",\"lhb\",\"theme\"], \"加权反对份额\": 0.713, \"反对侧\": \"偏悲观\", \"连续重做\": false}",
+  "env -u PYTHONPATH D:/股票数据/.venv312/Scripts/python.exe module_render_cycle.py 20261026 --out <scratch>/cycle_render_check.html → h2:7 / 断档卡:False / LLM 板块 1111111",
+  "env -u PYTHONPATH D:/股票数据/.venv312/Scripts/python.exe cycle数据核对.py 20261026 → 见 校验.哨兵"
+ ],
+ "结论": {
+  "stage": "退潮",
+  "stage_qualifier": "二次退回/退潮中继（冰点窗口）",
+  "direction": "升(弱)",
+  "confidence": 60,
+  "攻防档": "D档·总仓≤2成·环境层净新增0",
+  "环境三态": "退潮",
+  "复议": "触发(3/5, 加权0.713)，复议结论=维持"
+ },
+ "校验": {
+  "主判字段/div配平30:30/LEDGER成对/七段h2顺序/hint7/20261027仅可证伪语境/回源数字7项/五路投票理由≤80字/tally异议3路0.713/judgment其它bodies未改/哨兵量能字样1.61万亿": "全过(FAILS 0)"
+ },
+ "盲区摘要": "触发器字段=[]与温度24.2<25矛盾；一进二/二进三源值与逐码口径不符（双列）；昨停溢价null；logic弃权；回测小样本n=13/30；未读指数均线",
+ "下游待办": [
+  "总审_20261026.json 尚未出版 → 一致性待对齐（不预设同档）",
+  "生成盯盘台.py 渲染后需 cycle数据核对.py 通过（本路已修「1.61万亿」字样）"
+ ]
+}

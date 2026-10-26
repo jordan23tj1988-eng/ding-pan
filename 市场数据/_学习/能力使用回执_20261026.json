@@ -1,0 +1,76 @@
+{
+ "schema_version": 1,
+ "as_of": "20261026",
+ "written_at": "20261026 复盘(宿主汇总，源=五路能力回执+能力预加载；cycle/master 按预加载状态登记)",
+ "preload": {
+  "path": "_学习/能力预加载_20261026.json",
+  "sha256": "f8c08afda06405634a2420cd111933f1eb39ad0fe14ee17ecda00de191a8869f"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本路当日无可用能力"
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "采纳『净买占比』维度后本日名单与总仓各发生一处可复算变化：①600558 大西洋 净买占比 27.61% 落 >20% 负桶（n=136/执1 36.0%/-0.59%），由引擎第4名（席位分 3.48）降为观察·0%；②688386 泛亚微透 净买占比 12.55% 落唯一 ≥50% 正桶（n=454/50.0%/+0.26%），由引擎 Top5 之外升为唯一荐票·2%。若不用该维度、只按席位分排序，本日将荐 002696（3.61）+600558（3.48）两只、总仓 5%；实际输出 1 只 2%——即该能力同时改变了标的集合（换掉 600558）与总仓（5%→2%）。",
+     "source_locator": "_学习/_龙虎榜质量库.json#因子.净买占比.桶.10-20% 与 .>20%；_学习/龙虎榜双源校验_20261026.json#全量"
+    }
+   ],
+   "rejected": [],
+   "note": "边界如实披露：该能力验证窗口 20260401~20260708、库文件『更新』字段=20260710（距今日 108 天未重算），本日引用的是『净买占比』桶的静态估计，不是当日重估；库若下次重算把该因子状态改为淘汰，本回执自动失效。"
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本路判断未声明能力回执（宿主按未消费登记，非无能力可用）"
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "本路判断未声明能力回执（宿主按未消费登记，非无能力可用）"
+  },
+  "limitup": {
+   "status": "rejected_all",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [],
+   "rejected": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "reason": "能力规则要求『质量分选票保留换手率维度』且因子状态=有效；今日质量库 v6 该因子仍有效（w 0.143、区分度 11.2pp、rho 0.8、t 3.61，n=4299/7860/2397/1918 四桶），但当日打分明细里换手率字段全为 null（涨停质量荐票_20261026.json 明细 301502/000678/601900/605488/000411 换手率均 null），能力无法真正落地，按『数据缺失则不用』拒绝，并登记为取数缺口。",
+     "source_locator": "D:/股票数据/市场数据/_学习/_涨停质量库.json#因子.换手率；D:/股票数据/市场数据/_学习/涨停质量荐票_20261026.json#明细"
+    }
+   ],
+   "note": "能力可用、因子有效，但当日输入缺换手率字段 → 本日未采纳；已提请补 20261026 换手率并回补打分。"
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "按预加载状态登记"
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "按预加载状态登记"
+  }
+ }
+}

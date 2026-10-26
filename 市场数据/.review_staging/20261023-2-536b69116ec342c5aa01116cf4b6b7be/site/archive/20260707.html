@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>复盘存档 20260707</title><style>
+:root{color-scheme:light;--ink:#1c2530;--sub:#5b6672;--line:#e6e1d8;--paper:#f6f4ef;--card:#fffdf9;--up:#c0392b;--down:#1e8449;--hit:#0f766e;--half:#b45309;--miss:#b91c1c;--accent:#8a6d3b;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
+.nav{position:sticky;top:0;z-index:9;background:rgba(28,37,48,.97);display:flex;gap:2px;align-items:center;padding:10px 18px;box-shadow:0 2px 12px rgba(0,0,0,.15);flex-wrap:wrap}
+.nav .brand{color:#c9b892;font-size:13px;letter-spacing:2px;font-weight:700;margin-right:12px}
+.nav a{color:#c3ccd3;text-decoration:none;font-size:13px;padding:6px 12px;border-radius:8px;transition:.15s}
+.nav a:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav a.on{background:#c9b892;color:#1c2530;font-weight:600}
+.nav .upd{margin-left:auto;color:#8a94a0;font-size:11.5px}
+.wrap{max-width:940px;margin:0 auto;padding:24px 16px 60px}
+.hero{background:linear-gradient(135deg,#1c2530,#2f3a46 60%,#3a4b3f);color:#f4efe6;border-radius:18px;padding:26px 30px;box-shadow:0 12px 30px rgba(28,37,48,.2)}
+.hero .kick{font-size:12px;letter-spacing:3px;color:#c9b892;text-transform:uppercase}
+.hero h1{font-size:23px;margin:8px 0 6px;font-weight:700}
+.hero p{color:#c3ccd3;font-size:13.8px;max-width:670px}
+.stance{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:6px 14px;border-radius:22px;font-size:13px;color:#eadfca}
+.pill b{color:#fff}.pill.warn{background:rgba(192,57,43,.22);border-color:rgba(192,57,43,.4);color:#f3c8c2}
+h2{font-size:16px;margin:30px 0 4px;padding-left:12px;border-left:4px solid var(--accent)}
+h2.hot{border-left-color:var(--up)}
+.hint{color:var(--sub);font-size:12.5px;margin:4px 0 14px;padding-left:14px}
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+.kv .l{font-size:12px;color:var(--sub)}.kv .v{font-size:19px;font-weight:800;margin-top:3px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-top:14px;box-shadow:0 3px 9px rgba(0,0,0,.03)}
+.card p{font-size:13.7px;color:#3f4854}
+.card.hotcard{border:1px solid #e3c7bf;background:linear-gradient(135deg,#fffaf7,#fbf0ec)}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit;display:block;transition:.15s}
+.mith:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(0,0,0,.09)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:#4a4c50}
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--sub);font-weight:600;font-size:12px}
+th:first-child,td:first-child{min-width:78px}
+.dS{color:#8a1c8a;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px}
+.t-attack{background:#e2f1ef;color:var(--hit)}.t-watch{background:#fbeed8;color:var(--half)}.t-avoid{background:#f7e0e0;color:var(--miss)}
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid var(--paper)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700}
+.tli .h{font-size:14px;font-weight:600;margin:2px 0 4px}.tli .b{font-size:13px;color:#3f4854}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:5px;background:#efeae0;border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:9px;background:#ece7dc;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#8a6d3b,#c0392b)}
+.track.teal>i{background:linear-gradient(90deg,#0f766e,#3a9d8f)}
+.base{font-size:11.5px;color:var(--sub);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:#f7e0e0;border-style:dashed;border-color:#e0b4b4;color:var(--miss)}
+.rung.high{border-color:#c0392b}
+.foot{margin-top:32px;padding:15px 18px;background:#efeae0;border-radius:12px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:#e6f0ee;color:#0f766e}.bC{background:#faf0df;color:#b45309}.bMix{background:#eee9f5;color:#6b4fa0}
+.hlist{list-style:none}.hlist li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px}.hlist .st{flex:1;font-size:13.3px;color:#3f4854;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+
+.jjr td{background:linear-gradient(90deg,#f3eee1,#faf7f0);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#4a5460}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:#8a6d3b;background:#eae1cc;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+
+details.chain{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-top:12px;padding:0 18px;box-shadow:0 3px 9px rgba(0,0,0,.03)}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"▸";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"▾"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:#efeae0;color:var(--sub)}
+details.chain summary .chip.hot{background:#f7e0e0;color:var(--miss)}
+details.chain summary .chip.cold{background:#e2f1ef;color:var(--hit)}
+details.chain .inner{padding:2px 0 16px}
+</style></head><body><div class="nav"><span class="brand">情绪盯盘台 · 存档</span><a href="../index.html">← 返回概览</a><a href="../history.html">历史列表</a><span class="upd">冻结于 2026-07-07 收盘</span></div><div class="wrap"><div class="hero"><div class="kick">Daily Archive · 每日复盘总结（冻结存档）</div>
+<h1>2026-07-07 复盘总结</h1>
+<p>这是 07-07 收盘后冻结的完整复盘，永久留存。含环境/周期/主线/核心标的/龙头/竞价/龙虎榜、明日观察点，以及对 07-06 预判的校准记分。</p>
+<div class="stance"><span class="pill">情绪 · <b>退潮</b></span><span class="pill warn">攻防 · <b>防守/空仓0-2成</b></span><span class="pill">一句话 · <b>量能跌破3万亿，资金转半导体，恒尚6板孤悬</b></span></div></div>
+
+<h2>一、环境</h2>
+<div class="strip">
+<div class="kv"><div class="l">成交额</div><div class="v dn">2.58万亿</div></div>
+<div class="kv"><div class="l">涨停/跌停</div><div class="v">33/30</div></div>
+<div class="kv"><div class="l">炸板率</div><div class="v">41.1%</div></div>
+<div class="kv"><div class="l">最高板</div><div class="v up">6板</div></div></div>
+<div class="card"><p>量能较07-06(3.09万亿)缩5100亿、跌破3万亿退潮线；跌停30家两位数=恐慌信号。四层背离·弱，攻防切防守。</p></div>
+
+<h2>二、周期情绪 · 梯队断层</h2>
+<div class="card"><div class="ladder">
+<div class="rung high"><div class="lv">6板</div><div class="nm">恒尚节能</div></div>
+<div class="rung high"><div class="lv">5板</div><div class="nm">宜宾纸业</div></div>
+<div class="rung gap"><div class="lv">4板</div><div class="nm">空缺</div></div>
+<div class="rung gap"><div class="lv">3板</div><div class="nm">空缺</div></div>
+<div class="rung"><div class="lv">2板×3</div><div class="nm">大恒/万通/白云</div></div>
+<div class="rung"><div class="lv">首板×28</div><div class="nm">全场</div></div></div>
+<p style="margin-top:10px">高标孤悬、3-4板断层→高度是抱团硬撑非资金接力，恒尚6板一分歧即A杀风险极高。</p></div>
+
+<h2>三、主线题材</h2>
+<div class="card"><p>涨停全首板扎堆(化学4/半导体4/计算机3)、连板梯队为0=涣散退潮。<b>唯半导体有顶级资金介入</b>(华天科技龙头分75.1)，列为"候选主线苗头"，非主线。</p></div>
+
+<h2>四、核心标的 / 龙头</h2>
+<div class="card"><table>
+<tr><th>标的</th><th>身位</th><th>龙头分</th><th>行业</th><th>点评</th></tr>
+<tr><td>华天科技</td><td>首板</td><td class="dA">75.1</td><td>半导体</td><td>准龙头/候选，资金最强、待2板确认带动</td></tr>
+<tr><td>万通发展</td><td>2板</td><td>63.4</td><td>房地产</td><td>身位最高活口，竞价转强</td></tr>
+<tr><td>恒尚节能</td><td>6板</td><td>61.6</td><td>装修装饰</td><td>孤悬极高危</td></tr>
+<tr><td>宜宾纸业</td><td>5板</td><td>57.2</td><td>造纸</td><td>高位孤标无梯队</td></tr></table></div>
+
+<h2>五、竞价</h2>
+<div class="card"><p>算力龙紫光竞价额26.9亿最大却低开-4.95%走弱→算力接力被证伪；万通(2板)平开后+8.81走强。<b>退潮里弃竞价低开高位票，盯梯队内转强票。</b></p></div>
+
+<h2>六、龙虎榜</h2>
+<div class="card"><p>华天科技被外资(41.3%)+量化(31.3%)+机构(7.7%)爆买：深股通6.45亿+三亚3.08亿(A63%)+知春2.17亿(A61%)+紫阳2.71亿；净买占比13.14%、多空比3.33、强档。资金认半导体方向，但仅首板=方向强、高度弱。</p></div>
+
+<h2 class="hot">七、明日观察点（07-08）· 对应股票</h2>
+<div class="card hotcard"><table>
+<tr><th>标的</th><th>身位 / 逻辑</th><th>明日(07-08)观察点</th><th>类型</th></tr>
+<tr><td><b>华天科技</b> 002185</td><td>半导体首板·龙头分75.1·资金最强</td><td>看竞价高开+封2板确认；能否带出半导体梯队(有研新材/有研硅/华微)。</td><td><span class="tag2 t-attack">进攻观察</span></td></tr>
+<tr><td><b>恒尚节能</b> 603137</td><td>装修装饰·6板·孤高标</td><td>梯队断层，6板极高危；炸板/低开=退潮加速信号弹。</td><td><span class="tag2 t-watch">高危观察</span></td></tr>
+<tr><td><b>万通发展</b> 600246</td><td>房地产·2板·竞价转强</td><td>能否3板补断层。</td><td><span class="tag2 t-watch">观察</span></td></tr>
+<tr><td><b>紫光股份</b> 000938</td><td>算力·竞价低开熄火</td><td>规避，除非竞价重新转强。</td><td><span class="tag2 t-avoid">规避</span></td></tr></table></div>
+
+<h2>八、认知迭代 · 席位暗线</h2>
+<div class="card"><p><b>算力 → 半导体（一天换方向）：</b>07-06 顶级量化(知春/太华/紫阳)重仓算力紫光/中国长城 → 07-07 切到半导体华天科技爆买。资金没走、只换载体；算力龙次日竞价即被弃。<b>迭代结论：退潮里科技是唯一有真金方向，但跟方向不跟高度、载体一天一换。</b></p></div>
+
+<h2>九、校准记分卡 · 对 07-06 预判的结算</h2>
+<div class="card"><table>
+<tr><th>07-06 我的预判</th><th>07-07 真实</th><th>判定</th></tr>
+<tr><td>退潮延续、量能3万亿附近或下破</td><td>2.58万亿，跌破</td><td class="dA">✓ 命中</td></tr>
+<tr><td>涨停家数下降</td><td>64→33腰斩</td><td class="dA">✓ 命中</td></tr>
+<tr><td>跌停维持两位数</td><td>30家</td><td class="dA">✓ 命中</td></tr>
+<tr><td>恒尚5板孤标续板难/断板风险</td><td>走出6板(续了)</td><td class="dC">✗ 打脸</td></tr>
+<tr><td>无新主线、题材继续散</td><td>全首板更散</td><td class="dA">✓ 命中</td></tr>
+<tr><td>科技/算力是唯一接力方向</td><td>资金转半导体(方向对，接力弱)</td><td class="dB">◐ 半中</td></tr></table>
+<p style="margin-top:10px"><b>自评：</b>宏观A档(环境/情绪/题材/资金流向) 4/4 命中；个股续板C档盘感吃1次面(恒尚)。印证：靠数据逻辑取胜，别用盘感赌个股高度。</p></div>
+
+<div class="foot"><b>本页为 07-07 冻结存档</b>，只加不删。数据取自真实盘后，A档可验证/C档只能实盘。为 Claude 训练产物，非买卖指令。</div></div></body></html>

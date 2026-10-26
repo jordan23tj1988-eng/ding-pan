@@ -4,14 +4,16 @@
 口径: 预测指标含净利润; 预告类型∈{预增,扭亏}; 公告日<=当日(零后视镜); 按代码去重; 剔ST/退/N/C
 输出: 追加到 _学习/三季报池日序列_20261023.json
 """
+import glob
 import json
 import os
+import sys
 import urllib.parse
 from urllib.request import Request, urlopen
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATE = "20261023"
-CUT = "2026-10-23"
+DATE = sys.argv[1] if len(sys.argv) > 1 else "20261023"
+CUT = "%s-%s-%s" % (DATE[:4], DATE[4:6], DATE[6:8])
 
 
 def fetch_all():
@@ -88,8 +90,11 @@ def main():
         "当日涨停总数": len(ztrows),
     }
 
-    p_in = os.path.join(BASE, "_学习", "三季报池日序列_20261022.json")
-    series = json.load(open(p_in, encoding="utf-8")) if os.path.exists(p_in) else {}
+    prev = sorted(glob.glob(os.path.join(BASE, "_学习", "三季报池日序列_*.json")))
+    prev = [x for x in prev if os.path.basename(x)[-13:-5] < DATE]
+    series = {}
+    if prev:
+        series = json.load(open(prev[-1], encoding="utf-8")).get("明细", {})
     series[DATE] = day
     keys = sorted(series)
     by_date = {k: series[k]["∩涨停"] for k in keys}

@@ -1,0 +1,69 @@
+{
+ "route": "lhb",
+ "date": "20261026",
+ "status": "ok",
+ "attempts": 1,
+ "model": "deepseek-flash",
+ "provider": "deepseek",
+ "artifact_paths": [
+  "_学习/lhb判断_20261026.json",
+  "_学习/lhb_body_20261026.html",
+  "_学习/交易计划_lhb_20261026.json",
+  "_学习/_运行状态/lhb_20261026.json"
+ ],
+ "inputs": [
+  "20261026/lhb.csv",
+  "_学习/_席位动向/20261026.csv",
+  "_学习/龙虎榜双源校验_20261026.json",
+  "_学习/席位荐票_20261026.json",
+  "_学习/作战包_全路_20261026.json",
+  "20261026/zt_pool.csv",
+  "20261026/zb_pool.csv",
+  "20261026/dt_pool.csv",
+  "_学习/_席位分档.json",
+  "_学习/_龙虎榜质量库.json",
+  "_学习/_ths_zt_pool.json",
+  "_学习/_bars_cache"
+ ],
+ "checks": {
+  "h2_sections": 6,
+  "ledger_anchor": "<!--LHBLEDGER--> 成对",
+  "div_balance": "28/28",
+  "table_balance": "17/17",
+  "json_valid": true,
+  "funnel": [
+   55,
+   19,
+   13,
+   10,
+   2,
+   2,
+   1
+  ],
+  "sa_pen": 10,
+  "sa_buy_yi": 1.96,
+  "sa_share_pct": 3.24,
+  "real_rate_pct": -24.4,
+  "recommend": [
+   {
+    "code": "002696",
+    "type": "荐票",
+    "weight": 1.9
+   }
+  ],
+  "watch": [
+   "600558",
+   "688386"
+  ],
+  "position": "C",
+  "confidence": 58
+ },
+ "gaps": [
+  "昨停溢价/大面率=null（东财 spot 代理失败，未引用）",
+  "题材归位 A 档=0（全 B 档 THS 原文）",
+  "_席位胜率库.json/_龙虎榜量化.json 本机不存在",
+  "_交易日历.json 未含今日（工具 unavailable，已登记待修）",
+  "战绩画像『归因』为空对象，无环境档拆解"
+ ],
+ "updated_at": "2026-10-26T18:28:18+08:00"
+}

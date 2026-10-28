@@ -1,0 +1,83 @@
+# -*- coding: utf-8 -*-
+"""主流题材6有.py [d] —— 题材命门的确定性底座:对当日每个题材(行业近似)跑"盘面6有"打分。
+标准(神光5问6有,阈值当假设): 宽度=涨停数挂量能档(万亿+≥15/万亿-≥12/8000亿-≥10);
+强度=有竞价一字(首封≤09:25);容量=组内最大流通市值过档(万亿+200亿/万亿-100亿/8000亿-50亿);
+弹性=组内有20cm涨停(创业/科创,套利资金代理;转债/ETF不可得标null);
+高度=组内最高连板≥3(翻倍口径不可得,连板代理);换手=有非一字涨停(首封>09:25)。
+判定: 可测6项中≥5=主流候选 / 4=大分支 / ≤3=分支。零编造,代理口径均注明。
+产出: _学习/主流题材6有_{d}.json + 追加 主流题材6有快照.jsonl"""
+import os,sys,json,glob,datetime
+import pandas as pd
+BASE=os.path.dirname(os.path.abspath(__file__)); L=os.path.join(BASE,"_学习")
+def score6(g,label,kind,k_w,k_c):
+    """对一个分组g跑6有打分。kind='行业口径'|'题材聚类口径'"""
+    n=len(g); yizi=int((g["首封"]<="09:25").sum())
+    r={"题材("+kind+")":str(label),"涨停数":n,
+       "宽度":n>=k_w,"强度_一字数":yizi,"强度":yizi>=1,
+       "容量":bool((pd.to_numeric(g["流通市值"],errors="coerce")>=k_c).any()),
+       "弹性_20cm":bool(g["代码"].str[:2].isin(["30","68"]).any()),
+       "高度_最高连板":int(pd.to_numeric(g["连板数"],errors="coerce").max()),
+       "高度":int(pd.to_numeric(g["连板数"],errors="coerce").max())>=3,
+       "换手":bool((g["首封"]>"09:25").any())}
+    score=sum([r["宽度"],r["强度"],r["容量"],r["弹性_20cm"],r["高度"],r["换手"]])
+    r["得分"]=score; r["判定"]="主流候选" if score>=5 else ("大分支" if score==4 else "分支")
+    return r
+
+def main(d):
+    zp=os.path.join(BASE,d,"zt_pool.csv")
+    if os.path.isfile(zp):
+        df=pd.read_csv(zp,dtype={"代码":str})
+    else:
+        import akshare as ak
+        df=ak.stock_zt_pool_em(date=d)
+    df["代码"]=df["代码"].astype(str).str.zfill(6)
+    sj=os.path.join(BASE,d,"summary.json")
+    amt=json.load(open(sj,encoding="utf-8")).get("两市成交额_亿") if os.path.isfile(sj) else None
+    if amt is None:
+        k_w,k_c=12,100e8; dang="未知(按万亿下阈值)"
+    elif amt>=10000: k_w,k_c,dang=15,200e8,"万亿以上"
+    elif amt>=8000: k_w,k_c,dang=12,100e8,"8000亿-万亿"
+    else: k_w,k_c,dang=10,50e8,"8000亿以下"
+    def seal(x):
+        s=str(x).zfill(6); return s[:2]+":"+s[2:4]
+    df["首封"]=df["首次封板时间"].apply(seal)
+    out={"日期":d,"量能档":dang,"两市成交额_亿":amt,"阈值":{"宽度":k_w,"容量_亿":k_c/1e8},"题材":[]}
+    for ind,g in df.groupby("所属行业"):
+        if len(g)<3: continue
+        out["题材"].append(score6(g,ind,"行业口径",k_w,k_c))
+    out["题材"]=sorted(out["题材"],key=lambda x:(-x["得分"],-x["涨停数"]))
+    # ★题材聚类口径(2026-07-09):若存在 题材归位_{d}.json(agent按催化归位),
+    # 按【大方向】聚类跑6有——比行业口径准(跨界票归真实题材线,不被行业打散)。
+    ovp=os.path.join(L,f"题材归位_{d}.json")
+    if os.path.isfile(ovp):
+        ov=json.load(open(ovp,encoding="utf-8")).get("映射",{})
+        df["_大方向"]=df["代码"].map(lambda c:ov.get(c,{}).get("大方向"))
+        clus=[]
+        for dfx,g in df[df["_大方向"].notna()].groupby("_大方向"):
+            if len(g)<3: continue
+            clus.append(score6(g,dfx,"题材聚类口径",k_w,k_c))
+        out["题材_聚类口径"]=sorted(clus,key=lambda x:(-x["得分"],-x["涨停数"]))
+        out["聚类口径注"]="按题材归位_{d}.json的大方向聚类;覆盖率取决于当日override条数,未归位涨停不计入(偏保守)。跨界票已归真实题材线。".replace("{d}",d)
+    else:
+        out["题材_聚类口径"]=[]; out["聚类口径注"]="无题材归位_{d}.json,仅行业口径(下界)。agent跑涨停对链条.py并写override后重跑本脚本可得题材聚类口径。".replace("{d}",d)
+    # 全场判定:优先看题材聚类口径(题材≠行业),再看行业口径
+    cl=out.get("题材_聚类口径") or []
+    if cl and cl[0]["得分"]>=5:
+        out["全场判定"]="有主流候选(题材聚类口径):"+cl[0]["题材(题材聚类口径)"]+f'({cl[0]["得分"]}/6,涨停{cl[0]["涨停数"]})'
+    elif out["题材"] and out["题材"][0]["得分"]>=5:
+        out["全场判定"]="有主流候选(行业口径):"+out["题材"][0]["题材(行业口径)"]
+    else:
+        cltip=(f';聚类口径最高={cl[0]["题材(题材聚类口径)"]}{cl[0]["得分"]}/6' if cl else "")
+        out["全场判定"]="行业口径无题材过6有,分支轮动"+cltip
+    out["口径注"]="行业≈题材(跨界重组等需agent对照公告改归属);弹性缺转债/ETF、强度缺竞价额、高度用连板代理——判定为下界,agent可依补充证据上调但须注明"
+    json.dump(out,open(os.path.join(L,f"主流题材6有_{d}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
+    open(os.path.join(L,"主流题材6有快照.jsonl"),"a",encoding="utf-8").write(json.dumps({"快照日":d,"全场":out["全场判定"],"top":out["题材"][:3]},ensure_ascii=False)+"\n")
+    print(d,"|",out["全场判定"],"| 评分题材数",len(out["题材"]))
+    for t in out["题材"][:5]:
+        print(f'  [行业口径] {t["题材(行业口径)"]}: {t["得分"]}/6 {t["判定"]} (涨停{t["涨停数"]},一字{t["强度_一字数"]},最高{t["高度_最高连板"]}板)')
+    if out.get("题材_聚类口径"):
+        print("  --- 题材聚类口径(题材≠行业) ---")
+        for t in out["题材_聚类口径"]:
+            print(f'  [聚类] {t["题材(题材聚类口径)"]}: {t["得分"]}/6 {t["判定"]} (涨停{t["涨停数"]},一字{t["强度_一字数"]},最高{t["高度_最高连板"]}板)')
+if __name__=="__main__":
+    main(sys.argv[1] if len(sys.argv)>1 else datetime.date.today().strftime("%Y%m%d"))

@@ -1,0 +1,478 @@
+<section id="s1">
+<h2>一 总判断 · 今日一句话<span class="hint">环境 C 档 · 置信 70 · 冷档扩散首日：宽度回来了、接盘的人没回来</span></h2>
+<p>宽度是真回来了：涨停 <b>41→71</b>、封板总额 <b>21.5→45.62 亿（+112.2%）</b>、温度 <b>16.6→28.9</b>、跌停 21→5。可接盘的钱没回来：炸板 <b>69 只</b>、炸板率 <b>0.493</b>（250 日 97% 分位、连续第二日恶化）、回封率仅 <b>34.9%</b>、首封≥13:00 占 <b>25.4%</b>（昨 14.6%）——多出来的 30 只涨停是「低开翻红＋尾盘补板」补出来的。最硬的一条分离读数：昨日 41 只票今日执 1 只有 <b>+1.69%</b>，今日新晋 71 只当日执 1 却是 <b>+9.39%</b>，钱付给的是新面孔的开盘折价、不是老票的接力。所以今日定性是<b>冷档扩散首日的脉冲修复</b>，不是情绪出清后的重建：本席给 <b>C 档·防守·总仓上限 1.0%</b>，只做涨停质量路两腿最小仓（603533 0.6% ＋ 603337 0.4%），驳回 theme 的 000678（五板孤峰不接力）、把 600078 降为观察 0%。昨日总裁决是 C 档 2.0%，今日 <b>1.0%</b>，继续收——因为温度从冰点升到冷 25~40 档，而这一档是五路历史日均收全为负的最差档。</p>
+<div class="card">
+<h3 class="sub">不可让步的 12 项读数（每项带分母与来源文件名）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">温度</span>
+<span class="tnm">28.9 · 偏冷档（昨 16.6，+12.3）</span>
+<span class="tjd tj-main">升温 ≠ 变好做</span>
+<span class="tct">昨档位＝冰点，今日升入冷 25~40 档，而该档五路历史日均收全为负 → 从冰点升到冷档是降仓信号，不是加仓信号</span>
+<span class="tds">_市场温度表.json#20261028.温度 ＋ 总审#环境加权依据</span>
+</div>
+<div class="trow">
+<span class="tr1">成交额</span>
+<span class="tnm">16285 亿（昨 14609，+11.5%）</span>
+<span class="tjd tj-main">量回来了·封单没跟上</span>
+<span class="tct">量能增 11.5%，但封单率中位仅 0.71%（昨 0.84%）——量增在低吸盘，不在板上承接盘</span>
+<span class="tds">20261028/summary.json#两市成交额_亿</span>
+</div>
+<div class="trow">
+<span class="tr1">涨停 / 封板率</span>
+<span class="tnm">71 只（原始 72，剔 002731 萃华退）/ 71÷140＝50.7%</span>
+<span class="tjd tj-main">宽度真扩张·封板弱</span>
+<span class="tct">昨 41 只、封板率 59.4%；今日多出 30 只，同时炸板 69 只未回封</span>
+<span class="tds">20261028/zt_pool.csv（72 行）＋ zb_pool.csv（69 行）</span>
+</div>
+<div class="trow">
+<span class="tr1">跌停 / 核按钮</span>
+<span class="tnm">5 只（昨 21）；核按钮率 2.4%</span>
+<span class="tjd tj-main">恐慌腿解除</span>
+<span class="tct">1 只昨日涨停今日跌停回杀 ÷ 昨 41 只涨停；跌停 21→5 是本日唯一全面改善项</span>
+<span class="tds">_市场温度表.json#20261028.跌停数 ＋ _情绪先行指标.json#20261028.核按钮</span>
+</div>
+<div class="trow">
+<span class="tr1">炸板率</span>
+<span class="tnm">0.493（69÷140，昨 0.406）</span>
+<span class="tjd tj-main">承接崩塌</span>
+<span class="tct">250 日 97% 分位；连续第二日恶化（0.406→0.493），是「量升质降」六证里最硬的一条</span>
+<span class="tds">_市场温度表.json#20261028.炸板率</span>
+</div>
+<div class="trow">
+<span class="tr1">封板总额</span>
+<span class="tnm">45.62 亿（昨 21.5 亿，+112.2%）</span>
+<span class="tjd tj-main">封单翻倍但变薄</span>
+<span class="tct">占全场成交约 0.28%；封单率中位 0.707%、机器人线内 0.71%（昨 0.84%）＝总额靠只数堆、不靠单票厚度</span>
+<span class="tds">总审 20261028/zt_pool.csv 逐行复算（45.6225 亿）</span>
+</div>
+<div class="trow">
+<span class="tr1">一进二</span>
+<span class="tnm">5÷29＝17.2%（文件值 0.172）</span>
+<span class="tjd tj-main">传送带仍偏弱</span>
+<span class="tct">昨 8÷40＝20.0%，环比 -2.8pp；首板今日 63 只、占比 88.7%，二连板仅 5 只</span>
+<span class="tds">_情绪先行指标.json#20261028.晋级.一进二率</span>
+</div>
+<div class="trow">
+<span class="tr1">二进三</span>
+<span class="tnm">2÷8＝25.0%（文件值 0.25）</span>
+<span class="tjd tj-main">中层复活</span>
+<span class="tct">昨 0÷8＝0.0%；三连板 2 只回到场上，是昨日「腰断」之后第一次接上中层</span>
+<span class="tds">_情绪先行指标.json#20261028.晋级.二进三率</span>
+</div>
+<div class="trow">
+<span class="tr1">高度晋级</span>
+<span class="tnm">1÷4＝25.0%</span>
+<span class="tjd tj-main">高标只活一只</span>
+<span class="tct">昨日高度票 4 只（4 板 3 只＋5 板 1 只），仅 000678 晋级；603528 未涨停（执 1 -6.63%）、603028 未涨停（执 1 +8.22%）；今日 <b>4 板＝0</b>，断口从 3 板上移到 4 板</span>
+<span class="tds">_情绪先行指标#高度晋级率 ＋ theme判断_20261028.json#证据</span>
+</div>
+<div class="trow">
+<span class="tr1">最高板 / 梯队</span>
+<span class="tnm">5 板 000678 襄阳轴承；梯队 5:1 / 3:2 / 2:5 / 1:63</span>
+<span class="tjd tj-main">孤峰非重启</span>
+<span class="tct">全场唯一空间板、唯一新晋级高标；二板加 8（昨 12）；5-4 断档意味着 5 板下面没有 4 板承托</span>
+<span class="tds">20261028/zt_pool.csv 逐行 ＋ _市场温度表.json#20261028.梯队</span>
+</div>
+<div class="trow">
+<span class="tr1">回封 / 早封</span>
+<span class="tnm">回封率 34.9%（37÷106）；首封≥13:00 占 25.4%</span>
+<span class="tjd tj-main">尾盘补板型</span>
+<span class="tct">≤10:00 封 31 只（43.7%）、10:00-13:00 封 22 只、≥13:00 封 18 只；换手中位 5.69%（昨 8.18%）＝分歧被推迟到下午</span>
+<span class="tds">总审 20261028/zt_pool.csv 逐行复算</span>
+</div>
+<div class="trow">
+<span class="tr1">主线 / 次线</span>
+<span class="tnm">机器人 27÷72＝37.5%（封单 19.73 亿＝43.2%，6 有 5/6，资金认可 ✗）</span>
+<span class="tjd tj-main">标签宽度</span>
+<span class="tct">次线算力/电子硬件 13 只（18.1%）、封单 11.49 亿（25.2%）、全首板；机器人真卡位 0÷27、贴标 23 只＝85.2%</span>
+<span class="tds">题材归位_20261028.json#方向聚合 ＋ 卡位纯度_20261028.json#汇总</span>
+</div>
+</div>
+</div>
+</section>
+
+<section id="s2">
+<h2>二 五路裁决<span class="hint">2 路 C（auction/limitup）＋ 2 路 C 主体（logic 全采纳）＋ theme 的 B 是线级档；环境档＝防守，档位只表示仓位上限、不表示出票义务</span></h2>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">auction</span>
+<span class="tnm">C / 66</span>
+<span class="tjd tj-main">部分采纳（留档位·驳荐票）</span>
+<span class="tct">环境事实层全部可回源（温度/涨停/炸板率/梯队/池均分 39.58 与基准 37.70 复算一致）；自认「今日竞价实况不可复现」是本日最诚实的一段。荐票 600078 与另两路相反且本路冷档战绩五路最差（35.0%/-1.30%）→ 只保留「C 档·防守·薄正」的档位结论，票不采纳。</span>
+<span class="tds">修正：『冷&lt;40（一年库 n=898/-0.51%）』与『本路画像 冷25~40（17 池日/220 票/35.0%/-1.30%）』两套口径须在正文并列，否则读者会把 -0.51% 当成自己的冷档期望（MA-20261028-03③）</span>
+</div>
+<div class="trow">
+<span class="tr1">lhb</span>
+<span class="tnm">B / 74</span>
+<span class="tjd tj-main">全部采纳（0 荐票）</span>
+<span class="tct">S/A 5 笔净买合计 0.9483 亿（昨 1.5615 亿，-39.3%），其中 78.1%（0.7411 亿）压在 688691 一只非涨停票上；落进 71 只涨停池的 S/A 只剩 600078 一只，而它封/成交 4.59%（门槛 5%）、炸 4 次（门槛 ≤3）、净买占比 9.10% 落 5-10% 负桶（重算 41.1%/-0.64%）。五道门 71→21→18→10→S/A 0 只，是本日唯一独立否决 600078 的路，也是唯一给出「宁空不凑」而非拍票的路。</span>
+<span class="tds">语义校正：B 档 ≠ 必须出票，本日 0 荐与 B 档不矛盾；其质量库 109 天未重算已于今日重算并反转最优桶（0-5% n=611/46.8%/+0.73%）</span>
+</div>
+<div class="trow">
+<span class="tr1">theme</span>
+<span class="tnm">B（线级）/ C（产业支撑） / 66</span>
+<span class="tjd tj-main">部分采纳（留线级·驳荐票）</span>
+<span class="tct">线级结构逐项可回源：机器人 27 只、封单 19.73 亿、占比 43.2%（19.73÷45.62）、线内炸板 35 次；算力 13 只/11.49 亿/25.2%、化工 5 只/1.76 亿/3.9% 一致。双档并列（线级 B × 产业支撑 C 折扣 0.5）是首次把「贴标」量化进仓位，方法成立。但荐票 000678 被 limitup（同层 2 板+ 负格）与 logic（位置透支）两路独立反向，且本路冷档胜率 23.1% 为五路最低 → 票不采纳。</span>
+<span class="tds">A-01：『早封≤09:31 从 41% 降至 11.1%』41% 不可回源（复算昨值 4/16＝25.0%），该数在口径统一前只作描述，不作「质降」核心证据（另两条证据封单率中位 0.71%、线内炸板 51.9% 独立成立）</span>
+</div>
+<div class="trow">
+<span class="tr1">logic</span>
+<span class="tnm">C / 80</span>
+<span class="tjd tj-main">全部采纳（0 荐票）</span>
+<span class="tct">把「否决链」做成可机械反例检验的唯一一路：环节聚集度近 21 交易日 13 日＝1.000、20261008 起连续 13 日为常数，自认恒真量并已从否决链移除；卡位纯度 27/27 取数成功、真卡位 0 只、贴标 23 只＝85.2%——这是「机器人线是贴标线」最硬的一条证据。0 荐票＋2 观察（603667、300613）。</span>
+<span class="tds">口径修正：中报命中 8 只的分母须统一为 71（8/71＝11.27%），用 72 会与外路口径差 1 只（A-05）；其『机器人线首板桶 n=84/60.7%/+1.88%』未按当日温度分层，不作选票依据（D-04）</span>
+</div>
+<div class="trow">
+<span class="tr1">limitup</span>
+<span class="tnm">C / 58</span>
+<span class="tjd tj-main">部分采纳＋压缩（1.83%→1.0%）</span>
+<span class="tct">回封三集合（zt 内炸&gt;0＝37、zb＝69、回封率 37/106＝34.9%）与首封分布经总审逐行复算一致；对昨日 600785 口径错误的处置彻底（承认『1 板』标签吞掉反包票，昨日两层正格数字全部作废），并据此新建反包桶 n=108/58.3%/+1.00%。两荐 603533 0.85%＋603337 0.98% 采信方向，压缩到 0.6%＋0.4%＝1.0%。</span>
+<span class="tds">压缩理由：反包桶是 180 切面（封档 5 × 换档 4 × 时段 3 × 开板 3）在同日同数据上先发现再使用、样本外零验证；A-02『预测执 1 45.4% 为全池最高』不实（全池 max 45.8%＝688137），603337 为第二</span>
+</div>
+</div>
+<p><b>环境加权采信依据（分歧处按温度档定权，不按自评置信）</b>：当前温度 28.9 落冷 25~40 档，按该档各路历史战绩排序——“lhb 池日 n=11/票 n=39/胜率 38.5%/日均收 -0.21%”≈“limitup 8/39/38.5%/-0.38%” &gt; “auction 17/220/35.0%/-1.30%（胜率 -3.5pp）” &gt; “theme 6/13/23.1%/-0.42%（胜率 -15.4pp）”；logic 池日 n=2/票 n=3＜5，按规则<b>不参与</b>。数据源＝五份 战绩画像_{route}_20261028.json 的按日 × _市场温度表.json 逐日温度，由总审按「温度∈[25,40)」筛选后重算（样本截止 20261027、不含今日、零后视镜）。这个排序直接决定三处裁决：600078 采信 lhb（D-01）、000678 采信 limitup＋logic 反 theme（D-02）、机器人线首板桶采信 limitup 的同层负格而非 logic 的未分层正桶（D-04）。<b>另须写明</b>：该档五路日均收全部为负，所以「档位」在本系统里只表示<b>该路当日可承担的总仓上限</b>，不表示必须出票——lhb 的 B 档 0 荐与 limitup 的 C 档 2 荐并不倒挂，出票数由桶的 n 与执行口径决定，不由档位决定。</p>
+</section>
+
+<section id="s3">
+<h2>三 题材树 · 主线与结构<span class="hint">机器人＝形式主流＋产业空壳（真卡位 0/27）；算力/电子硬件＝横向扩散的宽度陷阱；消费接棒被证伪（宽 10→3）</span></h2>
+<h3 class="sub">结构四读（按 20261028/zt_pool.csv 72 行 ＋ 题材归位#映射 逐票复算）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">宽度</span>
+<span class="tnm">机器人 27÷72＝37.5%；算力/电子硬件 13÷72＝18.1%</span>
+<span class="tjd tj-main">一条主线＋一条横向线</span>
+<span class="tct">封单：机器人 19.73 亿（43.2%）、算力/电子硬件 11.49 亿（25.2%）；其余 32 只散在 12 条线（化工 5／AI 应用 4／医药 4／消费 3／汽车零部件 3／电力设备 4／其他 9）；昨日消费 10 只→今日 3 只（-70%）</span>
+<span class="tds">题材归位_20261028.json#方向聚合 逐票 ＋ zt_pool 封板资金</span>
+</div>
+<div class="trow">
+<span class="tr1">高度</span>
+<span class="tnm">机器人最高 5 板×1 只（000678）；线内梯队 5:1 / 3:1 / 2:2 / 首板 23</span>
+<span class="tjd tj-main">高宽同线、但塔身缺 4 板</span>
+<span class="tct">全场 4 板＝0，断口正好落在机器人线 5 板与 3 板之间；算力/电子硬件 13 只全首板、高度 1；消费线最高 3 板（001219）</span>
+<span class="tds">zt_pool.csv 逐行 × 归位#映射</span>
+</div>
+<div class="trow">
+<span class="tr1">深度</span>
+<span class="tnm">真卡位 0÷27＝0.0%；贴标 23÷27＝85.2%</span>
+<span class="tjd tj-main">塔身是空的</span>
+<span class="tct">27 只中仅 4 只有当日纯度档，其中 3 只纯度 0.00（000678/601956/603037）、最高 002708 仅 0.68%；其余 23 只无当日纯度文件，按规矩标『未评级』、不得反推为贴标</span>
+<span class="tds">卡位纯度_20261028.json#汇总（27/27 取数成功）</span>
+</div>
+<div class="trow">
+<span class="tr1">强度</span>
+<span class="tnm">封单率中位 0.71%、线内炸板 35 次/14 只＝51.9%</span>
+<span class="tjd tj-main">量升质降</span>
+<span class="tct">早封≤09:31 仅 3/27＝11.1%（昨 25.0%）；首板 23 只＝85.2%；封单率&lt;0.5% 共 7 只（301525 0.04%、603337 0.09%…）；线内无一字，0 只竞价一字</span>
+<span class="tds">zt_pool 逐行自算 ＋ theme判断_20261028.json#证据</span>
+</div>
+</div>
+<h3 class="sub">「6 有 5/6 却资金认可 ✗」：形式与钱分开了</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">①形式</span>
+<span class="tnm">6 有 5/6（缺『强度·竞价一字』）</span>
+<span class="tjd tj-main">主流候选成立</span>
+<span class="tct">宽度 ✓（27≥15）、容量 ✓（000559 流通 438.5 亿）、高度 ✓（5 板全场最高）、封单占比 ✓（43.2%）、换手 ✓（中位约 5.4%）；缺口＝0 只竞价一字，意味着<b>没有一字锁仓的核心资金</b>，全靠盘中封板</span>
+<span class="tds">_六有核对（theme判断#六有核对逐项）</span>
+</div>
+<div class="trow">
+<span class="tr1">②资金认可</span>
+<span class="tnm">✗：S/A 5 笔 0.9483 亿、净额 -39.3%</span>
+<span class="tjd tj-main">钱没落在主线里</span>
+<span class="tct">落进 71 只涨停池的 S/A 席位只有 1 只（600078），且质量门两项不达标；78.1% 的 S/A 净买压在 688691 一只非涨停票上 → 主线宽度是「盘中封板宽度」，不是「大钱锁仓宽度」</span>
+<span class="tds">lhb判断_20261028.json#判断、龙虎榜双源校验_20261028.json</span>
+</div>
+<div class="trow">
+<span class="tr1">③产业</span>
+<span class="tnm">真卡位 0/27、产业支撑档＝C</span>
+<span class="tjd tj-main">形式 B × 内容 C</span>
+<span class="tct">线级档 B（资金承载形式达标）不升高、也不因贴标降 C，另设独立产业支撑档 C；权重上限＝min(线级 2.0%,环境 1.5%) × 折扣 0.5＝<b>1.0%</b>。贴标组执 1 -1.05% vs 真卡位组 +11.08%，是这条折价的定价依据</span>
+<span class="tds">theme判断_20261028.json#评级、卡位纯度 T+1 对照</span>
+</div>
+<div class="trow">
+<span class="tr1">④可证伪</span>
+<span class="tnm">明日宽度≥20 ∧ 二板≥4 ∧ 封单率中位≥1.0%</span>
+<span class="tjd tj-main">证实/证伪各一半</span>
+<span class="tct">三项同真 ⇒ 扩散延续、线级维持 B 并允许上限回 1.5%；宽度环比≤-0.3 或 最高板≤4 ⇒ 高潮转退坡、线级降 C、权重清零；算力线出现≥2 只二板或高度≥3 ⇒ 承认其为二级大分支</span>
+<span class="tds">theme判断#可证伪条件 1/3、总审#线索跟踪 L-04</span>
+</div>
+</div>
+<p>本席结论：<b>机器人是形式上的主线、产业上的空壳</b>——27 只的宽度和 43.2% 的封单占比是真的，0 只真卡位和 0 只一字锁仓也是真的；所以它够格当「资金承载形式」，不够格拿到完整仓位。<b>算力/电子硬件 13 只全首板是宽度陷阱不是二主线</b>：它只有横向争资金的能力（11.49 亿＝25.2%），没有接力结构（高度 1、无线内二板）。<b>消费接棒被今日直接证伪</b>：宽 10→3、环比 -0.70、600838 断板，昨日「退潮期资金切防守属性」的推论在温度回升日失效——钱没有离场，而是回流主线并横向扩散。明日跟什么：只跟「温度 25-40 层 × n≥100 且执 1、执 2 双正」的两格；明日避什么：5 板身位单票接力（000678）、首板无纯度档的贴标票、以及把宽度当强度的读法。</p>
+</section>
+
+<section id="s4">
+<h2>四 总裁决 · 荐票与仓位<span class="hint">并集 3.43% → 终选 2 只 1.0%；单票≤0.6%、同时点≤2 只、机器人线合计≤1.0%；买不到就是 0 仓</span></h2>
+<div class="obs"><div class="obs-head"><span class="obs-nm">掌阅科技</span><span class="mut">603533</span><span class="obs-pos">荐票 · 0.6% · 质量路 1 板格</span></div><div class="obs-watch"><span class="obs-lab">身位逻辑</span>温度 25-40 层 × 1 板 × 首封 10:00-13:00 × 换手≥10%（n=221/52.5%/+1.03%，执 2 51.1%/+0.91%）——<b>本日唯一执 1 与执 2 同为正的格</b>，也是全系统今日唯一 n≥100 的可成交正格。首封 10:49 属盘中封非一字，封/成交 0.888÷13.58＝6.54%，涨停统计 1/1，属 AI 应用/传媒线（4 只）中线内封单率最实（中位 1.01%）。四路复核无反向否决：lhb 未上榜（不作反证）、auction 不在其早封池、theme 判该线非主流但资金最实、logic 无冲突。权重由路报 0.85% 上调至 0.6% 上限内的最大腿。</div><div class="obs-rec"><span class="obs-lab2">来源·触发/证伪条件</span>触发＝20261029 开盘价唯一执行价买入、当日收盘平（执 1）；gap&gt;+5% 弃买、一字或开盘即涨停弃买、<b>gap 无下界</b>（低开段是该格正收益最厚的一段）。证伪＝若该票执 1&lt;0 且同格（n=221）其余样本明日均值仍≥+1.00%，则「1 板×盘中封×换≥10」在本层失效、记为选票错误而非环境错误。</div></div>
+<div class="obs"><div class="obs-head"><span class="obs-nm">杰克科技</span><span class="mut">603337</span><span class="obs-pos">荐票 · 0.4%（压缩后）· 反包格</span></div><div class="obs-watch"><span class="obs-lab">身位逻辑</span>反包票（4 天 3 板）× 温度 25-40 层 n=108/58.3%/+1.00%/抓龙 20.4%；封/成交 0.212÷15.98＝1.33%，涨停统计 4/3，首封 10:18、炸 3 次，质量分 9＝全池最高档（9 分共 7 只），预测执 1 45.4% 高于基准 43.0 约 2.4pp。属机器人线，但 purity 0.00 为贴标——按 logic 自证「贴标≠不能做」（机器人线首板剔最强日后仍 +0.93%）保留交易性、不认产业锚。权重由路报 0.98% 压缩到 0.4%：反包桶是同日在同一份数据上从 180 切面筛出（n=32/71.9%/+1.94%），样本外零验证，不配拿满额。</div><div class="obs-rec"><span class="obs-lab2">来源·触发/证伪条件</span>触发＝20261029 开盘价唯一执行价、当日收盘平；gap&gt;+5% 弃买、一字弃买；与 000678 同为机器人线，本票为该线唯一持仓、不与任何机器人线观察票叠加。证伪＝若 603337 执 1≥+3.00% 且 603533 执 1&lt;0，则本次「0.98→0.4」为反向压缩（记错，须改为按桶 n 等权）；若 ≤-2.00% 且 603533≥0，则压缩方向正确。</div></div>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">000678 襄阳轴承</span>
+<span class="tnm">theme 报 1.0% → <b>0</b>（观察）</span>
+<span class="tjd tj-main">驳回（五板孤峰不接力）</span>
+<span class="tct">全场唯一 5 板、唯一新晋级高标、线内封单率第一 3.60%（次名 1.96 倍）、炸 0、缩量锁板（换手 20.57%→10.38%）——正向证据只有一条；反向三条：limitup 同层 2 板+ 负格 n=763/39.6%/-0.52% 且质量库该票打分 3（71 只中偏低）、预测执 1 41.6%＜基准 43.0；logic 位置透支（r20 +98.09%、r60 +121.23%、距 250 日高 0.00%）；theme 自身的支撑桶 n=11 与最精确桶 n=7 均低于其自定 n≥25 门槛</span>
+<span class="tds">裁决口径：n 优先、环境档次之。证伪＝若明日执 1≥+5.00% 且收盘涨停，本次驳回记负样本；执 1≤0 则驳回正确。5-4 断档也意味着它下面没有 4 板承托，孤峰断板无接力位</span>
+</div>
+<div class="trow">
+<span class="tr1">600078 澄星股份</span>
+<span class="tnm">auction 报 0.6% → <b>0</b>（观察）</span>
+<span class="tjd tj-main">降为观察（质量门优先）</span>
+<span class="tct">正向：封单比 0.22% 落一年库最优执行格 n=259/54.1%/+0.89%、竞价分 50.8 并列池内第一、双源一致（源 1 +0.2711 亿／源 2 +0.7743 亿）、净买占比 9.10%；反向：封/成交 4.59%＜5% 门槛、炸 4 次＞3、净买占比落 5-10% 桶（重算 n=372/41.1%/-0.64%）、该 A 席今日净买较昨日缩量 25.0%</span>
+<span class="tds">唯一例外条款：若明日 gap≤0 且 603533/603337 双双被弃买，允许其作为最后一个替补但不得超过 0.4%，且须写在次日计划里。证伪＝执 1≥+3.00%（gap&lt;5%）则薄封正格胜、质量门排序被证伪</span>
+</div>
+<div class="trow">
+<span class="tr1">002636 金安国纪</span>
+<span class="tnm">auction 观察 / limitup Top5#1 → <b>0</b></span>
+<span class="tjd tj-main">禁止买入（不可执行）</span>
+<span class="tct">今开 +10.01%＝涨停价，开盘即涨停，执 1 上界≈0；且『一字』标签与 20261028_盘后补_开盘结构.csv 一字板=False、zt_pool 炸板 1 次冲突（A-03）——真一字的是 001219</span>
+<span class="tds">纪律条文：开盘即涨停＝弃买，与 gap 闸同源；标签冲突已指派 auction 重算两种归属下的门 2 落门只数差（MA-20261028-03①）</span>
+</div>
+<div class="trow">
+<span class="tr1">688691 灿芯股份</span>
+<span class="tnm">lhb 机器候选#1（综合分 4.96） → <b>0</b></span>
+<span class="tjd tj-main">禁止买入</span>
+<span class="tct">当日 +17.5% 未封板、不在 zt_pool，违反「标的必须∈zt_pool」；双源判定『打折』4.9 倍（源 1 0.7411 亿 vs 票级口径差 4.9 倍）</span>
+<span class="tds">satisfies 不了可执行性；其占 S/A 净买 78.1% 正是「钱不在板上」的结构证据</span>
+</div>
+<div class="trow">
+<span class="tr1">301313 凡拓数创</span>
+<span class="tnm">lhb 机器候选#3 → <b>0</b></span>
+<span class="tjd tj-main">禁止买入</span>
+<span class="tct">席位买侧 +0.0869 亿 vs 票级净额 -0.6237 亿（符号反转）、当日 -2.17%；卖五缺失导致席位净额不可加总的典型样本</span>
+<span class="tds">回填窗口④：席位明细仅买五＋其卖出额、无卖五 → 源 2 只作方向不作数量</span>
+</div>
+</div>
+<p><b>合并与执行</b>：并集 3.43%（limitup 1.83% ＋ theme 1.0% ＋ auction 0.6%）压到 <b>1.0%（2 只）</b>，压缩率 71%。规则五条——R1 同票唯一归属（质量桶腿&gt;席位腿&gt;竞价腿&gt;题材腿）；R2 同线合计≤1.0%（按归位#映射，机器人线今日只留 603337 一腿）；R3 单票权重与该票依赖桶的 n 单调挂钩（n&lt;25 不得入正式荐票、25≤n&lt;100 权重≤0.5%、n≥100 可到单票上限）；R4 只允许代码级白名单两只、当日不得替换，买不到就是 0 仓、禁止用任何观察票顶替（今日观察集合＝603612/002636/002708/603667/300613/000678/600078，另 000559、603081、002696 三只反包票亦不得顶替）；R5 两腿各自为独立回合（T+1 开盘买→当日收盘平），不留第二日、不做 T+0 回转。<b>为什么只给 1.0%</b>：冷 25~40 档五路历史日均收全部为负，不存在任何一路在该档取得正期望；若按三路简单相加 3.43%，等于把两路最低胜率的票（theme 23.1%、auction 35.0%）变成主仓。这 1.0% 不是看多，是「两条 n≥100 且执 1 为正的最小可执行腿」——可降至 0 而不扣分。</p>
+</section>
+
+<section id="s5">
+<h2>五 指派与线索<span class="hint">昨日 5 条全部已承接（0 未做、3 处瑕疵）；今日 5 条逐路，截止 20261029；六账本 3 盈 3 亏</span></h2>
+<h3 class="sub">昨日指派承接验收（MA-20261027-01~05，5/5 已承接）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">MA-20261027-01</span>
+<span class="tnm">theme</span>
+<span class="tjd tj-main">已承接（①②③ 全实质）</span>
+<span class="tct">自建 _三方交叉桶_theme_20261028.json（本地 73 交易日/n=4946、base -0.46%/41.8%）给出 17 个桶表，把『4 板+』拆成 4 板／5 板+ 两级并给出机制解释（4 板封单≥2% -0.65% vs 5 板+封单≥2% +2.45% 方向反转）——本日最有价值的方法论产出；越权 2.0% 撤回且用 gap+4.28% 自证未产生真实损益</span>
+<span class="tds">瑕疵：②以「新增一档」替代「是否降档」的正面回答（部分规避）；A-01 早封占比 41%/25.0% 两个数并存 → 追 MA-20261028-01</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261027-02</span>
+<span class="tnm">limitup</span>
+<span class="tjd tj-main">已承接（质量五条最高）</span>
+<span class="tct">①600785 口径纠正彻底（承认『1 板』标签吞掉反包票、昨日两层正格作废 n=46 与 n=2），并据此新建反包桶 n=371/49.6%/+0.37%；②回封三集合改写并复算 37÷(37+69)＝34.9%，昨日把 zb 28 与 zt 内回封 28 混为一句的错误因两数不等而暴露；③相关性检验 pearson 0.231/spearman 0.179、日间方差 16.5%、8 因子中仅 3 个同桶</span>
+<span class="tds">瑕疵：180 切面多重比较未校正（已自认）、A-02『预测执 1 45.4 为全池最高』不实 → 追 MA-20261028-02①②</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261027-03</span>
+<span class="tnm">auction</span>
+<span class="tjd tj-main">已承接</span>
+<span class="tct">①梯队更正找到真实成因（全市场 4 板 3 vs 池内 4 板 2，池＝首封≤09:31 子集）并登记两套口径；②机械规则回测（55 可结算池日、命中 n=2、-0.62%）且诚实结论『n=2 无仓位效力、只作标签』；③正面回答冰点档 alpha 来源并降额至 0.6%，同时自算『冰点&lt;25 票 -0.75% 优于冷 25~40 -1.20%』完成自我纠偏</span>
+<span class="tds">瑕疵：『冷&lt;40』与『冷 25~40』两套口径仍在正文混用 → 追 MA-20261028-03③</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261027-04</span>
+<span class="tnm">lhb</span>
+<span class="tjd tj-main">已承接（产生实质判断改变）</span>
+<span class="tct">①质量库 109 天未重算已重算（54 交易日/可用 2436、10-20% 桶 n=314/41.4%/-0.55%，最优桶反转为 0-5% n=611/46.8%/+0.73%）——直接改变了今日判断走向，4 只原『最优桶』票全部退回观察；②301682 purity 0.00 并自认『把题材纯度写进荐票理由是越界抢功』；③权重四字段口径对账（1.0 目标/1.020 收盘计提/1.01 总审取整/1.0488 实际 fill）</span>
+<span class="tds">瑕疵：其『机器人涨停 16 只→15 只贴标』仍是昨日口径，今日红线已到 27 只（logic 产出），未吸收（轻度滞后，不影响其荐票）；M-01 任务书冲突责任不在本路</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261027-05</span>
+<span class="tnm">logic</span>
+<span class="tjd tj-main">已承接</span>
+<span class="tct">①环节聚集度 21 日逐日分布（0.619~1.000、13/21＝1.000、20261008 起连续 13 日）给出标准差 0.139 与方差来源，结论『退化为常数、从否决链移除』并附恢复条件（20 日内≥3 日&lt;0.90），可机械结算；②否决链适用范围定稿（只覆盖产业逻辑硬度、不覆盖次日交易性）；③中报雷达重取（1,550,209 字节、json.load 通过）并把 0 仓机会成本自算成两桶（236 元 vs 380 元）而非沿用总审口径</span>
+<span class="tds">瑕疵：『机器人线首板桶 n=84/+1.88%』未按当日温度分层（今日 28.9 vs 样本跨层）→ D-04 裁决已采 limitup 同层值；A-05 分母用 72</span>
+</div>
+</div>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">六账本净值（20261028）</span>
+<span class="tnm">theme 1.0171｜logic 1.0108｜lhb 0.9992</span>
+<span class="tjd tj-main">3 盈 3 亏·合计仍在 1.0 下方</span>
+<span class="tct">auction 0.9569（-4.31%，五路最差、持仓 1 只）｜limitup 0.9929（-0.71%，持仓 4 只）｜master 0.9872（-1.28%，持仓 3 只）；峰值仍在 theme（+1.71%）</span>
+<span class="tds">_学习/_模拟盘/{auction,lhb,theme,logic,limitup,master}/净值.json#20261028.nav</span>
+</div>
+</div>
+<h3 class="sub">今日指派（MA-20261028-01~05，截止 20261029）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">MA-20261028-01</span>
+<span class="tnm">theme</span>
+<span class="tjd tj-main">41% 早封占比自证 + n=7 桶明细</span>
+<span class="tct">①给出『早封≤09:31 从 41% 降至 11.1%』中 41% 的分子分母来源，无来源则作废并以 25.0%（4/16）重出，同时书面回答该数是否进入过任何权重算式；②给出 000678 最精确桶（5 板×冷&lt;40×封单≥2%×非早封）n=7 的逐笔明细（哪 7 个交易日、哪 7 只票、各自执 1），并解释为何 n=7 可支撑 1.0% 权重而其自定门槛是 n≥25</span>
+<span class="tds">理由：41% 是『量升质降』三证之一；n=7 支撑 1.0% 是本次被驳回的直接原因（D-02），须由本路自证</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261028-02</span>
+<span class="tnm">limitup</span>
+<span class="tjd tj-main">A-02 自纠 + 多重比较校正 + 四字段落地</span>
+<span class="tct">①改正『预测执 1 45.4% 为全池最高』（全池 max 45.8%），给出该票并说明是否在可执行池内，603337 表述改为『高于基准 43.0 约 2.4pp』；②对反包桶 n=32/71.9% 这一格做 Bonferroni 或 FDR 校正，给出校正后仍成立且 n≥30 的最强两格，若无格显著则书面声明该桶只能描述；③按 _模拟盘/limitup/状态.json#nav 给出 buys 四字段（target_weight_pct/fill_ref_px/shares/actual_weight_pct）并如实报股数取整后的 actual 漂移</span>
+<span class="tds">理由：A-02 必须自纠；反包桶决定明日能否继续用；四字段是 MA-20261027-04③ 已定的规则，本路尚未落地</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261028-03</span>
+<span class="tnm">auction</span>
+<span class="tjd tj-main">002636 标签口径 + 替身条款 + 两套温度并列</span>
+<span class="tct">①统一 002636 信号口径（记为『一字』但开盘结构 csv 一字板=False、炸 1），重算池内 11 只信号分布，并量化归入『一字|首板 n=549/30.8%/-0.89%』vs『秒板|首板 n=785/43.9%/-0.71%』两种归属下 P(明晨高开≥5) 落门只数的差额；②书面确认 600078 降观察后其『门替身条款（603612 接替 0.6%）』是否作废，若作废给出明日该池唯一可执行票与 0 仓条件；③把两套温度口径在正文并列并标注哪套定档、哪套算期望</span>
+<span class="tds">理由：标签误差直接影响其唯一正向期望的代入；荐票被否而替身条款仍活会形成执行矛盾</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261028-04</span>
+<span class="tnm">lhb</span>
+<span class="tjd tj-main">600078 交叉桶 + 三门门槛回测 + 库回写</span>
+<span class="tct">①给出 600078 在『冷 25~40 层 × 封/成交&lt;5%』交叉桶的 n/胜率/均收/超额（窗口至少 20260710~20261026），用它判定『auction 薄封正格』与『本路封板质量门』能否用单一交叉桶消解；②给出『封/成交≥5% ∧ 炸≤3 ∧ 首封≤14:00』三门的独立回测（三条同真 vs 任一不真，冷层执 1 差），证明该门不是经验值；③把新重算桶值回写 _学习/_龙虎榜质量库.json 并给出下次重算到期日</span>
+<span class="tds">理由：600078 是今日唯一被两路以相反依据处置的票，若能用单一交叉桶消解，就能把『采信谁』变成『查哪个桶』</span>
+</div>
+<div class="trow">
+<span class="tr1">MA-20261028-05</span>
+<span class="tnm">logic</span>
+<span class="tjd tj-main">首板桶分层 + 纪律一致性 + 披露日命中表</span>
+<span class="tct">①把『机器人线首板桶 n=84/60.7%/+1.88%』按当日温度拆成冰点&lt;25／冷 25~40／中 40~65 三层各自 n/胜率/均收与剔最强日后值，若冷层为负则书面撤回『机器人线次日执行期望为正』的普适表述；②说明『桶正期望却 0 荐票』的纪律一致性，给出若按该桶出手的期望仓位与股数；③出 20261029~20261031 公告清单 ∩ 今日 71 只涨停的逐票披露日/类型表，并标注本席两腿的风险等级</span>
+<span class="tds">理由：①是分歧 D-04 的直接来源；③填补今日最大趋同盲区 B-02，且可机械执行</span>
+</div>
+</div>
+<h3 class="sub">线索看板（8 条在跟踪，摘 5 条关键）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">L-01 反包票独立桶</span>
+<span class="tnm">limitup</span>
+<span class="tjd tj-main">跟踪中</span>
+<span class="tct">全窗 n=371/49.6%/+0.37%，温度 25-40 层内 n=108/58.3%/+1.00%/抓龙 20.4%，今日 4 只反包票（603081/000559/603337/002696）；该桶同日同数据新建、样本外零验证</span>
+<span class="tds">20261029 反包组执 1 均值 &gt; 同池纯首板组 ⇒ 方向成立；&lt; 纯首板组 ⇒ 降为描述性、不得再用于选票</span>
+</div>
+<div class="trow">
+<span class="tr1">L-02 600078 薄封正格 vs 质量门</span>
+<span class="tnm">auction + lhb</span>
+<span class="tjd tj-main">新增</span>
+<span class="tct">auction 用一年库封单比&lt;0.5%（n=259/54.1%/+0.89%）荐，lhb 用当日结构（封/成交 4.59%、炸 4）否；本日采信 lhb 并降为观察</span>
+<span class="tds">执 1≥+3.00% 且 gap&lt;5% ⇒ 薄封正格胜；≤-1.00% ⇒ 质量门胜</span>
+</div>
+<div class="trow">
+<span class="tr1">L-03 高位 5 板在冷档的可做性</span>
+<span class="tnm">theme vs limitup/logic</span>
+<span class="tjd tj-main">新增</span>
+<span class="tct">theme 用 n=11 桶给 1.0%，limitup 用 n=763 的 2 板+ 负格否，logic 判位置透支（距 250 日高 0.00%）；总审驳回</span>
+<span class="tds">000678 执 1≥+5.00% 且收盘涨停 ⇒ 驳回记错；执 1≤0 ⇒ 正确</span>
+</div>
+<div class="trow">
+<span class="tr1">L-05 昨日票接力枯竭</span>
+<span class="tnm">limitup</span>
+<span class="tjd tj-main">跟踪中</span>
+<span class="tct">同一天同买卖点：昨日 41 只 +1.69%、今日 71 只 +9.39% → 宽度由低吸盘提供、承接盘缺席，这解释了「宽度修复却质量恶化」</span>
+<span class="tds">今日 71 只票执 1≥+3.00% ⇒ 接力恢复（分离为单日）；≤+0.50% ⇒ 分离常态化，此后新晋批次一律按 +1.69% 类下修</span>
+</div>
+<div class="trow">
+<span class="tr1">L-06 三季报披露地雷</span>
+<span class="tnm">logic 提出、其余四路未纳入</span>
+<span class="tjd tj-main">新增</span>
+<span class="tct">风险日历四维（限售解禁/分红/股东减持/高管减持）未接入财报披露日历/股东大会/业绩预告；10/28~10/31 为披露高峰，68 只披露日不可排除，logic 明示『不得据此声称无此类风险』</span>
+<span class="tds">本周任一周荐票因三季报公告 gap&lt;-5% ⇒ 该维升级为硬闸门；三日零发生 ⇒ 降为观察</span>
+</div>
+</div>
+</section>
+
+<section id="s6">
+<h2>六 分歧与盲区 · 风险<span class="hint">最可能错的地方：把「71 只涨停 + 温度升 12.3」读成「环境变好做」——而冷 25~40 恰是五路历史最差档</span></h2>
+<h3 class="sub">今日四处分歧与裁决（D-01~D-04，全部按环境加权落锤）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">D-01</span>
+<span class="tnm">600078：auction 荐 0.6% vs lhb 剔除/只列观察</span>
+<span class="tjd tj-main">采信 lhb，降为观察 0%</span>
+<span class="tct">auction 依据＝一年库『封单比&lt;0.5%』正格（n=259/54.1%/+0.89%，无条件全样本）＋炸 1+ 正格＋竞价分 50.8 并列池内第一；lhb 依据＝封/成交 4.59%（&lt;5%）、炸 4（&gt;3）两门不达标＋净买占比 9.10% 落负桶（重算 41.1%/-0.64%）＋该 A 席净买较昨日缩量 25.0%。两条 n 均≥5 均参与环境加权，冷 25~40 档 lhb 38.5%/-0.21% 全面胜 auction 35.0%/-1.30%</span>
+<span class="tds">关键判别：当『历史桶』与『当日结构』冲突且历史桶不区分温度时，环境加权指向当日结构——auction 自己也算出冷&lt;40 n=898/39.0%/-0.51% 为负</span>
+</div>
+<div class="trow">
+<span class="tr1">D-02</span>
+<span class="tnm">000678：theme 荐 1.0% vs limitup 高位不做 + logic 位置透支</span>
+<span class="tjd tj-main">驳回 theme，降观察 0%</span>
+<span class="tct">theme 依据＝5 板×冷&lt;40×封单≥2% n=11/45.5%/+2.45%（最精确桶 n=7/42.9%/+0.50%）＋线内封单率第一 3.60% 为次名 1.96 倍＋炸 0＋缩量锁板；limitup 依据＝同层 2 板+ n=763/39.6%/-0.52%、质量分 3、预测执 1 41.6%＜基准；logic 依据＝r20 +98.09%、r60 +121.23%、距 250 日高 0.00%。theme 冷档胜率 23.1% 落后 limitup 15.4pp，且其两条支撑桶都低于自定 n≥25 门槛</span>
+<span class="tds">独立于环境加权的第二条依据：『用小样本桶支撑正式荐票』——limitup 的 n=763 才是有统计效力的反向桶。故 n 优先、环境档次之</span>
+</div>
+<div class="trow">
+<span class="tr1">D-03</span>
+<span class="tnm">档位与荐票数倒挂：lhb B 档 0 荐 vs limitup C 档 2 荐 1.83%</span>
+<span class="tjd tj-main">以 C 档为基准，不因任何单路 B 档抬总仓</span>
+<span class="tct">lhb 的 B 档是『可承担仓位上限』（S/A 钱没落在能买的地方：5 笔 0.9483 亿、池内 S/A 仅 1 只且质量门不达标）；limitup 的 C 档是『允许出手的资格』（层内有 n=108 反包格与 n=221 盘中封格两块 n≥30 正格，空仓不是选项）。若按三路简单相加 3.43%，等于把最低胜率两路（theme 23.1%、auction 35.0%）变成主仓</span>
+<span class="tds">定稿语义：档位只表示该路当日可承担的总仓上限、不表示出票义务；出票数由桶的 n 与执行口径决定。此条写进次日 prompt</span>
+</div>
+<div class="trow">
+<span class="tr1">D-04</span>
+<span class="tnm">机器人线次日期望：logic 首板桶 +1.88% vs limitup 同层 1 板 -0.39%/-0.51%</span>
+<span class="tjd tj-main">采信 limitup 的同层负格作仓位依据</span>
+<span class="tct">logic 桶 n=84/60.7%/+1.88%（剔最强日 +0.93%）是跨温度层混桶（横跨 8 个结算日、未按当日温度分层）；limitup 在温度 25-40 层内 n=3214 分层重算，1 板×late n=690/43.9%/-0.39%、1 板×首封≤9:31 n=609/38.8%/-0.51%，且自证『层一变符号就变』（冰点层该格 +0.66）。logic 在本档票级 n=3＜5、按规则不参与环境加权</span>
+<span class="tds">口径违规：今日温度 28.9 与冰点 16.6 已换层，跨层引用旧格无效——logic 的正桶只作方向参考，不作选票依据</span>
+</div>
+</div>
+<h3 class="sub">趋同盲区（五路都在同一侧的四件事）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">B-01</span>
+<span class="tnm">明日买的正是「今日的赢家票」，无人量化开盘溢价</span>
+<span class="tjd tj-main">最可能错的方向</span>
+<span class="tct">今日 71 只票当日执 1 已达 +9.39%（94.4% 为正），而 603533/603337 正是这批新票；其明日开盘溢价大概率已部分体现，五路对『+1.69% 类』与『+9.39% 类』都只定性提及，无一路折成明日期望的下修系数</span>
+<span class="tds">证伪方式：若明日两腿执 1 的均值仍≥+3%，说明溢价未被吃掉、本盲区不成立；若显著低于同池均值，则此后须引入「当日执 1＞+8% 的批次，次日期望先打 5 折」</span>
+</div>
+<div class="trow">
+<span class="tr1">B-02</span>
+<span class="tnm">三季报披露高峰的盘前地雷</span>
+<span class="tjd tj-main">闸门防不住低开型利空</span>
+<span class="tct">10/28~10/31 是披露密集期，68 只披露日不可排除、财报披露日历未接入；四路把明日 gap 分布当纯情绪变量，而 gap&gt;+5% 弃买只管高开、不管盘前利空低开</span>
+<span class="tds">追 MA-20261028-05③（logic 出披露日命中表）；任一本周荐票因公告 gap&lt;-5% ⇒ 该维升级为硬闸门</span>
+</div>
+<div class="trow">
+<span class="tr1">B-03</span>
+<span class="tnm">跨路重复计权 / 单线集中，无去重层</span>
+<span class="tjd tj-main">最接近实操翻车的结构性缺口</span>
+<span class="tct">603337 与 000678 同属机器人线，若 theme 与 limitup 同时执行，机器人线合计会到 2.0%，正撞 theme 自定的单线上限；600078 同时被四路覆盖（auction 荐/lhb 观察/limitup Top5 非荐/theme 化工线）。五路各算各的仓位，全部文件里没有去重层</span>
+<span class="tds">本席以 R1＋R2 手工补位（机器人线今日只留 603337 一腿、600078 直接归零）；引擎是否去重仍不可知</span>
+</div>
+<div class="trow">
+<span class="tr1">B-04</span>
+<span class="tnm">封单的真伪无人能验</span>
+<span class="tjd tj-main">因子稳健性上界缺失</span>
+<span class="tct">竞价快照与盘中 tick 全缺，封板总额 45.62 亿里有多少是对倒/撬板留痕无人能排除；五路都在用封单率做因子（今日三腿里有两条直接依赖它），但无一路给出该因子在「对倒污染」下的稳健性上界</span>
+<span class="tds">回填窗口①②：开盘验证维/日内温度曲线/日内轮动图谱/竞价撤单差分 四项 unavailable，封单类判断只有收盘单时点证据</span>
+</div>
+</div>
+<h3 class="sub">回填窗口 · 今日哪些数拿不到（缺源一律标 —，不用收盘数据反推）</h3>
+<div class="tbl">
+<div class="trow">
+<span class="tr1">开盘验证维</span>
+<span class="tnm">unavailable</span>
+<span class="tjd tj-main">缺开盘后 5 分钟内同码≥2 tick</span>
+<span class="tct">今日无法区分「开盘承接」与「尾盘偷袭」；竞价额、竞价换手、末段位移全部记为 —</span>
+<span class="tds">回填窗口标注①</span>
+</div>
+<div class="trow">
+<span class="tr1">日内温度曲线</span>
+<span class="tnm">unavailable</span>
+<span class="tjd tj-main">缺≥2 个盘中时点</span>
+<span class="tct">温度只有收盘单点 28.9；无法判断升温发生在早盘还是尾盘，也无法给「首封≥13:00 占 25.4%」配一条时间轴</span>
+<span class="tds">回填窗口标注②</span>
+</div>
+<div class="trow">
+<span class="tr1">日内轮动图谱</span>
+<span class="tnm">unavailable</span>
+<span class="tjd tj-main">缺≥2 时点或≥2 已归位题材</span>
+<span class="tct">「线内高低切」与「线间扩散」只能按收盘存量区分，无法验证资金下午是否二次调仓</span>
+<span class="tds">回填窗口标注②</span>
+</div>
+<div class="trow">
+<span class="tr1">竞价撤单差分</span>
+<span class="tnm">unavailable（快照存档无 20261028.csv.gz）</span>
+<span class="tjd tj-main">缺同一代码 9:20 前后两时点轨迹</span>
+<span class="tct">本日唯一竞价面替代是 20261028_盘后补_开盘结构.csv（5507 条，meta 标『今开＝9:25 成交价，A 档』），只含今开/高开幅度 → 全部竞价额类结论今日记 —</span>
+<span class="tds">回填窗口标注①；auction 因此不给任何个股竞价分位，本席亦不据此定仓</span>
+</div>
+<div class="trow">
+<span class="tr1">风险日历 / 质量库</span>
+<span class="tnm">status=pass 但缺三维；质量库今日已重算</span>
+<span class="tjd tj-main">「0 命中 ≠ 无风险」</span>
+<span class="tct">风险日历仅覆盖限售解禁/分红/股东减持/高管减持四维，未接入财报披露日历/股东大会/业绩预告；603303 得邦照明事件缺公告日、只能标『踩窗·日期缺』</span>
+<span class="tds">回填窗口标注⑥；替代源＝_龙虎榜质量库今日重算值（54 交易日/可用 2436）</span>
+</div>
+</div>
+<p><b>双向可证伪（不许只能对不能错）</b>：①若明日炸板率≥0.45 或回封率&lt;40%，则「今日是承接崩塌型脉冲修复」成立、C 档防守维持；若炸板率≤0.35 且涨停≥80，则今日定性偏保守、环境档上调中性；②若 603533＋603337 两腿合计执 1&lt;-3.00%，则 1.0% 上限仍偏高，此后冷档一律以 0.5% 为上限；若合计≥+5.00% 而全场涨停执 1&lt;+1.00%，则上限可放宽至 1.5%；③若 000678 明日执 1≥+5.00% 且收盘涨停，本次驳回记负样本；④若 600078 执 1≥+3.00%（gap&lt;5%），则 lhb 质量门排序被证伪；⑤若明日机器人线宽度≥20 且二板≥4 且封单率中位≥1.0%，则「量升质降」需降级为单日错位、线级上限可回 1.5%。没有 0 仓——1.0% 不是杠杆式看多，是「两条 n≥100 且执 1 为正的最小可执行腿」；同时买不到就是 0 仓，这一条今日有效、明日同样有效。</p>
+</section>

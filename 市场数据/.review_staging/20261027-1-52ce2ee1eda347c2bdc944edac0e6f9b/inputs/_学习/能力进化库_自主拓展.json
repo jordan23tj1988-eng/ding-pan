@@ -1,0 +1,4089 @@
+{
+  "version": 2,
+  "as_of": "20261027",
+  "updated": "20261027",
+  "source": "既有孵化区 + 能力账本历史；缺证据不推断；验证/能力化字段原样承接",
+  "records": [
+    {
+      "id": "extension:auction-秒板失效复盘",
+      "kind": "自主拓展",
+      "route": "auction",
+      "title": "秒板信号连续5期全负,失效还是环境?",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "立项;近5期读数-2.38/-4.14/-1.28/-8.90/-7.47"
+        },
+        {
+          "d": "20260713",
+          "进展": "判据首步完成:分桶库信号x温度拆档(零新脚本,库现成交叉表)——秒板|冷<40 +0.07%/胜率44.5%(n=263)唯一非负档;秒板|中40~65 -0.56%(n=639)≈池整体-0.62,未达判据'中性档显著为负'失效线;秒板|热≥65 -1.03%(n=385)最差。近5期负读数温度定位:4期中温(0701温59.6/0702温47.3/0703温44.1/0709温55.7)/1期冷(0706温25.8)。旁证:0710池(温37.7冷)秒板执1今日结算+0.86%破连转正。初判=环境项(中高温衰竭段拖累)非信号失效;下一步:明晚用0713冰点池(温8.7,池内秒板3只)结算作末次验证,07-15出结论并提请拍板'信号x温度'交叉是否入评分维度"
+        },
+        {
+          "d": "20260714",
+          "进展": "末次小样本对账:0713冰点池秒板3只今日结算执1均-3.02,表面打脸'冷档秒板唯一非负';复核0714滚动分桶库(n=2905,更新18:51):秒板|冷<40仍+0.07%/44.5%(n=263)为六个信号×温度交叉桶中唯一非负,秒板|中40~65 -0.56(n=639)/秒板|热≥65 -1.03(n=385)结构未变→按判据'中性档仍显著为负则信号失效'不成立,维持环境项初判(秒板没坏,是中温衰竭段拖累)。新增修正:0713温度8.7为冷档内部极值日,单日n=3打脸提示'冷档豁免'需收窄为'冷档且非冰点极值日'。旁证:低开≤0档连3日负(-4.7/-1.4/-1.0)同发生在冰点→修复段,与秒板同构,已并入本专题(判据升级=竞价执行×温度条件化)。信号×温度极差1.10pp>信号维度0.17pp(6倍信息量)。明晚07-15出终稿并提请拍板'信号×温度'是否入评分维度。"
+        },
+        {
+          "d": "20260716",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        },
+        {
+          "d": "20260716",
+          "进展": "复活并升级为'竞价执行×温度条件化':冰点日(11.4)昨池14只按高开档=中档+2.53%/低开+0.75%/高开≥5+0.96%——中档正、低开失效,叠加连3日序列(中档+1.5/+2.0/+1.7,低开-1.4/-1.0/-5.5)=温度依赖假设两侧样本齐;下一步按温度三档(<25/25-45/≥45)拆一年分桶库。"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪",
+      "due": "20260724",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "温度分档后低开档在冰点/退潮段执1均收显著<常规段(差≥1pp,n≥30)则固化'温度闸门';不显著则证伪"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:lhb-新面孔扫描降噪",
+      "kind": "自主拓展",
+      "route": "lhb",
+      "title": "新面孔扫描降噪版",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "naive版证伪(拉萨系/总部噪声);引擎版替代,转验收"
+        },
+        {
+          "d": "20260713",
+          "进展": "验收第1/3晚:引擎清单lhb域4项全为真席位共现,无散户通道/汇总行噪声;独立复核近5日净买≥1000万上榜≥3日且历史n<10的新面孔=0,无漏报"
+        },
+        {
+          "d": "20260714",
+          "进展": "验收第2/3晚通过:今晚引擎新面孔输出=中泰证券济宁吴泰闸路(真营业部,非散户通道/汇总行/区间榜噪声);应答判定该席位本身'不深挖'(单票688146接飞刀画像)但不影响降噪验收——扫描输出的是需要判断的真名字而非垃圾。明晚(0715)第3晚通过即毕业固化"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业",
+      "due": "20260716",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "自主拓展扫描lhb域已实现(真席位≥5000万剔通道/汇总/区间榜);验收=明晚起连续3晚输出无散户通道噪声即毕业"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:lhb-东吴扬富路立档",
+      "kind": "自主拓展",
+      "route": "lhb",
+      "title": "新活跃席位东吴苏州扬富路立档",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "立项(净买≥5000万,分档库无档案)"
+        },
+        {
+          "d": "20260713",
+          "进展": "统一清洗口径下合格笔仅n=4(0521威龙+0.0/0708浪潮信息2.9亿+3.6/0710航天发展-9.07/0710海兰信-8.43),执1均-3.48%胜1/4;风格初判=大额追打主流题材高位股(AI算力/商业航天),0710两笔冰点前夜齐大面;n<5不入分档库,今日未出手;截止顺延至凑满n≥5"
+        },
+        {
+          "d": "20260714",
+          "进展": "今日20260714 lhb全表核查:东吴系上榜仅苏州狮山路(苏州固锝)/上海西藏南路(科莱瑞迪/云创退)/苏州西北街(则成电子),扬富路未上榜,合格笔仍n=4无新证据;维持初判'大额追打主流题材高位股',截止0721,凑满n≥5即出档"
+        },
+        {
+          "d": "20260716",
+          "进展": "今日未现身(102条榜单无该席位),档案维持,无新样本。"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案",
+      "due": "20260721",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "拉近10日上榜明细:风格/常打题材/联手对象/执1胜率(n≥5),完成即入分档库档案"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:lhb-外资共现网络",
+      "kind": "自主拓展",
+      "route": "lhb",
+      "title": "高盛×瑞银×国泰总部共现组合",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260714",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "立项(3组两两共现≥2次)"
+        },
+        {
+          "d": "20260713",
+          "进展": "判据一次性走完(样本远超10,窗口0401~0710):中信上海×高盛共现≥3000万 n=119执1 59.7%/+1.41%(vs基准47.6%,+12.1pp)✓因子候选;国泰总部×高盛 n=184 51.1%(+3.5pp)边缘续观察;瑞银×高盛 n=96 49.0%(+1.4pp)✗证伪;国泰总部×瑞银 n=110 44.5%(-3.1pp)✗反向拥挤警示(0710共现688328次日-13.55%)。结论:共现≠普适edge,仅中信上海×高盛有肉;提请拍板列资金结构第11因子(先试算不改当日排序)。今日网络仍活跃:华微电子四通道同票(高盛2.29亿+国泰总部1.09亿+摩根0.92亿+瑞银0.72亿)"
+        },
+        {
+          "d": "20260713",
+          "进展": "★用户拍板(同意):①中信上海×高盛共现≥3000万(n=119,+12.1pp)固化为席位路因子候选——以【加分项试运行】方式进席位荐票/资金结构评分,禁当独立荐票源;可按毕业通道转lhb模拟盘账试验。②瑞银×高盛证伪归档。③国泰总部×瑞银(-3.1pp反向拥挤)不入评分,另立观察专题攒一个月稳定性。★毕业;实施承诺=明晚(07-14)lhb路agent把'中信上海×高盛共现≥3000万'落地为席位荐票加分项(试运行,非独立荐票源),校准环节核对此承诺"
+        },
+        {
+          "d": "20260714",
+          "进展": "已固化,维持毕业结论;中信上海×高盛≥3000万加分项试运行台账+2笔(宿迁联盛6632万×1.08亿/红板科技4305万×6400万),明晚看其T+1执行结果滚动验证"
+        }
+      ],
+      "falsifiable_rule": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪",
+      "due": "20260717",
+      "state": "capability",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "共现票样本≥10后测次日执行收益区分度(vs全场上榜基线);≥3pp成因子候选,<3pp证伪"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:lhb-国泰瑞银反向拥挤",
+      "kind": "自主拓展",
+      "route": "lhb",
+      "title": "国泰总部×瑞银共现=反向拥挤警示的稳定性",
+      "discovered_at": "20260713",
+      "last_tracked_at": "20260818",
+      "tracking_log": [
+        {
+          "d": "20260713",
+          "进展": "用户拍板立项:证伪归档之余反向价值单独验证,先只留档不入评分"
+        },
+        {
+          "d": "20260714",
+          "进展": "滚动记录:今日该组合双方≥3000万合格共现2笔=华微电子(国泰总部2.24亿×瑞银5536万)/宿迁联盛(5907万×6819万),小额同票另有ST标准/水发燃气/红板科技/灵康药业/ST南新;★昨日共现票华微电子今日-6.6%(17.02→15.90),与0710案例688328次日-13.55%构成连续第二例次日大跌实证,反向方向增信;另记首例信号对冲:宿迁联盛同日同时命中正向对(中信上海×高盛)与本反向对,留档观察谁赢"
+        },
+        {
+          "d": "20260716",
+          "进展": "新样本:国泰总部×高盛共现4次(中国卫星等高位票,卫星今日-6.44%)=上海系×外资拥挤度上行且兑现特征持续;反向警示假设方向暂获支持,继续攒样本至0817。"
+        },
+        {
+          "d": "20260818",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪",
+      "due": "20260817",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "滚动窗口再攒至20260817:该组合共现日票次日执1仍落后基准≥3pp(当前-3.1pp,n=110)→录为席位评分减分警示;落后<1.5pp或翻正→证伪"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:theme-医药形跟踪",
+      "kind": "自主拓展",
+      "route": "theme",
+      "title": "医药/创新药新线形跟踪",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260714",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "四维放宽2→11立项;6有初判未过线(高度✗)"
+        },
+        {
+          "d": "20260713",
+          "进展": "判据达标:承接8只≥8✓+立方3板/哈药联环2板✓(晋级率0.2=全场1进2率7.6%的2.6倍)→升格三级判定表=大分支(修正,6有脚本3/6为下界);全场腰斩日抗缩-27%;主流化再判条件=宽度≥15或容量≥200亿;状态探索→小样本验证,荐票三票全押本线做结算验证"
+        },
+        {
+          "d": "20260714",
+          "进展": "判据触发=断承接:今日宽度5<8(11→8→5缩圈-55%)+晋级率0(二连板0,哈药3板为存量沿板非新晋级)→升格打脸,按判据回落;三级判定改记'大分支(6有4/6下界)·衰竭段',主流化路径关闭。矛盾信号如实记:哈药3板=全场唯一最高板+迪哲BD出海A档实锤(阿斯利康首付6亿美元)——'神'(产业逻辑)未断但'形'(承接梯队)已断,形跟踪只管形,按判据结案,迪哲个股逻辑移交11号产逻。验证段荐票结算收官:0713三票全押本线2/3胜+2.04%(增益+0.23pp),身位归因业绩锚+7.37/补涨+4.64/人气龙-5.88——线走衰时身位差异(13pp)远大于线选择差异,此结论移交高低切接棒库与提炼场"
+        }
+      ],
+      "falsifiable_rule": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支",
+      "due": "20260715",
+      "state": "refuted",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "已达标升格;验证段:荐票(立方/哈药/联环)T+1结算身位有肉+明日承接≥8只维持→提请拍板固化;断承接(宽度<8)→升格打脸回落分支"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:theme-高低切接棒库",
+      "kind": "自主拓展",
+      "route": "theme",
+      "title": "题材轮动关系库:主流衰竭→谁接棒对照序列",
+      "discovered_at": "20260713",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260713",
+          "进展": "立项;首两条样本:①0710 AI算力急缩→切商业航天(高切高)仅一日寿命即崩;②0713 商业航天急缩-86%→预判医药接棒(当日8只顶宽,防御型低切),明晚结算。初步形态:退潮期高切高短命、低切防御存活"
+        },
+        {
+          "d": "20260714",
+          "进展": "样本②结算(0713商业航天急缩→预判医药接棒·低切防御):形判据未命中(医药宽度5<8,-38%续缩),收益维度荐票执1+2.04%微胜基准+0.23pp=钱没亏——记'半命中:退潮期低切防御不亏钱,但没接住棒(冰点次日修复被首板普涨分流)'。样本③新增(今日缩圈日强制记录):0714医药缩圈-55%→预判资源防御新线接棒(油气/煤炭9+有色/电解铝6,同'业绩+防御+低位'属性,今日两线同启=切换已在发生);T+1结算判据:两线合计宽度≥10且出新高度(电解铝3板或油气2板)=命中,合计<6=证伪,医药宽度回≥8=预判作废。库内形态更新:样本3条,退潮期接棒方向连续两次指向防御/业绩系,高切高0/1命中、低切防御0.5/1(半)——继续攒样本至≥5再谈固化"
+        },
+        {
+          "d": "20260716",
+          "进展": "入库第3例:医药【急缩】-57%当日,接棒者=AI硬件/消费电子8只全首板(低位新线,链条位置全链洼地-37~-48%)+医药线内部高切低(GLP-1/CRO清零→AI医疗3只+中药2只低位补位)——接棒模式再次='低位新线+线内低切',与0714有色例同构;判据推进:3例同构,还差高度验证(接棒线能否出2板)。"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪",
+      "due": "20260724",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "每次急缩/衰竭日记录高低切预判并T+1结算;样本≥5后命中率≥60%固化为规则,<40%证伪"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:limitup-线名归一表",
+      "kind": "自主拓展",
+      "route": "limitup",
+      "title": "题材线名归一表(防改名断裂)",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260716",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "立项(四维序列依赖线名一致,存改名断裂风险)"
+        },
+        {
+          "d": "20260713",
+          "进展": "实质进展:_学习/线名归一表.json建成(23条旧名映射+13标准名+新线登记'信创/自主可控');今晚题材归位已查表生效;明晚验收自动比对无断裂即毕业"
+        },
+        {
+          "d": "20260714",
+          "进展": "验收通过,毕业:①归一表扩至28条旧名映射+15标准名(新线油气/煤炭、有色/电解铝登记,新增旧名映射5条:油气/煤炭/石油→油气/煤炭,有色/电解铝→有色/电解铝);②今晚题材归位全量查表生效(宏桥控股由0713'中报预增(业绩)'随电解铝集群整体迁入并留案);③0714四维序列比对无断裂:医药/创新药 11→8→5、AI算力/半导体 42→15→3→26 宽度环比连续,新线无环比(null起点)属正常。判据三项全达,固化=查表动作进每晚归位流程(写线名前必查),归一表为持久库只加不删,改标准名须用户拍板留双向映射"
+        },
+        {
+          "d": "20260716",
+          "进展": "固化成果首次实战:AI硬件/消费电子开新线走完守卫流程(查表无义近旧名→登记标准名+旧名映射'消费电子/AI手机'→产业链模板同步建档6环节),四维序列从Day1起干净。"
+        }
+      ],
+      "falsifiable_rule": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业",
+      "due": "20260714",
+      "state": "capability",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "归一表建成且当晚归位查表生效;明晚(0714)自动比对四维序列无断裂即毕业"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:limitup-弱票池荐票门槛",
+      "kind": "自主拓展",
+      "route": "limitup",
+      "title": "弱票池日Top5该不该发满5只?",
+      "discovered_at": "20260714",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260714",
+          "进展": "立项。动机:首两个弱票池样本增益方向相反(0710 +1.24pp / 0713 -2.24pp),且0713套票两只均为商业航天急缩线残余=题材身位是9活跃因子外盲区;今日0714又是弱票池日(80票仅东山精密命中1规则,Top1抓龙率13.7%),样本自动累积第3个,明晚结算入账"
+        },
+        {
+          "d": "20260716",
+          "进展": "新样本:今日Top5含3只'命中0规'弱票(香江/沃顿/恒为,抓龙率16.2-16.5%)——冰点日环境规则全场加分但规则榜命中稀薄;继续攒'命中0规票 vs 命中≥1规票'执2分层样本(判据:分层差≥3pp则设榜内门槛),今晚起在反思jsonl标记。"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档",
+      "due": "20260731",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "弱票池日定义=当日Top5命中规则合计≤1条且Top1抓龙率<20%。攒样本≥8个弱票池日,统计其Top5执行均收-当日全场涨停执行均收(选股增益):增益中位<0(荐了不如闭眼买)→提请拍板改'发0-3只+防守标注'并试'急缩线身位减分';增益中位≥0→维持发满5只,证伪归档"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:cycle-量能台阶口径漂移监测",
+      "kind": "自主拓展",
+      "route": "cycle",
+      "title": "量能台阶口径漂移监测(例行年检)",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "立项;07-10落3.3-3.5强修档,无漂移"
+        },
+        {
+          "d": "20260713",
+          "进展": "0713量能2.82万亿→日签落'<3.0弱修'档(0710为3.39强修档),极端档连续计数=1/10,无漂移信号;另记:牛市主升口径A档表遇2.8万亿级缩量日,若连续多日需提前评估口径换代"
+        },
+        {
+          "d": "20260714",
+          "进展": "例行盘点:近10日档序=突破/强修/过渡×2/弱修×3/强修/弱修×2,当前同档(弱修<3.0万亿)连2日,距漂移信号(连10日)远;无漂移,继续例行。A档"
+        },
+        {
+          "d": "20260716",
+          "进展": "例行读数:两市24036亿(腾讯替代源),较昨25712亿缩6.5%,未连续落极端档,无漂移迹象。"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板",
+      "due": "20260731",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "连续10日量能日签落同一极端档=漂移信号→重标定提请拍板"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:cycle-温度分量钝化体检",
+      "kind": "自主拓展",
+      "route": "cycle",
+      "title": "温度7分量钝化体检",
+      "discovered_at": "20260710",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260710",
+          "进展": "立项;7分量等权是分位法软肋,温度=16因子第一权重+三窗底座"
+        },
+        {
+          "d": "20260713",
+          "进展": "体检数据点+1:跌停分量今日被172只打至窗口极值、温度单日37.7→8.7=分量方差活跃证据,当前无250日方差分位<10%钝化候选;下一步07-19前跑一次7分量方差分位表"
+        },
+        {
+          "d": "20260714",
+          "进展": "代理抽检(温度表可得列60日滚动方差分位,n=192):炸板率100%分位(极活跃,与0710炸板91/0713跌停172事件一致)、封板总额57%、最高板27%——无一<10%,今晚无钝化候选;下一步:取7分量原始序列做正检(数据源=市场温度.py内部,或申请落盘分量序列),截止0719前完成。A档"
+        },
+        {
+          "d": "20260716",
+          "进展": "截止前推进:今日温度11.4由7分量普跌驱动(涨停41/封板总额34.1亿/炸板率37.9%全部走弱),各分量随市场大幅变动=方差健康无钝化;结论预备:本期体检通过,0719给终判。"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)",
+      "due": "20260719",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "某分量250日方差分位<10%=钝化候选→提请重构(改前必跑冰点触发器回测.py复验三窗)"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:master-裁决对照账",
+      "kind": "自主拓展",
+      "route": "master",
+      "title": "总账裁决alpha复盘:该信哪路随周期档切换",
+      "discovered_at": "20260713",
+      "last_tracked_at": "20260812",
+      "tracking_log": [
+        {
+          "d": "20260713",
+          "进展": "立项(清单master_20260713_8触发);首条对照:0710信共振(卫星/航锦)弃资金面(华微+3.5)弃空仓纪律→当日六账master倒数第二;今晚裁决实验A/B:master只上医药多路共荐线,拒商业航天残余(竞价评分Top晋亿/中信重工 vs theme线级否决)——明晚结算谁对"
+        },
+        {
+          "d": "20260714",
+          "进展": "Day2记账:master nav1.0016 vs 最佳子路lhb1.0131(差1.15pp)。归因:0713夜master押哈药(题材/质量口径)+景兴纸业,未跟lhb路星子(其冰点机构捡筹信号今日兑现+5.82%五路最佳)——差距全部来自\"未跟席位信号\",非选股内错;记入对照账,权重演进交周考核(判据0727)。A档"
+        },
+        {
+          "d": "20260716",
+          "进展": "本期读数:总账+1.91% vs 最佳子路theme+2.10%,落后0.19pp<1pp未触发裁决alpha复盘;master两票(宏桥/迪哲)均为跨路共振票,共振裁决暂优于单路;继续记账。"
+        },
+        {
+          "d": "20260812",
+          "进展": "★超截止无推进,自动搁置(脚本)"
+        }
+      ],
+      "falsifiable_rule": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决",
+      "due": "20260727",
+      "state": "shelved",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "逐日记录master picks来源路vs五路当日计划;10个交易日后若master nav仍落后最佳子路≥1pp→'周期档×路权重表'裁决规则提请拍板;若追平/反超→维持自由裁决"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:logic-中报预增(业绩)",
+      "kind": "自主拓展",
+      "route": "logic",
+      "title": "中报预增(业绩)",
+      "discovered_at": "2026-07-12",
+      "last_tracked_at": "20260714",
+      "tracking_log": [
+        {
+          "d": "20260713",
+          "进展": "已毕业机制承接:雷达今日跑通(预告池252→未发酵150→叠加74→A共振21,agent复核后16),今日3只预增涨停(思维列控/宏创控股/丰林集团类)均在雷达口径内"
+        },
+        {
+          "d": "20260714",
+          "进展": "毕业机制承接:7-15预告截止前夜供给放大——池252→423,A共振37(复核后35:降B4/降C1/升A3);今日12只中报预增涨停在雷达口径内;明晚起雷达重心从'新增预告'转'正式中报兑现跟踪'(买预期卖事实时钟启动)"
+        }
+      ],
+      "falsifiable_rule": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)",
+      "due": null,
+      "state": "experience",
+      "source": "_学习/深挖专题台账.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "固化为logic页第五段中报预增雷达+成色自动审核(用户追问触发,本台账的起源case)"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:logic-医药/创新药",
+      "kind": "自主拓展",
+      "route": "logic",
+      "title": "医药/创新药",
+      "discovered_at": "2026-07-12",
+      "last_tracked_at": "20260714",
+      "tracking_log": [
+        {
+          "d": "20260713",
+          "进展": "立项深挖→毕业:建链+位置地图当晚完成(答神:医药8只顶宽的产业逻辑=BD出海主轴,但今日涨停结构=洼地环节催化(基药/精麻)+中药避险,两种资金异源——线的持续性看BD/Biotech是否接力,只有中药续板则是纯防御非产业行情)"
+        },
+        {
+          "d": "20260714",
+          "进展": "★建模方向调整:医药今日【缩圈】-55%(8→5),昨日'放宽'被证伪为冰点避险聚集(防御性放宽≠进攻性放宽,市场一修复资金即散)——0713的异源判断兑现。调整:①线级埋伏暂停(缩圈线不埋伏铁律),昨日3只医药荐票结算2/3+0.7%但不续荐;②链条用法转'BD事件个股化'跟踪:今日迪哲医药×阿斯利康(首付6亿美元+里程碑9亿+双位数分成,公告A档)=BD环节标杆案例,建模重心改为沉淀'BD案例库(首付款规模×环节位置×次日承接)'——迪哲r20+48.5%事件前已抢跑,科伦/药明贴前高,BD环节均60日仅+5.4%中低位=事件驱动个股化而非线行情;③润都类原料药环节埋伏逻辑降级为模拟盘持仓风控问题"
+        }
+      ],
+      "falsifiable_rule": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描",
+      "due": null,
+      "state": "experience",
+      "source": "_学习/深挖专题台账.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "20260713毕业:创新药链建模完成入产业链模板(8环节22股:BD龙头/Biotech/CXO/上游纯化/原料药/多肽/精麻/中药)+链条位置地图已出——焦点=今日8只顶宽的涨停出自精麻/缓控释洼地环节(立方3板,均60日-10%/距高-34%)与中药防御;Biotech中位(泽璟贴前高)/多肽洼地;后续=纵深库每日保鲜+环节内滞涨扫描"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:logic-存储/半导体",
+      "kind": "自主拓展",
+      "route": "logic",
+      "title": "存储/半导体",
+      "discovered_at": "2026-07-12",
+      "last_tracked_at": "20260714",
+      "tracking_log": [
+        {
+          "d": "20260713",
+          "进展": "并入已有链:AI算力链HBM/存储环节覆盖(江波龙/德明利/兆易创新,均60日+59高位分化);宽度7→3→1回落,今日仅恒尚节能1只且为跨界收购重组票(题材≠产业)——不独立建链,维持观察;再立项触发=存储环节涨停≥6只/日"
+        },
+        {
+          "d": "20260714",
+          "进展": "不扩链:今日存储仍仅恒尚节能1只——10板=幕墙跨界收购存储的空间情绪龙(题材≠产业,C类跨界投机票不入模板铁律),其高度是情绪现象,不改产业判断;HBM/存储环节保鲜(均60日+68.3%高位分化,江波龙r20+1.8滞涨);A池诚邦/大为=业绩真但线退潮等线;触发条件不变(环节涨停≥6只/日)"
+        }
+      ],
+      "falsifiable_rule": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链",
+      "due": null,
+      "state": "experience",
+      "source": "_学习/深挖专题台账.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "两日10只;存储涨价周期逻辑独立于AI算力需求逻辑,但个股与AI算力链存储环节重叠;应答=核实AI算力链存储环节覆盖度,环节内涨停股≥6只时独立建链"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:logic-电网/特高压",
+      "kind": "自主拓展",
+      "route": "logic",
+      "title": "电网/特高压",
+      "discovered_at": "2026-07-12",
+      "last_tracked_at": "20260714",
+      "tracking_log": [
+        {
+          "d": "20260714",
+          "进展": "观察第3日·不立项:按日3+1+2=6,未触发'连续2日≥5';A池内保变(交付主业干净)/风范(转让打折)/长高(公允价值打折)三只跟踪,无一进入荐票;迎峰度夏+特高压核准节奏是潜在催化,触发条件不变"
+        }
+      ],
+      "falsifiable_rule": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项",
+      "due": null,
+      "state": "experience",
+      "source": "_学习/深挖专题台账.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日6只且分散(3+0+3)未加速;个股层已有A池长高电气跟踪;宽度连续2日≥5再立项"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:logic-军工",
+      "kind": "自主拓展",
+      "route": "logic",
+      "title": "军工",
+      "discovered_at": "2026-07-12",
+      "last_tracked_at": "20260713",
+      "tracking_log": [
+        {
+          "d": "20260713",
+          "进展": "观察维持:今日0只,3日窗计数5→未触发;与商业航天链共用个股,商业航天急缩期不另立"
+        }
+      ],
+      "falsifiable_rule": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项",
+      "due": null,
+      "state": "experience",
+      "source": "_学习/深挖专题台账.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "3日5只,与商业航天链个股部分重叠(星网宇达类);看题材四维宽度趋势,放宽再立项"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:logic-油气/煤炭",
+      "kind": "自主拓展",
+      "route": "logic",
+      "title": "油气/煤炭",
+      "discovered_at": "2026-07-14",
+      "last_tracked_at": "2026-07-14",
+      "tracking_log": [
+        {
+          "d": "2026-07-14",
+          "进展": "立项深挖(横切面★新,单日9只):当晚建链入产业链模板(油气开采/油服/炼化油品/煤炭4环节9股:中曼石油/海南矿业/蓝焰控股/通源石油/恒逸石化/泰山石油/昊华能源/大有能源/创力集团)。首步结论(答神):三源催化=①煤价内外共振上行+需求超预期回暖=硬度①业绩已兑现(盘江扭亏+1327%/陕煤+50%公告A档实锤)②迎峰度夏旺季(硬度③,时效锚8月中)③霍尔木兹地缘(硬度③,时点不可控,THS归位口径)——煤炭腿硬于油气腿,埋伏优先级:低位业绩票(广汇r250-9.3/盘江r250-1.5)>地缘弹性票"
+        }
+      ],
+      "falsifiable_rule": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)",
+      "due": null,
+      "state": "experience",
+      "source": "_学习/深挖专题台账.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py出位置地图+环节内滞涨扫描;验证=新线Day2宽度是否≥5只(缩至≤2则降观察)"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:logic-有色/电解铝",
+      "kind": "自主拓展",
+      "route": "logic",
+      "title": "有色/电解铝",
+      "discovered_at": "2026-07-14",
+      "last_tracked_at": "2026-07-14",
+      "tracking_log": [
+        {
+          "d": "2026-07-14",
+          "进展": "立项深挖(横切面★新,单日6只):当晚建链入产业链模板(电解铝/绿电煤电铝一体化/铝加工线缆3环节5股:宏桥控股/中孚实业/天山铝业/电投能源/华通线缆)。首步结论(答神):铝价高位+氧化铝采购价下降=冶炼利润双击(焦作万方/云铝/中铝公告原文,硬度①A档)+电解铝4500万吨产能天花板=供给刚性长逻辑——本轮资源修复里逻辑最硬的一条;链内卡位=冶炼环节(利润弹性最大),纯冶炼(焦作万方)>一体化(中铝);A池复核升A两只(云铝/中国铝业)"
+        }
+      ],
+      "falsifiable_rule": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节",
+      "due": null,
+      "state": "experience",
+      "source": "_学习/深挖专题台账.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "明晚跑链条位置.py;把A池冶炼票(焦作万方/云铝/中国铝业)补进模板电解铝环节(结构性卡位,12号建档口径);明泰铝业补铝加工环节"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:cap-limitup-turnover-valid",
+      "kind": "自主拓展",
+      "route": "limitup",
+      "title": "涨停质量库·换手率因子有效（选票保留换手率维度）",
+      "capability_rule": "质量分选票时保留换手率维度；该因子在质量库中状态=有效即可用",
+      "boundary": "窗口20250701~20260930，样本≥2000；因子状态被淘汰即失效",
+      "validation_spec": {
+        "evidence": [
+          {
+            "path": "_学习/_涨停质量库.json",
+            "target_d": "20260930",
+            "field": "因子.换手率.状态",
+            "op": "eq",
+            "value": "有效"
+          },
+          {
+            "path": "_学习/_涨停质量库.json",
+            "target_d": "20260930",
+            "field": "样本",
+            "op": "ge",
+            "value": 2000
+          }
+        ]
+      },
+      "falsifiable_rule": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效",
+      "state": "capability",
+      "validation": "validated",
+      "hit_count": 1,
+      "capitalized": true,
+      "reused_count": 11,
+      "discovered_at": "20261001",
+      "last_tracked_at": "20261001",
+      "tracking_log": [
+        {
+          "d": "20261001",
+          "进展": "由既有质量库机械证据立档（因子状态=有效+样本量达标），进入可复用能力池待每日消费"
+        }
+      ],
+      "source": "_学习/_涨停质量库.json",
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 18907,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 18969,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19027,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19029,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19091,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19126,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19163,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19209,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19218,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19258,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19309,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19404,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "因子.换手率.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_涨停质量库.json",
+              "target_d": "20260930",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 19418,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若质量库中 因子.换手率.状态 变为淘汰，则该能力立即失效"
+        }
+      ],
+      "review_status": "validated",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "validation_evidence": [
+        {
+          "path": "_学习/_涨停质量库.json",
+          "target_d": "20260930",
+          "field": "因子.换手率.状态",
+          "op": "eq",
+          "expected": "有效",
+          "actual": "有效",
+          "passed": true
+        },
+        {
+          "path": "_学习/_涨停质量库.json",
+          "target_d": "20260930",
+          "field": "样本",
+          "op": "ge",
+          "expected": 2000,
+          "actual": 19418,
+          "passed": true
+        }
+      ],
+      "validated_at": "20261027",
+      "last_validated_at": "20261027",
+      "validation_pass_count": 12,
+      "reuse_log": [
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "改变的具体判断字段=_学习/limitup判断_20261012.json#荐票.标的（观察名单成员与排序口径）。做法：用换手率因子替换「规则榜命中票」作为观察名单排序口径，成员由600825新华传媒（换手3.4%，落<3%桶，该桶 n=2321 执1胜率33.9%、执1均涨-0.91%，为四桶最差）更换为002264新华都（换手21.7%，落≥20%桶 n=1866 执1胜率45.1%、执1均涨+0.08%，为唯一执1均涨为正的桶）、600241时代万恒（换手32.0%，同≥20%桶）与603500祥和实业（换手13.0%，落10-20%桶 n=4153 执1胜率45.3%、执1均涨-0.15%）。量化影响：观察名单的执1均涨期望由<3%桶的-0.91%抬升至-0.15%~+0.08%区间（相对<3%桶改善+0.76pp~+0.99pp）；同时使600825虽命中9条规则、封单10.17亿仍被排除出观察位（其预测执1 36.1%/-0.60%为全池最差档），避免了本路上轮「规则榜命中=观察位」的默认口径。",
+          "source_locator": "_学习/_涨停质量库.json#因子.换手率（桶序 <3%/3-10%/10-20%/≥20%；桶<3% n=2321 执1胜率33.9% 执1均涨-0.91%；桶3-10% n=7620 43.0%/-0.39%；桶10-20% n=4153 45.3%/-0.15%；桶≥20% n=1866 45.1%/+0.08%；区分度11.4pp、单调rho=0.8、近窗rho=0.8、RankIC=0.0367、ICIR=0.21、t=3.59、原始权重10.26、权重0.1498、状态=有效）；应用落点=_学习/limitup判断_20261012.json#荐票.标的[0..2]；触发日数据=_学习/涨停质量荐票_20261012.json#明细（新华都换手21.7%、祥和实业13.0%、时代万恒32.0%、新华传媒3.4%）；能力记录=_学习/能力预加载_20261012.json#routes.limitup.records[0]（validation=validated、last_validated_at=20261009、boundary=窗口20250701~20260930样本≥2000，本日窗口已滚动至20250701~20261012、样本19027≥2000，边界仍满足）。",
+          "as_of": "20261012",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "采用『涨停质量库·换手率因子有效』能力，并落到具体字段：limitup判断_20261013.json#荐票.标的（观察名单成员与排序口径）。本日把质量观察位锚定在换手率正期望桶——600802福建水泥换手21.55%落≥20%桶（n=1871/执1胜率43.1%→本库口径+0.07%，库内唯一执1均涨为正的换手率桶）、605058澳弘电子12.95%与688655迅捷兴13.31%落10-20%桶（n=4168/45.4%/-0.14%）；同时把换手<3%桶（n=2327/33.9%/-0.91%，四桶最差）的一字扛出票排除出观察位（本日池内如603096新经典换手2.79%、002343慈文传媒3.37%落在最差桶，仅作结构读法不进观察名单）。即『荐票.标的』成员由规则榜命中票（本日全池0命中）改为高换手非一字票，期望从-0.91%抬升至-0.14%~+0.07%区间。仅改变观察名单成员与排序，不放行任何仓位（正式荐票仍0只），与C档空仓结论一致。",
+          "source_locator": "_学习/能力预加载_20261013.json#routes.limitup.records[0]（id=extension:cap-limitup-turnover-valid，validation=validated）；_学习/_涨停质量库.json#因子.换手率（状态=有效、区分度11.5pp、单调rho0.8、RankIC0.0363 t=3.55、权重0.1519）；应用落点=_学习/limitup判断_20261013.json#荐票.标的",
+          "as_of": "20261013",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "采用『涨停质量库·换手率因子有效』能力，落到具体字段=_学习/limitup判断_20261014.json#荐票.标的（观察名单成员与排序口径）。本日把质量观察位锚定在换手率非最差桶并叠加开板次数正期望桶：001216华瓷股份换手17.98%落10-20%桶（n=4187/执1胜率45.3%/执1均涨-0.15%）、300299富春股份27.05%落≥20%桶（n=1874/45.0%/+0.07%，库内唯一执1均涨为正的换手率桶）、601858中国科传4.56%落3-10%桶（n=7683/42.9%/-0.40%）——三只同时落『开板2次+』桶（n=5922/48.5%/+0.26%）；同时把<3%桶（n=2330/33.9%/-0.91%，四桶最差）的5只一字票（002696/605189/002860/000668/002552）一律排除出观察位（仅作结构读法）。引述数字按库现值修正：≥20%桶执1胜率＝45.0%（修正20261013回执误引的43.1%）；002343慈文传媒20261013换手3.37%落3-10%桶、非<3%桶，20261012回执对600825新华传媒『换手3.4%落<3%桶』为同型误标（实测3.38%→3-10%桶），两处已按库现值重标留档。仅改变观察名单成员与排序口径，不放行任何仓位（正式荐票仍0只），与C档防守结论一致。",
+          "source_locator": "_学习/能力预加载_20261014.json#routes.limitup.records[0]（id=extension:cap-limitup-turnover-valid、kind=自主拓展、validation=validated、last_validated_at=20261013）；_学习/_涨停质量库.json#因子.换手率（更新20261014、窗口20250701~20261014、样本19091；桶序<3%/3-10%/10-20%/≥20%；n=2330/7683/4187/1874；执1胜率33.9%/42.9%/45.3%/45.0%；执1均涨-0.91%/-0.40%/-0.15%/+0.07%；区分度11.4pp、单调rho0.8、近窗rho0.2、RankIC0.0364、ICIR0.209、t=3.57、权重0.1546、状态=有效）；应用落点=_学习/limitup判断_20261014.json#荐票.标的[0..2]；触发日数据=_学习/涨停质量荐票_20261014.json#明细（华瓷股份换手17.98%、富春股份27.05%、中国科传4.56%）；桶归属修正依据=_学习/_涨停质量库.json#因子.换手率#桶 + 20261012/zt_pool.csv（600825换手3.38%）+ 20261013/zt_pool.csv（002343换手3.37%）。",
+          "as_of": "20261014",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "该能力（『涨停质量库·换手率因子有效（换手率分桶单调）』）被本路逐条落进当日判断，实质改写三处结论：①把『换手率≥3%』设为冰点档观察位/荐票的硬必要条件并据此否决2只票——本日池 <3% 桶仅2只：002815崇达技术（换手1.78%，预测执1-0.61%）与605003众望布艺（2.37%，-0.27%），二者进观察位名单前即被剔除，其中002815为 logic 路当日正式荐票、构成本路与 logic 路的硬分歧样本；②该能力不再作『排序器』而只作『阈值器』——本路实测冰点子集内换手率分桶非单调（<3% n=145 执1胜率35.9%/均涨-1.42%；3-10% n=518 44.6%/-0.12%；10-20% n=315 42.9%/-0.55%；≥20% n=126 46.8%/+0.47%，均涨两端单调但中间10-20%桶劣于3-10%桶、胜率完全非单调；全库同桶 n=2335/7700/4197/1878 为 33.8%/-0.91%、42.9%/-0.40%、45.2%/-0.15%、44.9%/+0.07%），故不作单票排序依据；③它进入 MA-20261014-07 闸门的必要条件项：冰点档『开板≥2且换手≥3』子集 n=344 执1胜率48.8%/均涨+0.39%（对照冰点全档 n=1203 43.5%/-0.27%、非冰点同口径 n=4361 48.0%/+0.23%），今日池过闸14只、含非一字/秒板12只，闸门成为本日推荐口径与空仓判定（过闸票预测执1全为负、最优605058澳弘电子-0.08%）的直接依据；反例项同步留档：『换手<3%且开板≥2』n=10 20.0%/-3.83%（小样本），即换手≥3%不可被开板次数替代。",
+          "source_locator": "_学习/_ma07_limitup_20261015.json#A_冰点档分桶.换手桶{\"<3%\":{n:145,执1胜率:35.9,执1均涨:-1.42},\"3-10%\":{n:518,44.6,-0.12},\"10-20%\":{n:315,42.9,-0.55},\"≥20%\":{n:126,46.8,+0.47}} 与 #A_冰点档分桶.换手桶._全样本对照（n=2335/7700/4197/1878）；闸门量见 #A2b_冰点闸门候选.G4_开板≥2次&换手≥3%；反例见 #A2_冰点_换手x开板.\"<3%×开2次+\"（n=10,20.0,-3.83）；能力登记源=_学习/能力预加载_20261015.json#routes.limitup.eligible[0]（source=_学习/_涨停质量库.json#因子.换手率.桶，库更新日20261015、窗口20250701~20261015、样本19126＝本路回测样本数逐数一致）",
+          "as_of": "20261015",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "能力『涨停质量库·换手率因子有效（选票保留换手率维度）』本日被实质采用，并直接改写了候选集、荐票成员与权重，非形式化引用。①否决层（剔除）：按当日温度29.1所属25-40档的换手率分桶（<3% n=415 执1胜率34.5%/均涨-1.00%、3-10% n=1292 43.8%/-0.30%、10-20% n=693 48.1%/+0.27%、≥20% n=282 47.5%/+0.48%，rho=1.0 严格单调）对61只逐票落桶，剔除换手<3%的11只（600825新华传媒1.56%、000573粤宏远Ａ1.25%、000607华媒控股2.21%、603636南威软件1.90%、603197保隆科技1.76%、600418江淮汽车2.89%、002683广东宏大2.20%、002535林州重机2.42%、603955大千生态2.13%、603173福斯达1.87%、603013亚普股份1.42%）。其中600825最典型：它是全池唯一命中9条规则、封单9.08亿、封单比5.734%的11板一字，若只按『规则命中数＋封单额』排序必进荐票；换手1.56%落<3%否决桶（近30交易日子窗该桶更差：n=49 24.5%/-1.76%）⇒ 本路把它压为『不可执行观察』，不进档、不下单。②准入层（选中）：换手≥10%且落25-35档三元正格者3只——300045 13.66%(首板×开1次×10-20%格 n=67 61.2%/+1.75%)、301586 13.92%(同格)、000530 33.24%(换手≥20%×4板+×封单<2% n=48 50.0%/+0.78%)，构成当日全部3只荐票（61只→12只正格→3只荐票）。③权重层：换手越高、桶越强则权重越高（000530 33.24%→5%、300045 13.66%→4%、301586 13.92%→3%，差异主要由封单与首封时点承担）；反向地，换手10.06%但属跌停反包结构的002917只列观察（10.06%足够入格，风险来自库内无『反包』维度）。④边界与不采信区（随能力一并登记）：该因子仅在温度<65档单调（rho 冰点0.8/25-40 1.0/40-65 1.0/≥65 -0.2，n=577/1953/1097/498），过热档顶部反转（≥20%桶 38.0%/-0.85% 反成最差），故本日『换手越高越好』的用法绑定『温度<65』前置；冰点档<3%桶内61.9%（91/147）为一字+秒板不可成交结构、可成交子集n=56仍为-1.45%，故否决权不能当作『买不进』的替代表述。⑤已获第1个正样本：20261015被该能力否决的002815崇达技术（换手1.78%），20261016 执1 -8.25%（一字开盘+10.02% 追不进），同期对照桶『冰点3-10%』-0.22% ⇒ 否决增益8.03pp。⑥未采信部分：能力原文只要求『选票保留换手率维度』，本路把维度升级为『分档否决+分档准入+权重调节』三级用法，属超出原文的扩展使用，已在判断/认知迭代②登记可证伪（连续5日 10-20%桶执1均涨 < 3-10%桶 则退回阈值化）。",
+          "source_locator": "_学习/能力预加载_20261016.json#/routes/limitup（eligible_count=1、status=ready、id=extension:cap-limitup-turnover-valid、validation=validated、last_validated_at=20261015）；能力源数据：_学习/_涨停质量库.json#/因子/换手率（状态=有效、权重0.1514）；本路分桶实测：_学习/_limitup_MA01_20261016.json（温度子档×换手桶）、_学习/_limitup_桶_2535_20261016.json（连板×开板×换手三元格）；当日落桶明细：20261016/zt_pool.csv#换手率 与 _学习/涨停质量荐票_20261016.json#明细/换手",
+          "as_of": "20261016",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "质量路选票保留换手率维度：301591 肯特股份(首板 换手34.21%)与002889 东方嘉盛(3板 换手20.48%)被列为可跟踪观察，而换手过低的003029(4.11%)仅作情绪标尺不作执行标的；最终因全池执1胜率max 45.6%仍空仓。",
+          "source_locator": "_学习/limitup判断_20261019.json#判断.证据 + _学习/涨停质量荐票_20261019.json",
+          "as_of": "20261019",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "质量库选票保留换手率维度：今日54只打标中换手率桶进入主导/拖累因子（≥20%档+0.6、10-20%档+0.5、<3%档-0.6），机械否决高风险票的排序，不改变全池执1负期望符号（预测均涨-0.339%、胜率42.59%）",
+          "source_locator": "_学习/limitup判断_20261020.json#判断.证据 与 #深挖（cap-limitup-turnover-valid 出现2处）",
+          "as_of": "20261020",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "保留换手率维度用于选票，但按温度子档分向使用（本日 温度=31.0 属偏冷 25-45 档）。偏冷档实测（20261008~20261020，n=457，去日级均值超额/胜率/n）：<3% -1.498pp/28.9%/45、3-10% -0.019pp/42.0%/138、10-20% +0.877pp/41.2%/68、≥20% +0.550pp/31.6%/19 ⇒ 本日以 10-20% 加分、<3% 硬否决。落地结果：一字未开 5 只（603278 换手 1.64%、600293 0.26%、002724 0.82%、002313 1.78%、002347 2.53%）全部落 <3% 否决列；荐票 002242（18.86%）、观察 600202（14.69%）落 10-20% 加分列。非单调边界警报：同一 <3% 桶在冰点<25 档为 -0.083pp/胜率 50.0%/n=24（近中性，不构成否决），到偏冷档放大为 -1.498pp/28.9%/n=45，边际惩罚差 18 倍；≥20% 桶冰点 +0.621pp/12、偏冷 +0.550pp/19 皆正但样本薄，中性≥45 档 n=7 为 -5.749pp 不可用 ⇒ 本能力不得在无温度子档方向的裸条件下外推到冰点/中性档，也不得把 ≥20% 当稳定正桶。",
+          "source_locator": "_学习/能力预加载_20261021.json#routes.limitup.records[0] → 验证证据 _学习/_涨停质量库.json#因子.换手率.状态=有效、样本=19218；本日复核样本 _学习/涨停质量荐票_{20261008..20261020}.json#明细 与 _学习/_bars_cache/*.csv 逐票重算（n=457），及 _学习/_市场温度表.json#20261021.温度=31.0/温度档=偏冷",
+          "as_of": "20261021",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "换手率维度直接决定了三票的权重排序与一条否决：冰点下换手正向最优桶从偏冷档 ≥20%（+1.663pp）降至 3-10%（+0.442pp）→ 603370 换手 9.99% 落该桶、给 2.0%（名义最高权重）；601091 换手 48.25% 为全场最高＝极端分歧、且落冰点反向区，故压到最低 1.0%；003021 换手 3.62% 在带内、配合炸2次给 1.5%；『换手<3%』保留为跨环境负向否决（-0.775/-0.868/-0.763pp），今日 33 只中落该档的一律不进 buys。若不采用换手维度，三票权重将变成按封单比排序，而封单比已被 M-04 判冰点失效（强封≥4% 超额从 +1.644pp 降至 +0.098pp），排序会完全失真。",
+          "source_locator": "_学习/limitup判断_20261022.json#/判断/证据",
+          "as_of": "20261022",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "本次判断与荐票保留换手率作为一级过滤并量化生效：003021 换手12.57%、300561 换手19.55% 均落中性正段(换手10-20% n=336/胜率48.2%/超额+0.698pp)，两票均入 buys；同时按本周新增交互证据对『换手≥20%×首封≤10:00(-0.835pp/35.3%/n=34)』执行反向扣分，002724(换手28.10%×首封09:53)因此从荐票降为观察(权重0)；判别力兑现：中性环境换手分档单调 <3% -1.043pp/40.1%(n=227) → 3-10% -0.120pp/43.4%(n=792) → 10-20% +0.698pp/48.2% → ≥20% +0.999pp/51.5%(n=97)，首尾区分度 2.04pp；冰点窗口①格内换手分档亦单调(3-5% +0.386pp/33.3% → 5-7% +1.194pp/53.1% → 7-10% +1.449pp/55.6%)，故因子有效但需『分段+与首封/炸板交互』使用。",
+          "source_locator": "_学习/_涨停质量库.json#因子.换手率.状态(=有效) + _学习/_涨停质量库.json#基准(执1胜率43.0/执1均涨-0.33,n=19342) + 本人 _学习/limitup判断_20261023.json#深挖[0][1] 自算桶表",
+          "as_of": "20261023",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-limitup-turnover-valid",
+          "effect": "采用并作为选票维度：今日自算复核换手率因子在冰点层方向成立且区分度足够——冰点换手<3%：n=127／胜率35.4%／均收-1.274%／超额-0.730pp（最差单维）；3-5%：n=140／40.7%／-0.495%；5-10%：n=284／42.6%／-0.322%；10-20%：n=242／42.6%／-0.688%；≥20%：n=85／42.4%／+0.129%／超额+0.673pp。极差1.403pp（-1.274%→+0.129%），单调性除10-20%段（-0.688%）外成立。本条能力直接改写了今日两只荐票的权重：600785换手19.86%落10-20%段（该段在纯单维为负），但它与首封≥13:00交互后转为正（冰点×1板×late×换手10-20%：n=46／56.5%／+0.655%／超额+1.199pp），故保留1.12%；603037换手8.18%落5-10%段（-0.322%）且无交互正格托底，故权重压到0.96%；同时把落<3%的6只池内票（000058 0.76%、603565 1.49%、600828 1.57%、603813 1.89%、002011 2.60%、603758 2.95%）全部不进候选，其中000058是机器截面Top1（质量分2、抓龙率25.4%）——否决它的第一理由就是换手0.76%落最差单维桶。",
+          "source_locator": "_学习/涨停质量荐票_20261027.json#明细[].换手率（与 20261027/zt_pool.csv#换手率 逐票交叉核对一致）",
+          "as_of": "20261027",
+          "route": "limitup",
+          "ledger_kind": "自主拓展"
+        }
+      ],
+      "last_reused_at": "20261027"
+    },
+    {
+      "id": "extension:cap-lhb-netbuy-valid",
+      "kind": "自主拓展",
+      "route": "lhb",
+      "title": "龙虎榜质量库·净买占比因子有效（席位判读纳入净买占比）",
+      "capability_rule": "席位判读纳入净买占比维度；该因子在龙虎榜质量库中状态=有效即可用",
+      "boundary": "窗口20260401~20260708，样本≥2000；因子状态被淘汰即失效",
+      "validation_spec": {
+        "evidence": [
+          {
+            "path": "_学习/_龙虎榜质量库.json",
+            "target_d": "20260710",
+            "field": "因子.净买占比.状态",
+            "op": "eq",
+            "value": "有效"
+          },
+          {
+            "path": "_学习/_龙虎榜质量库.json",
+            "target_d": "20260710",
+            "field": "样本",
+            "op": "ge",
+            "value": 2000
+          }
+        ]
+      },
+      "falsifiable_rule": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效",
+      "state": "capability",
+      "validation": "validated",
+      "hit_count": 1,
+      "capitalized": true,
+      "reused_count": 13,
+      "discovered_at": "20261001",
+      "last_tracked_at": "20261001",
+      "tracking_log": [
+        {
+          "d": "20261001",
+          "进展": "由既有质量库机械证据立档（因子状态=有效+样本量达标），进入可复用能力池待每日消费"
+        }
+      ],
+      "source": "_学习/_龙虎榜质量库.json",
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-01T00:00:00+08:00",
+          "as_of": "20261001",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-09T00:00:00+08:00",
+          "as_of": "20261009",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-12T00:00:00+08:00",
+          "as_of": "20261012",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-13T00:00:00+08:00",
+          "as_of": "20261013",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-14T00:00:00+08:00",
+          "as_of": "20261014",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-15T00:00:00+08:00",
+          "as_of": "20261015",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-16T00:00:00+08:00",
+          "as_of": "20261016",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-19T00:00:00+08:00",
+          "as_of": "20261019",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "validated",
+          "reason": "所有绑定证据满足 validation_spec",
+          "evidence": [
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "因子.净买占比.状态",
+              "op": "eq",
+              "expected": "有效",
+              "actual": "有效",
+              "passed": true
+            },
+            {
+              "path": "_学习/_龙虎榜质量库.json",
+              "target_d": "20260710",
+              "field": "样本",
+              "op": "ge",
+              "expected": 2000,
+              "actual": 4607,
+              "passed": true
+            }
+          ],
+          "rule_snapshot": "若龙虎榜质量库中 因子.净买占比.状态 变为淘汰，则该能力立即失效"
+        }
+      ],
+      "review_status": "validated",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "validation_evidence": [
+        {
+          "path": "_学习/_龙虎榜质量库.json",
+          "target_d": "20260710",
+          "field": "因子.净买占比.状态",
+          "op": "eq",
+          "expected": "有效",
+          "actual": "有效",
+          "passed": true
+        },
+        {
+          "path": "_学习/_龙虎榜质量库.json",
+          "target_d": "20260710",
+          "field": "样本",
+          "op": "ge",
+          "expected": 2000,
+          "actual": 4607,
+          "passed": true
+        }
+      ],
+      "validated_at": "20261027",
+      "last_validated_at": "20261027",
+      "validation_pass_count": 12,
+      "reuse_log": [
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "仅把验证状态为有效的净买占比因子作为历史背景校准；未扩展原窗口/样本边界，未用它替代目标日席位动向、双源污染过滤、位置门禁或单票预测。因目标日双源与席位源缺失，荐票维持0只。",
+          "source_locator": "_学习/能力预加载_20261009.json#/routes/lhb/records/0; _学习/_龙虎榜质量库.json#/因子/净买占比",
+          "验证证据": {
+            "validation": "validated",
+            "capitalized": true,
+            "状态": "有效",
+            "边界": "窗口20260401~20260708，样本≥2000；因子状态被淘汰即失效",
+            "样本": 4607
+          },
+          "as_of": "20261009",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "本次判断实际采用了『席位判读纳入净买占比维度』，并以三处可量化方式改变了分层与选票：①排序修正——把源1当日榜净买额前三名的票按净买额占总成交比重新分桶后全部降级：300006莱美药业24.05%、002531天顺风能29.76%、600693东百集团28.74% 均落最差桶>20%(n=136、执1胜率36.0%、均涨-0.59%、score=0.0)，从『净买额榜首选』降为不入荐票；②准入加固——4只观察票按该桶定级：002264新华都10.539%与688004博汇科技13.133%落最优桶10-20%(n=454、执1胜率50.0%、均涨+0.26%)，300829金丹科技3.079%落0-5%桶(48.2%/+0.54%)，301052果麦文化5.136%落5-10%桶(46.0%/-0.00%)，三等分档写入荐票『历史对照』字段；③反向校验——该因子单调rho=-0.4(近窗-0.5)即『净买占比越高跟随越亏』，与本次『源1净买额最大的三只恰是最该回避的三只』相互印证，故在证据链中作为独立否决项使用，而非仅作背景引用。该因子的否决不越过源1净买门禁与冰点门禁：能力只降级、不放行，最终正式荐票仍为0只。",
+          "source_locator": "_学习/_龙虎榜质量库.json#/因子/净买占比(状态=有效、区分度14.0、单调rho=-0.4、权重0.1394、窗口20260401~20260708、样本4607、基准执1胜率48.0%/均涨+0.37%；桶10-20% n=454 50.0%/+0.26%、0-5% n=1300 48.2%/+0.54%、≤0净卖 n=1986 48.9%/+0.50%、5-10% n=731 46.0%/-0.00%、>20% n=136 36.0%/-0.59%)；取值来源 20261012/lhb.csv#/净买额占总成交比 与 _学习/_席位动向/20261012.csv#/净额,买入金额；校验时点 target_d=20261012；失效条件=该因子状态转为淘汰即撤销本回执",
+          "as_of": "20261012",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "已真正纳入本日席位判读并改变排序结果：源1当日榜净买额第1的301660粤芯半导体(净买占比5.35%)与第2的002242九阳股份(6.45%)均落「5-10%」无肉桶(n=731/执1胜率46.0%/均涨-0.00%)，被独立降级为观察/剔除；而净买额第3、第4的002639雪人集团(10.28%)与002640跨境通(12.40%)落最优桶「10-20%」(n=454/50.0%/+0.26%)，成为本日两只正式荐票。同日落最差桶「>20%」的603188亚邦股份(27.00%)、600847万里股份(37.44%)被剔除。即：该因子在本日把「净买额排序」与「净买占比桶排序」错位，并直接决定了荐票名单(否则按净买额会推荐301660/002242)。",
+          "source_locator": "_学习/_龙虎榜质量库.json#因子.净买占比.状态=有效 (另见 区分度14.0、单调rho=-0.4、近窗rho=-0.5、权重0.1394、样本4607、窗口20260401~20260708；桶表见同文件#因子.净买占比.分桶)",
+          "as_of": "20261013",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "以『净买占比』桶表对源1正净买候选池做逆向修正，直接改写本路当日『荐票.标的』的成员与排序：①把源1净买额第3的000601韶能股份（净买+1.2117亿、净买额占总成交11.3065%）判入最优桶『10-20%』（n=454/执1胜率50.0%/均涨+0.26%），使其成为本路唯一正式荐票（轻仓8%）；②剔除落最差桶『>20%』（n=136/36.0%/-0.59%）的4只源1大额净买票——002029七匹狼（33.041%、+1.5636亿）、600252中恒集团（27.490%、+1.3145亿）、600097开创国际（21.644%、+0.3016亿）、605189富春染织（50.226%、+0.4865亿）；③剔除落『5-10%』无肉桶（n=731/46.0%/-0.00%）的002866传艺科技（5.716%、+0.4997亿）；④对落『0-5%』桶（n=1300/48.2%/+0.54%、score22.4为全桶最高）的001216华瓷股份（4.037%）与002639雪人集团（2.497%）保序但不升级——避免与封板质量维度冲突（该两票分别炸板7次与未涨停）；⑤用于解释机器席位荐票Top5全数否决——其成员000823/300006/002768/603668/600202五票均未进入源1正净买候选池，故无桶位可比，不构成对因子的反例。即：若仅按源1净买额主序，本日会推荐 300299/605287/002029/600252/600097；因子把名单改写成 000601（荐票）+ 300299/001216/002639（观察），属**实质复用（字段级：荐票.标的的成员与排序）**。",
+          "source_locator": "_学习/_龙虎榜质量库.json#/因子/净买占比（状态=有效、区分度14.0、单调rho=-0.4、近窗rho=-0.5、权重0.1394；窗口20260401~20260708、样本4607、基准执1胜率48.0%/均涨+0.37%）；应用落点 _学习/lhb判断_20261014.json#荐票.标的 与 _学习/交易计划_lhb_20261014.json#buys；触发日数据 20261014/lhb.csv、_学习/龙虎榜双源校验_20261014.json；预加载记录 _学习/能力预加载_20261014.json#routes.lhb.records[0]（eligible_count=1、status=ready、last_validated_at=20261013）",
+          "as_of": "20261014",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "能力『龙虎榜质量库·净买占比因子有效（席位判读纳入净买占比）』本日被实质采用，且它直接改写了本路当日的候选集、排序与最终荐票成员，不是形式化引用。①候选集收窄：源1当日榜正净买25只 ∩ 当日涨停池36只 ＝10只候选；按其净买占比桶门禁，把落最差桶『>20%』（n=136/执1胜率36.0%/均涨-0.59%）的2只剔除——600721百花医药（净买+1.9144亿、占比28.2715%）、301282金禄电子（净买+1.2075亿、占比21.6387%）。注意两只的净买额体量都在候选前列（分别第1、第3），若不用该因子、仅按净买额或席位档排序，二者会直接进入正式荐票（301282另有封板资金占比49.33%、炸板0次的当日最优封板质量），即该因子把『体量最大但桶最差』这一最典型陷阱挡在门外。剔除后候选集由12只→10只。②排序改写：把『10-20%』桶（n=454/50.0%/+0.26%，score 21.3）与『0-5%』桶（n=1300/48.2%/+0.54%，score 22.4全桶最高）置于优先位，『5-10%』桶（n=731/46.0%/0.00%）与『>20%』桶降权；该排序直接决定了正式荐票的归属——最终荐票600668尖峰集团占比10.4496%，正落10-20%最优桶；同批被能力挑出的观察票300111向日葵（12.7097%）与603230内蒙新华（12.2165%）亦落在该桶。③结论级改写：在本路『冰点门禁』四条硬门槛之外，净买占比桶成为第二条主项（与封板质量并列，任一不达标即降为观察），使当日正式荐票收缩到1只（10只候选中仅600668双主项+占比桶全过），并把仓位上限由8%压到6%。④反向风险已随能力一并登记：该因子所在 _学习/_龙虎榜质量库.json 的『净买占比』近窗单调rho=-0.5（负相关），且该库窗口20260401~20260708、mtime 2026-07-10（停更≈3个月、样本4607），能力边界『因子被淘汰即失效』自20260710起不可再验证；本路据此把该因子读作『排除最差桶』的守门规则，而非正向排序的唯一依据（正向排序仍由双主项+封板质量交叉确认），并在 _学习/lhb判断_20261015.json 的可证伪条件④登记次日机械结算：若被剔除的600721/301282执1均收高于保留组，则该剔除规则被证伪一次。",
+          "source_locator": "_学习/能力预加载_20261015.json#/routes/lhb/abilities/0 ；能力源数据：_学习/_龙虎榜质量库.json#/因子/净买占比 （含 buckets：0-5% n=1300/48.2%/+0.54%/score22.4；5-10% n=731/46.0%/0.00%/score12.9；10-20% n=454/50.0%/+0.26%/score21.3；>20% n=136/36.0%/-0.59%/score0.0；≤0净卖 n=1986/48.9%/+0.50%/score20.2；权重0.1394、区分度14.0、近窗rho-0.5）；当日被改写对象：20261015/lhb.csv#/columns/[12]净买额占总成交比 × 20261015/zt_pool.csv#/rows ；剔除清单落点：_学习/lhb判断_20261015.json#/判断/证据/6 与 #/深挖/1",
+          "as_of": "20261015",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "能力『龙虎榜质量库·净买占比因子有效（席位判读纳入净买占比）』本日被实质采用，且直接改写了本路的候选集门禁、排序与最终荐票成员，不是形式化引用。①候选集与门禁：源1当日榜正净买 ∩ 当日涨停池 ∩ 双源判定=一致 ＝12只（000530/000887/001696/300045/300411/300581/300681/301586/600319/600802/688592/920006）；按净买占比桶门禁筛查最差桶『>20%』（n=136/执1胜率36.0%/均涨-0.59%/score0.0）——本日落在该桶的两票 600721百花医药、301282金禄电子 已由更前置的『强矛盾清单』拦下（判定=强矛盾），故本日桶门禁与负面过滤清单互为冗余、无重复扣分；该能力在本日的真实增量体现在排序层。②排序改写：把『10-20%』桶（n=454/50.0%/+0.26%/score21.3）与『0-5%』桶（n=1300/48.2%/+0.54%/score22.4）置于优先位、『5-10%』（n=731/46.0%/-0.00%）与『>20%』降权。据此三只落10-20%桶的票成为荐票/观察主体：600802福建水泥占比18.6908%（荐票第1，7%）、001696宗申动力占比14.7913%（荐票第2，5%）、300411金盾股份占比15.5651%（观察）；而同五条交集的000530冰山冷热占比仅1.2962%、虽然落score最高的0-5%桶，仍因源1净买额仅+0.181亿（量级不足）＋4板高位＋换手33.24%被排至其后；920006晟楠科技占比6.2877%落5-10%弱桶（score12.9）且为北交所30cm、封单1.43%，直接否决。③结论级改写：净买占比桶成为本路五条交集之一（与源1正净买、涨停池、双源一致、封板质量门槛并列），任一不达标即降为观察/否决，使当日候选由12只收敛到6只（过封板质量门槛者），最终荐票2只、观察1只。④反向检验已机械结算并获正样本：20261015被该因子剔除的>20%桶两票 600721百花医药执1 -9.001%（开12.11/收11.02）、301282金禄电子 -10.095%（开50.62/收45.51），剔除组均收-9.548% 低于保留组7只均收-0.801%（差8.747pp）→ 『排除最差桶』规则第1个正样本，未被证伪。⑤边界（随能力一并登记，不无条件信任）：该因子所在 _学习/_龙虎榜质量库.json 窗口20260401~20260708、样本4607、文件mtime 2026-07-10（停更约98天），『因子被淘汰即失效』自20260710起不可再验证；近窗单调rho=-0.5（负相关）。故本路仅用其『排除最差桶(>20%)』与『优先最优桶(10-20%、0-5%)』的方向性结论，不把桶score当期望收益，正向排序改由『非小样本S/A档席位在场 → 封单/炸板 → 源1净买额体量』三级键承担（认知迭代[1]），并在 lhb判断_20261016.json#/判断/可证伪条件⑤登记次日（20261019）机械结算。",
+          "source_locator": "_学习/能力预加载_20261016.json#/routes/lhb（eligible_count=1、id=extension:cap-lhb-netbuy-valid）；能力源数据：_学习/_龙虎榜质量库.json#/因子/净买占比（桶：0-5% n=1300/48.2%/+0.54%/score22.4；5-10% n=731/46.0%/-0.00%/score12.9；10-20% n=454/50.0%/+0.26%/score21.3；>20% n=136/36.0%/-0.59%/score0.0；≤0净卖 n=1986/48.9%/+0.50%/score20.2；区分度14.0、单调rho-0.4、近窗rho-0.5、状态=有效、权重0.1394）；当日被改写对象：20261016/lhb.csv#/净买额占总成交比 × 20261016/zt_pool.csv#/rows；负面过滤交叉源：_学习/龙虎榜双源校验_20261016.json#/强矛盾清单 与 #/打折清单；落地落点：_学习/lhb判断_20261016.json#/判断/证据[10][11] 与 #/荐票/标的 与 #/深挖[0]；反向检验数据：_学习/_bars_cache/{600721,301282}.csv 与保留组 {600668,300111,603230,002134,600812,603172,002945}.csv（2026-10-16 行）",
+          "as_of": "20261016",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "席位路以『净买占比分桶』作为观察票唯一升格依据之一：002343 慈文传媒 净买占比10.27%落10-20%最优桶(n=454/50.0%/+0.26%) 才给观察；反之按净买绝对值排序会误抬高面广额小的票(当日80行净买+11.33亿但中位仅3953万)。",
+          "source_locator": "_学习/lhb判断_20261019.json#判断.证据 + _学习/交易计划_lhb_20261019.json",
+          "as_of": "20261019",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "席位判读纳入净买占比维度：今日82条龙虎榜按净买占比分档筛票，净买占比弱/两源净额矛盾的6只（000823/002245/002343/300006/601811/603466）不进荐票，荐票 600267/300115/301313 均带净买占比数值与席位分档；净买占比成为否决/排序维度而非新增推荐",
+          "source_locator": "_学习/lhb判断_20261020.json#深挖 与 #判断.证据（净买占比出现21处）",
+          "as_of": "20261020",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "净买占比因子直接决定了本日唯一荐票与唯一降级：按 _龙虎榜质量库.json（样本4607）分桶，002242 九阳股份 源1净买0.2236亿÷当日成交30.89亿=净买占比0.72%，落『0-5%』桶（n=1300/执1胜率48.2%/均涨+0.54%，低于全体基准49.1%/+0.61%）→ 由『今日唯一S/A席涨停票=自动首选』降为观察、0仓位；002639 雪人集团 占比17.52%、300296 利亚德14.75%、002929润建13.21%、300006莱美12.10%、600252中恒19.24% 落『10-20%』桶（n=454/50.0%/+0.26%，库内唯一执1胜率≥50%的正桶）→ 作为『无S/A席也可小仓』的必要条件，最终选出002639给6%权重；同时用『>20%』桶（n=136/36.0%/-0.59%）反向排除占比过高票。若不采用该因子，本日会荐002242（席位分最高、A档净买1.0721亿）并空掉002639，排序完全反转。",
+          "source_locator": "_学习/lhb判断_20261021.json#/判断/证据/2",
+          "as_of": "20261021",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "净买占比因子决定了本日『空仓』而非『荐 002307』：按 _龙虎榜质量库.json 分桶，『>20%』是最差桶（n=136/执1胜率36.0%/均收-0.59%），002307 净买 1.72 亿为全榜第一但净买占比落该桶 → 按桶否决，不进 buys；反向地用『10-20%』桶（库内唯一执1胜率≥50%的正桶）作为『无S/A席也可小仓』的必要条件，今日无一票同时满足『S/A 在场 ∧ 封板三项全过 ∧ 落正桶』，故 buys=[] 成立（空仓是交集为空，不是情绪选择）。若不采用该因子，本日会按『净买额全场第一』荐 002307，与其后的双源强矛盾（6只强矛盾之一）叠加，风险敞口从 0 变为 2%+。",
+          "source_locator": "_学习/lhb判断_20261022.json#/判断/证据",
+          "as_of": "20261022",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "该能力直接改写了本日荐票的名单与权重，共 3 处可核：①300296 利亚德 净买占比 4.16% 落 0-5% 桶（n=1300/执1 48.2%/均收 +0.54%，仅略高于基准 48.0%/+0.37%，按昨日认知迭代②属『需另加两项强化证据』的弱桶）→ 补足两项强化（A 席江苏路 n=199 非小样本且连续三日净买 2.0314 亿、封板三项全过）后进正式荐票，但权重由档位上限 6% 压到 4%；②603721 中广天择 净买占比 6.71% 落 5-10% 桶（n=731/46.0%/-0.00%，低于基准约 2pp，四桶最弱之一）→ 与它 A 席 n=11 小样本叠加，权重压到 2%（档位上限的 1/3）；③002354 天娱数科 净买占比 21.17% 落 >20% 桶（n=136/36.0%/-0.59%，四桶中唯一胜率<40%）→ 尽管它是今日源1净买最大的票（+4.891 亿、封单比 14.16%、首封 09:37 早封），仍被判为『观察』、权重 0，不进 buys。若该能力不可用，本日会荐 3 只、总仓 9%（300296 6% + 603721 3% + 002354 0%→误入 3%），实际输出为 2 只、总仓 6%。",
+          "source_locator": "D:/股票数据/市场数据/_学习/_龙虎榜质量库.json#因子.净买占比.桶（样本 4607，target_d 20260710，状态=有效；桶：≤0/0-5% n=1300 48.2%/+0.54、5-10% n=731 46.0%/-0.00、10-20% n=454 50.0%/+0.26、>20% n=136 36.0%/-0.59）",
+          "as_of": "20261023",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "采纳『净买占比』维度后本日名单与总仓各发生一处可复算变化：①600558 大西洋 净买占比 27.61% 落 >20% 负桶（n=136/执1 36.0%/-0.59%），由引擎第4名（席位分 3.48）降为观察·0%；②688386 泛亚微透 净买占比 12.55% 落唯一 ≥50% 正桶（n=454/50.0%/+0.26%），由引擎 Top5 之外升为唯一荐票·2%。若不用该维度、只按席位分排序，本日将荐 002696（3.61）+600558（3.48）两只、总仓 5%；实际输出 1 只 2%——即该能力同时改变了标的集合（换掉 600558）与总仓（5%→2%）。",
+          "source_locator": "_学习/_龙虎榜质量库.json#因子.净买占比.桶.10-20% 与 .>20%；_学习/龙虎榜双源校验_20261026.json#全量",
+          "as_of": "20261026",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        },
+        {
+          "id": "extension:cap-lhb-netbuy-valid",
+          "effect": "把『净买占比』作为漏斗的倒数第二道门（S/A 门之后、荐票确定之前），并强制用源1 股票级净买为分子（不用买五明细净额，避免偏买虚增）。本日它做了三件可复算的事：①确定了唯一荐票：8 只过封板三项的票里，占比落 10-20% 正桶（n=454／执1 50.0%／+0.26%／T1 59.9%／+1.91%）的只有 3 只（300539 13.53%、300504 10.35%、301682 13.53%），其中仅 301682 有 S/A 席在场；若不用该维度，8 只都还剩在池里，排序会退化为『封单比大小』，第一名会变成 600828（封/成交 16.20%）而它占比仅 5.68%（弱桶 n=1300／48.2%／+0.54%）且 S/A 0 席。②否决了资金最厚的 002249（占比 21.22% 落 >20% 负桶 n=136／36.0%／−0.59%，是全市场源1 净买最大票 +3.0104 亿）—— 这是本日单条最大的『少亏一个坑』读数。③把 603758 秦安股份（占比 34.88%）与 600828/603528（5.68%/1.51%）明确划入弱桶/负桶，避免它们以『封板强』的外表进入观察升级序列。若该能力不可用，本日输出会是『3 只／3.5%』（301682 1.0% + 300504 1.0% + 300539 1.5% 或按封单比排序后 600828 顶第 2），实际输出 1 只/1.0%，标的集合与总仓同时改变。",
+          "source_locator": "_学习/龙虎榜双源校验_20261027.json#全量[代码=301682/002249/603758].源1净买亿 ÷ 20261027/zt_pool.csv#成交额；桶界与桶内统计=_学习/_龙虎榜质量库.json#因子.净买占比.桶（10-20% n=454/执1 50.0%/+0.26%；>20% n=136/36.0%/-0.59%；5-10% n=731/46.0%/-0.00%；0-5% n=1300/48.2%/+0.54%；≤0 n=1986/48.9%/+0.50%）",
+          "as_of": "20261027",
+          "route": "lhb",
+          "ledger_kind": "自主拓展"
+        }
+      ],
+      "last_reused_at": "20261027"
+    },
+    {
+      "id": "extension:limitup-换手率冰点反转",
+      "kind": "自主拓展",
+      "route": "limitup",
+      "title": "换手率因子在冰点段是否反向(近窗rho-0.4/条件桶跨窗变号)",
+      "discovered_at": "20261019",
+      "last_tracked_at": "20261019",
+      "tracking_log": [
+        {
+          "d": "20261019",
+          "进展": "立项(_学习/自主拓展应答_20261019.json limitup_20261019_13)。动机:全窗≥20%桶 n=1883 执1 44.9%/+0.07 但近窗单调rho-0.4、近20日RankIC 0.0567高于全窗0.0363;冰点×换手≥20% 全窗 n=128 46.9%/+0.55 vs 近30日 n=40 32.5%/-0.39 符号相反;近5日3次套票与近窗负向一致,区别于开板次数(全窗ICIR 0.523正因子)的小样本假象。样本门槛 n≥60(现n=40,差20个票次)"
+        }
+      ],
+      "falsifiable_rule": "冰点(<25)×换手≥20% 近30日样本扩到 n≥60 时:执1≤-0.3% 且比同窗全温≥20%桶低≥1pp → 固化'冰点段换手≥20%只作否决器';执1≥+0.3% → 证伪并回填全窗口径",
+      "due": "20261106",
+      "state": "experience",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-20T00:00:00+08:00",
+          "as_of": "20261020",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "冰点(<25)×换手≥20% 近30日样本扩到 n≥60 时:执1≤-0.3% 且比同窗全温≥20%桶低≥1pp → 固化'冰点段换手≥20%只作否决器';执1≥+0.3% → 证伪并回填全窗口径"
+        },
+        {
+          "reviewed_at": "2026-10-21T00:00:00+08:00",
+          "as_of": "20261021",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "冰点(<25)×换手≥20% 近30日样本扩到 n≥60 时:执1≤-0.3% 且比同窗全温≥20%桶低≥1pp → 固化'冰点段换手≥20%只作否决器';执1≥+0.3% → 证伪并回填全窗口径"
+        },
+        {
+          "reviewed_at": "2026-10-22T00:00:00+08:00",
+          "as_of": "20261022",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "冰点(<25)×换手≥20% 近30日样本扩到 n≥60 时:执1≤-0.3% 且比同窗全温≥20%桶低≥1pp → 固化'冰点段换手≥20%只作否决器';执1≥+0.3% → 证伪并回填全窗口径"
+        },
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "冰点(<25)×换手≥20% 近30日样本扩到 n≥60 时:执1≤-0.3% 且比同窗全温≥20%桶低≥1pp → 固化'冰点段换手≥20%只作否决器';执1≥+0.3% → 证伪并回填全窗口径"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "冰点(<25)×换手≥20% 近30日样本扩到 n≥60 时:执1≤-0.3% 且比同窗全温≥20%桶低≥1pp → 固化'冰点段换手≥20%只作否决器';执1≥+0.3% → 证伪并回填全窗口径"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:lhb-新席位扫描去重修复",
+      "kind": "自主拓展",
+      "route": "lhb",
+      "title": "自主拓展扫描.py 席位侧未按(日,票)去重 → 『新活跃席位』条目虚增（共现侧一直正确）",
+      "discovered_at": "20261021",
+      "last_tracked_at": "20261022",
+      "tracking_log": [
+        {
+          "d": "20261021",
+          "进展": "立项(_学习/自主拓展应答_20261021.json lhb_20261021_3)。根因定位：自主拓展扫描.py 第102-103行 seat_hits 直接 append 原始行、未做(t,code)去重；同函数 pair_hits(第105-109行) 用 by_ticket+set 有去重。★补录：立项当日未落孵化区登记，2026-10-22 由宿主按原应答原文回填。"
+        },
+        {
+          "d": "20261022",
+          "进展": "未修（今日无 lhb 对应项）。污染实例：20261019 东莞虎门×002343 共4行、涨幅偏离/换手/振幅三行净额同为5628.42万，按(日,票)去重 unique=1 笔，而清单记『×3次』。"
+        }
+      ],
+      "falsifiable_rule": "修复后连续5个交易日：清单 lhb 域『新活跃席位』条目无同(日,票)重复，且每条净买额=对应csv按(日,票)去重后净额 → 结案毕业；出现任一重复条目 → 判修复未生效、回滚并记录失败原因",
+      "due": "20261104",
+      "state": "experience",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "修复后连续5个交易日：清单 lhb 域『新活跃席位』条目无同(日,票)重复，且每条净买额=对应csv按(日,票)去重后净额 → 结案毕业；出现任一重复条目 → 判修复未生效、回滚并记录失败原因"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "修复后连续5个交易日：清单 lhb 域『新活跃席位』条目无同(日,票)重复，且每条净买额=对应csv按(日,票)去重后净额 → 结案毕业；出现任一重复条目 → 判修复未生效、回滚并记录失败原因"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    },
+    {
+      "id": "extension:limitup-套票因子口径修正",
+      "kind": "自主拓展",
+      "route": "limitup",
+      "title": "『套票主导』指标须改为『套票侧出现率-赚票侧出现率』超额口径后再判降权（原口径是映射反射：因子权重越大越同时出现在赚票与套票两侧）",
+      "discovered_at": "20261020",
+      "last_tracked_at": "20261022",
+      "tracking_log": [
+        {
+          "d": "20261020",
+          "进展": "立项(_学习/自主拓展应答_20261020.json limitup_20261020_8)。★补录：立项当日未落孵化区登记，2026-10-22 由宿主按原应答原文回填，判据未改一字。"
+        },
+        {
+          "d": "20261022",
+          "进展": "第3轮并入(_学习/自主拓展应答_20261022.json limitup_20261022_7)：五结算日(1015~1021)自算 开板次数 套票侧11/16=68.8% vs 赚票侧4/9=44.4%、超额+24.3pp，落判据的20-40pp处理区间上沿、未触40pp降权线；库区分度8.9pp/单调rho1.0/近窗rho-0.5(未与全窗反号)/RankIC 全窗+0.0792 近20日+0.0388 同号。"
+        }
+      ],
+      "falsifiable_rule": "超额口径下：开板次数 差值≥40pp 且 近窗RankIC≤0 → 降权50%；差值<20pp → 保留全权重并废弃『套票主导』式告警（同等复算 首封时间/封单比/股价档）",
+      "due": "补录未设(按判据逐结算日机械结算)",
+      "state": "experience",
+      "source": "_学习/孵化区.json",
+      "validation": null,
+      "validation_evidence": [],
+      "validated_at": null,
+      "refuted_at": null,
+      "hit_count": null,
+      "validation_pass_count": null,
+      "capitalized": null,
+      "reused_count": null,
+      "reuse_log": null,
+      "last_reused_at": null,
+      "feedback_routes": null,
+      "review_log": [
+        {
+          "reviewed_at": "2026-10-26T00:00:00+08:00",
+          "as_of": "20261026",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "超额口径下：开板次数 差值≥40pp 且 近窗RankIC≤0 → 降权50%；差值<20pp → 保留全权重并废弃『套票主导』式告警（同等复算 首封时间/封单比/股价档）"
+        },
+        {
+          "reviewed_at": "2026-10-27T00:00:00+08:00",
+          "as_of": "20261027",
+          "status": "unverifiable",
+          "reason": "缺少结构化 validation_spec 证据绑定",
+          "evidence": [],
+          "rule_snapshot": "超额口径下：开板次数 差值≥40pp 且 近窗RankIC≤0 → 降权50%；差值<20pp → 保留全权重并废弃『套票主导』式告警（同等复算 首封时间/封单比/股价档）"
+        }
+      ],
+      "review_status": "unverifiable",
+      "last_reviewed_at": "2026-10-27T00:00:00+08:00",
+      "capability_rule": null,
+      "boundary": null,
+      "validation_spec": null,
+      "last_validated_at": null
+    }
+  ]
+}

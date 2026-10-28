@@ -1,0 +1,58 @@
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 第一路·竞价</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-4.25%</b></span> <span>本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-0.29%</b></span> <span>基准本周 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+5.20%</b></span> <span>平仓胜率 <b style="font-family:monospace">33.3%</b>(n=12)</span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="65.6" x2="620" y2="65.6" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,72.0 32.8,65.8 45.5,67.4 58.3,70.8 71.1,32.1 83.8,31.2 96.6,31.2 109.4,36.1 122.1,41.9 134.9,39.4 147.7,44.2 160.4,52.7 173.2,55.7 186.0,59.8 198.7,61.6 211.5,59.5 224.3,54.9 237.0,58.5 249.8,57.5 262.6,59.2 275.3,62.7 288.1,66.8 300.9,69.7 313.6,67.0 326.4,66.6 339.1,67.5 351.9,73.7 364.7,71.7 377.4,69.0 390.2,69.7 403.0,74.3 415.7,76.4 428.5,83.3 441.3,82.5 454.0,83.2 466.8,84.7 479.6,84.9 492.3,89.6 505.1,90.0 517.9,98.0 530.6,100.9 543.4,108.4 556.2,111.7 568.9,109.9 581.7,109.6 594.5,118.8 607.2,112.4 620.0,114.1" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,67.3 32.8,67.7 45.5,67.9 58.3,68.1 71.1,68.1 83.8,71.5 96.6,71.5 109.4,71.1 122.1,70.2 134.9,69.5 147.7,70.0 160.4,70.0 173.2,70.0 186.0,70.0 198.7,70.0 211.5,70.0 224.3,68.6 237.0,69.7 249.8,69.8 262.6,70.0 275.3,70.3 288.1,70.4 300.9,70.4 313.6,70.4 326.4,70.4 339.1,70.4 351.9,70.4 364.7,70.4 377.4,70.4 390.2,70.4 403.0,70.4 415.7,70.4 428.5,70.4 441.3,70.4 454.0,70.4 466.8,70.4 479.6,70.4 492.3,70.4 505.1,70.0 517.9,71.6 530.6,71.8 543.4,72.7 556.2,72.9 568.9,72.9 581.7,72.9 594.5,72.7 607.2,72.8 620.0,73.2" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="73.2" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20261027  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="68.2" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">0.9575</text></svg></div>
+<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · 【本日执行结论】买入 0 只、仓位 0%、现金 958628.04 元全额在场外（引擎 state.json date=20261027, positions=[]）。空仓为基准解而非看空，四条量化理由见下『空仓理由』。
+
+【三行校验（认知库2026-10-26条#①，缺任一行即视为无效计划）】
+[门版本] v3_20261027：门1 环境=极寒16.6（温度<20）单票≤1.0%、总仓≤1.0%（20261022原条为单票≤2%、合计≤2%，本路因『断层型』自设加严一档）；门2 gap 明晨高开≥5% 硬弃（不可豁免）；门3 925竞价额分位>5.0% 硬弃；门4 极寒档低开≤0 弃（且首板低开≤0 弃，双层）；门5 污染=源1净买<0 剔。
+[门判据实测值] 门2 库证 n=1632 21.9%/-1.77%（≥5带）；门3 今日池实测（09:25:17 快照，n=5576）：603028 5.15%、002011 5.08%、601566 9.42% 三只>5.0% 会被弃；反例 002535 昨日分位0.91% 被放行→执1 −11.76%；门4 极寒<20 低开≤0 n=55 −1.19%（20261022在案）、首板|低开≤0 n=376 43.4%/−0.38%；门5 今日池可核率1/11=9.1%（仅603528源1+0.1221亿/打折），无一只源1<0。
+[豁免条款] 无。若认为任一门失效，须先按 R2 出新门（n≥30、连续期数阈值≥3、生效日=次一交易日、回滚条件）再开仓；R1 门一发布当日（含09:15–09:25）不得修改或豁免。
+
+【① 污染硬闸逐票输出（MA-20261026-02①；11只全覆盖，缺一行即视为未完成）】数据源=_学习/龙虎榜双源校验_20261027.json
+[GATE 污染: 000058 深赛格 源1净买=未上榜 => 动作=不下结论(null语义)·登记可核失败]
+[GATE 污染: 001219 青岛食品 源1净买=无源1 => 动作=不下结论(null语义)·不剔不吹]
+[GATE 污染: 603528 多伦科技 源1净买=+0.1221亿(判定打折,源2/源1≈11倍) => 动作=放行但仅作弱正·不得作正面理由]
+[GATE 污染: 603028 赛福天 源1净买=无源1 => 动作=不下结论(null语义)]
+[GATE 污染: 002708 光洋股份 源1净买=无源1 => 动作=不下结论(null语义)]
+[GATE 污染: 002011 盾安环境 源1净买=未上榜 => 动作=不下结论(null语义)]
+[GATE 污染: 002284 亚太股份 源1净买=未上榜 => 动作=不下结论(null语义)]
+[GATE 污染: 600838 上海九百 源1净买=无源1 => 动作=不下结论(null语义)·列观察不加仓]
+[GATE 污染: 002093 国脉科技 源1净买=无源1 => 动作=不下结论(null语义)]
+[GATE 污染: 603565 中谷物流 源1净买=未上榜 => 动作=不下结论(null语义)·列观察不加仓]
+[GATE 污染: 601566 九牧王 源1净买=未上榜 => 动作=不下结论(null语义)]
+合计：剔0只／放行弱正1只／不可核10只（可核率9.1%）。★昨日反例：002535 源1净买−0.398亿(20261026)→今日−0.2645亿，两日均判『分歧』，而三条价量门全放行（分位0.91%、gap+2.10%、未封死）→ 执1 −11.76%。⇒ 价量门与污染门的失效域不重叠，两门都过才可进买单；『无源1/未上榜』不是资金安全，只是不可核。
+
+【② 分位判定三要素（MA-20261026-02②）】脚本=`R/竞价全市场快照.py`（09:26 采集全A→_学习/竞价快照存档/{d}.csv.gz+{d}_meta.json，含『竞价额排名』列；分位=竞价额排名÷当日快照总条数×100）；执行门脚本=`R/竞价闸门.py {昨日d}`（幂等注入 auction 页『★今晨闸门』段，只过滤、不荐票）。判定时点=09:25:00~09:30:00（09:25:00 之后、09:30:00 之前取最后一帧），时间戳唯一依据={d}_meta.json#采集时间（今日=09:25:17＝09:25:00 后第 17 秒，可信度A档≤09:30）；采集时间>09:30 即降级为『开盘前5分钟额排名代理』，当日不得作门判据。未判定时的默认动作=不下单（缺件≠放行，缺件≠上签）。今日实证：晨场未产出 _学习/竞价闸门_20261027.json（文件不存在）⇒ 按此条默认动作即不下单，昨日 002535 因此未成交，属缺件护栏、不得记成绩效。
+
+【③ 自检条文（MA-20261026-02③）】『同一只票的 T+1 价格记忆不得作为当日买入的唯一正证据』——每个候选必须同时具备 (a) 当日资金证据（源1净买≥0 且当日有榜读数）或 (b) 当日封板结构证据（封单比档／炸板次数／首末封时点）；T+1 收益在证据链中的权重记 0，只能写在理由末段作注释。反例即本路近日两次荐票：002535『同票T+1 +6.73%/✓封』被当作正证据 → T+2 执1 −11.76%；002474『V型日×炸1+×gap[0,3] n=15 60.0%/+2.93%』→ T+1 未封板、被 11:00 场防守清出 −12.87%（账本实测）。
+
+【空仓理由（四条量化，可被明日机械核对）】①逐票五维加权（信号×连板／封单比／炸板／门内0~5带／温度×门内带）11只全负：最好 001219/603028 −0.10%~−0.12%，最差 000058 −0.56%、002708 −0.56%、600838 −0.52%，全池均值 −0.23%；②池均分41.30−基准37.70=+3.60，落 20261019 检验的『高分组』（n=19日 增益均值−1.58pp、为正6/19=32%）＝拥挤度警示；③期望落门 4.29/11=39.0%，门后按构成加权（一字4×+0.46 + 秒板7×+0.05）/11=+0.20% 毛期望，扣费≈0；④断层型冰点（二进三率0.00、三连板0只、炸板率40.6%、跌停21）下令2板以上身位整体降权（20261015条），池内2板+占6/11。
+
+【明晨盯盘清单（09:25–09:30 逐条打钩，全中才动）】①全池 gap≥5% ⇒ 该票弃（门2）；②gap≤0 ⇒ 极寒档弃（门4）；③分位>5.0% ⇒ 弃（门3）；④仅当『gap∈[0,+3] ∧ 分位≤5.0% ∧ 二进三率读数≥0.20（梯队修复）』同时成立，才允许把 603565 或 600838 升为 1 只 1.0%（600838 因 P=47.6% 落[30,50) 再×0.5→0.5%）；⑤缺 竞价闸门_{d}.json ⇒ 一律不下单。
+
+【仓位与在持校验】[CHECK 持仓只数==表态条数] 状态.json 持仓=2（003021 兆威机电 200股、002474 榕基软件 2400股）｜本计划 sells=2｜2==2 → PASS｜漏票=0｜引擎 state.json date=20261027 positions=0（两票均于今日 kill，为状态文件的清仓后残留）→ 引擎口径下待表态=0，两者差集为空 PASS。仓位口径：本路额度=极寒16.6 → 单票≤1.0%、总仓≤1.0%；本日实际 0%。
+
+【数据缺口】竞价换手代理列（快照存档5576行）全空→不可算；极寒<20 行级交叉库不存在→用冷<40桶+20261022两条极寒值混用；_情绪先行指标.json#20261027『昨日涨停溢价』=null；因子快检.py 本机不存在→本轮未做因子快检；竞价闸门_20261027.json 未落盘。</div>
+</div><div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">002535 林州重机</td><td style="font-family:monospace">2800</td><td style="font-family:monospace">3.40</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-11.81%</b></td><td style="font-family:monospace">1</td><td>继续持有</td></tr>
+</table>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20261027发出,明日固定价执行)</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8d93a8"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">003021 兆威机电</td><td>开盘</td><td style="color:#a8adbd">已落地·对账留档，勿重复挂单。计划腿=交易计划_auction_20261026#sells[1] 腿open（T+1未涨停→T+2无条件卖）；实际 09:40 场未执行，由 10:30 场 catch_up 补执行：200股 85.00（买 20261023）→ 95.08（卖 20261027，成交留档 10:38:49，leg=hb_b_catchup，fill_cls=A档下一帧留档价−0.10%滑点），pnl +2007.50元/+11.80%（毛差未扣费）。证据：_模拟盘/auction/账本.jsonl#sell(20261027,003021) + 临盘决断_20261027_1030.json。当前引擎 state.json positions=[]，故本条为『清仓对账』而非待执行卖单。</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">002474 榕基软件</td><td>开盘</td><td style="color:#a8adbd">已落地·对账留档，勿重复挂单。计划腿=交易计划_auction_20261023 荐票（T+1到期卖）；实际持仓到期后由 11:00 场 B级预案外防守清出：2400股 7.72（买 20261026）→ 6.73（卖 20261027，成交留档 11:06，leg=hb_c_defense，fill_cls=A档下一帧留档价−0.10%滑点），pnl −2385.26元/−12.87%（毛差未扣费）。买入理由（20261026 低开−0.93%后 09:31:57 秒板＝分歧转一致）已被 T+1 证伪：今日未封板。今日 09:25 快照实测 gap −2.43%（竞价额排名18/5576，分位0.32%）⇒ 分位门会放行它、但按本日门4『极寒 gap≤0 弃』本不应再加仓——单靠分位门不足以保证可买，这条与 002535 的教训互为镜像。证据：_模拟盘/auction/账本.jsonl#sell(20261027,002474)、临盘决断_20261027_1100.json。当前引擎 state.json positions=[]，本条为清仓对账。</td></tr>
+</table>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(5)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600418 江淮汽车</td><td style="font-family:monospace">20261019@23.00</td><td style="font-family:monospace">20261021@21.54</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-6.49%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600668 尖峰集团</td><td style="font-family:monospace">20261019@8.48</td><td style="font-family:monospace">20261021@7.88</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-7.21%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>000530 冰山冷热</td><td style="font-family:monospace">20261016@6.64</td><td style="font-family:monospace">20261020@7.66</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+15.19%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>603968 醋化股份</td><td style="font-family:monospace">20261015@14.30</td><td style="font-family:monospace">20261019@13.02</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-9.09%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600693 东百集团</td><td style="font-family:monospace">20261014@12.40</td><td style="font-family:monospace">20261019@9.11</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-26.64%</b></td><td>开·持3日·顺延1</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>

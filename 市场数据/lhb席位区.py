@@ -19,12 +19,37 @@ def main(d):
       f'<td>{v["样本"]}</td><td>{v["通道"]}</td>'
       f'<td style="word-break:break-word"><span class="mut">{"、".join(x["名"]+("%+.1f"%x["执1"]) for x in v["近5笔"][-3:])}</span></td></tr>' for s,v in sa_sorted)
     cnt=lib['档分布']
+    # ★2026-10-28 历史日重建修正: 分档库每晚重算前移, 补跑历史日页必须用当日快照口径,
+    #   否则页面显示活库(更新日>d)的数字, 与 分档表核对/lhb数据核对 的目标日快照基准冲突(C12)。
+    def _snap_counts(d):
+        p=os.path.join(L,'_席位分档快照.jsonl')
+        if not d or not os.path.exists(p): return None
+        hit=None
+        try:
+            for line in open(p,encoding='utf-8'):
+                line=line.strip()
+                if not line: continue
+                try: r=json.loads(line)
+                except ValueError: continue
+                if str(r.get('日'))==d: hit=r
+        except OSError: return None
+        return hit
+    _snap=_snap_counts(d)
+    if _snap and str(lib.get('更新') or '')>str(d) and _snap.get('档分布'):
+        cnt=_snap['档分布']
+        _win=_snap.get('窗口') or lib['窗口']
+        _cntn=_snap.get('笔数') or lib['笔数']
+        snapnote=f' <span class="chip cold">{d}当日快照口径 · 活库已前移至{lib.get("更新")}</span>'
+        snapnote2='<b>口径</b>: 上方计数/窗口/笔数=当日快照; 明细表=活库(更新日>当日)重算, 仅供席位强弱参考, 不代表当日档位。'
+    else:
+        _win=lib['窗口']; _cntn=lib['笔数']; snapnote=''
+        snapnote2=''
     # v2.1(2026-07-11用户): 窗口末日<事实表最新日=有已入库待结算的动向,折叠条明示,防"数据断了"误读(零后视镜:当日笔T+1才结算入窗)
     md=max((f[:8] for f in os.listdir(os.path.join(L,'_席位动向')) if f[:8].isdigit() and f.endswith('.csv')),default='')
     wend=str(lib["窗口"]).split('~')[-1]
     pend=(f' <span class="chip cold">{md[4:6]}-{md[6:8]}动向已入库·待T+1结算入窗</span>' if md and md>wend else '')
-    libblk=(f'<details class="chain"><summary><b>全市场席位分档库(自我净化)</b> <span class="chip">S{cnt.get("S",0)}/A{cnt.get("A",0)}/B{cnt.get("B",0)}/C{cnt.get("C",0)}/预备{cnt.get("P",0)}</span> 窗口{lib["窗口"]} {lib["笔数"]}笔{pend}</summary><div class="inner">'
-     f'<div class="hint">{H.escape(lib["口径"])}。S=n≥5且执1胜率≥60%且均涨>1%;A=胜率≥55%或(≥50%且均涨>1.5%);B=45-55%;C=<45%;每晚重算,掉档自动降级。</div>'
+    libblk=(f'<details class="chain"><summary><b>全市场席位分档库(自我净化)</b> <span class="chip">S{cnt.get("S",0)}/A{cnt.get("A",0)}/B{cnt.get("B",0)}/C{cnt.get("C",0)}/预备{cnt.get("P",0)}</span> 窗口{_win} {_cntn}笔{pend}{snapnote}</summary><div class="inner">'
+     f'<div class="hint">{H.escape(lib["口径"])}。S=n≥5且执1胜率≥60%且均涨>1%;A=胜率≥55%或(≥50%且均涨>1.5%);B=45-55%;C=<45%;每晚重算,掉档自动降级。{snapnote2}</div>'
      f'<div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col><col style="width:92px"><col style="width:92px"><col style="width:36px"><col style="width:52px"><col style="width:170px"></colgroup>'
      f'<tr><th>席位</th><th>执1胜率/均涨</th><th>执2</th><th>n</th><th>通道</th><th>近3笔</th></tr>{librows}</table></div></div></details>')
     open(os.path.join(L,'席位分档库.html'),'w',encoding='utf-8').write(libblk)

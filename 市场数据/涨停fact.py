@@ -82,7 +82,8 @@ def build(d):
 
     facts = {}
     facts['涨停数'] = field(t.get('涨停数'), '温度表', {
-        '温度表': t.get('涨停数'), 'summary': s.get('涨停家数'),
+        '温度表': t.get('涨停数'), 'summary': s.get('涨停家数')})
+    facts['涨停覆盖数'] = field(zt_pool_rows(d), 'zt_pool原始行数(含ST口径)', {
         '对链条': c.get('涨停总数'), '归位': guiwei_n if guiwei_n else None,
         'zt_pool原始行数': zt_pool_rows(d)})
     facts['炸板数'] = field(t.get('炸板数'), '温度表', {
@@ -99,7 +100,7 @@ def build(d):
     facts['最高连板'] = field(t.get('最高板'), '温度表', {
         '温度表': t.get('最高板'), 'summary': s.get('最高连板')})
     facts['题材线数'] = field(c.get('题材线数'), '涨停对链条', {'涨停对链条': c.get('题材线数')})
-    facts['归位数量'] = field(guiwei_n, '题材归位', {'题材归位': guiwei_n, '涨停数': t.get('涨停数')})
+    facts['归位数量'] = field(guiwei_n, '题材归位', {'题材归位': guiwei_n})
     facts['归位A档数'] = field(abcc.get('A', 0), '题材归位(来源档计数)')
     facts['归位B档数'] = field(abcc.get('B', 0), '题材归位(来源档计数)')
     facts['归位C档数'] = field(abcc.get('C', 0), '题材归位(来源档计数)')

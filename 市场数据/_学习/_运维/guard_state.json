@@ -1,27 +1,17 @@
 {
- "checked_at": "2026-10-28T17:45:23",
- "day": "20261027",
+ "checked_at": "2026-10-29T09:12:08",
+ "day": "20261028",
  "issues": [
   {
-   "kind": "release_missing",
-   "day": "20261027",
-   "detail": "20261027 无已发布 release"
-  },
-  {
-   "kind": "cron_failures",
-   "day": "20261027",
-   "detail": "ifind-keepalive 最近连续失败 7 次"
-  },
-  {
    "kind": "assignments_overdue",
-   "day": "20261027",
+   "day": "20261028",
    "detail": "总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json"
   }
  ],
  "disk": {
   "total_gb": 1000.2,
-  "used_pct": 35.7,
-  "free_gb": 643.0
+  "used_pct": 36.1,
+  "free_gb": 639.6
  },
  "staging": {
   "exists": true,
@@ -29,15 +19,9 @@
   "gb": 0.08,
   "unit": "GiB",
   "size_is_lower_bound": true,
-  "oldest_days": 16.9
+  "oldest_days": 17.6
  },
- "cron_failures": [
-  {
-   "job_id": "5d8760e7a962",
-   "consecutive_failures": 7,
-   "name": "ifind-keepalive"
-  }
- ],
+ "cron_failures": [],
  "cron_stale_skipped": [],
  "assignments": {
   "critical": 103,
@@ -45,25 +29,7 @@
  },
  "alerts": [
   {
-   "key": "release_missing|20261027|20261027 无已发布 release",
-   "sent": false,
-   "delivery": {
-    "ok": false,
-    "rc": 1,
-    "out": "hermes send: Weixin send failed: iLink sendmessage session not ready: ret=-2 errcode=None errmsg=prepare failed — the user must send the bot a message first (or re-pair)"
-   }
-  },
-  {
-   "key": "cron_failures|20261027|ifind-keepalive 最近连续失败 7 次",
-   "sent": false,
-   "delivery": {
-    "ok": false,
-    "rc": 1,
-    "out": "hermes send: Weixin send failed: iLink sendmessage session not ready: ret=-2 errcode=None errmsg=prepare failed — the user must send the bot a message first (or re-pair)"
-   }
-  },
-  {
-   "key": "assignments_overdue|20261027|总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json",
+   "key": "assignments_overdue|20261028|总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json",
    "sent": false,
    "delivery": {
     "ok": false,

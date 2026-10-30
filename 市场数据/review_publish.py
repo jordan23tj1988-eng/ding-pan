@@ -1004,7 +1004,8 @@ def run_checks(frozen, stage, d):
     for route in REQUIRED_CHECKS:
         try:
             env = dict(os.environ, PYTHONUTF8="1", PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1",
-                       REVIEW_STAGE=str(stage), LHB_SITE_ROOT=str(stage / "site"))
+                       REVIEW_STAGE=str(stage), LHB_SITE_ROOT=str(stage / "site"),
+                       POST_SITE_ROOT=str(stage / "site"))
             r = subprocess.run([sys.executable, "-B", str(Path(__file__).resolve()), "_check", d,
                                 "--root", str(frozen), "--stage", str(stage), "--route", route],
                                cwd=frozen, env=env, capture_output=True, text=True, encoding="utf-8", timeout=180)

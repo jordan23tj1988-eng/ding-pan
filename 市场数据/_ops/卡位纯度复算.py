@@ -99,7 +99,8 @@ def main():
     by_code = {r["代码"].zfill(6): r for r in zt}
     gw = json.load(open(os.path.join(BASE, "_学习", "题材归位_%s.json" % DATE), encoding="utf-8"))
     mapping = gw["映射"]
-    robot = [c for c, v in mapping.items() if v.get("大方向") == "机器人"]
+    robot = [c for c, v in mapping.items()
+             if str(v.get("大方向") or "").startswith("机器人")]
 
     tpl = json.load(open(os.path.join(BASE, "产业链模板.json"), encoding="utf-8"))
     robot_tpl = tpl.get("人形机器人", {}).get("环节", {})

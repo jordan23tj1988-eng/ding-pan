@@ -1,17 +1,22 @@
 {
- "checked_at": "2026-10-29T09:12:08",
- "day": "20261028",
+ "checked_at": "2026-10-30T09:10:26",
+ "day": "20261029",
  "issues": [
   {
+   "kind": "cron_failures",
+   "day": "20261029",
+   "detail": "ifind-keepalive 最近连续失败 8 次"
+  },
+  {
    "kind": "assignments_overdue",
-   "day": "20261028",
+   "day": "20261029",
    "detail": "总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json"
   }
  ],
  "disk": {
   "total_gb": 1000.2,
-  "used_pct": 36.1,
-  "free_gb": 639.6
+  "used_pct": 36.3,
+  "free_gb": 637.0
  },
  "staging": {
   "exists": true,
@@ -19,9 +24,15 @@
   "gb": 0.08,
   "unit": "GiB",
   "size_is_lower_bound": true,
-  "oldest_days": 17.6
+  "oldest_days": 18.6
  },
- "cron_failures": [],
+ "cron_failures": [
+  {
+   "job_id": "5d8760e7a962",
+   "consecutive_failures": 8,
+   "name": "ifind-keepalive"
+  }
+ ],
  "cron_stale_skipped": [],
  "assignments": {
   "critical": 103,
@@ -29,7 +40,16 @@
  },
  "alerts": [
   {
-   "key": "assignments_overdue|20261028|总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json",
+   "key": "cron_failures|20261029|ifind-keepalive 最近连续失败 8 次",
+   "sent": false,
+   "delivery": {
+    "ok": false,
+    "rc": 1,
+    "out": "hermes send: Weixin send failed: iLink sendmessage session not ready: ret=-2 errcode=None errmsg=prepare failed — the user must send the bot a message first (or re-pair)"
+   }
+  },
+  {
+   "key": "assignments_overdue|20261029|总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json",
    "sent": false,
    "delivery": {
     "ok": false,

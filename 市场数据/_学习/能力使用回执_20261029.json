@@ -1,0 +1,70 @@
+{
+ "schema_version": 1,
+ "as_of": "20261029",
+ "decision_cutoff": "20261029",
+ "preload": {
+  "path": "D:\\股票数据\\市场数据\\_学习\\能力预加载_20261029.json",
+  "sha256": "75a7fbd5b8d0df729041a8c7602c5811e4a217c026ee3dfe08cbf411e60175d1"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "已用于本路判断证据链",
+     "source_locator": "_学习/lhb判断_20261029.json#判断.证据"
+    }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "【被真实使用并产生选票后果】规则=质量分选票保留换手率维度；今日执行可见：全池39只里换手<3%共10只，其中5只被判质量分≤2（002862 1.67%/601956 2.53%/001219 1.57%/002526 2.51%/603006 2.42%），逐票主导因子直接写『拖累 换手率:<3%(-0.7)』——001219（4板/一字）与601956（3板/一字）因此落到质量分2（全池最低档），机器预测执1胜率34.7%/34.4%也同步最低，与我今日73日实测分层『冰点×换手<3% n=132/35.6%/-1.24%（超额-0.98pp，冰点层最差单维桶）』方向一致。净效果：该维度自动把今日4只一字/秒板票挡在荐票序列之外，避免了『冰点×一字 n=103/34.0%/-1.27%』的负格，是本日0荐票结论的组成部分之一（若换手率被淘汰，001219 会凭抓龙率26.0%与4板身",
+     "source_locator": "_学习/limitup判断_20261029.json#判断.证据"
+    }
+   ],
+   "rejected": []
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  }
+ },
+ "source": "宿主按七域实际使用情况汇总(五路取 _能力回执片段_{route}, cycle/master 见 rejected 理由; 零编造: 无 effect 不写 applied)"
+}

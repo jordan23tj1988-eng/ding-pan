@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "as_of": "20261029",
+  "activation_date": "20261001",
+  "scope": "自我深挖与认知迭代发现→验证→能力化→预加载→七路消费→结算命中全链路只读审计",
+  "status": "pass",
+  "errors": [],
+  "warnings": [],
+  "routes": [
+    "auction",
+    "lhb",
+    "theme",
+    "logic",
+    "limitup",
+    "cycle",
+    "master"
+  ],
+  "ledger_summary": {
+    "自主拓展": {
+      "records": 24,
+      "strict_reusable": 2,
+      "validation_passes": 28,
+      "reused": 28,
+      "hits": 2,
+      "missing_boundary": 22,
+      "missing_validation_spec": 22
+    },
+    "认知迭代": {
+      "records": 8827,
+      "strict_reusable": 0,
+      "validation_passes": 0,
+      "reused": 0,
+      "hits": 0,
+      "missing_boundary": 8827,
+      "missing_validation_spec": 8827
+    }
+  },
+  "strict_reusable_total": 2,
+  "daily": {
+    "required": true,
+    "files": {
+      "preload": "D:\\股票数据\\市场数据\\_学习\\能力预加载_20261029.json",
+      "receipt": "D:\\股票数据\\市场数据\\_学习\\能力使用回执_20261029.json",
+      "consumption_audit": "D:\\股票数据\\市场数据\\_学习\\能力消费审计_20261029.json"
+    },
+    "exists": {
+      "preload": true,
+      "receipt": true,
+      "consumption_audit": true
+    },
+    "wiring_validate": {
+      "status": "pass",
+      "as_of": "20261029",
+      "applied_candidates": 2,
+      "preload": "_学习\\能力预加载_20261029.json",
+      "receipt": "_学习\\能力使用回执_20261029.json"
+    }
+  },
+  "policy": {
+    "validation_pass_is_not_hit": true,
+    "hit_requires_followup_object_date_result": true,
+    "missing_evidence_is_not_success": true,
+    "candidate_pool_cannot_enter_preload": true
+  }
+}

@@ -719,7 +719,7 @@ def _legacy(model, root):
             if top in ('日期','date','路','来源','schema_version','昨日战绩验收','环境加权依据','页面合同'):
                 continue
             if route=='index':
-                section = {'结论':'verdict','五路裁决':'routes','总裁决':'verdict','检查四项':'turning','发布门禁':'turning','推演指派':'verdict','分歧裁决':'turning','分歧点':'turning','综合深挖':'verdict','认知迭代':'verdict','线索跟踪':'verdict','指派清单':'verdict','回填窗口标注':'turning','独立盲区声明':'turning','能力承接':'verdict','矛盾捕获':'turning','筛选清单':'verdict'}[top]
+                section = {'结论':'verdict','五路裁决':'routes','总裁决':'verdict','检查四项':'turning','发布门禁':'turning','推演指派':'verdict','分歧裁决':'turning','分歧点':'turning','综合深挖':'verdict','认知迭代':'verdict','线索跟踪':'verdict','指派清单':'verdict','回填窗口标注':'turning','独立盲区声明':'turning','能力承接':'verdict','矛盾捕获':'turning','筛选清单':'verdict','趋同盲区':'turning','编造与后视镜审查':'turning','检查':'turning'}[top]
                 role = 'cognition' if top=='认知迭代' else 'research' if top=='综合深挖' else 'counterevidence' if top in ('分歧裁决','分歧点','矛盾捕获') else 'verdict' if top in ('结论','总裁决','筛选清单') else 'evidence'
             else:
                 section = 'cognition' if (top.startswith('认知迭代') or top=='独立盲区声明') else 'research' if top=='深挖' else first if top=='荐票' else evidence_section

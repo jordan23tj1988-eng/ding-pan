@@ -1,0 +1,70 @@
+{
+ "schema_version": 1,
+ "as_of": "20261030",
+ "decision_cutoff": "20261030",
+ "preload": {
+  "path": "D:\\股票数据\\市场数据\\_学习\\能力预加载_20261030.json",
+  "sha256": "930146d6329245bc24c71482e2c5207f98aca290e6445084ae769aeede4ea3b6"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "净买占比口径按该能力修正为『净买额/该股成交额』，并在席位判读中落 10-20% 正格遴选（000995 皇台酒业净买占比落 10-20% 正格→5% 试探仓；601083 打折 3.25×/301520 零 S-A 只观察）",
+     "source_locator": "_学习/lhb判断_20261030.json#判断"
+    }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "选票保留换手率维度并用于虚胖检测：换手≥20% 桶 n=1934/45.2%/+0.11%（p=0.02，未过 Bonferroni 校正，故不单独成规则）；一字检测用换手 1.8%/2.5%/3.2% 判『封单是假强度』；001219 换手 24.9% 计入荐票理由",
+     "source_locator": "_学习/limitup判断_20261030.json#判断"
+    }
+   ],
+   "rejected": []
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  }
+ },
+ "source": "宿主补写(片段缺失)：两路按判断文件原文引用判为 applied，其余零可复用能力→no_eligible_capabilities；零编造"
+}

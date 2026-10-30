@@ -1,0 +1,8 @@
+{
+ "route": "auction",
+ "status": "no_eligible_capabilities",
+ "considered_ids": [],
+ "applied": [],
+ "rejected": [],
+ "说明": "源 能力预加载_20261030.json#routes.auction：eligible_count=0、status=no_eligible_capabilities、records=[]（空数组），本路当日无任何可复用能力候选，故 considered_ids/applied/rejected 全部为空，未据任何 capability 状态改判。另注：资产证据池内另有 竞价撤单差分_20261030.json（status=pass，metrics.codes_with_pre_post=39、trajectory_codes=39）与 开盘验证维_20261030.json（status=pass，metrics.verified_codes=39、min_samples_per_code=2）两份能力产出，但两者均只有计数、无逐票数值，且后者声明的源 realtime_ticks.jsonl 在本机不存在，按要求不作为 applied 登记（它们不在 routes.auction.records 内），已在判断.独立盲区声明②③中如实标注。"
+}

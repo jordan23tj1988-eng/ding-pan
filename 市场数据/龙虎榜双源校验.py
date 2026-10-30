@@ -7,13 +7,16 @@
 缺口声明：源2 只有买入前五、无卖出前五 → 天然偏买，本脚本不把源2 当净买权威，只做方向/量级交叉。
 """
 from __future__ import annotations
-import argparse, csv, collections
+import argparse, csv, collections, time
 from pathlib import Path
 from capability_common import valid_date, load_json, write_json
 
 INTERVAL_KW = ("连续", "累计", "严重异常")
 STRONG_YI = 1.0        # 强矛盾阈值(亿)
 DISCOUNT_RATIO = 3.0   # 源2/源1 ≥ 3 判打折
+SOURCE2_MAX_WAIT = 180  # 源2 未落盘时最长等待秒数(时序竞态修, MA-20261029-01③)
+SOURCE2_POLL = 15
+SOURCE2_SETTLE = 5      # 文件 mtime 距今 <5s 视为可能仍在写入, 等它稳定
 
 
 def _f(x):
@@ -82,9 +85,31 @@ def read_source2(root: Path, d: str):
     return dict(agg)
 
 
-def build(root: Path, d: str):
+def _settle_source2(root: Path, d: str, max_wait: float = SOURCE2_MAX_WAIT):
+    """等源2 落盘且写入稳定(时序竞态修, MA-20261029-01③)。
+    返回 (data, waited秒)。lhb 与 席位明细 由不同脚本产出, 顺序不确定;
+    旧版一读到空就判 partial, 把『可比0』误读成『无分歧』。"""
+    p = root / "_学习" / "_席位动向" / f"{d}.csv"
+    t0 = time.time()
+    waited = 0.0
+    while True:
+        if p.is_file():
+            age = time.time() - p.stat().st_mtime
+            if age >= SOURCE2_SETTLE or time.time() - t0 >= max_wait:
+                return read_source2(root, d), waited
+        if time.time() - t0 >= max_wait:
+            return read_source2(root, d), waited
+        time.sleep(max(0.2, min(SOURCE2_POLL, max_wait - (time.time() - t0))))
+        waited = round(time.time() - t0, 1)
+
+
+def build(root: Path, d: str, wait_source2: float = SOURCE2_MAX_WAIT):
     valid_date(d)
-    s1, s2 = read_source1(root, d), read_source2(root, d)
+    s1 = read_source1(root, d)
+    if wait_source2 and wait_source2 > 0:
+        s2, waited = _settle_source2(root, d, wait_source2)
+    else:
+        s2, waited = read_source2(root, d), 0.0
     src = []
     if (root / d / "lhb.csv").is_file():
         src.append(f"{d}/lhb.csv")
@@ -131,6 +156,7 @@ def build(root: Path, d: str):
                     "分歧": len(diverge), "强矛盾": len(strong), "打折": len(discount),
                     "仅源1": len(only1), "仅源2": len(only2)},
         "errors": errors,
+        "等待源2秒数": waited,
         "note": "源1=股票级净买(当日榜行,禁累加多榜); 源2=东财买入前五买侧净额(无卖出前五,天然偏买,不作净买权威); "
                 "强矛盾(|任一|>1亿且方向相反)=卖压污染嫌疑禁入荐票; 打折(源2/源1≥3倍)=净买打折读",
         "口径": "源1取当日榜行(上榜原因不含 连续/累计/严重异常); 源2剔区间累计榜+(代码,席位)去重取买入金额最大",
@@ -151,8 +177,10 @@ def main(argv=None):
     p.add_argument('d')
     p.add_argument('--root', type=Path, default=Path(__file__).resolve().parent)
     p.add_argument('--out', type=Path)
+    p.add_argument('--wait-source2', type=float, default=SOURCE2_MAX_WAIT,
+                   help='源2 未落盘时最长等待秒数(默认180, 0=不等待)')
     a = p.parse_args(argv)
-    r = build(a.root.resolve(), a.d)
+    r = build(a.root.resolve(), a.d, a.wait_source2)
     out = a.out or (a.root / "_学习" / f"龙虎榜双源校验_{a.d}.json")
     write_json(out, r)
     print("[%s] %s 可比=%d 一致=%d 分歧=%d 强矛盾=%d 打折=%d" % (

@@ -38,6 +38,21 @@ def _junk(name):
     """ST/退/N/C统计层剔除(2026-07-11 P0-2);已冻结的历史发出版不回改。"""
     s=str(name or "")
     return ("ST" in s.upper()) or ("退" in s) or s.startswith("N") or s.startswith("C")
+def _lim(c):
+    """涨跌幅上限(%)按板块:30/68=20%,4/8/92(北交所)=30%,其余10%。"""
+    if c.startswith(("30","68")): return 20.0
+    if c.startswith(("4","8","92")): return 30.0
+    return 10.0
+def _buyable(c,ope):
+    """★可买子集(MA-20261029-03③落地):开盘价距涨停<0.3pp即视为开盘即封→买不进。
+    买不进样本的执行收益恒≈0,混入均值会把闸门对账的pp增益污染(认知库20261029条)。"""
+    if ope is None: return None
+    return not (ope >= _lim(c)-0.3)
+def _fakeyizi(sig,zha):
+    """★统一一字口径(MA-20261029-03②):标注一字但炸板≥3 ⇒ 假一字(实为秒板性质)。
+    只按现有字段(炸板次数)判定;末封时间字段当前池未入库,留待 zt_pool 扩展。"""
+    if not str(sig or "").startswith("一字"): return None
+    return "假一字" if (zha or 0)>=3 else "真一字"
 def build_pool(d):
     df=pd.read_csv(os.path.join(BASE,d,"zt_pool.csv"),dtype={"代码":str})
     df=df[~df["名称"].astype(str).map(_junk)]
@@ -81,7 +96,8 @@ def main(dprev):
         if exe is not None: exes.append(exe)
         feng=c in ztset
         verdict=("—" if exe is None else ("✓封" if feng else ("✓可吃" if exe>0 else "✗套")))
-        row.update(T1高开=ope,执行收益=exe,信号收益=sig,次日封板=feng,判定=verdict,竞价分=scores.get(c))
+        row.update(T1高开=ope,执行收益=exe,信号收益=sig,次日封板=feng,判定=verdict,竞价分=scores.get(c),
+                   可买=_buyable(c,ope),一字真伪=_fakeyizi(t.get("信号"),t.get("炸板")))
         res.append(row)
     n=len(exes); win=sum(1 for e in exes if e>0); seal=sum(1 for r in res if r["次日封板"])
     top_avg=_avg(exes)
@@ -106,6 +122,15 @@ def main(dprev):
         byscore={"高分半":_avg(hi),"低分半":_avg(lo),"分界":med}
     gate_in=[r["执行收益"] for r in gk if r["T1高开"]<5]
     bygate={"闸门内均收":_avg(gate_in),"闸门内只数":len(gate_in),"全池均收":top_avg}
+    # ★2026-10-30 MA-20261029-03③:闸门对账改双口径(结算口径保持不变,新增可买口径并列),防"买不进记0"污染pp增益
+    bygate["门内可买均收"]=_avg([r["执行收益"] for r in gk if r["T1高开"]<5 and r.get("可买") is True])
+    bygate["门内可买只数"]=len([r for r in gk if r["T1高开"]<5 and r.get("可买") is True])
+    bygate["门外可买均收"]=_avg([r["执行收益"] for r in gk if r["T1高开"]>=5 and r.get("可买") is True])
+    bygate["门外可买只数"]=len([r for r in gk if r["T1高开"]>=5 and r.get("可买") is True])
+    buyok=[r["执行收益"] for r in ok if r.get("可买") is True]
+    buyable_sum={"可买只数":len(buyok),"可买均收":_avg(buyok),
+                 "可买胜率":f"{sum(1 for e in buyok if e>0)}/{len(buyok)}" if buyok else "0/0",
+                 "假一字只数":len([r for r in res if r.get("一字真伪")=="假一字"])}
     refl=(f"{dprev}竞价池终结算:池{len(pool)}只,次日封板{seal}/{len(pool)},执行胜率{win}/{n},均收{top_avg}%"
       +(f" vs 全场涨停{mkt_avg}%(增益{edge:+.2f}pp)" if edge is not None else "")
       +f";按信号:{bysig};按连板:{bylb};按高开档:{bygk}(验证'低开有肉高开套')"
@@ -113,7 +138,7 @@ def main(dprev):
     out=dict(池日=dprev,结算日=dnext,明细=res,
         汇总=dict(池家数=len(pool),次日封板=f"{seal}/{len(pool)}",执行胜率=f"{win}/{n}" if n else "0/0",
                 执行均收=top_avg,全场涨停均收=mkt_avg,增益pp=edge,按信号=bysig,按连板=bylb,按高开档=bygk,
-                按评分半区=byscore,闸门对账=bygate),
+                按评分半区=byscore,闸门对账=bygate,**buyable_sum),
         口径="★执行口径=T+1开盘买入→T+1收盘;池=发出版冻结名单,不可事后增删;竞价分=昨晚竞价评分json(分数唯一源)")
     json.dump(out,open(os.path.join(L,f"竞价池结算_{dprev}.json"),"w",encoding="utf-8"),ensure_ascii=False,indent=1)
     append_dedup(os.path.join(L,"_竞价池结算.jsonl"), dict(池日=dprev,**{k:v for k,v in out["汇总"].items() if k not in("按信号","按连板","按高开档","按评分半区","闸门对账")}), "池日")

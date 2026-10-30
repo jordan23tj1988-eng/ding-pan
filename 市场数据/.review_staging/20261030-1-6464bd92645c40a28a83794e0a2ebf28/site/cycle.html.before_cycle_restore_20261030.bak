@@ -1,0 +1,2183 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>周期情绪</title><meta name="review-date" content="20261030"><meta name="review-schema-version" content="1"><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+
+/* ── v4.1 页面阅读路径与响应式增强 ── */
+:root{--route-accent:var(--accent)}
+body[data-route="cycle"]{--route-accent:#7b8cff}
+body[data-route="auction"]{--route-accent:#e8a33d}
+body[data-route="lhb"]{--route-accent:#b18aff}
+body[data-route="theme"]{--route-accent:#2fd3c5}
+body[data-route="logic"]{--route-accent:#63b3ff}
+body[data-route="limitup"]{--route-accent:#ff7b72}
+
+/* 内容宽度按信息密度自适应：宽表不再挤成一团，概览 bento 仍保持黄金版宽度。 */
+.wrap:has(>section){max-width:1180px}
+.wrap:has(.rowA){max-width:1440px}
+.wrap>section{scroll-margin-top:92px;margin-top:30px}
+.wrap>section>h2{margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid var(--line2);position:relative}
+.wrap>section>h2::before{background:var(--route-accent,var(--accent));box-shadow:0 0 14px color-mix(in srgb,var(--route-accent,var(--accent)) 35%,transparent)}
+.wrap>section:first-of-type{margin-top:24px}
+
+/* 页面阅读地图：显示板块职责，不复制正文事实。 */
+.page-map{position:sticky;top:78px;z-index:6;display:flex;align-items:center;gap:5px;overflow-x:auto;white-space:nowrap;margin:0 0 18px;padding:6px;background:rgba(18,20,28,.90);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(12px);scrollbar-width:none}
+.page-map::-webkit-scrollbar{display:none}
+.page-map-label{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:0 8px 0 5px;flex:0 0 auto}
+.page-map a{color:var(--sub);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:.16s;flex:0 0 auto}
+.page-map a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.page-map a.active{color:var(--route-accent,var(--accent));background:color-mix(in srgb,var(--route-accent,var(--accent)) 13%,transparent);box-shadow:inset 0 -2px 0 var(--route-accent,var(--accent));font-weight:700}
+.page-map a:focus-visible{outline:2px solid var(--route-accent,var(--accent));outline-offset:1px}
+
+/* 卡片层级：标题、来源提示、正文和长表分出视觉层。 */
+.card,.obs,.kpi,details.chain{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.card h3,.card h4{line-height:1.45}
+.card>h3:first-child,.card>h4:first-child{color:var(--ink)}
+.card .hint{display:inline-block;line-height:1.45}
+.card table{margin-top:10px}
+table tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+table tr:hover td{background:color-mix(in srgb,var(--route-accent,var(--accent)) 7%,transparent)}
+th{white-space:nowrap}
+pre{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:rgba(0,0,0,.16);font-family:var(--mono);font-size:11px;line-height:1.55}
+
+/* 触屏和窄屏：不缩小关键数字，改为卡内横向浏览，避免整页横溢出。 */
+@media(max-width:640px){
+    .navbar{display:block;top:6px;margin:6px 8px 0;max-width:calc(100% - 16px);padding:8px 10px;border-radius:14px}
+  .navbar .brand{font-size:13px;margin-bottom:6px}.navbar .logo{width:28px;height:28px;border-radius:8px}
+  .navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}
+  .navbar .pills::-webkit-scrollbar{display:none}
+  .navbar .pills a{font-size:12px;padding:6px 10px}
+  .navbar .upd{margin-left:auto;font-size:10px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap{padding:18px 10px 48px}.wrap:has(>section),.wrap:has(.rowA){max-width:none}
+  .page-map{top:65px;margin-bottom:14px}
+  .wrap>section{margin-top:24px}.wrap>section>h2{font-size:14.5px;padding-bottom:8px}
+  .card,.obs{padding-left:14px;padding-right:14px;border-radius:11px}
+  .card{overflow-x:auto}.card>h3,.card>h4,.card>p,.card>ul,.card>ol{min-width:0}
+  table{min-width:620px;font-size:12px}th,td{padding:7px 8px}
+  .routes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:19px 18px}.hero h1{font-size:21px}
+  .kpi .big{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.page-map a,.card,.obs,.kpi{transition:none!important}}
+
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}}
+
+/* ── v4.3 概览可读层 ── 只收敛版式与信息层级，不改判断内容 */
+.reading-spine a.rs-step{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-weight:600;white-space:nowrap}
+.reading-spine a.rs-step:hover{border-color:var(--line2);color:var(--ink)}
+.reading-spine a.rs-step b{color:var(--accent);font-family:var(--mono);font-size:10.5px;margin-right:6px;font-weight:800}
+.cgrp{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 20px 6px;margin-top:13px}
+.cgrp-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px dashed var(--line2)}
+.cgrp-head .cgrp-note{color:var(--dim);font-size:11.3px;font-family:var(--mono)}
+.cgrp-body{display:flex;flex-direction:column}
+.citem{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:2px 12px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:0;padding-bottom:2px}
+.citem>p{margin:0;line-height:1.62}
+.citem .citem-tag{color:var(--dim);font-size:11.1px;margin:2px 0 0;font-family:var(--mono);white-space:nowrap;text-align:right}
+.claim-proof{grid-column:2;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.claim-proof .proof-label{color:var(--dim);font-size:10.6px;font-weight:700}
+.claim-proof a{color:var(--sub);font-size:10.7px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--mono)}
+.claim-proof a:hover{border-color:var(--accent-dim);color:var(--ink)}
+.audit-fold{margin-top:13px}
+.audit-fold>summary{cursor:pointer;color:var(--sub);font-size:12.6px;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+.audit-fold>summary::-webkit-details-marker{display:none}
+.audit-fold>summary::before{content:'▸';color:var(--accent);font-family:var(--mono);font-size:12px}
+.audit-fold[open]>summary::before{content:'▾'}
+.audit-fold .inner{padding:2px 0 12px}
+.audit-fold .fold-note{color:var(--dim);font-size:11.6px;margin:0 0 10px}
+.audit-fold .inner-limit{margin:0 0 12px}
+.audit-fold .inner-limit b{color:var(--sub);font-size:12.2px}
+.audit-fold .inner-limit ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:11.8px}
+.machfold{margin-top:13px}
+.kpi .sub2{font-family:var(--mono);font-size:11px}
+.kpi .gauge .gl{font-size:10.4px;color:var(--dim)}
+.mx{width:100%;border-collapse:collapse;margin:2px 0 4px;table-layout:fixed}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mx thead th{color:var(--dim);font-size:11.1px;font-weight:700;font-family:var(--mono);white-space:nowrap}
+.mx tbody th{color:var(--sub);font-weight:600;font-size:11.6px;font-family:var(--mono);white-space:nowrap;width:66px}
+.mx td{font-size:12.2px;line-height:1.62}
+.mx td a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.mx td a:hover{border-bottom-color:var(--accent-dim)}
+.mx .mx-empty{color:var(--dim)}
+.mx tr:last-child th,.mx tr:last-child td{border-bottom:0}
+.chip2.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+section>h2{margin-top:32px}
+.chip2.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.chip2.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+
+/* ── v4.4 展示层去噪 / 纯内容层 ──
+   用户拍板(2026-09-22)：角色徽章(结论/观察/证据/反证/条件/认知/限制)、
+   来源标签、"证据回链/来源"字、旧版原文碎片卡 —— 这些只增加噪声，
+   对决策没有信息增量，全部退出展示层。
+   证据不删除:claim 锚点、#evidence-* 回链、模型 JSON、审计 JSON 全量保留。
+   概览页(citem 版式)同样的噪声一并在本层收敛。 */
+h1.claim-hero{font-size:inherit;font-family:inherit;font-weight:inherit;line-height:inherit;margin:0;display:inline}
+.claim-head:not(.cgrp-head),.citem .citem-tag{display:none}
+.claim-proof .proof-label{display:none}
+.claim-proof{margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05)}
+.claim-proof a{border:0;padding:0;background:none;font-size:10.6px}
+.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}
+/* 无痕原文库：给未上展示层的 claim 保留锚点与原文，供门禁复核，读者不可见 */
+.claim-anchor,.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}
+.legend-strip{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11.4px;padding:8px 0 2px;border-top:1px solid var(--line)}
+.legend-strip b{color:var(--sub);font-weight:800}
+.legend-strip i{font-style:normal;color:var(--dim)}
+</style></head><body data-route="cycle" data-d="20261030" data-schema-version="1" data-template-version="p1.3"><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="" href="index.html">概览</a><a class="on" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd">更新 20261030</span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp">温度15.2 · 涨停47 · 跌停82 · 炸板率39.7% · 最高5板001219 · 量能16745亿 · 1进2 20.7% · 2进3 33.3% · 总仓上限5%<span class="source-ticker">量能1.67万亿·弱修｜最高5板·青岛食品｜主判=退潮·降</span></div><div class="grp">温度15.2 · 涨停47 · 跌停82 · 炸板率39.7% · 最高5板001219 · 量能16745亿 · 1进2 20.7% · 2进3 33.3% · 总仓上限5%<span class="source-ticker">量能1.67万亿·弱修｜最高5板·青岛食品｜主判=退潮·降</span></div></div></div><nav class="reading-spine" aria-label="阅读顺序"><span class="rs-title">阅读顺序</span><span class="rs-step"><b>01</b>结论</span><span class="rs-arrow">→</span><span class="rs-step"><b>02</b>指标</span><span class="rs-arrow">→</span><span class="rs-step"><b>03</b>分段证据</span><span class="rs-arrow">→</span><span class="rs-step"><b>04</b>来源审计</span></nav><div class="rowA"><div class="hero"><div class="kick">周期情绪 · 我当前的判断 · 截至 2026-10-30 收盘</div><h1 aria-label="冰点里的一次分层"><em>冰点里的一次分层</em></h1><p>量能台阶→先行指标三窗→情绪五阶段（五路投票）→连板梯队→攻防总开关，五件事定仓位。</p><div class="stance"><span class="pill warn">周期 · <b class="s-weak">冰点里的一次分层</b></span><span class="pill">量能 · <b>16745.0</b></span><span class="pill hot"><b class="s-ok">三窗 · 退潮</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">10-30</span></div><span class="lab">两市量能 · 亿</span><span class="big">16745.0</span><svg class="spark" viewBox="0 0 180 44" aria-hidden="true"><polyline fill="none" stroke="#e8a33d" stroke-width="2" points="0.0,15.84 45.0,38.0 90.0,12.89 135.0,23.68 180.0,6.0"/></svg><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">10-30</span></div><span class="lab">周期投票主判</span><span class="big">退潮</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">10-30</span></div><span class="lab">市场温度 · 250日分位</span><span class="big">15.2</span><div class="gauge"><div class="gtrack"><i class="gmark" style="left:15.2%"></i></div><div class="gl"><span>冷</span><span>中性</span><span>热</span></div></div><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">10-30</span></div><span class="lab">执行仓位上限</span><span class="big">—</span><span class="sub2">当日该口径数据缺失，未填补</span></div></div><div class="card"><b>数据边界</b><ul><li>兼容导入旧判断；原文立场未重新验证。</li><li>旧 HTML 补充按原栏目职责归位；相似判断仅提示重叠，不作语义删除。</li></ul></div><section id="volume"><h2>一 量能台阶 · 我站在哪一阶</h2><div id="component-VOLSTEP"><!--VOLSTEP-->
+<div class="card"><h3 style="margin:0 0 8px">量能台阶 <span class="hint">机器核对 · 米开换算表(手册V2 §2.3) · 温度表权威</span></h3><div class="steps"><div class="step dim"><span class="sr">≥3.8</span><span class="sn">主升2确认<small>放量突破</small></span><span class="sd"></span></div>
+<div class="step dim"><span class="sr">3.5~3.8</span><span class="sn">突破压力<small>需增量</small></span><span class="sd"></span></div>
+<div class="step dim"><span class="sr">3.3~3.5</span><span class="sn">强修<small>量能承接</small></span><span class="sd"></span></div>
+<div class="step dim"><span class="sr">3.0~3.3</span><span class="sn">过渡<small>量能中枢</small></span><span class="sd"></span></div>
+<div class="step cur"><span class="sr">&lt;3.0</span><span class="sn">弱修<small>缩量分歧</small></span><span class="sd"><span class="dayc">10-28 1.63</span><span class="dayc">10-29 1.56</span><span class="dayc now">10-30 1.67</span></span></div>
+</div><div class="hint">量能 1.67 万亿落&quot;弱修&quot;档 —— 米开量能台阶换算(手册V2 §2.3 A档, 腾讯替代源); 当日涨停47/温度15.2(冰点), 档位与温度档冰点联动判读。</div></div>
+
+<!--/VOLSTEP--></div><div class="card"><span id="claim-cycle-e81cbf061d8b821e"></span></div><div class="" id="claim-cycle-77550d1220e9252b"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><h3>冰点里的一次分层：温度 11.0→<b>15.2</b>（冰点档下沿）、涨停 39→<b>47</b>（+20.5%）、跌停 41→<b class="down">82</b>（+100%）、封板额 31.1→<b>31.5 亿</b>（+1.3%）、一进二率 9.5%→<b>20.7%</b>、最高板 4→<b>5</b>（001219 青岛食品） · stage=<em>退潮</em>・direction=<em>降</em>・攻防<em>防守·总仓≤5%</em> · 五路周期投票＝降 3 / 平 2 / 升 0（无复议）</h3></div><div class="" id="claim-cycle-8544943c1d8fa4a6"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>量能台阶 → 情绪先行指标 → 五态与五路周期投票 → 连板梯队 → 攻防档位 → 自主深挖 → 我的认知迭代。周期路只做环境判定：不荐个股、不写交易计划、不给买卖点；个股与执行口径以五路判断页与总审为准。<b>本页一句话</b>：今天是<b>台阶升了半档、环境没升</b>——量能 16745 亿回到「一主线一次」档上沿、涨停 39→47、回封 21 只，宽度确实在回补；但跌停同日 41→82 翻倍、核按钮率 17.9%、全池 47 只执 1 无一过 50%，赚钱效应反向。宽度给的是反弹的形，赚钱效应给的是继续退潮的里，本页按两条腿分列判读，不取平均。</p></div><div class="card"><span id="claim-cycle-a9309eda164f38ce"></span><span id="claim-cycle-57d5a74ea9a3a81c"></span><span id="claim-cycle-58b2c9ade92fbc71"></span><span id="claim-cycle-6d4a479cda2a104c"></span><span id="claim-cycle-007cf414988cc24d"></span><span id="claim-cycle-efdee85005cc3e11"></span><span id="claim-cycle-d7fe98f20fdb20b2"></span><span id="claim-cycle-47e9145b64ece03f"></span><span id="claim-cycle-f7251a87c20470c6"></span><span id="claim-cycle-959083f76099b6c4"></span><span id="claim-cycle-cdbdca0595679f2b"></span></div><div class="" id="claim-cycle-ee0d6faadb526d1d"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>10-30两市量能 · 亿16745.0+7.58% · 源 _市场温度表.json#20261030.成交额亿</p></div><div class="" id="claim-cycle-cd907aa0188b951d"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>10-30周期投票主判退潮·降五路 3 降 2 平 0 升</p></div><div class="" id="claim-cycle-3d1916e82e24c6f4"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>10-30市场温度 · 冰点档15.2冰点偏冷中性偏热过热昨日 11.0 · 源 _市场温度表.json#20261029</p></div><div class="" id="claim-cycle-cdaf9ff71d7a4f34"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>10-30执行仓位上限5%C档 · 单票≤2% · 源 总审_20261030.json#总裁决</p></div><div class="card"><span id="claim-cycle-01945ee574ac1204"></span><span id="claim-cycle-8b7ec3142d79e9f7"></span><span id="claim-cycle-363f454af0fdf4e9"></span><span id="claim-cycle-f5533c3b57b58c2c"></span><span id="claim-cycle-36897df5f1534718"></span><span id="claim-cycle-9a14fa9f1d0167fe"></span><span id="claim-cycle-2e5415aa5b5c2d2b"></span><span id="claim-cycle-6a95582056daac26"></span><span id="claim-cycle-714c825dd94d6d5c"></span><span id="claim-cycle-22da436df555b8a9"></span><span id="claim-cycle-05a80244505dd1b0"></span><span id="claim-cycle-ed5a8c02b380c6c9"></span><span id="claim-cycle-1ee6be4a01a2ac5c"></span><span id="claim-cycle-0b1dcbfb23712ea7"></span><span id="claim-cycle-849043f0c2704192"></span><span id="claim-cycle-1e94dd168fb32294"></span><span id="claim-cycle-b689a79d3dcea879"></span><span id="claim-cycle-9ff82a21b73c7992"></span><span id="claim-cycle-f2f414d96c752135"></span><span id="claim-cycle-bf8ddde3895e0409"></span><span id="claim-cycle-ab516e3d65a5388e"></span><span id="claim-cycle-684cdf72c64d2a27"></span><span id="claim-cycle-dc0733dc5716d948"></span><span id="claim-cycle-69042ef459ce9278"></span><span id="claim-cycle-20608044d03b77b6"></span><span id="claim-cycle-3743302322482ad0"></span><span id="claim-cycle-cb1ca1611c3009ef"></span><span id="claim-cycle-0fb3c0ad86624ec4"></span><span id="claim-cycle-f283614806927312"></span><span id="claim-cycle-5fe82edc61a83243"></span><span id="claim-cycle-40e54987ae342843"></span><span id="claim-cycle-832e81fb0ae4e3ba"></span><span id="claim-cycle-5670edfdf062e730"></span><span id="claim-cycle-dc561357fe8d00dc"></span><span id="claim-cycle-a2c8d260151cc062"></span><span id="claim-cycle-e340ae8345f2bfdb"></span><span id="claim-cycle-ee5fe4a17d078181"></span><span id="claim-cycle-91d7e973013b8e9f"></span></div><div class="" id="claim-cycle-ce833e6ec5f9d234"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p class="mut">口径登记：本页量能一律取 fact 权威口径（成交额＝温度表）。五路正文与总审中出现的「昨 18186 亿 / -7.9%」在 20261029/summary.json 与 _市场温度表.json#20261029 中均无出处，推演_20261030.json#矛盾捕获 已列为第 1 条矛盾，本页按 15565 计，故结论是放量 +7.58% 而非缩量。</p></div></section><section id="leading"><h2>二 先行指标 · 三窗触发器</h2><div id="component-LEADIND"><!--LEADIND--><div class="card"><p style="font-weight:700;margin-bottom:2px">情绪先行指标 · 近20日 <span class="mut" style="font-weight:400">(脚本段A档 · 情绪先行指标.py --card · 当日温度 15.2·冰点,阈值冰点&lt;25/过热≥85)</span></p><div style="font-size:11px;color:#6b7683">涨停数_净=47</div><svg viewBox="0 0 880 196" style="width:100%;height:auto;display:block"><line x1="46" y1="172" x2="866" y2="172" stroke="#3a3f46"></line><line x1="46" y1="139.4" x2="866" y2="139.4" stroke="#8a6d2f" stroke-dasharray="4 4" stroke-width="0.8"></line><text x="866" y="136.4" font-size="8.5" fill="#8a6d2f" text-anchor="end">1进2率10%=接力冰点参考线</text><rect x="55.8" y="110.8" width="21.3" height="61.2" rx="1.5" fill="#4a5666"></rect><text x="66.5" y="108" font-size="8" fill="#6b7683" text-anchor="middle">33</text><rect x="96.8" y="68.2" width="21.3" height="103.8" rx="1.5" fill="#4a5666"></rect><text x="107.5" y="65" font-size="8" fill="#6b7683" text-anchor="middle">56</text><rect x="137.8" y="75.6" width="21.3" height="96.4" rx="1.5" fill="#4a5666"></rect><text x="148.5" y="73" font-size="8" fill="#6b7683" text-anchor="middle">52</text><rect x="178.8" y="94.1" width="21.3" height="77.9" rx="1.5" fill="#4a5666"></rect><text x="189.5" y="91" font-size="8" fill="#6b7683" text-anchor="middle">42</text><rect x="219.8" y="44.1" width="21.3" height="127.9" rx="1.5" fill="#4a5666"></rect><text x="230.5" y="41" font-size="8" fill="#6b7683" text-anchor="middle">69</text><rect x="260.8" y="86.7" width="21.3" height="85.3" rx="1.5" fill="#4a5666"></rect><text x="271.5" y="84" font-size="8" fill="#6b7683" text-anchor="middle">46</text><rect x="301.8" y="47.8" width="21.3" height="124.2" rx="1.5" fill="#4a5666"></rect><text x="312.5" y="45" font-size="8" fill="#6b7683" text-anchor="middle">67</text><rect x="342.8" y="105.3" width="21.3" height="66.7" rx="1.5" fill="#4a5666"></rect><text x="353.5" y="102" font-size="8" fill="#6b7683" text-anchor="middle">36</text><rect x="383.8" y="105.3" width="21.3" height="66.7" rx="1.5" fill="#4a5666"></rect><text x="394.5" y="102" font-size="8" fill="#6b7683" text-anchor="middle">36</text><rect x="424.8" y="62.6" width="21.3" height="109.4" rx="1.5" fill="#4a5666"></rect><text x="435.5" y="60" font-size="8" fill="#6b7683" text-anchor="middle">59</text><rect x="465.8" y="86.7" width="21.3" height="85.3" rx="1.5" fill="#4a5666"></rect><text x="476.5" y="84" font-size="8" fill="#6b7683" text-anchor="middle">46</text><rect x="506.8" y="71.9" width="21.3" height="100.1" rx="1.5" fill="#4a5666"></rect><text x="517.5" y="69" font-size="8" fill="#6b7683" text-anchor="middle">54</text><rect x="547.8" y="79.3" width="21.3" height="92.7" rx="1.5" fill="#4a5666"></rect><text x="558.5" y="76" font-size="8" fill="#6b7683" text-anchor="middle">50</text><rect x="588.8" y="110.8" width="21.3" height="61.2" rx="1.5" fill="#4a5666"></rect><text x="599.5" y="108" font-size="8" fill="#6b7683" text-anchor="middle">33</text><rect x="629.8" y="20.0" width="21.3" height="152.0" rx="1.5" fill="#4a5666"></rect><text x="640.5" y="17" font-size="8" fill="#6b7683" text-anchor="middle">82</text><rect x="670.8" y="70.0" width="21.3" height="102.0" rx="1.5" fill="#4a5666"></rect><text x="681.5" y="67" font-size="8" fill="#6b7683" text-anchor="middle">55</text><rect x="711.8" y="96.0" width="21.3" height="76.0" rx="1.5" fill="#4a5666"></rect><text x="722.5" y="93" font-size="8" fill="#6b7683" text-anchor="middle">41</text><rect x="752.8" y="40.4" width="21.3" height="131.6" rx="1.5" fill="#4a5666"></rect><text x="763.5" y="37" font-size="8" fill="#6b7683" text-anchor="middle">71</text><rect x="793.8" y="99.7" width="21.3" height="72.3" rx="1.5" fill="#4a5666"></rect><text x="804.5" y="97" font-size="8" fill="#6b7683" text-anchor="middle">39</text><rect x="834.8" y="84.9" width="21.3" height="87.1" rx="1.5" fill="#7d5a63"></rect><text x="845.5" y="82" font-size="8" fill="#6b7683" text-anchor="middle">47</text><polyline points="107.5,54.8 148.5,98.8 189.5,145.6 230.5,39.8 271.5,104.3 312.5,102.3 353.5,95.2 394.5,49.9 435.5,73.0 476.5,110.8 517.5,97.4 558.5,74.3 599.5,124.1 640.5,49.9 681.5,129.4 722.5,106.9 763.5,116.0 804.5,141.1 845.5,104.6" fill="none" stroke="#d9a441" stroke-width="1.8"></polyline><circle cx="107.5" cy="54.8" r="3" fill="#d9a441"></circle><circle cx="148.5" cy="98.8" r="3" fill="#d9a441"></circle><circle cx="189.5" cy="145.6" r="3" fill="#d9a441"></circle><circle cx="230.5" cy="39.8" r="3" fill="#d9a441"></circle><circle cx="271.5" cy="104.3" r="3" fill="#d9a441"></circle><circle cx="312.5" cy="102.3" r="3" fill="#d9a441"></circle><circle cx="353.5" cy="95.2" r="3" fill="#d9a441"></circle><circle cx="394.5" cy="49.9" r="3" fill="#d9a441"></circle><circle cx="435.5" cy="73.0" r="3" fill="#d9a441"></circle><circle cx="476.5" cy="110.8" r="3" fill="#d9a441"></circle><circle cx="517.5" cy="97.4" r="3" fill="#d9a441"></circle><circle cx="558.5" cy="74.3" r="3" fill="#d9a441"></circle><circle cx="599.5" cy="124.1" r="3" fill="#d9a441"></circle><circle cx="640.5" cy="49.9" r="3" fill="#d9a441"></circle><circle cx="681.5" cy="129.4" r="3" fill="#d9a441"></circle><circle cx="722.5" cy="106.9" r="3" fill="#d9a441"></circle><circle cx="763.5" cy="116.0" r="3" fill="#d9a441"></circle><circle cx="804.5" cy="141.1" r="3" fill="#d9a441"></circle><circle cx="845.5" cy="104.6" r="3" fill="#d9a441"></circle><text x="845.5" y="97.6" font-size="10" fill="#d9a441" text-anchor="end">20.7%</text><text x="107.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">09-29</text><text x="189.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-08</text><text x="271.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-12</text><text x="353.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-14</text><text x="435.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-16</text><text x="517.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-20</text><text x="599.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-22</text><text x="681.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-26</text><text x="763.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-28</text><text x="845.5" y="185" font-size="8.5" fill="#6b7683" text-anchor="middle">10-30</text><text x="46" y="12" font-size="9" fill="#98a0ab">灰柱=净涨停数(剔ST,峰82) · 金线=1进2率(右满刻度47%)</text></svg><svg viewBox="0 0 880 182" style="width:100%;height:auto;display:block"><line x1="46" y1="88" x2="866" y2="88" stroke="#3a3f46"></line><rect x="55.8" y="88.0" width="21.3" height="33.8" rx="1.5" fill="#2f9e6e"></rect><rect x="96.8" y="76.0" width="21.3" height="12.0" rx="1.5" fill="#d64541"></rect><rect x="137.8" y="88.0" width="21.3" height="3.6" rx="1.5" fill="#2f9e6e"></rect><rect x="178.8" y="88.0" width="21.3" height="21.5" rx="1.5" fill="#2f9e6e"></rect><rect x="219.8" y="78.0" width="21.3" height="10.0" rx="1.5" fill="#d64541"></rect><rect x="260.8" y="88.0" width="21.3" height="14.1" rx="1.5" fill="#2f9e6e"></rect><rect x="301.8" y="30.0" width="21.3" height="58.0" rx="1.5" fill="#d64541"></rect><text x="312.5" y="26.0" font-size="8.5" fill="#98a0ab" text-anchor="middle">+3.5</text><rect x="342.8" y="88.0" width="21.3" height="32.5" rx="1.5" fill="#2f9e6e"></rect><rect x="383.8" y="88.0" width="21.3" height="18.9" rx="1.5" fill="#2f9e6e"></rect><rect x="424.8" y="88.0" width="21.3" height="48.3" rx="1.5" fill="#2f9e6e"></rect><rect x="465.8" y="88.0" width="21.3" height="19.7" rx="1.5" fill="#2f9e6e"></rect><rect x="506.8" y="73.5" width="21.3" height="14.5" rx="1.5" fill="#d64541"></rect><rect x="547.8" y="84.5" width="21.3" height="3.5" rx="1.5" fill="#d64541"></rect><text x="599.5" y="84" font-size="8" fill="#4a5666" text-anchor="middle">∅</text><rect x="629.8" y="34.4" width="21.3" height="53.6" rx="1.5" fill="#d64541"></rect><rect x="670.8" y="88.0" width="21.3" height="5.3" rx="1.5" fill="#2f9e6e"></rect><rect x="711.8" y="88.0" width="21.3" height="2.5" rx="1.5" fill="#2f9e6e"></rect><rect x="752.8" y="60.2" width="21.3" height="27.8" rx="1.5" fill="#d64541"></rect><rect x="793.8" y="88.0" width="21.3" height="44.2" rx="1.5" fill="#2f9e6e"></rect><text x="845.5" y="84" font-size="8" fill="#4a5666" text-anchor="middle">∅</text><circle cx="435.5" cy="155" r="2.6" fill="#d9a441"></circle><circle cx="476.5" cy="155" r="2.6" fill="#d9a441"></circle><text x="107.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">09-29</text><text x="189.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-08</text><text x="271.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-12</text><text x="353.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-14</text><text x="435.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-16</text><text x="517.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-20</text><text x="599.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-22</text><text x="681.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-26</text><text x="763.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-28</text><text x="845.5" y="168" font-size="8.5" fill="#6b7683" text-anchor="middle">10-30</text><text x="46" y="12" font-size="9" fill="#98a0ab">昨停溢价=昨日涨停池今日开盘买→收盘均收(执行口径,%);红正绿负;金点=连负≥3日(洗出反弹窗条件)</text></svg><div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap"><div style="flex:1;min-width:190px;border:1px solid #4fb3aa;border-radius:8px;padding:8px 10px;background:rgba(217,164,65,.06)"><div style="font-weight:700;font-size:13px;color:#4fb3aa">❄ 冰点进攻窗 · 触发</div><div style="font-size:11px;color:#98a0ab;margin-top:2px">温度&lt;25 · A档:y1+0.30%/胜率60%(n=15/12段)</div></div><div style="flex:1;min-width:190px;border:1px solid #33383f;border-radius:8px;padding:8px 10px"><div style="font-weight:700;font-size:13px;color:#5b636d">☢ 过热禁追窗 · 灭</div><div style="font-size:11px;color:#5b636d;margin-top:2px">温度≥85 · A档:0/6全负·-1.86%</div></div><div style="flex:1;min-width:190px;border:1px solid #33383f;border-radius:8px;padding:8px 10px"><div style="font-weight:700;font-size:13px;color:#5b636d">♨ 洗出反弹窗 · —</div><div style="font-size:11px;color:#5b636d">溢价连负3日</div></div></div><div style="font-size:11px;color:#6b7683;margin-top:8px">读法:柱线剪刀口张开(涨停创高而金线趴地)=数量繁荣×接力冰点;三窗战绩=2025-07~2026-07单牛市周期回测,小样本,给环境判断不给指令。已证伪:复合&quot;冰点+≥2转机分量&quot;硬条件。</div></div><!--/LEADIND--></div><div class="card"><span id="claim-cycle-328db818eb36e597"></span><span id="claim-cycle-6ca103f4a58f03b0"></span><span id="claim-cycle-4ac02a0a8474a03c"></span><span id="claim-cycle-810a9e7bd24d17a1"></span><span id="claim-cycle-25d08c6812d215a6"></span><span id="claim-cycle-7395b17669801d59"></span><span id="claim-cycle-8db4311018c1b8c5"></span><span id="claim-cycle-5040b0c07eab115a"></span><span id="claim-cycle-c7f0b772480b7919"></span><span id="claim-cycle-f9d83bbbe1030585"></span><span id="claim-cycle-e85e2003efbe0a1f"></span><span id="claim-cycle-505dec9585ac781a"></span><span id="claim-cycle-d1544b886832ada3"></span><span id="claim-cycle-20a2f8a67acc1d59"></span><span id="claim-cycle-7ef50b99da686591"></span><span id="claim-cycle-77a7818202bf0318"></span><span id="claim-cycle-70ec13e0f4c2801d"></span><span id="claim-cycle-38ce57efe1a7d43a"></span><span id="claim-cycle-29ae61bec3ddd6b1"></span><span id="claim-cycle-876c31536bc40df0"></span><span id="claim-cycle-dd6da4a76c569d53"></span><span id="claim-cycle-03e162460573a5b9"></span><span id="claim-cycle-f785927b9d51276f"></span><span id="claim-cycle-e8dfb2813f87c27d"></span><span id="claim-cycle-eb83ae620eec804d"></span><span id="claim-cycle-8d1ea09659e6718b"></span><span id="claim-cycle-ab461adc9fe7c70b"></span><span id="claim-cycle-a457763f54836443"></span></div><div class="" id="claim-cycle-60913db2e6e815e9"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>三窗合计：<b>1 窗触发（核按钮）、1 窗未触发但差 1 日（溢价）、1 窗贴线未触发（晋级）</b>，加上触发器里唯一的冰点进攻窗，构成一个方向互斥的组合。我的处理原则是——触发器管「环境会不会变」，窗管「变了以后能不能做」。今日是环境有可能变好（统计 6/6 上行）、但当下做不了（执 1 全池负期望），所以主判保持退潮，攻防保持防守。</p></div></section><section id="stages"><h2>三 情绪五阶段 · 五路周期投票</h2><div id="component-MACHVOTE"><!--MACHVOTE--><!--VOTEBOARD--><div style="margin:10px 0;padding:12px 14px;background:#14171e;border:1px solid #2a2f3a;border-radius:10px">
+<div style="font-size:11px;letter-spacing:2px;color:#d9a441;font-family:monospace">五路周期投票 · 主判=退潮·降</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">①竞价 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">退潮·降</b><br><span style="color:#5c6674">权40%·准确率13/35</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">②席位 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">退潮·平</b><br><span style="color:#5c6674">权27%·准确率7/35</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">③题材 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">退潮·平</b><br><span style="color:#5c6674">权38%·准确率12/35</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">④产逻 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">退潮·降</b><br><span style="color:#5c6674">权43%·准确率15/36</span></div>
+<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#d8dee9">⑤质量 <span style="color:#4caf7d">同意</span><br><b style="color:#d8dee9">退潮·降</b><br><span style="color:#5c6674">权43%·准确率15/37</span></div>
+</div>
+<div style="margin-top:8px;color:#5c6674;font-size:11px">分歧未达阈值(当日≥3/5或加权≥0.60复议;连续3日≥2路同向重做) · 次日A档三指标Δ客观结算,准确率定话语权 · ★一致率长期&gt;0.8=回声室警示(evidence须私有数据)</div>
+</div><!--/VOTEBOARD--><!--/MACHVOTE--></div><div class="card"><span id="claim-cycle-cba7a94ec25ba556"></span><span id="claim-cycle-bd3e787daec452c3"></span><span id="claim-cycle-1fcf9a3a410d847b"></span><span id="claim-cycle-178b4cb70bfd7d34"></span><span id="claim-cycle-4a1ec03c00658cb5"></span><span id="claim-cycle-f057e36548eac5fe"></span><span id="claim-cycle-a68be5fd8706bc79"></span><span id="claim-cycle-4c143a0c3691ff8a"></span><span id="claim-cycle-9eb3af426a6c104e"></span><span id="claim-cycle-868fa23edb65b95d"></span><span id="claim-cycle-ad6475d0164db5eb"></span><span id="claim-cycle-ef1dc4c49b2f084d"></span><span id="claim-cycle-0c8461f6d5189376"></span><span id="claim-cycle-ebf252f442d1873a"></span><span id="claim-cycle-74e92d415acab469"></span><span id="claim-cycle-49390fcaaae22d3a"></span><span id="claim-cycle-b73afb0655828bf2"></span><span id="claim-cycle-72e6a42b0e727548"></span><span id="claim-cycle-85e707b11e8b0fe4"></span><span id="claim-cycle-3660e4dd53ec8138"></span><span id="claim-cycle-dce612d0fca779dd"></span><span id="claim-cycle-9871349479020097"></span><span id="claim-cycle-3ae5b29c54aae156"></span><span id="claim-cycle-0811b07b07e3a5ad"></span><span id="claim-cycle-6dd23e6141d8a80a"></span><span id="claim-cycle-e2a48fac8d510ee9"></span><span id="claim-cycle-6894e8602b4f0332"></span><span id="claim-cycle-af50a6c4f7bbbbab"></span><span id="claim-cycle-3232638d64c734e9"></span><span id="claim-cycle-77020131d95fdddf"></span><span id="claim-cycle-b05b2cb11a8a39d2"></span><span id="claim-cycle-a1917940cb42f518"></span><span id="claim-cycle-13e2e8ead140e1ef"></span><span id="claim-cycle-875d08f205433b8c"></span><span id="claim-cycle-d163cbd319d4af44"></span><span id="claim-cycle-eec49c980a28e8ab"></span><span id="claim-cycle-d06f8ea0b4d26214"></span><span id="claim-cycle-1c20b21f52d1b603"></span><span id="claim-cycle-d940d118634f6cb4"></span><span id="claim-cycle-ce63afc380a6726f"></span></div></section><section id="ladder"><h2>四 连板梯队</h2><div id="component-LADDER"><!--LADDER-->
+<div class="card"><h3 style="margin:0 0 8px">连板梯队 <span class="hint">机器核对 · 涨停池连板数分布(涨停池 47 只(zt_pool全口径,含ST))</span></h3><div class="cols"><div class="col hotc"><i style="height:4%"></i><b>1</b><span>5板</span></div>
+<div class="col"><i style="height:5%"></i><b>2</b><span>3板</span></div>
+<div class="col"><i style="height:15%"></i><b>6</b><span>2板</span></div>
+<div class="col"><i style="height:100%"></i><b>38</b><span>1板</span></div>
+</div><div class="colsub"><span>最高5板=青岛食品 休闲食品(5/5,093000首封)</span><span>腰部: 2板6只 / 3板2只 / 4板+1只</span><span>首板38占80% · 涨停池 47 只(zt_pool全口径,含ST)</span></div>
+<p style="margin:6px 0 0" class="mut">温度表涨停47只 · 炸板率39.7%</p></div>
+
+<!--/LADDER--></div><div class="card"><span id="claim-cycle-6beb92ff4cbb8dee"></span><span id="claim-cycle-af1c3c25073dcd92"></span><span id="claim-cycle-37aba3c97b6c9076"></span><span id="claim-cycle-57aa4a0d6c12c40d"></span><span id="claim-cycle-fc9490905437ec1c"></span><span id="claim-cycle-62fc39efdf296ef6"></span><span id="claim-cycle-825673f069571650"></span><span id="claim-cycle-efd1b5a3750cb8a0"></span><span id="claim-cycle-29d0376a32c889ec"></span><span id="claim-cycle-fbfd3cd336b3951e"></span><span id="claim-cycle-d259690aff98e5e2"></span><span id="claim-cycle-50060f55ff126739"></span><span id="claim-cycle-bdf15e2338acb285"></span><span id="claim-cycle-622fe34ac8c5f1e7"></span><span id="claim-cycle-bd47871bc4b44384"></span><span id="claim-cycle-183db516f7ad72a0"></span><span id="claim-cycle-d2666b6b09bc4cc2"></span><span id="claim-cycle-68185c3b11017a24"></span><span id="claim-cycle-d6a713c4f94b0034"></span><span id="claim-cycle-7b4e030e1df5b620"></span><span id="claim-cycle-cbeaa2087fcf548c"></span><span id="claim-cycle-9a5be8d67208cbc1"></span><span id="claim-cycle-140289cef3339033"></span><span id="claim-cycle-496728fba94c8583"></span><span id="claim-cycle-ca21f97ea8ff4ecd"></span><span id="claim-cycle-177153d6b3d724d2"></span><span id="claim-cycle-3715272a01559137"></span><span id="claim-cycle-b540d5bfaa5baa42"></span><span id="claim-cycle-7eaf762665ac9bc7"></span><span id="claim-cycle-a15374b30be46d68"></span><span id="claim-cycle-754b4680eabad0dc"></span><span id="claim-cycle-b3efb148aa84418f"></span><span id="claim-cycle-c9f5d7313e4086b5"></span><span id="claim-cycle-971b351ab8daa09c"></span><span id="claim-cycle-d02c66da23471fed"></span><span id="claim-cycle-788b05504fa175aa"></span><span id="claim-cycle-130dc9e3185c900c"></span></div></section><section id="position"><h2>五 攻防 · 仓位总开关</h2><div class="card"><span id="claim-cycle-2bfb66c957284ecc"></span><span id="claim-cycle-69c4b24a7aacfbbe"></span><span id="claim-cycle-39b66f338f4e1eb3"></span><span id="claim-cycle-1b46a02fbcc17699"></span><span id="claim-cycle-dea11f5d85801ae6"></span><span id="claim-cycle-b1319820206fe6b7"></span><span id="claim-cycle-0e7c26a65b68d6ea"></span><span id="claim-cycle-1f54133c532bedd4"></span><span id="claim-cycle-27af172a9b0cdf85"></span><span id="claim-cycle-cbba782fc0593c06"></span><span id="claim-cycle-aca4207615ce34ba"></span><span id="claim-cycle-90bc48edb1e3fb97"></span><span id="claim-cycle-d6930c98cf9efe25"></span><span id="claim-cycle-481467b5a9019c0f"></span><span id="claim-cycle-12da9913473eb7e1"></span><span id="claim-cycle-65577ef7d7032d92"></span><span id="claim-cycle-d66df7c659e90080"></span><span id="claim-cycle-491464db9983ef07"></span><span id="claim-cycle-cb72764a091be79b"></span><span id="claim-cycle-66605646c0a3154d"></span><span id="claim-cycle-b1e0dc253048eabc"></span><span id="claim-cycle-1103f205d79e0cc7"></span><span id="claim-cycle-b9e774a657e2a3d2"></span><span id="claim-cycle-c41cecbb89441291"></span><span id="claim-cycle-8c7f77d1f4dc3f03"></span><span id="claim-cycle-57c10e50fa5d87a0"></span><span id="claim-cycle-412687df3a732306"></span><span id="claim-cycle-5d51952e4095972a"></span><span id="claim-cycle-f1d084dfbe6755a3"></span><span id="claim-cycle-1bf3021f84dc4646"></span><span id="claim-cycle-3e3c4f00b5c11638"></span><span id="claim-cycle-eeaaf96b982ffe54"></span><span id="claim-cycle-933444ccedb4b2eb"></span></div><div class="" id="claim-cycle-be152986642df6d4"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>本节与周期路的分工：周期路只给「能不能做」（防守/上限 5%），具体四腿与闸门数值属个股层，源在总审与 master 计划，本页只做引用不做改写。若明日闸门一成立，周期档位将从「退潮·降」改判为「退潮·加速」，攻防降为「只减不加、0 条件单」。</p></div></section><section id="research"><h2>六 自主深挖 · 指标与阈值孵化</h2><div class="card"><span id="claim-cycle-5befecc9a53304c2"></span><span id="claim-cycle-f8c2586f2cd7d5a8"></span><span id="claim-cycle-c89bebae3ee10ec1"></span><span id="claim-cycle-c7ce1f8bca73e3ea"></span><span id="claim-cycle-403a5c617280ec41"></span><span id="claim-cycle-5eceec69f79d2021"></span><span id="claim-cycle-3d1e5d52f053ff21"></span><span id="claim-cycle-85ea2a6b41e0064f"></span><span id="claim-cycle-ad1384e5030557ab"></span><span id="claim-cycle-711a60805af0fb40"></span><span id="claim-cycle-04a4eb2aab126e44"></span><span id="claim-cycle-baaa4715c381f885"></span><span id="claim-cycle-fee9c8a99e03ad53"></span><span id="claim-cycle-7b1d9044c222e373"></span><span id="claim-cycle-158a08613ce26abb"></span><span id="claim-cycle-8ec6011b2b7a14af"></span><span id="claim-cycle-51cea968f0564a82"></span><span id="claim-cycle-0e95758e076640a8"></span><span id="claim-cycle-fa201f4b4702b3bb"></span><span id="claim-cycle-328792d4d18549b2"></span><span id="claim-cycle-2de845ef414fdfb4"></span><span id="claim-cycle-b8abdfda34724bae"></span><span id="claim-cycle-62b2a7bcdeaece04"></span><span id="claim-cycle-db3c21d03bd4b98d"></span><span id="claim-cycle-25bfdec3ec1bbf81"></span><span id="claim-cycle-f65be310d8079352"></span><span id="claim-cycle-5f76797e4667a6ac"></span></div><div class="" id="claim-cycle-89bade911229bc34"><div class="claim-head"><span class="claim-role role-research">研究</span><span class="claim-source">旧版原文补充</span></div><p class="mut">数据缺口如实标注：竞价换手（第一式核心）连续第 2 日不可算；资金温度（行业级净买/流通市值）覆盖 34/73 未分位化，与质量温度 15.2 的背离至今无解释；跌停池连续跌停字段仅 2 日样本。三项均在总审盲区清单内，本页不补算、不估填，缺源处写「—」。</p></div></section><section id="cognition"><h2>七 我的认知迭代 · 最新</h2><div class="tl"><div class="card"><span id="claim-cycle-b5e637be7884f43e"></span></div><div class="" id="claim-cycle-9d8b15412a344954"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">旧版原文补充</span></div><div class="tli"><div class="d">2026-10-30</div><div class="h">「台阶升半档」与「环境转正」是两件事——放量跌停日，量是出清不是进攻</div><div class="b">今日量能 15565→16745（+7.58%）、台阶从第三档中部升到顶部，同日跌停 41→82 翻倍。我过去容易把「量能台阶上移」直接读成「资金回来了、可以加一档」，今日这组数说明：跌停翻倍当日的放量是筹码交换（有人在接），不是增量入场（有人抢筹）。判据：若 20261102 成交额 ≥16745 亿且跌停 ≤50，则「放量＝出清」成立、量能可作下一档依据；若成交额回落而跌停仍 ≥70，则今日的放量只是单日换手，台阶要退回第三档中部。</div></div></div><details class="chain tlfold"><summary><b>其余认知与原文证据</b><span class="chip">2条</span></summary><div class="inner"><div class="" id="claim-cycle-70d2de7546ad4239"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">旧版原文补充</span></div><div class="tli"><div class="d">2026-10-30</div><div class="h">比例指标的「持平」必须拆到边际，否则分母膨胀会把恶化读成稳定</div><div class="b">炸板率 0.391→0.397 只差 0.6pp，看起来承接没坏；拆开是尝试 64→78、分子 25→31，新增 14 次尝试里炸 6 次＝边际炸板率 42.9%，高于存量 3.2pp。今后炸板率、封板率、回封率一律并列「总量＋边际」两行，边际连续 2 日高于存量 3pp 即判承接恶化，不看总比值。这条是昨日「比值必须并列分子分母」的同族升级——列了分子分母还不够，还要看新增那部分。</div></div></div><div class="" id="claim-cycle-51b227746e160a02"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">旧版原文补充</span></div><div class="tli"><div class="d">2026-10-30</div><div class="h">「一字」不是「早封」，时点阈值差 5 分钟会让不可成交比例差 4.7pp</div><div class="b">今日严格一字（首封 ≤09:25:02 且炸 0）3 只 11.10 亿＝封板总额 35.3%；放宽到 09:30:00 秒板就变 5 只 12.60 亿＝40.0%，多出的 000897/002365 是可成交的秒板。我此前把 09:30:00 首封的票也笼统记作「准一字」，在高估不可成交比例的同时，也把可做的票划进了禁区。判据已机械可算：一字＝首封 ≤09:25:02 且炸板 0，两个条件缺一即不算；明日按此口径重跑历史，若封板额中一字占比的历史值与旧口径差 &gt;5pp，则质量库的「封板可用」字段需按新口径回填。</div></div></div></div></details></div></section><details class="chain"><summary>编辑说明与来源审计</summary><div class="inner"><div class="claim-anchor-bank" aria-hidden="true"><pre class="claim-anchor-text">Cycle · 周期与情绪 · 截至 2026-10-30 收盘
+置信72
+一 量能台阶 · 我站在哪一阶米开§2.3.1 五档 + §2.3.3 当期退潮线 · 当日 16745 亿 · 源：_市场温度表.json#20261030.成交额亿 ＝ fact_20261030.json#facts.成交额亿（quality=ok）
+当日量能
+16745 亿（昨 15565，+1180 亿 / +7.58%）
+第三档上沿 · 放量
+按 §2.3.1 五档自判：&lt;1.0 万亿＝枯水（只做存量博弈）、1.0~1.5＝一主零次、
+1.5~1.7＝一主线一次
+、1.7~2.2＝一主两次、&gt;2.2＝全面进攻。今日 1.6745 万亿落在第三档（1.5~1.7）的
+，距上一档 1.7 万亿只差 255 亿（1.5%），距本档下沿 1745 亿。故台阶口径的答案是「站在第三档的顶上抬头看第四档」，不是已经站上第四档
+_市场温度表.json#20261030 / #20261029；fact_20261030.json#facts.成交额亿
+与退潮线的关系
+当期退潮线 1.5 万亿 / 实测 16745 亿
+量能级退潮未触发
+§2.3.3 的当期退潮线在量能中枢下移后被重定为 1.5 万亿（米开原口径 3 万亿是牛市中枢下的线，本窗不适用、不硬套）。今日高出退潮线 1745 亿＝+11.6% 缓冲，
+量能级退潮未触发
+。这一条很重要：它把今天的定性从「量能塌陷型退潮」排除掉，只留下「情绪级退潮」——即资金总量还在，坏的是钱的去向与承接质量。两条退潮的应对完全不同：前者要等缩量见底，后者只需等砸盘力量衰竭
+_市场温度表.json#20261026~#20261030 五日成交额；米开§2.3.3
+放量的方向
+放量 +7.58% 与跌停翻倍（41→82）同日
+筹码交换 · 恐慌出清
+若不是放量而是缩量下跌，今天的 82 家跌停就属「无量阴跌」，需要等流动性枯竭见底；实际是
+放量下跌
+——量增 1180 亿的同时跌停 +41 家、82 只均跌幅 -10.00%（20261030/dt_pool.csv 全样本），说明卖盘是在有承接的价格上被换手出去，属主动出清而非无人接。米开「放量下跌＝筹码交换」这条，今日是正样本；但筹码交换只说明「有人接」，不说明「接的人是对的」——接盘方质量要看后面第五段的条件单闸门
+_市场温度表.json#20261030.跌停数＝82；20261030/dt_pool.csv（82 行，均跌幅 -10.00）
+五日台阶序列
+16088 → 14609 → 16285 → 15565 → 16745
+今日为 1026 以来最高
+序列读法：1027 的 14609 亿是本窗最低点（当日温度 16.6），此后 16285→15565→16745 呈「一上一下一上」的锯齿，而不是单调回升。今日 16745 是 1026（16088）以来最高值，但仍低于 1023 的 19563 亿——即
+台阶从第三档中部回到第三档顶部，尚未回到 1023 的第四档
+。锯齿而非单调，说明增量资金是「脉冲式抢反弹」，不是持续性入场
+_市场温度表.json#20261023/#20261026/#20261027/#20261028/#20261029/#20261030
+台阶结论
+台阶升半档 · 环境判退潮
+量先转、价未转
+台阶语言只描述
+资金总量坐标
+，不描述赚钱效应。今日台阶升半档（第三档中部→顶部）成立，但同日跌停翻倍、核按钮 17.9%、全池执 1 无一过 50%，说明「量先转、价未转」。故本页不因量能上调周期档位：台阶是我站在哪一阶，五阶段是我处在哪一段，两件事分开写、不互相顶替
+综合：_市场温度表.json#20261030 ＋ _情绪先行指标.json#20261030.核按钮
+二 情绪先行指标 · 三窗触发器源：_情绪先行指标.json#20261030（晋级 / 核按钮 / 昨日涨停溢价 / 触发器）＋ _市场温度表.json#20261030（炸板率 0.397、封板率 0.6026）
+窗一 · T+1 溢价窗
+昨停溢价执行均收 -1.60%（昨 -2.69%）
+未触发（连负 2/3 日）
+判据：连续 3 个交易日 &lt;-1.0% 视为「接力端系统性亏损」，窗口打开。今日 -1.60% 是连续第 2 日负值，幅度从 -2.69% 收窄，方向在改善但仍在亏损区。差 1 日触发，明日(20261102)若执行均收仍 &lt;-1.0% 则本窗正式打开，届时「涨停数回补」必须让位于「接力不可做」
+_情绪先行指标.json#20261030.昨日涨停溢价（来源 竞价池结算jsonl）
+窗二 · 核按钮窗
+7/39＝17.9%（昨 0.0%）
+已触发（阈值 ≥15%）
+昨日 39 只涨停中 7 只今日直接跌停，核按钮率从 0.0% 跳到 17.9%——这是今日最硬的一条恶化指标，也是「分层通杀」区别于「冰点修复」的关键：修复日不该有 1/6 的隔夜票被核。该窗打开意味着隔夜风险定价必须上调，条件单必须压到最小可结算额度，且不许按 T+2 持有
+_情绪先行指标.json#20261030.核按钮（昨日涨停数 39 / 今日跌停回杀 7）
+窗三 · 晋级窗
+一进二 20.7% / 二进三 33.3% / 高度 30.0%
+贴线 · 未触发
+门槛：一进二 ≥25% 为健康、20~25% 为贴线、&lt;20% 为断档。今日 20.7% 落在「贴线」区（昨 9.5% 为断档），是
+从断档回到贴线
+的修复，不是回到健康。二进三 33.3%（昨 40.0%）反而下滑、高度晋级 30.0%（昨 50.0%）同步下滑——低身位修复、高身位继续退，这是典型的「补首板不补高度」结构
+_情绪先行指标.json#20261030.晋级（首板 38 / 二连 6 / 三连 2；一进二 0.207 / 二进三 0.333 / 高度 0.30）
+系统触发器
+仅 1 条：★冰点进攻窗（温度 15.2&lt;25）
+环境判断 · 非指令
+原文要点：A 档回测次日接力 y1 均 +0.30% / 胜率 60%（n=15 日 / 12 独立段，全样本基准 -0.21% / 45%）。即「冰点敢喊进攻，试错接力环境转正」。但样本仅 15 日、12 个独立段、单一牛市周期，故只作为环境层的偏多提示，不转成仓位指令——它与窗二（核按钮 17.9%）方向相反，本页取「环境偏多、执行偏空」的双轨写法，不强行统一
+_情绪先行指标.json#20261030.触发器[0]；温度源 _市场温度表.json#20261030.温度
+比值类复核
+炸板率 39.7%（昨 39.1%）/ 封板率 60.3%
+表面持平 · 里子是分母
+炸板 31、封板 47、尝试 78；昨日炸 25、封 39、尝试 64。比值仅 +0.6pp 看似稳定，但分母从 64 涨到 78（+21.9%）、分子从 25 涨到 31（+24.0%）——比值的稳定是两个数一起膨胀抵消出来的。边际口径见第六段自凿账②，此处不重复结论，只登记「比值持平≠承接持平」
+fact_20261030.json#facts.炸板数/涨停数/炸板率/封板率
+三 情绪五阶段 · 五路周期投票米开五态：冰点 → 修复 → 主升 → 高潮 → 退潮 · 源：auction/lhb/theme/logic/limitup 判断_20261030.json ＋ 总审_20261030.json#五路裁决
+五态定位
+温度 15.2 · 落在「冰点」档下沿
+阶段判定：退潮中段
+米开五态按温度＋赚钱效应双轴定：冰点（&lt;25）、修复（25~45 且赚钱效应转正）、主升（45~70 且接力正期望）、高潮（&gt;70 且核按钮抬头）、退潮（任何温度但赚钱效应连续负）。今日温度 15.2 属冰点档，但赚钱效应三项（核按钮 17.9%、昨停溢价 -1.60%、全池执 1 无一过 50%）全为负，按
+赚钱效应优先
+的判定顺序，落「退潮」而非「冰点筑底」。这一点与昨日一致，是第 2 日退潮
+_市场温度表.json#20261030.温度＝15.2；_情绪先行指标.json#20261030
+auction · C / 72
+0 仓为基准（连续第 2 日）
+竞价端是「全市场冰点低开 × 池内极端高开」的剪刀口：全市场 2131 只有效样本 91.0% 低开、中位 -2.13%、高开≥5% 仅 25 只（1.2%）。池内高开与全市场低开同时成立，说明竞价溢价是极少数票的局部现象，不构成环境改善。方向判降
+auction判断_20261030.json#判断.档位/置信度；总审_20261030.json#五路裁决.auction
+lhb · B / 62
+席位净买回升但非进攻性质
+净买占比口径已修正（净买额/该股成交额），今日席位净买回升、钱落在白酒/医疗服务/器械三类防守线；但总审按其冰点档 5/13＝38.5%/+0.17% 的环境加权把 B 降为 C，判定「B 档标签、C 档行为」。本页记读为
+名义 B、实质 C
+：方向判平（不是恶化，也不是改善）
+lhb判断_20261030.json#判断.档位；总审_20261030.json#分歧点[0]
+theme · C / 78
+无主线 · 分支轮动
+硬证据：15 条线的环节离散度全部＝1.00（47 只票落在 47 个互不相同的环节，无一条线出现「同一环节≥2 只」），来源档 A=0 / B=47 / C=0——全场零公告级实锤催化。今日的宽度是「同名标签」不是「链条共振」，故无主线可站。方向判平：题材层既未断崖也未成链
+theme判断_20261030.json#判断.结论；fact_20261030.json#facts.归位A档数=0 / 题材线数=15
+logic · C / 60
+仅 AI算力/PCB 一条真链，且是负桶
+纵深为真（002636 覆铜板主营 96.76%、301132 印刷电路板 88.47%、605058 PCB/HDI），但 PCB 冰点×首板桶 n=24 / 41.7% / -2.67% 为负期望，301132 封单比仅 0.54%、首封 11:26:42 属尾盘僵尸封。产业事实成立、明日可交易性不成立，方向判降
+logic判断_20261030.json#判断.结论；总审_20261030.json#分歧点[2] AI算力/PCB
+limitup · C / 78
+分层通杀，非修复
+涨停 47（昨 39）由医药医疗 10 家 / 大消费 10 家的低位首板扩散回补，但跌停 82（昨 41）翻倍、跌停/涨停 1.74（昨 1.05）、全池 47 只执 1 胜率无一过 50%（max 45.2%、603200 上海洗霸）、可执行规则命中 0/47。数量回补与赚钱效应反向，方向判降
+limitup判断_20261030.json#判断.结论；涨停质量荐票_20261030.json#明细
+投票合计
+降 3（auction / logic / limitup）· 平 2（lhb / theme）· 升 0
+主判：退潮 · 降
+无一路判升，无复议项。按米开「票数过半＋无升即退潮」的合成规则：降票 3/5 过半数、升票 0，主判锁定「退潮·降」。若明日出现「升票 ≥2 且降票归零」，本判才改档；仅凭温度回升 4.2 分不改档，因为温度是档位不是阶段
+auction / lhb / theme / logic / limitup 判断_20261030.json#判断.档位
+四 连板梯队 · 高度与宽度口径：自算自 20261030/zt_pool.csv（47 行，剔 ST 后仍 47）· 交叉核 _市场温度表.json#20261030.梯队 / 二板加 / 最高板 · 晋级率源 _情绪先行指标.json#20261030.晋级
+梯队结构
+首板 38 / 二连 6 / 三连 2 / 五连 1（无四连）
+底宽顶尖 · 中间断档
+自算口径：zt_pool.csv 47 行按「连板数」计数得 {1:38, 2:6, 3:2, 5:1}，与 _市场温度表.json#20261030.梯队 {1:38, 2:6, 3:2, 5:1} 逐字一致。结构特征是
+四板空缺
+——从 3 板直接跳到 5 板，中间没有 4 板承接。这在米开梯队语言里叫「断档式高度」：高度不是一层层爬上去的，而是单票独苗顶着，独苗一断全池无高标
+20261030/zt_pool.csv#连板数；_市场温度表.json#20261030.梯队
+001219 青岛食品 5 板（全池唯一 ≥4 板）
+分歧板 · 不是锁仓板
+逐行核对：首封 09:30:00（非一字）、末封 13:00:00（午后回封）、炸板 3 次、封板资金 0.5708 亿＝封/成交 6.05%、封/流通 1.50%、换手 24.90%、成交 9.441 亿、流通 37.93 亿。昨日封单 1.65 亿 → 今日 0.5708 亿＝
+-65%
+。天量换手＋午后才回封＝分歧顶，不是缩量锁仓的强势高标
+20261030/zt_pool.csv#001219 逐行；总审_20261030.json#分歧点[1]
+高度与宽度
+宽度 +8 只（39→47）/ 高度 +1 板（4→5）/ 二板加 9（昨 10）
+宽度回补 · 接力未回补
+宽度扩张全部来自首板：38 只首板里医药医疗 10 家、大消费 10 家，都是低位首板的标签扩散。真正的接力强度指标「二板加」反而 10→9 少 1 只，最高板虽 4→5 但只有 1 只。宽度＋8、二板加 -1，这两条同时为真时，米开的判读是「宽度是噪声、接力是真身」——今日宽度给的是反弹的形，接力给的是继续退潮的里
+_市场温度表.json#20261030.二板加=9 / #20261029.二板加=10
+晋级率分层
+一进二 20.7%（6/29，昨 9.5%）· 二进三 33.3%（2/6，昨 40.0%）· 高度 30.0%（昨 50.0%）
+低身位修复 · 高身位退
+三个晋级率呈单调下滑：一进二改善 11.2pp、二进三下滑 6.7pp、高度晋级下滑 20.0pp。这不是「接力整体修复」，而是「低身位修复、高身位继续退」的剪刀。对明日的含义：1→2 的供给＝今日首板 38 × 20.7% ≈
+7.9 只
+，二板加有回补动能；3 板以上只剩 001219 一只独苗，高度端无供给
+_情绪先行指标.json#20261030.晋级；交叉 _市场温度表.json#20261029.梯队
+7/39＝17.9%（昨 0.0%）
+隔夜风险重新定价
+昨日 39 只涨停今日 7 只跌停，其中含高位与低位混杂（非单一行业）。这条指标与「宽度扩张」直接冲突：一个市场如果在回补宽度，不该有 1/6 的隔夜票被核。故梯队的结论不是「底部在抬高」，而是「新票在补、老票在杀」，两者并行
+_情绪先行指标.json#20261030.核按钮
+梯队结论
+宽度可用 · 高度不可用
+只做首板/二板的结构 · 不接高度
+梯队给执行层的唯一有效信息：明日可看的接力窗口在 2 板 6 只里「早封＋炸 0＋封单有厚度」的那几只（002275 桂林三金 09:30:06/炸 0/封 1.0721 亿；003032 传智教育 09:31:12/炸 0/封 0.9491 亿），而不在 5 板独苗与三只一字上。但这是个股层结论，本页只登记结构，不做推荐
+20261030/zt_pool.csv 逐行；推演_20261030.json#龙头接力
+五 攻防 · 仓位总开关源：总审_20261030.json#总裁决（C 档 / 置信 72 / 总仓上限 5% / 单票≤2%）＋ 交易计划_master_20261030.json#notes ①③④
+攻防结论
+防守 · C 档 · 置信 72
+只出条件单 · 不成交即 0 仓
+三条环境硬约束同时成立才够得上「可正常配置」，今日三条全不成立：①跌停 82（昨 41）翻倍；②昨日涨停 39 只中 7 只今日跌停（核按钮 17.9%）；③涨停 47 只全池执 1 无一过 50%。故档位只能是 C。攻防动作：四笔全部条件单、gap 超区间即弃买、不递补、不追单、当日收盘平（执 1）
+总审_20261030.json#总裁决；_情绪先行指标.json#20261030.核按钮
+5%（单票 ≤2%）/ 计划名义 4.5%
+上限由纪律定 · 不按统计加仓
+四腿名义权重：002365 永安药业 2.0%、001287 中电港 1.0%、001219 青岛食品 1.0%、000995 皇台酒业 0.5%，合计 4.5%，低于上限 0.5pp。按示例价与 100 股取整后实际约 4.19%。
+不因「历史 6/6 上行」上调任何一腿
+——统计说方向、闸门说执行价，两条纪律独立
+交易计划_master_20261030.json#buys ＋ #notes①
+闸门一 · 加压线
+20261102 若跌停 ≥70 且涨停 &lt;60
+通杀延续 → 全部作废
+四腿全弃、当日 0 仓；已触发腿按 -4% 机械离场（收盘价触发）；全周不加仓。这条线的逻辑是「分层通杀若进入第 3 日，则不是单日恐慌而是趋势」——届时本页的「退潮·降」要升格为「退潮·加速」
+交易计划_master_20261030.json#notes④a；推演_20261030.json#明日攻防
+闸门二 · 翻案线
+20261102 若跌停 ≤41 且涨停 ≥60
+「分层通杀」判错 → 上限可至 8%
+翻案成立则 C 档上限上调至 8%（照抄总审翻案线，不自行放大）。注意是「盘后登记、不预先加仓」——翻案线的作用是修正判读，不是当日加仓许可。另加一条个股层翻案：若今日 47 只涨停的执 1 均收 ≥+0.41%，则「全池负期望」判错，须登记空仓/最小仓的机会成本
+总审_20261030.json#总裁决；推演_20261030.json#明日攻防
+闸门三 · 高度端
+001219 只做执 1 · 不许按执 2 持有
+取消 T+2
+统计上「4板+×冷&lt;40」执 2 n=207 / 58.0% / +1.95% 过 Bonferroni，但执行层三个负项叠加（封单比 1.50% 薄封、炸 3 次、末封 13:00），且冰点层核按钮率 17.9% 已大于该格执 1 期望（+0.12%~+0.37%），故只留执 1、1102 收盘了结、gap&gt;+3% 或一字即弃买
+总审_20261030.json#分歧点[1]；_涨停质量库.json#4板+×冷&lt;40
+明确不做
+一字 3 只 / 尾部首板 / 薄封尾封票
+不做清单
+①不做三只严格一字（603703 盛洋科技 2.43 亿＋600261 阳光照明 6.10 亿＋603131 上海沪工 2.58 亿＝11.11 亿＝封板总额 35.3%，不可成交）；②不做 15 条线的尾部首板（A 档催化 0、环节离散度 1.00 无链）；③不做薄封+尾盘封（301132 封单比 0.54%/首封 11:26:42、605338 炸 6 次/封单 0.039 亿）；④不做任何「冰点反弹→加仓」叙事
+20261030/zt_pool.csv；交易计划_master_20261030.json#notes⑦
+六 自主深挖 · 指标与阈值孵化今日三个自算口径：跌停首日/存量拆分 · 炸板率分母效应 · 一字质量分层 · 源：20261030/dt_pool.csv（82 行）、zt_pool.csv（47 行）
+自凿① 跌停首日 / 存量拆分
+首跌 70 / 82＝85.4%（昨 92.7%）· 存量仅 12 只
+82 是单日新增踩踏
+dt_pool.csv#连续跌停 计数：{1 天:70, 2 天:11, 3 天:1}。即 82 家里 70 家是当日首次跌停（85.4%），连续 2 日 11 家、连续 3 日 1 家，存量崩塌只占 14.6%。昨日同口径为 92.7% 首跌，两日都高度集中在「首日」——说明这不是「连续崩盘累积到 82」，而是「每天新砸一批、且前一批没有继续砸」。含义分两层：好的一层是存量没有滚雪球；坏的一层是杀跌是
+扩散式
+的，今天杀汽车零部 8 家/广告营销 6 家/通用设备 6 家，明天可能换一批行业继续杀
+20261030/dt_pool.csv#连续跌停（82 行，{1:70,2:11,3:1}）；均跌幅 -10.00%
+自凿② 炸板率分母效应
+尝试 78（封 47＋炸 31）vs 昨 64 · 边际炸板 42.9%
+「没恶化」是分母稀释的假象
+炸板率 0.397 vs 昨 0.391，只差 0.6pp，看起来承接持平。但拆分母：尝试数 64→78（+14 只，+21.9%），其中新增的 14 只里 8 只封住、6 只炸掉，
+边际炸板率 6/14＝42.9%，高于存量的 39.7%
+。也就是说今天新进来的承接盘质量比存量更差，只是被一个变大的分母摊薄成了「持平」。阈值孵化：新增「边际炸板率」指标（当日新增尝试的炸板比例），与炸板率并列登记，若连续 2 日边际 &gt; 存量 +3pp，则判「承接质量恶化」而不管总炸板率是多少。今日已满足首日条件
+fact_20261030.json#facts.炸板数=31 / 涨停数=47 / 炸板率=0.397；_市场温度表.json#20261029.炸板数=25 / 涨停数=39
+自凿③ 一字质量分层
+严格一字 3 只 11.11 亿（35.3%）· 放宽到秒板则 5 只
+口径差 2 只 / 1.49 亿
+严格口径（首封 ≤09:25:02 且炸板 0）：603703 盛洋科技 2.4285 亿、600261 阳光照明 6.1004 亿、603131 上海沪工 2.5753 亿，合计 11.1042 亿＝封板总额 31.46 亿的 35.3%。若放宽为「首封 09:30:00 且炸 0」，会多进 000897 津滨发展 0.4522 亿、002365 永安药业 1.0419 亿两只秒板，共 5 只 12.5983 亿（40.0%）。
+两只票 1.49 亿、4.7pp 的差异
+，足以改变「不可成交比例」的判读。纪律写入：一字＝首封时点＋炸板 0 双条件，且时点阈值必须 ≤09:25:02（集合竞价撮合结束），否则会把 09:30:00 秒板误记成一字，从而系统性高估封板资金中「不可成交」的部分
+20261030/zt_pool.csv#首次封板时间/炸板次数/封板资金（47 行逐行）
+阈值孵化登记
+2 项转正 · 1 项待样本
+可机械化结算
+①「边际炸板率」：今日首日达标（42.9% &gt; 39.7%+3pp），明日起并行登记，连续 2 日达标即转正为常规指标；②「一字双条件」：今日即可直接改口径重算历史，无样本门槛；③「跌停首日/存量拆分」：dt_pool 仅 2 日样本，与存量崩塌不可区分，沿用 limitup 路的门槛——须积累 ≥20 日或单侧 n≥50 且 p&lt;0.05 才可判定阈值，今日只登记不设线
+综合本段三条自算；门槛源 总审_20261030.json#昨日战绩验收 MA-20261029-04③
+七 我的认知迭代只记当日（2026-10-30）；更早条目由渲染器从认知库自动注入，不手写
+</pre></div><div class="inner-limit"><b>数据边界</b><ul><li>兼容导入旧判断；原文立场未重新验证。</li><li>旧 HTML 补充按原栏目职责归位；相似判断仅提示重叠，不作语义删除。</li></ul></div><ul><li>量能、先行指标、阶段投票和梯队各自承担一类证据。</li><li>攻防区集中呈现仓位条件，缺周期判断时只回源事实。</li><li>深挖保留新问题，认知保留新验证和下次证伪，历史另行链接。</li></ul><div id="evidence-ev-cycle-e81cbf061d8b821e"><b>ev-cycle-e81cbf061d8b821e</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-e81cbf061d8b821e&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/1&quot;
+}
+</pre></div><div id="evidence-ev-cycle-77550d1220e9252b"><b>ev-cycle-77550d1220e9252b</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-77550d1220e9252b&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/2&quot;
+}
+</pre></div><div id="evidence-ev-cycle-8544943c1d8fa4a6"><b>ev-cycle-8544943c1d8fa4a6</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-8544943c1d8fa4a6&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/3&quot;
+}
+</pre></div><div id="evidence-ev-cycle-a9309eda164f38ce"><b>ev-cycle-a9309eda164f38ce</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-a9309eda164f38ce&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/4&quot;
+}
+</pre></div><div id="evidence-ev-cycle-57d5a74ea9a3a81c"><b>ev-cycle-57d5a74ea9a3a81c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-57d5a74ea9a3a81c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/5&quot;
+}
+</pre></div><div id="evidence-ev-cycle-58b2c9ade92fbc71"><b>ev-cycle-58b2c9ade92fbc71</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-58b2c9ade92fbc71&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/6&quot;
+}
+</pre></div><div id="evidence-ev-cycle-6d4a479cda2a104c"><b>ev-cycle-6d4a479cda2a104c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-6d4a479cda2a104c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/7&quot;
+}
+</pre></div><div id="evidence-ev-cycle-007cf414988cc24d"><b>ev-cycle-007cf414988cc24d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-007cf414988cc24d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/8&quot;
+}
+</pre></div><div id="evidence-ev-cycle-efdee85005cc3e11"><b>ev-cycle-efdee85005cc3e11</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-efdee85005cc3e11&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/9&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d7fe98f20fdb20b2"><b>ev-cycle-d7fe98f20fdb20b2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d7fe98f20fdb20b2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/10&quot;
+}
+</pre></div><div id="evidence-ev-cycle-47e9145b64ece03f"><b>ev-cycle-47e9145b64ece03f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-47e9145b64ece03f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/11&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f7251a87c20470c6"><b>ev-cycle-f7251a87c20470c6</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f7251a87c20470c6&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/12&quot;
+}
+</pre></div><div id="evidence-ev-cycle-959083f76099b6c4"><b>ev-cycle-959083f76099b6c4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-959083f76099b6c4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/13&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cdbdca0595679f2b"><b>ev-cycle-cdbdca0595679f2b</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cdbdca0595679f2b&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/14&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ee0d6faadb526d1d"><b>ev-cycle-ee0d6faadb526d1d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ee0d6faadb526d1d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/15&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cd907aa0188b951d"><b>ev-cycle-cd907aa0188b951d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cd907aa0188b951d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/16&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3d1916e82e24c6f4"><b>ev-cycle-3d1916e82e24c6f4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3d1916e82e24c6f4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/17&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cdaf9ff71d7a4f34"><b>ev-cycle-cdaf9ff71d7a4f34</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cdaf9ff71d7a4f34&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/18&quot;
+}
+</pre></div><div id="evidence-ev-cycle-01945ee574ac1204"><b>ev-cycle-01945ee574ac1204</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-01945ee574ac1204&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/heading/19&quot;
+}
+</pre></div><div id="evidence-ev-cycle-8b7ec3142d79e9f7"><b>ev-cycle-8b7ec3142d79e9f7</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-8b7ec3142d79e9f7&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/20&quot;
+}
+</pre></div><div id="evidence-ev-cycle-363f454af0fdf4e9"><b>ev-cycle-363f454af0fdf4e9</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-363f454af0fdf4e9&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/21&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f5533c3b57b58c2c"><b>ev-cycle-f5533c3b57b58c2c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f5533c3b57b58c2c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/22&quot;
+}
+</pre></div><div id="evidence-ev-cycle-36897df5f1534718"><b>ev-cycle-36897df5f1534718</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-36897df5f1534718&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/23&quot;
+}
+</pre></div><div id="evidence-ev-cycle-9a14fa9f1d0167fe"><b>ev-cycle-9a14fa9f1d0167fe</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-9a14fa9f1d0167fe&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/24&quot;
+}
+</pre></div><div id="evidence-ev-cycle-2e5415aa5b5c2d2b"><b>ev-cycle-2e5415aa5b5c2d2b</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-2e5415aa5b5c2d2b&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/25&quot;
+}
+</pre></div><div id="evidence-ev-cycle-6a95582056daac26"><b>ev-cycle-6a95582056daac26</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-6a95582056daac26&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/26&quot;
+}
+</pre></div><div id="evidence-ev-cycle-714c825dd94d6d5c"><b>ev-cycle-714c825dd94d6d5c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-714c825dd94d6d5c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/27&quot;
+}
+</pre></div><div id="evidence-ev-cycle-22da436df555b8a9"><b>ev-cycle-22da436df555b8a9</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-22da436df555b8a9&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/28&quot;
+}
+</pre></div><div id="evidence-ev-cycle-05a80244505dd1b0"><b>ev-cycle-05a80244505dd1b0</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-05a80244505dd1b0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/29&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ed5a8c02b380c6c9"><b>ev-cycle-ed5a8c02b380c6c9</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ed5a8c02b380c6c9&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/30&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1ee6be4a01a2ac5c"><b>ev-cycle-1ee6be4a01a2ac5c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1ee6be4a01a2ac5c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/31&quot;
+}
+</pre></div><div id="evidence-ev-cycle-0b1dcbfb23712ea7"><b>ev-cycle-0b1dcbfb23712ea7</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-0b1dcbfb23712ea7&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/32&quot;
+}
+</pre></div><div id="evidence-ev-cycle-849043f0c2704192"><b>ev-cycle-849043f0c2704192</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-849043f0c2704192&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/33&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1e94dd168fb32294"><b>ev-cycle-1e94dd168fb32294</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1e94dd168fb32294&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/34&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b689a79d3dcea879"><b>ev-cycle-b689a79d3dcea879</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b689a79d3dcea879&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/35&quot;
+}
+</pre></div><div id="evidence-ev-cycle-9ff82a21b73c7992"><b>ev-cycle-9ff82a21b73c7992</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-9ff82a21b73c7992&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/36&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f2f414d96c752135"><b>ev-cycle-f2f414d96c752135</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f2f414d96c752135&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/37&quot;
+}
+</pre></div><div id="evidence-ev-cycle-bf8ddde3895e0409"><b>ev-cycle-bf8ddde3895e0409</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-bf8ddde3895e0409&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/38&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ab516e3d65a5388e"><b>ev-cycle-ab516e3d65a5388e</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ab516e3d65a5388e&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/39&quot;
+}
+</pre></div><div id="evidence-ev-cycle-684cdf72c64d2a27"><b>ev-cycle-684cdf72c64d2a27</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-684cdf72c64d2a27&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/40&quot;
+}
+</pre></div><div id="evidence-ev-cycle-dc0733dc5716d948"><b>ev-cycle-dc0733dc5716d948</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-dc0733dc5716d948&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/41&quot;
+}
+</pre></div><div id="evidence-ev-cycle-69042ef459ce9278"><b>ev-cycle-69042ef459ce9278</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-69042ef459ce9278&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/42&quot;
+}
+</pre></div><div id="evidence-ev-cycle-20608044d03b77b6"><b>ev-cycle-20608044d03b77b6</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-20608044d03b77b6&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/43&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3743302322482ad0"><b>ev-cycle-3743302322482ad0</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3743302322482ad0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/44&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cb1ca1611c3009ef"><b>ev-cycle-cb1ca1611c3009ef</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cb1ca1611c3009ef&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/45&quot;
+}
+</pre></div><div id="evidence-ev-cycle-0fb3c0ad86624ec4"><b>ev-cycle-0fb3c0ad86624ec4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-0fb3c0ad86624ec4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/46&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f283614806927312"><b>ev-cycle-f283614806927312</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f283614806927312&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/47&quot;
+}
+</pre></div><div id="evidence-ev-cycle-5fe82edc61a83243"><b>ev-cycle-5fe82edc61a83243</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-5fe82edc61a83243&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/48&quot;
+}
+</pre></div><div id="evidence-ev-cycle-40e54987ae342843"><b>ev-cycle-40e54987ae342843</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-40e54987ae342843&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/49&quot;
+}
+</pre></div><div id="evidence-ev-cycle-832e81fb0ae4e3ba"><b>ev-cycle-832e81fb0ae4e3ba</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-832e81fb0ae4e3ba&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/50&quot;
+}
+</pre></div><div id="evidence-ev-cycle-5670edfdf062e730"><b>ev-cycle-5670edfdf062e730</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-5670edfdf062e730&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/51&quot;
+}
+</pre></div><div id="evidence-ev-cycle-dc561357fe8d00dc"><b>ev-cycle-dc561357fe8d00dc</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-dc561357fe8d00dc&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/52&quot;
+}
+</pre></div><div id="evidence-ev-cycle-a2c8d260151cc062"><b>ev-cycle-a2c8d260151cc062</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-a2c8d260151cc062&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/53&quot;
+}
+</pre></div><div id="evidence-ev-cycle-e340ae8345f2bfdb"><b>ev-cycle-e340ae8345f2bfdb</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-e340ae8345f2bfdb&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/54&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ee5fe4a17d078181"><b>ev-cycle-ee5fe4a17d078181</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ee5fe4a17d078181&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/55&quot;
+}
+</pre></div><div id="evidence-ev-cycle-91d7e973013b8e9f"><b>ev-cycle-91d7e973013b8e9f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-91d7e973013b8e9f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/56&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ce833e6ec5f9d234"><b>ev-cycle-ce833e6ec5f9d234</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ce833e6ec5f9d234&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/57&quot;
+}
+</pre></div><div id="evidence-ev-cycle-328db818eb36e597"><b>ev-cycle-328db818eb36e597</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-328db818eb36e597&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/heading/58&quot;
+}
+</pre></div><div id="evidence-ev-cycle-6ca103f4a58f03b0"><b>ev-cycle-6ca103f4a58f03b0</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-6ca103f4a58f03b0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/59&quot;
+}
+</pre></div><div id="evidence-ev-cycle-4ac02a0a8474a03c"><b>ev-cycle-4ac02a0a8474a03c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-4ac02a0a8474a03c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/60&quot;
+}
+</pre></div><div id="evidence-ev-cycle-810a9e7bd24d17a1"><b>ev-cycle-810a9e7bd24d17a1</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-810a9e7bd24d17a1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/61&quot;
+}
+</pre></div><div id="evidence-ev-cycle-25d08c6812d215a6"><b>ev-cycle-25d08c6812d215a6</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-25d08c6812d215a6&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/62&quot;
+}
+</pre></div><div id="evidence-ev-cycle-7395b17669801d59"><b>ev-cycle-7395b17669801d59</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-7395b17669801d59&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/63&quot;
+}
+</pre></div><div id="evidence-ev-cycle-8db4311018c1b8c5"><b>ev-cycle-8db4311018c1b8c5</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-8db4311018c1b8c5&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/64&quot;
+}
+</pre></div><div id="evidence-ev-cycle-5040b0c07eab115a"><b>ev-cycle-5040b0c07eab115a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-5040b0c07eab115a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/65&quot;
+}
+</pre></div><div id="evidence-ev-cycle-c7f0b772480b7919"><b>ev-cycle-c7f0b772480b7919</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-c7f0b772480b7919&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/66&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f9d83bbbe1030585"><b>ev-cycle-f9d83bbbe1030585</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f9d83bbbe1030585&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/67&quot;
+}
+</pre></div><div id="evidence-ev-cycle-e85e2003efbe0a1f"><b>ev-cycle-e85e2003efbe0a1f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-e85e2003efbe0a1f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/68&quot;
+}
+</pre></div><div id="evidence-ev-cycle-505dec9585ac781a"><b>ev-cycle-505dec9585ac781a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-505dec9585ac781a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/69&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d1544b886832ada3"><b>ev-cycle-d1544b886832ada3</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d1544b886832ada3&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/70&quot;
+}
+</pre></div><div id="evidence-ev-cycle-20a2f8a67acc1d59"><b>ev-cycle-20a2f8a67acc1d59</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-20a2f8a67acc1d59&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/71&quot;
+}
+</pre></div><div id="evidence-ev-cycle-7ef50b99da686591"><b>ev-cycle-7ef50b99da686591</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-7ef50b99da686591&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/72&quot;
+}
+</pre></div><div id="evidence-ev-cycle-77a7818202bf0318"><b>ev-cycle-77a7818202bf0318</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-77a7818202bf0318&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/73&quot;
+}
+</pre></div><div id="evidence-ev-cycle-70ec13e0f4c2801d"><b>ev-cycle-70ec13e0f4c2801d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-70ec13e0f4c2801d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/74&quot;
+}
+</pre></div><div id="evidence-ev-cycle-38ce57efe1a7d43a"><b>ev-cycle-38ce57efe1a7d43a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-38ce57efe1a7d43a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/75&quot;
+}
+</pre></div><div id="evidence-ev-cycle-29ae61bec3ddd6b1"><b>ev-cycle-29ae61bec3ddd6b1</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-29ae61bec3ddd6b1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/76&quot;
+}
+</pre></div><div id="evidence-ev-cycle-876c31536bc40df0"><b>ev-cycle-876c31536bc40df0</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-876c31536bc40df0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/77&quot;
+}
+</pre></div><div id="evidence-ev-cycle-dd6da4a76c569d53"><b>ev-cycle-dd6da4a76c569d53</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-dd6da4a76c569d53&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/78&quot;
+}
+</pre></div><div id="evidence-ev-cycle-03e162460573a5b9"><b>ev-cycle-03e162460573a5b9</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-03e162460573a5b9&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/79&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f785927b9d51276f"><b>ev-cycle-f785927b9d51276f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f785927b9d51276f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/80&quot;
+}
+</pre></div><div id="evidence-ev-cycle-e8dfb2813f87c27d"><b>ev-cycle-e8dfb2813f87c27d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-e8dfb2813f87c27d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/81&quot;
+}
+</pre></div><div id="evidence-ev-cycle-eb83ae620eec804d"><b>ev-cycle-eb83ae620eec804d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-eb83ae620eec804d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/82&quot;
+}
+</pre></div><div id="evidence-ev-cycle-8d1ea09659e6718b"><b>ev-cycle-8d1ea09659e6718b</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-8d1ea09659e6718b&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/83&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ab461adc9fe7c70b"><b>ev-cycle-ab461adc9fe7c70b</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ab461adc9fe7c70b&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/84&quot;
+}
+</pre></div><div id="evidence-ev-cycle-a457763f54836443"><b>ev-cycle-a457763f54836443</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-a457763f54836443&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/85&quot;
+}
+</pre></div><div id="evidence-ev-cycle-60913db2e6e815e9"><b>ev-cycle-60913db2e6e815e9</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-60913db2e6e815e9&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/86&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cba7a94ec25ba556"><b>ev-cycle-cba7a94ec25ba556</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cba7a94ec25ba556&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/heading/87&quot;
+}
+</pre></div><div id="evidence-ev-cycle-bd3e787daec452c3"><b>ev-cycle-bd3e787daec452c3</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-bd3e787daec452c3&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/88&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1fcf9a3a410d847b"><b>ev-cycle-1fcf9a3a410d847b</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1fcf9a3a410d847b&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/89&quot;
+}
+</pre></div><div id="evidence-ev-cycle-178b4cb70bfd7d34"><b>ev-cycle-178b4cb70bfd7d34</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-178b4cb70bfd7d34&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/90&quot;
+}
+</pre></div><div id="evidence-ev-cycle-4a1ec03c00658cb5"><b>ev-cycle-4a1ec03c00658cb5</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-4a1ec03c00658cb5&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/91&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f057e36548eac5fe"><b>ev-cycle-f057e36548eac5fe</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f057e36548eac5fe&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/92&quot;
+}
+</pre></div><div id="evidence-ev-cycle-a68be5fd8706bc79"><b>ev-cycle-a68be5fd8706bc79</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-a68be5fd8706bc79&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/93&quot;
+}
+</pre></div><div id="evidence-ev-cycle-4c143a0c3691ff8a"><b>ev-cycle-4c143a0c3691ff8a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-4c143a0c3691ff8a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/94&quot;
+}
+</pre></div><div id="evidence-ev-cycle-9eb3af426a6c104e"><b>ev-cycle-9eb3af426a6c104e</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-9eb3af426a6c104e&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/95&quot;
+}
+</pre></div><div id="evidence-ev-cycle-868fa23edb65b95d"><b>ev-cycle-868fa23edb65b95d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-868fa23edb65b95d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/96&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ad6475d0164db5eb"><b>ev-cycle-ad6475d0164db5eb</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ad6475d0164db5eb&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/97&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ef1dc4c49b2f084d"><b>ev-cycle-ef1dc4c49b2f084d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ef1dc4c49b2f084d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/98&quot;
+}
+</pre></div><div id="evidence-ev-cycle-0c8461f6d5189376"><b>ev-cycle-0c8461f6d5189376</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-0c8461f6d5189376&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/99&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ebf252f442d1873a"><b>ev-cycle-ebf252f442d1873a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ebf252f442d1873a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/100&quot;
+}
+</pre></div><div id="evidence-ev-cycle-74e92d415acab469"><b>ev-cycle-74e92d415acab469</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-74e92d415acab469&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/101&quot;
+}
+</pre></div><div id="evidence-ev-cycle-49390fcaaae22d3a"><b>ev-cycle-49390fcaaae22d3a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-49390fcaaae22d3a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/102&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b73afb0655828bf2"><b>ev-cycle-b73afb0655828bf2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b73afb0655828bf2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/103&quot;
+}
+</pre></div><div id="evidence-ev-cycle-72e6a42b0e727548"><b>ev-cycle-72e6a42b0e727548</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-72e6a42b0e727548&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/104&quot;
+}
+</pre></div><div id="evidence-ev-cycle-85e707b11e8b0fe4"><b>ev-cycle-85e707b11e8b0fe4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-85e707b11e8b0fe4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/105&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3660e4dd53ec8138"><b>ev-cycle-3660e4dd53ec8138</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3660e4dd53ec8138&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/106&quot;
+}
+</pre></div><div id="evidence-ev-cycle-dce612d0fca779dd"><b>ev-cycle-dce612d0fca779dd</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-dce612d0fca779dd&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/107&quot;
+}
+</pre></div><div id="evidence-ev-cycle-9871349479020097"><b>ev-cycle-9871349479020097</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-9871349479020097&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/108&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3ae5b29c54aae156"><b>ev-cycle-3ae5b29c54aae156</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3ae5b29c54aae156&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/109&quot;
+}
+</pre></div><div id="evidence-ev-cycle-0811b07b07e3a5ad"><b>ev-cycle-0811b07b07e3a5ad</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-0811b07b07e3a5ad&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/110&quot;
+}
+</pre></div><div id="evidence-ev-cycle-6dd23e6141d8a80a"><b>ev-cycle-6dd23e6141d8a80a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-6dd23e6141d8a80a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/111&quot;
+}
+</pre></div><div id="evidence-ev-cycle-e2a48fac8d510ee9"><b>ev-cycle-e2a48fac8d510ee9</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-e2a48fac8d510ee9&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/112&quot;
+}
+</pre></div><div id="evidence-ev-cycle-6894e8602b4f0332"><b>ev-cycle-6894e8602b4f0332</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-6894e8602b4f0332&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/113&quot;
+}
+</pre></div><div id="evidence-ev-cycle-af50a6c4f7bbbbab"><b>ev-cycle-af50a6c4f7bbbbab</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-af50a6c4f7bbbbab&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/114&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3232638d64c734e9"><b>ev-cycle-3232638d64c734e9</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3232638d64c734e9&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/115&quot;
+}
+</pre></div><div id="evidence-ev-cycle-77020131d95fdddf"><b>ev-cycle-77020131d95fdddf</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-77020131d95fdddf&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/116&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b05b2cb11a8a39d2"><b>ev-cycle-b05b2cb11a8a39d2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b05b2cb11a8a39d2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/117&quot;
+}
+</pre></div><div id="evidence-ev-cycle-a1917940cb42f518"><b>ev-cycle-a1917940cb42f518</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-a1917940cb42f518&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/118&quot;
+}
+</pre></div><div id="evidence-ev-cycle-13e2e8ead140e1ef"><b>ev-cycle-13e2e8ead140e1ef</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-13e2e8ead140e1ef&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/119&quot;
+}
+</pre></div><div id="evidence-ev-cycle-875d08f205433b8c"><b>ev-cycle-875d08f205433b8c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-875d08f205433b8c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/120&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d163cbd319d4af44"><b>ev-cycle-d163cbd319d4af44</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d163cbd319d4af44&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/121&quot;
+}
+</pre></div><div id="evidence-ev-cycle-eec49c980a28e8ab"><b>ev-cycle-eec49c980a28e8ab</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-eec49c980a28e8ab&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/122&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d06f8ea0b4d26214"><b>ev-cycle-d06f8ea0b4d26214</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d06f8ea0b4d26214&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/123&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1c20b21f52d1b603"><b>ev-cycle-1c20b21f52d1b603</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1c20b21f52d1b603&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/124&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d940d118634f6cb4"><b>ev-cycle-d940d118634f6cb4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d940d118634f6cb4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/125&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ce63afc380a6726f"><b>ev-cycle-ce63afc380a6726f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ce63afc380a6726f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/126&quot;
+}
+</pre></div><div id="evidence-ev-cycle-6beb92ff4cbb8dee"><b>ev-cycle-6beb92ff4cbb8dee</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-6beb92ff4cbb8dee&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/heading/127&quot;
+}
+</pre></div><div id="evidence-ev-cycle-af1c3c25073dcd92"><b>ev-cycle-af1c3c25073dcd92</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-af1c3c25073dcd92&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/128&quot;
+}
+</pre></div><div id="evidence-ev-cycle-37aba3c97b6c9076"><b>ev-cycle-37aba3c97b6c9076</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-37aba3c97b6c9076&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/129&quot;
+}
+</pre></div><div id="evidence-ev-cycle-57aa4a0d6c12c40d"><b>ev-cycle-57aa4a0d6c12c40d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-57aa4a0d6c12c40d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/130&quot;
+}
+</pre></div><div id="evidence-ev-cycle-fc9490905437ec1c"><b>ev-cycle-fc9490905437ec1c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-fc9490905437ec1c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/131&quot;
+}
+</pre></div><div id="evidence-ev-cycle-62fc39efdf296ef6"><b>ev-cycle-62fc39efdf296ef6</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-62fc39efdf296ef6&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/132&quot;
+}
+</pre></div><div id="evidence-ev-cycle-825673f069571650"><b>ev-cycle-825673f069571650</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-825673f069571650&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/133&quot;
+}
+</pre></div><div id="evidence-ev-cycle-efd1b5a3750cb8a0"><b>ev-cycle-efd1b5a3750cb8a0</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-efd1b5a3750cb8a0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/134&quot;
+}
+</pre></div><div id="evidence-ev-cycle-29d0376a32c889ec"><b>ev-cycle-29d0376a32c889ec</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-29d0376a32c889ec&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/135&quot;
+}
+</pre></div><div id="evidence-ev-cycle-fbfd3cd336b3951e"><b>ev-cycle-fbfd3cd336b3951e</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-fbfd3cd336b3951e&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/136&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d259690aff98e5e2"><b>ev-cycle-d259690aff98e5e2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d259690aff98e5e2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/137&quot;
+}
+</pre></div><div id="evidence-ev-cycle-50060f55ff126739"><b>ev-cycle-50060f55ff126739</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-50060f55ff126739&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/138&quot;
+}
+</pre></div><div id="evidence-ev-cycle-bdf15e2338acb285"><b>ev-cycle-bdf15e2338acb285</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-bdf15e2338acb285&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/139&quot;
+}
+</pre></div><div id="evidence-ev-cycle-622fe34ac8c5f1e7"><b>ev-cycle-622fe34ac8c5f1e7</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-622fe34ac8c5f1e7&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/140&quot;
+}
+</pre></div><div id="evidence-ev-cycle-bd47871bc4b44384"><b>ev-cycle-bd47871bc4b44384</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-bd47871bc4b44384&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/141&quot;
+}
+</pre></div><div id="evidence-ev-cycle-183db516f7ad72a0"><b>ev-cycle-183db516f7ad72a0</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-183db516f7ad72a0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/142&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d2666b6b09bc4cc2"><b>ev-cycle-d2666b6b09bc4cc2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d2666b6b09bc4cc2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/143&quot;
+}
+</pre></div><div id="evidence-ev-cycle-68185c3b11017a24"><b>ev-cycle-68185c3b11017a24</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-68185c3b11017a24&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/144&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d6a713c4f94b0034"><b>ev-cycle-d6a713c4f94b0034</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d6a713c4f94b0034&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/145&quot;
+}
+</pre></div><div id="evidence-ev-cycle-7b4e030e1df5b620"><b>ev-cycle-7b4e030e1df5b620</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-7b4e030e1df5b620&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/146&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cbeaa2087fcf548c"><b>ev-cycle-cbeaa2087fcf548c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cbeaa2087fcf548c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/147&quot;
+}
+</pre></div><div id="evidence-ev-cycle-9a5be8d67208cbc1"><b>ev-cycle-9a5be8d67208cbc1</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-9a5be8d67208cbc1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/148&quot;
+}
+</pre></div><div id="evidence-ev-cycle-140289cef3339033"><b>ev-cycle-140289cef3339033</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-140289cef3339033&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/149&quot;
+}
+</pre></div><div id="evidence-ev-cycle-496728fba94c8583"><b>ev-cycle-496728fba94c8583</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-496728fba94c8583&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/150&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ca21f97ea8ff4ecd"><b>ev-cycle-ca21f97ea8ff4ecd</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ca21f97ea8ff4ecd&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/151&quot;
+}
+</pre></div><div id="evidence-ev-cycle-177153d6b3d724d2"><b>ev-cycle-177153d6b3d724d2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-177153d6b3d724d2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/152&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3715272a01559137"><b>ev-cycle-3715272a01559137</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3715272a01559137&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/153&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b540d5bfaa5baa42"><b>ev-cycle-b540d5bfaa5baa42</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b540d5bfaa5baa42&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/154&quot;
+}
+</pre></div><div id="evidence-ev-cycle-7eaf762665ac9bc7"><b>ev-cycle-7eaf762665ac9bc7</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-7eaf762665ac9bc7&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/155&quot;
+}
+</pre></div><div id="evidence-ev-cycle-a15374b30be46d68"><b>ev-cycle-a15374b30be46d68</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-a15374b30be46d68&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/156&quot;
+}
+</pre></div><div id="evidence-ev-cycle-754b4680eabad0dc"><b>ev-cycle-754b4680eabad0dc</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-754b4680eabad0dc&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/157&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b3efb148aa84418f"><b>ev-cycle-b3efb148aa84418f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b3efb148aa84418f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/158&quot;
+}
+</pre></div><div id="evidence-ev-cycle-c9f5d7313e4086b5"><b>ev-cycle-c9f5d7313e4086b5</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-c9f5d7313e4086b5&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/159&quot;
+}
+</pre></div><div id="evidence-ev-cycle-971b351ab8daa09c"><b>ev-cycle-971b351ab8daa09c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-971b351ab8daa09c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/160&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d02c66da23471fed"><b>ev-cycle-d02c66da23471fed</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d02c66da23471fed&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/161&quot;
+}
+</pre></div><div id="evidence-ev-cycle-788b05504fa175aa"><b>ev-cycle-788b05504fa175aa</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-788b05504fa175aa&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/162&quot;
+}
+</pre></div><div id="evidence-ev-cycle-130dc9e3185c900c"><b>ev-cycle-130dc9e3185c900c</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-130dc9e3185c900c&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/163&quot;
+}
+</pre></div><div id="evidence-ev-cycle-2bfb66c957284ecc"><b>ev-cycle-2bfb66c957284ecc</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-2bfb66c957284ecc&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/heading/164&quot;
+}
+</pre></div><div id="evidence-ev-cycle-69c4b24a7aacfbbe"><b>ev-cycle-69c4b24a7aacfbbe</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-69c4b24a7aacfbbe&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/165&quot;
+}
+</pre></div><div id="evidence-ev-cycle-39b66f338f4e1eb3"><b>ev-cycle-39b66f338f4e1eb3</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-39b66f338f4e1eb3&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/166&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1b46a02fbcc17699"><b>ev-cycle-1b46a02fbcc17699</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1b46a02fbcc17699&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/167&quot;
+}
+</pre></div><div id="evidence-ev-cycle-dea11f5d85801ae6"><b>ev-cycle-dea11f5d85801ae6</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-dea11f5d85801ae6&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/168&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b1319820206fe6b7"><b>ev-cycle-b1319820206fe6b7</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b1319820206fe6b7&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/169&quot;
+}
+</pre></div><div id="evidence-ev-cycle-0e7c26a65b68d6ea"><b>ev-cycle-0e7c26a65b68d6ea</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-0e7c26a65b68d6ea&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/170&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1f54133c532bedd4"><b>ev-cycle-1f54133c532bedd4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1f54133c532bedd4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/171&quot;
+}
+</pre></div><div id="evidence-ev-cycle-27af172a9b0cdf85"><b>ev-cycle-27af172a9b0cdf85</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-27af172a9b0cdf85&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/172&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cbba782fc0593c06"><b>ev-cycle-cbba782fc0593c06</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cbba782fc0593c06&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/173&quot;
+}
+</pre></div><div id="evidence-ev-cycle-aca4207615ce34ba"><b>ev-cycle-aca4207615ce34ba</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-aca4207615ce34ba&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/174&quot;
+}
+</pre></div><div id="evidence-ev-cycle-90bc48edb1e3fb97"><b>ev-cycle-90bc48edb1e3fb97</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-90bc48edb1e3fb97&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/175&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d6930c98cf9efe25"><b>ev-cycle-d6930c98cf9efe25</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d6930c98cf9efe25&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/176&quot;
+}
+</pre></div><div id="evidence-ev-cycle-481467b5a9019c0f"><b>ev-cycle-481467b5a9019c0f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-481467b5a9019c0f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/177&quot;
+}
+</pre></div><div id="evidence-ev-cycle-12da9913473eb7e1"><b>ev-cycle-12da9913473eb7e1</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-12da9913473eb7e1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/178&quot;
+}
+</pre></div><div id="evidence-ev-cycle-65577ef7d7032d92"><b>ev-cycle-65577ef7d7032d92</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-65577ef7d7032d92&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/179&quot;
+}
+</pre></div><div id="evidence-ev-cycle-d66df7c659e90080"><b>ev-cycle-d66df7c659e90080</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-d66df7c659e90080&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/180&quot;
+}
+</pre></div><div id="evidence-ev-cycle-491464db9983ef07"><b>ev-cycle-491464db9983ef07</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-491464db9983ef07&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/181&quot;
+}
+</pre></div><div id="evidence-ev-cycle-cb72764a091be79b"><b>ev-cycle-cb72764a091be79b</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-cb72764a091be79b&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/182&quot;
+}
+</pre></div><div id="evidence-ev-cycle-66605646c0a3154d"><b>ev-cycle-66605646c0a3154d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-66605646c0a3154d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/183&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b1e0dc253048eabc"><b>ev-cycle-b1e0dc253048eabc</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b1e0dc253048eabc&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/184&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1103f205d79e0cc7"><b>ev-cycle-1103f205d79e0cc7</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1103f205d79e0cc7&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/185&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b9e774a657e2a3d2"><b>ev-cycle-b9e774a657e2a3d2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b9e774a657e2a3d2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/186&quot;
+}
+</pre></div><div id="evidence-ev-cycle-c41cecbb89441291"><b>ev-cycle-c41cecbb89441291</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-c41cecbb89441291&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/187&quot;
+}
+</pre></div><div id="evidence-ev-cycle-8c7f77d1f4dc3f03"><b>ev-cycle-8c7f77d1f4dc3f03</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-8c7f77d1f4dc3f03&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/188&quot;
+}
+</pre></div><div id="evidence-ev-cycle-57c10e50fa5d87a0"><b>ev-cycle-57c10e50fa5d87a0</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-57c10e50fa5d87a0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/189&quot;
+}
+</pre></div><div id="evidence-ev-cycle-412687df3a732306"><b>ev-cycle-412687df3a732306</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-412687df3a732306&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/190&quot;
+}
+</pre></div><div id="evidence-ev-cycle-5d51952e4095972a"><b>ev-cycle-5d51952e4095972a</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-5d51952e4095972a&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/191&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f1d084dfbe6755a3"><b>ev-cycle-f1d084dfbe6755a3</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f1d084dfbe6755a3&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/192&quot;
+}
+</pre></div><div id="evidence-ev-cycle-1bf3021f84dc4646"><b>ev-cycle-1bf3021f84dc4646</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-1bf3021f84dc4646&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/193&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3e3c4f00b5c11638"><b>ev-cycle-3e3c4f00b5c11638</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3e3c4f00b5c11638&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/194&quot;
+}
+</pre></div><div id="evidence-ev-cycle-eeaaf96b982ffe54"><b>ev-cycle-eeaaf96b982ffe54</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-eeaaf96b982ffe54&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/195&quot;
+}
+</pre></div><div id="evidence-ev-cycle-933444ccedb4b2eb"><b>ev-cycle-933444ccedb4b2eb</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-933444ccedb4b2eb&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/196&quot;
+}
+</pre></div><div id="evidence-ev-cycle-be152986642df6d4"><b>ev-cycle-be152986642df6d4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-be152986642df6d4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/197&quot;
+}
+</pre></div><div id="evidence-ev-cycle-5befecc9a53304c2"><b>ev-cycle-5befecc9a53304c2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-5befecc9a53304c2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/heading/198&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f8c2586f2cd7d5a8"><b>ev-cycle-f8c2586f2cd7d5a8</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f8c2586f2cd7d5a8&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/199&quot;
+}
+</pre></div><div id="evidence-ev-cycle-c89bebae3ee10ec1"><b>ev-cycle-c89bebae3ee10ec1</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-c89bebae3ee10ec1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/200&quot;
+}
+</pre></div><div id="evidence-ev-cycle-c7ce1f8bca73e3ea"><b>ev-cycle-c7ce1f8bca73e3ea</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-c7ce1f8bca73e3ea&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/201&quot;
+}
+</pre></div><div id="evidence-ev-cycle-403a5c617280ec41"><b>ev-cycle-403a5c617280ec41</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-403a5c617280ec41&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/202&quot;
+}
+</pre></div><div id="evidence-ev-cycle-5eceec69f79d2021"><b>ev-cycle-5eceec69f79d2021</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-5eceec69f79d2021&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/203&quot;
+}
+</pre></div><div id="evidence-ev-cycle-3d1e5d52f053ff21"><b>ev-cycle-3d1e5d52f053ff21</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-3d1e5d52f053ff21&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/204&quot;
+}
+</pre></div><div id="evidence-ev-cycle-85ea2a6b41e0064f"><b>ev-cycle-85ea2a6b41e0064f</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-85ea2a6b41e0064f&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/205&quot;
+}
+</pre></div><div id="evidence-ev-cycle-ad1384e5030557ab"><b>ev-cycle-ad1384e5030557ab</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-ad1384e5030557ab&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/206&quot;
+}
+</pre></div><div id="evidence-ev-cycle-711a60805af0fb40"><b>ev-cycle-711a60805af0fb40</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-711a60805af0fb40&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/207&quot;
+}
+</pre></div><div id="evidence-ev-cycle-04a4eb2aab126e44"><b>ev-cycle-04a4eb2aab126e44</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-04a4eb2aab126e44&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/208&quot;
+}
+</pre></div><div id="evidence-ev-cycle-baaa4715c381f885"><b>ev-cycle-baaa4715c381f885</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-baaa4715c381f885&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/209&quot;
+}
+</pre></div><div id="evidence-ev-cycle-fee9c8a99e03ad53"><b>ev-cycle-fee9c8a99e03ad53</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-fee9c8a99e03ad53&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/210&quot;
+}
+</pre></div><div id="evidence-ev-cycle-7b1d9044c222e373"><b>ev-cycle-7b1d9044c222e373</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-7b1d9044c222e373&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/211&quot;
+}
+</pre></div><div id="evidence-ev-cycle-158a08613ce26abb"><b>ev-cycle-158a08613ce26abb</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-158a08613ce26abb&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/212&quot;
+}
+</pre></div><div id="evidence-ev-cycle-8ec6011b2b7a14af"><b>ev-cycle-8ec6011b2b7a14af</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-8ec6011b2b7a14af&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/213&quot;
+}
+</pre></div><div id="evidence-ev-cycle-51cea968f0564a82"><b>ev-cycle-51cea968f0564a82</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-51cea968f0564a82&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/214&quot;
+}
+</pre></div><div id="evidence-ev-cycle-0e95758e076640a8"><b>ev-cycle-0e95758e076640a8</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-0e95758e076640a8&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/215&quot;
+}
+</pre></div><div id="evidence-ev-cycle-fa201f4b4702b3bb"><b>ev-cycle-fa201f4b4702b3bb</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-fa201f4b4702b3bb&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/216&quot;
+}
+</pre></div><div id="evidence-ev-cycle-328792d4d18549b2"><b>ev-cycle-328792d4d18549b2</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-328792d4d18549b2&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/217&quot;
+}
+</pre></div><div id="evidence-ev-cycle-2de845ef414fdfb4"><b>ev-cycle-2de845ef414fdfb4</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-2de845ef414fdfb4&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/218&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b8abdfda34724bae"><b>ev-cycle-b8abdfda34724bae</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b8abdfda34724bae&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/219&quot;
+}
+</pre></div><div id="evidence-ev-cycle-62b2a7bcdeaece04"><b>ev-cycle-62b2a7bcdeaece04</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-62b2a7bcdeaece04&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/220&quot;
+}
+</pre></div><div id="evidence-ev-cycle-db3c21d03bd4b98d"><b>ev-cycle-db3c21d03bd4b98d</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-db3c21d03bd4b98d&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/221&quot;
+}
+</pre></div><div id="evidence-ev-cycle-25bfdec3ec1bbf81"><b>ev-cycle-25bfdec3ec1bbf81</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-25bfdec3ec1bbf81&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/222&quot;
+}
+</pre></div><div id="evidence-ev-cycle-f65be310d8079352"><b>ev-cycle-f65be310d8079352</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-f65be310d8079352&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/223&quot;
+}
+</pre></div><div id="evidence-ev-cycle-5f76797e4667a6ac"><b>ev-cycle-5f76797e4667a6ac</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-5f76797e4667a6ac&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/text/224&quot;
+}
+</pre></div><div id="evidence-ev-cycle-89bade911229bc34"><b>ev-cycle-89bade911229bc34</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-89bade911229bc34&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/225&quot;
+}
+</pre></div><div id="evidence-ev-cycle-b5e637be7884f43e"><b>ev-cycle-b5e637be7884f43e</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-b5e637be7884f43e&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/heading/226&quot;
+}
+</pre></div><div id="evidence-ev-cycle-9d8b15412a344954"><b>ev-cycle-9d8b15412a344954</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-9d8b15412a344954&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/227&quot;
+}
+</pre></div><div id="evidence-ev-cycle-70d2de7546ad4239"><b>ev-cycle-70d2de7546ad4239</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-70d2de7546ad4239&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/228&quot;
+}
+</pre></div><div id="evidence-ev-cycle-51b227746e160a02"><b>ev-cycle-51b227746e160a02</b><pre>{
+  &quot;id&quot;: &quot;ev-cycle-51b227746e160a02&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;judgment_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/cycle/block/229&quot;
+}
+</pre></div><div id="evidence-fact-229"><b>fact-229</b><pre>{
+  &quot;id&quot;: &quot;fact-229&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;fact_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数&quot;,
+  &quot;value&quot;: 47
+}
+</pre></div><div id="evidence-fact-230"><b>fact-230</b><pre>{
+  &quot;id&quot;: &quot;fact-230&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;fact_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度&quot;,
+  &quot;value&quot;: 15.2
+}
+</pre></div><div id="evidence-fact-231"><b>fact-231</b><pre>{
+  &quot;id&quot;: &quot;fact-231&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;fact_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板&quot;,
+  &quot;value&quot;: 5
+}
+</pre></div><div id="evidence-fact-232"><b>fact-232</b><pre>{
+  &quot;id&quot;: &quot;fact-232&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;fact_20261030.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿&quot;,
+  &quot;value&quot;: 16745.0
+}
+</pre></div><div id="evidence-kpi-source-0-0"><b>kpi-source-0-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;102413108a65f32994086d321fc0eceb9d8120ad2e3acd33bb52ddbbacab96c4&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;,
+  &quot;hash_scope&quot;: &quot;asof_prefix&quot;,
+  &quot;as_of&quot;: &quot;20261030&quot;
+}
+</pre></div><div id="evidence-kpi-source-0-1"><b>kpi-source-0-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_周期投票台账.jsonl&quot;,
+  &quot;sha256&quot;: &quot;9f5b8285b234ead61666190404c81287073518a0ed3fddb50ce8bff96be1660d&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-0"><b>kpi-source-1-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;102413108a65f32994086d321fc0eceb9d8120ad2e3acd33bb52ddbbacab96c4&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;,
+  &quot;hash_scope&quot;: &quot;asof_prefix&quot;,
+  &quot;as_of&quot;: &quot;20261030&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-1"><b>kpi-source-1-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_周期投票台账.jsonl&quot;,
+  &quot;sha256&quot;: &quot;9f5b8285b234ead61666190404c81287073518a0ed3fddb50ce8bff96be1660d&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-0"><b>kpi-source-2-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;102413108a65f32994086d321fc0eceb9d8120ad2e3acd33bb52ddbbacab96c4&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;,
+  &quot;hash_scope&quot;: &quot;asof_prefix&quot;,
+  &quot;as_of&quot;: &quot;20261030&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-1"><b>kpi-source-2-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_周期投票台账.jsonl&quot;,
+  &quot;sha256&quot;: &quot;9f5b8285b234ead61666190404c81287073518a0ed3fddb50ce8bff96be1660d&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-0"><b>kpi-source-3-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-0&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_市场温度表.json&quot;,
+  &quot;sha256&quot;: &quot;102413108a65f32994086d321fc0eceb9d8120ad2e3acd33bb52ddbbacab96c4&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;,
+  &quot;hash_scope&quot;: &quot;asof_prefix&quot;,
+  &quot;as_of&quot;: &quot;20261030&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-1"><b>kpi-source-3-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-1&quot;,
+  &quot;d&quot;: &quot;20261030&quot;,
+  &quot;source&quot;: &quot;_学习/_周期投票台账.jsonl&quot;,
+  &quot;sha256&quot;: &quot;9f5b8285b234ead61666190404c81287073518a0ed3fddb50ce8bff96be1660d&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><p><a href="audit/cycle.json">原文审计与来源条目</a> · <a href="models/cycle.json">结构化页面模型</a></p></div></details><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+  var wrap=document.querySelector('.wrap');
+  if(!wrap)return;
+  /* 阅读条已给出真实栏目锚点时，不再叠加第二份导航 */
+  if(wrap.querySelector('.reading-spine a.rs-step'))return;
+  var sections=Array.prototype.filter.call(wrap.children,function(el){return el.tagName==='SECTION';});
+  if(sections.length<3)return;
+  var map=document.createElement('nav');
+  map.className='page-map';
+  map.setAttribute('aria-label','本页阅读地图');
+  var label=document.createElement('span');
+  label.className='page-map-label';
+  label.textContent='本页阅读';
+  map.appendChild(label);
+  var links=[];
+  sections.forEach(function(sec,i){
+    var h=Array.prototype.find.call(sec.children,function(el){return el.tagName==='H2';});
+    if(!h)return;
+    if(!sec.id)sec.id='section-'+(i+1);
+    var a=document.createElement('a');
+    a.href='#'+sec.id;
+    a.textContent=h.textContent.replace(/^[一二三四五六七八九十]+\\s*/,'');
+    a.setAttribute('data-section',sec.id);
+    map.appendChild(a); links.push({a:a,sec:sec});
+  });
+  if(links.length)wrap.insertBefore(map,sections[0]);
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      links.forEach(function(x){x.a.classList.toggle('active',x.sec===entry.target);});
+    });
+  },{rootMargin:'-88px 0px -64% 0px',threshold:0});
+  links.forEach(function(x){io.observe(x.sec);});
+})();
+</script></body></html>

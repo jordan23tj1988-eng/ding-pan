@@ -444,7 +444,12 @@ def dashboard(d):
                     _g(p,'code','代码'),_g(p,'name','名称'),_g(p,'weight_pct','权重%','权重'),gtxt,_g(p,'reason','理由',default='')))
             for o in sells:
                 stxt = '开盘' if _norm_leg(_g(o,'leg','腿'))!='close' else '收盘'
-                if o.get('sell_switch'): stxt += '(高开≥%s%%改收)'%o['sell_switch'].get('if_gap_ge_pct')
+                ss = o.get('sell_switch')
+                if isinstance(ss, dict):
+                    stxt += '(高开≥%s%%改收)'%ss.get('if_gap_ge_pct')
+                elif isinstance(ss, str) and ss.strip():
+                    # 策略 agent 有时把 sell_switch 写成自然语言条件句；不能因此崩页，原文截断展示
+                    stxt += '(条件:%s)'%ss.strip()[:60]
                 h.append('<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">%s %s</td><td>%s</td><td style="color:#a8adbd">%s</td></tr>'%(
                     _g(o,'code','代码'),_g(o,'name','名称',default=''),stxt,_g(o,'reason','理由',default='')))
             h.append('</table>')

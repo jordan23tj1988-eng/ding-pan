@@ -1,0 +1,688 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>④产业逻辑</title><meta name="review-date" content="20261102"><meta name="review-schema-version" content="1"><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+
+/* ── v4.1 页面阅读路径与响应式增强 ── */
+:root{--route-accent:var(--accent)}
+body[data-route="cycle"]{--route-accent:#7b8cff}
+body[data-route="auction"]{--route-accent:#e8a33d}
+body[data-route="lhb"]{--route-accent:#b18aff}
+body[data-route="theme"]{--route-accent:#2fd3c5}
+body[data-route="logic"]{--route-accent:#63b3ff}
+body[data-route="limitup"]{--route-accent:#ff7b72}
+
+/* 内容宽度按信息密度自适应：宽表不再挤成一团，概览 bento 仍保持黄金版宽度。 */
+.wrap:has(>section){max-width:1180px}
+.wrap:has(.rowA){max-width:1440px}
+.wrap>section{scroll-margin-top:92px;margin-top:30px}
+.wrap>section>h2{margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid var(--line2);position:relative}
+.wrap>section>h2::before{background:var(--route-accent,var(--accent));box-shadow:0 0 14px color-mix(in srgb,var(--route-accent,var(--accent)) 35%,transparent)}
+.wrap>section:first-of-type{margin-top:24px}
+
+/* 页面阅读地图：显示板块职责，不复制正文事实。 */
+.page-map{position:sticky;top:78px;z-index:6;display:flex;align-items:center;gap:5px;overflow-x:auto;white-space:nowrap;margin:0 0 18px;padding:6px;background:rgba(18,20,28,.90);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(12px);scrollbar-width:none}
+.page-map::-webkit-scrollbar{display:none}
+.page-map-label{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:0 8px 0 5px;flex:0 0 auto}
+.page-map a{color:var(--sub);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:.16s;flex:0 0 auto}
+.page-map a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.page-map a.active{color:var(--route-accent,var(--accent));background:color-mix(in srgb,var(--route-accent,var(--accent)) 13%,transparent);box-shadow:inset 0 -2px 0 var(--route-accent,var(--accent));font-weight:700}
+.page-map a:focus-visible{outline:2px solid var(--route-accent,var(--accent));outline-offset:1px}
+
+/* 卡片层级：标题、来源提示、正文和长表分出视觉层。 */
+.card,.obs,.kpi,details.chain{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.card h3,.card h4{line-height:1.45}
+.card>h3:first-child,.card>h4:first-child{color:var(--ink)}
+.card .hint{display:inline-block;line-height:1.45}
+.card table{margin-top:10px}
+table tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+table tr:hover td{background:color-mix(in srgb,var(--route-accent,var(--accent)) 7%,transparent)}
+th{white-space:nowrap}
+pre{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:rgba(0,0,0,.16);font-family:var(--mono);font-size:11px;line-height:1.55}
+
+/* 触屏和窄屏：不缩小关键数字，改为卡内横向浏览，避免整页横溢出。 */
+@media(max-width:640px){
+    .navbar{display:block;top:6px;margin:6px 8px 0;max-width:calc(100% - 16px);padding:8px 10px;border-radius:14px}
+  .navbar .brand{font-size:13px;margin-bottom:6px}.navbar .logo{width:28px;height:28px;border-radius:8px}
+  .navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}
+  .navbar .pills::-webkit-scrollbar{display:none}
+  .navbar .pills a{font-size:12px;padding:6px 10px}
+  .navbar .upd{margin-left:auto;font-size:10px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap{padding:18px 10px 48px}.wrap:has(>section),.wrap:has(.rowA){max-width:none}
+  .page-map{top:65px;margin-bottom:14px}
+  .wrap>section{margin-top:24px}.wrap>section>h2{font-size:14.5px;padding-bottom:8px}
+  .card,.obs{padding-left:14px;padding-right:14px;border-radius:11px}
+  .card{overflow-x:auto}.card>h3,.card>h4,.card>p,.card>ul,.card>ol{min-width:0}
+  table{min-width:620px;font-size:12px}th,td{padding:7px 8px}
+  .routes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:19px 18px}.hero h1{font-size:21px}
+  .kpi .big{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.page-map a,.card,.obs,.kpi{transition:none!important}}
+
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}}
+
+/* ── v4.3 概览可读层 ── 只收敛版式与信息层级，不改判断内容 */
+.reading-spine a.rs-step{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-weight:600;white-space:nowrap}
+.reading-spine a.rs-step:hover{border-color:var(--line2);color:var(--ink)}
+.reading-spine a.rs-step b{color:var(--accent);font-family:var(--mono);font-size:10.5px;margin-right:6px;font-weight:800}
+.cgrp{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 20px 6px;margin-top:13px}
+.cgrp-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px dashed var(--line2)}
+.cgrp-head .cgrp-note{color:var(--dim);font-size:11.3px;font-family:var(--mono)}
+.cgrp-body{display:flex;flex-direction:column}
+.citem{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:2px 12px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:0;padding-bottom:2px}
+.citem>p{margin:0;line-height:1.62}
+.citem .citem-tag{color:var(--dim);font-size:11.1px;margin:2px 0 0;font-family:var(--mono);white-space:nowrap;text-align:right}
+.claim-proof{grid-column:2;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.claim-proof .proof-label{color:var(--dim);font-size:10.6px;font-weight:700}
+.claim-proof a{color:var(--sub);font-size:10.7px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--mono)}
+.claim-proof a:hover{border-color:var(--accent-dim);color:var(--ink)}
+.audit-fold{margin-top:13px}
+.audit-fold>summary{cursor:pointer;color:var(--sub);font-size:12.6px;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+.audit-fold>summary::-webkit-details-marker{display:none}
+.audit-fold>summary::before{content:'▸';color:var(--accent);font-family:var(--mono);font-size:12px}
+.audit-fold[open]>summary::before{content:'▾'}
+.audit-fold .inner{padding:2px 0 12px}
+.audit-fold .fold-note{color:var(--dim);font-size:11.6px;margin:0 0 10px}
+.audit-fold .inner-limit{margin:0 0 12px}
+.audit-fold .inner-limit b{color:var(--sub);font-size:12.2px}
+.audit-fold .inner-limit ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:11.8px}
+.machfold{margin-top:13px}
+.kpi .sub2{font-family:var(--mono);font-size:11px}
+.kpi .gauge .gl{font-size:10.4px;color:var(--dim)}
+.mx{width:100%;border-collapse:collapse;margin:2px 0 4px;table-layout:fixed}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mx thead th{color:var(--dim);font-size:11.1px;font-weight:700;font-family:var(--mono);white-space:nowrap}
+.mx tbody th{color:var(--sub);font-weight:600;font-size:11.6px;font-family:var(--mono);white-space:nowrap;width:66px}
+.mx td{font-size:12.2px;line-height:1.62}
+.mx td a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.mx td a:hover{border-bottom-color:var(--accent-dim)}
+.mx .mx-empty{color:var(--dim)}
+.mx tr:last-child th,.mx tr:last-child td{border-bottom:0}
+.chip2.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+section>h2{margin-top:32px}
+.chip2.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.chip2.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+
+/* ── v4.4 展示层去噪 / 纯内容层 ──
+   用户拍板(2026-09-22)：角色徽章(结论/观察/证据/反证/条件/认知/限制)、
+   来源标签、"证据回链/来源"字、旧版原文碎片卡 —— 这些只增加噪声，
+   对决策没有信息增量，全部退出展示层。
+   证据不删除:claim 锚点、#evidence-* 回链、模型 JSON、审计 JSON 全量保留。
+   概览页(citem 版式)同样的噪声一并在本层收敛。 */
+h1.claim-hero{font-size:inherit;font-family:inherit;font-weight:inherit;line-height:inherit;margin:0;display:inline}
+.claim-head:not(.cgrp-head),.citem .citem-tag{display:none}
+.claim-proof .proof-label{display:none}
+.claim-proof{margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05)}
+.claim-proof a{border:0;padding:0;background:none;font-size:10.6px}
+.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}
+/* 无痕原文库：给未上展示层的 claim 保留锚点与原文，供门禁复核，读者不可见 */
+.claim-anchor,.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}
+.legend-strip{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11.4px;padding:8px 0 2px;border-top:1px solid var(--line)}
+.legend-strip b{color:var(--sub);font-weight:800}
+.legend-strip i{font-style:normal;color:var(--dim)}
+</style><style id="overview-evolution-sync">.evolution{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}.evo-stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}.evo-stat{min-width:92px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.025)}.evo-stat b{display:block;font-size:20px;color:var(--accent)}.evo-stat small{color:var(--mut)}.evo-list{display:grid;gap:0;margin-top:10px}.evo-row{display:grid;grid-template-columns:72px minmax(0,1fr) 250px;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);line-height:1.55}.evo-row b{color:var(--accent)}.evo-row span{font-weight:700}.evo-row small{color:var(--mut)}.evo-empty{padding:14px 0;color:var(--mut);font-size:12px}.evo-row{grid-template-columns:1fr}.evo-row small{grid-column:1}</style><style id="display-noise-v44">.claim-head:not(.cgrp-head),.citem .citem-tag,.claim-proof .proof-label,.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}</style></head><body data-route="logic" data-d="20261102" data-schema-version="1" data-template-version="p1.3"><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="on" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd">更新 20261102</span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp">温度54.9 · 涨停125 · 跌停8 · 炸板28(18.3%) · 最高板6 · 成交17837亿 · 二板加11 · 一进二16.7% · 核按钮0.0%</div><div class="grp">温度54.9 · 涨停125 · 跌停8 · 炸板28(18.3%) · 最高板6 · 成交17837亿 · 二板加11 · 一进二16.7% · 核按钮0.0%</div></div></div><nav class="reading-spine" aria-label="阅读顺序"><span class="rs-title">阅读顺序</span><span class="rs-step"><b>01</b>结论</span><span class="rs-arrow">→</span><span class="rs-step"><b>02</b>指标</span><span class="rs-arrow">→</span><span class="rs-step"><b>03</b>分段证据</span><span class="rs-arrow">→</span><span class="rs-step"><b>04</b>来源审计</span></nav><div class="rowA"><div class="hero"><div class="kick">④产业逻辑 · 我当前的判断 · 截至 2026-11-02 收盘</div><h1 aria-label="温度 54.9（中性档，昨 15.2 冰点）、涨停 125/跌停 8、首板 114、封板 72.8 亿——这是情绪修复日，不是业绩驱动的产业行情">温度 54.9（中性档，<em>昨 15.2 冰点）、涨停 125/跌停 8、首板 114、封板 72.8 亿——这是情绪修复日，不是业绩驱动的产业行情</em></h1><p>链条深度地图（只加不删）→消息溯源→前置预期雷达→中报预增 A 共振池；埋伏靠逻辑硬度，不靠盘面热度。</p><div class="stance"><span class="pill warn">逻辑 · <b class="s-weak">温度 54.9（中性档，昨 15.2 冰点）、涨停 125/跌停 8、首板 114、封板 72.8 亿——这是情绪修复日，不是业绩驱动的产业行情</b></span><span class="pill">风险 · <b>192</b></span><span class="pill hot"><b class="s-ok">新链 · 4</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">11-02</span></div><span class="lab">A共振池 · 成色A</span><span class="big">192</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">11-02</span></div><span class="lab">链条库 · 线数</span><span class="big">4</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">11-02</span></div><span class="lab">透支警示 · 均60日</span><span class="big">—</span><span class="sub2">当日该口径数据缺失，未填补</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">11-02</span></div><span class="lab">昨产逻结算 · 执1</span><span class="big">—</span><span class="sub2">当日该口径数据缺失，未填补</span></div></div><!--PAPERTRADE-->
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 第四路·产业逻辑</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+0.73%</b></span> <span>本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-0.04%</b></span> <span>基准本周 <b style="color:#8d93a8;font-family:ui-monospace,monospace">+0.00%</b></span> <span>平仓胜率 <b style="font-family:monospace">62.5%</b>(n=8)</span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="62.9" x2="620" y2="62.9" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,68.8 31.8,63.1 43.5,64.5 55.3,67.6 67.1,32.0 78.8,31.2 90.6,31.2 102.4,35.7 114.1,41.0 125.9,38.8 137.6,43.2 149.4,51.0 161.2,53.7 172.9,57.5 184.7,59.1 196.5,57.3 208.2,53.0 220.0,56.3 231.8,55.4 243.5,57.0 255.3,60.2 267.1,63.9 278.8,66.6 290.6,64.1 302.4,63.8 314.1,64.6 325.9,70.3 337.6,68.5 349.4,66.0 361.2,66.7 372.9,70.9 384.7,72.8 396.5,79.1 408.2,78.4 420.0,79.1 431.8,80.4 443.5,80.6 455.3,85.0 467.1,85.4 478.8,92.7 490.6,95.4 502.4,102.3 514.1,105.3 525.9,103.6 537.6,103.3 549.4,111.9 561.2,105.9 572.9,107.5 584.7,108.5 596.5,108.4 608.2,115.2 620.0,118.8" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,65.7 31.8,66.0 43.5,64.5 55.3,65.4 67.1,64.3 78.8,63.2 90.6,63.5 102.4,63.2 114.1,63.1 125.9,62.7 137.6,62.6 149.4,62.7 161.2,62.6 172.9,62.5 184.7,62.6 196.5,62.0 208.2,61.7 220.0,61.1 231.8,61.1 243.5,61.1 255.3,61.1 267.1,61.1 278.8,61.1 290.6,61.4 302.4,60.9 314.1,60.8 325.9,60.7 337.6,60.7 349.4,60.7 361.2,60.7 372.9,60.7 384.7,60.7 396.5,60.7 408.2,60.7 420.0,60.7 431.8,60.7 443.5,60.7 455.3,60.7 467.1,60.7 478.8,60.5 490.6,60.7 502.4,60.9 514.1,60.5 525.9,60.6 537.6,60.6 549.4,60.5 561.2,61.2 572.9,61.1 584.7,61.1 596.5,61.1 608.2,61.6 620.0,61.7" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="61.7" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20261102  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="56.7" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">1.0073</text></svg></div>
+<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · 【在持票逐票表态】600592 龙溪股份（1000股/@18.80/权重2.0%/买入日20261030）：**卖出（open 腿）**，理由见 sells；不转持有、不留半仓，因买入的唯一依据（冰点层机器人首板桶）已在温度档切换当日失效，且其业绩腿为负（净利-19.31%/营收-11.59%），本路规则禁止对业绩腿为负的票加仓或续持。【今日买入】仅 688518 联赢激光 2.0%，gap 闸门[-3%,+3%]；开盘 gap＞+3% 不追（20cm 20cm 首板次日高开>3% 时执1 分布右尾已被今日情绪透支），gap＜-3% 不接（说明秒板承接失败）。【观察不买】688596 正帆科技（卡位报告期旧2025-12-31＋首封11:22炸1落中性薄封晚封负桶n=269/42.0%/-0.51%）、603171 税友股份（10cm封单0.32%首封11:13，同落负桶；业绩与卡位本身硬）。【明确不碰】停牌/一字不可成交票0只；风险日历踩窗5只（600715/301262/603955/603755/300508）全部不进入买卖；减亏假阳14只中002086（3板/封单5.34%/玄学「羊字辈」首项催化）与605303（半导体线唯一贴标票、前三日成交0.36亿）为最典型两只，点名排除。【组合层】本路今日总买入权重2.0%，若组合层给出总仓上限低于2%，本路接受组合层更严约束并等比压缩；卖出600592回款约1.55万元（按15.55估）计入现金，不做再投资。</div>
+</div><div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">600592 龙溪股份</td><td style="font-family:monospace">1000</td><td style="font-family:monospace">18.80</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-17.33%</b></td><td style="font-family:monospace">2</td><td>继续持有</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">002365 永安药业</td><td style="font-family:monospace">1500</td><td style="font-family:monospace">12.61</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-1.56%</b></td><td style="font-family:monospace">1</td><td>继续持有</td></tr>
+</table>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20261102发出,明日固定价执行)</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8d93a8"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">688518 联赢激光</td><td style="font-family:monospace">2.0%·闸门高开≥3弃</td><td style="color:#a8adbd">三现全中（业绩已兑现：三季报净利同比+131.42%/营收+30.55%/毛利率29.17%/归母2.50亿，公告日2026-10-31≤判断日；卡位可证：F10 2026-06-30 激光焊接自动化成套设备43.76%+工作台24.75%=68.5%；未透支：r20 -0.5%、距250日高-38.8%）。封板可执行：首封09:30秒板、炸0、封单0.77%、换手4.9%、成交3.31亿/流通68.7亿。历史对照（含公告日约束口径）：中性档×首板×20cm n=88/胜率51.1%/均收+0.70%（本桶为纯盘面结构、不含业绩标签，故无后视镜成分；剔贡献最大3日后 n=64/42.2%/-0.50%）；本路战绩14日/22笔/胜率27.3%/均收-2.37%，故权重封顶2%。扣分项：封单比0.77%属中性档薄封（n=577/38.8%/-0.70%）、公告日历龄2个交易日非当日新增催化、电力设备线6只中真增长仅此1只无同环节共证。</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">600592 龙溪股份</td><td>开盘(条件:若20261103开盘价≥15.90（即较今日收盘+2.2%，等于本路三现票的期望上限）则改为按现价卖出、不追高；若开盘)</td><td style="color:#a8adbd">业绩腿否决成立并已公告：三季报净利同比-19.31%、营收同比-11.59%（东财正式报表，公告/更新日2026-10-29≤判断日，非后视镜）。买入依据是『冰点层机器人首板桶（口径B n=49/77.6%/+3.87%）』，该桶随温度15.2→54.9（中性档）当日失效；今日机器人/具身智能9只中真增长仅2只（劲旅环境/统一股份），线内无业绩共证。持仓成本18.80，20261102收15.55＝浮亏-17.29%，开14.72。按『业绩腿否决＋买入桶失效』双条件清仓，不在中性档以『价格止跌』为由继续持有。</td></tr>
+</table>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(5)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>002979 雷赛智能</td><td style="font-family:monospace">20261026@55.86</td><td style="font-family:monospace">20261027@56.01</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+0.22%</b></td><td>开·持1日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>000823 超声电子</td><td style="font-family:monospace">20261015@25.13</td><td style="font-family:monospace">20261019@24.78</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-1.54%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>002463 沪电股份</td><td style="font-family:monospace">20260908@126.00</td><td style="font-family:monospace">20260911@128.25</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+1.63%</b></td><td>收·持3日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600256 广汇能源</td><td style="font-family:monospace">20260715@5.40</td><td style="font-family:monospace">20260831@6.76</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+25.00%</b></td><td>收·持16日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>601677 明泰铝业</td><td style="font-family:monospace">20260715@16.07</td><td style="font-family:monospace">20260811@17.43</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+8.30%</b></td><td>开·持2日</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<div class="card"><b>数据边界</b><ul><li>兼容导入旧判断；原文立场未重新验证。</li><li>旧 HTML 补充按原栏目职责归位；相似判断仅提示重叠，不作语义删除。</li></ul></div><section id="recommendations"><h2>一 荐票卡</h2><div id="component-RECOLOGIC"><!--RECOLOGIC--><div class="card"><div id="table-935db3c265d09f50"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:104px"><col style="width:80px"><col><col style="width:170px"></colgroup><tr><th>#</th><th>标的</th><th>类型</th><th>逻辑(链条·环节·理由)</th><th>同类历史</th></tr><tr><td>1</td><td style="white-space:nowrap"><b>联赢激光</b><br><span class="mut">688518</span></td><td style="white-space:nowrap"><b>荐票</b></td><td style="word-break:break-word">三现全中：业绩已兑现（三季报净利 +131.42%/营收 +30.55%/毛利率 29.17%/归母 2.50 亿，公告 2026-10-31≤判断日）；卡位可证（F10 2026-06-30：激光焊接成套设备 43.76%＋工作台 24.75%＝68.5%，固态电池设备环节）；未透支（r20 -0.5%、距 250 日高 -38.8%）。封板可执行：首封 09:30 秒板、炸 0、封单 0.77%、换手 4.9%、成交 3.31 亿。扣分项如实计入：封单比 0.77% 属薄封（中性档薄封&lt;1% n=577/38.8%/-0.70%）、业绩公告日为 10-31（2 个交易日前，非当日新增催化）、电力设备/新能源线 6 只中真增长仅此 1 只（无同环节共证）。买入闸门 gap∈[-3%,+3%]，执1 失效阈值 ≤ -3%。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px">①盘面结构：中性档×首板×20cm n=88、胜率 51.1%、均收 +0.70%，剔贡献最大 3 日后 n=64、42.2%、-0.50%（公告日约束：本桶为纯盘面结构，不含业绩标签，故无后视镜成分）；②业绩腿同类：口径A dirn=中报预增(业绩) n=28、75.0%、+1.34%，其中中性档 n=5、80.0%、+0.23%（n&lt;30，仅作方向）；③本路战绩对照：14 日/22 笔、胜率 27.3%、均收 -2.37%，故权重封顶 2%。</span></td></tr><tr><td>2</td><td style="white-space:nowrap"><b>正帆科技</b><br><span class="mut">688596</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">今日全池唯一带『新签订单』字样的票（催化原文：三季报增长+新签订单+半导体零部件），业绩腿最硬（净利 +281.11%/营收 +16.64%/归母 2.72 亿/毛利 18.81%），位置最深调（r20 -29.5%、距 250 日高 -49.1%）。不给权重的原因：①F10 最新报告期仍为 2025-12-31（旧期），半导体设备零组件仅 17.41%，『制程关键系统 57.69%』不专属半导体，卡位占比不可精确到环节；②封板质量差（首封 11:22、炸 1、封单 0.26%）落在中性薄封晚封负桶；③订单金额/交付期未取到（无公告原文），只能标『订单在场、量级未知』。明日若出现『公告级订单金额 ≥ 上年在手订单 20%』或 封单比 ≥1% 且 首封 ≤10:00，可升为荐票。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px">中性档×首板×20cm×封单&lt;1% n=49、胜率 49.0%、均收 +0.83%（n≥30 但方向由 3 个强日贡献，剔后转负）；中性档首板×封单&lt;1%×首封&gt;11:00 n=269、42.0%、-0.51%。</span></td></tr><tr><td>3</td><td style="white-space:nowrap"><b>税友股份</b><br><span class="mut">603171</span></td><td style="white-space:nowrap"><span class="mut">观察</span></td><td style="word-break:break-word">卡位与业绩都硬：数智财税业务 76.97%（毛利 67.58%）、净利同比 +106.84%、营收 +9.93%、归母 2.28 亿、公告 2026-10-24（已知）。但两只硬条件落负桶：10cm、封单 0.32%、首封 11:13（晚封薄封），落在中性档 -0.51% 的负期望格里；且 AI应用/软件 9 只中真增长 4 只、无同环节共证。→ 只观察，不进权重；明日若 封单比 ≥1% 且 首封 ≤10:00 再评估。</td><td style="word-break:break-word"><span class="mut" style="font-size:11px">中性档×首板×封单&lt;1%×首封&gt;11:00 n=269、胜率 42.0%、均收 -0.51%（负桶）；10cm 同结构 n=121、33.9%、-1.57%。</span></td></tr></table></div></div>
+<div class="hint">发出版不可覆盖(logic判断_20261102.json(发出版)); 正式荐票来自本路发出版；观察候选不进入正式荐票/结算。 荐票=兑现逻辑可结算化≠确认; 结算=兑现口径</div><!--/RECOLOGIC--></div><div class="obs" id="claim-logic-7659da63af1be539"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">荐票 · 结论</span></div><div class="obs-watch"><p class="mut">荐票 · 结论</p><p>1 只正式荐票（688518 联赢激光，权重 2.0%，带 gap 闸门）+2 只观察，总仓位 2.0%，不构成进攻。漏斗：125 只涨停 → 剔踩窗 5 只（600715/301262/603955/603755/300508）→ 120 只 → 业绩腿三同（净利同比&gt;0 且 归母净利&gt;0 且 营收同比&gt;0）→ 剔减亏假阳 14 只 → 卡位≥50%（F10 主营占比）→ 剔已透支（001219 青岛食品 r20 +69.6%、距 250 日高 0.0%，6 板）→ 剩 3 只（688518/688596/603171）→ 三现全中仅 688518（688596 卡位报告期旧 2025-12-31 且首封 11:22 炸 1；603171 10cm 薄封 0.32% 晚封 11:13 落在中性薄封晚封负桶 n=375/41.1%/-0.70%）→ 1 只 2.0%。</p></div></div><div class="obs" id="claim-logic-82780fc06a4d7a94"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 代码</span></div><div class="obs-watch"><p class="mut">标的 · 代码</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-41bb389db9ecc89b"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 名称</span></div><div class="obs-watch"><p class="mut">标的 · 名称</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-84989d7eaec1a4a5"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 类型</span></div><div class="obs-watch"><p class="mut">标的 · 类型</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-76fee37ff9283593"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 历史对照</span></div><div class="obs-watch"><p class="mut">标的 · 历史对照</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-a55efbb6d5619b5d"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 理由</span></div><div class="obs-watch"><p class="mut">标的 · 理由</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-e78454b9f29e157d"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 代码</span></div><div class="obs-watch"><p class="mut">标的 · 代码</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-fb0868ae6592b71a"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 名称</span></div><div class="obs-watch"><p class="mut">标的 · 名称</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-fa91b021eb2df63e"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 类型</span></div><div class="obs-watch"><p class="mut">标的 · 类型</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-8bd6bbbbab90b2d8"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 历史对照</span></div><div class="obs-watch"><p class="mut">标的 · 历史对照</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-40c14ae047cad5e0"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 理由</span></div><div class="obs-watch"><p class="mut">标的 · 理由</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-5c6271393d8bf87c"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 代码</span></div><div class="obs-watch"><p class="mut">标的 · 代码</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-1e9e33b32855abb2"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 名称</span></div><div class="obs-watch"><p class="mut">标的 · 名称</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-f6f6a710ba650db8"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 类型</span></div><div class="obs-watch"><p class="mut">标的 · 类型</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-3cb693a8edaef305"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 历史对照</span></div><div class="obs-watch"><p class="mut">标的 · 历史对照</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-logic-2ea27ac8d738c081"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 理由</span></div><div class="obs-watch"><p class="mut">标的 · 理由</p><p><a href="#component-RECOLOGIC">回看本段权威组件中的原条目</a></p></div></div><div class="card"><span id="claim-logic-a62dba406c8d6819"></span></div><div class="" id="claim-logic-99a85c6249485d61"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><h3>主线 45 只落在 40 个环节上、真增长只有 47/125＝37.6%、订单级证据仅 3 只——<b>业绩腿不支持任何 A 档</b>，本路只给 1 只 2.0% 单点试探（688518），档位 <b>C</b>，温度 <b>54.9 中性</b>（昨 15.2 冰点）。</h3></div><div class="" id="claim-logic-c1672fa88b9ef7dc"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>读法：先承接 Master 指派（含总审原文版与父指令版两套口径的差异声明）→ 再看业绩腿命门（三同口径逐只过筛）→ 再看判断（纵深/桶/可证伪）→ 再看荐票与深挖 → 最后认知迭代。<b>本页一句话</b>：今天涨停 125 只、首板 114 只、封板 72.8 亿，是情绪从冰点修复的第一天；但把每只票的三季报摊开，净利同比为正的 61 只里有 14 只仍在亏钱（减亏假阳），主线 45 只里 57.8% 净利同比为负，带订单/扩产字样的只有 3 只——<b>这是「换手修复」，不是「业绩驱动」</b>。</p></div><div class="card"><span id="claim-logic-41af43678e870dfc"></span><span id="claim-logic-e355096545c04be2"></span><span id="claim-logic-6cb21d2a8067d8f8"></span><span id="claim-logic-0f712173659a1b8e"></span><span id="claim-logic-9d7c35918106e459"></span><span id="claim-logic-f57812a8a3bf0262"></span><span id="claim-logic-f78c249dc7c2d3e6"></span><span id="claim-logic-cc464f5e87788b19"></span><span id="claim-logic-b63e6728218cc8a2"></span><span id="claim-logic-a579782d35e745a2"></span></div><div class="" id="claim-logic-63da649aed83233d"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>真增长 47/12537.6% · 减亏假阳 14 只 · 负增 64 只</p></div><div class="" id="claim-logic-1069bc845d18881a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>主线 45 只 / 40 环节聚集度 1.13 · 最大聚集 3 只 · 全 1 板</p></div><div class="" id="claim-logic-77060c37025e7f67"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>中性档首板 n=964胜率 39.3% · 均收 -0.73% · 全档唯一负</p></div><div class="" id="claim-logic-ad04a26a2089c1d3"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>订单级证据 3 只688596 新签订单 · 688376 扩产 · 605288 送样</p></div><div class="card"><span id="claim-logic-486963f910546ec2"></span></div><div class="" id="claim-logic-2fd67f48916c4283"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>荐票：1 只（2.0%）＋观察 2 只；漏斗 125→120→47→3→1</b>
+<div id="table-0e72db87527c036e"><table><thead><tr><th>#</th><th>标的</th><th>类型</th><th>逻辑（链条·环节·理由）</th><th>同类历史（含公告日约束口径）</th></tr></thead><tbody>
+<tr><td>1</td><td><b>688518 联赢激光</b></td><td><b>荐票</b> 2.0%</td><td>固态电池/激光焊接设备·<b>激光焊接自动化成套设备</b>：三现全中——业绩已兑现（净利 +131.42%/营收 +30.55%/毛利 29.17%/归母 2.50 亿，公告 2026-10-31）；卡位可证（F10 2026-06-30 焊接成套 43.76%+工作台 24.75%＝68.5%）；未透支（r20 -0.5%、距 250 日高 -38.8%）。封板：首封 09:30 秒板、炸 0、封单 0.77%、换手 4.9%、成交 3.31 亿。扣分：薄封、公告日历龄 2 日、电力设备线 6 只中真增长仅此 1 只无同环节共证</td><td>中性×首板×20cm n=88/51.1%/+0.70%（纯盘面结构、无业绩标签故无后视镜；剔最强 3 日 n=64/42.2%/-0.50%）；业绩腿同类 dirn=中报预增(业绩) n=28/75.0%/+1.34%、中性档 n=5/80.0%/+0.23%；本路 14 日 22 笔 27.3%/-2.37% → 权重封顶 2%</td></tr>
+<tr><td>2</td><td>688596 正帆科技</td><td>观察</td><td>半导体设备零组件：全池唯一「新签订单」票（净利 +281.11%/营收 +16.64%，r20 -29.5%、距 250 日高 -49.1%）。不给权重：F10 最新报告期 2025-12-31（卡位口径旧，半导体零组件仅 17.41%）、首封 11:22 炸 1 封单 0.26% 落负桶、「新签订单」无金额</td><td>中性×首板×20cm×封单&lt;1% n=49/49.0%/+0.83%（方向由 3 强日贡献）；中性×薄封×晚封 n=269/42.0%/-0.51%</td></tr>
+<tr><td>3</td><td>603171 税友股份</td><td>观察</td><td>AI应用/软件·数智财税 76.97%（毛利 67.58%）、净利 +106.84%/营收 +9.93%，公告 2026-10-24。不给权重：10cm、封单 0.32%、首封 11:13＝中性档负桶；AI应用/软件 9 只中真增长 4 只无同环节共证</td><td>中性×首板×封单&lt;1%×首封&gt;11:00 n=269/42.0%/-0.51%；10cm 同结构 n=121/33.9%/-1.57%</td></tr>
+</tbody></table></div>
+<p class="mut">闸门：688518 buy_gate gap∈[-3%,+3%]，执1 失效阈值 ≤-3%；若开盘 gap＞+3% 不追（20cm 首板次日高开已透支右尾），gap＜-3% 不接（秒板承接失败）。观察票不进结算、不给权重。</p>
+</div></div><div class="" id="claim-logic-ee8c84552705f5b9"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>交易计划摘要（唯一输入 _学习/交易计划_logic_20261102.json）</b>
+<div id="table-d8e2c53d15ec166a"><table><thead><tr><th>动作</th><th>标的</th><th>权重/腿</th><th>理由</th></tr></thead><tbody>
+<tr><td>卖出</td><td><b>600592 龙溪股份</b>（1000 股 @18.80，20261030 买入）</td><td>open 腿</td><td>业绩腿否决已公告：三季报净利 <b>-19.31%</b>、营收 <b>-11.59%</b>（公告 2026-10-29，非后视镜）；买入依据「冰点层机器人首板桶」随温度 15.2→54.9 当日失效；今日机器人线 9 只真增长仅 2 只。现价 15.55（浮亏 -17.29%），不以「价格止跌」为由续持</td></tr>
+<tr><td>买入</td><td>688518 联赢激光</td><td>2.0%</td><td>见上表；本路今日总仓 2.0%，若组合层更严则等比压缩</td></tr>
+</tbody></table></div>
+<p class="mut">卖出切换：若 20261103 开盘 ≥15.90（较今收 +2.2%）则按现价卖出不追高；若开盘 &lt;14.21（今日最低）则跌停价挂单优先成交，不做限价等待。</p>
+</div></div><div class="" id="claim-logic-d07e5f37ca9059ad"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>深挖（三项新增判断，均带可结算条件）</b>
+<p>①<b>「减亏假阳」是今日最大的一类误读</b>：14 只（11.2%）净利同比转正但归母仍亏，其中 002086 东方海洋（3 板、封单 5.34%、催化首项「羊字辈」）与 605303 园林股份（半导体线唯一贴标、日成交 0.36 亿）最典型。规则落地：业绩腿必须三同，否则只能写「减亏」。→ 次日校验：每只候选须带「净利同比 / 归母净利 / 营收同比」三字段，缺一即不得标业绩腿。</p>
+<p>②<b>后视镜的规模被量化了</b>：三季报预告口径 123 行里 <b>87 行（70.7%）</b>公告日晚于判断日；中报 A 池 145 行里 19 行（13.1%）同样是事后已知，且这 19 行有 14 行挤在 20260709 单日、均收 -4.26%。剔除后 A 池首板均收 -1.44%→-0.91%，对基线 delta 从 -0.81pp 修到 -0.28pp，<b>方向没变（仍负）</b>。→ 次日校验：任何业绩桶必须双列「已知 n / 后视镜 n」。</p>
+<p>③<b>「业绩公告日 ≤ 判断日」不等于「业绩是催化」</b>：今日 125 只公告日全部在 10-17~10-31，日历龄 2~10 个交易日，属已消化背景。本路据此把业绩腿降级为「筛除工具」（剔亏损/减亏），买入催化一律要求「当日新增」的订单/政策/价格证据——今日满足者仅 688596 一只，且无金额。</p>
+</div></div></section><section id="chains"><h2>二 链条深度地图库</h2><div id="component-MACHCHAIN"><!--MACHCHAIN-->
+<p class="mut" style="margin:4px 0 8px">链条位置快照最新止 07-16(AI硬件_消费电子、AI算力、创新药) · 距 11-02 约 109 个自然日, 位置引用为窗口数据</p>
+<details class="chain" open><summary><b>商业航天</b> <span class="chip cold">快照 07-13</span><span class="mut">首建 20260710 · 位置 链条位置_商业航天_20260713.json</span></summary><div class="inner"><div class="hint" style="padding-left:0;margin:2px 0 8px">条=环节均60日涨幅(红涨绿跌,满刻度±22%);右注=距250日高·位置档。快照 07-13</div><div class="hb"><span class="hbl">整箭/发射服务</span><div class="hbt"><i class="neg" style="width:61.2%"></i></div><span class="hbv dn">-13.4%</span><span class="hbs">距高-46% · 洼地</span><div class="hbnote">回收成功最直接映射,正统度最高 <span class="mut">代表(60日/距高): 中天火箭+3/-38 航天科技-30/-54</span></div></div><div class="hb"><span class="hbl">火箭发动机/动力</span><div class="hbt"><i class="neg" style="width:37.0%"></i></div><span class="hbv dn">-8.1%</span><span class="hbs">距高-34% · 洼地</span><div class="hbnote">复用次数决定成本,长逻辑核心 <span class="mut">代表(60日/距高): 航天动力-27/-50 航天工程+10/-18</span></div></div><div class="hb"><span class="hbl">回收装备(网系/海上平台)</span><div class="hbt"><i class="neg" style="width:66.2%"></i></div><span class="hbv dn">-14.5%</span><span class="hbs">距高-31% · 洼地</span><div class="hbnote">本次全球首创网系回收的新增量环节,事件纯度最高 <span class="mut">代表(60日/距高): 贵绳股份-4/-26 巨力索具-42/-55 中信重工-11/-33 中船防务-12/-31</span></div></div><div class="hb"><span class="hbl">箭体/特种材料</span><div class="hbt"><i class="neg" style="width:84.0%"></i></div><span class="hbv dn">-18.4%</span><span class="hbs">距高-41% · 洼地</span><div class="hbnote">同益中UHMWPE=阻拦网独门材料 <span class="mut">代表(60日/距高): 同益中-5/-30 神剑股份-32/-52</span></div></div><div class="hb"><span class="hbl">特燃特气</span><div class="hbt"><i class="pos" style="width:29.7%"></i></div><span class="hbv up">+6.5%</span><span class="hbs">距高-31% · 中低位</span><div class="hbnote">官媒点名本次保障单位(A档),发射频次=业绩弹性 <span class="mut">代表(60日/距高): 九丰能源+5/-20 水发燃气+8/-41</span></div></div><div class="hb"><span class="hbl">卫星制造/箭上电子</span><div class="hbt"><i class="neg" style="width:24.2%"></i></div><span class="hbv dn">-5.3%</span><span class="hbs">距高-34% · 洼地</span><div class="hbnote">运力放量→卫星起量,二阶受益 <span class="mut">代表(60日/距高): 中国卫星+8/-25 航天环宇-13/-36 航天电子-5/-32 星网宇达-12/-41</span></div></div><div class="hb"><span class="hbl">卫星运营/应用</span><div class="hbt"><i class="neg" style="width:100.0%"></i></div><span class="hbv dn">-21.9%</span><span class="hbs">距高-50% · 洼地</span><div class="hbnote">运力瓶颈解除的最终受益,节奏最慢 <span class="mut">代表(60日/距高): 中国卫通-7/-41 普天科技-37/-58</span></div></div><div class="hb"><span class="hbl">参股民营火箭</span><div class="hbt"><i class="neg" style="width:90.9%"></i></div><span class="hbv dn">-19.9%</span><span class="hbs">距高-42% · 洼地</span><div class="hbnote">朱雀三号映射弹性 <span class="mut">代表(60日/距高): 金风科技-20/-42</span></div></div><div style="margin-top:10px"></div></div></details>
+<details class="chain"><summary><b>AI算力</b> <span class="chip cold">快照 07-13</span><span class="mut">首建 20260708 · 位置 链条位置_AI算力_20260713.json</span></summary><div class="inner"><div class="hint" style="padding-left:0;margin:2px 0 8px">条=环节均60日涨幅(红涨绿跌,满刻度±90%);右注=距250日高·位置档。快照 07-13</div><div class="hb"><span class="hbl">AI芯片</span><div class="hbt"><i class="pos" style="width:28.0%"></i></div><span class="hbv up">+25.3%</span><span class="hbs">距高-16% · 中位</span><div class="hbnote">海光临高点,寒武纪中位 <span class="mut">代表(60日/距高): 寒武纪+12/-26 海光信息+39/-7</span></div></div><div class="hb"><span class="hbl">光模块/CPO光互连</span><div class="hbt"><i class="pos" style="width:54.8%"></i></div><span class="hbv up">+49.5%</span><span class="hbs">距高-23% · 高位/分化</span><div class="hbnote">高位分化,光迅已翻倍 <span class="mut">代表(60日/距高): 中际旭创+43/-20 新易盛-1/-35 光迅科技+94/-22 东山精密+62/-14</span></div></div><div class="hb"><span class="hbl">HBM/存储</span><div class="hbt"><i class="pos" style="width:65.4%"></i></div><span class="hbv up">+59.1%</span><span class="hbs">距高-29% · 高位/分化</span><div class="hbnote">60日+88%严重透支 <span class="mut">代表(60日/距高): 江波龙+37/-28 德明利+44/-26 兆易创新+97/-34</span></div></div><div class="hb"><span class="hbl">先进封装</span><div class="hbt"><i class="pos" style="width:100.0%"></i></div><span class="hbv up">+90.3%</span><span class="hbs">距高-6% · 基本涨到位</span><div class="hbnote">07-09扩散主战场,涨到位后07-10分歧兑现 <span class="mut">代表(60日/距高): 华天科技+90/-5 长电科技+123/-7 通富微电+57/-5</span></div></div><div class="hb"><span class="hbl">PCB</span><div class="hbt"><i class="pos" style="width:6.0%"></i></div><span class="hbv up">+5.4%</span><span class="hbs">距高-26% · 中低位</span><div class="hbnote"> <span class="mut">代表(60日/距高): 沪电股份+28/-20 胜宏科技-12/-30 深南电路+38/-14 威尔高-32/-38</span></div></div><div class="hb"><span class="hbl">液冷散热</span><div class="hbt"><i class="neg" style="width:12.7%"></i></div><span class="hbv dn">-11.5%</span><span class="hbs">距高-28% · 中低位</span><div class="hbnote">中低位,卡位=散热刚需 <span class="mut">代表(60日/距高): 英维克-39/-45 高澜股份-17/-27 四方科技+21/-12</span></div></div><div class="hb"><span class="hbl">服务器整机/ICT</span><div class="hbt"><i class="pos" style="width:16.1%"></i></div><span class="hbv up">+14.5%</span><span class="hbs">距高-16% · 中位</span><div class="hbnote">浪潮业绩兑现距高0,华勤洼地 <span class="mut">代表(60日/距高): 浪潮信息+26/-4 工业富联+7/-22 中科曙光+19/-15 紫光股份+38/-0</span></div></div><div class="hb"><span class="hbl">铜连接</span><div class="hbt"><i class="neg" style="width:40.3%"></i></div><span class="hbv dn">-36.4%</span><span class="hbs">距高-52% · 洼地</span><div class="hbnote">最深洼地-30/-47 <span class="mut">代表(60日/距高): 沃尔核材-36/-52 精达股份-36/-51</span></div></div><div class="hb"><span class="hbl">IDC/算力租赁</span><div class="hbt"><i class="neg" style="width:22.9%"></i></div><span class="hbv dn">-20.7%</span><span class="hbs">距高-36% · 洼地</span><div class="hbnote">真洼地未启动,启动=真高低切信号 <span class="mut">代表(60日/距高): 数据港-36/-40 润泽科技-15/-25 网宿科技-21/-35 南兴股份-19/-48</span></div></div><div class="hb"><span class="hbl">数据中心/交换机</span><div class="hbt"><i class="neg" style="width:16.7%"></i></div><span class="hbv dn">-15.1%</span><span class="hbs">距高-30% · 洼地</span><div class="hbnote"> <span class="mut">代表(60日/距高): 星网锐捷+2/-19 朗威股份-12/-33 二六三-43/-44 南天信息-12/-37</span></div></div><div class="hb"><span class="hbl">算力服务</span><div class="hbt"><i class="neg" style="width:11.2%"></i></div><span class="hbv dn">-10.1%</span><span class="hbs">距高-31% · 洼地</span><div class="hbnote">洼地 <span class="mut">代表(60日/距高): 荣联科技-11/-36 广电运通-16/-32 熙菱信息-3/-26</span></div></div><div class="hb"><span class="hbl">AI应用外溢(末端)</span><div class="hbt"><i class="pos" style="width:9.2%"></i></div><span class="hbv up">+8.3%</span><span class="hbs">距高-22% · 中低位</span><div class="hbnote">末端跟风,可复制性差 <span class="mut">代表(60日/距高): 浪潮软件-12/-39 魅视科技+28/-2 绿盟科技-16/-36 浙江美大-7/-29</span></div></div><div style="margin-top:10px"></div></div></details>
+<details class="chain"><summary><b>人形机器人</b> <span class="chip cold">快照 07-13</span><span class="mut">首建 20260708 · 位置 链条位置_人形机器人_20260713.json</span></summary><div class="inner"><div class="hint" style="padding-left:0;margin:2px 0 8px">条=环节均60日涨幅(红涨绿跌,满刻度±55%);右注=距250日高·位置档。快照 07-13</div><div class="hb"><span class="hbl">谐波减速器</span><div class="hbt"><i class="pos" style="width:69.8%"></i></div><span class="hbv up">+38.4%</span><span class="hbs">距高-28% · 中位</span><div class="hbnote">绿的+100与中大力德+2极端分化 <span class="mut">代表(60日/距高): 绿的谐波+83/-22 中大力德-6/-34</span></div></div><div class="hb"><span class="hbl">行星滚柱丝杠</span><div class="hbt"><i class="neg" style="width:24.9%"></i></div><span class="hbv dn">-13.7%</span><span class="hbs">距高-30% · 中低位</span><div class="hbnote">零件缺席,量产逻辑核心环节未启动 <span class="mut">代表(60日/距高): 贝斯特-18/-31 五洲新春-17/-35 北特科技-6/-23</span></div></div><div class="hb"><span class="hbl">无框力矩/空心杯电机</span><div class="hbt"><i class="neg" style="width:18.9%"></i></div><span class="hbv dn">-10.4%</span><span class="hbs">距高-40% · 洼地</span><div class="hbnote">洼地 <span class="mut">代表(60日/距高): 步科股份+1/-32 鸣志电器-5/-34 伟创电气-27/-53</span></div></div><div class="hb"><span class="hbl">灵巧手传动</span><div class="hbt"><i class="neg" style="width:37.8%"></i></div><span class="hbv dn">-20.8%</span><span class="hbs">距高-46% · 洼地</span><div class="hbnote">洼地,兆威-42距高 <span class="mut">代表(60日/距高): 兆威机电-21/-46</span></div></div><div class="hb"><span class="hbl">六维力传感器</span><div class="hbt"><i class="neg" style="width:34.9%"></i></div><span class="hbv dn">-19.2%</span><span class="hbs">距高-46% · 洼地</span><div class="hbnote">洼地,安培龙-65距高 <span class="mut">代表(60日/距高): 柯力传感+3/-28 东华测试-13/-41 安培龙-48/-68</span></div></div><div class="hb"><span class="hbl">本体/集成</span><div class="hbt"><i class="pos" style="width:100.0%"></i></div><span class="hbv up">+55.0%</span><span class="hbs">距高-27% · 高位/分化</span><div class="hbnote">独舞:埃斯顿+107,高位 <span class="mut">代表(60日/距高): 埃斯顿+84/-21 拓斯达+35/-33 昊志机电+46/-26</span></div></div><div class="hb"><span class="hbl">具身大模型</span><div class="hbnote"><span class="mut">A股无纯卡位标的,照实标——警惕蹭概念票</span></div></div><div style="margin-top:10px"></div></div></details>
+<details class="chain"><summary><b>创新药</b> <span class="chip cold">快照 07-13</span><span class="mut">首建 20260713 · 位置 链条位置_创新药_20260713.json</span></summary><div class="inner"><div class="hint" style="padding-left:0;margin:2px 0 8px">条=环节均60日涨幅(红涨绿跌,满刻度±28%);右注=距250日高·位置档。快照 07-13</div><div class="hb"><span class="hbl">创新药龙头(BD出海)</span><div class="hbt"><i class="pos" style="width:35.7%"></i></div><span class="hbv up">+10.0%</span><span class="hbs">距高-19% · 中位</span><div class="hbnote">BD出海授权=本轮医药主逻辑,恒瑞/百利天恒大单锚 <span class="mut">代表(60日/距高): 恒瑞医药-1/-23 百利天恒+0/-27 科伦药业+31/-7</span></div></div><div class="hb"><span class="hbl">创新药Biotech</span><div class="hbt"><i class="pos" style="width:100.0%"></i></div><span class="hbv up">+28.0%</span><span class="hbs">距高-9% · 中位</span><div class="hbnote">临床/BD事件驱动,泽璟距高-0%贴前高 <span class="mut">代表(60日/距高): 贝达药业+44/-14 泽璟制药+47/-0 荣昌生物-6/-14</span></div></div><div class="hb"><span class="hbl">CXO研发生产外包</span><div class="hbt"><i class="pos" style="width:31.4%"></i></div><span class="hbv up">+8.8%</span><span class="hbs">距高-14% · 中低位</span><div class="hbnote">创新药景气二阶导,订单回暖验证中 <span class="mut">代表(60日/距高): 药明康德+13/-5 凯莱英+36/-1 泰格医药-23/-34</span></div></div><div class="hb"><span class="hbl">上游分离纯化/生命科学</span><div class="hbt"><i class="neg" style="width:21.1%"></i></div><span class="hbv dn">-5.9%</span><span class="hbs">距高-27% · 中低位</span><div class="hbnote">纳微科技=色谱填料卡位(中报预增A池) <span class="mut">代表(60日/距高): 纳微科技+15/-20 键凯科技-27/-34</span></div></div><div class="hb"><span class="hbl">原料药/制剂出海</span><div class="hbt"><i class="neg" style="width:7.1%"></i></div><span class="hbv dn">-2.0%</span><span class="hbs">距高-26% · 中低位</span><div class="hbnote">润都/华海=量价修复,中报预增密集环节 <span class="mut">代表(60日/距高): 华海药业+5/-38 普洛药业+4/-6 润都股份-15/-35</span></div></div><div class="hb"><span class="hbl">多肽/GLP-1</span><div class="hbt"><i class="neg" style="width:25.4%"></i></div><span class="hbv dn">-7.1%</span><span class="hbs">距高-34% · 洼地</span><div class="hbnote">GLP-1产业趋势最硬,环节整体洼地 <span class="mut">代表(60日/距高): 翰宇药业+11/-22 诺泰生物-8/-42 圣诺生物-24/-39</span></div></div><div class="hb"><span class="hbl">精麻/缓控释特色制剂</span><div class="hbt"><i class="neg" style="width:37.1%"></i></div><span class="hbv dn">-10.4%</span><span class="hbs">距高-34% · 洼地</span><div class="hbnote">立方制药3板=今日医药顶宽出自本洼地环节(基药目录催化) <span class="mut">代表(60日/距高): 人福医药-6/-24 恩华药业-10/-31 立方制药-15/-47</span></div></div><div class="hb"><span class="hbl">中药(防御)</span><div class="hbt"><i class="neg" style="width:3.2%"></i></div><span class="hbv dn">-0.9%</span><span class="hbs">距高-20% · 中低位</span><div class="hbnote">冰点日避险资金,与创新药产业逻辑异源,不作纵深主轴 <span class="mut">代表(60日/距高): 九芝堂-5/-29 天目药业+8/-6 陇神戎发-5/-26</span></div></div><div style="margin-top:10px"></div></div></details>
+
+<!--/MACHCHAIN--></div><div class="card"><span id="claim-logic-8917560f22f64283"></span></div><div class="" id="claim-logic-776b813b0ae1e73a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>判断一：主线 45 只是「标签宽度」，不是「链条纵深」——40 个环节、聚集度 1.13。</b>
+<p>45 只 AI应用/传媒 逐只归位后落在 <b>40 个互不相同的环节文本</b>上，聚≥2 的只有 4 组：AI短剧/AI影视 3 只（海看股份/浙文影业/粤传媒）、AI影视/院线 2（上海电影/博纳影业）、出版/AI出版 2（山东出版/出版传媒）、AI营销/AIGC 2（天下秀/因赛集团）。全池 19 条线里 <b>17 条的最大环节聚集＝1</b>。按 11 号规格「上游材料→中游制造→下游应用全环节列出」的标准，今日没有任何一条线能成链——<b>说不清就标卡位不明，不硬画链条</b>，故 A 档＝0、链条地图段落今日不产新链。</p>
+<p>更关键的是封板结构：45 只<b>全部 1 板</b>；封单比中位 <b>0.37%</b>、&lt;1% 共 <b>35 只（77.8%）</b>、≥3% 仅 2 只；<b>首封晚于 11:00 共 38 只（84.4%）</b>；<b>炸板≥3 次 19 只（42.2%）</b>。早封占比 0.02、开板占比 0.78，按 12 号脚本的强度画像属「普遍晚封＋过半开板＝情绪外溢、可复制性差」，不是「主线承载核心」。</p>
+</div></div><div class="" id="claim-logic-2be0ef3b56c6b06f"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>判断二：纵深与 20cm 的「溢价」在中性档都不成立——桶矩阵（公告日约束口径）</b>
+<div id="table-51117e6dc91ee606"><table><thead><tr><th>结构格（中性档 40~65）</th><th>n</th><th>胜率</th><th>执1 均收</th><th>读法</th></tr></thead><tbody>
+<tr><td>首板 基线</td><td>964</td><td>39.3%</td><td><b>-0.73%</b></td><td>今日所处档，负期望</td></tr>
+<tr><td>首板 × 封单&lt;1%</td><td>577</td><td>38.8%</td><td>-0.70%</td><td>薄封无溢价</td></tr>
+<tr><td>首板 × 封单&lt;1% × 首封&gt;11:00</td><td>375</td><td>41.1%</td><td>-0.70%</td><td>晚封薄封＝负桶（603171/688596 落此格）</td></tr>
+<tr><td>首板 × 首封≤09:31 × 封单&lt;1% × 炸0</td><td>128</td><td>33.6%</td><td>-1.59%</td><td>「秒板薄封」反而最差</td></tr>
+<tr><td>首板 × 20cm</td><td>88</td><td>51.1%</td><td>+0.70%</td><td>看似正；<b>剔最强 3 日后 n=64/42.2%/-0.50%</b></td></tr>
+<tr><td>环节聚集 ≥3 只</td><td>335</td><td>36.1%</td><td>-0.72%</td><td>与独苗同值</td></tr>
+<tr><td>环节聚集＝1（独苗）</td><td>666</td><td>40.4%</td><td>-0.72%</td><td>独苗胜率更高＝纵深无溢价</td></tr>
+<tr><td>4 板+</td><td>53</td><td>39.6%</td><td>-0.25%</td><td>高标亦负</td></tr>
+</tbody></table></div>
+<p><b>结论：</b>在中性档，<b>没有一格是稳健正期望</b>。20cm 的 +0.70% 由 20260921（+4.82/n=8）、20260817（+3.46/n=13）、20260828（+3.40/n=3）三个交易日贡献，剔除后转负——所以本路今日<b>不用桶定权</b>，权重只由票级三现决定（认知库 20261030 条目 2）。</p>
+</div></div><div class="" id="claim-logic-227532c9246534fe"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>判断三：档位 C 的三条理由与可证伪条件</b>
+<p><b>三条理由：</b>①业绩腿不支持（真增长 37.6%、主线 26.7%、订单级 2.4%）；②没有链条（45 只/40 环节，17 条线最大聚集 1）；③环境虽从冰点修复到中性（温度 15.2→54.9、涨停 47→125、跌停 82→8、封板 31.5→72.8 亿），但中性档历史桶为负（-0.73%），修复日的「普涨首板」不是本路的买点结构。所以只保留 1 只三现全中的单点（2.0%），不参与主线扩散。</p>
+<p><b>可证伪（明日机械结算）：</b>①AI应用/传媒 涨停 ≥30 且 新 2 板 ≥1 只 且 一进二率 ≥25% → 本路「无纵深」判断错；②688518 执1 ≥ +2% 且 688596/603171 中至少 1 只 执1 ≥ +2% → 真业绩票有溢价、2% 上限过保守，若 688518 执1 ≤ -3%（自留阈值）则三现定权规则当日失效；③中性×首板 全场执1 均收 ≥ +1% → 桶口径失效须重算窗口；④600592 收盘 ≥15.55 → 卖出纪律需加「业绩否决仅不加仓、不强制清仓」例外。</p>
+</div></div><div class="" id="claim-logic-40ae2ec59bf4378f"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>中报预增雷达·A 共振池今日状态（该段只剩观测价值）</b>
+<p>雷达 A 池 192 只，<b>与今日涨停交集＝0 只</b>——原因不是没有业绩票，而是业绩腿来源已从「中报预告」切换到「三季报正式报表」（125/125 命中）；中报预告的公告日集中在 2026-07-03~07-20，日历龄 100 天以上，对今日盘面零催化。A 池今日仍是「未发酵埋伏池」的性质（未发酵候选 663 只、其中概念叠加 527 只），但其 56 日实测增益为负（见深挖⑥），本路不从中选票。</p>
+</div></div></section><section id="hardness"><h2>三 逻辑硬度 · 消息溯源</h2><div id="component-MACHHIST"><!--MACHHIST-->
+<div class="card"><h3 style="margin:0 0 8px">荐票历史结算 <span class="hint">机器核对 · _逻辑荐票结算.jsonl · 按类型聚合(结算口径)</span></h3><p style="margin:4px 0 8px" class="mut">已结算 n=11 · 执行胜率 6/22 · 执行均收 -2.37%</p><div class="tl"><div class="trow"><div class="tr1"><span class="tnm">荐票</span><span class="tct">n=6</span><span class="warn">均收-2.73%</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">埋伏观察</span><span class="tct">n=2</span><span class="warn">均收-1.75%</span> <span class="mut">样本小不可外推</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">未启动挖掘</span><span class="tct">n=2</span><span class="warn">均收-1.67%</span> <span class="mut">样本小不可外推</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">观察(judgment留档)</span><span class="tct">n=1</span><span class="ok">均收+0.52%</span> <span class="mut">样本小不可外推</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">卡位兑现</span><span class="tct">n=1</span><span class="warn">均收-1.77%</span> <span class="mut">样本小不可外推</span></div></div>
+<div class="trow"><div class="tr1"><span class="tnm">身位排序</span><span class="tct">n=1</span><span class="warn">均收-4.86%</span> <span class="mut">样本小不可外推</span></div></div>
+</div></div>
+
+<!--/MACHHIST--></div><div class="card"><div class="" id="claim-logic-6cada3a794fd5ccd"><div class="claim-head"><span class="claim-role role-verdict">结论</span><span class="claim-source">判断 · 结论</span></div><p class="mut">判断 · 结论</p><p>温度 54.9（中性档，昨 15.2 冰点）、涨停 125/跌停 8、首板 114、封板 72.8 亿——这是情绪修复日，不是业绩驱动的产业行情。本路核心问题『业绩腿是否支持主线』的答案是**不支持**：125 只里净利同比&gt;0 且归母净利&gt;0（真增长）只有 47 只=37.6%，另 14 只（11.2%）是『同比转正但绝对仍亏』的减亏假阳性（含 002086 东方海洋、605303 园林股份）；带订单/扩产/涨价级产业证据的只有 3 只（688596 正帆科技『新签订单』、688376 美埃科技『海外扩产』、605288 凯迪股份『送样』且亏损）。宽 45 只的『AI应用/传媒』落在 40 个互不相同的环节文本上（最大聚集 3 只，聚集度 45/40=1.13），中位封单比 0.37%、35/45 封单&lt;1%、38/45 首封晚于 11:00、19/45 炸板≥3 次——宽度=标签宽度，不是链条纵深。中性档历史桶为负：首板 n=964/39.3%/-0.73%；环节聚集≥3 只无溢价（n=335/36.1%/-0.72%，与独苗 n=666/40.4%/-0.72% 同值）；20cm 溢价剔最强 3 日后消失（n=88/51.1%/+0.70% → n=64/42.2%/-0.50%）。故本路判 C 档、只出 1 只 2.0% 的单点试探（688518 联赢激光，三现全中），其余 2 只留观察，不构成进攻。</p></div><div class="" id="claim-logic-dae5a05a2aaee86b"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【业绩腿·全池】125 只涨停逐只取东财三季报正式报表（RPT_LICO_FN_CPD，REPORTDATE=2026-09-30，批量 5 批 125/125 命中，公告日 UPDATE_DATE 2026-10-17~2026-10-31，全部 ≤20261102＝已知）：净利同比&gt;0 共 61 只，其中归母净利&gt;0 的真增长 47 只（37.6%）、归母净利&lt;0 的减亏假阳 14 只（11.2%）、净利同比≤0 的 64 只（51.2%）。→ 今日『业绩普增』是口径幻觉：同比正增长的 61 只里有 23% 仍在亏钱。</p></div><div class="" id="claim-logic-76fb3358d5fbf348"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【业绩腿·主线】AI应用/传媒 45 只：真增长 12 只（26.7%）、减亏假阳 7 只、净利同比≤0 共 26 只（57.8%）。即今日最宽的主线，是三条线里业绩腿最弱的一档（对比：周期/资源材料 5/7 真增长、AI算力/硬件 6/11、半导体/芯片 1/2、电力设备/新能源 1/6、机器人/具身智能 2/9、医药医疗 0/6）。</p></div><div class="" id="claim-logic-30d14891d0fbe9c8"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【链条纵深】AI应用/传媒 45 只→40 个环节（聚≥2 的只有 4 组：AI短剧/AI影视 3 只、AI影视/院线 2、出版/AI出版 2、AI营销/AIGC 2），全池 19 条线里 17 条的最大环节聚集=1。按 11 号规格『全链条无遗漏』标准，今日没有任何一条线可以画出上游→中游→下游三段，纵深判断不成立。</p></div><div class="" id="claim-logic-7cb86979efb2683e"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【封板结构·主线】45 只全部 1 板；封单比中位 0.37%、&lt;1% 共 35 只（77.8%）、≥3% 仅 2 只；首封&gt;11:00 共 38 只（84.4%）；炸板≥3 次 19 只（42.2%）。→ 晚封+薄封+高开板同时出现，是接力末端的画像，不是承载核心（对照 12 号脚本『早封占比≥0.6 且开板占比&lt;0.34＝主线承载核心』，今日 45 只早封占比 0.02、开板占比 0.78）。</p></div><div class="" id="claim-logic-3cd696c5303863d2"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【历史桶·今日所处中性档】口径A（涨停对链条 55 日 3220 票，20260707~20261029，单牛市窗口）：首板 n=964、胜率 39.3%、均收 -0.73%、中位 -0.90%；4 板+ n=53、39.6%、-0.25%；封单&lt;1% n=577、38.8%、-0.70%。全部为负期望，故今日不存在『拿桶换仓位』的许可。</p></div><div class="" id="claim-logic-e4b563d85c60d10b"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【纵深桶·中性档】环节同日聚集≥3 只 n=335、36.1%、-0.72%；聚集=2 n=214、34.6%、-0.70%；独苗 n=666、40.4%、-0.72%。三档同值且独苗胜率最高 → 『线内多点聚集所以更安全』在中性档不成立，与昨日冰点档结论（聚集≥3 n=73/38.4%/-0.81% vs 独苗 n=668/42.2%/-0.40%）同向。</p></div><div class="" id="claim-logic-65da2e26dc25265d"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【20cm 桶的脆弱性】中性档 20cm 首板 n=88、51.1%、+0.70%（正）；剔除贡献最大的 3 日（20260921 +4.82/n=8、20260817 +3.46/n=13、20260828 +3.40/n=3）后 n=64、42.2%、-0.50%。→ 20cm 溢价是 3 个交易日的产物，不可作为定权依据；票级只用『三现』筛，不用桶定权。</p></div><div class="" id="claim-logic-f0d35e9bd6f8ba25"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【风险日历·踩窗】今日涨停池 5 只落在减持窗内，全部降级为不可荐：600715 文投控股（公告 2026-10-22，北京文创定增基金 -93.6 万股＋北京文化中心基金 -1788.89 万股，变动截止 2026-10-20）、301262 海看股份（公告 2026-10-09，新余中文产业 -8.83 万股）、603955 大千生态（公告 2026-10-28，速源科技 -24 万股）、603755 日辰股份（高管 2026-10-20 三人合计 -2.5 万股）、300508 维宏股份（高管 2026-10-26 董事景梓森 -0.5 万股）。另 2026-11-02 解禁 7 只（301555/603107/920007/300395/002116/600237/600367）无一在涨停池。</p></div><div class="" id="claim-logic-17539bea4a503b9e"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【负期望的反向证据·昨日荐票】20261030 两只荐票结算 0/2、均收 -0.92%（全场涨停 +0.14%，增益 -1.06pp）；本路 14 个荐票日合计 6/22=27.3%、均收 -2.37%（战绩画像_logic_20261102.json）。在自身负期望未扭转前，任何加仓都必须有票级三现，不能靠线宽或故事。</p></div><div class="" id="claim-logic-a33f6acc5a214a44"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>【唯一通过三现的票】688518 联赢激光：①业绩已兑现——三季报净利同比 +131.42%、营收同比 +30.55%、毛利率 29.17%、归母净利 2.50 亿（公告日 2026-10-31，≤判断日，非后视镜）；②卡位可证——F10（报告期 2026-06-30）激光焊接自动化成套设备 43.76%＋工作台 24.75%＝68.5% 主营在『固态电池/激光焊接设备』环节；③未透支——r20 -0.5%、r60 +9.6%、距 250 日高 -38.8%。封板：首封 09:30 秒板、炸 0、封单 0.77%、换手 4.9%、成交 3.31 亿/流通 68.7 亿（可成交、非一字）。</p></div><div class="" id="claim-logic-6610d06f87189f26"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 档位</span></div><p class="mut">判断 · 档位</p><p>C</p></div><div class="" id="claim-logic-f12f297766a6251d"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 置信度</span></div><p class="mut">判断 · 置信度</p><p>62</p></div><div class="" id="claim-logic-1ddbd5abf37132db"><div class="claim-head"><span class="claim-role role-condition">条件</span><span class="claim-source">判断 · 可证伪条件</span></div><p class="mut">判断 · 可证伪条件</p><p>明日(20261103) 若 AI应用/传媒 涨停家数 ≥30 且 出现新 2 板 ≥1 只 且 一进二率 ≥25%（今日 6/38＝15.8%）→ 本路『主线业绩腿不支持、无纵深』判断错，档位应升 B 及以上；三项全不满足 → 判断成立。</p></div><div class="" id="claim-logic-f20765682cd7d9ad"><div class="claim-head"><span class="claim-role role-condition">条件</span><span class="claim-source">判断 · 可证伪条件</span></div><p class="mut">判断 · 可证伪条件</p><p>明日(20261103) 若 688518 执1（T+1 开→T+1 收）≥ +2% 且 688596/603171 两只观察中至少 1 只 执1 ≥ +2% → 『真业绩票在中性档有溢价』成立，本路 2% 上限过保守；若 688518 执1 ≤ -3%（本路自留失效阈值）→ 三现定权规则当日失效，须降为观察。</p></div><div class="" id="claim-logic-bbe9fe07182ad1b7"><div class="claim-head"><span class="claim-role role-condition">条件</span><span class="claim-source">判断 · 可证伪条件</span></div><p class="mut">判断 · 可证伪条件</p><p>明日(20261103) 若 中性×首板 全场执1 均收 ≥ +1%（推翻 n=964/-0.73% 的负期望）→ 本路桶口径（口径A 55 日）失效，须重算窗口；若 ≤ -0.73% 则为同向复现。</p></div><div class="" id="claim-logic-420aba21fcc35f68"><div class="claim-head"><span class="claim-role role-condition">条件</span><span class="claim-source">判断 · 可证伪条件</span></div><p class="mut">判断 · 可证伪条件</p><p>明日(20261103) 若 600592 龙溪股份 收盘价 ≥ 15.55（今日收盘，卖出错）→ 卖出纪律在『业绩腿为负但价格止跌』的情形下需加一条『业绩腿否决仅用于不加仓、不强制清仓』；若 &lt; 15.55 → 卖出正确。</p></div><div class="" id="claim-logic-c32777141db4e7da"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>『双源交叉』字段不存在：任务书要求引用『双源交叉（iwencai 业绩预告存档 vs 东财）』，本路对 _学习/中报预增雷达_20261102.json（1.6MB）递归枚举全部键名并全文检索『双源/iwencai/交叉』，命中均为 0；本机 iwencai 盘后存档最新为 _学习/iwencai盘后_20260908.json，20261102 无对应文件。故今日业绩腿为**单源**（东财正式报表＋同花顺归位催化），A 档一律压为 0，不声称双源。</p></div><div class="" id="claim-logic-c80e4b741194b023"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>业绩腿的绝对净利判据来自东财 RPT_LICO_FN_CPD（PARENT_NETPROFIT/SJLTZ/YSTZ/XSMLL），该表对『净利同比』的基数为上年同期归母净利，负基数公司的同比符号不可直接读作改善；本路已用『净利同比&gt;0 且 归母净利&gt;0』双条件过滤，但仍未核公告原文（PDF），属 B 档证据。</p></div><div class="" id="claim-logic-ad6e82f20492ac5d"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>桶统计窗口＝20260707~20261029 共 55 个交易日、3220 票（口径A，涨停对链条归位后的逐笔），全部落在 2026 年 7 月以来的单牛市窗口内，不能外推到跨周期；温度分档（冰点&lt;25/冷25-40/中40-65/热≥65）为本路自定阈值。</p></div><div class="" id="claim-logic-42831c2764e0c955"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>风险日历只覆盖 限售解禁+分红除权+股东减持+高管减持（事件 575 条），**未接入**财报披露日历/股东大会/业绩预告 → 不得据此声称这些维度无风险；且解禁仅覆盖 2026-11-02 当日 7 条，2026-11-03 之后的解禁窗口在本文件中缺席，明日候选的解禁门禁须次日重取。</p></div><div class="" id="claim-logic-39102e6b9e6baa96"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>F10 主营构成存在两个口径缺口：688596 正帆科技的最新报告期仍为 2025-12-31（旧期，半导体设备零组件 17.41%/制程关键系统 57.69%），其卡位占比不能等同 2026H1；603989 艾华集团 F10 为分部口径（电容器分部 112.49%，分部间抵销 -40.77%），产品口径卡位不可算。600259 中稀有色 F10 接口返回非 UTF-8（解码失败），卡位未取到。</p></div><div class="" id="claim-logic-4f439beec043677e"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>战绩画像 n=14 个荐票日 / 22 笔（胜率 6/22=27.3%、均收 -2.37%），样本偏小，本路所有『增益 pp』只作方向性，不给置信区间；且本路未做席位/龙虎榜交叉（非本路职责），故不知今日 45 只主线里游资与机构的分布。</p></div><div class="" id="claim-logic-b370ebe3c2db5c95"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>『同涨同跌』未剥离：中性档 n=964 的首板样本跨越 55 个交易日，日间聚类未处理（有效独立样本远小于 964），故所有胜率/均收的标准误被低估，本路不据此计算凯利。</p></div><div class="" id="claim-logic-2d59864cac2b1962"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 主动查证</span></div><p class="mut">判断 · 主动查证</p><p>ifind查.py：本机不存在（`ls ifind查.py` → No such file or directory），iFinD 调用 0 次；本路不做 iFinD 补数，如实记录。</p></div><div class="" id="claim-logic-5fdc4ff2724acec0"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 主动查证</span></div><p class="mut">判断 · 主动查证</p><p>东财 datacenter RPT_LICO_FN_CPD（三季报正式报表，REPORTDATE=2026-09-30，批量 125 码 ×5 批）→ 125/125 命中，取得 SJLTZ/YSTZ/XSMLL/PARENT_NETPROFIT/UPDATE_DATE；落盘 _tmp_logic_q3_1102.json。</p></div><div class="" id="claim-logic-54cc82e2b4c939eb"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 主动查证</span></div><p class="mut">判断 · 主动查证</p><p>东财 F10 BusinessAnalysis（主营构成，14 码：688596/688518/603989/001230/002086/605303/002275/001219/600345/002929/600259/600506/603171/002827）→ 13/14 命中，600259 接口返回非 UTF-8 解码失败（卡位未取到）。</p></div><div class="" id="claim-logic-3d8f49373e2e6fb6"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 主动查证</span></div><p class="mut">判断 · 主动查证</p><p>东财 push2his kline（688518/688596/603171/600592/001219，lmt=300，fqt=1）→ 用于 r20/r60/距 250 日高 的位置标尺，全部 ≤20261102。</p></div><div class="" id="claim-logic-8112c9ef6c9d1fba"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 框架引用</span></div><p class="mut">判断 · 框架引用</p><p>11_产业逻辑agent.md#步骤2『逻辑深挖：逻辑硬度四档 ①业绩已兑现 ②订单/合同落地 ③政策/事件催化 ④纯讲故事』→ 今日 125 只按四档落位：①47 只（净利同比&gt;0 且归母&gt;0）、②仅 3 只（688596 新签订单/688376 海外扩产/605288 送样且亏）、③22 只为重组·并购·国资类事件、④约 10 只为『羊字辈』玄学与纯资金；②档占比 2.4%，故本路只承认单点、不承认线级产业景气。</p></div><div class="" id="claim-logic-59971d2d1bffd3bb"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 框架引用</span></div><p class="mut">判断 · 框架引用</p><p>11_产业逻辑agent.md#步骤3『★★卡位分析：判断价值量增量最大/供给瓶颈在哪个环节=卡位；核实是真受益还是蹭概念』＋§深度标准3『位置标尺：距前高&lt;10%=基本到位、深调30%+且逻辑在场=洼地』→ 今日用东财 F10 主营占比替代研报结论：688518 68.5%（真卡位）、603171 76.97%（真卡位）、605303 存储 43.78%（转型首期）、002086 水产 68.38%（与催化不匹配）、688596 半导体零组件 17.41%（口径旧）；位置用 r20/r60/距 250 日高：688518 -0.5%/-38.8%（洼地未透支）、001219 +69.6%/0.0%（贴年内新高=透支，剔除）。</p></div><div class="" id="claim-logic-a772bc654610e805"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 框架引用</span></div><p class="mut">判断 · 框架引用</p><p>11_产业逻辑agent.md#§深度标准1『全链条无遗漏（上游→中游→下游全环节）』→ 今日主线 45 只/40 环节、17 条线中 17 条最大聚集=1，无法成链，按规格『说不清就标卡位不明，不硬画链条』处理，A 档=0。</p></div><div class="" id="claim-logic-ff1091c5984e6828"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 框架引用</span></div><p class="mut">判断 · 框架引用</p><p>11_产业逻辑agent.md#§承接Master指派（2026-08-15）：认领逻辑路指派并逐项应答，结论须带可结算判定条件 → 本文件『深挖』六项即应答，其中三项对应总审原文、三项对应父指令版，差异已注明。</p></div><div class="" id="claim-logic-04f02998962b8a2b"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 框架引用</span></div><p class="mut">判断 · 框架引用</p><p>11_产业逻辑agent.md#§能力预加载与消费回执（强制）：读 _学习/能力预加载_20261102.json#routes.logic（eligible_count=0）→ status=no_eligible_capabilities，未用任何未验证 capability 改判。</p></div><div class="" id="claim-logic-c07ed02a55f77dc0"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 框架引用</span></div><p class="mut">判断 · 框架引用</p><p>认知库_logic_20261030.json#条目2『桶只能描述结构、不得直接换算权重；权重只来自票级三现（三现→上限2%）』→ 今日 688518 三现全中给 2.0%，688596/603171 各缺一项（卡位口径旧/落负桶）给观察，正是这条规则的首次完整执行。</p></div><div class="" id="claim-logic-72ed235ffa792e19"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 框架引用</span></div><p class="mut">判断 · 框架引用</p><p>认知库_logic_20261030.json#条目4『纵深只用于选卡位最硬那一只，不作加仓理由』→ 今日中性档纵深桶无溢价（n=335/36.1%/-0.72% vs 独苗 n=666/40.4%/-0.72%）再次验证，未用线宽加仓。</p></div><span id="claim-logic-ceb1fa974d7f9c0c"></span></div><div class="" id="claim-logic-75691ca889ab18e6"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>硬度分级（原文摘录）：125 只涨停按三同口径（净利同比&gt;0 且 归母净利&gt;0 且 营收同比&gt;0）分为 真增长 47 只＝37.6% / 减亏假阳 14 只＝11.2%（同比转正但归母仍亏） / 净利同比≤0 共 64 只＝51.2%；带订单·扩产·涨价级产业证据的只有 3 只（688596 正帆科技「新签订单」、688376 美埃科技「海外扩产」、605288 凯迪股份「送样」且亏损）。本段为原文搬运，判断归属 logic 路 20261102，宿主未改写。</p></div></section><section id="forward"><h2>四 前置预期雷达</h2><div class="card"><span id="claim-logic-5495fa789fa5084a"></span></div><div class="" id="claim-logic-b1d0cf6f8edd8560"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>风险日历读数：事件 575 条；已接入维度 限售解禁 / 分红除权 / 股东减持 / 高管减持；未接入维度 财报披露日历 / 股东大会 / 业绩预告 —— 缺事件≠无风险，不得据此声称无此类风险。事件源状态 pass，覆盖交易日 20261102。</p></div></section><section id="earnings"><h2>五 中报预增 · 概念叠加雷达</h2><div id="component-MACHRADAR"><!--MACHRADAR-->
+<div class="card"><b>今晚漏斗(11-02刷新)</b><p style="margin:6px 0 0">预告池(净利润·预增扭亏)800只 → 剔ST退N/C 19 → 未发酵候选663(r20&lt;15%且近5日无涨停) → 概念叠加527 → <b>成色A共振 192只</b>(B蹭246/C低质89留档); 已发酵(对照)55(预期已兑现r250≥100%剔31只)。下面按重要度取前6只:</p></div>
+<div class="obs"><div class="obs-head"><span class="obs-nm">北斗星通 <span class="mut">002151</span></span><span class="obs-pos tag">重要度9 · 商业航天类</span></div><div class="obs-watch"><span class="obs-lab">共振</span>预增2897.2 · r20 -8.93% / r250 -11.5% / 距高-61.3% · 线=商业航天/卫星×半导体/芯片×商业航天 · 动因词:元器件,芯片(题材业务=业绩来源)</div><div class="obs-rec"><span class="obs-lab2">原因</span>本报告期,公司聚焦智能位置数字底座和陶瓷元器件主业,抓住智能割草机、行业无人机、农机、智能机器人等新兴领域的市场机遇,芯片及数据服务业务中的芯片、模组产品线收入和导航产品业务中的Livox产品线收入增长使得归母净利润大幅度增长。</div></div>
+<div class="obs"><div class="obs-head"><span class="obs-nm">香农芯创 <span class="mut">300475</span></span><span class="obs-pos tag">重要度9 · AI算力类</span></div><div class="obs-watch"><span class="obs-lab">共振</span>预增2275.9 · r20 -40.96% / r250 -12.5% / 距高-69.2% · 线=AI算力/PCB×半导体/芯片×AI算力/硬件×AI算力 · 动因词:人工智能,元器件,存储,数据中心(题材业务=业绩来源)</div><div class="obs-rec"><span class="obs-lab2">原因</span>2026年上半年,受人工智能相关需求增长影响,互联网数据中心等领域对企业级存储产品的需求持续增加,存储芯片行业保持高景气度,相关产品价格较上年同期稳步上涨。公司电子元器件分销业务销售综合毛利率同比提高,带动公司盈利水平大幅提升。同时,公司自</div></div>
+<div class="obs"><div class="obs-head"><span class="obs-nm">联芸科技 <span class="mut">688449</span></span><span class="obs-pos tag">重要度9 · AI算力类</span></div><div class="obs-watch"><span class="obs-lab">共振</span>预增821.0 · r20 -33.07% / r250 -29.5% / 距高-56.7% · 线=AI应用/传媒×AI算力/PCB×半导体/芯片×AI算力/硬件 · 动因词:IP,存储,数据中心,芯片(题材业务=业绩来源)</div><div class="obs-rec"><span class="obs-lab2">原因</span>(一)主营业务影响经过多年的发展,公司已构建起SoC芯片架构设计、算法设计、数字IP设计、模拟IP设计、中后端设计、封测设计、系统方案开发等全流程的芯片研发及产业化平台。公司紧跟数据中心及AIPC发展浪潮,为客户提供覆盖企业级、消费级、嵌入</div></div>
+<div class="obs"><div class="obs-head"><span class="obs-nm">东芯股份 <span class="mut">688110</span></span><span class="obs-pos tag">重要度9 · AI算力类</span></div><div class="obs-watch"><span class="obs-lab">共振</span>扭亏694.8 · r20 -55.64% / r250 -47.7% / 距高-74.6% · 线=AI应用/传媒×AI算力/PCB×半导体/芯片×AI算力/硬件 · 动因词:AI算力,存储,算力,芯片(题材业务=业绩来源)</div><div class="obs-rec"><span class="obs-lab2">原因</span>报告期内,受益于AI算力需求持续爆发及国内利基型存储技术竞争力的增强,海外存储原厂加速退出利基型市场,供给端收缩态势明显;与此同时,网络通信、工业控制、汽车电子等下游应用需求稳步复苏,利基型存储芯片供需缺口持续扩大。公司所面对的存储芯片市场</div></div>
+<div class="obs"><div class="obs-head"><span class="obs-nm">高德红外 <span class="mut">002414</span></span><span class="obs-pos tag">重要度9 · AI算力类</span></div><div class="obs-watch"><span class="obs-lab">共振</span>预增651.7 · r20 -12.4% / r250 -17.8% / 距高-46.2% · 线=医药医疗×商业航天/卫星×AI算力/PCB×半导体/芯片 · 动因词:芯片(题材业务=业绩来源)</div><div class="obs-rec"><span class="obs-lab2">原因</span>报告期内,型号项目类产品,包括与某客户签订的某完整装备系统产品持续交付,同时民品领域红外芯片应用业务持续增长,公司营业收入及利润同比实现大幅增长。</div></div>
+<div class="obs"><div class="obs-head"><span class="obs-nm">雅创电子 <span class="mut">301099</span></span><span class="obs-pos tag">重要度9 · AI算力类</span></div><div class="obs-watch"><span class="obs-lab">共振</span>预增500.2 · r20 -33.04% / r250 -31.6% / 距高-62.2% · 线=机器人/具身智能×电力设备/新能源×AI算力/PCB×半导体/芯片 · 动因词:AI算力,半导体,存储,算力(题材业务=业绩来源)</div><div class="obs-rec"><span class="obs-lab2">原因</span>(一)主营业务影响2026年上半年,公司主营业务经营态势稳健向好,经营业绩实现同比大幅提升。一方面,伴随国产替代进程持续深化,公司聚焦主业,依托综合竞争优势,推动汽车电子业务稳中有进、持续向好发展;另一方面,在全球半导体产业AI算力需求爆发</div></div>
+
+<!--/MACHRADAR--></div><div class="card"><span id="claim-logic-bf3ee719f325338f"></span></div><div class="" id="claim-logic-0c27bb5805a93cab"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>结论：今日「业绩普增」是口径幻觉——同比转正的 61 只里有 23% 仍在亏钱。</b>
+<p>把 125 只涨停的三季报摊开做三同口径（净利同比&gt;0 且 归母净利&gt;0 且 营收同比&gt;0）：<b>真增长 47 只＝37.6%</b>；<b>减亏假阳 14 只＝11.2%</b>（同比转正但归母仍亏）；<b>净利同比≤0 共 64 只＝51.2%</b>。这意味着「三季报增长」这四个字在今天的涨停催化里，有一半以上是站不住的——被市场读成利好的是同比符号，不是利润本身。</p>
+<div id="table-441b4572a6d0b36d"><table><thead><tr><th>业绩腿档</th><th>只数</th><th>占涨停</th><th>判据</th><th>能否作买入依据</th></tr></thead><tbody>
+<tr><td><b>真增长</b></td><td><b>47</b></td><td>37.6%</td><td>净利同比&gt;0 且 归母&gt;0 且 营收&gt;0</td><td>可作硬度①（仍需卡位与位置两项）</td></tr>
+<tr><td><b>减亏假阳</b></td><td><b>14</b></td><td>11.2%</td><td>净利同比&gt;0 但 归母&lt;0</td><td>不可，只能写「减亏/未盈利」</td></tr>
+<tr><td><b>负增长</b></td><td><b>64</b></td><td>51.2%</td><td>净利同比≤0</td><td>不可，纯情绪/事件票</td></tr>
+<tr><td><b>订单/扩产级</b></td><td><b>3</b></td><td>2.4%</td><td>催化原文含订单/中标/扩产/涨价</td><td>可作硬度②（今日仅 688596 同时三同）</td></tr>
+</tbody></table></div>
+<p class="mut">硬度四档落位（11 号规格·步骤2）：①业绩已兑现 47 只 ／ ②订单合同落地 3 只（688596 正帆科技「新签订单」、688376 美埃科技「海外扩产」、605288 凯迪股份「送样」且亏损）／ ③政策事件 22 只（重组/并购/国资/定增）／ ④纯讲故事 约 10 只（「羊字辈」玄学标签）。②档占 2.4%，故本路只承认单点证据，不承认线级产业景气。</p>
+</div></div><div class="" id="claim-logic-c13debc7982e96f4"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>分方向看：主线最宽，业绩腿最弱</b>
+<div id="table-13c19ad9eb8795b0"><table><thead><tr><th>大方向</th><th>涨停</th><th>真增长</th><th>减亏假阳</th><th>负增长</th><th>真增长占比</th><th>真增长名单（前 6）</th></tr></thead><tbody>
+<tr><td><b>AI应用/传媒（主线）</b></td><td><b>45</b></td><td>12</td><td>7</td><td><b>26</b></td><td><b>26.7%</b></td><td>奥飞娱乐·生意宝·浙文影业·巨人网络·丝路视觉·风语筑</td></tr>
+<tr><td>AI算力/硬件</td><td>11</td><td>6</td><td>0</td><td>5</td><td>54.5%</td><td>艾华集团·宏英智能·润建股份·闽发铝业</td></tr>
+<tr><td>机器人/具身智能</td><td>9</td><td>2</td><td>1</td><td>6</td><td>22.2%</td><td>劲旅环境·统一股份</td></tr>
+<tr><td>消费/大消费</td><td>9</td><td>4</td><td>0</td><td>5</td><td>44.4%</td><td>地素时尚·青岛食品·锦江酒店·百隆东方</td></tr>
+<tr><td>AI应用/软件</td><td>9</td><td>4</td><td>1</td><td>4</td><td>44.4%</td><td>恒生电子·郑中设计·税友股份·顶点软件</td></tr>
+<tr><td>周期/资源材料</td><td>7</td><td><b>5</b></td><td>1</td><td>1</td><td><b>71.4%</b></td><td>中稀有色·安迪苏·华新建材·岳阳兴长·富春染织</td></tr>
+<tr><td>医药医疗</td><td>6</td><td><b>0</b></td><td>1</td><td>5</td><td><b>0.0%</b></td><td>—（含 002086 减亏假阳）</td></tr>
+<tr><td>电力设备/新能源</td><td>6</td><td>1</td><td>0</td><td>5</td><td>16.7%</td><td>联赢激光（唯一）</td></tr>
+<tr><td>半导体/芯片</td><td>2</td><td>1</td><td>1</td><td>0</td><td>50.0%</td><td>正帆科技（605303 为减亏假阳）</td></tr>
+</tbody></table></div>
+<p><b>读法：</b>业绩腿最强的是<b>周期/资源材料 5/7＝71.4%</b>（稀土、蛋氨酸、水泥、染料），但它只有 7 只、无环节纵深、且催化多为「三季报+涨价」的单点；业绩腿最弱的是<b>医药医疗 0/6</b> 与<b>机器人 2/9＝22.2%</b>——机器人线 9 只里 6 只净利同比为负，这也是昨日在持票 600592（净利 -19.31%）所在线，线级证据不成立。主线 AI应用/传媒 真增长 12/45＝26.7%，是「最宽但最虚」的一档。</p>
+</div></div><div class="" id="claim-logic-11e19279ad846239"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>候选逐只的三栏标注：公告日 / 是否在+1后 / 踩窗</b>
+<div id="table-1b77253f2a2e0977"><table><thead><tr><th>代码</th><th>名称</th><th>方向·环节</th><th>三季报公告日</th><th>是否在+1后</th><th>净利同比 / 归母 / 营收</th><th>F10 卡位</th><th>处置</th></tr></thead><tbody>
+<tr><td>688518</td><td>联赢激光</td><td>电力设备·激光焊接成套设备</td><td>2026-10-31</td><td><b>否</b></td><td>+131.42% / 2.50 亿 / +30.55%</td><td>68.5%（焊接 43.76%+工作台 24.75%）</td><td><b>荐票 2.0%</b></td></tr>
+<tr><td>688596</td><td>正帆科技</td><td>半导体·设备零组件</td><td>2026-10-31</td><td><b>否</b></td><td>+281.11% / 2.72 亿 / +16.64%</td><td>17.41% 零组件 + 57.69% 制程系统（报告期 2025-12-31 旧）</td><td>观察</td></tr>
+<tr><td>603171</td><td>税友股份</td><td>AI应用/软件·数智财税</td><td>2026-10-24</td><td><b>否</b></td><td>+106.84% / 2.28 亿 / +9.93%</td><td>76.97%（分部口径，含数字政务 34.62%、抵销 -11.59%）</td><td>观察</td></tr>
+<tr><td>002086</td><td>东方海洋</td><td>医药·体外诊断/海参</td><td>2026-10-29</td><td><b>否</b></td><td>+35.55% / <b>-6793 万</b> / +0.37%</td><td>水产加工 68.38%＋体外诊断 12.93%（与催化错配）</td><td><b>排除</b>（减亏假阳＋玄学催化）</td></tr>
+<tr><td>605303</td><td>园林股份</td><td>半导体·存储芯片/华澜微</td><td>2026-10-31</td><td><b>否</b></td><td>+80.45% / <b>-2126 万</b> / +29.71%</td><td>工程施工 50.64%＋存储销售 43.78%</td><td><b>排除</b>（减亏假阳＋日成交 0.36 亿）</td></tr>
+<tr><td>001219</td><td>青岛食品</td><td>消费·休闲食品</td><td>2026-10-24</td><td><b>否</b></td><td>+10.38% / 1.02 亿 / +6.00%</td><td>饼干 86.00%（毛利 47.43%）</td><td><b>排除</b>（6 板·r20 +69.6%·距 250 日高 0.0%＝透支）</td></tr>
+</tbody></table></div>
+<p class="mut">「是否在+1后」全为「否」，说明没有一只是靠「明天才披露」的业绩在讲故事；但同样说明业绩都已是旧信息（日历龄 2~10 个交易日），因此本路只用它<b>筛掉</b>亏损票，不用它当买入催化。</p>
+</div></div><div class="" id="claim-logic-6ffd7a4115badb63"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card"><b>风险日历踩窗降级名单（解禁/减持，一律不荐，写明窗口日）</b>
+<div id="table-78ba4f973a42da14"><table><thead><tr><th>代码</th><th>名称</th><th>事件</th><th>窗口/公告日</th><th>规模</th><th>处置</th></tr></thead><tbody>
+<tr><td>600715</td><td>文投控股</td><td>股东减持</td><td>公告 2026-10-22（变动截止 2026-10-20）</td><td>北京文创定增基金 -93.6 万股＋北京文化中心基金 -1788.89 万股</td><td>降级·不荐</td></tr>
+<tr><td>301262</td><td>海看股份</td><td>股东减持</td><td>公告 2026-10-09（变动 10-09 当日）</td><td>新余中文产业 -8.83 万股（持股降至 5.00%）</td><td>降级·不荐</td></tr>
+<tr><td>603955</td><td>大千生态</td><td>股东减持</td><td>公告 2026-10-28（变动 10-20~10-26）</td><td>速源科技 -24 万股</td><td>降级·不荐</td></tr>
+<tr><td>603755</td><td>日辰股份</td><td>高管减持</td><td>变动 2026-10-20</td><td>崔宝军/陈颖/隋锡党 合计 -2.5 万股（均价 30.00~30.01）</td><td>降级·不荐</td></tr>
+<tr><td>300508</td><td>维宏股份</td><td>高管减持</td><td>变动 2026-10-26</td><td>董事景梓森 -0.5 万股（均价 37.50）</td><td>降级·不荐</td></tr>
+<tr><td>301555·603107·920007·300395·002116·600237·600367</td><td>7 只</td><td>限售解禁</td><td>解禁日 2026-11-02</td><td>合计解禁市值约 30.4 亿（占流通 88.03%~0.01%）</td><td>无一在涨停池</td></tr>
+</tbody></table></div>
+<p class="mut">缺口声明：风险事件源只覆盖 解禁/分红除权/股东减持/高管减持（575 条），<b>未接入</b>财报披露日历、股东大会、业绩预告；解禁仅覆盖 2026-11-02 当日 7 条，<b>2026-11-03 之后的解禁窗口未覆盖</b>——不得据此声称明日无解禁风险。</p>
+</div></div></section><section id="research">
+
+<!--OVERVIEW_EVOLUTION_SYNC_START-->
+<section class="evolution"><h2>六 自主拓展 · 能力进化<span class="hint">发现 → 追踪 → 验证 → 经验 → 能力 → 后续命中</span></h2><div class="evo-stats"><span class="evo-stat"><b>7</b><small>历史承接</small></span><span class="evo-stat"><b>7</b><small>经验/教训/信号</small></span><span class="evo-stat"><b>0</b><small>已沉淀能力</small></span><span class="evo-stat"><b>0</b><small>后续命中</small></span><span class="evo-stat"><b>0</b><small>验证成功</small></span><span class="evo-stat"><b>0</b><small>已证伪</small></span><span class="evo-stat"><b>0</b><small>追踪中</small></span><span class="evo-stat"><b>0</b><small>已搁置</small></span></div><details open><summary>已沉淀与验证明细 <span class="chip">0条有结果记录</span><span class="chip">本路 · 产业逻辑</span></summary><div class="evo-list"><div class="evo-empty">当前没有明确的能力化、后续命中或验证证据；不把未验证记录伪装成结果。</div></div></details></section>
+<section class="evolution"><h2>七 认知迭代 · 能力进化<span class="hint">发现 → 追踪 → 验证 → 经验 → 能力 → 后续命中</span></h2><div class="evo-stats"><span class="evo-stat"><b>1512</b><small>历史承接</small></span><span class="evo-stat"><b>1512</b><small>经验/教训/信号</small></span><span class="evo-stat"><b>0</b><small>已沉淀能力</small></span><span class="evo-stat"><b>0</b><small>后续命中</small></span><span class="evo-stat"><b>0</b><small>验证成功</small></span><span class="evo-stat"><b>0</b><small>已证伪</small></span><span class="evo-stat"><b>0</b><small>追踪中</small></span><span class="evo-stat"><b>0</b><small>已搁置</small></span></div><details open><summary>已沉淀与验证明细 <span class="chip">0条有结果记录</span><span class="chip">本路 · 产业逻辑</span></summary><div class="evo-list"><div class="evo-empty">当前历史资料没有明确的能力化、后续命中或验证证据，暂不计数。</div></div></details></section>
+<!--OVERVIEW_EVOLUTION_SYNC_END-->
+<div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+  var wrap=document.querySelector('.wrap');
+  if(!wrap)return;
+  /* 阅读条已给出真实栏目锚点时，不再叠加第二份导航 */
+  if(wrap.querySelector('.reading-spine a.rs-step'))return;
+  var sections=Array.prototype.filter.call(wrap.children,function(el){return el.tagName==='SECTION';});
+  if(sections.length<3)return;
+  var map=document.createElement('nav');
+  map.className='page-map';
+  map.setAttribute('aria-label','本页阅读地图');
+  var label=document.createElement('span');
+  label.className='page-map-label';
+  label.textContent='本页阅读';
+  map.appendChild(label);
+  var links=[];
+  sections.forEach(function(sec,i){
+    var h=Array.prototype.find.call(sec.children,function(el){return el.tagName==='H2';});
+    if(!h)return;
+    if(!sec.id)sec.id='section-'+(i+1);
+    var a=document.createElement('a');
+    a.href='#'+sec.id;
+    a.textContent=h.textContent.replace(/^[一二三四五六七八九十]+\\s*/,'');
+    a.setAttribute('data-section',sec.id);
+    map.appendChild(a); links.push({a:a,sec:sec});
+  });
+  if(links.length)wrap.insertBefore(map,sections[0]);
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      links.forEach(function(x){x.a.classList.toggle('active',x.sec===entry.target);});
+    });
+  },{rootMargin:'-88px 0px -64% 0px',threshold:0});
+  links.forEach(function(x){io.observe(x.sec);});
+})();
+</script><div class="claim-anchor-bank" aria-hidden="true"><span class="claim-anchor" id="claim-logic-d3cc22ad63cd512c"></span><span class="claim-anchor" id="claim-logic-6e1c621e46d4e081"></span><span class="claim-anchor" id="claim-logic-73f1f8c99c1ab635"></span><span class="claim-anchor" id="claim-logic-e112795af499d1d6"></span><span class="claim-anchor" id="claim-logic-041e40132356853a"></span><span class="claim-anchor" id="claim-logic-ae9d6d15180c5978"></span><span class="claim-anchor" id="claim-logic-78d359ada6e94f3b"></span><span class="claim-anchor" id="claim-logic-46006e89be4ddced"></span><span class="claim-anchor" id="claim-logic-73d37843bfbc7dc7"></span><span class="claim-anchor" id="claim-logic-8747481ecb7c3c5c"></span><span class="claim-anchor" id="claim-logic-d9ffebbd9fb089c3"></span><span class="claim-anchor" id="claim-logic-b301049e1b103afd"></span><span class="claim-anchor" id="claim-logic-2145acb8f6b87b36"></span><span class="claim-anchor" id="claim-logic-7e5beca7fc595269"></span><span class="claim-anchor" id="claim-logic-2cac0ef4567ab848"></span><span class="claim-anchor" id="claim-logic-d2ee14d10959a1d0"></span><span class="claim-anchor" id="claim-logic-04a7201a364bd10e"></span><span class="claim-anchor" id="claim-logic-cb57994cef10022a"></span><span class="claim-anchor" id="claim-logic-45a54798e6e3332b"></span><span class="claim-anchor" id="claim-logic-e6aa33b152622414"></span><span class="claim-anchor" id="claim-logic-f13f653b9d43335d"></span><span class="claim-anchor" id="claim-logic-2a434d4a30be0345"></span><span class="claim-anchor" id="claim-logic-32d7a53046e67f68"></span><span class="claim-anchor" id="claim-logic-a25aaf881da331f5"></span><span class="claim-anchor" id="claim-logic-a7bc233e40afd438"></span><span class="claim-anchor" id="claim-logic-6c0372158f0224c3"></span><span class="claim-anchor" id="claim-logic-9b45cc8776376001"></span><span class="claim-anchor" id="claim-logic-fac3ac71af7f603e"></span><span class="claim-anchor" id="claim-logic-4a75c49814018081"></span><span class="claim-anchor" id="claim-logic-9a174fc95be2b2dc"></span><pre class="claim-anchor-text">把『业绩腿成立』收紧为三同口径：净利同比&gt;0 且 归母净利&gt;0 且 营收同比&gt;0，缺一即只能写『减亏/未盈利』。今日 125 只里净利同比&gt;0 有 61 只，但归母净利&lt;0 的减亏假阳 14 只（002086 东方海洋 -6793 万、605303 园林股份 -2126 万均在其中），误把它当业绩腿会直接把 A 档发出去。
+『宽度≠纵深』再获第三日同向证据，且纵深在中性档无溢价：同日同环节聚集≥3 只 n=335/36.1%/-0.72%，独苗 n=666/40.4%/-0.72%，胜率还以独苗更高。规则：产业链纵深只能用于『在一条线里选出卡位最硬那一只』，永不作『线内聚集所以更安全』的加仓理由。
+封板质量在本系统里只能当**可执行性门槛**，不能当**期望**：冰点档『封单&lt;1% 且 首封&gt;11:00』n=111/53.2%/+1.07%，而『封单≥3% 且 首封≤09:31』n=14/28.6%/-1.84%——硬封秒板反而更差。昨日以『封板不可用/薄封』为由把 301132 归零，是把自己的可用性阈值误当成了期望阈值（详见深挖②）。
+任何业绩腿桶必须同时报『已知 n』与『后视镜 n』，且后视镜不得计入分母：三季报预告口径 123 行里 87 行（70.7%）公告日&gt;判断日；中报 A 池 145 行里 19 行（13.1%）同为事后已知，且这 19 行有 14 行挤在 20260709 单日、均收 -4.26%。剔除后 A 池首板均收从 -1.44% 修正到 -0.91%，仍低于全体首板基线 -0.63%。
+『业绩腿』不构成次日买入理由，只构成背景：今日 125 只的三季报公告日全部落在 2026-10-17~2026-10-31（3~10 个交易日前），即所有业绩都是『已发生、已消化』的事实，不是当日新增信息。规则：公告日 ≤ 判断日 但 日历龄 &gt;2 个交易日的业绩，只能用于『筛掉亏损票』，不得写进买入理由的催化位。
+承接MA-20261030-02①（总审原文版）『封单比&lt;1% 且 首封&gt;11:00 的票在冰点层是否可买』——给 n/胜率/执1 均收，并与『封单比≥3% 且 首封≤09:31』做同口径对照
+可买。口径A（55 日 3220 票）：冰点档×首板×封单&lt;1%×首封&gt;11:00 → n=111、胜率 53.2%、执1 均收 +1.07%、中位 +1.05%；同层对照『封单≥3% 且 首封≤09:31』→ n=14、胜率 28.6%、均收 -1.84%。交叉验证用第二套样本（_tmp_all_recs 69 日 4747 票）：n=99、52.5%、+0.80% vs n=26、38.5%、-2.40%，两套样本方向一致（薄封晚封为正、硬封秒板为负）。冰点档首板基线 n=594、43.6%、-0.25%，即该格比基线高 +1.32pp。结论对昨日操作的含义：301132（封单 0.54%、首封 11:26）当日落在的历史格是**正**格（+1.07%），被归零的理由来自本路『封板不可用』硬剔项而非历史桶，属规则错配；002365（封单 3.47%、首封 09:30）落在**负**格（-1.84%），却给了权重。两只的实际归因与历史格完全相反。
+20261103 用同一口径A基线（20260707 起逐笔）重算两格，若『薄封晚封』格均收 ≤ 基线 -0.25% 或 胜率 ≤43.6%，则本条作废并改为分环境表述；样本文件：_学习/_tmp_logic1102_bucket_rows.csv（已落盘 145 行，含两格全部样本与 PCB 冰点样本，字段=格/日期/代码/名称/板数/封单比/首封/大方向/环节/温度/档/执1）。
+承接MA-20261030-02②（总审原文版）『为何自身漏斗把封板不可用列为硬剔项，却放行 0.54% 薄封——同尺不一致的机制原因』
+机制原因有三层，且都不是数据问题：①**同一阈值被两个不同对象共用**——『封板可用性』（能否成交、是否一字）与『次日期望』（执1 收益）在漏斗里共用了同一条『封单比/首封时间』阈值，而这个阈值最初是从 limitup 路（打板可执行性）借来的，从未在 logic 路的样本上校准过；②**漏斗的终止条件盖过了统计的反向性**——本路漏斗对『封单比&lt;1%』是硬剔（不进入候选池），于是历史上所有落在该格的样本根本不会出现在『可买清单』里，形成选择偏差：越是被硬剔的格，越没有机会被本路实测，于是『硬剔』自我强化，无法被数据纠正；③**昨日两条荐票恰好各自犯了相反方向的错**——301132 是真薄封（0.54%）却被判『薄封不可用』而归零，002365 是真硬封（3.47%+秒板）却拿到了权重，说明阈值不是被『误用』一次，而是**两个方向都被误用**，根因是规则没有绑定到『该格的历史期望符号』。修正：封单比与首封时间自此只进『可执行性门槛』（一字/巨量封单=不可成交才剔），不进权重、不作期望；票级权重只由三现数量决定（三现→上限 2%、两现→1% 或观察、一现→观察）。
+20261103 起，本路 logic判断_{d}.json#荐票.标的 中每只票必须带『三现』逐项打勾字段（业绩已兑现/卡位可证/未透支 三布尔），且权重 ∈{0,1%,2%} 与勾数严格对应；出现『勾 1 项而权重&gt;1%』或『封单比/首封时间出现在权重理由中』即本条执行失败（可用 grep 计数＝0 验证）。
+承接MA-20261030-02③（总审原文版）『PCB 冰点 n=24 / -2.67% 的样本清单落盘（口径A 逐笔），使负桶可复算』
+部分做到，且复算值与原值不完全对齐（如实报差异）。落盘文件：_学习/_tmp_logic1102_bucket_rows.csv，共 145 行（3 格：冰点×首板×封单&lt;1%×首封&gt;11:00 111 行；冰点×首板×封单≥3%×首封≤09:31 14 行；PCB 相关×冰点 20 行），字段含日期/代码/名称/板数/封单比/首封/大方向/环节/温度/档/执1，可 json/csv 直接计数复算。PCB 复算：以 dirn/seg 含『PCB』或『覆铜板』的 51 行为母本，冰点档首板 n=18、38.9%、-2.78%；昨日口径 n=24、41.7%、-2.67%——差异来自线名变体归并（PCB/电子元件、AI硬件-PCB、高速覆铜板、PCB算力硬件等 7 种写法），本路按字面包含合并后只剩 18 行，另 6 行在昨日口径中被并入但今日母本不含（线名在归位表里被改写为 AI算力/半导体）。结论方向不变：PCB 是**跨三个温度档全负**的线（冰点 -2.78%、冷 -1.70%、中 -1.66%），负桶成立。
+20261103 校验：_学习/_tmp_logic1102_bucket_rows.csv 存在且 csv 行数 ≥30（实测 145）；文件内『格』字段的 PCB 行数 ≥15（实测 20）；若 PCB 冰点首板均收在次日复算中 ≥0%，则『PCB 跨档全负』被证伪。
+承接MA-20261030-02（父指令版）①『公告日≥次日』纪律落地：对本路今日候选逐只标注『公告日』与『公告是否在+1后』
+做到。①口径定义（今日起固定）：只把『公告日 ≤ 判断日』的事件算作已知证据；公告日 &gt; 判断日的样本一律不计入任何胜率/均收分母，并在文中单列 n。②今日 3 只候选的标注：688518 联赢激光 公告日 2026-10-31（三季报），在+1后＝**否**（公告在判断日之前 2 个交易日）；688596 正帆科技 公告日 2026-10-31，否；603171 税友股份 公告日 2026-10-24，否。三只均**不是**未披露票，故不因本条降为观察（688596/603171 的观察理由分别是卡位报告期旧、落负桶）。③全池 125 只的三季报公告日区间 2026-10-17~2026-10-31，无一落在 20261103 及以后，即今日全池业绩腿均为已知事件、无后视镜成分；④但反向风险必须写明：公告日虽≤判断日，日历龄已达 2~10 个交易日，业绩是『已消化』的背景而非当日催化，故本条只允许用于**筛除**（剔亏损/减亏票），不得写进买入理由的催化位。⑤未披露票处置规则留档：若明日出现『T+1 才公告』的票，最高只能给观察、权重 0。
+20261103 校验：logic判断_20261103.json#荐票.标的 每只都含『公告日』与『是否在+1后』两个键；任一只『是否在+1后＝是』而类型＝荐票 → 本条执行失败；全池统计须给出『公告日&gt;判断日』的只数（今日=0）。
+承接MA-20261030-02（父指令版）②含公告日约束的业绩腿历史胜率重算（分母只算公告日≤判断日），并单验 002086 与 605303
+做到，且结论是『业绩腿在历史上没有正增益，后视镜让它可以看起来更好』。两个口径：①**中报雷达 A 共振池**（613 只有公告日期，192 只 A 池）：原口径（含后视镜）n=145、胜率 39.3%、均收 -1.22%；公告日约束后 n=126、42.9%、-0.77%；被剔除的后视镜 n=19、15.8%、-4.26%。限首板：原 n=120、37.5%、-1.44% → 约束后 n=101、41.6%、-0.91%；对照全体首板基线 n=2560、40.4%、-0.63% → **原口径 delta -0.81pp、约束后 delta -0.28pp（仍为负）**。②**三季报预告池**（531 只）：原 n=123、38.2%、-0.91% → 约束后 n=36、30.6%、-1.24%；被剔除 87 行（70.7%）为公告日&gt;判断日的后视镜，其均收 -0.77% 反而好于已知组，说明『预告未出却被先炒』的票系统性偏强，把它算作业绩腿证据是纯粹的幸存者偏差。③单验两只点名票：**002086 东方海洋**——三季报公告日 2026-10-29（已知），净利同比 +35.55% 但归母净利 **-6793 万**、营收同比 +0.37%、毛利率 3.77%，主营水产品加工 68.38%＋体外诊断 12.93%（F10 2026-06-30），催化首项是『羊字辈』玄学 → 业绩腿**不成立**（减亏假阳），3 板 封单 5.34% 属情绪接力，不荐；**605303 园林股份**——三季报公告日 2026-10-31（已知），净利同比 +80.45% 但归母净利 **-2126 万**、毛利率 8.13%，主营工程施工 50.64%＋存储产品销售 43.78%（华澜微相关），半导体线仅 2 只且当日成交额仅 0.36 亿、换手 1.0% → 业绩腿**不成立**（减亏假阳），卡位虽达 43.78% 但属转型首期、不荐。④做不到的小项：『002086/605303 的逐笔同类历史桶（减亏型业绩腿 × 涨停）』**做不到**——口径A 逐笔样本里没有『净利同比/绝对净利』字段，无法按业绩质量切历史；只能给今日横截面证据，无法给 n/胜率。
+20261103 校验：logic判断_20261103.json#深挖 中出现四个数『A池已知 n=126/42.9%/-0.77%』『三季报预告已知 n=36/30.6%/-1.24%』；若次日可用公告日字段重建样本（要求 _tmp_logic_rows 类文件含 NOTICE_DATE），则须复算并给出 n；否则标记『仍然做不到』。
+承接MA-20261030-02（父指令版）③『中报雷达 A 共振池 n=14 在 +4.6pp 上偏乐观多少』——公告日约束后的新 delta
+先把 n=14 定位到了，再回答乐观幅度。全库检索『4.6pp』在现存文件里没有任何一处指向中报 A 池增益（命中的是 20261023/20261026 的行文，与本问题无关），故 +4.6pp 的原始算式**不可复现**（无样本清单落盘）。但 n=14 有唯一对应：中性档（温度 40~65）×首板×中报 A 池×公告日&gt;判断日 恰好 **14 行，且 14 行全部挤在 20260709 一天**（002845/603991/002185/600584/002156/605358/688328/603986/002281/002916/600770/002384/002436/603933，公告日 2026-07-10~07-15，全部晚于 20260709），该 14 行胜率 **7.1%**、均收 **-5.62%**（仅 688328 +5.43%、600770 0.0%，其余 12 只亏）。含它的原口径：中性档 A 池首板 n=58、32.8%、-2.04%；公告日约束后 n=44、40.9%、-0.90%。对照中性档全体首板基线 n=964、39.3%、-0.73% → **原口径 delta -1.31pp，约束后 delta -0.17pp**。回答问句：若 +4.6pp 是在含这类后视镜样本的池子上算出的，则公告日约束后真实增益为 **-0.17pp**，即 **在 +4.6pp 上偏乐观约 4.77pp**（名义值几乎全部来自不可交易的『事后已知』成分）；换言之业绩腿在中性档的真实增益≈0，且方向略负，不能作为 A 档或加权的依据。另注：中报 A 池 ∩ 今日涨停 = **0 只**（业绩腿来源已换成三季报正式报表），故今日不存在『A 池共振』候选。
+20261103 校验：若明日出现『中性档×首板×A池』新样本，须按公告日拆成已知/后视镜两列报 n 与均收；若已知组 delta ≥ +1.0pp 且 n≥20 → 本条『业绩腿≈0 增益』被证伪；样本清单须落盘（同 _tmp_logic1102_bucket_rows.csv 格式）。
+LOGIC · 产业逻辑 · 截至 2026-11-02 收盘 · as_of 20261102
+2.0% · 观察 2 只
+并清 600592
+一 承接Master指派§11号规格·承接Master指派 · 源 _学习/总审_20261030.json#指派清单（MA-20261030-02）+ 宿主编排下发的父指令版三项 · 口径：公告日≤判断日才算已知
+先把话说清楚：本日收到的 MA-20261030-02 有两套文本，内容不同，本路两套都做。
+①总审文件原文版（_学习/总审_20261030.json#指派清单[1]）：问「封单比&lt;1% 且首封&gt;11:00 的票在冰点层是否可买」、问「为何自身漏斗把封板不可用列为硬剔却放行 0.54% 薄封」、要求「PCB 冰点 n=24/-2.67% 样本清单落盘」。②父指令版（宿主编排直接下发）：要求「把『公告日≥次日』定义为只算已知事件」「重算含公告日约束的业绩腿历史胜率，重点验 002086 与 605303」「回答中报雷达 A 共振池 n=14 在 +4.6pp 上偏乐观多少」。两套都指向同一件事——不许用事后才知道的信息算历史胜率，所以合并应答，逐项给数，做不到的项直说。
+口径统一声明：本文所有「已知 n」＝只统计「公告日 ≤ 判断日」的样本；「后视镜 n」单列且不计入分母。业绩腿成立＝净利同比&gt;0 且 归母净利&gt;0 且 营收同比&gt;0（三同）。
+指派表（6 项，全部带可机械结算条件）
+#指派项结论（带数）次日可机械结算
+1冰点层「封单&lt;1% 且 首封&gt;11:00」能不能买能买。口径A 55 日：n=111、胜率 53.2%、执1 均收 +1.07%；同层对照「封单≥3% 且 首封≤09:31」n=14、28.6%、-1.84%；交叉样本（69 日 4747 票）n=99/52.5%/+0.80% vs n=26/38.5%/-2.40%，方向一致。冰点首板基线 n=594/43.6%/-0.25%次日重算两格，若薄封晚封均收 ≤ 基线 -0.25% 或胜率 ≤43.6% 则本条作废
+2同尺不一致的机制原因三层。①同一阈值被两个对象共用（可执行性 vs 次日期望），且是从 limitup 路借来未在 logic 样本上校准；②硬剔造成选择偏差——落在负格/正格的票根本不进候选池，规则自我强化、无法被数据纠正；③昨日两条荐票各自错在相反方向：301132（封 0.54%/首封 11:26）落在正格却被归零，002365（封 3.47%/秒板）落在负格却给了权重。修正：封单比与首封只进可执行性门槛，不进权重次日起每只荐票须带三现三布尔，权重 ∈{0,1%,2%} 与勾数严格对应；理由里出现封单比即失败
+3PCB 冰点样本落盘做到，值与昨日不完全对齐（如实报）。落盘 _学习/_tmp_logic1102_bucket_rows.csv 145 行（三格：薄封晚封 111 / 硬封秒板 14 / PCB×冰点 20）。PCB 复算：冰点首板 n=18/38.9%/-2.78%（昨日 n=24/41.7%/-2.67%），差异来自线名 7 种变体归并；跨档全负：冰点 -2.78%、冷 -1.70%、中 -1.66%csv 行数 ≥30（实 145）、PCB 行 ≥15（实 20）；若 PCB 冰点次日复算 ≥0% 则「全负」被证伪
+4公告日逐只标注（父指令①）做到。3 只候选公告日：688518 2026-10-31、688596 2026-10-31、603171 2026-10-24，「是否在+1后」全部＝否；全池 125 只公告日区间 2026-10-17~10-31，「公告日&gt;判断日」只数＝0。但反向风险写明：日历龄已 2~10 个交易日，业绩属「已消化」背景，只能用于筛除亏损票，不得当买入催化次日文件每只带「公告日」「是否在+1后」两键；出现「是＋类型=荐票」即失败
+5含公告日约束的业绩腿重算（父指令②）做到，结论是业绩腿没有正增益。中报 A 池：原 n=145/39.3%/-1.22% → 已知 n=126/42.9%/-0.77%，被剔后视镜 n=19/15.8%/-4.26%；首板原 n=120/37.5%/-1.44% → n=101/41.6%/-0.91%，对基线 -0.63% 的 delta 由 -0.81pp 修到 -0.28pp（仍负）。三季报预告池：原 n=123/38.2%/-0.91% → 已知 n=36/30.6%/-1.24%，后视镜占 87/123＝70.7%。单验：002086 净利同比 +35.55% 但归母 -6793 万（减亏假阳）；605303 +80.45% 但归母 -2126 万（减亏假阳）次日文件须出现四数 n=126/42.9%/-0.77% 与 n=36/30.6%/-1.24%；逐笔同类桶仍做不到则标「做不到」
+6A 共振池 n=14 在 +4.6pp 上偏乐观多少（父指令③）做到，n=14 已定位。它是「中性档×首板×A 池×公告日&gt;判断日」的 14 行，全部挤在 20260709 一天，公告日 07-10~07-15，胜率 7.1%、均收 -5.62%。含它：n=58/32.8%/-2.04%；约束后：n=44/40.9%/-0.90%；对基线 -0.73% 的 delta 由 -1.31pp 修到 -0.17pp。→ 若 +4.6pp 含这类成分，则真实增益约 -0.17pp，即偏乐观约 4.77pp；另：A 池∩今日涨停＝0 只次日须按公告日拆两列报 n/均收；已知组 delta ≥ +1.0pp 且 n≥20 则本条被证伪
+做不到的小项（如实写，不补）
+①002086 / 605303 的「减亏型业绩腿×涨停」历史桶做不到：口径A 逐笔样本（3220 行）只有盘面字段（封单比/首封/板数/温度/执1）与线名，没有净利同比与绝对净利字段，无法把「减亏假阳」这一业绩质量标签回溯到历史样本上，所以只能给今日横截面证据，给不出 n/胜率/均收。②「双源交叉」字段不存在：任务书要求引用 iwencai 业绩预告存档 vs 东财的双源交叉，实际该文件递归枚举键名与全文检索「双源 / iwencai / 交叉」均 0 命中，iwencai 盘后最新存档是 20260908，故今日业绩腿是单源（东财正式报表＋同花顺归位催化），A 档压为 0。③订单金额：688596 的「新签订单」只有同花顺聚合字样，公告原文与金额未取，只能写「订单在场、量级未知」。
+二 中报季报 · 业绩腿三同口径§11号规格·步骤2 逻辑硬度四档 · 源 东财 RPT_LICO_FN_CPD（REPORTDATE=2026-09-30，125/125 命中）+ 东财 F10 主营构成（14 码 13 命中）+ _学习/中报预增雷达_20261102.json + _学习/风险事件_20261102.json
+三 链条纵深与环节卡位§11号规格·步骤3 卡位分析 + §深度标准1/3 全链条与位置标尺 · 桶口径＝口径A 涨停对链条 55 日 3220 票（20260707~20261029，单牛市窗口）
+四 逻辑硬度 · 消息溯源机器段：原文搬运自 _学习/logic判断_20261102.json#判断.结论（agent 原文，未经改写，不新增判断）
+五 前置预期雷达 · 风险日历踩窗机器段：源 _学习/风险日历_20261102.json（status=pass）· 只呈现已接入维度，不把缺事件解释成无风险
+六 荐票与深挖§11号规格·荐票闭环 · 发出版 _学习/逻辑荐票_20261102.json（不可覆盖）· 结算口径 T+1 开→T+1 收 · 清仓腿 open
+七 认知迭代§11号规格·认知迭代（永远最末）· 每条都须用 20261102 数据验证后才可作证据，未验证者标假设
+①（已验证）业绩腿三同口径。净利同比&gt;0 有 61 只，但归母&lt;0 的减亏假阳 14 只——只读同比符号会把 11.2% 的亏损票打成「业绩增长」。规则：三同缺一即写「减亏/未盈利」，权重 0。
+②（已验证）宽度≠纵深，且纵深在中性档无溢价。同日同环节聚集≥3 只 n=335/36.1%/-0.72%，独苗 n=666/40.4%/-0.72%，胜率还是独苗更高。纵深只用于「在一条线里选卡位最硬那一只」，永不作为「线内聚集所以更安全」的加仓理由（与 20261030 冰点档结论同向）。
+③（已验证）封板质量只作可执行性门槛，不作期望。冰点档薄封晚封 n=111/53.2%/+1.07% 对上硬封秒板 n=14/28.6%/-1.84%，方向与直觉相反；昨日把 301132 归零、却给 002365 权重，两个方向都错在用「可用性阈值」替代「期望符号」。
+④（已验证）任何业绩桶必须双列「已知 n / 后视镜 n」。三季报预告 70.7%、中报 A 池 13.1% 是事后已知样本；后视镜样本在 A 池里把均收从 -0.91% 拉到 -1.44%（更差），在三季报预告里则相反（后视镜组 -0.77% 好于已知组 -1.24%）——两个方向都会误导，唯一办法是不混算。
+⑤（今日新立·未验证假设）「修复日普涨首板」的结构在历史上是负期望：温度从冰点单日跳到中性（+39.7 度）之后的第一个交易日，本路尚未单独建桶（需按「温度日变动 &gt;+30 且 涨停数翻倍」切样本），故本日只把它当描述性判断（中性档首板 -0.73%），不写成规则；若明日复现则立项建桶。
+本文的边界（盲区清单，不粉饰）
+①单源：业绩腿只用东财正式报表，无 iwencai 双源交叉（字段与存档均不存在），A 档压 0；②窗口：桶统计 20260707~20261029 单牛市窗口，不外推跨周期；③样本：本路战绩仅 14 个荐票日/22 笔（27.3%/-2.37%），所有增益只作方向；④聚类：中性档 n=964 跨 55 日，日间聚类未处理，标准误被低估，故不算凯利；⑤风险日历缺口：未接入财报披露/股东大会/业绩预告，解禁仅覆盖当日；⑥F10 缺口：688596 报告期旧（2025-12-31）、603989 为分部口径、600259 解码失败；⑦订单量级未知：688596「新签订单」无金额与交付期。
+</pre></div></body></html>

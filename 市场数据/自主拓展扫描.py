@@ -100,7 +100,12 @@ def scan(d):
                 seat=row.get('席位',''); code=str(row.get('代码','')).zfill(6)
                 if not real_seat(seat): continue  # 类别汇总行/通道类席位剔除
                 if net>=5e7 and seat not in known:
-                    seat_hits.setdefault(seat,[]).append((t,code,round(net/1e8,2)))
+                    # 20261030 周训练修复(lhb-新席位扫描去重修复): 同一(日,票)多上榜原因=多行同值净额,
+                    # 直接append会把1笔虚增成N次(实例20261019东莞虎门×002343/20261028国海深圳中心路×920220)。
+                    # 与 pair_hits 的 by_ticket+set 口径对齐: 按(日,票)去重, 同票只记一次。
+                    hs_=seat_hits.setdefault(seat,[])
+                    if not any(h_[0]==t and h_[1]==code for h_ in hs_):
+                        hs_.append((t,code,round(net/1e8,2)))
                 if net>=3e7: by_ticket.setdefault((t,code),[]).append(seat)
         for (t2,code),seats in by_ticket.items():
             ss=sorted(set(seats))

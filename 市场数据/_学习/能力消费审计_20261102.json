@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "as_of": "20261102",
+  "preload": {
+    "path": "_学习\\能力预加载_20261102.json",
+    "sha256": "bb07d698ec8f36d316818d8ce33f3145fb27b4e9d2dd4398f1b8de6304f47343"
+  },
+  "receipt": {
+    "path": "_学习\\能力使用回执_20261102.json",
+    "sha256": "51c135bffd09d37ac07f3c2e70bc859043bd2e16e9536dd4bf7d1238fba99bcd"
+  },
+  "status": "pass",
+  "applied_events": [
+    {
+      "id": "extension:cap-lhb-netbuy-valid",
+      "route": "lhb",
+      "kind": "自主拓展"
+    },
+    {
+      "id": "extension:cap-limitup-turnover-valid",
+      "route": "limitup",
+      "kind": "自主拓展"
+    }
+  ],
+  "applied_count": 2,
+  "policy": "仅回执中有 effect+source_locator 的 applied 事件计入 reused_count；拒绝/无能力不计数"
+}

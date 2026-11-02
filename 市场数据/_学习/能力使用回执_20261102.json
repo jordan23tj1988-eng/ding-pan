@@ -1,0 +1,76 @@
+{
+ "schema_version": 1,
+ "as_of": "20261102",
+ "decision_cutoff": "20261102",
+ "preload": {
+  "path": "D:\\股票数据\\市场数据\\_学习\\能力预加载_20261102.json",
+  "sha256": "bb07d698ec8f36d316818d8ce33f3145fb27b4e9d2dd4398f1b8de6304f47343"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "源 _学习/能力预加载_20261102.json#routes.auction：eligible_count=0、status=no_eligible_capabilities、records=[]（activation_date 20261102，decision_cutoff 09:30）。本路今日无任何可复用能力条目可消费，故按契约写 considered_ids=[]、applied=[]、rejected=[]，不虚构能力引用。本日判断全部由 _agent规格/08_竞价命门agent.md 框架 + 60 份 竞价池结算_*.json 逐笔复算 + 20261102 竞价快照/zt_pool 直接推出。"
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "采用效果：把『净买占比』作为席位判读的强制第三维，对今日 S/A 候选池逐只落桶后再评判，并直接用该维度否掉了两票的正格资格。①600715 文投控股 占该股成交 7.64% → 5-10% 弱桶（质量库 n=731 / 执1 46.0% / 均涨 −0.00%），该桶在弱点位上本已无正格资格，叠加业绩门（−1120.90%）后定 0 权重、类型=观察；②688019 安集科技 1.30%、600838 上海九百 2.95% → 0-5% 桶（n=1300 / 48.2% / +0.54%），属中性近均值桶，不构成建仓依据，只入观察；③10-20% 正格（n=454 / 50.0% / +0.26%）今日无一只 S/A 标落入，>20% 极值负格（n=136 / 36.0% / −0.59%）今日 0 只，无需剔除。影响的具体结论：若不用该维度，600715 会以『A 档在场 + 主线 AI应用/传媒 + 涨停 + 地天板 n=60/46.7%/+2.46%』拿到 3-5% 试探仓；用了该维度后它的占比落 5-10% 弱桶，加上业绩门，最终权重 0，本路今日正式荐票 0 只、档位 C。即该能力是把『有席位+有主线+有形态』的一票从可建仓压到不可建仓的直接原因之一。边界复核：读 _学习/_龙虎榜质量库.json#因子.净买占比.状态 = 『有效』（未淘汰），窗口 20260401~20260708、样本 4607 ≥ 2000，边界两条件均满足，可用。同时复核出两条边界警告并已写入判断正文：①该因子单调 rho=−0.4、近窗 rho=−0.5（买得越猛 T+1 越差），故本路只用其『桶位』不用其『单调方向』给正分；②质量库桶序是全年混合温度口径，本路自算本窗分层后，占比[10,20) 在冰点层 n=89/49.4%/+0.52%、在中性层 n=73/32.9%/−1.45%，方向反转——故今日（中性 54.9）该桶不得当正格加分，能力规则在非冰点层须加温度条件，此条已登记为认知迭代第 2 条与明日可证伪条件第 5 条。",
+     "source_locator": "D:\\股票数据\\市场数据\\_学习\\_龙虎榜质量库.json#因子.净买占比（状态=有效，区分度 14.0，权重 0.1394，桶：0-5% n=1300/48.2%/+0.54%；5-10% n=731/46.0%/−0.00%；10-20% n=454/50.0%/+0.26%；>20% n=136/36.0%/−0.59%；≤0净卖 n=1986/48.9%/+0.50%）＋ D:\\股票数据\\市场数据\\_学习\\能力预加载_20261102.json#routes.lhb.records[0]（validation=validated，last_validated_at=20261030，boundary=窗口20260401~20260708 样本≥2000）"
+    }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "源 _学习/能力预加载_20261102.json#routes.theme：eligible_count=0、status=no_eligible_capabilities、records=[]。本路今日无任何可复用能力条目可消费，故按契约写 considered_ids=[]、applied=[]、rejected=[]，不虚构能力引用。本日判断全部由 _agent规格/10_题材命门agent.md 框架 + 题材归位_20261102.json（125/125）+ 主流题材6有_20261102.json + 题材生命周期_20261102.json（脚本机械分类）+ 题材线宽_20261102.json（族口径）+ _涨停质量库.json 分板胜率/因子桶 + zt_pool.csv 逐票重算 直接推出；主动查证两次失败（ifind查.py / 因子快检.py 本机不存在），已如实标注并改用 THS 涨停池交叉校验。"
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "能力预加载_20261102.json 中 routes.logic.eligible_count=0、status=no_eligible_capabilities、records=[]；本路未使用任何 capability 状态改判，全部结论来自当日数据与自有口径A样本。"
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "采用方式：选票排序保留换手率维度（库权重0.1564、区分度11.4、单调rho+1.0、近窗rho+1.0、RankIC 0.0375、ICIR 0.218、t=3.81、IC天数306），与封单比/连板/开板次数做交集而非单因子排序。实际用法与影响：①把『换手≥20%』作为可选集合的第一道压缩——今日全池125只仅7只（5.6%）落该桶（唯一执1均涨为正的桶 n=1940 45.3%/+0.11%；10-20% n=4354 45.1%/-0.17%、3-10% n=7984 42.8%/-0.42%、<3% n=2449 33.9%/-0.92%），这一条直接把『荐票1只』的依据从叙事变成可核数字；②002172 换手25.05% 落≥20%桶，与本格『4板+×封单<2%』(n=584 49.3%/+0.13%)、『开2次+』(n=6079 48.3%/+0.24%) 形成三维同向，因此把它列为唯一荐票；③001219 换手19.74% 严格落10-20%桶（45.1%/-0.17% 为负），这一条与『未开板39.4%/-0.69%』『中封41.9%/-0.56%』共同构成它从荐票降为观察的理由，是本路今日下调其权重的直接因子依据；④600259 换手4.43% 落3-10%桶（42.8%/-0.42%），故虽质量分8分全池最高仍只给观察。边界复核：能力声明的窗口=20250701~20260930、样本≥2000，今日实核 库『窗口=20250701~20261102、样本19582、更新20261102、因子.换手率.状态=有效』，均满足且未跨窗失效；边界陷阱已避开——001219 换手19.74% 距≥20%门槛仅0.26pp，若按四舍五入记为20.0%会误判为正桶，本路一律用原始值严格比较（>=20.0 才算），并把该票标注为『边界票』；另该因子桶序单调但幅度小（≥20% 桶仅+0.11pp），故只用于压缩可选集合与排同分次序，不单独构成买入理由。",
+     "source_locator": "_学习/能力预加载_20261102.json → routes.limitup.records[0]（id=extension:cap-limitup-turnover-valid，validation=validated，last_validated_at=20261030）；实核字段 _学习/_涨停质量库.json#/因子/换手率（状态/权重/桶）与 #/样本=19582、#/窗口"
+    }
+   ],
+   "rejected": []
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "周期路可复用能力=0(能力预加载 eligible_total 仅 lhb/limitup 各1项); 本回执由宿主在周期投票/主判环节代写"
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "note": "master 域可复用能力=0"
+  }
+ },
+ "applied_total": 2,
+ "source": "能力回执汇总.py 机械汇总七域分路回执（原文搬运，零改写、零补造）；来源: 能力使用回执_auction_20261102.json, 能力使用回执_lhb_20261102.json, 能力使用回执_theme_20261102.json, 能力使用回执_logic_20261102.json, 能力使用回执_limitup_20261102.json, 能力使用回执_cycle_20261102.json, 能力使用回执_master_20261102.json"
+}

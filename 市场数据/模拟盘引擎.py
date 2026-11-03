@@ -184,6 +184,14 @@ def settle(d):
                 keep.append(pos); continue
             leg = 'open' if pos.get('defer_sell') else ('close' if _norm_leg(_g(order,'leg','腿'))=='close' else 'open')
             sw = None if pos.get('defer_sell') else (order or {}).get('sell_switch')
+            # 20261103: 部分路把 sell_switch 写成自然语言字符串(契约应为对象{if_gap_ge_pct:…}),
+            # 旧代码直接 sw.get() 会 AttributeError 打断整条 settle。文本无法机械判定阈值,
+            # 按「无切换条件」处理(保守: 照 leg 执行)并登记, 不解释文本、不猜阈值。
+            if sw is not None and not isinstance(sw, dict):
+                ledger(route, {'ev': 'warn', 'd': d, 'code': code,
+                               'why': 'sell_switch非对象,按无条件执行(不触发切换)',
+                               'sw_type': type(sw).__name__, 'sw_text': str(sw)[:80]})
+                sw = None
             bar,b = get_bar(code, d, deadline)
             pvc = b.get(prev_td(d,cal),(None,)*5)[3] if prev_td(d,cal) else None
             if bar is None:

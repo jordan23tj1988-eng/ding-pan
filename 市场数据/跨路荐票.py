@@ -187,19 +187,42 @@ def master_gate(d):
     不得把「核不了」说成「通过了」。留数=0 属合法空仓，不递补、不凑票。"""
     a = load('总审_%s.json' % d) or {}
     sc = a.get('筛选清单') or {}
+    # 20261103: 总审 prompt 允许把筛选清单写成 list(明细数组), 旧代码假定 dict 会 AttributeError。
+    # 两种形态都收敛成 (明细, 汇总) 再走同一套门禁, 不改裁决语义。
+    if isinstance(sc, list):
+        detail = sc
+        _verdict = lambda r: str(r.get('留/剔') or r.get('留剔') or '')
+        _keep = [r for r in detail if isinstance(r, dict) and _verdict(r).startswith('留')]
+        _cut = [r for r in detail if isinstance(r, dict) and _verdict(r) == '剔']
+        _w = 0.0
+        _has_w = False
+        for r in _keep:
+            try:
+                _w += float(r.get('建议权重%'))
+                _has_w = True
+            except (TypeError, ValueError):
+                pass
+        summary = {'并集数': len(detail), '留数': len(_keep), '剔数': len(_cut),
+                   '留用合计权重%': round(_w, 2) if _has_w else None,
+                   '筛选说明': '（list 形态，汇总由明细现算；明细无建议权重%时合计标空）'}
+    else:
+        detail = sc.get('明细') or []
+        summary = {'并集数': sc.get('并集数'), '留数': sc.get('留数'), '剔数': sc.get('剔数'),
+                   '留用合计权重%': sc.get('留用合计权重%'),
+                   '筛选说明': str(sc.get('筛选说明') or '')[:200]}
     gate = {}
-    for r in (sc.get('明细') or []):
+    for r in detail:
         code = _code_from_text(r.get('票'))
         if not code:
             continue
         gate[code] = {'名称': re.sub(r'\d{6}', '', str(r.get('票') or '')).strip() or code,
-                      '裁决': r.get('留/剔') or '—',
+                      '裁决': r.get('留/剔') or r.get('留剔') or '—',
                       '建议权重%': r.get('建议权重%'),
                       '原因': r.get('原因') or ''}
     info = {'来源': '总审_%s.json#筛选清单' % d,
-            '并集数': sc.get('并集数'), '留数': sc.get('留数'), '剔数': sc.get('剔数'),
-            '留用合计权重%': sc.get('留用合计权重%'),
-            '筛选说明': str(sc.get('筛选说明') or '')[:200]}
+            '并集数': summary['并集数'], '留数': summary['留数'], '剔数': summary['剔数'],
+            '留用合计权重%': summary['留用合计权重%'],
+            '筛选说明': summary['筛选说明']}
     if not gate:
         info['状态'] = 'unavailable:总审无筛选清单'
         return None, info

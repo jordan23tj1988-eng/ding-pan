@@ -204,6 +204,10 @@ def r_mach_vote(d):
     agree_n = 0
     for rk, rl in ROUTE_LABEL:
         vt = votes.get(rk) or {}
+        if isinstance(vt, str):
+            # 弃权日(tally 写字符串"弃权")不应中断渲染：照实显示无票
+            cards += ('<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#5c6674">%s <br>%s</div>\n' % (rl, vt))
+            continue
         if not vt:
             cards += ('<div style="flex:1;min-width:100px;padding:8px;border:1px solid #2a2f3a;border-radius:8px;font-size:11.5px;color:#5c6674">%s <br>无票</div>\n' % rl)
             continue

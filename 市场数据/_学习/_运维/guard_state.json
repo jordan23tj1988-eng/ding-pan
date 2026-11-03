@@ -1,30 +1,35 @@
 {
- "checked_at": "2026-11-02T07:29:58",
- "day": "20261030",
+ "checked_at": "2026-11-04T07:00:24",
+ "day": "20261103",
  "issues": [
   {
+   "kind": "release_missing",
+   "day": "20261103",
+   "detail": "20261103 无已发布 release"
+  },
+  {
    "kind": "cron_failures",
-   "day": "20261030",
+   "day": "20261103",
    "detail": "ifind-keepalive 最近连续失败 7 次"
   },
   {
    "kind": "assignments_overdue",
-   "day": "20261030",
+   "day": "20261103",
    "detail": "总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json"
   }
  ],
  "disk": {
   "total_gb": 1000.2,
-  "used_pct": 36.7,
-  "free_gb": 633.0
+  "used_pct": 37.0,
+  "free_gb": 629.9
  },
  "staging": {
   "exists": true,
-  "count": 1,
-  "gb": 0.08,
+  "count": 2,
+  "gb": 0.09,
   "unit": "GiB",
   "size_is_lower_bound": true,
-  "oldest_days": 21.5
+  "oldest_days": 23.5
  },
  "cron_failures": [
   {
@@ -40,7 +45,7 @@
  },
  "alerts": [
   {
-   "key": "cron_failures|20261030|ifind-keepalive 最近连续失败 7 次",
+   "key": "release_missing|20261103|20261103 无已发布 release",
    "sent": false,
    "delivery": {
     "ok": false,
@@ -49,7 +54,16 @@
    }
   },
   {
-   "key": "assignments_overdue|20261030|总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json",
+   "key": "cron_failures|20261103|ifind-keepalive 最近连续失败 7 次",
+   "sent": false,
+   "delivery": {
+    "ok": false,
+    "rc": 1,
+    "out": "hermes send: Weixin send failed: iLink sendmessage session not ready: ret=-2 errcode=None errmsg=prepare failed — the user must send the bot a message first (or re-pair)"
+   }
+  },
+  {
+   "key": "assignments_overdue|20261103|总审指派逾期(>2天) 103 项，看板见 _学习/_任务看板/最新.json",
    "sent": false,
    "delivery": {
     "ok": false,

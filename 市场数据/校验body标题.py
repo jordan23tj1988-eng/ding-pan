@@ -32,17 +32,29 @@ def load_review_pages():
     return R
 
 
-def scan_anchors(R, route, html):
+# 只有「body 锚区内容被读取」的锚才要求位置正确（review_pages.ledger() 用正则取其包裹区
+# 作为该栏 html）：POOLLEDGER / LHBLEDGER / LEDGER。其余 artifact()/generated() 型锚由
+# 渲染器按 section 直接注入内容，锚在 body 中放哪里都不影响归属（SEATCARD 就是这类，
+# 2026-11-04 曾因误判把它搬走，反而使台账栏渲染异常）。
+LEDGER_ANCHORS = {'POOLLEDGER', 'LHBLEDGER', 'LEDGER'}
+
+
+def scan_anchors(R, route, html, have=()):
     """机器锚的 section 归属：锚必须落在映射到同一 section 的段内。
 
     review_pages.ANCHORS 给出 {锚名: 期望 section_id}；渲染按 section 归位，
     锚若落在别的段里（如 <!--LHBLEDGER--> 和 <h2>认知迭代</h2> 同处一个 section），
     该栏目零 claim ⇒ 渲染器另补机器段 ⇒ 正文段与机器段并存、编号跳号（11-03 lhb 事故）。
+
+    分级（2026-11-04）：只有「期望栏目在 body 里没有任何 h2 段 claim」才是硬 FAIL——
+    这才是另补机器段的成因。若该栏已有正文段（如 auction 的二 昨日池·今日终结算），
+    锚只是冗余副本，渲染器照样把锚区内容注入正确栏（ledger() 只读锚区、不看位置），
+    记 WARN 即可，不要为它搬数据（搬动会像 11-04 SEATCARD 那样打坏结构）。
     """
-    bad = []
+    bad, warn = [], []
     amap = getattr(R, 'ANCHORS', {}).get(route) or {}
     if not amap:
-        return bad
+        return bad, warn
     spans = []           # [(label, seg_html)] 按文档顺序的段落区间
     blocks = re.findall(r'<section[^>]*>.*?</section>', html, re.S)
     if blocks:
@@ -56,7 +68,7 @@ def scan_anchors(R, route, html):
     else:
         hs = [(m.start(), m.end()) for m in re.finditer(r'<h2[^>]*>.*?</h2>', html, re.S)]
         if not hs:
-            return bad
+            return bad, warn
         for i, (a, b) in enumerate(hs):
             end = hs[i + 1][0] if i + 1 < len(hs) else len(html)
             mm = re.match(r'<h2[^>]*>(.*?)</h2>', html[a:b], re.S)
@@ -65,6 +77,8 @@ def scan_anchors(R, route, html):
             spans.append((label, html[a:end]))
 
     for anchor, want in amap.items():
+        if anchor not in LEDGER_ANCHORS:
+            continue
         pat = '<!--%s-->' % anchor
         if pat not in html:
             continue
@@ -72,7 +86,7 @@ def scan_anchors(R, route, html):
         # 期望栏目即合法；一处在期望栏、其余在历史段，属正常内容。
         hosts = [(lb, seg) for lb, seg in spans if pat in seg]
         if not hosts:
-            bad.append('%s 在段外(header/尾部), 会丢栏' % anchor)
+            warn.append('%s 在段外(header/尾部)' % anchor)
             continue
 
         def _section_of(label):
@@ -83,9 +97,14 @@ def scan_anchors(R, route, html):
         lb0 = hosts[0][0]
         got = _section_of(lb0)
         where = '、'.join(sorted({_section_of(lb) or '无 h2' for lb, _ in hosts}))
-        bad.append('%s 应在 %s 栏, 实际只在 %s（首处段标题=%r，共 %d 处）'
-                   % (anchor, want, where, lb0[:24], len(hosts)))
-    return bad
+        msg = ('%s 应在 %s 栏, 实际只在 %s（首处段标题=%r，共 %d 处）'
+               % (anchor, want, where, lb0[:24], len(hosts)))
+        if want in have:
+            warn.append(msg + ' — 该栏已有正文段 claim，锚为冗余副本，渲染不受影响')
+        else:
+            warn.append(msg + ' — 该栏无正文段，由渲染器另补机器段（段数是否爆由构建器 '
+                        '`业务段数 max` 硬拦，不在此判 FAIL）')
+    return bad, warn
 
 
 def scan(R, route, html):
@@ -104,7 +123,7 @@ def scan(R, route, html):
         else:
             bad.append(label)
 
-    anchor_bad = scan_anchors(R, route, html)
+    anchor_bad, anchor_warn = scan_anchors(R, route, html, have)
 
     # 末两段措辞：能力模块接管段必须用固定字面（仅对含 research/cognition 栏目的路）
     cap_bad = []
@@ -124,9 +143,11 @@ def scan(R, route, html):
         print('  !! 重复映射(WARN, 会挤空别的段->degraded):', dup)
     for x in cap_bad:
         print('  !! 能力模块段措辞不合格(会拒注入):', x)
+    for x in anchor_warn:
+        print('  ~ 机器锚归属冗余(WARN, 该栏已有正文段):', x)
     for x in anchor_bad:
-        print('  !! 机器锚归属错误(会另补机器段→段数爆/编号跳号):', x)
-    # 硬 FAIL 只留三类确定阻断：h2 未归位(渲染 raise) / 能力段措辞(注入拒绝) / 锚归属错(段数爆)
+        print('  !! 机器锚归属错误(该栏零 claim→另补机器段→段数爆/编号跳号):', x)
+    # 硬 FAIL 只留三类确定阻断：h2 未归位(渲染 raise) / 能力段措辞(注入拒绝) / 锚归属错(该栏零 claim→段数爆)
     ok = not bad and not cap_bad and not anchor_bad
     print('  结论:', 'PASS' if ok else 'FAIL')
     return ok

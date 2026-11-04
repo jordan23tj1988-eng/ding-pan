@@ -1,0 +1,53 @@
+route=index 无 body（judgment 与 master_body_20261104.html 均缺）
+route=cycle 无 body（judgment 与 cycle_body_20261104.html 均缺）
+route=auction 字节=22746
+  h2='一 当日竞价选股池 · 10 只池票的结构、分与今日竞价层'              -> pool
+  h2='二 昨日池终结算 · 13 只的 T+1 兑现、闸门对账与我自己的错'         -> settlement
+  h2='三 温度与封板质量 · 中40~65 档开局，为什么它不等于进攻许可'         -> temperature
+  h2='四 胜率分桶与闸门 · 明晨只留一张条件单，一张就够'                 -> winrate
+  h2='五 自主深挖 · 薄封族的正期望，是票的属性还是广度的函数'              -> research
+  h2='六 我的认知迭代'                                   -> cognition
+  必需: ['pool', 'settlement', 'temperature', 'winrate', 'research', 'cognition']
+  覆盖: ['cognition', 'pool', 'research', 'settlement', 'temperature', 'winrate']
+  结论: PASS
+route=lhb 字节=14501
+  h2='一 席位综合 · 当日榜全景'                             -> seats
+  h2='二 资金温度 · 谁在场、谁撤退'                           -> temperature
+  h2='三 台账 · 承接、结算与在持'                            -> ledger
+  h2='四 分档 · 荐票与剔除'                               -> tiers
+  h2='五 自主深挖 · 真实率必须分层：全场 −21.11% 是污染，涨停层 +15.5% 才是席位真相' -> research
+  h2='六 我的认知迭代'                                   -> cognition
+  必需: ['seats', 'temperature', 'ledger', 'tiers', 'research', 'cognition']
+  覆盖: ['cognition', 'ledger', 'research', 'seats', 'temperature', 'tiers']
+  结论: PASS
+route=theme 字节=16730
+  h2='一 荐票卡 · 题材综合判断'                             -> recommendations
+  h2='二 三级判定 · 龙头识别'                              -> matrix
+  h2='三 主流生命周期 · 逐线判定'                            -> lifecycle
+  h2='四 自主深挖 · 承接 MA-20261103-01'                 -> research
+  h2='五 我的认知迭代'                                   -> cognition
+  必需: ['recommendations', 'matrix', 'lifecycle', 'research', 'cognition']
+  覆盖: ['cognition', 'lifecycle', 'matrix', 'recommendations', 'research']
+  结论: PASS
+route=logic 字节=19402
+  h2='一 产业逻辑主线 · 硬度判定'                            -> hardness
+  h2='二 链条纵深与位置'                                  -> chains
+  h2='三 中报预增双源交叉'                                 -> earnings
+  h2='四 风险日历踩窗'                                   -> forward
+  h2='五 荐票 · 卡位兑现与空仓理由'                           -> recommendations
+  h2='六 自主深挖'                                     -> research
+  h2='七 我的认知迭代'                                   -> cognition
+  必需: ['recommendations', 'chains', 'hardness', 'forward', 'earnings', 'research', 'cognition']
+  覆盖: ['chains', 'cognition', 'earnings', 'forward', 'hardness', 'recommendations', 'research']
+  结论: PASS
+route=limitup 字节=18856
+  h2='一 今日涨停全景 · 封板质量库读数、全池执行期望与荐票序列'             -> recommendations
+  h2='二 市场温度 · 涨停生态'                              -> temperature
+  h2='三 归位台账'                                     -> ledger
+  h2='四 涨停质量库 · 连板结构与质量训练'                        -> training
+  h2='五 自主深挖 · 承接 MA-20261103-02'                 -> research
+  h2='六 我的认知迭代'                                   -> cognition
+  必需: ['recommendations', 'temperature', 'ledger', 'training', 'research', 'cognition']
+  覆盖: ['cognition', 'ledger', 'recommendations', 'research', 'temperature', 'training']
+  结论: PASS
+批量结论: FAIL

@@ -804,12 +804,8 @@ def render_page(w, ts_lbl, trig):
                 '<div class="mut" style="font-size:11px;padding:2px 0 6px">起算08-13·现金100万·防守总仓≤30%%·单票≤6%%·闸门内承接=开盘价+滑点0.10%%</div>') % txn_html
 
     pulse = w.get("pulse", {})
-    pl = {"fresh_sec": None, "last_tick": ("08-13 %s 腾讯+THS" % ts_lbl) if ts_lbl else "08-12收盘定格",
-          "quota": {"实时行情": {"used": 0, "cap": 100}, "日内快照": {"used": 0, "cap": 50},
-                    "高频序列": {"used": 0, "cap": 20}}}
+    pl = {"fresh_sec": None, "last_tick": ("08-13 %s 腾讯+THS" % ts_lbl) if ts_lbl else "08-12收盘定格"}
     pu = gen.pulse_html(pulse, pl)
-    pu = pu.replace('iFind配额水位</div>',
-                    'iFind配额水位</div><div class="mut" style="font-size:11px;padding:0 0 4px">8/13未调用(盘中管道停摆)·腾讯+THS兜底</div>')
 
     acct_disp = {"nav": 1.0, "week_pct": 0.0, "bench_week_pct": 0.0, "curve": [],
                  "pos_pct": 0.0, "cash_pct": 100.0, "n_pos": 0}

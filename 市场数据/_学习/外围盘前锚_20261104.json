@@ -1,0 +1,19 @@
+{
+ "日期": "20261104",
+ "状态": "缺",
+ "原因": "iFinD THS_iFinDLogin 返回 rc=-2（登录被拒；自 2026-10-13 起持续，为连续第 13 个交易日同一现象：20260922/20260924/20261014/20261103/20261104）。本次核查：SuperCommand.exe 不在岗（tasklist 仅 iFinDHelper.exe），手动拉起 SuperCommand 后进程仍未驻留（tasklist 复查无 SuperCommand），8602 无监听；THS_iFinDLogin 连试 2 次恒 rc=-2。",
+ "未取到": [
+  "HSI.HK",
+  "USDCNH.FX",
+  "NDX.GI"
+ ],
+ "已尝试": [
+  "THS_iFinDLogin x2 → rc=-2",
+  "启动 D:\\THSDataInterface_Windows\\SuperCommand.exe → 进程未驻留",
+  "netstat 8602 → 无监听",
+  "★竞价全市场快照.py 内置 iFinD 兜底同样失败：THS_RealtimeQuotes 分批 500 全部 3000/3500/4000/4500/5000/5500 段 errorcode!=0 → 'iFinD无数据'（该脚本最终落到 sina_spot 末位源）"
+ ],
+ "口径": "只尝试 iFinD RQ/THS_HQ（设计稿 8.5）；不绕第三方源、不给外围驱动 gap context。今日外围方向与离岸人民币方向 = null。",
+ "待办": "账号/授权侧问题需用户处理（GUI 登录校验凭据或确认会话互斥）；已连续 13 个交易日缺，属结构性欠账而非今日偶发",
+ "影响": "早盘简报『外围锚』节记缺；今日 gap 判断不含隔夜外围/汇率输入，全部依据本币内部结构"
+}

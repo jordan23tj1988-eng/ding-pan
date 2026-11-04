@@ -8,7 +8,7 @@
 职责:
   1) 09:15-09:25 竞价段: 观察池逐票竞价轨迹 → 盘中/{d}/auction_traj.jsonl
   2) 09:30-15:00 连续段: 观察池实时 tick(每60s) → 盘中/{d}/realtime_ticks.jsonl
-  3) 数据源优先级: iFinD THS_RealtimeQuotes 批量(主) → 腾讯 qt.gtimg.cn 批量(降级)
+  3) 数据源: 腾讯 qt.gtimg.cn 批量(唯一实时源; 2026-11-04 决议 iFinD 全线剔除; 腾讯已返 bid1/ask1/量额)
      东财 82.push2 clist 因风控动态封禁(2026-08-13 实测)不在链内。
 
 观察池: 昨日涨停池(数据/每日/{prev}/zt_pool.csv 或 _学习/涨停复盘/{prev}/limitup.json)
@@ -25,12 +25,9 @@ sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 BASE = r"D:\股票数据"
 MDIR = os.path.join(BASE, "市场数据")
 POOL_CANDIDATES = []          # 启动时填充
-IFIND = None                  # iFinDPy 句柄(登录后)
 SELFTEST = "--selftest" in sys.argv
 POOL_INFO = {}                # 观察池来源/日期/是否滞后(供 tick 落档审计)
 ALARM_PATH = None             # main() 里设为 盘中/{d}/pipeline_alarm.jsonl
-_IFIND_FAILS = 0              # iFinD 实时连续失败计数(熔断用)
-_IFIND_DOWN_UNTIL = 0.0       # iFinD 熔断截止时刻(time.time())
 
 
 def _alarm(kind, detail):
@@ -141,54 +138,6 @@ def ths_code(code):
     return code + ".SZ"
 
 
-def ifind_login():
-    global IFIND
-    try:
-        import iFinDPy
-        auth = json.load(open(os.path.join(BASE, "_ifind_auth.json"), encoding="utf-8"))
-        rc = iFinDPy.THS_iFinDLogin(auth["account"], auth["password"])
-        IFIND = iFinDPy if rc == 0 else None
-        log("iFinD login rc=%s" % rc)
-        return rc == 0
-    except Exception as e:
-        log("iFinD login 异常: %s" % e)
-        IFIND = None
-        return False
-
-
-def fetch_ifind(codes):
-    """iFinD 批量实时: 返回 {thscode: {latest, pct, amount, volume, bid1, ask1}}"""
-    if IFIND is None:
-        return None
-    try:
-        code_str = ",".join(ths_code(c) for c, _ in codes)
-        r = IFIND.THS_RealtimeQuotes(code_str,
-            "latest;changeRatio;amount;volume;bid1;ask1;open;high;low;preClose")
-        if not isinstance(r, dict) or r.get("errorcode") != 0:
-            log("iFinD 实时 errorcode=%s" % (r.get("errorcode") if isinstance(r, dict) else "?"))
-            return None
-        out = {}
-        for t in r.get("tables") or []:
-            code = t.get("thscode")          # 外层标量
-            nt = t.get("table")              # 嵌套 OrderedDict, 每字段=list
-            if not code or not isinstance(nt, dict):
-                continue
-            row = {}
-            for k in ("latest", "changeRatio", "amount", "volume",
-                      "bid1", "ask1", "open", "high", "low", "preClose"):
-                v = nt.get(k)
-                if isinstance(v, list) and v:
-                    row[k] = v[-1]
-                else:
-                    row[k] = None
-            row["pct"] = row.get("changeRatio")   # 与腾讯 fetch 键名统一
-            out[code] = row
-        return out or None
-    except Exception as e:
-        log("iFinD 实时异常: %s" % e)
-        return None
-
-
 def fetch_tencent(codes):
     """腾讯批量: q=sh600519,sz000001,... 返回 {code6: {...}}
 
@@ -238,22 +187,10 @@ def fetch_tencent(codes):
 
 
 def fetch_batch(codes):
-    """源优先级: iFinD → 腾讯; iFinD 连续失败 3 次熔断 10 分钟, 期间主源切腾讯(不再每轮白等)。
+    """唯一实时源: 腾讯 qt.gtimg.cn 批量(2026-11-04 iFinD 剔除后无主备切换)。
 
-    ★20260911 新增熔断: 实测 iFinD 实时整段返 -1010(登录态失效)时, 原实现每轮先白等一次
-      iFinD, 再走腾讯; 熔断后 tick 直接由腾讯产出, 保证盘中证据不断档。
+    腾讯一次 URL 约 60-80 只, 上游观察池通常 <60 只; 无数据即返回 None 由上层 fail_streak 报警。
     """
-    global _IFIND_FAILS, _IFIND_DOWN_UNTIL
-    now = time.time()
-    if IFIND is not None and now >= _IFIND_DOWN_UNTIL:
-        d = fetch_ifind(codes)
-        if d:
-            _IFIND_FAILS = 0
-            return ("iFinD", d)
-        _IFIND_FAILS += 1
-        if _IFIND_FAILS >= 3:
-            _IFIND_DOWN_UNTIL = now + 600
-            _alarm("ifind_breaker", "iFinD 实时连续 %d 次无数据 → 熔断10分钟, 主源暂切腾讯" % _IFIND_FAILS)
     d = fetch_tencent(codes)
     if d:
         return ("腾讯", d)
@@ -365,8 +302,6 @@ def main():
     codes = load_pool(d)
     log("观察池落档: kind=%s date=%s stale=%s n=%d" % (
         POOL_INFO.get("kind"), POOL_INFO.get("date"), POOL_INFO.get("stale"), len(codes)))
-    if not ifind_login():
-        log("iFinD 不可用, 仅腾讯降级(竞价轨迹可用但无 Level1 盘口)")
     now = datetime.datetime.now()
     if now.strftime("%H:%M") <= "09:26" or SELFTEST:
         # 启动器固定在 09:14 拉起；竞价函数内部会等待到 09:15。

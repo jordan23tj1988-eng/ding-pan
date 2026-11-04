@@ -1,0 +1,713 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>概览</title><meta name="review-date" content="20261103"><meta name="review-schema-version" content="1"><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+
+/* ── v4.1 页面阅读路径与响应式增强 ── */
+:root{--route-accent:var(--accent)}
+body[data-route="cycle"]{--route-accent:#7b8cff}
+body[data-route="auction"]{--route-accent:#e8a33d}
+body[data-route="lhb"]{--route-accent:#b18aff}
+body[data-route="theme"]{--route-accent:#2fd3c5}
+body[data-route="logic"]{--route-accent:#63b3ff}
+body[data-route="limitup"]{--route-accent:#ff7b72}
+
+/* 内容宽度按信息密度自适应：宽表不再挤成一团，概览 bento 仍保持黄金版宽度。 */
+.wrap:has(>section){max-width:1180px}
+.wrap:has(.rowA){max-width:1440px}
+.wrap>section{scroll-margin-top:92px;margin-top:30px}
+.wrap>section>h2{margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid var(--line2);position:relative}
+.wrap>section>h2::before{background:var(--route-accent,var(--accent));box-shadow:0 0 14px color-mix(in srgb,var(--route-accent,var(--accent)) 35%,transparent)}
+.wrap>section:first-of-type{margin-top:24px}
+
+/* 页面阅读地图：显示板块职责，不复制正文事实。 */
+.golden-legacy-map{position:sticky;top:78px;z-index:6;display:flex;align-items:center;gap:5px;overflow-x:auto;white-space:nowrap;margin:0 0 18px;padding:6px;background:rgba(18,20,28,.90);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(12px);scrollbar-width:none}
+.golden-legacy-map::-webkit-scrollbar{display:none}
+.golden-legacy-map-label{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:0 8px 0 5px;flex:0 0 auto}
+.golden-legacy-map a{color:var(--sub);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:.16s;flex:0 0 auto}
+.golden-legacy-map a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.golden-legacy-map a.active{color:var(--route-accent,var(--accent));background:color-mix(in srgb,var(--route-accent,var(--accent)) 13%,transparent);box-shadow:inset 0 -2px 0 var(--route-accent,var(--accent));font-weight:700}
+.golden-legacy-map a:focus-visible{outline:2px solid var(--route-accent,var(--accent));outline-offset:1px}
+
+/* 卡片层级：标题、来源提示、正文和长表分出视觉层。 */
+.card,.obs,.kpi,details.chain{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.card h3,.card h4{line-height:1.45}
+.card>h3:first-child,.card>h4:first-child{color:var(--ink)}
+.card .hint{display:inline-block;line-height:1.45}
+.card table{margin-top:10px}
+table tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+table tr:hover td{background:color-mix(in srgb,var(--route-accent,var(--accent)) 7%,transparent)}
+th{white-space:nowrap}
+pre{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:rgba(0,0,0,.16);font-family:var(--mono);font-size:11px;line-height:1.55}
+
+/* 触屏和窄屏：不缩小关键数字，改为卡内横向浏览，避免整页横溢出。 */
+@media(max-width:640px){
+    .navbar{display:block;top:6px;margin:6px 8px 0;max-width:calc(100% - 16px);padding:8px 10px;border-radius:14px}
+  .navbar .brand{font-size:13px;margin-bottom:6px}.navbar .logo{width:28px;height:28px;border-radius:8px}
+  .navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}
+  .navbar .pills::-webkit-scrollbar{display:none}
+  .navbar .pills a{font-size:12px;padding:6px 10px}
+  .navbar .upd{margin-left:auto;font-size:10px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap{padding:18px 10px 48px}.wrap:has(>section),.wrap:has(.rowA){max-width:none}
+  .golden-legacy-map{top:65px;margin-bottom:14px}
+  .wrap>section{margin-top:24px}.wrap>section>h2{font-size:14.5px;padding-bottom:8px}
+  .card,.obs{padding-left:14px;padding-right:14px;border-radius:11px}
+  .card{overflow-x:auto}.card>h3,.card>h4,.card>p,.card>ul,.card>ol{min-width:0}
+  table{min-width:620px;font-size:12px}th,td{padding:7px 8px}
+  .routes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:19px 18px}.hero h1{font-size:21px}
+  .kpi .big{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.golden-legacy-map a,.card,.obs,.kpi{transition:none!important}}
+
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}}
+
+/* ── v4.3 概览可读层 ── 只收敛版式与信息层级，不改判断内容 */
+.reading-spine a.rs-step{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-weight:600;white-space:nowrap}
+.reading-spine a.rs-step:hover{border-color:var(--line2);color:var(--ink)}
+.reading-spine a.rs-step b{color:var(--accent);font-family:var(--mono);font-size:10.5px;margin-right:6px;font-weight:800}
+.cgrp{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 20px 6px;margin-top:13px}
+.cgrp-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px dashed var(--line2)}
+.cgrp-head .cgrp-note{color:var(--dim);font-size:11.3px;font-family:var(--mono)}
+.cgrp-body{display:flex;flex-direction:column}
+.citem{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:2px 12px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:0;padding-bottom:2px}
+.citem>p{margin:0;line-height:1.62}
+.citem .citem-tag{color:var(--dim);font-size:11.1px;margin:2px 0 0;font-family:var(--mono);white-space:nowrap;text-align:right}
+.claim-proof{grid-column:2;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.claim-proof .proof-label{color:var(--dim);font-size:10.6px;font-weight:700}
+.claim-proof a{color:var(--sub);font-size:10.7px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--mono)}
+.claim-proof a:hover{border-color:var(--accent-dim);color:var(--ink)}
+.audit-fold{margin-top:13px}
+.audit-fold>summary{cursor:pointer;color:var(--sub);font-size:12.6px;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+.audit-fold>summary::-webkit-details-marker{display:none}
+.audit-fold>summary::before{content:'▸';color:var(--accent);font-family:var(--mono);font-size:12px}
+.audit-fold[open]>summary::before{content:'▾'}
+.audit-fold .inner{padding:2px 0 12px}
+.audit-fold .fold-note{color:var(--dim);font-size:11.6px;margin:0 0 10px}
+.audit-fold .inner-limit{margin:0 0 12px}
+.audit-fold .inner-limit b{color:var(--sub);font-size:12.2px}
+.audit-fold .inner-limit ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:11.8px}
+.golden-legacy-fold{margin-top:13px}
+.kpi .sub2{font-family:var(--mono);font-size:11px}
+.kpi .gauge .gl{font-size:10.4px;color:var(--dim)}
+.mx{width:100%;border-collapse:collapse;margin:2px 0 4px;table-layout:fixed}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mx thead th{color:var(--dim);font-size:11.1px;font-weight:700;font-family:var(--mono);white-space:nowrap}
+.mx tbody th{color:var(--sub);font-weight:600;font-size:11.6px;font-family:var(--mono);white-space:nowrap;width:66px}
+.mx td{font-size:12.2px;line-height:1.62}
+.mx td a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.mx td a:hover{border-bottom-color:var(--accent-dim)}
+.mx .mx-empty{color:var(--dim)}
+.mx tr:last-child th,.mx tr:last-child td{border-bottom:0}
+.chip2.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+section>h2{margin-top:32px}
+.chip2.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.chip2.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+
+/* ── v4.4 展示层去噪 / 纯内容层 ──
+   用户拍板(2026-09-22)：角色徽章(结论/观察/证据/反证/条件/认知/限制)、
+   来源标签、"证据回链/来源"字、旧版原文碎片卡 —— 这些只增加噪声，
+   对决策没有信息增量，全部退出展示层。
+   证据不删除:claim 锚点、#evidence-* 回链、模型 JSON、审计 JSON 全量保留。
+   概览页(citem 版式)同样的噪声一并在本层收敛。 */
+h1.claim-hero{font-size:inherit;font-family:inherit;font-weight:inherit;line-height:inherit;margin:0;display:inline}
+.claim-head:not(.cgrp-head),.citem .citem-tag{display:none}
+.claim-proof .proof-label{display:none}
+.claim-proof{margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05)}
+.claim-proof a{border:0;padding:0;background:none;font-size:10.6px}
+
+/* 无痕原文库：给未上展示层的 claim 保留锚点与原文，供门禁复核，读者不可见 */
+.claim-anchor,.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}
+.legend-strip{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11.4px;padding:8px 0 2px;border-top:1px solid var(--line)}
+.legend-strip b{color:var(--sub);font-weight:800}
+.legend-strip i{font-style:normal;color:var(--dim)}
+</style><style id="overview-evolution-sync">.evolution{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}.evo-stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}.evo-stat{min-width:92px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.025)}.evo-stat b{display:block;font-size:20px;color:var(--accent)}.evo-stat small{color:var(--mut)}.evo-list{display:grid;gap:0;margin-top:10px}.evo-row{display:grid;grid-template-columns:72px minmax(0,1fr) 250px;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);line-height:1.55}.evo-row b{color:var(--accent)}.evo-row span{font-weight:700}.evo-row small{color:var(--mut)}.evo-empty{padding:14px 0;color:var(--mut);font-size:12px}.evo-row{grid-template-columns:1fr}.evo-row small{grid-column:1}</style><style id="display-noise-v44">.claim-head:not(.cgrp-head),.citem .citem-tag,.claim-proof .proof-label{display:none}.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}</style></head><body data-route="index" data-d="20261103" data-schema-version="1" data-template-version="p1.3"><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="on" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd">更新 20261103</span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp">量能 1.70万亿 · 涨停 48 跌停 17 · 炸板率 41.5% · 最高 4 板 · 温度 20.3(昨54.9) · 一进二 10.5% · 二进三 16.7% · 主线候选 缩圈线传媒/宽度线电力设备 · 总裁决 C74 · 名义 4.0%</div><div class="grp">量能 1.70万亿 · 涨停 48 跌停 17 · 炸板率 41.5% · 最高 4 板 · 温度 20.3(昨54.9) · 一进二 10.5% · 二进三 16.7% · 主线候选 缩圈线传媒/宽度线电力设备 · 总裁决 C74 · 名义 4.0%</div></div></div><div class="rowA"><div class="hero"><div class="kick">概览 · 我当前的判断 · 截至 2026-11-03 收盘</div><h1 aria-label="温度20.3（昨54.9）退回冰点、涨停48（昨125）、炸板率41.5%创309日最高、跌停17只，昨日启动一日游被打回；五路全C、总裁决C档74分，明日名义4.0%只做结构不做方向">温度20.3（昨54.9）退回冰点、涨停48（昨125）、炸板率41.5%创309日最高、跌停17只，<em>昨日启动一日游被打回；五路全C、总裁决C档74分，明日名义4.0%只做结构不做方向</em></h1><p>此刻我对市场的判断。明日观察点在第一屏；五路荐票按 ①竞价→②龙虎榜→③主线题材→④产业逻辑→⑤涨停复盘 深读。</p><div class="stance"><span class="pill warn">情绪档 · <b class="s-weak">冰点 · 温度20.3</b></span><span class="pill">周期 · <b>量能1.7万亿 · 弱修档</b></span><span class="pill warn">攻防 · <b>冰点二次探底未确认、五路全 C，明日只做结构不做方向：名义 4.0%（条件单为主，期望成交约 2.0%），单票≤1.5%，600261 类连续一字高开一律弃单。</b></span><span class="pill hot"><b class="s-ok">三窗 · 条件观察</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">冰点 &lt;25</span></div><span class="lab">情绪温度 · 250日分位</span><span class="big">20.3</span><div class="gauge"><div class="gtrack"><i class="gmark" style="left:20.3%"></i></div><div class="gl"><span>冰点</span><span>偏冷</span><span>中性</span><span>偏热</span><span>过热</span></div></div><span class="sub2">昨54.9→今20.3（-34.6） · 档位 中性→冰点</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">弱修档</span></div><span class="lab">两市量能</span><span class="big">1.7<small>万亿</small></span><svg class="spark" viewBox="0 0 180 44" aria-hidden="true"><polyline fill="none" stroke="#e8a33d" stroke-width="2" points="0.0,27.86 45.0,38.0 90.0,21.38 135.0,6.0 180.0,17.31"/></svg><span class="sub2">1.67 → 1.78 → 1.70 回落（缩量分歧）</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">环比 -62%</span></div><span class="lab">涨停 / 跌停(剔ST退)</span><span class="big"><b class="up">48</b><span class="mut">/</span><b class="dn">17</b></span><span class="sub2">昨125/8→今48/17 · 炸板34只·炸板率41.5%（昨18.3%）</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">环比 -6.2pp</span></div><span class="lab">1进2率（昨114只首板）</span><span class="big">10.5<small>%</small></span><span class="sub2">昨16.7%→今10.5% · 2进3率16.7% · 高度晋级27.3%</span></div></div><!--PAPERTRADE-->
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 总·情绪总裁决</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-1.64%</b></span> <span>本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-0.04%</b></span> <span>基准本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-3.24%</b></span> <span>平仓胜率 <b style="font-family:monospace">27.8%</b>(n=18)</span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="62.4" x2="620" y2="62.4" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,68.2 31.5,62.6 43.1,64.0 54.6,67.1 66.2,32.0 77.7,31.2 89.2,31.2 100.8,35.6 112.3,40.9 123.8,38.7 135.4,43.0 146.9,50.7 158.5,53.4 170.0,57.1 181.5,58.7 193.1,56.9 204.6,52.7 216.2,56.0 227.7,55.0 239.2,56.6 250.8,59.8 262.3,63.5 273.8,66.1 285.4,63.6 296.9,63.3 308.5,64.1 320.0,69.7 331.5,68.0 343.1,65.5 354.6,66.1 366.2,70.3 377.7,72.2 389.2,78.4 400.8,77.7 412.3,78.4 423.8,79.7 435.4,79.9 446.9,84.2 458.5,84.6 470.0,91.8 481.5,94.5 493.1,101.3 504.6,104.2 516.2,102.6 527.7,102.3 539.2,110.7 550.8,104.8 562.3,106.4 573.8,107.4 585.4,107.3 596.9,114.0 608.5,117.6 620.0,118.8" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,63.9 31.5,62.1 43.1,60.1 54.6,59.3 66.2,59.0 77.7,59.8 89.2,59.8 100.8,59.4 112.3,60.0 123.8,60.7 135.4,60.9 146.9,60.9 158.5,60.9 170.0,60.9 181.5,60.9 193.1,60.9 204.6,60.9 216.2,60.9 227.7,60.9 239.2,60.9 250.8,60.9 262.3,60.9 273.8,60.9 285.4,60.9 296.9,60.9 308.5,60.9 320.0,60.9 331.5,60.9 343.1,60.9 354.6,60.9 366.2,60.9 377.7,60.9 389.2,60.9 400.8,60.9 412.3,60.9 423.8,60.9 435.4,60.9 446.9,60.9 458.5,60.6 470.0,62.0 481.5,62.3 493.1,63.9 504.6,64.1 516.2,64.0 527.7,64.0 539.2,63.8 550.8,64.8 562.3,64.7 573.8,64.5 585.4,64.7 596.9,65.0 608.5,65.0 620.0,65.0" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="65.0" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20261103  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="60.0" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">0.9836</text></svg></div>
+<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · 【在持票逐票表态·3 只无漏票】master 状态.json（date=20261102、mtime 2026-11-02 21:16）在持 3 只：601188 龙江交通 4200 股 @3.47（1.5%）、002365 永安药业 1500 股 @12.61（2.0%）、001287 中电港 400 股 @20.25（1.0%）。①601188：**已于 20261103 开盘按前日计划平仓成交 3.30（相对成本 -4.90%）**——证据：_学习/总审_20261103.json#昨日战绩验收（『601188 按昨日计划开盘平仓 3.30』）、_学习/交易计划_lhb_20261103.json#sells[0]。故本条不重复下卖单（避免双记成本），仅登记『已平仓、无残余仓』；若账本显示仍在持，则 20261104 开盘市价清出。②002365：明日执2 到期，open 腿了结（见 sells[1]）。③001287：逾期执2，open 腿清出（见 sells[0]）。★三只持仓在 20261103 的合计浮亏/实亏：601188 -4.90%（已实现）、002365 -4.84%（浮）、001287 -4.00%（浮），nav 0.983958 的口径与 _学习/_模拟盘/master/净值.json 一致。
+【总仓与算术】buys 名义合计 3.5%（1.5+1.0+0.5+0.5），比总审名义 4.0%／上限 4.5% 低 1.0pp，差额 100% 来自 600261 由 1.5%→0.5%（依据见其理由②③），其余三票权重与总审一字不改。按各路自报可执行率折算期望实际成交：002652 1.5%×0.607＝0.91%、603906 1.0%×0.65≈0.65%、002292 0.5%×0.156＝0.08%、600261 0.5%×0.333＝0.17%，合计约 1.81%——即『名义 3.5%、实盘约 1.8%』，与总审『名义 4.0%、期望 2.0%』同量级。卖出两只释放约 3.0% 敞口，明日收盘预期仓位 ≈1.8%，现金 ≥95%。
+【纪律与反向线】单票≤1.5%、单日新增≤2 笔（今日 4 笔全是条件单，实际成交期望 1.8 笔）、不追一字、不追 gap≥+3、不参与 5 板以上接力、任何单笔 -3% 机械离场。反向线照抄总审#明日验证点（不自创）：20261104 若 涨停<40 且 二板加≤8 → 冰点深化，全部未成交条件单作废、已成交按 -3% 离场、明日不开新单；若 涨停≥70 且 炸板率≤0.30 → 修复确认，档位 C→B、总仓上限升至 7%。
+【与推演的一致性声明】本计划与 _学习/推演_20261103.json 的 10 条预测同源：押『冰点不深化（温度≥25）、宽度带 45~90、炸板率≤0.40、跌停≤25、一进二率≥0.18、二板加≤16、最高连板≤4、成交额≥15000、600261 断板、002652 收红』。其中最反共识的一条是 600261 断板（8.3% 封板率格），它直接决定了我把该票砍到 0.5%，也决定了我不给 theme 的 5% 任何转正空间——若明日它封 5 板（约 23% 概率），本计划在 600261 上认 1 负。
+【口径提示】本计划为总裁决路（master），标的池＝五路荐票 ∩ 总审筛选清单（留档 4 只），未事后增删；持仓处置只对 master 自己的状态文件负责，不引用其他路的账本余额。</div>
+</div><div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">当前持仓(卖点自主:每晚表态卖或持有)</div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>代码/名称</td><td>股数</td><td>买价</td><td>浮盈</td><td>持有天数</td><td>今晚指令</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">002365 永安药业</td><td style="font-family:monospace">1500</td><td style="font-family:monospace">12.61</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-4.89%</b></td><td style="font-family:monospace">2</td><td>继续持有</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">001287 中电港</td><td style="font-family:monospace">400</td><td style="font-family:monospace">20.25</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-4.05%</b></td><td style="font-family:monospace">2</td><td>继续持有</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">600299 安迪苏</td><td style="font-family:monospace">2300</td><td style="font-family:monospace">8.20</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+3.48%</b></td><td style="font-family:monospace">1</td><td>继续持有</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="white-space:nowrap">600259 中稀有色</td><td style="font-family:monospace">100</td><td style="font-family:monospace">60.20</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+3.19%</b></td><td style="font-family:monospace">1</td><td>继续持有</td></tr>
+</table>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20261103发出,明日固定价执行)</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px"><tr style="color:#8d93a8"><td>动作</td><td>代码/名称</td><td>仓位/腿</td><td>理由</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">002652 扬子新材</td><td style="font-family:monospace">1.5%</td><td style="color:#a8adbd">【第 1 顺位·limitup 自报 1.0% → 总审上调 1.5%，我维持 1.5%（单票上限）】来源：_学习/limitup判断_20261103.json#荐票、_学习/交易计划_limitup_20261103.json#buys[0]、_学习/总审_20261103.json#筛选清单[1]（裁定『1% 上调至 1.5%』）。①票级（源 20261103/zt_pool.csv 逐行）：4.17 元 +10.03%、首封 14:32:00 即末封（尾盘首板）、炸板 0 次、封单 0.1922 亿＝封/成交 5.2%、封/流通 0.90%、换手 18.25%、成交 3.6855 亿、流通 21.35 亿、装修建材。②格：冰点×尾盘首板×换手≥10 历史 n=30 执1 67.9%/+2.33%、执2 64.3%/+1.69%（上一级 冰点×尾盘首板 n=67 执1 54.8%/+1.03%）；闸门 [-3%,+1.5%] 下该格触发率 60.7%、gap 中位 -0.93%、gap>+3% 仅 7.1% ⇒ 可兑现期望 2.33%×0.607＝+1.41%，为今日四票最高。③我自己的独立结算证据（不与 limitup 互相背书）：首板 且 炸 0 且 首封≥14:00 且 换手≥10% 的次日收红 23/38＝60.5%（本地自算 _学习/_bars_cache，20260901~20261103），故我在推演第 10 条单押它收红——这是四票里唯一被我写入可证伪清单的票。④反向如实登记：属 limitup 点名的『羊字辈』12 只名单（若明日羊字辈翻红≤2 只则该名称标签归零）、封单比 0.90% 落偏弱桶（n 内 44.5%/-0.20%）、未开板 n=10306 39.4%/-0.69%、无龙虎榜席位证据。执行：gap 闸门 [-3.0%,+1.5%] 且非涨停价才买，越界弃单即 0 仓、不改买 601123 或任何替代票；当日不封板或炸板不回封即当日离场（执1），单笔 -3% 机械离场，不留第二夜。</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">603906 龙蟠科技</td><td style="font-family:monospace">1.0%</td><td style="color:#a8adbd">【第 2 顺位·logic 自报 1.5% → 总审下调 1.0%，我维持 1.0%】来源：_学习/logic判断_20261103.json#荐票、_学习/交易计划_logic_20261103.json#buys[0]、_学习/总审_20261103.json#筛选清单[2]（裁定『1.5% 下调至 1.0%』）。①票级（源 20261103/zt_pool.csv 逐行）：15.64 元 +9.99%、首封 09:47:13 即末封（早封）、炸 0 次、封单 0.7673 亿＝封/成交 21.2%、封/流通 0.87%、换手 4.23%、成交 3.6151 亿、流通 88.05 亿、电池。②业绩腿（公告日 2026-10-31≤20261103，非后视镜）：三季报营收 29.34 亿(+110.72%)、归母 5.06 亿（基期 -1.10 亿，实质扭亏）、毛利 18.1%；同环节池外共证 5/5 营收翻倍（湖南裕能 +147.6%、德方纳米 +195.2%、万润新能 +178.7%、丰元 +347.1%）。③未透支：r20 -9.6%、距 250 日高 -54.7%（电池链中位 -48.8%）。④权重为何低于三现上限 2%：所在桶『冰点×电池链首板』n=18/33.3%/-1.18% 为负格，logic 冰点档历史 -3.19%（五路最差，_学习/总审_20261103.json#环境加权依据），故只给单点观察性仓位；总审再降 0.5pp 的理由（宽度第一的电力设备/新能源 13 只但最高仅 2 板、晋级率 0.333、theme 已标『启动⚠宽度陷阱』）我认可并保留 1.0%。执行：gap 闸门 [-3%,+3%] 且非涨停价；越界弃单、不追不摊薄；单笔 -3% 机械离场；执2（买入后第 2 个交易日收盘）强制了结。</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">002292 奥飞娱乐</td><td style="font-family:monospace">0.5%</td><td style="color:#a8adbd">【第 3 顺位·auction 自报 0.5% 条件单，总审保留 0.5%，我维持】来源：_学习/auction判断_20261103.json#荐票、_学习/交易计划_auction_20261103.json#buys[0]、_学习/总审_20261103.json#筛选清单[3]（『留（条件单）』）。①票级（源 20261103/zt_pool.csv 逐行）：9.58 元 +9.99%、2 板、首封 09:30:09、末封 09:31:03（秒板）、炸 1 次、封单 1.2155 亿＝封/流通 1.25%、封/成交 22.5%、换手 5.55%、成交 5.3955 亿、流通 97.51 亿、文娱用品。②格（本笔唯一正格来源）：秒板|2板|gap≤-3 全窗 n=36 47.2%/+2.67%、冰点档内 n=17 52.9%/+3.46%（n<30 只作方向）；反面对照 -3~0 是全年唯一负低开带（池级 n=120 34.2%/-1.39%），故闸门只留深低开 [-10%,-3%]、不放开浅低开。③触发率 15.6%（秒板|2板 格 gap<-3 频率 n=128）⇒ 期望成交 0.08 只，**0 成交是首选结果、不是事故**，不递补、不改买。④反向登记：auction 冰点档历史 214 票 36.0%/-1.08%（等于基线、均收更差）、该格 P(明日 gap≥5)=36.7%、属『羊字辈』标签股、封单比 1.25% 落 0.5~1.5 档（n=736 -0.49%）。执行：仅 gap∈[-10%,-3] 成交，09:25 一次性判定、盘中不改单；开盘价距涨停<0.3pp 记『买不进』不得记 0 收益；-3% 机械离场。</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#ff5f56">买</td><td style="white-space:nowrap">600261 阳光照明</td><td style="font-family:monospace">0.5%</td><td style="color:#a8adbd">【第 4 顺位·theme 自报 5% → 总审砍至 1.5% → **我再降至 0.5%**，这是一次主动下调，依据如下】来源：_学习/theme判断_20261103.json#buys[0]、_学习/总审_20261103.json#筛选清单[0]（名义 1.5%、闸门 gap∈[-3%,+3] 且非涨停价）。①票级（源 20261103/zt_pool.csv 逐行）：4.95 元 +10.00%、4 板、首封 09:25:02（一字开）、末封 09:35:47、炸 5 次、封单 1.9859 亿＝封/成交 11.8%、封/流通 3.01%（较昨日 -64.7%）、换手 25.52%（昨 1.4%）、成交 16.85 亿、流通 66.09 亿、照明设备。②我为什么砍：我在推演第 8、10 条押『顶端断』——4 板×炸≥3×换手≥20 的次日封板仅 1/12＝8.3%（放宽到 4 板×炸≥3 为 3/19＝15.8%，本地自算 78 池日逐行），而 600261 正好落最差格；且 _学习/_bars_cache/600261.csv 显示 10-30、11-02 均 open=high=low=close、11-03 开 4.95＝+10%，已三连一字开，闸门 [-3,+3] 的可执行率仅 0.333。一个我自己押它不封板的票，不该拿 1.5%。③为什么不是 0：theme 冰点档历史 16 票 8/16＝50.0%、日等权 +0.86%（五路里与 lhb 并列最优，_学习/总审_20261103.json#环境加权依据），且它是全池唯一『4 板+×换手≥20×开 2 次以上』形态（limitup 自算 n=16 执1 73.3%/+3.62%，n<25 只作观察），留 0.5% 作最小可结算样本、用于结算『桶冲突』（正桶 4板+×冷<40 n=208 47.1% vs 负桶 4板+×封单≥2% n=319 30.7%/-1.47）。④与总审的差额留痕：总审 1.5% − 我 0.5% = 1.0pp，若明日 600261 封 5 板，则我记 1 负、并承认总审的桶选择正确。执行：gap 闸门 [-3%,+3] 且非涨停价，gap≥+3 或 09:25 一字封死一律弃单（弃单即 0 仓、不改买 002086 或 000995）；-3% 机械离场、不延持。</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">001287 中电港</td><td>开盘</td><td style="color:#a8adbd">【在持票 1/3·逾期未了结，明日开盘无条件清出】读 _学习/_模拟盘/master/状态.json（date=20261102、mtime 2026-11-02 21:16）：在持 001287 中电港 400 股 @20.25、权重 1.0%、plan_date 20261030、buy_date 20261102。①口径：本笔按『执1 开→收、执2 强制了结』口径，最迟 20261104 应已了结，现已是第 3 个持有日＝逾期，master 不留第三夜。②价格证据（_学习/_bars_cache/001287.csv）：20261102 买价 20.25；20261103 开 19.90（-1.73%）／高 20.11／低 19.39／收 19.44（-4.00%），相对成本 -4.00% 已破 master『任何单笔 -3% 机械离场』线。③依据判负：建仓理由为 auction 池内评分第 2（50.8）＋封单比 0.45%，而 auction 冰点档 214 票 36.0%/-1.08% 本就等于基线；该票今日不在涨停池（未封板）、无任何续持依据。执行：20261104 开盘价无条件卖出、不设价格条件；若引擎已按前日计划清出，本条为幂等空操作（重复卖单在账本层应被幂等吞掉，不得计两次成本）。</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td style="color:#3fcb86">卖</td><td style="white-space:nowrap">002365 永安药业</td><td>开盘</td><td style="color:#a8adbd">【在持票 2/3·执2 到期且已破 -3% 纪律线，明日开盘了结（比 logic 的『收盘腿』提前半天，理由见下）】读 _学习/_模拟盘/master/状态.json：在持 002365 永安药业 1500 股 @12.61、权重 2.0%、plan_date 20261030、buy_date 20261102。①价格：20261103 收 12.00，相对成本 12.61 为 -4.84%（相对昨收 12.42 为 -3.38%，当日执1 口径 -1.15%），已破 master『-3% 机械离场』线。②明日（20261104）本就是其执2 强制了结日（源 _学习/交易计划_logic_20261103.json#sells[0]，logic 定close 腿）。③我改为 open 腿的依据：-3% 纪律线已在 20261103 收盘触发而当日未执行，逾期一天后再等收盘＝用『执2 规则』给『已触发的止损』开后门；同一了结动作提前到开盘，方向与 logic 一致、只在时点上更保守（不赌盘中反抽）。④依据判负：建仓三现（牛磺酸卡位 70.75%、三季报 +348.81%、r20 -9.3%）皆未失效，但 logic 冰点档 11 票 4/11＝36.4%、均收 -3.19% 为五路最差，环境不支持等待。执行：20261104 开盘价卖出 1500 股、不留残余；若开盘价低于 11.98（今日低点 11.95 下沿）同样市价成交、不做限价等待。</td></tr>
+</table>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(5)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>601188 龙江交通</td><td style="font-family:monospace">20261030@3.47</td><td style="font-family:monospace">20261103@3.30</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-5.04%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>603533 掌阅科技</td><td style="font-family:monospace">20261029@28.33</td><td style="font-family:monospace">20261102@24.00</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-15.41%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>603037 凯众股份</td><td style="font-family:monospace">20261028@11.87</td><td style="font-family:monospace">20261102@10.89</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-8.39%</b></td><td>开·持3日·顺延1</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600785 新华百货</td><td style="font-family:monospace">20261028@13.06</td><td style="font-family:monospace">20261030@12.00</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-8.25%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>688386 泛亚微透</td><td style="font-family:monospace">20261027@47.00</td><td style="font-family:monospace">20261029@51.60</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+9.62%</b></td><td>开·持2日</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<section id="recommendations"><h2>一 明日核心观察点</h2><!--GOLDEN-INDEX:recommendations--><div id="component-CROSSPICK"><!--CROSSPICK--><div class="rowC"><div><div class="hint">★筛选口径: 总审筛选清单(唯一真源, 只让「留」进榜) → 五路候选去重 → 共振路数(被几路同时选中)优先 → 路内位置分 → 执行期望 → 取前5; 每行标注来源路与该路核心指标。环境: 温度20.3(冰点) · 涨停48·炸板34·跌停17 · 总裁决C档: 冰点二次探底未确认、五路全 C，明日只做结构不做方向：名义 4.0%（条件单为主，期望成交约</div><div class="obs"><div class="obs-head"><span class="obs-nm">阳光照明 <span class="mut">600261</span></span><span class="obs-pos tag">3路共振 · 商业航天/卫星</span></div><div class="obs-watch"><span class="obs-lab">身位</span>位置分9；①竞价 #8 竞价分39.8 一字·4板 · 首封09:25 ③题材 #1 荐票 孤高标·线内唯一高度龙（4板·一字开门→天量换手→早盘回封） · 身位：4天4板、线内唯一连板、封1.99亿(封比3.01%)、炸5次后09:35:47回封锁到收盘、换手25.5%(昨1.4%)=一字开门后 ⑤质量 #2 抓龙率21.5%·分5 主导: 开板次数:开2次+(+1.6); 换手率:≥20%(+0.8); 量比:爆量≥4(+0.2)</div><div class="obs-rec"><span class="obs-lab2">来源</span>①竞价、③题材、⑤质量；执行口径(各路历史桶, 非个股预言)：①竞价 高开0~5% +0.41%/57%(n=313) ⑤质量 执1 39.4%/-0.41% · 执2 45.8%/-0.07%</div><div class="obs-jj"><span class="jjtag">今日竞价池 2026-11-03</span>竞价分39.8 一字·4板 · 首封09:25 — <b class="s-mid">执行桶:高开0~5% +0.41%/57%(n=313)</b></div></div><div class="obs"><div class="obs-head"><span class="obs-nm">扬子新材 <span class="mut">002652</span></span><span class="obs-pos tag">1路共振 · —</span></div><div class="obs-watch"><span class="obs-lab">身位</span>位置分0；⑤质量 正式荐票 正式荐票1.0% 经总审采纳的正式荐票(交易计划#buys)</div><div class="obs-rec"><span class="obs-lab2">来源</span>⑤质量；执行口径(各路历史桶, 非个股预言)：— 该路无执行口径</div><div class="obs-jj"><span class="jjtag">今日竞价池 2026-11-03</span>—（该票当日不在竞价路候选内）</div></div><div class="obs"><div class="obs-head"><span class="obs-nm">龙蟠科技 <span class="mut">603906</span></span><span class="obs-pos tag">1路共振 · —</span></div><div class="obs-watch"><span class="obs-lab">身位</span>位置分0；④产逻 正式荐票 正式荐票1.5% 经总审采纳的正式荐票(交易计划#buys)</div><div class="obs-rec"><span class="obs-lab2">来源</span>④产逻；执行口径(各路历史桶, 非个股预言)：④产逻 竞价gap∈[-3%,+3%]</div><div class="obs-jj"><span class="jjtag">今日竞价池 2026-11-03</span>—（该票当日不在竞价路候选内）</div></div></div><aside class="rail"><div id="component-IDXLEAD"><!--IDXLEAD--><div class="card"><h2 style="margin:0 0 2px;font-size:15px">二 拐点预警 · 命门温度背离</h2><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:0 0 10px;font-size:12px"><span style="color:#98a0ab;font-weight:700">三窗触发器(A档)</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #4fb3aa;color:#4fb3aa;background:rgba(217,164,65,.07);font-weight:700">❄冰点进攻窗·触发</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">☢过热禁追窗·灭</span><span style="padding:2px 10px;border-radius:99px;border:1px solid #33383f;color:#5b636d">♨洗出反弹窗·—</span><span style="color:#6b7683">温度 20.3·冰点 · 1进2率 10.5% · 昨停溢价 —</span></div><p style="margin:8px 0 0">_战绩画像汇总_20261103.json（按日 × _市场温度表 逐日对齐温度后，我按 冰点&lt;25 重算，票级加权、n≥5 参与）：theme 冰点档 16 票 8/16=50.0%、日等权均收 +0.86%（8 个有效日）；lhb 31 票 15/31=48.4%、+1.21%（12 日）；limitup 60 票 27/60=45.0%、-0.03%（12 日）；auction 214 票 77/214=36.0%、-1.08%（20 日）；logic 11 票 4/11=36.4%、-3.19%（7 日）。五路 n 均 ≥5，按规则全部参与，无一路被剔除；但 logic 自报『n&lt;20 不下结论』，故其权重再乘 0.7 折扣。全样本对照（合计 386/1067=36.2%、均收 -0.62%）说明 36% 是这套系统的基线胜率，theme/lhb 在冰点档的 48-50% 是真实超额、auction/logic 在冰点档低于基线。裁决用：①logic 的 B 档升级与 lhb/theme 的 C 档在同环境下的历史战绩方向相反（-3.19 vs +1.21/+0.86），故不采信其升档；②lhb 冰点最优但今日 0 票无标的可承接，故仓位只能向次优的 theme/limitup 倾斜，而不是『按胜率把仓全给 lhb』；③auction 冰点 36.0%（=基线、均收更差）故其 0.5% 条件单维持不加；④limitup 冰点 -0.03% 是五路里『档位对、期望平』的典型，其 002652 单格 +1.41% 可兑现应视为格内 alpha 而非路级 alpha，权重封顶 1.5%。</p></div><!--/IDXLEAD--></div></aside></div><!--/CROSSPICK--></div><!--/GOLDEN-INDEX:recommendations--></section><section id="turning" hidden aria-hidden="true"><h2>二 拐点预警 · 命门温度背离</h2><!--GOLDEN-INDEX:turning--><!--/GOLDEN-INDEX:turning--></section><section id="routes"><h2>三 五路看牌</h2><!--GOLDEN-INDEX:routes--><div class="routes"><a class="rt" href="auction.html"><span class="rtn">01 / 第一路</span><span class="rtm">竞价·时机</span><b class="rtt s-weak">C档 · 60</b><span class="rtd">①口径最干净：竞价层（09:25 前）与收盘兑现层严格分层、互不因果，是五路里唯一把『决策时点信息』和『事后结算』物理隔开的写法；②基准可信：自算冰点&lt;25 档 20 池日、池均收 -1.08%、正日 7/20、票级胜率…<br>裁决采信 · 0.5% 条件单 002292（仅 gap∈[-10%,-3] 成交），标的∈zt_pool ✔；不成交即 0 仓，无虚增</span></a><a class="rt" href="lhb.html"><span class="rtn">02 / 第二路</span><span class="rtm">龙虎榜·席位</span><b class="rtt s-weak">C档 · 74</b><span class="rtd">①本轮唯一的新增硬口径『真实率』成立且可复算：席位侧 262 笔 +58.03 亿（234 正/28 负）vs 票级当日榜 60 码 -5.7130 亿（29 正/31 负）= -9.8%，前两日 +25.3%/+22.6%，首次转负…<br>裁决采信 · 0 荐票（合法空仓）；观察 000591/001318 均∈zt_pool ✔，权重 0</span></a><a class="rt" href="theme.html"><span class="rtn">03 / 第三路</span><span class="rtm">题材·主线</span><b class="rtt s-weak">C档 · 82</b><span class="rtd">①档位论证最完整且全部可回溯：六有全场最高 2/6（我核 方向聚合：电力设备/新能源 13、AI应用/传媒 7、周期/资源材料 5、消费/大消费 5，四条并列 2/6）、归位 A 档 0/48（我核 档计数 A=0 B=48…<br>裁决采信档位、修正荐票权重（5%→1.5%） · 荐票 600261（本审 5%→1.5%）∈zt_pool ✔（4 板、封板 1.99 亿、换手 25.52%）；观察 002086/600892 ∈zt_pool ✔ 权重 0</span></a><a class="rt" href="logic.html"><span class="rtn">04 / 第四路</span><span class="rtm">产业·逻辑</span><b class="rtt s-weak">C档 · 66</b><span class="rtd">降档四条硬依据：①自证否：其结论自己写下『冰点档×电池链首板 n=18、胜率 33.3%、执1 -1.18%』，并写『产业趋势成立 ≠ 交易可得』——档位在本系统里是次日可得性评级，不是产业景气评级，桶为负还升 B 属标签与证据反向…<br>裁决降档 B(70)→C(66) · 荐票 603906（本审 1.5%→1.0%）∈zt_pool ✔（首板、封板 7672.7 万、炸 0）；观察 002805/601123 ∈zt_pool ✔ 权重 0</span></a><a class="rt" href="limitup.html"><span class="rtn">05 / 第五路</span><span class="rtm">涨停·质量</span><b class="rtt s-weak">C档 · 72</b><span class="rtd">①结构读数最硬且我逐项复算一致：涨停 48、首板 33、2 板 12、3 板 1、4 板 2、二板加 15、首板占比 68.8%、封板率 58.5%、回封 21、封板总额 38.51 亿、炸板率 41.5%（309 日 100 分位）、成交 17034…<br>裁决采信档位、上调其荐票权重（1%→1.5%） · 荐票 002652（本审 1%→1.5%）∈zt_pool ✔（首板、首封 143200、换手 18.25%、炸 0）；观察 600261/002086 ∈zt_pool ✔ 权重 0</span></a></div><!--/GOLDEN-INDEX:routes--></section><section id="verdict"><h2>四 总裁决 · 自主进化</h2><!--GOLDEN-INDEX:verdict--><div id="component-ENGINEBOOKS"><!--ENGINEBOOKS--><div class="rowE"><div class="card"><h3>六账本 · 当日引擎净值</h3><div class="hb"><span class="hbl">竞价</span><div class="hbt"><i class="neg" style="width:48%"></i></div><span class="hbv">-4.44%</span><span class="hbs">净值 0.955614</span></div><div class="hb"><span class="hbl">龙虎榜席位</span><div class="hbt"><i class="neg" style="width:5.308%"></i></div><span class="hbv">-0.23%</span><span class="hbs">净值 0.997692</span></div><div class="hb"><span class="hbl">主线题材</span><div class="hbt"><i class="pos" style="width:30.756%"></i></div><span class="hbv">+1.34%</span><span class="hbs">净值 1.013372</span></div><div class="hb"><span class="hbl">产业逻辑</span><div class="hbt"><i class="pos" style="width:14.635%"></i></div><span class="hbv">+0.64%</span><span class="hbs">净值 1.006363</span></div><div class="hb"><span class="hbl">涨停质量</span><div class="hbt"><i class="neg" style="width:19.969%"></i></div><span class="hbv">-0.87%</span><span class="hbs">净值 0.991318</span></div><div class="hb"><span class="hbl">总 Master</span><div class="hbt"><i class="neg" style="width:37.665%"></i></div><span class="hbv">-1.64%</span><span class="hbs">净值 0.983624</span></div><p class="mut">日期 20261103 · 各账本独立核算；读取当日引擎净值，未重算交易收益。</p></div></div><!--/ENGINEBOOKS--></div><div class="card"><b>总裁决 · <span class="s-weak">C档</span> <span class="hint">置信度 74/100(评分,未校准)</span></b><p style="margin:6px 0 0">冰点二次探底未确认、五路全 C，明日只做结构不做方向：名义 4.0%（条件单为主，期望成交约 2.0%），单票≤1.5%，600261 类连续一字高开一律弃单</p></div><!--/GOLDEN-INDEX:verdict--></section><div class="claim-anchor-bank" aria-hidden="true"><span class="claim-anchor" id="claim-index-578a74120e65bf94"></span><span class="claim-anchor" id="claim-index-ff558687b98f0e2a"></span><span class="claim-anchor" id="claim-index-e02eadfaf3259ca7"></span><span class="claim-anchor" id="claim-index-e4da0dca8e5d200d"></span><span class="claim-anchor" id="claim-index-b052d28697d9b64c"></span><span class="claim-anchor" id="claim-index-bf361e6ab046d13f"></span><span class="claim-anchor" id="claim-index-94bb7b72cd052cd2"></span><span class="claim-anchor" id="claim-index-e0af9cbebd8ae273"></span><span class="claim-anchor" id="claim-index-e53e10255e3a5aee"></span><span class="claim-anchor" id="claim-index-4c0b0fbc22d3f885"></span><span class="claim-anchor" id="claim-index-039f976c1df285df"></span><span class="claim-anchor" id="claim-index-7b5391e3ae5eb953"></span><span class="claim-anchor" id="claim-index-370bc6a979f4ab4c"></span><span class="claim-anchor" id="claim-index-15c4d12174e9c72c"></span><span class="claim-anchor" id="claim-index-be16a59d433d98b8"></span><span class="claim-anchor" id="claim-index-6c2122fc08e8fd14"></span><span class="claim-anchor" id="claim-index-158592234dd4857a"></span><span class="claim-anchor" id="claim-index-fee3b77dd9b16f29"></span><span class="claim-anchor" id="claim-index-6564f61040dcf53b"></span><span class="claim-anchor" id="claim-index-ba276b49ddd48f0f"></span><span class="claim-anchor" id="claim-index-bc4b34245f67404f"></span><span class="claim-anchor" id="claim-index-dc7d3c87855ad45e"></span><span class="claim-anchor" id="claim-index-8f584051231c65b9"></span><span class="claim-anchor" id="claim-index-5e3065ec1c9dcb6a"></span><span class="claim-anchor" id="claim-index-3b0e9b0e71124b6b"></span><span class="claim-anchor" id="claim-index-22fd75886011c864"></span><span class="claim-anchor" id="claim-index-b43e333673ec7937"></span><span class="claim-anchor" id="claim-index-8199efdf20b03da0"></span><span class="claim-anchor" id="claim-index-039319ec572b9cb9"></span><span class="claim-anchor" id="claim-index-20079fec6b4dcb14"></span><span class="claim-anchor" id="claim-index-616ec6c668b4699e"></span><span class="claim-anchor" id="claim-index-6b4ccee215f5f4e4"></span><span class="claim-anchor" id="claim-index-151d2e4de2e70a50"></span><span class="claim-anchor" id="claim-index-5bb407846f34f5a6"></span><span class="claim-anchor" id="claim-index-c551a685ff32a5b0"></span><span class="claim-anchor" id="claim-index-d57475cc36706de5"></span><span class="claim-anchor" id="claim-index-1c99e48ffa1d520f"></span><span class="claim-anchor" id="claim-index-bc05a41aca2f9cea"></span><span class="claim-anchor" id="claim-index-ab8017c98b054eb4"></span><span class="claim-anchor" id="claim-index-05c3bc2f3a103a8a"></span><span class="claim-anchor" id="claim-index-73ed79567c703baf"></span><span class="claim-anchor" id="claim-index-e3f2e919e9f51ef2"></span><span class="claim-anchor" id="claim-index-37f566d795d4a79f"></span><span class="claim-anchor" id="claim-index-efb26a80ac5daf3e"></span><span class="claim-anchor" id="claim-index-3f79ff3eaa92d274"></span><span class="claim-anchor" id="claim-index-91bd1265ce5255cd"></span><span class="claim-anchor" id="claim-index-526c032ea40d46b7"></span><span class="claim-anchor" id="claim-index-b394a2beb3a51d8d"></span><span class="claim-anchor" id="claim-index-2e2458f9f50bc947"></span><span class="claim-anchor" id="claim-index-5b05981c396443fd"></span><span class="claim-anchor" id="claim-index-a5743771acdf4345"></span><span class="claim-anchor" id="claim-index-7b4e60f56ab994f7"></span><span class="claim-anchor" id="claim-index-1681d5e5ffb22b17"></span><span class="claim-anchor" id="claim-index-e072593302adcdd9"></span><span class="claim-anchor" id="claim-index-62283185f0cd3ab8"></span><span class="claim-anchor" id="claim-index-eac2b16adbc60222"></span><span class="claim-anchor" id="claim-index-a280697001fffdfa"></span><span class="claim-anchor" id="claim-index-8041dc632a6b91a7"></span><span class="claim-anchor" id="claim-index-6e04c287887b1ef3"></span><span class="claim-anchor" id="claim-index-7b0719f830ade50f"></span><span class="claim-anchor" id="claim-index-127ba050812ccdcb"></span><span class="claim-anchor" id="claim-index-0bccf38104093ff8"></span><span class="claim-anchor" id="claim-index-d6ec45917d454f92"></span><span class="claim-anchor" id="claim-index-93f66b8856a74b33"></span><span class="claim-anchor" id="claim-index-5496a2174dc8bba1"></span><span class="claim-anchor" id="claim-index-82f9ef7ba22e547a"></span><span class="claim-anchor" id="claim-index-797b782628149e6a"></span><span class="claim-anchor" id="claim-index-acc60a41e5c1c3f5"></span><span class="claim-anchor" id="claim-index-0415874094c8f44f"></span><span class="claim-anchor" id="claim-index-e36fbdde373defe1"></span><span class="claim-anchor" id="claim-index-7ae15ee7cd752ae7"></span><span class="claim-anchor" id="claim-index-f8dea4d549f43b29"></span><span class="claim-anchor" id="claim-index-af46abc9e965321e"></span><span class="claim-anchor" id="claim-index-ad371f5bf3c02797"></span><span class="claim-anchor" id="claim-index-1cc48f7834dd3edc"></span><span class="claim-anchor" id="claim-index-1e0e77b316bfc38b"></span><span class="claim-anchor" id="claim-index-d18c47569cf081b0"></span><span class="claim-anchor" id="claim-index-47de0dfd3f0f8a2a"></span><span class="claim-anchor" id="claim-index-5090dad3b81a799f"></span><span class="claim-anchor" id="claim-index-e44b7280208c4eb9"></span><span class="claim-anchor" id="claim-index-5cf0c153832c2bb1"></span><span class="claim-anchor" id="claim-index-f434fe6a1e65f59b"></span><span class="claim-anchor" id="claim-index-72732c90b11d35a9"></span><span class="claim-anchor" id="claim-index-b247ab7e0bb7a958"></span><span class="claim-anchor" id="claim-index-c61c221e0d366303"></span><span class="claim-anchor" id="claim-index-c6072ae15078d9c9"></span><span class="claim-anchor" id="claim-index-e5757c3f31213cf2"></span><span class="claim-anchor" id="claim-index-4b5cf5703f5d8b88"></span><span class="claim-anchor" id="claim-index-376fac422e4e9029"></span><span class="claim-anchor" id="claim-index-0155f2bca7f98547"></span><span class="claim-anchor" id="claim-index-5a29f4cf3e639d54"></span><span class="claim-anchor" id="claim-index-9e9552506406d2df"></span><span class="claim-anchor" id="claim-index-5617ff5da3a6d5c3"></span><span class="claim-anchor" id="claim-index-c0d45aaa3ad59b92"></span><span class="claim-anchor" id="claim-index-28cd3838bb4b4f65"></span><span class="claim-anchor" id="claim-index-a12be8efada7ac1f"></span><span class="claim-anchor" id="claim-index-83b7d61ce3233117"></span><span class="claim-anchor" id="claim-index-12866e4f08d61a88"></span><span class="claim-anchor" id="claim-index-e89f15c72a874f91"></span><span class="claim-anchor" id="claim-index-6618872b92ae4b8e"></span><span class="claim-anchor" id="claim-index-897a7e121ae6fce0"></span><span class="claim-anchor" id="claim-index-f4f332d22629075d"></span><span class="claim-anchor" id="claim-index-8c287ececf462f57"></span><span class="claim-anchor" id="claim-index-d70202420d9b15b9"></span><span class="claim-anchor" id="claim-index-c4053904a8b3b7ae"></span><span class="claim-anchor" id="claim-index-9f3d21bdd0bc3090"></span><span class="claim-anchor" id="claim-index-0fe463fad4624c63"></span><span class="claim-anchor" id="claim-index-6c791f98e5b64afa"></span><span class="claim-anchor" id="claim-index-af07ab5fc4f04aaa"></span><span class="claim-anchor" id="claim-index-ad52ba1c4d3d37d8"></span><span class="claim-anchor" id="claim-index-7e497b99334a7f6a"></span><span class="claim-anchor" id="claim-index-e8fd18f47e4379ca"></span><span class="claim-anchor" id="claim-index-2354fac9ef86eb6d"></span><span class="claim-anchor" id="claim-index-0436ca33b7da6640"></span><span class="claim-anchor" id="claim-index-b9745847672d09a7"></span><span class="claim-anchor" id="claim-index-82b272df176f2f3c"></span><span class="claim-anchor" id="claim-index-7cb064e0a9ff2ac1"></span><span class="claim-anchor" id="claim-index-a7acc336a1df4f39"></span><span class="claim-anchor" id="claim-index-b4ca6f9b2c383ddd"></span><span class="claim-anchor" id="claim-index-5e1dda79cf1f8e3d"></span><span class="claim-anchor" id="claim-index-dec3f99297afd9be"></span><span class="claim-anchor" id="claim-index-f98f62284ebf4d56"></span><span class="claim-anchor" id="claim-index-cb39234e5582ed7e"></span><span class="claim-anchor" id="claim-index-8fc05431a2677fe2"></span><span class="claim-anchor" id="claim-index-8b159e8dbbfe220f"></span><span class="claim-anchor" id="claim-index-f75f26aa5cd2b3c3"></span><span class="claim-anchor" id="claim-index-85ad3a573d056910"></span><span class="claim-anchor" id="claim-index-c7b728d1297568a8"></span><span class="claim-anchor" id="claim-index-4983cc95f911f46e"></span><span class="claim-anchor" id="claim-index-1cafe18ba85a31d1"></span><span class="claim-anchor" id="claim-index-768ddd8bb9f46418"></span><span class="claim-anchor" id="claim-index-b82fc27d18f82c58"></span><span class="claim-anchor" id="claim-index-83bedaef51ff18fc"></span><span class="claim-anchor" id="claim-index-383bee35bd77fc72"></span><span class="claim-anchor" id="claim-index-a5b6489530552c7f"></span><span class="claim-anchor" id="claim-index-cc31a9fafea41ab2"></span><span class="claim-anchor" id="claim-index-25e01d243154428e"></span><span class="claim-anchor" id="claim-index-55b5117572c368fa"></span><span class="claim-anchor" id="claim-index-dfc6e927edf6984b"></span><span class="claim-anchor" id="claim-index-6c820dfb8450393f"></span><span class="claim-anchor" id="claim-index-42305717a9a4ae09"></span><span class="claim-anchor" id="claim-index-6422c90bd6b171de"></span><span class="claim-anchor" id="claim-index-03e382eb2d84a71d"></span><span class="claim-anchor" id="claim-index-a022c7c1db65a7da"></span><span class="claim-anchor" id="claim-index-3109c315f5a12039"></span><span class="claim-anchor" id="claim-index-0bdc1847daad2301"></span><span class="claim-anchor" id="claim-index-0b29e742cec0fbdd"></span><span class="claim-anchor" id="claim-index-3bc6f41c2ff2ea99"></span><span class="claim-anchor" id="claim-index-efd2247e4e78a13f"></span><span class="claim-anchor" id="claim-index-a528057d0112cabd"></span><span class="claim-anchor" id="claim-index-8ac7f364e905042c"></span><span class="claim-anchor" id="claim-index-92a339e699531681"></span><span class="claim-anchor" id="claim-index-de24f8e5e10ac0d7"></span><span class="claim-anchor" id="claim-index-8655184f41732325"></span><span class="claim-anchor" id="claim-index-7c793ae2f576e2ef"></span><span class="claim-anchor" id="claim-index-6f82fa4095ae0b91"></span><span class="claim-anchor" id="claim-index-5bdb4cc24db211e8"></span><span class="claim-anchor" id="claim-index-ed6025ae03f3bc93"></span><span class="claim-anchor" id="claim-index-bace418efde735c8"></span><span class="claim-anchor" id="claim-index-5984f1f23d1aa0ea"></span><span class="claim-anchor" id="claim-index-d68e646f97545a95"></span><span class="claim-anchor" id="claim-index-e3157d49c8fef373"></span><span class="claim-anchor" id="claim-index-87993900b7fd8c52"></span><span class="claim-anchor" id="claim-index-3defd6fca0fec29a"></span><span class="claim-anchor" id="claim-index-3437aef3f9d4664e"></span><span class="claim-anchor" id="claim-index-a0ef9036bc3863ba"></span><span class="claim-anchor" id="claim-index-2c98f66a8ae439fe"></span><span class="claim-anchor" id="claim-index-513b14654c84c610"></span><span class="claim-anchor" id="claim-index-7734036844558ca9"></span><span class="claim-anchor" id="claim-index-1d1f5cfec8c12036"></span><span class="claim-anchor" id="claim-index-587910968adb43fa"></span><span class="claim-anchor" id="claim-index-79cfffaf0f6c37c9"></span><span class="claim-anchor" id="claim-index-f986445b259de955"></span><span class="claim-anchor" id="claim-index-bbf7873c98cb4309"></span><span class="claim-anchor" id="claim-index-2371b70ccd2bbad0"></span><span class="claim-anchor" id="claim-index-e2b32b2be39926e1"></span><span class="claim-anchor" id="claim-index-72459d7f41017a77"></span><span class="claim-anchor" id="claim-index-3f222063f98b0594"></span><span class="claim-anchor" id="claim-index-3f8c8a6f9f7dfef7"></span><span class="claim-anchor" id="claim-index-eaa2cc8dfca75079"></span><span class="claim-anchor" id="claim-index-cc435a8c10e30bb7"></span><span class="claim-anchor" id="claim-index-964a62c9c544690c"></span><span class="claim-anchor" id="claim-index-cea7f92472eef943"></span><span class="claim-anchor" id="claim-index-fa1e3dc40c15a21e"></span><span class="claim-anchor" id="claim-index-ef1665cd117e31d7"></span><span class="claim-anchor" id="claim-index-b1753fb8aa31f4dd"></span><span class="claim-anchor" id="claim-index-66afd7ed0a77a7d8"></span><span class="claim-anchor" id="claim-index-717cf2f2534c0e5e"></span><span class="claim-anchor" id="claim-index-e1fc602894627299"></span><span class="claim-anchor" id="claim-index-a31725508211305d"></span><span class="claim-anchor" id="claim-index-1641b5a2850f7a3f"></span><span class="claim-anchor" id="claim-index-a7f6840ff658ddf5"></span><span class="claim-anchor" id="claim-index-44c1425bcd56d968"></span><span class="claim-anchor" id="claim-index-2ce722b637edfacf"></span><span class="claim-anchor" id="claim-index-a0520acf07a4e3c6"></span><span class="claim-anchor" id="claim-index-cd56e0219fef5835"></span><span class="claim-anchor" id="claim-index-707dbd9365d9eed6"></span><span class="claim-anchor" id="claim-index-77fb38e28ff2a71f"></span><span class="claim-anchor" id="claim-index-e459936b420fc360"></span><span class="claim-anchor" id="claim-index-8967ae4e6ce8df15"></span><span class="claim-anchor" id="claim-index-83e5448d30572a00"></span><span class="claim-anchor" id="claim-index-9f34d3eb8c4387eb"></span><span class="claim-anchor" id="claim-index-89bfe6fc66836471"></span><span class="claim-anchor" id="claim-index-2b6d58564e0e8520"></span><span class="claim-anchor" id="claim-index-68c614349384cc7b"></span><span class="claim-anchor" id="claim-index-260be3d8c6e21e65"></span><span class="claim-anchor" id="claim-index-5b3ec9ba4be7df2d"></span><span class="claim-anchor" id="claim-index-743a4e41679a4f85"></span><span class="claim-anchor" id="claim-index-c9a7abc5daa7f8b7"></span><span class="claim-anchor" id="claim-index-32c1be863885bd8d"></span><span class="claim-anchor" id="claim-index-908e11d1e0731ed7"></span><span class="claim-anchor" id="claim-index-cece057de64dacfe"></span><span class="claim-anchor" id="claim-index-ec2bdc564f35b5d4"></span><span class="claim-anchor" id="claim-index-5cc1cdc01692c107"></span><span class="claim-anchor" id="claim-index-606536268ad2c37f"></span><span class="claim-anchor" id="claim-index-a1b93bd595ce63cf"></span><span class="claim-anchor" id="claim-index-4ed8f8da3668550f"></span><span class="claim-anchor" id="claim-index-9f35d48d68c53b44"></span><span class="claim-anchor" id="claim-index-2c272e3327215018"></span><span class="claim-anchor" id="claim-index-7bbd9ae80ea98d04"></span><span class="claim-anchor" id="claim-index-5fa6441ba11f6a2e"></span><span class="claim-anchor" id="claim-index-903f4065841a65fc"></span><span class="claim-anchor" id="claim-index-02d3419b126ede2c"></span><span class="claim-anchor" id="claim-index-42fcd29238cff486"></span><span class="claim-anchor" id="claim-index-752867972eb6aa49"></span><span class="claim-anchor" id="claim-index-6f8b749b55ce2aaa"></span><span class="claim-anchor" id="claim-index-48ffcb66cae0374b"></span><span class="claim-anchor" id="claim-index-1c08ba5d655b706a"></span><span class="claim-anchor" id="claim-index-ed6982d18291eb2d"></span><span class="claim-anchor" id="claim-index-92582b1ef89088c2"></span><span class="claim-anchor" id="claim-index-f8e73d340b631094"></span><span class="claim-anchor" id="claim-index-f746a27d255a0303"></span><span class="claim-anchor" id="claim-index-992a8d2ff1696b9b"></span><span class="claim-anchor" id="claim-index-e1f7e90bfed0185c"></span><span class="claim-anchor" id="claim-index-42c768b4e01913ad"></span><span class="claim-anchor" id="claim-index-342511bef233e938"></span><span class="claim-anchor" id="claim-index-4fec5a4e03b1f8d3"></span><span class="claim-anchor" id="claim-index-f9909a11264f4460"></span><span class="claim-anchor" id="claim-index-115a5c063921f041"></span><span class="claim-anchor" id="claim-index-881ca5b3898c0054"></span><span class="claim-anchor" id="claim-index-36cf0cd4d5088c3a"></span><span class="claim-anchor" id="claim-index-21fe9829fb98c1cb"></span><span class="claim-anchor" id="claim-index-13cc9c4032380254"></span><span class="claim-anchor" id="claim-index-1bc467911a0a3f79"></span><span class="claim-anchor" id="claim-index-ade9558a144867b0"></span><span class="claim-anchor" id="claim-index-e1ee3355d1dfac19"></span><span class="claim-anchor" id="claim-index-5dafcf7fa1fba282"></span><span class="claim-anchor" id="claim-index-50f1895f46650cd9"></span><span class="claim-anchor" id="claim-index-e9e619e43239c26b"></span><span class="claim-anchor" id="claim-index-937b76038b09a014"></span><span class="claim-anchor" id="claim-index-9c594978262a5598"></span><span class="claim-anchor" id="claim-index-c20427701480a459"></span><span class="claim-anchor" id="claim-index-3a07143bd87f2245"></span><span class="claim-anchor" id="claim-index-c9b3bbf3207199e3"></span><span class="claim-anchor" id="claim-index-f0a6c1fbbc94d527"></span><span class="claim-anchor" id="claim-index-e86facd4d24ea529"></span><span class="claim-anchor" id="claim-index-11fad032823afb07"></span><span class="claim-anchor" id="claim-index-ca608fa335be6628"></span><span class="claim-anchor" id="claim-index-273b9fc46ddf41c1"></span><span class="claim-anchor" id="claim-index-d416709967bdd840"></span><span class="claim-anchor" id="claim-index-b4b0e2b8ad2354a7"></span><span class="claim-anchor" id="claim-index-776de11ae7356d87"></span><span class="claim-anchor" id="claim-index-f4d3bd9b5fde7c69"></span><span class="claim-anchor" id="claim-index-e47600f928addbb2"></span><span class="claim-anchor" id="claim-index-abc51a3a3f263295"></span><span class="claim-anchor" id="claim-index-7754c7ee5bf724d9"></span><span class="claim-anchor" id="claim-index-e878e1212d0dec68"></span><span class="claim-anchor" id="claim-index-4bfd77d1a6cfa082"></span><span class="claim-anchor" id="claim-index-d386c50c74366774"></span><span class="claim-anchor" id="claim-index-62ec2fd93684c1ba"></span><span class="claim-anchor" id="claim-index-2df8c8bbfb1c7558"></span><span class="claim-anchor" id="claim-index-60a662fe0ca86844"></span><span class="claim-anchor" id="claim-index-f8ea575d786e7d1d"></span><span class="claim-anchor" id="claim-index-6cf38c5b9972cd5c"></span><span class="claim-anchor" id="claim-index-c3edfea274d4b4fa"></span><span class="claim-anchor" id="claim-index-7638f976eea09c98"></span><pre class="claim-anchor-text">①口径最干净：竞价层（09:25 前）与收盘兑现层严格分层、互不因果，是五路里唯一把『决策时点信息』和『事后结算』物理隔开的写法；②基准可信：自算冰点&lt;25 档 20 池日、池均收 -1.08%、正日 7/20、票级胜率 36.0%（n=214，与我独立复算的 214 票/36.0%/-1.08 逐位一致）；③第 14 个月同向的事实链成立——昨日池 17 只 T+1 封板 5/17、执1 均收 -2.56%，低于全场涨停 -1.19%（增益 -1.37pp），高开≥5 档 -4.37% 为最差档，与其『冰点池 0/13 落薄封&lt;0.5% 正族、组成加权 P(gap≥5)=52.1%』的判断同向；④0.5% 条件单（002292，仅 gap∈[-10%,-3] 成交）是唯一带正期望的可执行格（秒板|gap≤-3 n=22 54.5%/+3.47%，票格 n=17 52.9%/+3.46%，n&lt;30 已自标只作方向），且明确『不成交不递补』，不虚增仓。修正一点：其『冰点挡 20 池日 -1.08%』只统计池内票，不含池外主线票，故不能反推『冰点不该做高度票』——这正是 theme/limitup 的 4 板格与它分歧的根。
+①口径最干净：竞价层（09:25 前）与收盘兑现层严格分层、互不因果，是五路里唯一把『决策时点信息』和『事后结算』物理隔开的写法；②基准可信：自算冰点&lt;25 档 20 池日、池均收 -1.08%、正日 7/20、票级胜率 36.0%（n=214，与我独立复算的 214 票/36.0%/-1.08 逐位一致）；③第 14 个月同向的事实链成立——昨日池 17 只 T+1 封板 5/17、执1 均收 -2.56%，低于全场涨停 -1.19%（增益 -1.37pp），高开≥5 档 -4.37% 为最差档，与其『冰点池 0/13 落薄封&lt;0.5% 正族、组成加权 P(gap≥5)=52.1%』的判断同向；④0.5% 条件单（002292，仅 gap∈[-10%,-3] 成交）是唯一带正期望的可执行格（秒板|gap≤-3 n=22 54.5%/+3.47%，票格 n=17 52.9%/+3.46%，n&lt;30 已自标只作方向），且明确『不成交不递补』，不虚增仓。修正一点：其『冰点挡 20 池日 -1.08%』只统计池内票，不含池外主线票，故不能反推『冰点不该做高度票』——这正是 theme/limitup 的 4 板格与它分歧的根。
+①本轮唯一的新增硬口径『真实率』成立且可复算：席位侧 262 笔 +58.03 亿（234 正/28 负）vs 票级当日榜 60 码 -5.7130 亿（29 正/31 负）= -9.8%，前两日 +25.3%/+22.6%，首次转负；机制解释（东财只披露买五、卖五不可得）与数据自洽，属『买榜方向与全场相反』的实证，不是叙事；②0 荐票有硬门支撑而非情绪：S/A 池 12 笔落在涨停的仅 000591/001318 两只，前者占比 23.05% 落 &gt;20% 极值桶（冰点 n=46 34.8%/-0.32%）、后者封单比 3.7% 不达 5% 封板门且占比 3.64% 落冰点最差桶（n=76 40.8%/-0.19%），另 603228/000530 双源强矛盾、605100 分歧+跌停，Top5 全否；③覆盖缺口自报（48 只涨停仅 22 只有榜=45.8%、当日榜 12 只=25.0%），没有把 1/4 视野包装成全样本；④冰点档历史战绩 48.4%（15/31）/+1.21% 是五路最高，环境加权下其『不进攻』的分量应高于 limitup 的同向结论。扣 26 分的理由：业绩否决门昨日刚被 600715（净利 -1120.90%，今日 +8.85% 涨停）单票证伪，虽已自降级并补『≥5 样本同向方生效』，但该门今日仍参与了 000591（-21.73%）/001318（-25.71%）的判决，规则尚在试错期。
+①本轮唯一的新增硬口径『真实率』成立且可复算：席位侧 262 笔 +58.03 亿（234 正/28 负）vs 票级当日榜 60 码 -5.7130 亿（29 正/31 负）= -9.8%，前两日 +25.3%/+22.6%，首次转负；机制解释（东财只披露买五、卖五不可得）与数据自洽，属『买榜方向与全场相反』的实证，不是叙事；②0 荐票有硬门支撑而非情绪：S/A 池 12 笔落在涨停的仅 000591/001318 两只，前者占比 23.05% 落 &gt;20% 极值桶（冰点 n=46 34.8%/-0.32%）、后者封单比 3.7% 不达 5% 封板门且占比 3.64% 落冰点最差桶（n=76 40.8%/-0.19%），另 603228/000530 双源强矛盾、605100 分歧+跌停，Top5 全否；③覆盖缺口自报（48 只涨停仅 22 只有榜=45.8%、当日榜 12 只=25.0%），没有把 1/4 视野包装成全样本；④冰点档历史战绩 48.4%（15/31）/+1.21% 是五路最高，环境加权下其『不进攻』的分量应高于 limitup 的同向结论。扣 26 分的理由：业绩否决门昨日刚被 600715（净利 -1120.90%，今日 +8.85% 涨停）单票证伪，虽已自降级并补『≥5 样本同向方生效』，但该门今日仍参与了 000591（-21.73%）/001318（-25.71%）的判决，规则尚在试错期。
+①档位论证最完整且全部可回溯：六有全场最高 2/6（我核 方向聚合：电力设备/新能源 13、AI应用/传媒 7、周期/资源材料 5、消费/大消费 5，四条并列 2/6）、归位 A 档 0/48（我核 档计数 A=0 B=48 C=0，与它一致）、宽高不同线（13 只宽的线最高 2 板、两只 4 板各自线宽 1）、封单额我逐只复算完全吻合（电力设备/新能源 8.70 亿 = 全场 38.51 亿的 22.6%、AI应用/传媒 7.51 亿）；②『无主线退为轮动』的结论比 logic 的 B 档更符合事实分层——同一天里既没有一条线过 5/6，也没有一条线贡献两只以上高度票；③荐票 600261 的权重不采信：它在同一份证据里并列了 4板+×封单≥2% n=319 执1 30.7%/-1.47%（负）与 4板+×冷&lt;40 n=208 执1 47.1%/+0.40%（正），两者都含 4 板条件、后者只多了『冷&lt;40』这一个全局温度门、前者恰好条件在其自身强调的『封比 3.01% 落强 2-4% 负桶』上，取正舍负属竞争条件集里的择优，不是交互桶优先原则的必然结果；再叠加 limitup 的可兑现折算（3.62%×33.3%=+1.21%）与『连续两日 gap+10% 一字开』的个股先验，5% 的名义仓在同一格里是最高权重而非最小仓。故档位 C 采信、置信 85→82，权重由 5% 砍到 1.5%（仍为四票中最高，保留其冰点档 50.0%/+0.86 的历史优势）。
+①档位论证最完整且全部可回溯：六有全场最高 2/6（我核 方向聚合：电力设备/新能源 13、AI应用/传媒 7、周期/资源材料 5、消费/大消费 5，四条并列 2/6）、归位 A 档 0/48（我核 档计数 A=0 B=48 C=0，与它一致）、宽高不同线（13 只宽的线最高 2 板、两只 4 板各自线宽 1）、封单额我逐只复算完全吻合（电力设备/新能源 8.70 亿 = 全场 38.51 亿的 22.6%、AI应用/传媒 7.51 亿）；②『无主线退为轮动』的结论比 logic 的 B 档更符合事实分层——同一天里既没有一条线过 5/6，也没有一条线贡献两只以上高度票；③荐票 600261 的权重不采信：它在同一份证据里并列了 4板+×封单≥2% n=319 执1 30.7%/-1.47%（负）与 4板+×冷&lt;40 n=208 执1 47.1%/+0.40%（正），两者都含 4 板条件、后者只多了『冷&lt;40』这一个全局温度门、前者恰好条件在其自身强调的『封比 3.01% 落强 2-4% 负桶』上，取正舍负属竞争条件集里的择优，不是交互桶优先原则的必然结果；再叠加 limitup 的可兑现折算（3.62%×33.3%=+1.21%）与『连续两日 gap+10% 一字开』的个股先验，5% 的名义仓在同一格里是最高权重而非最小仓。故档位 C 采信、置信 85→82，权重由 5% 砍到 1.5%（仍为四票中最高，保留其冰点档 50.0%/+0.86 的历史优势）。
+降档四条硬依据：①自证否：其结论自己写下『冰点档×电池链首板 n=18、胜率 33.3%、执1 -1.18%』，并写『产业趋势成立 ≠ 交易可得』——档位在本系统里是次日可得性评级，不是产业景气评级，桶为负还升 B 属标签与证据反向；②档位与仓位背离：B 档只给 1.5%（昨日 C 档也是 1.5%），说明其自身风控并不认 B，标签虚高一级；③结构口径未经验证：『8 环节』是自行构造，产业链模板 0/48 命中、_学习/链条纵深库.json 最后更新 20260713（我核 mtime 与内容均停在 7 月，113 日未更新），等于这条链今天第一次被画出来，没有历史结构可比；④计数含边缘票：归位口径 电力设备/新能源 13 只中电池链核心 10 只（固态/锂电/正极/电解液/铝塑膜/铜箔/设备），另 603381 永臻『光伏边框/电池铝箔』属边缘，logic 的 11 只只能靠纳入该边缘票凑到，『11/48=22.9%』略高估 2.1pp。保留的正面：同环节业绩共证（磷酸铁锂正极 5/5 营收翻倍：龙蟠 +110.7%、丰元 +347.1%、湖南裕能 +147.6%、德方纳米 +195.2%、万润新能 +178.7%，上游天齐 +147.1%、下游宁德 +56.2%/亿纬 +63.1%）是今日唯一的产业级事实，我采信其为『线级线索』（写入线索跟踪 L-05 并指派建桶），但不作为档位升级依据。环境加权也同向：logic 冰点档历史 36.4%（4/11）/-3.19% 是五路最差，且其自报 n&lt;20 不下结论。
+降档四条硬依据：①自证否：其结论自己写下『冰点档×电池链首板 n=18、胜率 33.3%、执1 -1.18%』，并写『产业趋势成立 ≠ 交易可得』——档位在本系统里是次日可得性评级，不是产业景气评级，桶为负还升 B 属标签与证据反向；②档位与仓位背离：B 档只给 1.5%（昨日 C 档也是 1.5%），说明其自身风控并不认 B，标签虚高一级；③结构口径未经验证：『8 环节』是自行构造，产业链模板 0/48 命中、_学习/链条纵深库.json 最后更新 20260713（我核 mtime 与内容均停在 7 月，113 日未更新），等于这条链今天第一次被画出来，没有历史结构可比；④计数含边缘票：归位口径 电力设备/新能源 13 只中电池链核心 10 只（固态/锂电/正极/电解液/铝塑膜/铜箔/设备），另 603381 永臻『光伏边框/电池铝箔』属边缘，logic 的 11 只只能靠纳入该边缘票凑到，『11/48=22.9%』略高估 2.1pp。保留的正面：同环节业绩共证（磷酸铁锂正极 5/5 营收翻倍：龙蟠 +110.7%、丰元 +347.1%、湖南裕能 +147.6%、德方纳米 +195.2%、万润新能 +178.7%，上游天齐 +147.1%、下游宁德 +56.2%/亿纬 +63.1%）是今日唯一的产业级事实，我采信其为『线级线索』（写入线索跟踪 L-05 并指派建桶），但不作为档位升级依据。环境加权也同向：logic 冰点档历史 36.4%（4/11）/-3.19% 是五路最差，且其自报 n&lt;20 不下结论。
+①结构读数最硬且我逐项复算一致：涨停 48、首板 33、2 板 12、3 板 1、4 板 2、二板加 15、首板占比 68.8%、封板率 58.5%、回封 21、封板总额 38.51 亿、炸板率 41.5%（309 日 100 分位）、成交 17034 亿（6.5 分位）；②一进二 10.5%（12/114）＜二进三 16.7%＜三进四 66.7%＞四进五 0% 的『倒金字塔』与 _情绪先行指标 完全一致（一进二率 0.105/二进三 0.167/高度晋级 0.273/核按钮 0.0），且它主动指出『二板加 15』是分母缩小的算术假象、明日必然回落——这是五路里唯一对自身有利数字做反向解读的；③跨路分歧备案写法规范（重复三次的 600261 段是渲染冗余，不影响判定）；④上调 002652 权重到 1.5% 的理由：可兑现期望 2.33%×60.7%=+1.41% 是今日四票里最高，且 1% 的口径过小以致即使格成立也无法验证。扣分项：002652 本身在它自己列的『羊字辈 12 只』名单里（002086、600261、002292、002580、600558、002088、000591、002300、002696、001318、000608、002652），一边判『羊字辈是名称博弈不是产业主线』、一边把羊字辈票作为唯一荐票，内部未打通，故设正交检验指派（MA-20261103-03）而非直接否定。
+①结构读数最硬且我逐项复算一致：涨停 48、首板 33、2 板 12、3 板 1、4 板 2、二板加 15、首板占比 68.8%、封板率 58.5%、回封 21、封板总额 38.51 亿、炸板率 41.5%（309 日 100 分位）、成交 17034 亿（6.5 分位）；②一进二 10.5%（12/114）＜二进三 16.7%＜三进四 66.7%＞四进五 0% 的『倒金字塔』与 _情绪先行指标 完全一致（一进二率 0.105/二进三 0.167/高度晋级 0.273/核按钮 0.0），且它主动指出『二板加 15』是分母缩小的算术假象、明日必然回落——这是五路里唯一对自身有利数字做反向解读的；③跨路分歧备案写法规范（重复三次的 600261 段是渲染冗余，不影响判定）；④上调 002652 权重到 1.5% 的理由：可兑现期望 2.33%×60.7%=+1.41% 是今日四票里最高，且 1% 的口径过小以致即使格成立也无法验证。扣分项：002652 本身在它自己列的『羊字辈 12 只』名单里（002086、600261、002292、002580、600558、002088、000591、002300、002696、001318、000608、002652），一边判『羊字辈是名称博弈不是产业主线』、一边把羊字辈票作为唯一荐票，内部未打通，故设正交检验指派（MA-20261103-03）而非直接否定。
+档位：logic 判 B(70)『真产业趋势但只支持单点小仓』，theme/limitup/auction/lhb 全判 C；同一份 48 只涨停，logic 读成『一条真链 + 一堆标签』，theme 读成『无主线退为轮动』。
+降为 C(66)。产业趋势成立（正极 5/5 营收翻倍、上中下游三级同向）我采信为线级事实，但它不改变次日档位：本系统档位=次日可得性，logic 自算该链冰点桶 n=18/33.3%/-1.18% 为负，且结构口径（8 环节）无库可比（产业链模板 0/48、链条纵深库停在 20260713）。给 1.0% 单点（原 1.5%），并把『电池链建桶』拆成独立指派。
+logic 自报桶 n=18/33.3%/-1.18%；归位 方向聚合 电力设备/新能源 13 只中电池链核心 10 只；theme 六有 2/6；limitup 行业口径 电池 7 只=2/6、一字 0；logic 冰点档历史 36.4%/-3.19（五路最差）。
+600261 阳光照明：theme 给 5%（唯一正权重、冰点档唯一下注），limitup 给 0（观察、可兑现期望 +1.21% 低于 002652 的 +1.41%）。同一只票、同一组事实（4 板、封单 1.99 亿、封比 3.01%、换手 25.52%、炸 5 次后 09:35 回封、连两日 gap+10% 一字开），结论差 5pp。
+1.5%（theme 5% 砍 70%、limitup 0 上调至 1.5%）。分歧实质不是『4 板冰点格是否正』（两路都认 n=24/70.8%/+2.84 为正），而是『可不可成交的期望能不能计入仓位』——这一条 limitup 的方法更硬：格均值 × 触发率 = 可兑现期望，是唯一把执行闸门内生化到权重里的算法。同时 theme 的 5% 在单票≤2% 的总审纪律下本来就不合规，且其立论用了同一证据里的正桶、把更贴合的负桶（4板+×封单≥2% n=319 30.7%/-1.47）放进『反方』。
+theme 标的卡与证据（4板+×冷&lt;40 n=208 47.1%/+0.40 vs 4板+×封单≥2% n=319 30.7%/-1.47）；limitup 跨路分歧备案（3.62%×0.333=+1.21%）；昨日总裁决已立 单票≤2%。
+002652 扬子新材：limitup 唯一荐票（1%），但其同文件把『羊字辈 12 只』判为『名称博弈不是产业主线』，且 002652 就在该 12 只名单内；同时它的格是『冰点×尾盘首板×换手≥10 n=30 67.9%/+2.33%』——形态格与名称标签无法分离。
+保留并上调到 1.5%（可兑现 +1.41% 全场最高），但附加正交检验：明日若羊字辈次日翻红 ≤2 只（limitup 自设证伪⑤）则 002652 权重同归零；并把『剔除谐音标签后重算该格』列为硬指派。
+limitup 荐票卡（可执行率 0.607、格 n=30 67.9%/+2.33%）与同文『羊字辈 12 只=25.0%』名单含 002652；zt_pool 002652 首封 143200（尾盘）、换手 18.25%、炸 0、封板 1922 万。
+一进二率：theme 写『全场 15 只二板加/125 = 12.0%』，而 _情绪先行指标 与 limitup 均为 10.5%（12/114）。
+以 10.5%(12/114) 为准。theme 的 12.0% 是分子取今日（15 只二板加）、分母取昨日（125 只涨停）的跨日错配，偏差 +1.5pp。不影响 theme 的档位结论，但一进二是核心情绪指标，须修正（写入 MA-20261103-01）。
+_学习/_情绪先行指标.json#20261103.晋级 一进二率 0.105、二进三率 0.167、高度晋级率 0.273；limitup 证据『一进二 10.5%（12/114）』。
+五路（logic 被降后为五路全 C）全部不给单票 &gt;1.5%，看似一致谨慎，实为**同一个样本盲区**：所有路都在给『今天已经封住的 48 只涨停』定价，而今日真正决定次日赔率的三个池子无人定价——①34 只炸板（其中 13 只未回封：34 炸 - 21 回封），这是冰点日次日反包的第一候选池，只有 limitup 在『明日观察』里提了一句『炸板池反包率』，没有给名单、没有给分桶、没有给概率；②17 只跌停（9 只流通≥100 亿、深南/光迅/景旺/德明利/麦格米特都是 AI 算力硬件），这是『杀权重不杀接力』的另一半证据（涨停 ∩ 流通≥100 亿仅 2 只=4.2%），但没有一路把『权重止跌』作为情绪修复的领先指标建模；③17034 亿成交额（6.5 分位）的缩量属性——缩量冰点与放量冰点的次日修复概率不同，五路都只把它当『环境差』的背景值。第二个盲区：四路用同一个后视指标『昨日涨停今日执1 -1.19%/30.6%』代表赚钱效应，这是当日最坏时点的回望读数，用它推次日会系统性偏空。第三个盲区：五路一致把冰点读成『继续防守』，但没有任何一路给出『冰点二次探底 vs 冰点一日游』的可区分领先指标（theme 的环境证伪 D 与 limitup 的『涨停&lt;40』门是仅有的两个近似物，且都只能事后结算）。
+若明日（20261104）出现反抽，最可能从 AI应用/传媒 的缩圈二板起，锚是 600892 大晟文化，跟随 601599 浙文影业 / 605577 龙版传媒；第二顺位是电池链同环节双票 603906 龙蟠 + 002805 丰元——而不是从宽度第一的电力设备/新能源起。依据：传媒族是今日唯一『缩圈同时强化』的线（宽度 45→7=-84.4%，但线内 6/7 是二板、一字 2 只、早封 5/7=71.4%、封单比中位 0.37%→1.25%、单票封单 0.35→1.07 亿、封单合计 7.51 亿）；电池链相反，宽度 13 只但最高仅 2 板、一字 0、早封 1/13=7.7%、开板 5/13=38.5%，是 theme 机械口径的『启动⚠宽度陷阱』画像。五路今日给的是『无方向』，我给出的方向性反驳是：缩圈线 &gt; 宽度线。
+20261104 收盘：①传媒族（短剧/游戏/AI影视，600892/601599/603258/605577/002292/600358/600715）涨停 ≥4 只 或 出现 ≥1 只 3 板 且 600892 封板 ≥5% 封单比 → 反抽假设成立，明日若有仓位应保留、并允许把 600261 之外的第二笔加到传媒缩圈线；②传媒族涨停 ≤2 只 且 600892 断板 且 其执1 ≤-3% → 假设证伪（缩圈不成立、冰点延续），明日全部条件单作废、已成交按 -3% 机械离场；③若 传媒族 ≥4 只但 600892 反而断板（龙头错位）→ 假设部分证伪，只认『缩圈线』不认『600892 锚』，并把锚改为 601599/605577 里封单比最高者。三条互斥穷尽，收盘可机械结算。
+①A 档虚标：零。归位件 档计数 A=0/B=48/C=0、A 数组为空，我逐只复核 48/48 均无公告级催化（全为 THS 涨停原因原文 B 档），五路均未把任何一只包装成 A 档；theme 甚至把『归位 A 档 0/48』写成降级理由第④条，方向正确。②未来数据（&gt;20261103）泄漏：全库扫描 五路 证据 段，仅 logic 1 处命中『20261104』（『明日（20261104）为执2 强制了结日』），性质是持仓了结规则的规则型前瞻，不是引用未来事实，且出现在 证据 而非 可证伪 也属可接受；其余各路 20261104/20261106 全部只出现在 可证伪条件 字段，合规。③后视镜（用当日收盘解释当日盘中决策）：auction 明确分层『竞价层 vs 收盘兑现层，不互为因果』，是唯一做到物理隔离的路；theme/limitup/logic/lhb 的定位是收盘复盘，用收盘结构判当日形态属本职，但 lhb 有一处需注意——它对 001318 的『封板门』用了 zt_pool 的首封/末封时间（112503/142927）而它在自身盲区里已声明该字段在『开盘价=跌停价』的票上系统性失效，今日 001318 非该类票，暂无实害。④数据口径错配（非编造，但须修）：theme 的『全场 15 只二板加/125=12.0%』跨日错配（应为 12/114=10.5%）；theme 声称的 _学习/题材四维_20261103.json、_学习/横切面扫描_20261103.json 经实测确不存在，但它把这两件写成『盲区』而非『已落盘』，属诚实缺口不是伪造（对比昨日它把不存在的文件写成已产出，今日已改正）。⑤缺件复核：_学习/主流题材6有_20261103.json、题材生命周期_20261103.json、题材归位_20261103.json、涨停对链条_20261103.json、席位荐票_20261103.json、涨停质量荐票_20261103.json、风险日历_20261103.json、日内温度曲线_20261103.json 均实际存在；logic 引用的『链条纵深库.json』真实路径在 _学习/ 下、mtime 与内容停在 20260713，与其『113 日未更新』自述一致。⑥结论：五路今日均未出现昨日那类『把不存在的文件写成已产出』的硬伤，A 档零虚标、零未来数据引用，故检查四项判 pass，仅留 1 条派生比率口径错配待修。
+①auction：竞价快照存档目录不存在 ⇒ 竞价额/竞价排名/竞价换手字段为 空值，非回填，属当日缺失（本路已标）；_学习/临盘决断_20261103_0921.json 为单时点 09:21 快照，不可代表全天（已标）。②limitup：_学习/日内温度曲线_20261103.json 共 332 个时点、样本为观察池 125 只而非全市场（已标）；309 日分位基准来自 _市场温度表（窗口 20260615~20261103），与质量库窗口 20260401~20260708 不同源；质量库 n=19673 与其自算 n=20285 差 612 笔，本路已并列两口径未混用（已标）。③theme：_学习/题材生命周期_20261103.json 自 20260713 起算 113 日、同源同脚本（已标）；_学习/题材四维_20261103.json 与 _学习/横切面扫描_20261103.json 实测不存在，四维/横切面两维缺失（已标为盲区）；昨日传媒封单 15.71 亿→今日 7.51 亿（今日值我逐只复算吻合）但昨日值未标源件，属轻缺口。④logic：产业链模板 20260401~20260708 口径、今日 0/48 命中；_学习/链条纵深库.json 最后更新 20260713（113 日未更新，我核 mtime 与内容一致）；iwencai 最新存档 20260908 ⇒ 业绩腿存在 56 日窗口偏差、且今日无存档（已标为单源）。⑤lhb：风险日历_20261103.json status=partial（限售解禁取数失败）、事件 590 条仅覆盖分红除权/股东减持/高管减持（已标）；自算冰点切片 20260615~20261030、23 个冰点日、2417 笔，与质量库 4607 样本不同源、不可相加（已标）。⑥结论：未发现『引用回填数据而未标窗口』的条目，上一轮同类问题（不标窗口直接引用概念指数/分时库）本轮已整改；仅 theme 的『昨日传媒封单 15.71 亿』缺源件标注，列为口径待补而不入 fail。
+名义总仓 4.0%（上限 4.5% 含条件单）：600261 阳光照明 1.5%（theme 5% 砍 70%，闸门 gap∈[-3%,+3%] 且非涨停价）、002652 扬子新材 1.5%（limitup 1% 上调，闸门 gap∈[-3%,+1.5]）、603906 龙蟠科技 1.0%（logic 1.5% 下调）、002292 奥飞娱乐 0.5% 条件单（仅 gap∈[-10%,-3] 成交，不成交不递补）；lhb 0 票空仓。总仓为名义值，按各路自报可执行率（0.333/0.607/约 0.65/0.156）折算，期望实际成交约 2.0%。纪律：单票≤1.5%、单日新增≤2 笔、不追一字、不追 gap≥+3、不参与 5 板以上接力、任何单笔 -3% 机械离场。
+①环境：20261104 涨停&lt;40 且 二板加≤8 → 冰点深化，全部条件单作废、已成交按 -3% 离场；涨停≥70 且 炸板率≤0.30 → 修复确认，档位由 C 上调 B、总仓上限升至 7%（theme D + limitup ① 双门）。
+②600261：封 5 板且 gap∈[-3,+1.5] → 高度轴延续、权重可由 1.5% 上调至 2%；gap≥+3 弃单记『不可成交』不计胜率；断板且执1≤-5% → 『冰点×4板+×换手≥20』格由常规格降为观察格，theme 的桶冲突裁决规则改为负桶优先。
+③002652：执1&gt;0 → 『冰点×尾盘首板×换手≥10』格成立、可升常规格；执1≤-4% → 该格权重清零并入库；同时验『羊字辈次日翻红 ≤2 只 → 名称噪声』（limitup ⑤ / logic ④）。
+④电池链：涨停≥8 家 且 新 2 板≥2 → logic 过保守、线级扩散成立（须建桶）；≤3 家 且 603906 执1≤-3% → 『产业趋势成立≠交易可得』分离判断成立。
+⑤传媒缩圈（本审反向假设）：传媒族涨停≥4 只 或 出现 ≥1 只 3 板 且 600892 封板 → 缩圈线为反抽起点；≤2 只 且 600892 断板且执1≤-3% → 假设证伪。
+⑥炸板池/跌停池（盲区补测）：20261104 观察今日 34 只炸板中未回封的 13 只、17 只跌停中 9 只流通≥100 亿的 AI 算力硬件，记录其次日执1均收与翻红率，作为『冰点反抽领先指标』的首个样本日。
+温度 20.3（309 日 8.9 分位、冰点档 &lt;25）与昨日 54.9 中性直接掉档；涨停 48（22.7 分位）、炸板率 41.5%（100 分位）、跌停 17（81.5 分位）、成交 17034 亿（6.5 分位）、封板总额 38.51 亿（-47.1%）；一进二 10.5%＜二进三 16.7%＜三进四 66.7%＞四进五 0%（倒金字塔、顶端 5 板以上空缺）；归位 A 档 0/48、六有全场最高 2/6 → 无方向级主线；冰点档各路历史战绩 theme 50.0%/+0.86、lhb 48.4%/+1.21、limitup 45.0%/-0.03、auction 36.0%/-1.08、logic 36.4%/-3.19，故仓位按 结构可得性 而非 命题可信度 分配。
+pass
+pass
+pass
+pass
+MA-20261103-01
+①修正派生口径：把『全场一进二 = 15/125 = 12.0%』改为 12/114 = 10.5%，并在正文标明分子（今日二板数）与分母（昨日首板数）来自哪一行数据；②给『桶冲突裁决』立先验规则：今日 600261 同时在 4板+×冷&lt;40（n=208，47.1%/+0.40）与 4板+×封单≥2%（n=319，30.7%/-1.47）两个竞争条件集里，须回答『当同一票同时落正桶与负桶时，按什么规则取桶』——要求用 20260401~20261030 全样本做回测：对每个 4 板+ 样本，分别按两条规则（取正桶 / 取最贴合个股特征的桶 / 取样本量最大桶）预测执1，给出三种规则的命中率与均收，输出到 _学习/桶冲突规则回测_20261103.json；③在荐票卡固定增加『可兑现期望 = 格执1均值 × 闸门触发率』字段，与名义权重并列。
+今日最大仓位分歧（600261：theme 5% vs limitup 0）的根因就是选桶规则缺先验，而 theme 刚好在同一份证据里正负两桶并存、取了正桶，事后择优的嫌疑无法自证；不立规则，明日 5 板或下一只 4 板票会重演同一争议。派生比率 12.0% 虽不影响档位结论，但一进二是核心情绪指标，错 1.5pp 会累积到温度模型。
+待承接
+MA-20261103-02
+①对 002652 做正交检验：在『冰点×尾盘首板×换手≥10』的 n=30 样本内，把催化/名称含谐音标签（羊字辈等）的票剔除后重算 n、胜率、执1/执2 均收；若剔除后均收 ≤0，则判定该格是名称效应的伪装，须把『谐音标签』做成该格的负向条件；若剔除后仍 &gt;+1%，则名称噪声不影响形态格，须在因子库登记『形态格与标签正交』。②把『可执行率』升级为全票固定字段并对昨日/今日两日复盘：给出昨日 5 只候选与今日 4 只候选的 闸门触发率 × 格均值 与实际成交率对照，量化『名义仓 vs 实盘仓』的系统性偏差。
+limitup 一边判『羊字辈是名称博弈不是产业主线』、一边把羊字辈的 002652 作为唯一荐票，逻辑未闭环；而 002652 的 +1.41% 可兑现期望正是总裁决里权重最高的来源，它若只是名称效应，明日的 1.5% 就是押在噪声上。可执行率字段是它昨日被指派的成果，今日必须验证是否真的降低了名义/实盘偏差。
+待承接
+MA-20261103-03
+①给固态电池/锂电链独立建桶：用 _市场温度表 冰点日（&lt;25）样本，按『电池链首板 / 电池链 2 板』分别算 执1、执2 的 n/胜率/均收、gap 分布、闸门触发率（gap∈[-3,+3]），并与全市场冰点首板基线对比，输出 _学习/桶_电池链冰点_20261103.json；明确回答『冰点×电池链首板 n=18/33.3%/-1.18%』是否结构性（用 20260615~20261030 与 20260401~20260708 两个窗口分别验，不同源不许相加）。②解决结构口径无库可比：产业链模板 0/48 命中、链条纵深库停在 20260713，须说明今日『8 环节』的环节词典与模板差在哪，并给出把电池链写入模板的最小字段方案（含公告级催化来源）。③业绩腿换源：把 iwencai 20260908 存档（56 日窗口偏差）替换为可当日核验的 THS 三季报，并补上『公告日』字段以便判断买入日前是否已披露。
+logic 是今日唯一主张升 B 的路，而它的 B 完全建立在『真产业趋势』上；这条链若真成立将是新主线（今日已占涨停 22.9%），若只是又一次宽度陷阱，则本审的降档正确。建桶是唯一能把『产业趋势成立≠交易可得』这句话变成可结算数字的动作。
+20261106
+待承接
+MA-20261103-04
+①给今日 34 只炸板（重点 13 只未回封）与 17 只跌停（重点 9 只流通≥100 亿的 AI 算力硬件）做次日定价：按 炸板次数/首封时间/换手/所属线 分桶，用历史同桶样本算 次日执1 的 n/胜率/均收 与 反包率，输出 _学习/桶_炸板池_20261103.json 与 _学习/桶_跌停池_20261103.json；②回答『缩量冰点（17034 亿、6.5 分位）vs 放量冰点』的次日修复概率是否不同，用成交额分位分两组给数字；③补竞价快照存档目录缺失的取数方案（哪个落盘脚本、每日几点写、字段清单），使竞价额/排名/换手不再为 空值。
+今日五路全部只给『已封住的 48 只』定价，34 只炸板 + 17 只跌停 + 缩量属性三个池子无人建模，而冰点日的次日反抽通常从炸板反包与超跌修复起——这是本轮最大的趋同盲区。auction 是唯一具备竞价层（T+1 09:25 前）口径的路，也是唯一能把『低开带』概率化的路，因此由它承接。
+20261106
+待承接
+L-20261103-01
+600261 的 5% 权重源于『竞争条件集里取正桶』，而非格均值×触发率
+观察中
+20261104 600261 执1：&gt;0 且封 5 板 → 正桶派短期占优（但规则仍须回测，不以 n=1 改规则）；执1≤0 → 负桶派占优，theme 须改取保守解
+L-20261103-02
+AI应用/传媒 缩圈强化（宽度 45→7 但 6/7 二板、封单比中位 0.37→1.25%、单票封单 0.35→1.07 亿）是本审反向假设的锚
+观察中
+20261104 传媒族涨停≥4 或 出现≥1 只 3 板且 600892 封板 → 成立；≤2 且 600892 断板执1≤-3% → 证伪
+L-20261103-03
+磷酸铁锂正极 5/5 营收翻倍（龙蟠/丰元/湖南裕能/德方纳米/万润新能）+ 上游天齐 +147.1% + 下游宁德 +56.2%/亿纬 +63.1%，三级同向
+观察中
+20261104 电池链涨停≥8 且新 2 板≥2 → 线级扩散；≤3 且 603906 执1≤-3% → 趋势与可得性分离成立
+L-20261103-04
+真实率首次转负 -9.8%（席位侧 +58.03 亿 vs 票级 -5.7130 亿），席位净额只可判名单不可判强度
+观察中
+20261104 票级当日榜净买&gt;0 且 席位侧/票级≤3 倍 → 判负（负值是买榜口径必然）；票级再造负 → 升级为硬规则『净卖环境不参与』
+L-20261103-05
+闸门是带选择器不是风险过滤器（门内 9 只 -0.95% vs 全池 -2.56%，+1.61pp）
+已证实
+20261103 竞价池结算已结算：门内(gap&lt;5) 与前 14 个月同向；后续验证点为『分段闸门 (-10,-3]∪(0,2] 加权单笔 +1.24% vs 原闸门 -0.37%』的实盘成交样本
+20261106
+L-20261103-06
+冰点×尾盘首板×换手≥10 n=30 67.9%/+2.33%（002652 所在格）、可兑现 +1.41% 为今日最高
+观察中
+20261104 002652 执1&gt;0 → 格升常规；≤-4% → 格清零；同时验剔除谐音标签后是否仍正（MA-20261103-02）
+L-20261103-07
+34 只炸板（13 只未回封）+ 17 只跌停（9 只 ≥100 亿 AI 算力硬件）+ 6.5 分位成交额 = 五路共同未定价的三个池子
+观察中
+20261104 记录三池的次日翻红率/执1 均收，若炸板未回封池翻红率 ≥40% 或 跌停池修复 ≥30%，则『反抽从炸板/超跌起』成立并须建模；否则确认冰点延续
+L-20261103-08
+昨日总裁决 B 档 6.0% 在冰点日属过进取 1 档（温度 54.9→20.3 一日掉档），档位升降须连续两日确认
+已证实
+20261104 若温度仍在 &lt;25 或涨停&lt;70，则『一日跳档不可作为 B 档依据』升级为硬规则写入总审方法层；若涨停≥70 且炸板率≤0.30 则记『昨日 B 档仅迟到一日』
+『真产业趋势』与『可交易主线』的分野：电池链 11 只（22.9%）vs 传媒缩圈 7 只
+今日两条线各有『真』的一面——电池链有产业级业绩共证（正极 5/5 营收翻倍、上中下游三级同向），传媒链有缩圈强化（宽度 -84.4% 但线内 6/7 二板、单票封单 +206%）；但主线资格的两条硬门槛（宽高同线、封板质量）都不成立：电池链 13 只宽却最高 2 板、一字 0、早封 1/13=7.7%，传媒链 7 只里 0 只 3 板。所以『产业趋势为真』与『有主线可做』可以同时为假——五路全 C 不是集体悲观，是两条门槛都过不去。
+20261104 若 电池链涨停≥8 家且新 2 板≥2（线级扩散成立）或 传媒族涨停≥4 且出现≥1 只 3 板（缩圈升级），则本条的『分野判断』错，须把对应线升为主线候选并给线级仓位上限；两者都未达则分野判断成立。
+冰点日的定价样本错位：五路只给『已封住的 48 只』定价，34 炸板 / 17 跌停 / 6.5 分位成交额三池空白
+冰点日次日反抽的经验起点通常不是今日封住的票，而是今日炸掉的（13 只未回封）与被杀过头的（9 只流通≥100 亿 AI 算力硬件）。五路共用一个后视指标『昨日涨停今日执1 -1.19%/30.6%』代表赚钱效应，这是当日最坏时点的读数，用它推次日系统性偏空；再叠加缩量（17034 亿、6.5 分位）这一未建模属性，五路的一致悲观缺少一个独立证据源。
+20261104 记录 13 只未回封炸板池的翻红率与执1均收：翻红率≥40% 或 均收&gt;0 → 『反抽从炸板池起』成立，须为该池建模并纳入温度计；同时 17 只跌停池修复率≥30% 则权重票止跌可作为情绪修复领先指标。两项都未达则确认冰点延续、现有样本口径可用。
+环境加权与仓位分配的错配：冰点最优的两路（lhb 48.4%/+1.21、theme 50.0%/+0.86）一个 0 票、一个被砍到 1.5%，仓位实际落在中游（limitup -0.03）与最差（logic -3.19）上
+这不是裁决错误而是约束下的次优解：lhb 的候选被两条硬门全否，无标的可承接，仓位只能向次优路倾斜。但代价要记账——系统在『最会做冰点的路无票』时，把风险预算交给了历史最差的路。明日环境一旦改善（出现 lhb 四条件交集票），应优先恢复 lhb 权重而不是均摊，否则环境加权的优势永远兑现在纸面上。
+20261104 若 lhb 出现『S/A 净买≥1000 万 ∧ 涨停 ∧ 三季报净利≥0 ∧ 占比落 5-20% 正桶』交集≥1 只，则该票权重直接给 2.0%（高于其他路同格上限 1.5%），作为环境加权兑现的检验；0 只则本条顺延不结算。
+档位=次日可得性评级，不是命题可信度评级；桶为负还升档属标签虚高
+logic 的 B 档建立在『电池链真产业趋势』上，但其自算冰点×电池链首板 n=18/33.3%/-1.18%，且 B 档只给 1.5%（与昨日 C 档同额）——标签与仓位自相矛盾。本审据此降 B→C，同时保留产业趋势为线级线索。
+20261104 若电池链涨停≥8 家且新 2 板≥2，且 603906 执1≥+2%，则降档过严、B 档标签应保留；若电池链≤3 家且 603906 执1≤-3%，则『趋势成立≠交易可得』升级为硬规则写入档位定义。
+同一票同时落正桶与负桶时，取桶规则必须事前立，否则事后择优无法自证
+600261 同时在 4板+×冷&lt;40（n=208，47.1%/+0.40）与 4板+×封单≥2%（n=319，30.7%/-1.47），theme 取了正桶并给 5%，而后者恰好条件在其自身强调的『封比 3.01% 落强 2-4% 负桶』这一特征上。
+theme 回测『取正桶 / 取最贴合个股特征的桶 / 取样本量最大桶』三规则后，若『取正桶』在 4 板+ 全样本上命中率与均收均最优，则本审质疑撤回并改为标准做法；若否则取桶规则须写入 specs。
+冰点日名义仓≠实盘仓，权重必须乘闸门触发率，否则权重只是纸面排序
+今日四票可执行率 0.156（002292）/0.333（600261）/0.607（002652）/约 0.65（603906）；名义 4.0% 折算期望成交约 2.0%，若按名义仓管风险会高估一倍敞口。
+20261104 若 600261 与 002292 均触发成交（gap 落在各自门内），说明触发率估计系统性偏低，须用两日实盘样本重估；若均未触发，则折算口径可用。
+档位升降须连续两日确认；单日温度跳档（54.9→20.3）不得作为 B 档依据
+昨日总裁决 B 档 6.0%、置信 63，今日温度直接掉到 20.3 冰点，昨日 10 条预测 5 伪，6.0% 名义仓在冰点日属过进取。唯一兜住损失的是『四票全为条件单』的执行约束。
+20261104 若温度仍&lt;25 或涨停&lt;70，则本条升级为总审方法层硬规则（档位确认须两日）；若涨停≥70 且炸板率≤0.30，则记『昨日 B 档仅迟到一日』，规则降为建议。
+theme（limitup 同票给 0）
+theme 5% 砍至 1.5%：4 板冰点格两路都认正，但可兑现期望仅 +1.21%（3.62%×33.3%）且连两日 gap+10%，桶选择存在事后择优嫌疑；名义 1.5%，闸门 gap∈[-3%,+3] 且非涨停价
+1% 上调至 1.5%：可兑现期望 +1.41% 为四票最高、触发率 60.7%；但属羊字辈名单，附『次日羊字辈翻红≤2 只即归零』条件
+1.5% 下调至 1.0%：电池链产业趋势真实，但该链冰点桶 n=18/33.3%/-1.18% 为负、logic 冰点档历史 -3.19% 最差，只给单点观察性仓位
+0.5% 仅 gap∈[-10%,-3] 成交，不成交即 0 仓；格 n=22/54.5%/+3.47% 为今日唯一正期望低开带，但 n&lt;30 只作方向、且属羊字辈
+002086 东方海洋
+两路均为观察（0 权重）：4 板但炸 3 次、无业绩（减亏仍 -6793 万）、线宽 1，与 600261 同格但封板质量更弱
+600892 大晟文化
+theme / auction
+观察 0 权重：2 板一字、封单 2.49 亿（封比 9.27%）属强封族、竞价路历史强封族为负；但保留为反向假设的锚（见可证伪条件）
+002805 丰元股份
+观察 0 权重：与 603906 同环节，避免同链双仓（同线共振），仅在 603906 弃单时作替补
+601123 马矿股份
+观察 0 权重：尾盘首封 144743、冶钢原料、非电池链核心环节，属逻辑外延票
+000591 太阳能
+观察 0 权重：净买占比 23.05% 落 &gt;20% 极值桶（冰点 n=46/34.8%/-0.32%）且三季报 -21.73%，两条硬门全否
+001318 阳光乳业
+观察 0 权重：封单比 3.7% 不达 5% 封板门、末封 14:29 尾盘回封、净利 -25.71%
+002692 远程股份
+观察 0 权重：首板薄封（封板 1.5 亿级）、电线电缆非电池链核心，未落竞价池正族
+000995 皇台酒业
+auction / limitup
+观察 0 权重：3 板一字，limitup 判其格为全库最差（冰点×3板×封单≥4% n=19 执1 10.5%/-0.79%、gap 中位 10% 买不进）
+能力预加载_20261103.json#routes.master + 能力使用回执_20261103.json
+no_eligible_capabilities
+master 域预加载 eligible_count=0，禁止虚构能力；本审不引入未验证能力作为裁决依据。
+extension:cap-lhb-netbuy-valid
+applied
+extension:cap-limitup-turnover-valid
+applied
+no_eligible_capabilities
+no_eligible_capabilities
+no_eligible_capabilities
+cycle
+no_eligible_capabilities
+no_eligible_capabilities
+本字段为契约补齐（20261001 起强制），内容逐项搬运自预加载与回执原文，未改写总裁决、五路裁决或任何荐票。
+Index · 概览 · 截至 2026-11-03 收盘
+启动一日游：温度 54.9→20.3、涨停 125→48、炸板率 41.5% 创 309 日最高，跌停 17 只——环境二次探底、五路全 C，明日只做结构不做方向
+此刻我对市场的判断：昨日「封板质量修复」被今日一天打回，问题不在宽度而在承接——二板加 15 只里没有一只走出三板，炸板 34 只、封板总额从 72.8 亿腰斩到 38.5 亿。明日不猜方向，只按闸门执行：四只条件单名义 4.0%（期望实际成交约 2.0%），不成交即 0 仓；第一屏先看五只关键票的身位，右栏是三个断点与两处背离。
+· 温度 20.3（昨 54.9）
+冰点第 1 日
+· 方向 降（启动失败）
+C 档防守
+· 74 分 · 名义 4.0%（上限 4.5%）
+市场温度冰点温度 · 昨 54.9（中性）/ 前日 15.2（冰点）20.3 / 309 日 8.9 分位单日 -34.6，8 个「急跌入冰点」前例之一
+涨停 / 跌停双杀涨停 · 昨 125 / 前日 4748 / 跌停 17跌停 81.5 分位；涨停 ∩ 流通≥100 亿仅 2 只=4.2%
+炸板率极值炸板 34 只 / 昨日 28 只41.5% / 昨 18.3%309 日 100 分位＝历史最高；回封 21 只=25.6%
+最高板 / 二板加断层梯队 4板2·3板1·2板12·首板334 板 / 二板加 15一进二 10.5%（昨 16.7%）· 高度晋级 27.3%
+一 明日核心观察点 · 五只
+阳光照明6002614 板 · 全池最高身位逻辑高度轴唯一 core：封单 1.99 亿/封比 3.01%/换手 25.52%/炸 5 次后 09:35 回封。题材 5% 与质量 0 的分歧由总审裁到 1.5%，闸门 gap∈[-3%,+1.5%] 且非一字；gap≥+3% 一律弃单记不可成交。明日判定强：gap 落区间且非一字 → 权重可升 2%。弱：断板且执1≤-5% → 『冰点×4板×换手≥20』格降为观察格。
+扬子新材002652首板 · 尾封 14:32身位逻辑唯一正首封桶（尾封）：炸 0、换手 18.25%、封单 0.19 亿/成交 3.69 亿=5.2%。总审 1.5%，闸门 gap∈[-3%,+1.5%]。明日判定强：执1&gt;0 → 『冰点×尾封×换手≥10』格升常规格。弱：执1≤-4% → 该格权重清零。
+龙蟠科技6039062 板 · 磷酸铁锂正极身位逻辑电池链 11 只的中游材料承载位，三季报营收 29.34 亿兑现。logic 1.5% 被总审降到 1.0%，闸门随 master（非一字、gap≤+1.5%）。明日判定强：电池链明日涨停≥8 家且新 2 板≥2 → 线级扩散成立须建桶。弱：≤3 家且执1≤-3% → 只做单点不定线。
+奥飞娱乐0022922 板 · 池内竞价分第 1身位逻辑竞价池唯一具备『炸1+薄封 1.25%+秒板』三元同向的票，0.5% 条件单只在 gap∈[-10%,-3] 成交，不成交不递补。明日判定强：低开落区间后翻红 → 『炸1+薄封』格可升级。弱：高开 gap≥5% → 该池 day1 结构证伪（池内 gap≥5 只数&gt;5）。
+大晟文化6008922 板 · 缩圈线核心身位逻辑总审反向假设的锚：传媒族是今日唯一『缩圈同时强化』的线（宽 45→7、线内 6/7 二板、一字 2、早封 5/7、封单合计 7.51 亿）。观察不买，只作反抽验证锚。明日判定强：传媒+软件宽≥15 且最高板≥3 → 『无主线』判错、C 升 B。弱：宽≤5 且最高板≤2 → 缩圈线熄火。
+右栏 · 三个断点与两处背离
+断点① 回封 21/34=61.8%，但回封票封单中位不足昨日六成——「回封≠修复」。
+断点② 二板加 15 只却无一晋级三板，3 板档只剩 1 只（000995 皇台酒业）。
+断点③ 一进二 10.5% 与 27.4 分位同向，首板占比 68.8% ＝ 宽度靠新票撑。
+背离① 核按钮 0/125=0.0% 与跌停 17 只背离：杀的是权重硬件（深南/光迅/景旺/德明利），不是接力链。
+背离② 成交额 1.70 万亿（6.5 分位）缩量下跌，跌幅来自封板质量而非放量出货。
+4.0% / 4.5%名义 / 上限
+二 五路看牌 · 档位与产出
+竞价命门 C 档 · 置信 60档位 C（防守），置信度 60。温度 20.3（昨 54.9）跌回冰点&lt;25 档——我自算该档 20 个池日池均收 -1.08%、正日 7/20、票级胜率 36.0%（n=214）。今日池 1荐票 1 只 / 标的 4 项 · 本路落点 002292 奥飞娱乐
+席位命门 C 档 · 置信 74席位路今日仍不进攻：正式荐票 0 只（空仓，连续第二日），档位 C，置信 74。三条硬事实支撑：①S/A 池只剩 12 笔 / 1.2775 亿（昨日 9 笔 / 1.5323 亿），S 档第荐票 0 只 / 标的 2 项 · 本路落点 空仓（连续第二日）
+题材命门 C 档 · 置信 85无主线（退为轮动）· C 档 · 置信 85。①六有：全场无题材过 6 有，聚类口径最高 2/6（电力设备/新能源、AI应用/传媒、周期/资源材料、消费/大消费 四条并列 2/6），行业口径最荐票 1 只 / 标的 3 项 · 本路落点 600261 阳光照明
+产业逻辑 B 档 · 置信 70温度 20.3（冰点档，昨 54.9 中性）、涨停 48/跌停 17、封板 38.5 亿（昨 72.8 亿）、炸板率 41.5%、最高 4 板——今日的上涨**不是普涨式情绪抱团，而是一条真产荐票 0 只 / 标的 3 项 · 本路落点 603906 龙蟠科技
+涨停复盘 C 档 · 置信 72冰点日（温度 20.3，309 日 8.9 分位；昨 54.9）的涨停结构不具备次日持续条件，且不是『缩量休整』而是『宽度与封板质量同时崩』：涨停 48（22.7 分位）、炸板率 41.5%（荐票 1 只 / 标的 3 项 · 本路落点 002652 扬子新材
+三 明日验证 · 竞价强弱预判与明晨三条
+gap ≥ +5%
+一律弃单：冰点档高开≥5 执行均收 -4.37%（最差档）
+-3% ≤ gap ≤ +1.5%
+唯一可成交区间：002652 / 603906 / 600261 共用主区间，落此区间才递单
+gap ≤ -3%
+仅 002292 条件单：落 [-10%,-3%] 成交，不成交不递补、不改替代票
+一字 / 涨停价开盘
+600261 类连续一字高开一律弃单，记「不可成交」不计胜率
+四 总裁决 · C 档 74
+项目内容
+裁决冰点二次探底未确认、五路全 C，明日只做结构不做方向：名义 4.0%（条件单为主，期望成交约 2.0%），单票≤1.5%，600261 类连续一字高开一律弃单。
+仓位名义总仓 4.0%（上限 4.5% 含条件单）：600261 阳光照明 1.5%（theme 5% 砍 70%，闸门 gap∈[-3%,+3%] 且非涨停价）、002652 扬子新材 1.5%（limitup 1% 上调，闸门 gap∈[-3%,+1.5]）、603906 龙蟠科技 1.0%（logic 1.5% 下调）、002292 奥飞娱乐 0.5% 条件单（仅 gap∈[-10%,-3] 成交，不成交不递补）；lhb 0 票空仓。总仓为名义值，按各路自报可执行率（0.333/0.607/约 0.65/0.156）折算，期望实际成交约 2.0%。纪律：单票≤1.5%、单日新增≤2 笔、不追一字、不追 gap≥+3、不参与 5 板以上接力、任何单笔 -3% 机械离场。
+纪律单票≤1.5%、单日新增≤2 笔、不追一字、不追 gap≥+3%、不参与 5 板以上接力、任何单笔 -3% 机械离场
+推演差异推演给出名义 3.5%（低于总审上限 1.0pp），差额来自 600261 由 1.5% 降至 0.5%；两套口径都记，明日按总审上限执行、按推演做降仓预警
+五 检查四项与发布门禁
+零编造
+pass：五路荐票标的全部 ∈ 20261103/zt_pool.csv，数字回源 fact/summary/温度表
+零后视镜
+pass：全部结论只用 ≤20261103 数据，竞价层与收盘兑现层分层
+口径一致
+pass：涨停 48 为剔 ST 口径（zt_pool 48 行），与温度表 20261103 一致
+发布门禁
+总审/推演/五路/台账/哨兵 C1-C28 全过才发版；任一 FAIL 不出页
+六 我的认知迭代
+2026-11-03
+启动可以一天走完，冰点也可以一天回来
+昨日判「启动第一天」的依据是质量三项到 309 日极值；今日这三项全部反向（炸板率 18.3%→41.5%、回封 66.4%→25.6%、封板总额 72.8→38.5 亿）。
+教训：质量极值只能证明「当日封得好」，不能证明「次日有人接」。以后凡「质量到极值 + 二板加停在低分位」的组合，阶段上限锁启动，仓位按 C 档执行。
+第二，五路本次全 C 且全部只给单票 ≤1.5%，是同一个样本盲区（只给已封的 48 只定价）；明日必须把 34 只炸板池与 17 只跌停池纳入定价，否则永远漏掉反包与杀跌两条腿。
+</pre></div><div class="audit-anchor-bank" hidden aria-hidden="true"><span id="evidence-ev-index-578a74120e65bf94"></span><span id="evidence-ev-index-ff558687b98f0e2a"></span><span id="evidence-ev-index-e02eadfaf3259ca7"></span><span id="evidence-ev-index-e4da0dca8e5d200d"></span><span id="evidence-ev-index-b052d28697d9b64c"></span><span id="evidence-ev-index-bf361e6ab046d13f"></span><span id="evidence-ev-index-94bb7b72cd052cd2"></span><span id="evidence-ev-index-e0af9cbebd8ae273"></span><span id="evidence-ev-index-e53e10255e3a5aee"></span><span id="evidence-ev-index-4c0b0fbc22d3f885"></span><span id="evidence-ev-index-039f976c1df285df"></span><span id="evidence-ev-index-7b5391e3ae5eb953"></span><span id="evidence-ev-index-370bc6a979f4ab4c"></span><span id="evidence-ev-index-15c4d12174e9c72c"></span><span id="evidence-ev-index-be16a59d433d98b8"></span><span id="evidence-ev-index-6c2122fc08e8fd14"></span><span id="evidence-ev-index-158592234dd4857a"></span><span id="evidence-ev-index-fee3b77dd9b16f29"></span><span id="evidence-ev-index-6564f61040dcf53b"></span><span id="evidence-ev-index-ba276b49ddd48f0f"></span><span id="evidence-ev-index-bc4b34245f67404f"></span><span id="evidence-ev-index-dc7d3c87855ad45e"></span><span id="evidence-ev-index-8f584051231c65b9"></span><span id="evidence-ev-index-5e3065ec1c9dcb6a"></span><span id="evidence-ev-index-3b0e9b0e71124b6b"></span><span id="evidence-ev-index-22fd75886011c864"></span><span id="evidence-ev-index-b43e333673ec7937"></span><span id="evidence-ev-index-8199efdf20b03da0"></span><span id="evidence-ev-index-039319ec572b9cb9"></span><span id="evidence-ev-index-20079fec6b4dcb14"></span><span id="evidence-ev-index-616ec6c668b4699e"></span><span id="evidence-ev-index-6b4ccee215f5f4e4"></span><span id="evidence-ev-index-151d2e4de2e70a50"></span><span id="evidence-ev-index-5bb407846f34f5a6"></span><span id="evidence-ev-index-c551a685ff32a5b0"></span><span id="evidence-ev-index-d57475cc36706de5"></span><span id="evidence-ev-index-1c99e48ffa1d520f"></span><span id="evidence-ev-index-bc05a41aca2f9cea"></span><span id="evidence-ev-index-ab8017c98b054eb4"></span><span id="evidence-ev-index-05c3bc2f3a103a8a"></span><span id="evidence-ev-index-73ed79567c703baf"></span><span id="evidence-ev-index-e3f2e919e9f51ef2"></span><span id="evidence-ev-index-37f566d795d4a79f"></span><span id="evidence-ev-index-efb26a80ac5daf3e"></span><span id="evidence-ev-index-3f79ff3eaa92d274"></span><span id="evidence-ev-index-91bd1265ce5255cd"></span><span id="evidence-ev-index-526c032ea40d46b7"></span><span id="evidence-ev-index-b394a2beb3a51d8d"></span><span id="evidence-ev-index-2e2458f9f50bc947"></span><span id="evidence-ev-index-5b05981c396443fd"></span><span id="evidence-ev-index-a5743771acdf4345"></span><span id="evidence-ev-index-7b4e60f56ab994f7"></span><span id="evidence-ev-index-1681d5e5ffb22b17"></span><span id="evidence-ev-index-e072593302adcdd9"></span><span id="evidence-ev-index-62283185f0cd3ab8"></span><span id="evidence-ev-index-eac2b16adbc60222"></span><span id="evidence-ev-index-a280697001fffdfa"></span><span id="evidence-ev-index-8041dc632a6b91a7"></span><span id="evidence-ev-index-6e04c287887b1ef3"></span><span id="evidence-ev-index-7b0719f830ade50f"></span><span id="evidence-ev-index-127ba050812ccdcb"></span><span id="evidence-ev-index-0bccf38104093ff8"></span><span id="evidence-ev-index-d6ec45917d454f92"></span><span id="evidence-ev-index-93f66b8856a74b33"></span><span id="evidence-ev-index-5496a2174dc8bba1"></span><span id="evidence-ev-index-82f9ef7ba22e547a"></span><span id="evidence-ev-index-797b782628149e6a"></span><span id="evidence-ev-index-acc60a41e5c1c3f5"></span><span id="evidence-ev-index-0415874094c8f44f"></span><span id="evidence-ev-index-e36fbdde373defe1"></span><span id="evidence-ev-index-7ae15ee7cd752ae7"></span><span id="evidence-ev-index-f8dea4d549f43b29"></span><span id="evidence-ev-index-af46abc9e965321e"></span><span id="evidence-ev-index-ad371f5bf3c02797"></span><span id="evidence-ev-index-1cc48f7834dd3edc"></span><span id="evidence-ev-index-1e0e77b316bfc38b"></span><span id="evidence-ev-index-d18c47569cf081b0"></span><span id="evidence-ev-index-47de0dfd3f0f8a2a"></span><span id="evidence-ev-index-5090dad3b81a799f"></span><span id="evidence-ev-index-e44b7280208c4eb9"></span><span id="evidence-ev-index-5cf0c153832c2bb1"></span><span id="evidence-ev-index-f434fe6a1e65f59b"></span><span id="evidence-ev-index-72732c90b11d35a9"></span><span id="evidence-ev-index-b247ab7e0bb7a958"></span><span id="evidence-ev-index-c61c221e0d366303"></span><span id="evidence-ev-index-c6072ae15078d9c9"></span><span id="evidence-ev-index-e5757c3f31213cf2"></span><span id="evidence-ev-index-4b5cf5703f5d8b88"></span><span id="evidence-ev-index-376fac422e4e9029"></span><span id="evidence-ev-index-0155f2bca7f98547"></span><span id="evidence-ev-index-5a29f4cf3e639d54"></span><span id="evidence-ev-index-9e9552506406d2df"></span><span id="evidence-ev-index-5617ff5da3a6d5c3"></span><span id="evidence-ev-index-c0d45aaa3ad59b92"></span><span id="evidence-ev-index-28cd3838bb4b4f65"></span><span id="evidence-ev-index-a12be8efada7ac1f"></span><span id="evidence-ev-index-83b7d61ce3233117"></span><span id="evidence-ev-index-12866e4f08d61a88"></span><span id="evidence-ev-index-e89f15c72a874f91"></span><span id="evidence-ev-index-6618872b92ae4b8e"></span><span id="evidence-ev-index-897a7e121ae6fce0"></span><span id="evidence-ev-index-f4f332d22629075d"></span><span id="evidence-ev-index-8c287ececf462f57"></span><span id="evidence-ev-index-d70202420d9b15b9"></span><span id="evidence-ev-index-c4053904a8b3b7ae"></span><span id="evidence-ev-index-9f3d21bdd0bc3090"></span><span id="evidence-ev-index-0fe463fad4624c63"></span><span id="evidence-ev-index-6c791f98e5b64afa"></span><span id="evidence-ev-index-af07ab5fc4f04aaa"></span><span id="evidence-ev-index-ad52ba1c4d3d37d8"></span><span id="evidence-ev-index-7e497b99334a7f6a"></span><span id="evidence-ev-index-e8fd18f47e4379ca"></span><span id="evidence-ev-index-2354fac9ef86eb6d"></span><span id="evidence-ev-index-0436ca33b7da6640"></span><span id="evidence-ev-index-b9745847672d09a7"></span><span id="evidence-ev-index-82b272df176f2f3c"></span><span id="evidence-ev-index-7cb064e0a9ff2ac1"></span><span id="evidence-ev-index-a7acc336a1df4f39"></span><span id="evidence-ev-index-b4ca6f9b2c383ddd"></span><span id="evidence-ev-index-5e1dda79cf1f8e3d"></span><span id="evidence-ev-index-dec3f99297afd9be"></span><span id="evidence-ev-index-f98f62284ebf4d56"></span><span id="evidence-ev-index-cb39234e5582ed7e"></span><span id="evidence-ev-index-8fc05431a2677fe2"></span><span id="evidence-ev-index-8b159e8dbbfe220f"></span><span id="evidence-ev-index-f75f26aa5cd2b3c3"></span><span id="evidence-ev-index-85ad3a573d056910"></span><span id="evidence-ev-index-c7b728d1297568a8"></span><span id="evidence-ev-index-4983cc95f911f46e"></span><span id="evidence-ev-index-1cafe18ba85a31d1"></span><span id="evidence-ev-index-768ddd8bb9f46418"></span><span id="evidence-ev-index-b82fc27d18f82c58"></span><span id="evidence-ev-index-83bedaef51ff18fc"></span><span id="evidence-ev-index-383bee35bd77fc72"></span><span id="evidence-ev-index-a5b6489530552c7f"></span><span id="evidence-ev-index-cc31a9fafea41ab2"></span><span id="evidence-ev-index-25e01d243154428e"></span><span id="evidence-ev-index-55b5117572c368fa"></span><span id="evidence-ev-index-dfc6e927edf6984b"></span><span id="evidence-ev-index-6c820dfb8450393f"></span><span id="evidence-ev-index-42305717a9a4ae09"></span><span id="evidence-ev-index-6422c90bd6b171de"></span><span id="evidence-ev-index-03e382eb2d84a71d"></span><span id="evidence-ev-index-a022c7c1db65a7da"></span><span id="evidence-ev-index-3109c315f5a12039"></span><span id="evidence-ev-index-0bdc1847daad2301"></span><span id="evidence-ev-index-0b29e742cec0fbdd"></span><span id="evidence-ev-index-3bc6f41c2ff2ea99"></span><span id="evidence-ev-index-efd2247e4e78a13f"></span><span id="evidence-ev-index-a528057d0112cabd"></span><span id="evidence-ev-index-8ac7f364e905042c"></span><span id="evidence-ev-index-92a339e699531681"></span><span id="evidence-ev-index-de24f8e5e10ac0d7"></span><span id="evidence-ev-index-8655184f41732325"></span><span id="evidence-ev-index-7c793ae2f576e2ef"></span><span id="evidence-ev-index-6f82fa4095ae0b91"></span><span id="evidence-ev-index-5bdb4cc24db211e8"></span><span id="evidence-ev-index-ed6025ae03f3bc93"></span><span id="evidence-ev-index-bace418efde735c8"></span><span id="evidence-ev-index-5984f1f23d1aa0ea"></span><span id="evidence-ev-index-d68e646f97545a95"></span><span id="evidence-ev-index-e3157d49c8fef373"></span><span id="evidence-ev-index-87993900b7fd8c52"></span><span id="evidence-ev-index-3defd6fca0fec29a"></span><span id="evidence-ev-index-3437aef3f9d4664e"></span><span id="evidence-ev-index-a0ef9036bc3863ba"></span><span id="evidence-ev-index-2c98f66a8ae439fe"></span><span id="evidence-ev-index-513b14654c84c610"></span><span id="evidence-ev-index-7734036844558ca9"></span><span id="evidence-ev-index-1d1f5cfec8c12036"></span><span id="evidence-ev-index-587910968adb43fa"></span><span id="evidence-ev-index-79cfffaf0f6c37c9"></span><span id="evidence-ev-index-f986445b259de955"></span><span id="evidence-ev-index-bbf7873c98cb4309"></span><span id="evidence-ev-index-2371b70ccd2bbad0"></span><span id="evidence-ev-index-e2b32b2be39926e1"></span><span id="evidence-ev-index-72459d7f41017a77"></span><span id="evidence-ev-index-3f222063f98b0594"></span><span id="evidence-ev-index-3f8c8a6f9f7dfef7"></span><span id="evidence-ev-index-eaa2cc8dfca75079"></span><span id="evidence-ev-index-cc435a8c10e30bb7"></span><span id="evidence-ev-index-964a62c9c544690c"></span><span id="evidence-ev-index-cea7f92472eef943"></span><span id="evidence-ev-index-fa1e3dc40c15a21e"></span><span id="evidence-ev-index-ef1665cd117e31d7"></span><span id="evidence-ev-index-b1753fb8aa31f4dd"></span><span id="evidence-ev-index-66afd7ed0a77a7d8"></span><span id="evidence-ev-index-717cf2f2534c0e5e"></span><span id="evidence-ev-index-e1fc602894627299"></span><span id="evidence-ev-index-a31725508211305d"></span><span id="evidence-ev-index-1641b5a2850f7a3f"></span><span id="evidence-ev-index-a7f6840ff658ddf5"></span><span id="evidence-ev-index-44c1425bcd56d968"></span><span id="evidence-ev-index-2ce722b637edfacf"></span><span id="evidence-ev-index-a0520acf07a4e3c6"></span><span id="evidence-ev-index-cd56e0219fef5835"></span><span id="evidence-ev-index-707dbd9365d9eed6"></span><span id="evidence-ev-index-77fb38e28ff2a71f"></span><span id="evidence-ev-index-e459936b420fc360"></span><span id="evidence-ev-index-8967ae4e6ce8df15"></span><span id="evidence-ev-index-83e5448d30572a00"></span><span id="evidence-ev-index-9f34d3eb8c4387eb"></span><span id="evidence-ev-index-89bfe6fc66836471"></span><span id="evidence-ev-index-2b6d58564e0e8520"></span><span id="evidence-ev-index-68c614349384cc7b"></span><span id="evidence-ev-index-260be3d8c6e21e65"></span><span id="evidence-ev-index-5b3ec9ba4be7df2d"></span><span id="evidence-ev-index-743a4e41679a4f85"></span><span id="evidence-ev-index-c9a7abc5daa7f8b7"></span><span id="evidence-ev-index-32c1be863885bd8d"></span><span id="evidence-ev-index-908e11d1e0731ed7"></span><span id="evidence-ev-index-cece057de64dacfe"></span><span id="evidence-ev-index-ec2bdc564f35b5d4"></span><span id="evidence-ev-index-5cc1cdc01692c107"></span><span id="evidence-ev-index-606536268ad2c37f"></span><span id="evidence-ev-index-a1b93bd595ce63cf"></span><span id="evidence-ev-index-4ed8f8da3668550f"></span><span id="evidence-ev-index-9f35d48d68c53b44"></span><span id="evidence-ev-index-2c272e3327215018"></span><span id="evidence-ev-index-7bbd9ae80ea98d04"></span><span id="evidence-ev-index-5fa6441ba11f6a2e"></span><span id="evidence-ev-index-903f4065841a65fc"></span><span id="evidence-ev-index-02d3419b126ede2c"></span><span id="evidence-ev-index-42fcd29238cff486"></span><span id="evidence-ev-index-752867972eb6aa49"></span><span id="evidence-ev-index-6f8b749b55ce2aaa"></span><span id="evidence-ev-index-48ffcb66cae0374b"></span><span id="evidence-ev-index-1c08ba5d655b706a"></span><span id="evidence-ev-index-ed6982d18291eb2d"></span><span id="evidence-ev-index-92582b1ef89088c2"></span><span id="evidence-ev-index-f8e73d340b631094"></span><span id="evidence-ev-index-f746a27d255a0303"></span><span id="evidence-ev-index-992a8d2ff1696b9b"></span><span id="evidence-ev-index-e1f7e90bfed0185c"></span><span id="evidence-ev-index-42c768b4e01913ad"></span><span id="evidence-ev-index-342511bef233e938"></span><span id="evidence-ev-index-4fec5a4e03b1f8d3"></span><span id="evidence-ev-index-f9909a11264f4460"></span><span id="evidence-ev-index-115a5c063921f041"></span><span id="evidence-ev-index-881ca5b3898c0054"></span><span id="evidence-ev-index-36cf0cd4d5088c3a"></span><span id="evidence-ev-index-21fe9829fb98c1cb"></span><span id="evidence-ev-index-13cc9c4032380254"></span><span id="evidence-ev-index-1bc467911a0a3f79"></span><span id="evidence-ev-index-ade9558a144867b0"></span><span id="evidence-ev-index-e1ee3355d1dfac19"></span><span id="evidence-ev-index-5dafcf7fa1fba282"></span><span id="evidence-ev-index-50f1895f46650cd9"></span><span id="evidence-ev-index-e9e619e43239c26b"></span><span id="evidence-ev-index-937b76038b09a014"></span><span id="evidence-ev-index-9c594978262a5598"></span><span id="evidence-ev-index-c20427701480a459"></span><span id="evidence-ev-index-3a07143bd87f2245"></span><span id="evidence-ev-index-c9b3bbf3207199e3"></span><span id="evidence-ev-index-f0a6c1fbbc94d527"></span><span id="evidence-ev-index-e86facd4d24ea529"></span><span id="evidence-ev-index-11fad032823afb07"></span><span id="evidence-ev-index-ca608fa335be6628"></span><span id="evidence-ev-index-273b9fc46ddf41c1"></span><span id="evidence-ev-index-d416709967bdd840"></span><span id="evidence-ev-index-b4b0e2b8ad2354a7"></span><span id="evidence-ev-index-776de11ae7356d87"></span><span id="evidence-ev-index-f4d3bd9b5fde7c69"></span><span id="evidence-ev-index-e47600f928addbb2"></span><span id="evidence-ev-index-abc51a3a3f263295"></span><span id="evidence-ev-index-7754c7ee5bf724d9"></span><span id="evidence-ev-index-e878e1212d0dec68"></span><span id="evidence-ev-index-4bfd77d1a6cfa082"></span><span id="evidence-ev-index-d386c50c74366774"></span><span id="evidence-ev-index-62ec2fd93684c1ba"></span><span id="evidence-ev-index-2df8c8bbfb1c7558"></span><span id="evidence-ev-index-60a662fe0ca86844"></span><span id="evidence-ev-index-f8ea575d786e7d1d"></span><span id="evidence-ev-index-6cf38c5b9972cd5c"></span><span id="evidence-ev-index-c3edfea274d4b4fa"></span><span id="evidence-ev-index-7638f976eea09c98"></span><span id="evidence-fact-276"></span><span id="evidence-fact-277"></span><span id="evidence-fact-278"></span><span id="evidence-fact-279"></span><span id="evidence-kpi-source-0-0"></span><span id="evidence-kpi-source-0-1"></span><span id="evidence-kpi-source-1-0"></span><span id="evidence-kpi-source-1-1"></span><span id="evidence-kpi-source-2-0"></span><span id="evidence-kpi-source-2-1"></span><span id="evidence-kpi-source-3-0"></span><span id="evidence-kpi-source-3-1"></span></div><div class="machine-anchor-bank" hidden aria-hidden="true"><!--IDXTEMP--><!--/IDXTEMP--><!--IDXVOTE--><!--/IDXVOTE--></div>
+
+<!--OVERVIEW_EVOLUTION_SYNC_START-->
+<section class="evolution"><h2>五 自主拓展 · 能力进化<span class="hint">发现 → 追踪 → 验证 → 经验 → 能力 → 后续命中</span></h2><div class="evo-stats"><span class="evo-stat"><b>1</b><small>历史承接</small></span><span class="evo-stat"><b>0</b><small>经验/教训/信号</small></span><span class="evo-stat"><b>0</b><small>已沉淀能力</small></span><span class="evo-stat"><b>0</b><small>后续命中</small></span><span class="evo-stat"><b>0</b><small>验证成功</small></span><span class="evo-stat"><b>0</b><small>已证伪</small></span><span class="evo-stat"><b>0</b><small>追踪中</small></span><span class="evo-stat"><b>1</b><small>已搁置</small></span></div><details open><summary>已沉淀与验证明细 <span class="chip">0条有结果记录</span><span class="chip">本路 · 概览·总审</span></summary><div class="evo-list"><div class="evo-empty">当前没有明确的能力化、后续命中或验证证据；不把未验证记录伪装成结果。</div></div></details></section>
+<section class="evolution"><h2>六 认知迭代 · 能力进化<span class="hint">发现 → 追踪 → 验证 → 经验 → 能力 → 后续命中</span></h2><div class="evo-stats"><span class="evo-stat"><b>1192</b><small>历史承接</small></span><span class="evo-stat"><b>1192</b><small>经验/教训/信号</small></span><span class="evo-stat"><b>0</b><small>已沉淀能力</small></span><span class="evo-stat"><b>0</b><small>后续命中</small></span><span class="evo-stat"><b>0</b><small>验证成功</small></span><span class="evo-stat"><b>0</b><small>已证伪</small></span><span class="evo-stat"><b>0</b><small>追踪中</small></span><span class="evo-stat"><b>0</b><small>已搁置</small></span></div><details open><summary>已沉淀与验证明细 <span class="chip">0条有结果记录</span><span class="chip">本路 · 概览·总审</span></summary><div class="evo-list"><div class="evo-empty">当前历史资料没有明确的能力化、后续命中或验证证据，暂不计数。</div></div></details></section>
+<!--OVERVIEW_EVOLUTION_SYNC_END-->
+<div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div></body></html>

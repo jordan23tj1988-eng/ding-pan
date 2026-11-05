@@ -1,0 +1,31 @@
+{
+  "route": "lhb",
+  "date": "20261105",
+  "status": "pass",
+  "attempts": 1,
+  "model": "deepseek-flash",
+  "provider": "deepseek",
+  "error_class": null,
+  "updated_at": "2026-11-05T18:35:42+08:00",
+  "artifact_paths": [
+    "_学习/lhb判断_20261105.json",
+    "_学习/lhb_body_20261105.html",
+    "_学习/交易计划_lhb_20261105.json",
+    "_学习/_能力回执_lhb_20261105.json",
+    "_学习/_运行状态/lhb_20261105.json",
+    "_学习/lhb_分层真实率.py",
+    "_学习/lhb_分层真实率_多日.json",
+    "_学习/_前置校验_lhb.py",
+    "_学习/_前置校验_lhb_20261105.json"
+  ],
+  "selfcheck": {
+    "校验body标题.py lhb body": "PASS",
+    "segments": ["seats", "temperature", "ledger", "tiers", "research", "cognition"],
+    "div_balance": "30 open / 30 close",
+    "section_balance": "6 open / 6 close",
+    "null_scan": "无裸 null / None（缺值统一写「—」）",
+    "ledger_rows": 58,
+    "batch_mode": "校验body标题.py 20261105 批量结论 FAIL，仅因 index/cycle/theme/logic/limitup 五路当日 body 尚未产出（非本路）；lhb 段 PASS"
+  },
+  "notes": "本路 11/05 为 0 荐票第 6 个交易日（四门交集 0，成因由「钱也看不见」转为「钱在、人不在」）；承接 MA-20261104-05 三项完成、第四项（替代门槛 65 日回测）因需历史席位档快照而顺延至 20261107。"
+}

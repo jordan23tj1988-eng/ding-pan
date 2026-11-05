@@ -1,0 +1,70 @@
+{
+ "schema_version": 1,
+ "as_of": "20261105",
+ "preload": {
+  "sha256": "fd297107ac50aa8872f2cfe0358e965fa202aab6fbce0b20f0326bbd7458e990"
+ },
+ "routes": {
+  "auction": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "lhb": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-lhb-netbuy-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-lhb-netbuy-valid",
+     "effect": "净买占比维度直接决定今日荐票层的取舍：①用五桶口径给 4 只落涨停的 S/A 票定桶（000995 −2.58% 落 ≤0 净卖桶 n=1986/48.9%/+0.50%、002086 3.44% 与 600261 7.98% 落 0-10% 弱桶、688648 9.09% 落 5-10% 弱桶 n=731/46.0%/−0.00%），确认最优桶 10-20%（n=454/50.0%/+0.26%/T1 59.9%/+1.91%）空档，四门第 4 条全部不满足 → 0 荐票；②反向用同一因子在无 S/A 席的票里定位「钱」这一维的合格集（8 只落最优桶），把结论从「今日无票」改写成「钱在、人不在」，并据此把 002131（15.36%）与 601929（15.39%）列为 0 权重观察而非直接丢弃；③因子状态复核（_学习/_龙虎榜质量库.json#因子.净买占比.状态=有效、样本 4607≥2000）后仍按 boundary 使用，未越界外推到窗口外日期。",
+     "source_locator": "_学习/_龙虎榜质量库.json#因子.净买占比（桶/状态/样本）; _学习/席位荐票_20261105.json#top5（600261 占比 7.98%、002086 3.44%）; 20261105/lhb.csv#净买额占总成交比（000995 −2.5827、688648 9.0948、601929 15.3863、002131 15.3617）; _学习/lhb判断_20261105.json#判断.证据[6][7]"
+    }
+   ],
+   "rejected": []
+  },
+  "theme": {
+   "日期": "20261105",
+   "路": "theme",
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": [],
+   "依据": "_学习/能力预加载_20261105.json → routes.theme.eligible_count=0 / status=no_eligible_capabilities / records=[]；本路无 validated 且 capitalized=true 的能力可调用，故今日判断全部来自本路自建格统计与回测，未引用任何进化库能力。"
+  },
+  "logic": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "limitup": {
+   "status": "applied",
+   "considered_ids": [
+    "extension:cap-limitup-turnover-valid"
+   ],
+   "applied": [
+    {
+     "id": "extension:cap-limitup-turnover-valid",
+     "effect": "采用换手率维度做当日负筛：库因子.换手率 状态=有效、权重 0.1516、区分度 11.5pp；桶级执1 单调（<3% n=2501 33.9%/-0.94% → 3-10% n=8139 42.9%/-0.4% → 10-20% n=4418 45.2%/-0.15% → ≥20% n=1959 45.4%/+0.11%），我独立重算 n=19822 逐位一致、20260901 起仍单调（29.9/41.7/42.6/46.2%）。当日落地效果：①把今日 26 只换手<3% 票（占 31.0%，库内占比仅 12.6%）的可兑现期望全部压到 0 以下，构成「全池 11 正/73 负、合计 -15.7pp」的主因；②把荐票候选锁在换手≥10% 的 20 只里，最终 2 只观察票换手 21.5%/12.9% 均落 ≥10% 桶；③格内校验：『首板×尾盘×换手10-20%』格 n=321 执1 50.8%/+0.66% vs『首板×尾盘』不分换手 n=1342 48.6%/+0.33%，换手维度贡献 +0.33pp，支持保留该因子。",
+     "source_locator": "_学习/_涨停质量库.json#因子.换手率（权重/区分度/状态/桶）+ _学习/_tmp_P_20261105.pkl 重算（_tmp_limitup_ana3_20261105.py 输出）"
+    }
+   ],
+   "rejected": []
+  },
+  "cycle": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  },
+  "master": {
+   "status": "no_eligible_capabilities",
+   "considered_ids": [],
+   "applied": [],
+   "rejected": []
+  }
+ }
+}

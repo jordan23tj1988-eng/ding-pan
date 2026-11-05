@@ -1,0 +1,1424 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>②龙虎榜</title><meta name="review-date" content="20261105"><meta name="review-schema-version" content="1"><style>
+:root{color-scheme:dark;
+--bg:#08090f;--panel:#12141c;--panel2:#151824;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+--ink:#eceef5;--sub:#a8adbd;--dim:#8d93a8;
+--accent:#e8a33d;--accent-dim:#8a6d3b;
+--up:#ff5f56;--down:#3fcb86;
+--hit:#2fd3c5;--half:#e8a33d;--miss:#ff5f56;
+--mono:ui-monospace,"Cascadia Mono","SF Mono",Consolas,"Courier New",monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scrollbar-color:#2a2e3d var(--bg)}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+::selection{background:rgba(232,163,61,.25)}
+/* ── nav ── */
+.nav{position:sticky;top:0;z-index:9;background:rgba(12,15,21,.92);backdrop-filter:blur(10px);display:flex;gap:2px;align-items:center;padding:11px 18px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.nav .brand{color:var(--accent);font-size:13px;letter-spacing:3px;font-weight:700;margin-right:14px}
+.nav a{color:#9aa3b5;text-decoration:none;font-size:13px;padding:5px 11px;border-radius:7px;transition:.15s;border:1px solid transparent}
+.nav a:hover{color:var(--ink);border-color:var(--line2)}
+.nav a.on{background:var(--accent);color:#14100a;font-weight:700}
+.nav .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono)}
+.wrap{max-width:960px;margin:0 auto;padding:26px 18px 70px}
+/* ── hero ── */
+
+
+
+
+
+.stance{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(255,255,255,.04);border:1px solid var(--line2);padding:5px 13px;border-radius:20px;font-size:12.8px;color:#c9cfdc}
+.pill b{color:var(--ink)}
+.pill.warn{background:rgba(255,95,86,.1);border-color:rgba(255,95,86,.35);color:#f0b6b4}
+/* ── section head ── */
+
+
+.hint{color:var(--dim);font-size:12.3px;margin:4px 0 14px;padding-left:15px}
+/* ── strips/cards ── */
+.strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.kv{flex:1;min-width:120px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 15px}
+.kv .l{font-size:11.8px;color:var(--sub)}.kv .v{font-size:20px;font-weight:800;margin-top:3px;font-family:var(--mono);letter-spacing:-.5px}
+.dn{color:var(--down)}.up{color:var(--up)}.mut{color:var(--sub)}
+.cor{display:inline-block;line-height:1.6}
+.cor b{color:var(--ink);font-weight:700}
+.cor .mut{margin-left:1px}
+.jdx{display:block;line-height:1.55;color:var(--sub);font-size:11.5px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;margin-top:13px}
+.card p{font-size:13.6px;color:#b9c1d0}
+.card.hotcard{border-color:rgba(255,95,86,.35);background:linear-gradient(135deg,var(--panel),rgba(255,95,86,.05))}
+.gate{display:flex;gap:10px;flex-wrap:wrap}
+.gate .g{flex:1;min-width:110px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:9px;background:var(--panel2)}
+.gate .g .t{font-size:12px;color:var(--sub)}.gate .g .s{font-weight:700;margin-top:2px}
+.s-weak{color:var(--miss)}.s-mid{color:var(--half)}.s-ok{color:var(--hit)}
+.two{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.mith{flex:1;min-width:270px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:17px 20px;text-decoration:none;color:inherit;display:block;transition:.18s}
+.mith:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.mith h3{font-size:15px;margin-bottom:8px;display:flex;justify-content:space-between}.mith h3 .arw{color:var(--accent)}
+.mith p{font-size:13px;color:var(--sub)}
+/* ── tables ── */
+table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13px;table-layout:auto}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top;overflow-wrap:anywhere;word-break:break-word}
+th{color:var(--sub);font-weight:600;font-size:11.8px;letter-spacing:.5px}
+td{font-variant-numeric:tabular-nums}
+tr:hover td{background:rgba(255,255,255,.02)}
+th:first-child,td:first-child{min-width:78px}
+table td:first-child{min-width:5em}
+table td:first-child b{white-space:nowrap}
+.wrap{overflow-x:hidden}
+.dS{color:#b18aff;font-weight:700}.dA{color:var(--hit);font-weight:700}.dB{color:var(--sub)}.dC{color:var(--miss)}
+.tag2{display:inline-block;font-size:11px;padding:1px 8px;border-radius:9px}
+.t-attack{background:rgba(47,211,197,.14);color:var(--hit)}.t-watch{background:rgba(232,163,61,.14);color:var(--half)}.t-avoid{background:rgba(255,95,86,.14);color:var(--miss)}
+/* ── timeline ── */
+.tl{position:relative;margin-top:10px;padding-left:22px}
+.tl:before{content:"";position:absolute;left:6px;top:4px;bottom:4px;width:2px;background:var(--line)}
+.tli{position:relative;padding:0 0 18px 8px}
+.tli:before{content:"";position:absolute;left:-19px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)}
+.tli .d{font-size:12px;color:var(--accent);font-weight:700;font-family:var(--mono)}
+.tli .h{font-size:14px;font-weight:650;margin:2px 0 4px}.tli .b{font-size:13px;color:#aab2c2}
+.tli .sup{font-size:12px;color:var(--sub);margin-top:6px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px 10px}.tli .sup b{color:var(--ink)}
+/* ── legacy misc ── */
+.qbar{margin:9px 0}.qbar .lab{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px}
+.track{height:8px;background:#191f2b;border-radius:5px;overflow:hidden}.track>i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent-dim),var(--up))}
+.track.teal>i{background:linear-gradient(90deg,#1f6a5e,var(--hit))}
+.base{font-size:11.5px;color:var(--dim);margin-top:4px}
+.ladder{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:stretch}
+.rung{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;text-align:center;min-width:80px;font-size:12.6px}
+.rung .lv{font-size:12px;color:var(--sub)}.rung .nm{font-size:12.5px;font-weight:600;margin-top:2px}
+.rung.gap{background:rgba(255,95,86,.07);border-style:dashed;border-color:rgba(255,95,86,.4);color:var(--miss)}
+.rung.high{border-color:var(--up)}
+.rung .tag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.12);border-radius:7px;padding:0 7px;margin-right:6px;font-family:var(--mono)}
+.foot{margin-top:36px;padding:14px 18px;background:var(--panel2);border:1px solid var(--line);border-radius:11px;font-size:12.2px;color:var(--sub)}.foot b{color:var(--ink)}
+.badge{display:inline-block;font-size:11px;padding:1px 8px;border-radius:10px;font-weight:600}
+.bA{background:rgba(47,211,197,.14);color:var(--hit)}.bC{background:rgba(232,163,61,.14);color:var(--half)}.bMix{background:rgba(177,138,255,.14);color:#b18aff}
+.hlist{list-style:none}.hlist li{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-top:10px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.hlist .dt{font-weight:800;font-size:15px;flex:0 0 96px;font-family:var(--mono)}.hlist .st{flex:1;font-size:13.2px;color:#aab2c2;min-width:200px}
+.hlist a.go{color:var(--accent);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap}
+.jjr td{background:rgba(232,163,61,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#b3a98f}
+.jjr .jjtag{display:inline-block;font-size:11px;font-weight:700;color:var(--accent);background:rgba(232,163,61,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.jpr td{background:rgba(47,211,197,.06);border-bottom:1px solid var(--line);padding:7px 10px 9px;font-size:12.4px;color:#8fbcb0}
+.jpr .jptag{display:inline-block;font-size:11px;font-weight:700;color:var(--hit);background:rgba(47,211,197,.14);border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+/* ── obs 荐票/观察卡 ── */
+.obswrap{margin-top:6px}
+.obs{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0;margin-top:12px;overflow:hidden;transition:border-color .18s}
+.obs:hover{border-color:var(--line2)}
+.obs-head{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:13px 16px 8px}
+.obs-nm{font-weight:800;font-size:14.5px;flex:0 0 auto}.obs-nm .mut{font-weight:400;font-size:12px;margin-left:6px;font-family:var(--mono)}
+.obs-pos{flex:1 1 240px;min-width:0;font-size:13px;color:#aab2c2;overflow-wrap:anywhere}
+.obs-watch{padding:6px 16px 12px;font-size:13.2px;color:#c4cbd8;overflow-wrap:anywhere;border-bottom:1px solid var(--line)}
+.obs-lab,.obs-lab2{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:1px 8px;margin-right:8px;white-space:nowrap}
+.obs-lab{color:#f0a5a3;background:rgba(255,95,86,.13)}
+.obs-rec{padding:8px 16px;font-size:12.6px;color:#8fbcb0;background:rgba(47,211,197,.05);overflow-wrap:anywhere}
+.obs-lab2{color:var(--hit);background:rgba(47,211,197,.14)}
+.obs-jj{padding:8px 16px 10px;font-size:12.4px;color:#b3a98f;background:rgba(232,163,61,.05);overflow-wrap:anywhere}
+/* ── details 折叠 ── */
+details.chain{background:var(--panel);border:1px solid var(--line);border-radius:13px;margin-top:12px;padding:0 18px}
+details.chain summary{cursor:pointer;padding:13px 0;font-weight:700;font-size:14px;color:var(--ink);list-style:none;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+details.chain summary::before{content:"\25B8";color:var(--accent);transition:.15s}
+details.chain[open] summary::before{content:"\25BE"}
+details.chain summary .chip{font-size:11.5px;font-weight:600;padding:1px 9px;border-radius:10px;background:rgba(255,255,255,.05);color:var(--sub);border:1px solid var(--line)}
+details.chain summary .chip.hot{background:rgba(255,95,86,.13);color:#f0a5a3;border-color:transparent}
+details.chain summary .chip.cold{background:rgba(47,211,197,.13);color:var(--hit);border-color:transparent}
+details.chain .inner{padding:2px 0 16px}
+/* ══ 新图表组件 ══ */
+/* 五路牌 */
+.routes{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:13px}
+.routes .rt{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:5px;transition:.18s}
+.routes .rt:hover{transform:translateY(-2px);border-color:var(--accent-dim)}
+.rt .rtn{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:1px}
+.rt .rtm{font-size:13.2px;font-weight:700}
+.rt .rtt{font-size:15px;font-weight:800}
+.rt .rtd{font-size:11.8px;color:var(--sub);line-height:1.5}
+@media(max-width:820px){.routes{grid-template-columns:repeat(2,1fr)}}
+/* 柱状图 */
+.cols{display:flex;gap:8px;align-items:flex-end;height:150px;margin-top:14px;padding:0 4px}
+.cols .col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;height:100%}
+.cols .col i{display:block;width:70%;max-width:56px;background:linear-gradient(180deg,var(--accent),var(--accent-dim));border-radius:5px 5px 2px 2px;min-height:3px;transform-origin:bottom}
+.cols .col.hotc i{background:linear-gradient(180deg,var(--up),#8a2f32)}
+.cols .col b{font-size:11.6px;font-family:var(--mono);color:var(--ink);white-space:nowrap}
+.cols .col span{font-size:11px;color:var(--dim);font-family:var(--mono);white-space:nowrap}
+.colsub{display:flex;gap:8px;margin-top:8px;padding:0 4px}
+.colsub span{flex:1;text-align:center;font-size:11px;color:var(--sub);font-family:var(--mono);white-space:nowrap}
+/* 横向条形(diverging,中轴50%) */
+.hb{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.hb .hbl{flex:0 0 128px;font-size:12.6px;color:#c4cbd8;text-align:right;overflow-wrap:anywhere}
+.hb .hbt{flex:1;position:relative;height:14px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden}
+.hb .hbt:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line2)}
+.hb .hbt i{position:absolute;top:2px;bottom:2px;border-radius:2px}
+.hb .hbt i.pos{left:50%;background:linear-gradient(90deg,rgba(255,95,86,.75),rgba(255,95,86,.35));transform-origin:left}
+.hb .hbt i.neg{right:50%;background:linear-gradient(270deg,rgba(63,203,134,.75),rgba(63,203,134,.35));transform-origin:right}
+.hb .hbv{flex:0 0 72px;font-family:var(--mono);font-size:12.6px;font-weight:700;text-align:right}
+.hb .hbs{flex:0 0 auto;font-size:11.5px;color:var(--dim);font-family:var(--mono)}
+.hb .hbnote{flex:1 1 100%;font-size:11.8px;color:var(--sub);padding-left:138px;margin-top:-2px}
+@media(max-width:640px){.hb .hbl{flex-basis:86px}.hb .hbnote{padding-left:0}}
+/* 温度计 */
+.gauge{margin-top:12px}
+.gauge .gtrack{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,#2b5f8f 0 25%,#2f7d74 0 45%,#8a7f3a 0 65%,#b06a35 0 85%,#c04545 0 100%);opacity:.9}
+.gauge .gmark{position:absolute;top:-5px;width:3px;height:20px;background:var(--ink);border-radius:2px;box-shadow:0 0 0 2px rgba(0,0,0,.5)}
+.gauge .gl{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:5px;font-family:var(--mono)}
+.gauge .gv{font-family:var(--mono);font-weight:800;font-size:18px;margin-top:6px}
+/* 三态总开关 / 仓位计 */
+.stages{display:flex;gap:8px;margin-top:12px}
+.stages .st{flex:1;text-align:center;padding:9px 6px;border:1px solid var(--line);border-radius:9px;color:var(--dim);font-size:13px;background:var(--panel2)}
+.stages .st.on{border-color:var(--accent);color:var(--ink);font-weight:700;background:rgba(232,163,61,.09)}
+.stages .st small{display:block;font-size:10.5px;color:var(--dim);font-family:var(--mono)}
+.posmeter{position:relative;height:12px;border-radius:6px;background:#191f2b;margin-top:12px;overflow:hidden}
+.posmeter i{position:absolute;top:0;bottom:0;left:0;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px}
+.posmeter em{position:absolute;top:-3px;bottom:-3px;width:2px;background:rgba(255,255,255,.35)}
+.posml{display:flex;justify-content:space-between;font-size:10.5px;color:var(--dim);margin-top:4px;font-family:var(--mono)}
+/* 六有点 */
+.d6{display:inline-flex;gap:3px;vertical-align:middle;margin:0 6px}
+.d6 i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid var(--line2)}
+.d6 i.on{background:var(--accent);border-color:var(--accent)}
+/* 生命周期七段轴(图2) */
+.lifeaxis{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.lseg{flex:1;min-width:104px;border:1px solid var(--line);border-radius:10px;background:var(--panel2);padding:8px 10px}
+.lseg .lt{font-size:12px;font-weight:700;color:var(--dim);text-align:center;padding-bottom:7px;margin-bottom:7px;border-bottom:1px solid var(--line);font-family:var(--mono)}
+.lseg.on{border-color:var(--accent);background:rgba(232,163,61,.07)}
+.lseg.on .lt{color:var(--accent)}
+.lseg .ll{display:block;font-size:11.8px;color:#c4cbd8;padding:3px 0;line-height:1.45}
+.lseg .ll b{color:var(--ink);font-weight:700}
+.lseg .ll .lwarn{color:#ff8d7b;font-size:11px;font-weight:700}
+.lseg .ll.mut{color:var(--sub)}
+/* 题材行 */
+.trow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.trow .tr1{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.trow .tnm{font-weight:750;font-size:13.8px;min-width:110px}
+.trow .tjd{font-size:12px;font-weight:700;padding:1px 9px;border-radius:9px}
+.tj-main{background:rgba(255,95,86,.13);color:#f0a5a3}.tj-branch{background:rgba(232,163,61,.13);color:var(--half)}.tj-minor{background:rgba(255,255,255,.06);color:var(--sub)}
+.trow .tbar{flex:1;min-width:120px;height:12px;background:rgba(255,255,255,.03);border-radius:3px;overflow:hidden;position:relative}
+.trow .tbar i{position:absolute;left:0;top:2px;bottom:2px;border-radius:2px;background:linear-gradient(90deg,rgba(232,163,61,.8),rgba(232,163,61,.3));transform-origin:left}
+.trow .tct{font-family:var(--mono);font-size:12.5px;font-weight:700;min-width:44px;text-align:right}
+.trow .tds{font-size:12.2px;color:var(--sub);margin-top:4px}
+/* 竞价池行 */
+.pool .hb .hbl{flex-basis:150px}
+.sigchip{display:inline-block;font-size:11px;font-weight:700;padding:0 7px;border-radius:7px;margin-left:6px}
+.sig-yz{background:rgba(255,95,86,.14);color:#f0a5a3}.sig-mb{background:rgba(255,255,255,.06);color:var(--sub)}
+/* 量能台阶梯(站在哪一阶) */
+.steps{margin-top:12px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--line);border-radius:9px;margin-top:6px;background:var(--panel2)}
+.step .sr{flex:0 0 108px;font-family:var(--mono);font-size:12.3px;color:var(--sub);text-align:right}
+.step .sn{flex:0 0 170px;font-size:12.8px;font-weight:700}
+.step .sn small{display:block;font-weight:400;font-size:11px;color:var(--dim)}
+.step .sd{flex:1;display:flex;gap:6px;flex-wrap:wrap;min-height:18px}
+.step .dayc{font-family:var(--mono);font-size:11.5px;padding:1px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:var(--sub)}
+.step .dayc.now{background:rgba(255,95,86,.2);color:#f6b8b6;font-weight:700}
+.step.cur{border-color:var(--accent);background:rgba(232,163,61,.09)}
+.step.dim .sn{color:var(--sub);font-weight:600}
+@media(max-width:640px){.step .sn{flex-basis:120px}.step .sr{flex-basis:80px}}
+/* ── 脚本段浅色inline覆盖(台账/温度卡等,勿改上游脚本) ── */
+[style*="#faf7f0"]{background:var(--panel2)!important;color:#aab2c2!important}
+[style*="#f3eee1"]{background:rgba(232,163,61,.07)!important;color:#b3a98f!important}
+[style*="#fffdf9"],[style*="#f6f4ef"],[style*="#efeae0"]{background:var(--panel)!important;color:var(--ink)!important}
+[style*="color:#1e8449"]{color:var(--down)!important}
+[style*="color:#c0392b"]{color:var(--up)!important}
+[style*="color:#b45309"]{color:var(--half)!important}
+[style*="#eae1cc"]{background:rgba(232,163,61,.14)!important;color:var(--accent)!important}
+/* ── 进场动画(JS加持,无JS=静态;尊重reduced-motion) ── */
+
+.rv{opacity:0;transform:translateY(12px)}
+.rv.on{opacity:1;transform:none;transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.on .hbt i,.on .tbar i{animation:growx .7s cubic-bezier(.16,1,.3,1)}
+.on .cols i{animation:growy .7s cubic-bezier(.16,1,.3,1)}
+@keyframes growx{from{transform:scaleX(0)}}
+@keyframes growy{from{transform:scaleY(0)}}
+
+
+/* ── hero(v4 verdict式:渐变+角辉光,无侧条) ── */
+.hero{position:relative;background:linear-gradient(150deg,#181420,var(--panel) 55%);border:1px solid var(--line);border-radius:18px;padding:24px 26px;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(360px 220px at 92% -12%,rgba(232,163,61,.30),transparent 60%);pointer-events:none;opacity:.6}
+.hero .kick{font-size:11px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;font-family:var(--mono)}
+.hero h1{font-size:24px;margin:9px 0 7px;font-weight:800;letter-spacing:-.3px;color:var(--ink);line-height:1.3;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero p{color:var(--sub);font-size:13.2px;max-width:680px;text-wrap:pretty}
+
+h2{font-size:15.5px;margin:34px 0 4px;font-weight:700;letter-spacing:.3px;color:var(--ink);display:flex;align-items:center;gap:9px}
+h2::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--accent);transform:rotate(45deg);flex-shrink:0}
+h2.hot::before{background:var(--up)}
+
+
+/* ══ v4琥珀bento追加层(2026-07-15移植,index bento+全站导航;老组件类全保留在上方) ══ */
+.num{font-variant-numeric:tabular-nums;letter-spacing:-.02em;font-family:var(--mono)}
+/* 顶部pill导航(主站六页;存档页仍用旧.nav) */
+.navbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:rgba(18,20,28,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:20px;padding:10px 16px;box-shadow:0 1px 3px rgba(0,0,0,.4);
+  position:sticky;top:10px;z-index:9;margin:12px auto 0;max-width:min(1440px,calc(100% - 32px))}
+.navbar .brand{display:flex;align-items:center;gap:10px;padding-right:4px;color:var(--ink);font-weight:700;font-size:15px;letter-spacing:.5px;white-space:nowrap}
+.navbar .logo{width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#c07f22);
+  display:grid;place-items:center;color:#141008;font-weight:800;font-size:15px;box-shadow:0 6px 18px rgba(232,163,61,.30)}
+.pills{display:flex;align-items:center;gap:3px;background:var(--bg);border-radius:13px;padding:4px;flex-wrap:wrap}
+.pills a{padding:7px 13px;border-radius:10px;color:var(--dim);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap;transition:.16s}
+.pills a:hover:not(.on){color:var(--ink)}
+.pills a.on{background:var(--accent);color:#141008;font-weight:700}
+.pills a:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(232,163,61,.25)}
+.navbar .upd{margin-left:auto;color:var(--dim);font-size:11.5px;font-family:var(--mono);max-width:380px;line-height:1.5;display:flex;align-items:center;gap:8px}
+.navbar .upd b{color:var(--accent);font-weight:600}
+.live{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.live::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--accent);opacity:0;animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.4);opacity:.8}70%{transform:scale(1.15);opacity:0}100%{opacity:0}}
+/* 行情带(全页唯一marquee) */
+.ticker{overflow:hidden;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;padding:7px 0;position:relative}
+.ticker:before,.ticker:after{content:'';position:absolute;top:0;bottom:0;width:56px;z-index:1;pointer-events:none}
+.ticker:before{left:0;background:linear-gradient(90deg,var(--panel),transparent)}
+.ticker:after{right:0;background:linear-gradient(270deg,var(--panel),transparent)}
+.ticker .in{display:flex;width:max-content;animation:tick 52s linear infinite}
+.ticker:hover .in{animation-play-state:paused}
+.ticker .grp{display:flex;gap:36px;padding:0 18px;font-family:var(--mono);font-size:12px;color:var(--dim);white-space:nowrap}
+.ticker b{font-weight:700;color:var(--ink)}
+.ticker b.u{color:var(--up)}.ticker b.d{color:var(--down)}.ticker b.a{color:var(--accent)}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* chip语义帽 */
+.chip2{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:9px;white-space:nowrap}
+.c-hit{background:rgba(47,211,197,.12);color:var(--hit)}
+.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+.c-acc{background:rgba(232,163,61,.13);color:var(--accent)}
+.c-cool{background:rgba(123,140,255,.13);color:#7b8cff}
+.c-mid{background:rgba(232,163,61,.13);color:var(--half)}
+.ok{color:var(--accent);font-weight:600}
+table.p2{margin:10px 0;width:100%;border-collapse:collapse}
+.chip2.c-hot{background:rgba(255,107,107,.14);color:#ff8d7b;border:1px solid rgba(255,107,107,.32)}/* 8/13修复: 机器温度卡自造(偏热档)原无定义=裸奔 */
+.chip2.c-warn{background:rgba(232,163,61,.13);color:var(--half);border:1px solid rgba(232,163,61,.32)}/* 8/13修复: 机器卡自造(分歧/警示)原无定义=裸奔 */
+/* 8/12修复: LLM自造类(8/11/8/12温度档徽章)原无定义=裸奔, 补中性琥珀(黄金版体系无此类) */
+/* index bento网格 */
+.wrap:has(.rowA){max-width:1440px}
+.rowA{display:grid;grid-template-columns:2.4fr 1fr 1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:stretch}
+@media(max-width:1080px){.rowA{grid-template-columns:1fr 1fr}.rowA .hero{grid-column:1/-1}}
+@media(max-width:560px){.rowA{grid-template-columns:1fr}}
+.rowA .hero{margin:0}
+.kpi{display:flex;flex-direction:column;gap:7px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:15px 16px;transition:border-color .2s}
+.kpi:hover{border-color:rgba(232,163,61,.3)}
+.kpi .top{display:flex;justify-content:space-between;align-items:center}
+.kpi .ico{width:32px;height:32px;border-radius:10px;background:rgba(232,163,61,.13);display:grid;place-items:center}
+.kpi .ico svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.kpi .lab{font-size:11.5px;color:var(--sub);letter-spacing:.04em}
+.kpi .big{font-size:28px;font-weight:800;color:var(--ink);font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.5px}
+.kpi .big small{font-size:13px;font-weight:600;color:var(--dim);margin-left:2px}
+.kpi .sub2{font-size:11.3px;color:var(--dim);line-height:1.45;margin-top:auto}
+.kpi .sub2 b{color:var(--sub)}
+.kpi .gauge{margin-top:2px}
+.spark{width:100%;height:30px;margin-top:2px}
+/* index 观察点+右栏 */
+.rowC{display:grid;grid-template-columns:1fr 340px;gap:14px;margin-bottom:14px;align-items:start}
+@media(max-width:1080px){.rowC{grid-template-columns:1fr}}
+.rowC .card{margin-top:0}
+.rail{display:flex;flex-direction:column;gap:14px}
+.rowE{display:grid;grid-template-columns:1fr 1.35fr;gap:14px;margin-bottom:6px;align-items:start}
+@media(max-width:1080px){.rowE{grid-template-columns:1fr}}
+.rowE .card{margin-top:0}
+/* PAPERTRADE注入块琥珀化覆盖(勿改上游模拟盘引擎;靠inline子串匹配retint) */
+[style*="background:#14171e"]{background:linear-gradient(140deg,#171308,var(--panel) 46%)!important;
+  border:1px solid rgba(232,163,61,.28)!important;border-radius:18px!important;
+  box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)!important}
+[style*="color:#d9a441"]{color:var(--accent)!important}
+[style*="color:#e05d5d"]{color:var(--up)!important}
+[style*="color:#4caf7d"]{color:var(--down)!important}
+[style*="color:#aab3c0"]{color:var(--sub)!important}
+[style*="color:#8892a0"]{color:var(--dim)!important}
+[style*="color:#d8dee9"]{color:var(--ink)!important}
+[style*="border-left:2px solid #3a4150"]{border-left-color:rgba(255,255,255,.13)!important}
+
+/* ── v4.1 页面阅读路径与响应式增强 ── */
+:root{--route-accent:var(--accent)}
+body[data-route="cycle"]{--route-accent:#7b8cff}
+body[data-route="auction"]{--route-accent:#e8a33d}
+body[data-route="lhb"]{--route-accent:#b18aff}
+body[data-route="theme"]{--route-accent:#2fd3c5}
+body[data-route="logic"]{--route-accent:#63b3ff}
+body[data-route="limitup"]{--route-accent:#ff7b72}
+
+/* 内容宽度按信息密度自适应：宽表不再挤成一团，概览 bento 仍保持黄金版宽度。 */
+.wrap:has(>section){max-width:1180px}
+.wrap:has(.rowA){max-width:1440px}
+.wrap>section{scroll-margin-top:92px;margin-top:30px}
+.wrap>section>h2{margin:0 0 12px;padding:0 0 10px;border-bottom:1px solid var(--line2);position:relative}
+.wrap>section>h2::before{background:var(--route-accent,var(--accent));box-shadow:0 0 14px color-mix(in srgb,var(--route-accent,var(--accent)) 35%,transparent)}
+.wrap>section:first-of-type{margin-top:24px}
+
+/* 页面阅读地图：显示板块职责，不复制正文事实。 */
+.page-map{position:sticky;top:78px;z-index:6;display:flex;align-items:center;gap:5px;overflow-x:auto;white-space:nowrap;margin:0 0 18px;padding:6px;background:rgba(18,20,28,.90);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(12px);scrollbar-width:none}
+.page-map::-webkit-scrollbar{display:none}
+.page-map-label{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:.08em;padding:0 8px 0 5px;flex:0 0 auto}
+.page-map a{color:var(--sub);text-decoration:none;font-size:12px;padding:6px 10px;border-radius:8px;transition:.16s;flex:0 0 auto}
+.page-map a:hover{color:var(--ink);background:rgba(255,255,255,.05)}
+.page-map a.active{color:var(--route-accent,var(--accent));background:color-mix(in srgb,var(--route-accent,var(--accent)) 13%,transparent);box-shadow:inset 0 -2px 0 var(--route-accent,var(--accent));font-weight:700}
+.page-map a:focus-visible{outline:2px solid var(--route-accent,var(--accent));outline-offset:1px}
+
+/* 卡片层级：标题、来源提示、正文和长表分出视觉层。 */
+.card,.obs,.kpi,details.chain{box-shadow:0 8px 26px rgba(0,0,0,.10)}
+.card h3,.card h4{line-height:1.45}
+.card>h3:first-child,.card>h4:first-child{color:var(--ink)}
+.card .hint{display:inline-block;line-height:1.45}
+.card table{margin-top:10px}
+table tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+table tr:hover td{background:color-mix(in srgb,var(--route-accent,var(--accent)) 7%,transparent)}
+th{white-space:nowrap}
+pre{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:10px;background:rgba(0,0,0,.16);font-family:var(--mono);font-size:11px;line-height:1.55}
+
+/* 触屏和窄屏：不缩小关键数字，改为卡内横向浏览，避免整页横溢出。 */
+@media(max-width:640px){
+    .navbar{display:block;top:6px;margin:6px 8px 0;max-width:calc(100% - 16px);padding:8px 10px;border-radius:14px}
+  .navbar .brand{font-size:13px;margin-bottom:6px}.navbar .logo{width:28px;height:28px;border-radius:8px}
+  .navbar .pills{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));min-width:0;overflow:visible;row-gap:3px}.navbar .pills a{min-width:0;text-align:center}
+  .navbar .pills::-webkit-scrollbar{display:none}
+  .navbar .pills a{font-size:12px;padding:6px 10px}
+  .navbar .upd{margin-left:auto;font-size:10px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .wrap{padding:18px 10px 48px}.wrap:has(>section),.wrap:has(.rowA){max-width:none}
+  .page-map{top:65px;margin-bottom:14px}
+  .wrap>section{margin-top:24px}.wrap>section>h2{font-size:14.5px;padding-bottom:8px}
+  .card,.obs{padding-left:14px;padding-right:14px;border-radius:11px}
+  .card{overflow-x:auto}.card>h3,.card>h4,.card>p,.card>ul,.card>ol{min-width:0}
+  table{min-width:620px;font-size:12px}th,td{padding:7px 8px}
+  .routes{grid-template-columns:repeat(2,1fr)}
+  .hero{padding:19px 18px}.hero h1{font-size:21px}
+  .kpi .big{font-size:24px}
+}
+@media(prefers-reduced-motion:reduce){.page-map a,.card,.obs,.kpi{transition:none!important}}
+
+/* ── v4.2 reading spine / claim proof layer ── */
+.reading-spine{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 18px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,rgba(232,163,61,.08),rgba(255,255,255,.025));color:var(--sub);font-size:11.8px}
+.reading-spine .rs-title{color:var(--accent);font-weight:800;letter-spacing:.08em;white-space:nowrap}
+.reading-spine .rs-arrow{color:var(--dim);font-family:var(--mono)}
+.reading-spine .rs-step{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border-radius:8px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);white-space:nowrap}
+.reading-spine .rs-step b{color:var(--ink);font-family:var(--mono);font-size:10.5px}
+.claim-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.claim-role{display:inline-flex;align-items:center;padding:2px 8px;border-radius:8px;font-size:10.8px;font-weight:800;letter-spacing:.04em}
+.claim-source{color:var(--dim);font-size:11px}
+.role-verdict,.role-observation{color:#f0b6b4;background:rgba(255,95,86,.13)}
+.role-evidence{color:var(--hit);background:rgba(47,211,197,.13)}
+.role-counterevidence{color:#ffb36b;background:rgba(232,163,61,.14)}
+.role-condition,.role-research{color:var(--half);background:rgba(232,163,61,.12)}
+.role-cognition{color:#c8b4ff;background:rgba(177,138,255,.13)}
+.role-limitation{color:#f0a5a3;background:rgba(255,95,86,.10)}
+.claim-proof{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:12px;padding-top:9px;border-top:1px solid rgba(255,255,255,.06);font-size:11.5px;color:var(--dim)}
+.claim-proof>a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent-dim)}
+.claim-proof>a:hover{color:var(--ink)}
+.claim-proof .proof-label{font-weight:700;color:var(--sub)}
+@media(max-width:640px){.reading-spine{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:6px}.reading-spine .rs-title{grid-column:1/-1}.reading-spine .rs-arrow{display:none}.reading-spine .rs-step{min-width:0;width:100%;justify-content:center}.claim-proof{line-height:1.8}}
+
+/* ── v4.3 概览可读层 ── 只收敛版式与信息层级，不改判断内容 */
+.reading-spine a.rs-step{color:var(--sub);text-decoration:none;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-weight:600;white-space:nowrap}
+.reading-spine a.rs-step:hover{border-color:var(--line2);color:var(--ink)}
+.reading-spine a.rs-step b{color:var(--accent);font-family:var(--mono);font-size:10.5px;margin-right:6px;font-weight:800}
+.cgrp{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:13px 20px 6px;margin-top:13px}
+.cgrp-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding-bottom:9px;border-bottom:1px dashed var(--line2)}
+.cgrp-head .cgrp-note{color:var(--dim);font-size:11.3px;font-family:var(--mono)}
+.cgrp-body{display:flex;flex-direction:column}
+.citem{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:2px 12px;align-items:start;padding:7px 0;border-bottom:1px solid var(--line)}
+.citem:last-child{border-bottom:0;padding-bottom:2px}
+.citem>p{margin:0;line-height:1.62}
+.citem .citem-tag{color:var(--dim);font-size:11.1px;margin:2px 0 0;font-family:var(--mono);white-space:nowrap;text-align:right}
+.claim-proof{grid-column:2;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px}
+.claim-proof .proof-label{color:var(--dim);font-size:10.6px;font-weight:700}
+.claim-proof a{color:var(--sub);font-size:10.7px;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:1px 7px;font-family:var(--mono)}
+.claim-proof a:hover{border-color:var(--accent-dim);color:var(--ink)}
+.audit-fold{margin-top:13px}
+.audit-fold>summary{cursor:pointer;color:var(--sub);font-size:12.6px;font-weight:700;padding:12px 0;list-style:none;display:flex;align-items:center;gap:9px}
+.audit-fold>summary::-webkit-details-marker{display:none}
+.audit-fold>summary::before{content:'▸';color:var(--accent);font-family:var(--mono);font-size:12px}
+.audit-fold[open]>summary::before{content:'▾'}
+.audit-fold .inner{padding:2px 0 12px}
+.audit-fold .fold-note{color:var(--dim);font-size:11.6px;margin:0 0 10px}
+.audit-fold .inner-limit{margin:0 0 12px}
+.audit-fold .inner-limit b{color:var(--sub);font-size:12.2px}
+.audit-fold .inner-limit ul{margin:6px 0 0;padding-left:18px;color:var(--dim);font-size:11.8px}
+.machfold{margin-top:13px}
+.kpi .sub2{font-family:var(--mono);font-size:11px}
+.kpi .gauge .gl{font-size:10.4px;color:var(--dim)}
+.mx{width:100%;border-collapse:collapse;margin:2px 0 4px;table-layout:fixed}
+.mx th,.mx td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top;overflow-wrap:anywhere}
+.mx thead th{color:var(--dim);font-size:11.1px;font-weight:700;font-family:var(--mono);white-space:nowrap}
+.mx tbody th{color:var(--sub);font-weight:600;font-size:11.6px;font-family:var(--mono);white-space:nowrap;width:66px}
+.mx td{font-size:12.2px;line-height:1.62}
+.mx td a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line2)}
+.mx td a:hover{border-bottom-color:var(--accent-dim)}
+.mx .mx-empty{color:var(--dim)}
+.mx tr:last-child th,.mx tr:last-child td{border-bottom:0}
+.chip2.c-half{background:rgba(232,163,61,.13);color:var(--half)}
+section>h2{margin-top:32px}
+.chip2.c-miss{background:rgba(255,95,86,.12);color:#ff8d86}
+.chip2.c-mut{background:rgba(255,255,255,.05);color:var(--dim)}
+
+/* ── v4.4 展示层去噪 / 纯内容层 ──
+   用户拍板(2026-09-22)：角色徽章(结论/观察/证据/反证/条件/认知/限制)、
+   来源标签、"证据回链/来源"字、旧版原文碎片卡 —— 这些只增加噪声，
+   对决策没有信息增量，全部退出展示层。
+   证据不删除:claim 锚点、#evidence-* 回链、模型 JSON、审计 JSON 全量保留。
+   概览页(citem 版式)同样的噪声一并在本层收敛。 */
+h1.claim-hero{font-size:inherit;font-family:inherit;font-weight:inherit;line-height:inherit;margin:0;display:inline}
+.claim-head:not(.cgrp-head),.citem .citem-tag{display:none}
+.claim-proof .proof-label{display:none}
+.claim-proof{margin-top:8px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05)}
+.claim-proof a{border:0;padding:0;background:none;font-size:10.6px}
+.obs-head .obs-nm,.obs-watch>.obs-lab{display:none}
+/* 无痕原文库：给未上展示层的 claim 保留锚点与原文，供门禁复核，读者不可见 */
+.claim-anchor,.claim-anchor-bank,.claim-anchor-text,.audit-anchor-bank{display:none}
+.legend-strip{display:flex;gap:12px;flex-wrap:wrap;color:var(--dim);font-size:11.4px;padding:8px 0 2px;border-top:1px solid var(--line)}
+.legend-strip b{color:var(--sub);font-weight:800}
+.legend-strip i{font-style:normal;color:var(--dim)}
+</style></head><body data-route="lhb" data-d="20261105" data-schema-version="1" data-template-version="p1.3"><nav class="navbar"><span class="brand"><span class="logo">盯</span>情绪盯盘台</span><div class="pills"><a class="" href="intraday.html">盘中作战</a><a class="" href="index.html">概览</a><a class="" href="cycle.html">周期情绪</a><a class="" href="auction.html">①竞价</a><a class="on" href="lhb.html">②龙虎榜</a><a class="" href="theme.html">③主线题材</a><a class="" href="logic.html">④产业逻辑</a><a class="" href="limitup.html">⑤涨停复盘</a><a class="" href="history.html">历史</a></div><span class="upd">更新 20261105</span></nav><div class="wrap"><div class="ticker"><div class="in"><div class="grp"></div><div class="grp"></div></div></div><nav class="reading-spine" aria-label="阅读顺序"><span class="rs-title">阅读顺序</span><span class="rs-step"><b>01</b>结论</span><span class="rs-arrow">→</span><span class="rs-step"><b>02</b>指标</span><span class="rs-arrow">→</span><span class="rs-step"><b>03</b>分段证据</span><span class="rs-arrow">→</span><span class="rs-step"><b>04</b>来源审计</span></nav><div class="rowA"><div class="hero"><div class="kick">②龙虎榜 · 我当前的判断 · 截至 2026-11-05 收盘</div><h1 aria-label="环境是「宽度回落、高度升一档、炸板率恶化」"><em>环境是「宽度回落、高度升一档、炸板率恶化」</em></h1><p>席位综合判断→资金温度（FUNDTEMP）→龙虎榜台账（LHBLEDGER）→席位分档库；席位胜率一律收缩估计，K=10、n&lt;25 标记警告。</p><div class="stance"><span class="pill warn">席位 · <b class="s-weak">环境是「宽度回落、高度升一档、炸板率恶化」</b></span><span class="pill">资金 · <b>58</b></span><span class="pill hot"><b class="s-ok">观察 · 27席 / 6.4亿</b></span></div></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v10.3a4 4 0 1 0 2 0V3z"/><circle cx="13" cy="17" r="1.6"/></svg></span><span class="chip2 c-half">11-05</span></div><span class="lab">资金温度 · 分位</span><span class="big">58</span><div class="gauge"><div class="gtrack"><i class="gmark" style="left:58%"></i></div><div class="gl"><span>冷</span><span>中性</span><span>热</span></div></div><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 4 6-8 3 4"/></svg></span><span class="chip2 c-half">11-05</span></div><span class="lab">机构席次 / 金额亿</span><span class="big">27席 / 6.4亿</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20V10m5 10V4m5 16v-7"/></svg></span><span class="chip2 c-half">11-05</span></div><span class="lab">席位荐票Top1</span><span class="big">阳光照明</span><span class="sub2">当日真源读数</span></div><div class="kpi"><div class="top"><span class="ico"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14l6-6 4 4 6-6"/></svg></span><span class="chip2 c-half">11-05</span></div><span class="lab">昨席位路结算 · 执1</span><span class="big">—</span><span class="sub2">当日该口径数据缺失，未填补</span></div></div><!--PAPERTRADE-->
+<div style="background:linear-gradient(140deg,#171308,#12141c 46%);border:1px solid rgba(232,163,61,.28);border-radius:18px;padding:20px 24px;margin:18px 0;color:#eceef5;font-size:13px;box-shadow:0 12px 44px -18px rgba(232,163,61,.30),0 1px 3px rgba(0,0,0,.4)">
+<div style="font-size:11.5px;letter-spacing:3px;color:#e8a33d;font-family:monospace">PAPER TRADING · 模拟实盘 · 第二路·席位</div>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 12px;font-size:12.5px;color:#a8adbd"><span>累计 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-0.23%</b></span> <span>本周 <b style="color:#ff5f56;font-family:ui-monospace,monospace">+0.03%</b></span> <span>基准本周 <b style="color:#3fcb86;font-family:ui-monospace,monospace">-5.75%</b></span> <span>平仓胜率 <b style="font-family:monospace">37.5%</b>(n=16)</span> <span>本金100万 · 双边0.15% · 次日开盘买 · 卖点自主(最早T+2,每晚表态)</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:6px 20px;margin-top:6px;align-items:start"><div>
+<div style="background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:12px;padding:10px 12px"><svg viewBox="0 0 640 150" style="width:100%;max-width:680px;display:block"><line x1="20" y1="60.9" x2="620" y2="60.9" stroke="rgba(255,255,255,.13)" stroke-dasharray="3 4"/><polyline points="20.0,66.4 31.1,61.1 42.2,62.4 53.3,65.3 64.4,31.9 75.6,31.2 86.7,31.2 97.8,35.4 108.9,40.4 120.0,38.3 131.1,42.4 142.2,49.7 153.3,52.3 164.4,55.8 175.6,57.4 186.7,55.6 197.8,51.6 208.9,54.7 220.0,53.8 231.1,55.4 242.2,58.4 253.3,61.9 264.4,64.4 275.6,62.1 286.7,61.7 297.8,62.5 308.9,67.8 320.0,66.2 331.1,63.8 342.2,64.4 353.3,68.4 364.4,70.2 375.6,76.1 386.7,75.4 397.8,76.1 408.9,77.3 420.0,77.5 431.1,81.6 442.2,82.0 453.3,88.9 464.4,91.4 475.6,97.8 486.7,100.6 497.8,99.1 508.9,98.8 520.0,106.8 531.1,101.2 542.2,102.7 553.3,103.7 564.4,103.6 575.6,110.0 586.7,113.3 597.8,114.6 608.9,116.0 620.0,118.8" fill="none" stroke="#7b8cff" stroke-width="1.2" stroke-dasharray="5 4" opacity=".65"/><polyline class="drawin" points="20.0,60.2 31.1,58.9 42.2,59.3 53.3,59.6 64.4,57.1 75.6,57.0 86.7,55.4 97.8,55.1 108.9,54.2 120.0,54.8 131.1,56.2 142.2,55.9 153.3,55.9 164.4,55.9 175.6,56.2 186.7,56.1 197.8,56.1 208.9,56.1 220.0,56.4 231.1,56.9 242.2,56.4 253.3,56.4 264.4,56.4 275.6,56.4 286.7,56.4 297.8,56.4 308.9,56.4 320.0,56.4 331.1,57.0 342.2,57.4 353.3,57.4 364.4,58.2 375.6,58.2 386.7,58.2 397.8,58.2 408.9,58.2 420.0,58.2 431.1,58.2 442.2,58.5 453.3,58.4 464.4,57.9 475.6,58.5 486.7,59.5 497.8,59.6 508.9,59.5 520.0,59.6 531.1,60.7 542.2,61.0 553.3,61.0 564.4,61.0 575.6,61.3 586.7,61.1 597.8,61.2 608.9,61.2 620.0,61.2" fill="none" stroke="#e8a33d" stroke-width="2.2"/><circle cx="620.0" cy="61.2" r="3" fill="#e8a33d"/><text x="20" y="12" fill="#8d93a8" font-size="10" font-family="monospace">20260713~20261105  金=本账净值  紫虚线=影子基准(全场涨停同规则)  横线=1.0</text><text x="618" y="56.2" fill="#e8a33d" font-size="11" font-family="monospace" text-anchor="end">0.9977</text></svg></div>
+<div style="margin-top:10px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.045);border-radius:10px;padding:9px 12px;color:#a8adbd;font-size:12.3px"><span style="color:#e8a33d;font-weight:700">交易心得</span> · 空仓（连续第 6 个交易日）。buys=[] 的理由：四道硬门「S/A 净买 ≥1000 万 ∧ 涨停 ∧ 双源非强矛盾 ∧ 净买占比落 10-20% 最优桶」今日交集为空（0 只）——落涨停的 S/A 票 4 只（000995 −2.58%、002086 3.44%、600261 7.98%、688648 9.09%）无一落最优桶，其中 000995 票级净卖 −0.3124 亿且双源分歧、688648 的 A 档净买仅 606.3 万未达 1000 万门槛；落最优桶的 8 只涨停票（600683/300071/688316/601929/002131/300093/300049/920007）无一有 S/A 席。用弱桶或封板质量不合格的票凑仓位＝确定负期望（5-10% 桶 46.0%/−0.00%、本路中档环境 38.2%/−0.80%），不执行。sells=[] 的理由：_学习/_模拟盘/lhb/状态.json（date=20261104）持仓=[] 空数组、现金 997692.06 元、净值 0.997692（累计 −0.23%）、已平仓 16 笔、胜率 37.5%——逐票表态完毕：无在持票，故无买卖腿、不构成漏票。3 只观察（002131 利欧股份 / 601929 吉视传媒 / 002086 东方海洋）全部 0 权重，不进账本，升级条件写在 _学习/lhb判断_20261105.json#荐票.标的 各自的「升级条件」字段。</div>
+</div><div>
+<div style="margin-top:12px;color:#8d93a8">当前空仓</div>
+<div style="margin-top:12px;color:#e8a33d;font-size:12px">今晚指令单(20261105发出,明日固定价执行)</div>
+<div style="color:#8d93a8;margin-top:4px">★今晚无买卖指令(在持票默认继续持有/或空仓)</div>
+</div></div>
+<details style="margin-top:10px"><summary style="color:#8d93a8;cursor:pointer;font-size:12px">最近平仓明细(5)</summary><table style="width:100%;border-collapse:collapse;font-size:12px;margin-top:4px">
+<tr style="color:#8d93a8"><td>票</td><td>买入</td><td>卖出</td><td>收益</td><td>腿/顺延</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>601188 龙江交通</td><td style="font-family:monospace">20261030@3.47</td><td style="font-family:monospace">20261103@3.30</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-5.04%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>300296 利亚德</td><td style="font-family:monospace">20261026@7.25</td><td style="font-family:monospace">20261027@6.43</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-11.35%</b></td><td>开·持1日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>001696 宗申动力</td><td style="font-family:monospace">20261019@16.00</td><td style="font-family:monospace">20261021@15.44</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-3.64%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600802 福建水泥</td><td style="font-family:monospace">20261019@6.88</td><td style="font-family:monospace">20261021@6.40</td><td><b style="color:#3fcb86;font-family:ui-monospace,monospace">-7.12%</b></td><td>开·持2日</td></tr>
+<tr style="border-top:1px solid rgba(255,255,255,.07)"><td>600668 尖峰集团</td><td style="font-family:monospace">20261016@8.15</td><td style="font-family:monospace">20261019@8.48</td><td><b style="color:#ff5f56;font-family:ui-monospace,monospace">+3.89%</b></td><td>开·持1日</td></tr>
+</table></details>
+<div style="margin-top:10px;color:#5f6577;font-size:11px">铁律:发出版不可覆盖·一字拒单·跌停顺延·整手·逐日盯市·卖点自主(每晚表态,最早T+2,无卖单=持有)·≤5只·数字全出自引擎·本路只看本账+情绪周期</div>
+</div>
+<!--/PAPERTRADE-->
+<section id="seats"><h2>一 席位综合判断</h2><div id="component-SEATCARD"><!--SEATCARD--><div class="card"><table style="table-layout:fixed;width:100%"><colgroup><col style="width:24px"><col style="width:100px"><col style="width:60px"><col><col style="width:104px"><col style="width:118px"></colgroup><tr><th>#</th><th>标的</th><th>综合分·共振</th><th>S/A席位(档·滚动执1胜率·净买)</th><th>资金结构</th><th>T+1结算(开买→收)</th></tr><tr><td>1</td><td style="white-space:nowrap"><b>阳光照明</b><br><span class="mut">600261 +10.1%</span></td><td style="white-space:nowrap"><b>4.95</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>国联民生证券股份有限公司宁波… <span class="mut">执1 59.4%/1.72%⚠小样本(n=10) 净买7381万</span></td><td style="white-space:nowrap">结构<b>50</b><br><span class="mut">机构0·量化0·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>2</td><td style="white-space:nowrap"><b>东方海洋</b><br><span class="mut">002086 +10.1%</span></td><td style="white-space:nowrap"><b>4.09</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>华泰证券股份有限公司深圳彩田… <span class="mut">执1 58.0%/1.95%(n=26) 净买5030万</span></td><td style="white-space:nowrap">结构<b>52</b><br><span class="mut">机构0·量化1·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>3</td><td style="white-space:nowrap"><b>马矿股份</b><br><span class="mut">601123 -4.0%</span></td><td style="white-space:nowrap"><b>3.03</b><br><span class="mut">共振2</span></td><td style="word-break:break-word"><b>[A]</b>国泰海通证券股份有限公司济南… <span class="mut">执1 59.2%/1.33%⚠小样本(n=5) 净买1502万</span><br><b>[A]</b>中国国际金融股份有限公司北京… <span class="mut">执1 59.2%/0.88%(n=27) 净买1067万</span></td><td style="white-space:nowrap">结构<b>50</b><br><span class="mut">机构0·量化0·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>4</td><td style="white-space:nowrap"><b>皇台酒业</b><br><span class="mut">000995 +10.0%</span></td><td style="white-space:nowrap"><b>2.82</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>中信建投证券股份有限公司福州… <span class="mut">执1 53.8%/2.36%(n=27) 净买2049万</span></td><td style="white-space:nowrap">结构<b>50</b><br><span class="mut">机构1·量化0·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr><tr><td>5</td><td style="white-space:nowrap"><b>澳弘电子</b><br><span class="mut">605058 -7.6%</span></td><td style="white-space:nowrap"><b>2.51</b><br><span class="mut">共振1</span></td><td style="word-break:break-word"><b>[A]</b>东方财富证券股份有限公司昌都… <span class="mut">执1 50.3%/1.67%(n=99) 净买1274万</span></td><td style="white-space:nowrap">结构<b>50</b><br><span class="mut">机构0·量化0·游资0</span></td><td style="white-space:nowrap"><span class="mut">—待结算</span></td></tr></table></div><div class="hint">候选=当日S/A席位净买≥1000万(64个S/A,候选9只);席位胜率=滚动执行口径历史值(窗口20260401~20261104),非个股预言;结构分仅辅助。结算列次日由结算脚本原位回填,同一张表不换结构。</div><!--/SEATCARD--></div><div class="obs" id="claim-lhb-f2e023b0d1674e43"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">荐票 · 结论</span></div><div class="obs-watch"><p class="mut">荐票 · 结论</p><p>0 只荐票（空仓第 6 个交易日），3 只观察（0 权重）。四道硬门（S/A 净买 ≥1000 万 ∧ 涨停 ∧ 双源非强矛盾 ∧ 净买占比落 10-20% 最优桶）今日交集为空，且是第 3 个连续空档日（20261103 / 20261104 / 20261105）。今日的空档成因与过去 5 日不同，必须分开写：过去是「钱也看不见」（涨停层真实率 +15.5% 低于 30% 门槛、最优桶空档），今天是「钱看得见（+58.2%）、人不在」——8 只落最优桶的涨停票全部无 S/A 席，4 只有 S/A 席的涨停票全部不落最优桶。两维互斥是本路门径的结构问题，不是今日的个案，已写入认知迭代第 1 条并把替代门槛作为提案上报，但**不在今日执行**（今日先看后改 = 事后拟合）。</p></div></div><div class="obs" id="claim-lhb-81807e31203ba227"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 代码</span></div><div class="obs-watch"><p class="mut">标的 · 代码</p><p>002131</p></div></div><div class="obs" id="claim-lhb-94dbccdca9536510"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 名称</span></div><div class="obs-watch"><p class="mut">标的 · 名称</p><p>利欧股份</p></div></div><div class="obs" id="claim-lhb-b621da12aee29389"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 类型</span></div><div class="obs-watch"><p class="mut">标的 · 类型</p><p>观察</p></div></div><div class="obs" id="claim-lhb-bca83f78d3d572c0"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 历史对照</span></div><div class="obs-watch"><p class="mut">标的 · 历史对照</p><p>涨停上榜 × 净买占比 10-20%：n=454 / 执1 50.0% / +0.26%（T1 59.9% / +1.91%）；涨停桶 n=2157 / 48.4% / +0.34%；多空比 ≥3 桶 n=163 / 45.4% / −0.07%；换手 3-15% 桶 n=2131 / 46.4% / −0.05%；流通 100-300 亿桶 n=1324 / 47.6% / +0.39%；上榜原因「涨幅偏离」n=2245 / 47.3% / +0.17%；席位万豪世家 B 档 n=62 / 52.6% / +1.19%</p></div></div><div class="obs" id="claim-lhb-2551f8713e9bd68e"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 理由</span></div><div class="obs-watch"><p class="mut">标的 · 理由</p><p>今日「钱」这一维最完整的票：票级净买 +3.2995 亿为全场第一（占当日榜 58 码净买合计的绝对值 72%）、净买占比 15.36% 落最优桶、双源一致 1.08×（源1 +3.2995 亿 / 源2 +3.5600 亿，无打折）、封单 1.37 亿 ÷ 成交 21.48 亿 = 6.38% 过 5% 门、炸 1 次、首封 09:40:57 末封 10:14:00（早盘封死，非尾盘弱封）、10cm 首板（统计 1/1）、换手 8.5%、流通 257.0 亿、资金结构分 55 为全场最高（量化 2 席 +4pp、大单席 4、净买强度 85）、5 席全正无净卖（万豪世家 +1.4982 亿 B / 开源西安西大街 +6791 万 C / 深股通 +5234 万 B / 东方拉萨金珠西路 +5018 万 B / 江苏路 +3575 万 B）。不给荐票的唯一硬因是「人」：无任何 S/A 席（最高为 B 档），不满足本路四门第 1 条。降级观察的另两条：①流通 257 亿 + 换手 8.5% 落 3-15% 桶（n=2131 / 46.4% / −0.05%，等于无优势），大票要靠持续增量资金；②多空比 3.27 落 ≥3 桶（n=163 / 45.4% / −0.07%，非正格），说明买卖两侧金额都被放大、属高换手博弈而非单边锁筹。升级条件（三条齐备）：Master 批准替代门槛 ∧ 明日该票 开盘 gap ∈[−3%,+3%] ∧ 万豪世家类 B 档席次日仍在榜且净买 ≥3000 万。证伪：若明日 002131 执1 ≤ −3.0%，则「无 S/A 即不可打」的判决成立、观察位当日移出。</p></div></div><div class="obs" id="claim-lhb-f76cb80342b03d8f"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 代码</span></div><div class="obs-watch"><p class="mut">标的 · 代码</p><p>601929</p></div></div><div class="obs" id="claim-lhb-b8228ef35e6e169b"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 名称</span></div><div class="obs-watch"><p class="mut">标的 · 名称</p><p>吉视传媒</p></div></div><div class="obs" id="claim-lhb-d427a7313b23a53d"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 类型</span></div><div class="obs-watch"><p class="mut">标的 · 类型</p><p>观察</p></div></div><div class="obs" id="claim-lhb-52ea7c89a04cb4d2"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 历史对照</span></div><div class="obs-watch"><p class="mut">标的 · 历史对照</p><p>涨停 × 净买占比 10-20%：n=454 / 50.0% / +0.26%（T1 59.9% / +1.91%）；涨停桶 n=2157 / 48.4% / +0.34%；多空比 ≥3 n=163 / 45.4% / −0.07%；换手 3-15% n=2131 / 46.4% / −0.05%；流通 30-100 亿 n=1884 / 46.5% / +0.17%；席位东亚前海苏州 B 档 n=59 / 49.1% / +4.81%（均涨为今日 B 档最高）</p></div></div><div class="obs" id="claim-lhb-e02d985bab348037"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 理由</span></div><div class="obs-watch"><p class="mut">标的 · 理由</p><p>今日唯一同时满足「最优桶 + 封板质量全过 + 线共振」的票：票级净买 +0.9150 亿（占比 15.39% 落最优桶、当日榜第 2）、双源一致 1.26×、封单 0.86 亿 ÷ 成交 5.95 亿 = 14.45%（远过 5% 门）、炸 0 次、首封 = 末封 13:16:56（午后一次封死、无开板）、10cm 首板、收 2.50 元、换手 7.2%、流通 87.2 亿、资金结构分 49（均值附近）；5 席全 B 档且全正：沪股通 +5676 万、东亚前海苏州 +3214 万（n=59 / 49.1% / +4.81%，本路样本里均涨最高的 B 档之一）、高盛 +1636 万（n=986 / 50.7%）、国泰海通总部 +1420 万（n=1282 / 48.7%）、瑞银 +1269 万（n=490 / 49.8%）。线共振：今日传媒线 6 只涨停（广告营销 3 / 电视广播 1 / 影视院线 2，含 603598 引力传媒 2 板封比 49.32% 炸 0），其中 4 只有榜且净买全正（300071 +2.03 亿、002343 +0.95 亿、601929 +0.92 亿、600986 +0.66 亿，合计 +4.56 亿）。不给荐票的原因：①无 S/A 席（同样卡在四门第 1 条）；②净买额绝对值小（0.92 亿，为当日榜第 12），单席均值 2644 万，属「薄买」而非「重仓锁筹」；③换手 7.2% 落 3-15% 桶（46.4% / −0.05%）与流通 30-100 亿桶（46.5% / +0.17%）都不给正分。升级条件（三条齐备）：Master 批准替代门槛 ∧ 次日 gap ∈[−3%,+3%] ∧ 传媒线次日涨停仍 ≥4 只。证伪：若明日 601929 执1 ≤ −2.0% 且传媒线涨停 &lt;4 只，则「线共振 + 强封板」判读被证伪、移出观察。</p></div></div><div class="obs" id="claim-lhb-e0ebaf635405d029"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 代码</span></div><div class="obs-watch"><p class="mut">标的 · 代码</p><p><a href="#component-SEATCARD">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-lhb-55633f2b2249d6d2"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 名称</span></div><div class="obs-watch"><p class="mut">标的 · 名称</p><p><a href="#component-SEATCARD">回看本段权威组件中的原条目</a></p></div></div><div class="obs" id="claim-lhb-7d1e3d495b7fa439"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 类型</span></div><div class="obs-watch"><p class="mut">标的 · 类型</p><p>观察</p></div></div><div class="obs" id="claim-lhb-93ca8501bfe9e0ab"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 历史对照</span></div><div class="obs-watch"><p class="mut">标的 · 历史对照</p><p>涨停 × 净买占比 0-5%：n=1300 / 48.2% / +0.54%（T1 47.7% / +0.15%）；换手 &gt;30% 桶 n=847 / 53.6% / +1.27%（执1 最优换手桶）；上榜原因「换手率」n=1113 / 52.0% / +1.05%；流通 30-100 亿 n=1884 / 46.5% / +0.17%；席位华泰深圳彩田路 A 档 n=26 / 58.0% / +1.95%（非小样本）</p></div></div><div class="obs" id="claim-lhb-85d29c4701739974"><div class="claim-head"><span class="claim-role role-observation">观察</span><span class="claim-source">标的 · 理由</span></div><div class="obs-watch"><p class="mut">标的 · 理由</p><p>今日唯一「非小样本 A 档 + 票级净买正 + 双源一致 + 涨停」四齐的票：A 档华泰深圳彩田路 +5030.2 万（n=26、58.0%、+1.95%，全部 A 档里样本最厚），另有国新证券北京 +7468 万 B（n=202 / 46.6%）、国泰海通知春路 +6194 万 B（n=155 / 48.4%）、净买 +1.0042 亿、占比 3.44% 落 0-5% 桶（n=1300 / 48.2% / +0.54%，该桶执1 并不差）、换手 53.0% 落 &gt;30% 桶（n=847 / 53.6% / +1.27%，全场执1 最优换手桶）、资金结构分 52。但封板质量全数不合格，这是它只能观察不能荐票的硬因：封单 0.18 亿 ÷ 成交 29.19 亿 = **0.63%**（5% 门的 1/8）、炸板 **14 次**（今日全场最多）、首封 09:58:03 末封 14:18:15、换手 53.0%、统计 12/7（12 个交易日 7 个板的高位妖股）。含义：这只票的 +1 亿净买是在 29 亿成交里反复开板换手出来的「接力盘」，不是锁筹盘；封单 0.63% 意味着次日开盘定价权在散户手上，本路的中档环境（n=34 / 38.2% / −0.80%）扛不住这种 gap 风险。升级条件（两条齐备）：次日封单/成交 ≥5% ∧ 炸板 ≤3。证伪：若明日 002086 高开低走（执1 ≤ −5%），则「封比 0.63% 即拒」的门槛得到验证，本路把「封单/成交 ≥5%」从经验门升为硬门。</p></div></div><div class="card"><span id="claim-lhb-caab50cf9b68efc4"></span></div><div class="" id="claim-lhb-199cdf2409d2bb98"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card">
+<p><b>一句话：今天钱看得见，人不在。</b>温度 49.3（中性，昨 49.0）、涨停 84（昨 118）、跌停 0、炸板 48（炸板率 36.4%，昨 21.9%）、回封 36、最高 4 板（昨 3）、梯队 63-17-2-2、二板加 21（昨 12）、两市成交 21180 亿、封板总额 55.3 亿——宽度回落近三成、高度升一档、失败率同步恶化。席位层给出的却是本路三日内最干净的一次读数：涨停 ∩ 当日榜 22 码 票级 <b>+13.707 亿</b> ÷ 席位侧 <b>+23.5484 亿</b> = 真实率 <b>+58.2%</b>（≥30% 门槛、昨 +15.5%），非涨停榜 36 码 −18.2802 亿 ÷ +32.3846 亿 = <b>−56.4%</b>，全场 <b>−8.2%</b>。钱的方向第一次可读，但「人」这一维是空的：S/A 落涨停只有 4 只，且 4 只全部不落 10-20% 最优桶；反过来落最优桶的 8 只涨停票，全部没有一张 S/A 席。</p>
+<p class="hint">口径（固定，跨日可比）：席位真源 _学习/_席位动向/20261105.csv，原始 315 行 → 剔「连续 / 累计 / 严重异常」34 行得 281 →（代码, 席位）去重取买入金额最大 → 262 笔，净额 +55.9329 亿（买 76.7641 / 卖 20.8311）；票级真源 20261105/lhb.csv 当日榜 58 码（69 行 / 63 码，剔 5 码区间累计榜）；真实率 = 票级净买 ÷ 席位侧净额，只可相除不可相减。注意：昨日 lhb判断 的席位侧未剔区间累计行（318 笔 +105.2524 亿），用今日同一脚本复算 20261104 得 −37.8%，故两日数值不可直接比。</p>
+</div></div><div class="" id="claim-lhb-ca577d49794910e4"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>真实率 −8.2%票级 −4.5732 亿 / 席位 +55.9329 亿 · 昨 −21.11%</p></div><div class="" id="claim-lhb-022330e645aadda7"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>涨停层 +58.2%22 码 +13.707 亿 / +23.5484 亿 · 首次回到 ≥30% 可读区</p></div><div class="" id="claim-lhb-d2fc207e41fd476a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>涨停覆盖 26.2%84 只涨停中 22 只有榜 · 昨 16.1% · 拟合预测 23.1%</p></div><div class="" id="claim-lhb-3466782b8bac3951"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p>S/A 落涨停 4 只 · 最优桶 0 只四门交集连续第 3 日为 0</p></div><div class="" id="claim-lhb-ffa3e9afdb17a796"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div id="table-ca96fd7cd651969d"><table class="table trow">
+<tr><th>维度</th><th>今日读数</th><th>判读</th></tr>
+<tr><td>市场温度（涨停质量口径）</td><td>49.3（昨 49.0 / 前日 20.3）</td><td>两天连续中性，环境没变差，是「宽度缩、失败率升」的内部换手</td></tr>
+<tr><td>涨停 / 跌停 / 炸板</td><td>84 / 0 / 48（炸板率 36.4%）</td><td>宽度 −28.8%（118→84），炸板率 +14.5pp，跌停 0 说明没崩、只是承接差</td></tr>
+<tr><td>最高连板 / 梯队 / 二板加</td><td>4 板 / 63-17-2-2 / 21</td><td>高度升 1 档、二板加 12→21，晋级比宽度好</td></tr>
+<tr><td>两市成交额 / 封板总额</td><td>21180 亿 / 55.3 亿</td><td>量能仍高，封板资金只覆盖 0.26%，属分散封</td></tr>
+<tr><td>当日榜码数 / 席位笔数</td><td>58 码 / 262 笔（315 行剔 34 行再去重）</td><td>净卖仅 29 笔（11.1%），买五口径天然偏买</td></tr>
+<tr><td>票级净买（当日榜）</td><td>−4.5732 亿 / 58 码，29 正 29 负</td><td>多空家数完全对半，方向由金额而非家数决定</td></tr>
+<tr><td>涨停 ∩ 当日榜</td><td>22 只（26.2%）</td><td>宽度收缩反而让覆盖率从 16.1% 回升，符合覆盖率−宽度反向函数</td></tr>
+<tr><td>涨停 ∩ S/A 席（净买≥1000 万）</td><td>4 只（000995 / 002086 / 600261 / 688648）</td><td>4 只全部不落 10-20% 最优桶，其中 1 只票级净卖</td></tr>
+<tr><td>双源校验（status=pass）</td><td>可比 58：一致 22 / 分歧 16 / 强矛盾 10 / 打折 10 / 仅源2 6</td><td>强矛盾 10 只今日<b>全部非涨停</b>，负面过滤对荐票层零拦截</td></tr>
+</table></div></div><div class="" id="claim-lhb-f59206f390e9ccd7"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card">
+<p><b>今日最硬的一刀：分层仍然成立，而且今日两组差 114.6pp，是本路 65 日样本里第 9 大的分层差（65 日里最大 202.5pp @20260714）。</b>涨停层 +58.2% vs 非涨停层 −56.4%——买五看到涨停层 23.55 亿买盘、票级只有 13.71 亿净买（偏置 1.72×，正常范围）；非涨停层则是看到 32.38 亿买盘、票级 18.28 亿<b>净卖</b>，卖压全部落在未披露的卖出前五。这层含义很重要：今日全场 −8.2% 这个负号，<b>100% 由非涨停榜贡献</b>，涨停层是正贡献。若照全场口径直接判「净卖环境不参与」，今日会把唯一可读的涨停层一起禁掉——这是昨日修正过、今日再次被验证的一条。</p>
+</div></div><div class="" id="claim-lhb-8a8151e8f40ec29e"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div id="table-1a9cdd01745f33ef"><table class="table trow">
+<tr><th>分层（同日同源，本路脚本自算）</th><th>码数</th><th>票级净买合计</th><th>席位侧净额</th><th>真实率</th><th>判读</th></tr>
+<tr><td>涨停 ∩ 当日榜</td><td>22</td><td><b>+13.707 亿</b></td><td>+23.5484 亿</td><td><b>+58.2%</b></td><td>≥30% ⇒ 强度可读（本路修订后口径：≥40% 可参与四门）</td></tr>
+<tr><td>非涨停榜（异动 / 振幅 / 跌停）</td><td>36</td><td><b>−18.2802 亿</b></td><td>+32.3846 亿</td><td><b>−56.4%</b></td><td>看到 32.4 亿买盘、票级 18.3 亿净卖 ⇒ 卖压在未披露的卖五</td></tr>
+<tr><td>全场</td><td>58</td><td><b>−4.5732 亿</b></td><td>+55.9329 亿</td><td><b>−8.2%</b></td><td>负号由非涨停组单独贡献，不可外推为涨停层净卖</td></tr>
+</table></div></div></section><section id="temperature"><h2>二 资金温度 · 日度统计(买侧席位明细)</h2><div id="component-FUNDTEMP"><!--FUNDTEMP--><div class="card"><b>资金温度 · 分位</b><div id="table-915af3e5c19d4c81"><table><tbody><tr><td>11-05</td><td>27</td><td>13</td><td>156</td><td>30</td><td>76.7亿</td><td>58</td></tr><tr><td>11-04</td><td>26</td><td>5</td><td>142</td><td>20</td><td>92.2亿</td><td>83</td></tr><tr><td>11-03</td><td>29</td><td>13</td><td>141</td><td>20</td><td>89.1亿</td><td>77</td></tr><tr><td>11-02</td><td>31</td><td>11</td><td>144</td><td>21</td><td>69.0亿</td><td>42</td></tr><tr><td>10-30</td><td>34</td><td>13</td><td>153</td><td>32</td><td>87.1亿</td><td>70</td></tr></tbody></table></div></div><!--/FUNDTEMP--></div><div class="card"><div class="" id="claim-lhb-248d5927227ee737"><div class="claim-head"><span class="claim-role role-verdict">结论</span><span class="claim-source">判断 · 结论</span></div><p class="mut">判断 · 结论</p><p>环境是「宽度回落、高度升一档、炸板率恶化」：温度 49.3 中性（昨 49.0）、涨停 84（昨 118，−28.8%）、跌停 0、炸板率 36.4%（昨 21.9%，+14.5pp）、最高板 4（昨 3）、二板加 21（昨 12）、成交 21180 亿、封板总额 55.3 亿。席位层今日第一次给出「强度可读」的读数：涨停∩当日榜 22 码 票级 +13.707 亿 ÷ 席位侧 +23.5484 亿 = 真实率 +58.2%（≥30% 门槛，昨 +15.5%），非涨停榜 36 码 −18.2802 亿 ÷ +32.3846 亿 = −56.4%，全场 −8.2%（−4.5732 ÷ +55.9329）。分层依旧成立，且今日两组差 114.6pp，是 65 日样本里第 9 大的分层差（65 日里最大 202.5pp @20260714、次为 170.5pp @20260921）。但「人」这一维空档：S/A 共 20 笔 +2.3537 亿、覆盖 18 码，落在涨停只有 4 只（000995 皇台酒业、002086 东方海洋、600261 阳光照明、688648 中邮科技），4 只的净买占比分别是 −2.58%、3.44%、7.98%、9.09%，无一落 10-20% 最优桶；反过来，8 只落最优桶的涨停票（600683 16.84%、300071 16.61%、688316 15.72%、601929 15.39%、002131 15.36%、300093 11.83%、300049 10.64%、920007 10.25%）无一有 S/A 席在场。四门交集连续第 3 日为 0 ⇒ 档位 C、0 荐票、空仓第 6 日。与过去 5 个空仓日的区别必须写清：不是「看不见钱」，而是「钱在、人不在」——钱这一维今天给的其实是正分（+58.2%），挡路的是席位档这一维。</p></div><div class="" id="claim-lhb-87f265bd1cc2f9e7"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>席位明细唯一真源 _学习/_席位动向/20261105.csv：原始 315 行 → 剔 类型 含「连续/累计/严重异常」34 行得 281 行 →（代码,席位）去重取买入金额最大 → 262 笔；净额合计 +55.9329 亿（买 76.7641 / 卖 20.8311），净买笔 233/262、净卖仅 29 笔（11.1%，买五口径的必然偏置，不作资金结论）。</p></div><div class="" id="claim-lhb-0fae77b8a93299f2"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>票级真源 20261105/lhb.csv：69 行 / 63 码；剔上榜原因含「连续/累计/严重异常」后 62 行 / 当日榜 58 码（5 码仅区间累计榜）；票级净买合计 −4.5732 亿（29 正 29 负）→ 全场真实率 = −4.5732 ÷ 55.9329 = −8.2%（昨 −21.11%、前日 −9.8%）。</p></div><div class="" id="claim-lhb-805b64c23be5539b"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>分层复算（本路脚本 _学习/lhb_分层真实率.py，同日同源）：涨停∩当日榜 22 码 票级 +13.707 亿 vs 席位 +23.5484 亿 = 真实率 +58.2%（买五偏置 23.5484÷13.707 = 1.72×）；非涨停榜 36 码 票级 −18.2802 亿 vs 席位 +32.3846 亿 = −56.4%；两组异号，分层必要=True（自动判定字段 _学习/lhb_分层真实率_多日.json#明细[20261105].分层必要）。</p></div><div class="" id="claim-lhb-ed94671d6295421e"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>覆盖率 22/84 = 26.2%（昨 16.1%、前日 25.0%）：宽度从 118 收缩到 84，覆盖率随之回升，与「覆盖率 = 43.08 − 0.2377×涨停数」（n=66）的拟合方向一致（涨停 84 预测 23.1%、实际 26.2%；涨停 118 预测 15.0%、实际 16.1%）。</p></div><div class="" id="claim-lhb-10d8300d9b0dcc60"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>S/A 出手：_学习/_席位分档.json（更新 20261105、窗口 20260401~20261104、S 19 / A 45 / B 145 / C 91 / P 177、全体基准 48.8%/+0.65%）口径下今日 20 笔、净额 +2.3537 亿、覆盖 18 码；其中 S 档 4 笔全是「东方财富证券拉萨团结路第二证券营业部」（n=67、63.5%、小样本否）——拉萨席位是散户通道而非游资，故 S 档这 4 笔不计入「人」的加分。A 档 16 笔里 5 笔标⚠小样本（n&lt;25）。</p></div><div class="" id="claim-lhb-d2d75e2a1518549f"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>落涨停的 4 只 S/A 票逐项：000995 皇台酒业（A 中信建投福州东街 n=27/53.8%/+2.36% +2049.5 万；票级净买 −0.3124 亿、占比 −2.58%、双源分歧、封比 1.93%、炸 1、统计 9/5）；002086 东方海洋（A 华泰深圳彩田路 n=26/58.0%/+1.95% +5030.2 万；票级 +1.0042 亿、占比 3.44%、双源一致、封比 0.63%、炸 14、换手 53.0%、统计 12/7）；600261 阳光照明（A 国联民生宁波 n=10⚠/59.4%/+1.72% +7381.1 万；票级 +1.2244 亿、占比 7.98%、双源一致 1.71×、封比 4.48%、炸 4、统计 11/6）；688648 中邮科技（A 国泰海通成都顺城大街 n=6⚠/55.5% +606.3 万，未达 1000 万门槛；票级 +0.2210 亿、占比 9.09%、封比 19.13%、炸 0、首封 13:20、20cm 首板）。</p></div><div class="" id="claim-lhb-359cd462fd4ce084"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>落最优桶（10-20%，n=454/执1 50.0%/+0.26%/T1 59.9%/+1.91%）的 8 只涨停票的无 S/A 席位证据：600683 京投发展（席位 5 笔全为 B/C，最大为国泰海通总部 +1138 万 B）、300071 福石控股（最大开源西安西大街 +8027 万 C）、688316 青云科技（机构专用 +2472 万 B + 开源西大街 +3149 万 C）、601929 吉视传媒（5 席全 B：沪股通 +5676 万 / 东亚前海苏州 +3214 万 / 高盛 +1636 万 / 国泰海通总部 +1420 万 / 瑞银 +1269 万）、002131 利欧股份（万豪世家 +1.4982 亿 B / 开源西大街 +6791 万 C / 深股通 +5234 万 B / 东方拉萨金珠西路 +5018 万 B / 江苏路 +3575 万 B）、300093 金刚光伏（开源西大街 +7145 万 C）、300049 福瑞医科（中信建投长沙芙蓉中路 +6509 万 P 档 n=3 / 深股通 +3139 万 B）、920007 酉立智能（东吴苏州西北街 +593 万 B，北交所 30cm）。</p></div><div class="" id="claim-lhb-77fce2772b15c375"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>双源校验 _学习/龙虎榜双源校验_20261105.json（status=pass，源1 63 码 / 源2 59 码 / 可比 58）：一致 22 / 分歧 16 / 强矛盾 10 / 打折 10 / 仅源2 6。强矛盾 10 只（000530 冰山冷热 −1.1533 亿 vs +0.1759 亿、000678 襄阳轴承、600127 金健米业、600371 万向德农、600715 文投控股、600892 大晟文化、601857 中国石油、603268 松发股份 −3.2433 亿 vs +3.0401 亿、605577 龙版传媒、688002 睿创微纳 −1.6489 亿 vs +5.4250 亿）今日全部为非涨停，故本轮负面过滤对荐票层零拦截、只在观察层生效；其中 000530 昨日是本路「涨停∩榜净买第一（+1.978 亿）」，今日 −4.44%——强矛盾禁入规则的第 1 次事后验证。</p></div><div class="" id="claim-lhb-e4c8cea70329eeff"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>机器荐票卡 _学习/席位荐票_20261105.json（候选 9、SA 64、窗口 20260401~20261104）Top5：600261 阳光照明（综合 4.95、涨停、一致）、002086 东方海洋（4.09、涨停、一致）、601123 马矿股份（3.03、−3.98% 未涨停、分歧）、000995 皇台酒业（2.82、涨停、分歧、票级净卖）、605058 澳弘电子（2.51、−7.62% 未涨停、分歧）。Top5 里 3 只因「未涨停 / 净卖 / 分歧」出局，剩 2 只均落 ≤0-5% 弱桶且封板质量不合格——与本路四门结论一致，但排序键（席位分）与仓位门（占比桶 + 封板质量）不同源，不能直接照抄。</p></div><div class="" id="claim-lhb-a4a33d28c82fd495"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>资金温度 _学习/_资金温度.json#20261105（末条）：总 76.7 亿 / 262 席 / 58 分位（昨 92.2 亿 / 232 席 / 83 分位）。机构 27 席 6.4 亿（昨 26 席 11.8 亿，金额 −46%）、北向 30 席 23.1 亿（昨 20 席 38.1 亿，−39%）、量化 13 席 7.0 亿（昨 5 席 1.8 亿，+289%）、知名游资 156 席 35.4 亿（昨 142 席 34.0 亿，+4%）、营业部 36 席 4.8 亿（昨 39 席 6.5 亿）。</p></div><div class="" id="claim-lhb-97c7b111d2a4adbe"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>资金结构分 _学习/资金结构分_20261105.json：全场分数域 42~55，最高 002131 利欧股份 55（主导「量化席数 2+(+4pp)」、大单席 4、净买强度 85），次高 002949 华纬科技 53、300071 福石控股 53（量化 2 席 +4pp、大单 2 −2pp）、601857 53、000603 52、002086 52、603626 52、300049 51。</p></div><div class="" id="claim-lhb-cca74ec03a05c569"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>能力复核：_学习/_龙虎榜质量库.json#因子.净买占比.状态 = 有效、样本 4607 ≥ 2000、窗口 20260401~20260708（与 _学习/能力预加载_20261105.json 的 boundary 一致、validation=validated），能力可用；应用结果见 _学习/_能力回执_lhb_20261105.json。</p></div><div class="" id="claim-lhb-0e6726ebf39a5a70"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>本路战绩画像 _学习/子agent增强/战绩画像_lhb_20261105.json（今日已做存在性校验并通过：5821 字节、文件存在、可解析）：57 个交易日 / 109 笔 / 46 胜 = 42.2% / 均收 +0.13%，低于分档库全体基准 48.8% / +0.65%；归因字段为空 {}，故环境档拆解改用 _学习/总审_20261104.json 的复算值（中 40~65 档 9 日 n=34 / 38.2% / −0.80%，本路四个温度档里最差），标注为「他人复算、非本路自算」。</p></div><div class="" id="claim-lhb-24a17703da0e253a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 证据</span></div><p class="mut">判断 · 证据</p><p>昨日观察结算（_学习/总审_20261104.json#昨日战绩验收）：20261103 两只 0 权重观察 000591 太阳能 执1 −0.22%、001318 阳光乳业 执1 −7.34%，基准 −1.99%——否决门第 2 次事后验证。昨日（20261104）的观察票 300139 晓程科今日在 20261105 无当日榜（未上榜），本路不复算其执1，如实标注为「不可结算、不进胜率」。</p></div><div class="" id="claim-lhb-1ffddbf7ffd70a2f"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 档位</span></div><p class="mut">判断 · 档位</p><p>C</p></div><div class="" id="claim-lhb-5edd88818213be87"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">判断 · 置信度</span></div><p class="mut">判断 · 置信度</p><p>66</p></div><div class="" id="claim-lhb-b19e7a11967909a8"><div class="claim-head"><span class="claim-role role-condition">条件</span><span class="claim-source">判断 · 可证伪条件</span></div><p class="mut">判断 · 可证伪条件</p><p>① 明日(20261106) 若 Master 书面批准「替代门槛」（以『任一非小样本 n≥25 的 B 档以上席位净买 ≥5000 万 且 最大净卖席 ≤−3000 万 不存在』替代『S/A 净买 ≥1000 万』，其余三门不变）后，本路仍 0 荐票 → 判本路已由「纪律性空仓」退化为「惯性空仓」，档位下调 D 并暂停本路荐票权 3 个交易日；② 明日若 002131 利欧股份 或 601929 吉视传媒 任一 执1（T+1开→T+1收）≥ +5.0% 且本路今日 0 权重 → 判「S/A 门」是今日唯一的错误约束，须当日改用替代门槛并补记踏空成本；若两者执1 均 ≤ 0，则今日「钱在、人不在」的判读成立、S/A 门保留；③ 明日若 涨停∩当日榜 层的真实率 &lt; 20%（历史低分位，65 日仅 2 日）→ 今日「强度可读」判读被证伪，按本轮修订的 ≤20% 口径回到「只判名单」；若落 20-40% 则判「弱化」、只给观察不给仓；④ 明日若 涨停数 &lt; 60 且 炸板率 &gt; 40% → 今日 C 档与空仓判对；若 涨停数 ≥ 110 且 炸板率 ≤ 25% → 判本路在宽度修复日仍不出票属结构性失能，须提交门槛改造方案。</p></div><div class="" id="claim-lhb-4eac4ea32ce28528"><div class="claim-head"><span class="claim-role role-limitation">限制</span><span class="claim-source">判断 · 独立盲区声明</span></div><p class="mut">判断 · 独立盲区声明</p><p>① 覆盖盲区（最重）：84 只涨停仅 22 只有当日榜（26.2%），62 只涨停本路零席位数据，「没有可买票」只在四分之一的视野内成立，属数据披露边界不是漏扫；② 口径盲区（会跨日误比）：本路今日席位侧剔除了 类型 含「连续/累计/严重异常」的 34 行（315→281→去重 262 笔 +55.9329 亿），而昨日 lhb判断_20261104 的席位侧未做此剔除（361 行→318 笔 +105.2524 亿、全场 −21.11%）；用今日同一脚本复算 20261104 得 −37.8%（涨停层 +15.7% 与非涨停层 −139.2%），差 16.7pp——两日数值不可直接比，本文件一律用今日固定口径；③ 口径盲区：东财只披露买入前五，卖出前五不可得，席位净额天然偏买（今日 262 笔里 233 笔为正），真实率是唯一纠偏项但为比值，小分母票会被放大（本涨停层 22 码席位侧 23.5484 亿 ÷ 票级 13.707 亿 = 1.72× 偏置尚可，非涨停层 32.38÷18.28 = 1.77×）；④ 分档库盲区：A 档仅 45 席、今日 16 笔 A 档里 5 笔 ⚠小样本（n&lt;25），600261 的国联民生宁波 n=10、688648 的国泰海通成都顺城大街 n=6 均属此列；S 档 4 笔全为拉萨团结路第二（散户通道），本路对 S 档的解释力今日为零；⑤ 资金温度与本路席位明细分母不同（资金温度按全市场席次 262 席 76.7 亿、本路按（代码,席位）去重 262 笔 55.9329 亿），只可对照方向、不可相除；⑥ 缺件：领域手册与作战包均缺失，本路按 _agent规格/09_席位命门agent.md 自行组装（席位动向 + 荐票卡 + 资金结构分），无 §作战包 校验；⑦ 无法判的：非涨停榜 −18.2802 亿里有多少是跌停/振幅票的真实出货本路无法拆到票（卖出前五不可得），故只用它做「不看不参与」的方向判断，不用它给任何单票定性；⑧ 归因空档：战绩画像 归因 = {}，本路环境档拆解引用总审复算值，非自算，样本 n=34 且只覆盖中档一支。</p></div><span id="claim-lhb-1e7b1e8fd462472e"></span></div><div class="" id="claim-lhb-7032bb5ed5da9162"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div id="table-e4dbf0b901b4aa61"><table class="table trow">
+<tr><th>资金类型（_学习/_资金温度.json#20261105）</th><th>席次</th><th>金额</th><th>较昨 20261104</th><th>读法</th></tr>
+<tr><td>知名游资</td><td>156</td><td>35.4 亿</td><td>席次 +14 / 金额 +1.4 亿</td><td>席次最多、单席均值 2269 万，仍是铺量结构</td></tr>
+<tr><td>北向（股通）</td><td>30</td><td>23.1 亿</td><td>席次 +10 / 金额 <b>−15.0 亿（−39%）</b></td><td>席次增、金额大减 ⇒ 拆成小单分散买，权重票在减仓</td></tr>
+<tr><td>机构专用</td><td>27</td><td>6.4 亿</td><td>席次 +1 / 金额 <b>−5.4 亿（−46%）</b></td><td>席次不变金额腰斩，机构今日基本退出承接位</td></tr>
+<tr><td>量化 / 交易单元</td><td>13</td><td>7.0 亿</td><td>席次 +8 / 金额 <b>+5.2 亿（+289%）</b></td><td>宽度收缩日回补，是高频做市不是持有承接</td></tr>
+<tr><td>营业部</td><td>36</td><td>4.8 亿</td><td>席次 −3 / 金额 −1.7 亿</td><td>散户通道同步退潮（S 档 4 笔全是拉萨团结路第二）</td></tr>
+<tr><td><b>合计</b></td><td><b>262</b></td><td><b>76.7 亿</b></td><td>昨 232 席 92.2 亿</td><td><b>温度 58 分位（昨 83），从过热桶退回温和桶</b></td></tr>
+</table></div></div><div class="" id="claim-lhb-3bde89453cec5262"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div class="card">
+<p><b>结构判读：活跃度上来了，承接力没上来。</b>今日最扎眼的一对是「机构 11.8 → 6.4 亿（−46%）＋北向 38.1 → 23.1 亿（−39%）」与「量化 1.8 → 7.0 亿（+289%）」同时发生，而炸板率从 21.9% 升到 36.4%。量化是宽度敏感型资金，它在宽度收缩日回补，只说明它在做高频接盘 / 做市；真正决定次日承接的是机构与北向，这两类今日同时撤了 40% 以上。落到本路：本路吃的是「某个高胜率席位在某只涨停票上大额净买」的点状信号，而今日 76.7 亿里游资 156 席铺开占 46%、单席均值 2269 万——单点信号自然缺位。</p>
+<p><b>温度背离按老规矩处理：市场温度定档、资金温度定权。</b>市场温度 49.3 中性给 C 档资格（本路中档 40-65 历史 n=34 / 38.2% / −0.80%，是四个温度档里最差的一档，引用 _学习/总审_20261104.json 的复算值）；资金温度 58 分位落温和桶（本路 34-66 层 61.6% &gt; 过热 ≥67 层 45.7% &gt; 冷 &lt;34 层 48.7%），权重本可 ×1.0，但「机构北向双撤」是资金温度分位<b>看不到</b>的内部结构，故权重仍按不进攻处理（0）。</p>
+<p class="hint">口径差异须标明：资金温度按全市场席次归类（262 席 / 76.7 亿），本路席位明细按（代码, 席位）去重（262 笔 / 55.9329 亿），两者分母不同、笔数巧合相同，只可对照方向、不可相加或相除。</p>
+</div></div><div class="" id="claim-lhb-1057607000844265"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><div id="table-38b3eaa9a352473b"><table class="table trow">
+<tr><th>资金结构分 TOP8（_学习/资金结构分_20261105.json，全场 42~55）</th><th>分数</th><th>主导项</th><th>是否涨停</th></tr>
+<tr><td>002131 利欧股份</td><td><b>55</b></td><td>量化席数 2+（+4pp）、大单席 4、净买强度 85</td><td>1 板 ✔</td></tr>
+<tr><td>002949 华阳国际</td><td>53</td><td>机构买占比 &lt;15%（+6pp）</td><td>未涨停</td></tr>
+<tr><td>300071 福石控股</td><td>53</td><td>量化席数 2+（+4pp）、大单席 2（−2pp）</td><td>1 板 ✔</td></tr>
+<tr><td>601857 中国石油</td><td>53</td><td>买侧总额 ≥6 亿（+3pp）</td><td>未涨停（强矛盾）</td></tr>
+<tr><td>000603 盛达资源</td><td>52</td><td>量化 2 席、大单 2 席</td><td>2 板（票级净卖）</td></tr>
+<tr><td>002086 东方海洋</td><td>52</td><td>均值附近（大单席 5、净买强度 53.9）</td><td>1 板 ✔</td></tr>
+<tr><td>603626 科森科技</td><td>52</td><td>均值附近</td><td>未涨停</td></tr>
+<tr><td>300049 福瑞医科</td><td>51</td><td>机构买占比 &lt;15%（+6pp）、大单 2（−2pp）</td><td>1 板 ✔</td></tr>
+</table></div></div><div class="" id="claim-lhb-0b8793c0f151f45f"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><details class="chain" open><summary><b>11-05</b> <span class="chip cold">最新</span> 上榜63 · 机构在场28只 · S/A出手10笔</summary><div class="inner"><div class="strip"><div class="kv"><div class="l">上榜(买侧明细)</div><div class="v">63</div></div><div class="kv"><div class="l">机构在场</div><div class="v">28</div></div><div class="kv"><div class="l">S/A出手</div><div class="v">10笔</div></div></div><p style="font-weight:700;margin:8px 0 4px;border-left:3px solid var(--accent);padding-left:8px">当日席位路Top5荐票(S/A席位动向v3·第2路)</p><div class="card"><p><a href="#component-SEATCARD">回看同一份数据表</a></p></div><div class="hint">候选=当日S/A席位净买≥1000万(64个S/A,候选9只);席位胜率=滚动执行口径历史值(窗口20260401~20261104),非个股预言;结构分仅辅助。结算列次日由结算脚本原位回填,同一张表不换结构。</div><p style="font-weight:700;margin:14px 0 4px;border-left:3px solid var(--accent);padding-left:8px">今日S/A席位动向全表(出手10笔)</p><div class="card"><div id="table-58453f58fc56741c"><table style="table-layout:fixed;width:100%"><colgroup><col><col style="width:110px"><col style="width:96px"></colgroup><tr><th>S/A席位(滚动战绩)</th><th>买入标的</th><th>金额</th></tr><tr><td style="white-space:nowrap"><span id="shared-701b8ba4e528af93"></span><b class="s-ok">[S]</b> 东方财富证券股份有限公司拉萨团结路第二证券营…<br><span class="mut">滚动执1 65.7%/1.19% · n=67 · 营业部</span></td><td style="white-space:nowrap"><b>果麦文化</b><br><span class="mut">301052</span></td><td style="white-space:nowrap">净买<b>0.05亿</b><br><span class="mut">买0.13亿</span></td></tr><tr><td style="white-space:nowrap"><a href="#shared-701b8ba4e528af93">同窗口席位统计</a></td><td style="white-space:nowrap"><b>联亚药业</b><br><span class="mut">301569</span></td><td style="white-space:nowrap">净买<b>0.01亿</b><br><span class="mut">买0.11亿</span></td></tr><tr><td style="white-space:nowrap"><span id="shared-097c3fbce156715b"></span><b class="s-mid">[A]</b> 国联民生证券股份有限公司宁波分公司…<br><span class="mut">滚动执1 70.0%/2.79% · n=10 · 营业部</span></td><td style="white-space:nowrap"><b>阳光照明</b><br><span class="mut">600261</span></td><td style="white-space:nowrap">净买<b>0.74亿</b><br><span class="mut">买0.74亿</span></td></tr><tr><td style="white-space:nowrap"><span id="shared-dc9935aa03947a5e"></span><b class="s-mid">[A]</b> 华泰证券股份有限公司深圳彩田路证券营业部…<br><span class="mut">滚动执1 61.5%/2.45% · n=26 · 营业部</span></td><td style="white-space:nowrap"><b>东方海洋</b><br><span class="mut">002086</span></td><td style="white-space:nowrap">净买<b>0.50亿</b><br><span class="mut">买0.51亿</span></td></tr><tr><td style="white-space:nowrap"><span id="shared-3a8524d7ea2d46f2"></span><b class="s-mid">[A]</b> 中信建投证券股份有限公司福州东街证券营业部…<br><span class="mut">滚动执1 55.6%/3.0% · n=27 · 营业部</span></td><td style="white-space:nowrap"><b>皇台酒业</b><br><span class="mut">000995</span></td><td style="white-space:nowrap">净买<b>0.20亿</b><br><span class="mut">买0.21亿</span></td></tr><tr><td style="white-space:nowrap"><span id="shared-6b4c256fd03fc38d"></span><b class="s-mid">[A]</b> 国泰海通证券股份有限公司济南舜华路证券营业部…<br><span class="mut">滚动执1 80.0%/2.69% · n=5 · 营业部</span></td><td style="white-space:nowrap"><b>马矿股份</b><br><span class="mut">601123</span></td><td style="white-space:nowrap">净买<b>0.15亿</b><br><span class="mut">买0.15亿</span></td></tr><tr><td style="white-space:nowrap"><span id="shared-560700287ac9e591"></span><b class="s-mid">[A]</b> 东方财富证券股份有限公司昌都两江大道证券营业…<br><span class="mut">滚动执1 50.5%/1.77% · n=99 · 营业部</span></td><td style="white-space:nowrap"><b>澳弘电子</b><br><span class="mut">605058</span></td><td style="white-space:nowrap">净买<b>0.13亿</b><br><span class="mut">买0.13亿</span></td></tr><tr><td style="white-space:nowrap"><span id="shared-8349355c06bf3487"></span><b class="s-mid">[A]</b> 中国国际金融股份有限公司北京建国门外大街证券…<br><span class="mut">滚动执1 63.0%/0.96% · n=27 · 营业部</span></td><td style="white-space:nowrap"><b>马矿股份</b><br><span class="mut">601123</span></td><td style="white-space:nowrap">净买<b>0.11亿</b><br><span class="mut">买0.11亿</span></td></tr><tr><td style="white-space:nowrap"><span id="shared-52dfc0e01e09ec7c"></span><b class="s-mid">[A]</b> 东莞证券股份有限公司四川分公司…<br><span class="mut">滚动执1 58.8%/-1.15% · n=17 · 营业部</span></td><td style="white-space:nowrap"><b>艾能聚</b><br><span class="mut">920770</span></td><td style="white-space:nowrap">净买<b>0.09亿</b><br><span class="mut">买0.12亿</span></td></tr><tr><td style="white-space:nowrap"><a href="#shared-560700287ac9e591">同窗口席位统计</a></td><td style="white-space:nowrap"><b>冰山冷热</b><br><span class="mut">000530</span></td><td style="white-space:nowrap">净买<b>0.08亿</b><br><span class="mut">买0.19亿</span></td></tr></table></div></div></div></details></div><div class="" id="claim-lhb-e7463596fba539e3"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-e7463596fba539e3">历史来源 · 11-04 存档 上榜72 · 机构在场36只 · S/A出手15笔</a></p></div><div class="" id="claim-lhb-512be521e1c8aa4e"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-512be521e1c8aa4e">历史来源 · 11-03 存档 上榜78 · 机构在场38只 · S/A出手6笔</a></p></div><div class="" id="claim-lhb-baf30d8cfb85b6bd"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-baf30d8cfb85b6bd">历史来源 · 11-02 存档 上榜73 · 机构在场36只 · S/A出手5笔</a></p></div><div class="" id="claim-lhb-0ec7c9bc232cbaab"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-0ec7c9bc232cbaab">历史来源 · 10-30 存档 上榜83 · 机构在场42只 · S/A出手11笔</a></p></div><div class="" id="claim-lhb-58640fbd7aa15d79"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-58640fbd7aa15d79">历史来源 · 10-29 存档 上榜69 · 机构在场31只 · S/A出手9笔</a></p></div><div class="" id="claim-lhb-09278e98b7e13caa"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-09278e98b7e13caa">历史来源 · 10-28 存档 上榜67 · 机构在场32只 · S/A出手5笔</a></p></div><div class="" id="claim-lhb-e49ece8008c5f603"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-e49ece8008c5f603">历史来源 · 10-27 存档 上榜78 · 机构在场35只 · S/A出手8笔</a></p></div><div class="" id="claim-lhb-41ae118b105853d9"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-41ae118b105853d9">历史来源 · 10-26 存档 上榜73 · 机构在场36只 · S/A出手21笔</a></p></div><div class="" id="claim-lhb-b7b603067e130687"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-b7b603067e130687">历史来源 · 10-23 存档 上榜81 · 机构在场39只 · S/A出手24笔</a></p></div><div class="" id="claim-lhb-25ec450a1de7f0d2"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-25ec450a1de7f0d2">历史来源 · 10-22 存档 上榜66 · 机构在场30只 · S/A出手12笔</a></p></div><div class="" id="claim-lhb-ff8a4e71ba9def5c"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-ff8a4e71ba9def5c">历史来源 · 10-21 存档 上榜62 · 机构在场30只 · S/A出手6笔</a></p></div><div class="" id="claim-lhb-ab4787ccf9a0d0ba"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-ab4787ccf9a0d0ba">历史来源 · 10-20 存档 上榜67 · 机构在场37只 · S/A出手13笔</a></p></div><div class="" id="claim-lhb-675d88f67b36c219"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-675d88f67b36c219">历史来源 · 10-19 存档 上榜67 · 机构在场29只 · S/A出手11笔</a></p></div><div class="" id="claim-lhb-35851061709bddbd"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-35851061709bddbd">历史来源 · 10-16 存档 上榜59 · 机构在场28只 · S/A出手6笔</a></p></div><div class="" id="claim-lhb-51adb7612b28da8f"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-51adb7612b28da8f">历史来源 · 10-15 存档 上榜60 · 机构在场36只 · S/A出手8笔</a></p></div><div class="" id="claim-lhb-eb5975979d8c5dee"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-eb5975979d8c5dee">历史来源 · 10-14 存档 上榜68 · 机构在场35只 · S/A出手10笔</a></p></div><div class="" id="claim-lhb-d6ff453ed7615b5a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-d6ff453ed7615b5a">历史来源 · 10-13 存档 上榜62 · 机构在场32只 · S/A出手16笔</a></p></div><div class="" id="claim-lhb-17e44cc43a919955"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-17e44cc43a919955">历史来源 · 10-12 存档 上榜68 · 机构在场30只 · S/A出手8笔</a></p></div><div class="" id="claim-lhb-828d0a795aa6afe3"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-828d0a795aa6afe3">历史来源 · 10-09 存档 上榜72 · 机构在场31只 · S/A出手18笔</a></p></div><div class="" id="claim-lhb-048f50c7844d2488"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-048f50c7844d2488">历史来源 · 10-08 存档 上榜66 · 机构在场36只 · S/A出手8笔</a></p></div><div class="" id="claim-lhb-c03b04c5e4a49128"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-c03b04c5e4a49128">历史来源 · 09-30 存档 上榜66 · 机构在场25只 · S/A出手7笔</a></p></div><div class="" id="claim-lhb-1fc8fe2b111dd83b"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-1fc8fe2b111dd83b">历史来源 · 09-29 存档 上榜66 · 机构在场24只 · S/A出手11笔</a></p></div><div class="" id="claim-lhb-5fa7c0be8f2eb03a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-5fa7c0be8f2eb03a">历史来源 · 09-28 存档 上榜55 · 机构在场25只 · S/A出手6笔</a></p></div><div class="" id="claim-lhb-29d89fe47fe12dc0"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-29d89fe47fe12dc0">历史来源 · 09-24 存档 上榜63 · 机构在场29只 · S/A出手6笔</a></p></div><div class="" id="claim-lhb-aefece00bb3271d1"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-aefece00bb3271d1">历史来源 · 09-23 存档 上榜68 · 机构在场26只 · S/A出手21笔</a></p></div><div class="" id="claim-lhb-a9537c0884ae2480"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-a9537c0884ae2480">历史来源 · 09-22 存档 上榜66 · 机构在场28只 · S/A出手10笔</a></p></div><div class="" id="claim-lhb-5c3690f45c7fae0c"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-5c3690f45c7fae0c">历史来源 · 09-21 存档 上榜60 · 机构在场30只 · S/A出手14笔</a></p></div><div class="" id="claim-lhb-14ddc33ae63134e5"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-14ddc33ae63134e5">历史来源 · 09-11 存档 上榜58 · 机构在场28只 · S/A出手9笔</a></p></div><div class="" id="claim-lhb-2fb5ea9ae26dae2e"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-2fb5ea9ae26dae2e">历史来源 · 09-10 存档 上榜53 · 机构在场20只 · S/A出手13笔</a></p></div><div class="" id="claim-lhb-fef195e7569804e6"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-fef195e7569804e6">历史来源 · 09-09 存档 上榜60 · 机构在场29只 · S/A出手13笔</a></p></div><div class="" id="claim-lhb-90e9e44327bbfff8"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-90e9e44327bbfff8">历史来源 · 09-08 存档 上榜55 · 机构在场23只 · S/A出手10笔</a></p></div><div class="" id="claim-lhb-726dfba3ee8fa0a2"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-726dfba3ee8fa0a2">历史来源 · 09-07 存档 上榜66 · 机构在场34只 · S/A出手21笔</a></p></div><div class="" id="claim-lhb-4c991721d2e9fe34"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-4c991721d2e9fe34">历史来源 · 09-04 存档 上榜55 · 机构在场16只 · S/A出手13笔</a></p></div><div class="" id="claim-lhb-757339e56bd013aa"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-757339e56bd013aa">历史来源 · 09-03 存档 上榜53 · 机构在场23只 · S/A出手12笔</a></p></div><div class="" id="claim-lhb-5194daf8c2e72871"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-5194daf8c2e72871">历史来源 · 09-02 存档 上榜71 · 机构在场34只 · S/A出手21笔</a></p></div><div class="" id="claim-lhb-bb3c25616f465882"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-bb3c25616f465882">历史来源 · 09-01 存档 上榜64 · 机构在场30只 · S/A出手18笔</a></p></div><div class="" id="claim-lhb-23646d6c0f72961e"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-23646d6c0f72961e">历史来源 · 08-31 存档 上榜70 · 机构在场28只 · S/A出手31笔</a></p></div><div class="" id="claim-lhb-94472e1a7dd4f90a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-94472e1a7dd4f90a">历史来源 · 08-28 存档 上榜51 · 机构在场18只 · S/A出手20笔</a></p></div><div class="" id="claim-lhb-414c86202b6bf098"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-414c86202b6bf098">历史来源 · 08-27 存档 上榜58 · 机构在场31只 · S/A出手32笔</a></p></div><div class="" id="claim-lhb-0a8cdf22cd3cd9d4"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-0a8cdf22cd3cd9d4">历史来源 · 08-26 存档 上榜58 · 机构在场28只 · S/A出手13笔</a></p></div><div class="" id="claim-lhb-2120ab9fdd3ebb70"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-2120ab9fdd3ebb70">历史来源 · 08-25 存档 上榜60 · 机构在场30只 · S/A出手13笔</a></p></div><div class="" id="claim-lhb-febb6a0f5fdf6574"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-febb6a0f5fdf6574">历史来源 · 08-24 存档 上榜60 · 机构在场26只 · S/A出手18笔</a></p></div><div class="" id="claim-lhb-47266076c913e109"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-47266076c913e109">历史来源 · 08-21 存档 上榜54 · 机构在场25只 · S/A出手18笔</a></p></div><div class="" id="claim-lhb-e69887a104ccf272"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-e69887a104ccf272">历史来源 · 08-20 存档 上榜68 · 机构在场25只 · S/A出手9笔</a></p></div><div class="" id="claim-lhb-9076b3c33e93b510"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-9076b3c33e93b510">历史来源 · 08-19 存档 上榜74 · 机构在场33只 · S/A出手10笔</a></p></div><div class="" id="claim-lhb-852e158ceb38357a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-852e158ceb38357a">历史来源 · 08-18 存档 上榜72 · 机构在场30只 · S/A出手17笔</a></p></div><div class="" id="claim-lhb-183ae5c453241bce"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-183ae5c453241bce">历史来源 · 08-17 存档 上榜58 · 机构在场26只 · S/A出手15笔</a></p></div><div class="" id="claim-lhb-61238a87fc68b3ef"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-61238a87fc68b3ef">历史来源 · 08-14 存档 上榜67 · 机构在场26只 · S/A出手8笔</a></p></div><div class="" id="claim-lhb-f1d82da8a357456f"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-f1d82da8a357456f">历史来源 · 08-13 存档 上榜71 · 机构在场29只 · S/A出手24笔</a></p></div><div class="" id="claim-lhb-7b8f1331e3ffa734"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-7b8f1331e3ffa734">历史来源 · 08-12 存档 上榜46 · 机构在场22只 · S/A出手19笔</a></p></div><div class="" id="claim-lhb-255ff8040db9a09a"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-255ff8040db9a09a">历史来源 · 08-11 存档 上榜61 · 机构在场31只 · S/A出手12笔</a></p></div><div class="" id="claim-lhb-70b3eac6a5ba4e8d"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-70b3eac6a5ba4e8d">历史来源 · 07-16 存档 上榜85 · 机构在场45只 · S/A出手9笔</a></p></div><div class="" id="claim-lhb-f3d38e021be31006"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-f3d38e021be31006">历史来源 · 07-15 存档 上榜77 · 机构在场34只 · S/A出手10笔</a></p></div><div class="" id="claim-lhb-e31e9c5c20a35116"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-e31e9c5c20a35116">历史来源 · 07-14 存档 上榜72 · 机构在场40只 · S/A出手3笔</a></p></div><div class="" id="claim-lhb-b8bbb1f1cfffa419"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-b8bbb1f1cfffa419">历史来源 · 07-13 存档 上榜80 · 机构在场42只 · S/A出手7笔</a></p></div><div class="" id="claim-lhb-884841ba4d8a2053"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-884841ba4d8a2053">历史来源 · 07-10 存档 上榜92 · 机构在场45只 · S/A出手16笔</a></p></div><div class="" id="claim-lhb-bb1dbeeaaa33d253"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-bb1dbeeaaa33d253">历史来源 · 07-09 存档 上榜82 · 机构在场46只 · S/A出手9笔</a></p></div><div class="" id="claim-lhb-b4250c3590858ffc"><div class="claim-head"><span class="claim-role role-evidence">证据</span><span class="claim-source">旧版原文补充</span></div><p><a href="history_sources/lhb.html#claim-lhb-b4250c3590858ffc">历史来源 · 07-08 存档 上榜82 · 机构在场33只 · S/A出手14笔</a></p></div></section><section id="ledger"><h2>三 龙虎榜台账</h2><div id="component-LHBLEDGER"><!--LHBLEDGER--><div class="card"><span class="mut">当日权威机器源缺失：—</span></div><!--/LHBLEDGER--></div></section><section id="tiers"><h2>四 席位分档库</h2><div id="component-SEATLIB"><!--SEATLIB--><details class="chain"><summary><b>席位分档库</b><span class="chip">S19/A45/B145/C91/预备177</span></summary><div class="inner"><p>窗口20260401~20261104 20451笔 · 当日冻结快照</p><p>S榜首：东方财富证券股份有限公司江苏分公司(88.9%/9笔)；华泰证券股份有限公司上海黄浦区来福士广场(88.9%/9笔)；华泰证券股份有限公司上海徐汇区龙启路证券(100.0%/5笔)</p><p>一笔=席位净买&gt;0且买额≥1000万;执1=T+1开买→T+1收,执2=→T+2收(跟随执行口径);零后视镜=只用已有前向的笔;每晚重算=掉档自动净化;★分档用收缩胜率(向全体基准收缩K=10),n&lt;25标小样本</p><div id="table-63dd02cd2716d44c"><table><tr><th>营业部</th><th>档</th><th>样本</th><th>执1胜率</th><th>执1均涨</th></tr><tr><th>万和证券股份有限公司华南分公司</th><td>C</td><td>6</td><td>33.3</td><td>-2.47</td></tr><tr><th>上海证券有限责任公司上海分公司</th><td>A</td><td>11</td><td>63.6</td><td>6.52</td></tr><tr><th>上海证券有限责任公司徐汇区高安路证券营业部</th><td>C</td><td>7</td><td>14.3</td><td>-0.96</td></tr><tr><th>东亚前海证券有限责任公司上海分公司</th><td>B</td><td>42</td><td>47.6</td><td>0.06</td></tr><tr><th>东亚前海证券有限责任公司四川分公司</th><td>B</td><td>6</td><td>50.0</td><td>0.98</td></tr><tr><th>东亚前海证券有限责任公司广东分公司</th><td>P</td><td>4</td><td>50.0</td><td>1.78</td></tr><tr><th>东亚前海证券有限责任公司浙江分公司</th><td>C</td><td>22</td><td>40.9</td><td>-0.46</td></tr><tr><th>东亚前海证券有限责任公司浙江第二分公司</th><td>S</td><td>6</td><td>83.3</td><td>3.0</td></tr><tr><th>东亚前海证券有限责任公司深圳分公司</th><td>C</td><td>50</td><td>34.0</td><td>-0.07</td></tr><tr><th>东亚前海证券有限责任公司苏州分公司</th><td>B</td><td>59</td><td>49.2</td><td>5.51</td></tr><tr><th>东兴证券股份有限公司上海肇嘉浜路证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-1.88</td></tr><tr><th>东兴证券股份有限公司南京汉中路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>-0.44</td></tr><tr><th>东北证券股份有限公司佛山分公司</th><td>C</td><td>41</td><td>41.5</td><td>-0.61</td></tr><tr><th>东北证券股份有限公司宁波甬江大道证券营业部</th><td>P</td><td>4</td><td>0.0</td><td>-4.72</td></tr><tr><th>东北证券股份有限公司德惠德惠路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>6.62</td></tr><tr><th>东北证券股份有限公司武汉香港路证券营业部</th><td>C</td><td>9</td><td>22.2</td><td>-1.53</td></tr><tr><th>东北证券股份有限公司盐城腾飞路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-2.16</td></tr><tr><th>东吴证券股份有限公司上海西藏南路证券营业部</th><td>B</td><td>7</td><td>57.1</td><td>1.85</td></tr><tr><th>东吴证券股份有限公司吴江体育路证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>6.13</td></tr><tr><th>东吴证券股份有限公司嘉兴中山西路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>5.51</td></tr><tr><th>东吴证券股份有限公司昆山前进中路证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>2.91</td></tr><tr><th>东吴证券股份有限公司苏州工业园区扬富路证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>-2.62</td></tr><tr><th>东吴证券股份有限公司苏州干将东路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>5.56</td></tr><tr><th>东吴证券股份有限公司苏州永昌泾大道证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>5.25</td></tr><tr><th>东吴证券股份有限公司苏州相城区珍珠湖路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>1.32</td></tr><tr><th>东吴证券股份有限公司苏州相城大道证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-1.69</td></tr><tr><th>东吴证券股份有限公司苏州相城采莲路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>5.25</td></tr><tr><th>东吴证券股份有限公司苏州石路证券营业部</th><td>A</td><td>7</td><td>57.1</td><td>3.6</td></tr><tr><th>东吴证券股份有限公司苏州西北街证券营业部</th><td>B</td><td>19</td><td>57.9</td><td>1.2</td></tr><tr><th>东方证券股份有限公司上海松江区沪亭北路证券营业部</th><td>S</td><td>13</td><td>69.2</td><td>2.46</td></tr><tr><th>东方证券股份有限公司上海浦东新区源深路证券营业部</th><td>B</td><td>7</td><td>57.1</td><td>0.55</td></tr><tr><th>东方证券股份有限公司东方资财</th><td>P</td><td>4</td><td>50.0</td><td>-2.98</td></tr><tr><th>东方证券股份有限公司厦门仙岳路证券营业部</th><td>A</td><td>12</td><td>66.7</td><td>1.21</td></tr><tr><th>东方证券股份有限公司常熟李闸路证券营业部</th><td>C</td><td>8</td><td>25.0</td><td>-0.84</td></tr><tr><th>东方证券股份有限公司广州广州大道中路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-1.69</td></tr><tr><th>东方证券股份有限公司张家港东环路证券营业部</th><td>A</td><td>5</td><td>80.0</td><td>0.29</td></tr><tr><th>东方证券股份有限公司成都万象南路证券营业部</th><td>B</td><td>25</td><td>44.0</td><td>-0.26</td></tr><tr><th>东方证券股份有限公司拉萨金珠西路证券营业部</th><td>B</td><td>10</td><td>60.0</td><td>1.47</td></tr><tr><th>东方证券股份有限公司无锡梁清路证券营业部</th><td>B</td><td>23</td><td>43.5</td><td>-0.52</td></tr><tr><th>东方证券股份有限公司杭州金鸡路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>-0.05</td></tr><tr><th>东方证券股份有限公司杭州龙井路证券营业部</th><td>B</td><td>22</td><td>54.5</td><td>0.75</td></tr><tr><th>东方证券股份有限公司汕头长平路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-0.76</td></tr><tr><th>东方证券股份有限公司深圳深南大道证券营业部</th><td>C</td><td>10</td><td>30.0</td><td>-2.08</td></tr><tr><th>东方证券股份有限公司深圳金田路证券营业部</th><td>B</td><td>15</td><td>53.3</td><td>1.92</td></tr><tr><th>东方证券股份有限公司重庆金州大道证券营业部</th><td>A</td><td>5</td><td>60.0</td><td>8.37</td></tr><tr><th>东方财富证券股份有限公司上海东方路证券营业部</th><td>B</td><td>10</td><td>60.0</td><td>2.21</td></tr><tr><th>东方财富证券股份有限公司上海徐汇区云锦路证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-3.35</td></tr><tr><th>东方财富证券股份有限公司山南香曲东路证券营业部</th><td>B</td><td>298</td><td>49.0</td><td>0.68</td></tr><tr><th>东方财富证券股份有限公司拉萨东城区江苏大道证券营业部</th><td>B</td><td>52</td><td>46.2</td><td>1.0</td></tr><tr><th>东方财富证券股份有限公司拉萨东环路第一证券营业部</th><td>B</td><td>90</td><td>55.6</td><td>1.4</td></tr><tr><th>东方财富证券股份有限公司拉萨东环路第二证券营业部</th><td>B</td><td>274</td><td>47.4</td><td>0.81</td></tr><tr><th>东方财富证券股份有限公司拉萨团结路第一证券营业部</th><td>B</td><td>230</td><td>53.0</td><td>1.28</td></tr><tr><th>东方财富证券股份有限公司拉萨团结路第二证券营业部</th><td>S</td><td>67</td><td>65.7</td><td>1.19</td></tr><tr><th>东方财富证券股份有限公司拉萨江苏东路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.22</td></tr><tr><th>东方财富证券股份有限公司拉萨达孜区虎峰大道证券营业部</th><td>C</td><td>6</td><td>33.3</td><td>-0.24</td></tr><tr><th>东方财富证券股份有限公司拉萨金融城南环路证券营业部</th><td>B</td><td>486</td><td>51.0</td><td>0.86</td></tr><tr><th>东方财富证券股份有限公司昆明南屏街证券营业部</th><td>A</td><td>5</td><td>80.0</td><td>5.12</td></tr><tr><th>东方财富证券股份有限公司昌都两江大道证券营业部</th><td>A</td><td>99</td><td>50.5</td><td>1.77</td></tr><tr><th>东方财富证券股份有限公司江苏分公司</th><td>S</td><td>9</td><td>88.9</td><td>6.65</td></tr><tr><th>东方财富证券股份有限公司长春人民大街证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-3.42</td></tr><tr><th>东海证券股份有限公司福州长乐北路证券营业部</th><td>A</td><td>11</td><td>63.6</td><td>-0.23</td></tr><tr><th>东莞证券股份有限公司北京分公司</th><td>P</td><td>4</td><td>25.0</td><td>-1.54</td></tr><tr><th>东莞证券股份有限公司南京分公司</th><td>B</td><td>59</td><td>47.5</td><td>-0.77</td></tr><tr><th>东莞证券股份有限公司四川分公司</th><td>A</td><td>17</td><td>58.8</td><td>-1.15</td></tr><tr><th>东莞证券股份有限公司常熟东南大道证券营业部</th><td>B</td><td>16</td><td>43.8</td><td>-1.37</td></tr><tr><th>东莞证券股份有限公司武汉营业部</th><td>B</td><td>5</td><td>40.0</td><td>2.72</td></tr><tr><th>东莞证券股份有限公司江门分公司</th><td>P</td><td>3</td><td>0.0</td><td>-2.07</td></tr><tr><th>东莞证券股份有限公司河源分公司</th><td>P</td><td>3</td><td>100.0</td><td>3.32</td></tr><tr><th>东莞证券股份有限公司苏州聚茂街证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-1.28</td></tr><tr><th>中信建投证券股份有限公司上海营口路证券营业部</th><td>B</td><td>19</td><td>52.6</td><td>-0.64</td></tr><tr><th>中信建投证券股份有限公司北京东城分公司</th><td>A</td><td>18</td><td>55.6</td><td>3.08</td></tr><tr><th>中信建投证券股份有限公司北京中关村东路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>2.78</td></tr><tr><th>中信建投证券股份有限公司北京海淀分公司</th><td>P</td><td>3</td><td>33.3</td><td>1.66</td></tr><tr><th>中信建投证券股份有限公司北京远大路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.88</td></tr><tr><th>中信建投证券股份有限公司北京鸿翼分公司</th><td>B</td><td>6</td><td>50.0</td><td>-0.51</td></tr><tr><th>中信建投证券股份有限公司南昌北京东路证券营业部</th><td>B</td><td>8</td><td>50.0</td><td>-1.01</td></tr><tr><th>中信建投证券股份有限公司南昌桃苑大街证券营业部</th><td>C</td><td>6</td><td>33.3</td><td>-3.45</td></tr><tr><th>中信建投证券股份有限公司厦门杏东路证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>1.25</td></tr><tr><th>中信建投证券股份有限公司安徽分公司</th><td>C</td><td>13</td><td>30.8</td><td>-2.4</td></tr><tr><th>中信建投证券股份有限公司杭州庆春路证券营业部</th><td>B</td><td>28</td><td>57.1</td><td>1.81</td></tr><tr><th>中信建投证券股份有限公司福州东街证券营业部</th><td>A</td><td>27</td><td>55.6</td><td>3.0</td></tr><tr><th>中信建投证券股份有限公司福清福和路证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>-2.1</td></tr><tr><th>中信建投证券股份有限公司重庆龙山路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>4.85</td></tr><tr><th>中信建投证券股份有限公司长沙芙蓉中路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-2.95</td></tr><tr><th>中信建投证券股份有限公司长沙金星中路证券营业部</th><td>B</td><td>5</td><td>60.0</td><td>3.08</td></tr><tr><th>中信证券股份有限公司上海分公司</th><td>B</td><td>723</td><td>50.9</td><td>0.62</td></tr><tr><th>中信证券股份有限公司上海徐汇区漕溪北路证券营业部</th><td>C</td><td>11</td><td>27.3</td><td>-0.61</td></tr><tr><th>中信证券股份有限公司上海浦东新区东方路证券营业部</th><td>C</td><td>10</td><td>40.0</td><td>0.61</td></tr><tr><th>中信证券股份有限公司上海溧阳路证券营业部</th><td>C</td><td>18</td><td>38.9</td><td>-1.99</td></tr><tr><th>中信证券股份有限公司上海静安区山西北路证券营业部</th><td>C</td><td>5</td><td>20.0</td><td>-2.57</td></tr><tr><th>中信证券股份有限公司东阳吴宁西路证券营业部</th><td>C</td><td>24</td><td>29.2</td><td>-1.03</td></tr><tr><th>中信证券股份有限公司北京中关村证券营业部</th><td>B</td><td>9</td><td>55.6</td><td>-0.24</td></tr><tr><th>中信证券股份有限公司北京京城大厦证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-4.25</td></tr><tr><th>中信证券股份有限公司北京分公司</th><td>C</td><td>17</td><td>29.4</td><td>-1.28</td></tr><tr><th>中信证券股份有限公司北京天通苑证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-4.02</td></tr><tr><th>中信证券股份有限公司北京安外大街证券营业部</th><td>B</td><td>7</td><td>57.1</td><td>1.4</td></tr><tr><th>中信证券股份有限公司北京建国门证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>-1.96</td></tr><tr><th>中信证券股份有限公司北京总部证券营业部</th><td>A</td><td>7</td><td>71.4</td><td>0.55</td></tr><tr><th>中信证券股份有限公司北京紫竹院路证券营业部</th><td>P</td><td>4</td><td>100.0</td><td>8.06</td></tr><tr><th>中信证券股份有限公司嘉兴分公司</th><td>C</td><td>8</td><td>37.5</td><td>1.78</td></tr><tr><th>中信证券股份有限公司四川分公司</th><td>S</td><td>11</td><td>72.7</td><td>5.75</td></tr><tr><th>中信证券股份有限公司客户资产管理部</th><td>P</td><td>4</td><td>25.0</td><td>-1.65</td></tr><tr><th>中信证券股份有限公司总部(非营业场所)</th><td>P</td><td>3</td><td>100.0</td><td>7.36</td></tr><tr><th>中信证券股份有限公司杭州凤起路证券营业部</th><td>C</td><td>14</td><td>28.6</td><td>-1.46</td></tr><tr><th>中信证券股份有限公司杭州延安路证券营业部</th><td>A</td><td>26</td><td>61.5</td><td>1.69</td></tr><tr><th>中信证券股份有限公司杭州文三路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>1.7</td></tr><tr><th>中信证券股份有限公司杭州玉皇山南基金小镇证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-2.52</td></tr><tr><th>中信证券股份有限公司浙江分公司</th><td>B</td><td>47</td><td>51.1</td><td>1.51</td></tr><tr><th>中信证券股份有限公司海宁海昌南路证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>2.78</td></tr><tr><th>中信证券股份有限公司深圳分公司</th><td>A</td><td>21</td><td>61.9</td><td>3.05</td></tr><tr><th>中信证券股份有限公司深圳深南中路中信大厦证券营业部</th><td>B</td><td>198</td><td>47.0</td><td>0.28</td></tr><tr><th>中信证券股份有限公司深圳滨海大道证券营业部</th><td>B</td><td>16</td><td>50.0</td><td>0.29</td></tr><tr><th>中信证券股份有限公司西安朱雀大街证券营业部</th><td>B</td><td>16</td><td>56.2</td><td>0.95</td></tr><tr><th>中信证券股份有限公司长兴明珠路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>-0.57</td></tr><tr><th>中国中金财富证券有限公司上海分公司</th><td>P</td><td>4</td><td>25.0</td><td>-0.32</td></tr><tr><th>中国中金财富证券有限公司北京建国门外大街证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>-3.18</td></tr><tr><th>中国中金财富证券有限公司南昌红谷中大道证券营业部</th><td>B</td><td>10</td><td>60.0</td><td>2.28</td></tr><tr><th>中国中金财富证券有限公司广州分公司</th><td>P</td><td>3</td><td>33.3</td><td>-0.63</td></tr><tr><th>中国中金财富证券有限公司广州天河路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>4.82</td></tr><tr><th>中国中金财富证券有限公司杭州江河汇证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>1.27</td></tr><tr><th>中国中金财富证券有限公司株洲珠江北路证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>1.67</td></tr><tr><th>中国中金财富证券有限公司深圳中金大厦证券营业部</th><td>C</td><td>8</td><td>37.5</td><td>2.26</td></tr><tr><th>中国中金财富证券有限公司深圳分公司</th><td>C</td><td>7</td><td>28.6</td><td>-0.98</td></tr><tr><th>中国中金财富证券有限公司湖南分公司</th><td>S</td><td>11</td><td>72.7</td><td>2.46</td></tr><tr><th>中国国际金融股份有限公司上海分公司</th><td>B</td><td>405</td><td>49.9</td><td>0.66</td></tr><tr><th>中国国际金融股份有限公司北京建国门外大街证券营业部</th><td>A</td><td>27</td><td>63.0</td><td>0.96</td></tr><tr><th>中国银河证券股份有限公司三亚迎宾路证券营业部</th><td>C</td><td>18</td><td>27.8</td><td>-2.49</td></tr><tr><th>中国银河证券股份有限公司上海杨浦区靖宇东路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>-1.36</td></tr><tr><th>中国银河证券股份有限公司上海虹口区天潼路证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>3.91</td></tr><tr><th>中国银河证券股份有限公司北京中关村大街证券营业部</th><td>B</td><td>68</td><td>50.0</td><td>1.55</td></tr><tr><th>中国银河证券股份有限公司北京学院南路证券营业部</th><td>B</td><td>55</td><td>50.9</td><td>0.76</td></tr><tr><th>中国银河证券股份有限公司北京安贞门证券营业部</th><td>S</td><td>6</td><td>83.3</td><td>3.51</td></tr><tr><th>中国银河证券股份有限公司北京广安门证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>2.03</td></tr><tr><th>中国银河证券股份有限公司北京苏州街证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>1.44</td></tr><tr><th>中国银河证券股份有限公司北京金融街证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>4.52</td></tr><tr><th>中国银河证券股份有限公司厦门湖滨中路证券营业部</th><td>C</td><td>6</td><td>16.7</td><td>-1.27</td></tr><tr><th>中国银河证券股份有限公司台州黄岩委羽街证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>3.31</td></tr><tr><th>中国银河证券股份有限公司宜昌新世纪证券营业部</th><td>B</td><td>29</td><td>51.7</td><td>1.48</td></tr><tr><th>中国银河证券股份有限公司广州粤海金融中心证券营业部</th><td>C</td><td>10</td><td>30.0</td><td>0.07</td></tr><tr><th>中国银河证券股份有限公司庄河世纪大街证券营业部</th><td>A</td><td>17</td><td>64.7</td><td>3.07</td></tr><tr><th>中国银河证券股份有限公司总部</th><td>B</td><td>7</td><td>42.9</td><td>-1.04</td></tr><tr><th>中国银河证券股份有限公司桂林中山中路证券营业部</th><td>B</td><td>10</td><td>60.0</td><td>1.41</td></tr><tr><th>中国银河证券股份有限公司深圳南山海岸城证券营业部</th><td>B</td><td>7</td><td>57.1</td><td>-0.52</td></tr><tr><th>中国银河证券股份有限公司深圳滨河大道证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>-0.72</td></tr><tr><th>中国银河证券股份有限公司绍兴鲁迅中路证券营业部</th><td>C</td><td>23</td><td>26.1</td><td>-0.62</td></tr><tr><th>中国银河证券股份有限公司蚌埠东海大道证券营业部</th><td>A</td><td>7</td><td>71.4</td><td>2.47</td></tr><tr><th>中国银河证券股份有限公司诸暨东旺路证券营业部</th><td>B</td><td>6</td><td>50.0</td><td>0.34</td></tr><tr><th>中山证券有限责任公司南通黄海路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>2.08</td></tr><tr><th>中泰证券股份有限公司北京中关村大街证券营业部</th><td>B</td><td>14</td><td>42.9</td><td>1.57</td></tr><tr><th>中泰证券股份有限公司宁波分公司</th><td>B</td><td>6</td><td>50.0</td><td>4.81</td></tr><tr><th>中泰证券股份有限公司常州惠国路证券营业部</th><td>B</td><td>97</td><td>45.4</td><td>-0.27</td></tr><tr><th>中泰证券股份有限公司杭州湖墅南路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>0.17</td></tr><tr><th>中泰证券股份有限公司济宁吴泰闸路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>-2.23</td></tr><tr><th>中泰证券股份有限公司湖北分公司</th><td>P</td><td>4</td><td>50.0</td><td>1.22</td></tr><tr><th>中泰证券股份有限公司电子商务分公司</th><td>P</td><td>3</td><td>33.3</td><td>-2.67</td></tr><tr><th>中泰证券股份有限公司龙口港城大道证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-4.54</td></tr><tr><th>中航证券有限公司南昌九洲大街证券营业部</th><td>C</td><td>8</td><td>12.5</td><td>-3.59</td></tr><tr><th>中航证券有限公司广州营业部</th><td>P</td><td>3</td><td>33.3</td><td>-3.58</td></tr><tr><th>中银国际证券股份有限公司深圳中心四路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>4.47</td></tr><tr><th>中银国际证券股份有限公司郑州花园路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.52</td></tr><tr><th>五矿证券有限公司东莞汇金路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-3.66</td></tr><tr><th>信达证券股份有限公司无锡金融一街证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-1.34</td></tr><tr><th>光大证券股份有限公司丹阳丹金路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>2.36</td></tr><tr><th>光大证券股份有限公司汕头华山路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>0.72</td></tr><tr><th>兴业证券股份有限公司厦门湖里大道证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>6.16</td></tr><tr><th>兴业证券股份有限公司成都航空路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>-0.98</td></tr><tr><th>兴业证券股份有限公司深圳分公司</th><td>B</td><td>12</td><td>58.3</td><td>1.26</td></tr><tr><th>兴业证券股份有限公司深圳益田路证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>7.24</td></tr><tr><th>兴业证券股份有限公司福州工业路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>1.03</td></tr><tr><th>华创证券有限责任公司北京西直门证券营业部</th><td>B</td><td>13</td><td>53.8</td><td>1.08</td></tr><tr><th>华安证券股份有限公司北京东三环中路证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>0.47</td></tr><tr><th>华宝证券股份有限公司上海东大名路证券营业部</th><td>S</td><td>11</td><td>72.7</td><td>3.86</td></tr><tr><th>华泰证券股份有限公司上海徐汇区龙启路证券营业部</th><td>S</td><td>5</td><td>100.0</td><td>6.02</td></tr><tr><th>华泰证券股份有限公司上海普陀区江宁路证券营业部</th><td>A</td><td>14</td><td>57.1</td><td>2.14</td></tr><tr><th>华泰证券股份有限公司上海武定路证券营业部</th><td>B</td><td>8</td><td>62.5</td><td>1.49</td></tr><tr><th>华泰证券股份有限公司上海浦东新区世纪大道证券营业部</th><td>B</td><td>18</td><td>50.0</td><td>0.17</td></tr><tr><th>华泰证券股份有限公司上海浦东新区东方路证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-4.02</td></tr><tr><th>华泰证券股份有限公司上海浦东新区滨江大道证券营业部</th><td>C</td><td>6</td><td>16.7</td><td>-1.68</td></tr><tr><th>华泰证券股份有限公司上海黄浦区来福士广场证券营业部</th><td>S</td><td>9</td><td>88.9</td><td>4.79</td></tr><tr><th>华泰证券股份有限公司上海黄浦区黄陂南路证券营业部</th><td>A</td><td>9</td><td>66.7</td><td>2.89</td></tr><tr><th>华泰证券股份有限公司北京东三环北路证券营业部</th><td>C</td><td>31</td><td>32.3</td><td>-2.25</td></tr><tr><th>华泰证券股份有限公司北京月坛南街证券营业部</th><td>B</td><td>18</td><td>55.6</td><td>0.77</td></tr><tr><th>华泰证券股份有限公司北京西三环国际财经中心证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.95</td></tr><tr><th>华泰证券股份有限公司南京郑和中路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-1.52</td></tr><tr><th>华泰证券股份有限公司南京长江路证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-1.67</td></tr><tr><th>华泰证券股份有限公司南通分公司</th><td>P</td><td>3</td><td>66.7</td><td>6.25</td></tr><tr><th>华泰证券股份有限公司厦门厦禾路证券营业部</th><td>B</td><td>5</td><td>60.0</td><td>1.48</td></tr><tr><th>华泰证券股份有限公司天津东丽开发区二纬路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>4.19</td></tr><tr><th>华泰证券股份有限公司天津河东金茂广场证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.99</td></tr><tr><th>华泰证券股份有限公司岳阳岳阳大道证券营业部</th><td>S</td><td>14</td><td>71.4</td><td>1.82</td></tr><tr><th>华泰证券股份有限公司常州和平北路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>4.06</td></tr><tr><th>华泰证券股份有限公司张家港杨舍东街证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.25</td></tr><tr><th>华泰证券股份有限公司总部</th><td>C</td><td>247</td><td>43.7</td><td>0.26</td></tr><tr><th>华泰证券股份有限公司成都蜀金路证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>-2.17</td></tr><tr><th>华泰证券股份有限公司杭州解放东路证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>2.17</td></tr><tr><th>华泰证券股份有限公司武汉新华路证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>5.33</td></tr><tr><th>华泰证券股份有限公司江西分公司</th><td>C</td><td>10</td><td>40.0</td><td>-1.54</td></tr><tr><th>华泰证券股份有限公司泰兴国庆西路证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-0.7</td></tr><tr><th>华泰证券股份有限公司深圳前海证券营业部</th><td>C</td><td>20</td><td>30.0</td><td>-0.6</td></tr><tr><th>华泰证券股份有限公司深圳彩田路证券营业部</th><td>A</td><td>26</td><td>61.5</td><td>2.45</td></tr><tr><th>华泰证券股份有限公司深圳深南大道基金大厦证券营业部</th><td>B</td><td>11</td><td>45.5</td><td>-1.76</td></tr><tr><th>华泰证券股份有限公司深圳深南大道证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>1.54</td></tr><tr><th>华泰证券股份有限公司深圳益田路荣超商务中心证券营业部</th><td>B</td><td>32</td><td>46.9</td><td>8.2</td></tr><tr><th>华泰证券股份有限公司福建分公司</th><td>C</td><td>7</td><td>28.6</td><td>1.19</td></tr><tr><th>华泰证券股份有限公司苏州吴中大道证券营业部</th><td>C</td><td>25</td><td>40.0</td><td>-0.97</td></tr><tr><th>华泰证券股份有限公司辽宁分公司</th><td>C</td><td>21</td><td>23.8</td><td>-1.38</td></tr><tr><th>华泰证券股份有限公司重庆江北嘴证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-5.14</td></tr><tr><th>华泰证券股份有限公司镇江黄山南路证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-2.6</td></tr><tr><th>华泰证券股份有限公司长沙湘江中路证券营业部</th><td>C</td><td>11</td><td>36.4</td><td>-0.4</td></tr><tr><th>华源证券股份有限公司武汉分公司</th><td>P</td><td>3</td><td>100.0</td><td>5.11</td></tr><tr><th>华源证券股份有限公司江苏分公司</th><td>C</td><td>37</td><td>35.1</td><td>-1.42</td></tr><tr><th>华源证券股份有限公司深圳分公司</th><td>A</td><td>5</td><td>100.0</td><td>0.95</td></tr><tr><th>华福证券股份有限公司上海浦明路证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>-0.34</td></tr><tr><th>华福证券股份有限公司南京胜太路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.62</td></tr><tr><th>华福证券股份有限公司广州花城大道证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-6.28</td></tr><tr><th>华福证券股份有限公司杭州江南大道证券营业部</th><td>C</td><td>6</td><td>33.3</td><td>0.53</td></tr><tr><th>华西证券股份有限公司合肥长江西路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>1.04</td></tr><tr><th>华鑫证券有限责任公司上海东大名路证券营业部</th><td>B</td><td>9</td><td>44.4</td><td>-0.06</td></tr><tr><th>华鑫证券有限责任公司上海分公司</th><td>S</td><td>13</td><td>76.9</td><td>2.7</td></tr><tr><th>华鑫证券有限责任公司上海宛平南路证券营业部</th><td>B</td><td>77</td><td>50.6</td><td>0.26</td></tr><tr><th>华鑫证券有限责任公司上海徐汇区云锦路证券营业部</th><td>C</td><td>21</td><td>38.1</td><td>-0.7</td></tr><tr><th>华鑫证券有限责任公司上海徐汇区瑞平路证券营业部</th><td>C</td><td>36</td><td>41.7</td><td>0.06</td></tr><tr><th>华鑫证券有限责任公司上海茅台路证券营业部</th><td>B</td><td>6</td><td>50.0</td><td>0.46</td></tr><tr><th>华鑫证券有限责任公司上海莲花路证券营业部</th><td>B</td><td>12</td><td>58.3</td><td>0.82</td></tr><tr><th>华鑫证券有限责任公司上海陆家嘴证券营业部</th><td>B</td><td>67</td><td>44.8</td><td>0.14</td></tr><tr><th>华鑫证券有限责任公司南京清凉门大街证券营业部</th><td>B</td><td>15</td><td>53.3</td><td>-1.04</td></tr><tr><th>华鑫证券有限责任公司杭州分公司</th><td>C</td><td>8</td><td>25.0</td><td>-1.83</td></tr><tr><th>华鑫证券有限责任公司深圳分公司</th><td>B</td><td>8</td><td>50.0</td><td>-0.63</td></tr><tr><th>华鑫证券有限责任公司深圳益田路证券营业部</th><td>C</td><td>5</td><td>0.0</td><td>-3.03</td></tr><tr><th>华鑫证券有限责任公司绍兴胜利东路证券营业部</th><td>C</td><td>125</td><td>36.8</td><td>-1.07</td></tr><tr><th>华龙证券股份有限公司湖南分公司</th><td>C</td><td>8</td><td>25.0</td><td>-2.32</td></tr><tr><th>国信证券股份有限公司北京分公司</th><td>B</td><td>27</td><td>51.9</td><td>0.85</td></tr><tr><th>国信证券股份有限公司北京朝阳门证券营业部</th><td>B</td><td>27</td><td>44.4</td><td>-0.73</td></tr><tr><th>国信证券股份有限公司厦门湖滨北路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.95</td></tr><tr><th>国信证券股份有限公司广州东风中路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>2.35</td></tr><tr><th>国信证券股份有限公司成都二环路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>0.68</td></tr><tr><th>国信证券股份有限公司杭州市心中路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-1.22</td></tr><tr><th>国信证券股份有限公司浙江互联网分公司</th><td>B</td><td>622</td><td>51.3</td><td>1.15</td></tr><tr><th>国信证券股份有限公司浙江分公司</th><td>P</td><td>3</td><td>100.0</td><td>3.08</td></tr><tr><th>国信证券股份有限公司深圳互联网分公司</th><td>B</td><td>84</td><td>46.4</td><td>0.56</td></tr><tr><th>国信证券股份有限公司深圳泰然九路证券营业部</th><td>C</td><td>16</td><td>37.5</td><td>1.01</td></tr><tr><th>国信证券股份有限公司深圳红岭中路证券营业部</th><td>A</td><td>49</td><td>59.2</td><td>3.72</td></tr><tr><th>国信证券股份有限公司福州五一中路证券营业部</th><td>C</td><td>6</td><td>33.3</td><td>-3.01</td></tr><tr><th>国信证券股份有限公司福建分公司</th><td>P</td><td>3</td><td>33.3</td><td>-5.05</td></tr><tr><th>国元证券股份有限公司上海虹桥路证券营业部</th><td>C</td><td>8</td><td>37.5</td><td>-1.6</td></tr><tr><th>国元证券股份有限公司浙江分公司</th><td>P</td><td>3</td><td>33.3</td><td>-3.3</td></tr><tr><th>国投证券股份有限公司上海四平路证券营业部</th><td>P</td><td>4</td><td>0.0</td><td>-4.96</td></tr><tr><th>国投证券股份有限公司上海虹口区杨树浦路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>1.45</td></tr><tr><th>国投证券股份有限公司上海黄浦区中山南路证券营业部</th><td>B</td><td>6</td><td>50.0</td><td>1.0</td></tr><tr><th>国投证券股份有限公司深圳深南大道华侨城大厦证券营业部</th><td>B</td><td>16</td><td>43.8</td><td>-0.07</td></tr><tr><th>国投证券股份有限公司深圳红荔西路证券营业部</th><td>B</td><td>29</td><td>48.3</td><td>-0.8</td></tr><tr><th>国投证券股份有限公司西安曲江池南路证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-1.32</td></tr><tr><th>国投证券股份有限公司长春人民大街证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-1.17</td></tr><tr><th>国投证券股份有限公司阳江分公司</th><td>P</td><td>3</td><td>100.0</td><td>10.75</td></tr><tr><th>国新证券股份有限公司北京中关村大街证券营业部</th><td>C</td><td>99</td><td>44.4</td><td>-0.0</td></tr><tr><th>国新证券股份有限公司北京分公司</th><td>B</td><td>202</td><td>46.5</td><td>0.09</td></tr><tr><th>国新证券股份有限公司海南分公司</th><td>C</td><td>10</td><td>30.0</td><td>-1.25</td></tr><tr><th>国泰海通证券股份有限公司</th><td>C</td><td>8</td><td>0.0</td><td>-4.68</td></tr><tr><th>国泰海通证券股份有限公司三亚迎宾路证券营业部</th><td>C</td><td>31</td><td>41.9</td><td>-0.54</td></tr><tr><th>国泰海通证券股份有限公司上海分公司</th><td>B</td><td>122</td><td>50.8</td><td>0.5</td></tr><tr><th>国泰海通证券股份有限公司上海徐汇区宛平南路证券营业部</th><td>B</td><td>5</td><td>60.0</td><td>2.3</td></tr><tr><th>国泰海通证券股份有限公司上海徐汇区宜山路证券营业部</th><td>B</td><td>14</td><td>42.9</td><td>-0.72</td></tr><tr><th>国泰海通证券股份有限公司上海普陀区大渡河路证券营业部</th><td>B</td><td>25</td><td>56.0</td><td>0.97</td></tr><tr><th>国泰海通证券股份有限公司上海杨浦区周家嘴路证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>4.53</td></tr><tr><th>国泰海通证券股份有限公司上海松江区中山东路证券营业部</th><td>B</td><td>90</td><td>47.8</td><td>0.57</td></tr><tr><th>国泰海通证券股份有限公司上海浦东新区海阳西路证券营业部</th><td>C</td><td>12</td><td>33.3</td><td>-0.12</td></tr><tr><th>国泰海通证券股份有限公司上海浦东新区福山路证券营业部</th><td>B</td><td>9</td><td>44.4</td><td>0.07</td></tr><tr><th>国泰海通证券股份有限公司上海自贸试验区第二分公司</th><td>B</td><td>106</td><td>46.2</td><td>0.64</td></tr><tr><th>国泰海通证券股份有限公司上海长宁区天山路证券营业部</th><td>B</td><td>14</td><td>50.0</td><td>1.03</td></tr><tr><th>国泰海通证券股份有限公司上海长宁区江苏路证券营业部</th><td>B</td><td>221</td><td>52.5</td><td>0.45</td></tr><tr><th>国泰海通证券股份有限公司上海闵行区号文路证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>4.47</td></tr><tr><th>国泰海通证券股份有限公司上海静安区新闸路证券营业部</th><td>C</td><td>46</td><td>43.5</td><td>0.13</td></tr><tr><th>国泰海通证券股份有限公司东莞总部一路证券营业部</th><td>C</td><td>15</td><td>33.3</td><td>-0.98</td></tr><tr><th>国泰海通证券股份有限公司义乌丹溪北路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>1.18</td></tr><tr><th>国泰海通证券股份有限公司余姚舜水南路证券营业部</th><td>B</td><td>9</td><td>44.4</td><td>1.2</td></tr><tr><th>国泰海通证券股份有限公司佛山南海金明路证券营业部</th><td>P</td><td>4</td><td>0.0</td><td>-3.16</td></tr><tr><th>国泰海通证券股份有限公司儋州中兴大道证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-3.72</td></tr><tr><th>国泰海通证券股份有限公司北京中关村南大街证券营业部</th><td>B</td><td>6</td><td>50.0</td><td>2.03</td></tr><tr><th>国泰海通证券股份有限公司北京建国路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>3.68</td></tr><tr><th>国泰海通证券股份有限公司北京德外大街证券营业部</th><td>C</td><td>11</td><td>27.3</td><td>-0.39</td></tr><tr><th>国泰海通证券股份有限公司北京方庄路证券营业部</th><td>B</td><td>7</td><td>42.9</td><td>1.96</td></tr><tr><th>国泰海通证券股份有限公司北京知春路证券营业部</th><td>B</td><td>155</td><td>48.4</td><td>0.14</td></tr><tr><th>国泰海通证券股份有限公司北京金融街分公司</th><td>P</td><td>3</td><td>66.7</td><td>1.95</td></tr><tr><th>国泰海通证券股份有限公司南京太平南路证券营业部</th><td>B</td><td>134</td><td>45.5</td><td>-0.54</td></tr><tr><th>国泰海通证券股份有限公司南京广州路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.08</td></tr><tr><th>国泰海通证券股份有限公司南京胜利路证券营业部</th><td>B</td><td>27</td><td>48.1</td><td>0.77</td></tr><tr><th>国泰海通证券股份有限公司南京金融城证券营业部</th><td>B</td><td>5</td><td>60.0</td><td>1.61</td></tr><tr><th>国泰海通证券股份有限公司南宁民族大道证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>4.93</td></tr><tr><th>国泰海通证券股份有限公司厦门展鸿路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-2.44</td></tr><tr><th>国泰海通证券股份有限公司宁波广福街证券营业部</th><td>B</td><td>5</td><td>60.0</td><td>2.45</td></tr><tr><th>国泰海通证券股份有限公司宁波解放北路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>2.75</td></tr><tr><th>国泰海通证券股份有限公司岳阳南湖大道证券营业部</th><td>A</td><td>5</td><td>60.0</td><td>4.36</td></tr><tr><th>国泰海通证券股份有限公司常州健身路证券营业部</th><td>C</td><td>20</td><td>40.0</td><td>-0.17</td></tr><tr><th>国泰海通证券股份有限公司广州东风中路证券营业部</th><td>B</td><td>16</td><td>43.8</td><td>-0.66</td></tr><tr><th>国泰海通证券股份有限公司广州临江大道证券营业部</th><td>B</td><td>19</td><td>47.4</td><td>15.93</td></tr><tr><th>国泰海通证券股份有限公司广州珠江新城营业部</th><td>C</td><td>11</td><td>27.3</td><td>-3.49</td></tr><tr><th>国泰海通证券股份有限公司广州珠江新城证券营业部</th><td>B</td><td>8</td><td>62.5</td><td>2.33</td></tr><tr><th>国泰海通证券股份有限公司广州琶洲证券营业部</th><td>C</td><td>27</td><td>37.0</td><td>10.34</td></tr><tr><th>国泰海通证券股份有限公司张家港人民中路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>1.51</td></tr><tr><th>国泰海通证券股份有限公司总部</th><td>B</td><td>1282</td><td>48.7</td><td>0.59</td></tr><tr><th>国泰海通证券股份有限公司成都北一环路证券营业部</th><td>B</td><td>95</td><td>51.6</td><td>0.48</td></tr><tr><th>国泰海通证券股份有限公司成都天府大道证券营业部</th><td>B</td><td>18</td><td>44.4</td><td>0.83</td></tr><tr><th>国泰海通证券股份有限公司成都顺城大街证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>1.86</td></tr><tr><th>国泰海通证券股份有限公司成都龙腾东路营业部</th><td>S</td><td>18</td><td>72.2</td><td>3.47</td></tr><tr><th>国泰海通证券股份有限公司成都龙腾东路证券营业部</th><td>A</td><td>23</td><td>60.9</td><td>1.55</td></tr><tr><th>国泰海通证券股份有限公司无锡湖滨路证券营业部</th><td>B</td><td>11</td><td>45.5</td><td>0.82</td></tr><tr><th>国泰海通证券股份有限公司昆明人民中路证券营业部</th><td>C</td><td>15</td><td>40.0</td><td>1.31</td></tr><tr><th>国泰海通证券股份有限公司曲靖翠峰东路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>2.07</td></tr><tr><th>国泰海通证券股份有限公司杭州富春路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>-1.72</td></tr><tr><th>国泰海通证券股份有限公司杭州延安路证券营业部</th><td>C</td><td>9</td><td>33.3</td><td>0.54</td></tr><tr><th>国泰海通证券股份有限公司武汉紫阳东路证券营业部</th><td>B</td><td>243</td><td>51.9</td><td>0.49</td></tr><tr><th>国泰海通证券股份有限公司沈阳青年大街证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-5.29</td></tr><tr><th>国泰海通证券股份有限公司济南舜华路证券营业部</th><td>A</td><td>5</td><td>80.0</td><td>2.69</td></tr><tr><th>国泰海通证券股份有限公司深圳人民南路证券营业部</th><td>B</td><td>6</td><td>50.0</td><td>0.38</td></tr><tr><th>国泰海通证券股份有限公司深圳分公司</th><td>P</td><td>3</td><td>66.7</td><td>-0.5</td></tr><tr><th>国泰海通证券股份有限公司深圳前海分公司</th><td>P</td><td>3</td><td>100.0</td><td>1.9</td></tr><tr><th>国泰海通证券股份有限公司深圳宝安怀德国际大厦证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>3.03</td></tr><tr><th>国泰海通证券股份有限公司深圳海岸城海德三道证券营业部</th><td>B</td><td>19</td><td>47.4</td><td>0.3</td></tr><tr><th>国泰海通证券股份有限公司深圳福田中心区华融大厦证券营业部</th><td>C</td><td>10</td><td>30.0</td><td>-0.95</td></tr><tr><th>国泰海通证券股份有限公司湖北武汉紫阳东路营业部</th><td>P</td><td>3</td><td>33.3</td><td>2.13</td></tr><tr><th>国泰海通证券股份有限公司湛江万豪世家证券营业部</th><td>B</td><td>62</td><td>53.2</td><td>1.28</td></tr><tr><th>国泰海通证券股份有限公司西安雁展路证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-3.09</td></tr><tr><th>国泰海通证券股份有限公司连云港巨龙南路证券营业部</th><td>B</td><td>20</td><td>50.0</td><td>1.6</td></tr><tr><th>国泰海通证券股份有限公司连云港苍梧路证券营业部</th><td>S</td><td>6</td><td>83.3</td><td>2.86</td></tr><tr><th>国泰海通证券股份有限公司重庆中山三路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>3.61</td></tr><tr><th>国泰海通证券股份有限公司重庆民生路营业部</th><td>P</td><td>3</td><td>33.3</td><td>-3.52</td></tr><tr><th>国泰海通证券股份有限公司重庆民生路证券营业部</th><td>C</td><td>8</td><td>25.0</td><td>-1.85</td></tr><tr><th>国泰海通证券股份有限公司重庆观音桥步行街营业部</th><td>P</td><td>3</td><td>33.3</td><td>1.0</td></tr><tr><th>国泰海通证券股份有限公司重庆观音桥步行街证券营业部</th><td>C</td><td>6</td><td>16.7</td><td>-2.54</td></tr><tr><th>国泰海通证券股份有限公司长宁区江苏路证券营业部</th><td>B</td><td>16</td><td>56.2</td><td>1.23</td></tr><tr><th>国泰海通证券股份有限公司长沙五一大道第二证券营业部</th><td>C</td><td>11</td><td>36.4</td><td>-0.52</td></tr><tr><th>国泰海通证券股份有限公司顺德大良证券营业部</th><td>C</td><td>6</td><td>33.3</td><td>-0.04</td></tr><tr><th>国海证券股份有限公司上海世纪大道证券营业部</th><td>S</td><td>8</td><td>75.0</td><td>4.84</td></tr><tr><th>国海证券股份有限公司深圳中心路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-1.37</td></tr><tr><th>国盛证券股份有限公司太原高新街证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>0.36</td></tr><tr><th>国盛证券股份有限公司宁波桑田路证券营业部</th><td>B</td><td>61</td><td>54.1</td><td>1.37</td></tr><tr><th>国盛证券股份有限公司杭州建设三路证券营业部</th><td>B</td><td>33</td><td>48.5</td><td>1.47</td></tr><tr><th>国盛证券股份有限公司深圳梅园路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>-0.27</td></tr><tr><th>国联民生证券股份有限公司上海分公司</th><td>C</td><td>6</td><td>33.3</td><td>-1.66</td></tr><tr><th>国联民生证券股份有限公司上海虹口区杨树浦路证券营业部</th><td>C</td><td>6</td><td>16.7</td><td>0.2</td></tr><tr><th>国联民生证券股份有限公司北京分公司</th><td>C</td><td>10</td><td>30.0</td><td>0.91</td></tr><tr><th>国联民生证券股份有限公司宁波分公司</th><td>A</td><td>10</td><td>70.0</td><td>2.79</td></tr><tr><th>国联民生证券股份有限公司宁波财神殿南路证券营业部</th><td>A</td><td>10</td><td>70.0</td><td>3.97</td></tr><tr><th>国联民生证券股份有限公司慈溪影清路证券营业部</th><td>B</td><td>7</td><td>57.1</td><td>-0.14</td></tr><tr><th>国融证券股份有限公司上海分公司</th><td>P</td><td>3</td><td>66.7</td><td>4.83</td></tr><tr><th>国融证券股份有限公司杭州市心北路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>4.42</td></tr><tr><th>国融证券股份有限公司青岛分公司</th><td>P</td><td>3</td><td>66.7</td><td>2.65</td></tr><tr><th>国金证券股份有限公司上海奉贤区金碧路证券营业部</th><td>A</td><td>5</td><td>60.0</td><td>3.25</td></tr><tr><th>国金证券股份有限公司上海静安区南京西路证券营业部</th><td>C</td><td>8</td><td>25.0</td><td>-3.15</td></tr><tr><th>国金证券股份有限公司北京崇文门外大街证券营业部</th><td>B</td><td>12</td><td>58.3</td><td>1.89</td></tr><tr><th>国金证券股份有限公司攀枝花佳兴路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-0.35</td></tr><tr><th>国金证券股份有限公司深圳分公司</th><td>B</td><td>147</td><td>53.7</td><td>1.2</td></tr><tr><th>国金证券股份有限公司深圳湾一号证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>1.74</td></tr><tr><th>国金证券股份有限公司西安朱雀大街证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-2.54</td></tr><tr><th>国金证券股份有限公司重庆江北嘴证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.4</td></tr><tr><th>天府证券有限责任公司上海崂山路证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>6.7</td></tr><tr><th>天风证券股份有限公司上海浦东分公司</th><td>C</td><td>5</td><td>20.0</td><td>-1.9</td></tr><tr><th>天风证券股份有限公司浙江分公司</th><td>C</td><td>5</td><td>20.0</td><td>-1.93</td></tr><tr><th>天风证券股份有限公司深圳分公司</th><td>B</td><td>6</td><td>50.0</td><td>1.2</td></tr><tr><th>山西证券股份有限公司湖南分公司</th><td>P</td><td>3</td><td>33.3</td><td>-1.67</td></tr><tr><th>平安证券股份有限公司嘉兴中环南路证券营业部</th><td>C</td><td>23</td><td>30.4</td><td>-0.88</td></tr><tr><th>平安证券股份有限公司宁波海晏北路证券营业部</th><td>C</td><td>11</td><td>36.4</td><td>-0.69</td></tr><tr><th>平安证券股份有限公司广州体育东路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>1.0</td></tr><tr><th>平安证券股份有限公司杭州曙光路证券营业部</th><td>B</td><td>114</td><td>47.4</td><td>0.41</td></tr><tr><th>平安证券股份有限公司江苏分公司</th><td>A</td><td>7</td><td>71.4</td><td>0.2</td></tr><tr><th>平安证券股份有限公司济南解放路证券营业部</th><td>C</td><td>15</td><td>33.3</td><td>-0.56</td></tr><tr><th>平安证券股份有限公司浙江分公司</th><td>C</td><td>137</td><td>43.1</td><td>0.22</td></tr><tr><th>平安证券股份有限公司深圳分公司</th><td>S</td><td>18</td><td>66.7</td><td>1.53</td></tr><tr><th>平安证券股份有限公司深圳深南东路罗湖商务中心证券营业部</th><td>C</td><td>13</td><td>23.1</td><td>-2.42</td></tr><tr><th>平安证券股份有限公司深圳金田路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.83</td></tr><tr><th>平安证券股份有限公司深圳香蜜湖证券营业部</th><td>C</td><td>25</td><td>32.0</td><td>-1.18</td></tr><tr><th>平安证券股份有限公司绍兴解放大道证券营业部</th><td>C</td><td>26</td><td>34.6</td><td>-1.65</td></tr><tr><th>平安证券股份有限公司金华李渔路证券营业部</th><td>A</td><td>15</td><td>60.0</td><td>1.75</td></tr><tr><th>广发证券股份有限公司上海浦东新区东方路证券营业部</th><td>C</td><td>12</td><td>33.3</td><td>-1.71</td></tr><tr><th>广发证券股份有限公司上海浦东新区海阳西路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.13</td></tr><tr><th>广发证券股份有限公司上海漕溪北路营业部</th><td>P</td><td>4</td><td>100.0</td><td>8.75</td></tr><tr><th>广发证券股份有限公司上海玉兰路证券营业部</th><td>A</td><td>5</td><td>60.0</td><td>4.54</td></tr><tr><th>广发证券股份有限公司佛山顺德诚德路证券营业部</th><td>B</td><td>28</td><td>53.6</td><td>0.22</td></tr><tr><th>广发证券股份有限公司北京善缘街证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-3.66</td></tr><tr><th>广发证券股份有限公司南京汉中路证券营业部</th><td>B</td><td>19</td><td>52.6</td><td>1.61</td></tr><tr><th>广发证券股份有限公司南京泰山路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-4.52</td></tr><tr><th>广发证券股份有限公司广州寺右新马路证券营业部</th><td>B</td><td>17</td><td>52.9</td><td>0.95</td></tr><tr><th>广发证券股份有限公司广州康王中路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>1.04</td></tr><tr><th>广发证券股份有限公司广州马场路广发证券大厦证券营业部</th><td>B</td><td>10</td><td>50.0</td><td>0.51</td></tr><tr><th>广发证券股份有限公司总部</th><td>P</td><td>4</td><td>75.0</td><td>3.55</td></tr><tr><th>广发证券股份有限公司成都天府大道北段证券营业部</th><td>B</td><td>7</td><td>42.9</td><td>0.35</td></tr><tr><th>广发证券股份有限公司成都新光路证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>1.67</td></tr><tr><th>广发证券股份有限公司杭州富春路证券营业部</th><td>B</td><td>13</td><td>53.8</td><td>1.71</td></tr><tr><th>广发证券股份有限公司武汉建设大道广发银行大厦证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>-1.82</td></tr><tr><th>广发证券股份有限公司深圳东滨路证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-4.02</td></tr><tr><th>广发证券股份有限公司深圳后海证券营业部</th><td>B</td><td>9</td><td>55.6</td><td>2.17</td></tr><tr><th>广发证券股份有限公司深圳深南东路证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-1.83</td></tr><tr><th>广发证券股份有限公司深圳福华一路证券营业部</th><td>P</td><td>4</td><td>100.0</td><td>8.02</td></tr><tr><th>广发证券股份有限公司西安南广济街证券营业部</th><td>B</td><td>11</td><td>45.5</td><td>1.94</td></tr><tr><th>广发证券股份有限公司邯郸陵园路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-3.77</td></tr><tr><th>广发证券股份有限公司郑州农业路证券营业部</th><td>B</td><td>31</td><td>48.4</td><td>0.66</td></tr><tr><th>开源证券股份有限公司徐州分公司</th><td>B</td><td>7</td><td>42.9</td><td>0.09</td></tr><tr><th>开源证券股份有限公司浙江分公司</th><td>S</td><td>7</td><td>85.7</td><td>7.29</td></tr><tr><th>开源证券股份有限公司西安太华路证券营业部</th><td>B</td><td>483</td><td>47.8</td><td>0.19</td></tr><tr><th>开源证券股份有限公司西安西大街证券营业部</th><td>C</td><td>292</td><td>44.2</td><td>0.06</td></tr><tr><th>开源证券股份有限公司西安高新成章路证券营业部</th><td>B</td><td>46</td><td>52.2</td><td>1.19</td></tr><tr><th>德邦证券股份有限公司宜昌沿江大道证券营业部</th><td>C</td><td>7</td><td>28.6</td><td>1.09</td></tr><tr><th>招商证券交易单元(052300)</th><td>P</td><td>3</td><td>33.3</td><td>-2.09</td></tr><tr><th>招商证券股份有限公司上海世纪大道证券营业部</th><td>A</td><td>7</td><td>71.4</td><td>4.16</td></tr><tr><th>招商证券股份有限公司北京安外大街证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>9.06</td></tr><tr><th>招商证券股份有限公司北京建国路证券营业部</th><td>A</td><td>9</td><td>66.7</td><td>3.06</td></tr><tr><th>招商证券股份有限公司北京车公庄西路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-2.37</td></tr><tr><th>招商证券股份有限公司合肥北一环证券营业部</th><td>P</td><td>3</td><td>0.0</td><td>-3.1</td></tr><tr><th>招商证券股份有限公司深圳前海大道证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-1.51</td></tr><tr><th>招商证券股份有限公司深圳南山南油大道证券营业部</th><td>P</td><td>4</td><td>100.0</td><td>5.49</td></tr><tr><th>招商证券股份有限公司深圳建安路证券营业部</th><td>B</td><td>6</td><td>50.0</td><td>1.19</td></tr><tr><th>招商证券股份有限公司深圳招商证券大厦证券营业部</th><td>B</td><td>9</td><td>44.4</td><td>0.97</td></tr><tr><th>招商证券股份有限公司深圳益田路免税商务大厦证券营业部</th><td>B</td><td>118</td><td>49.2</td><td>0.66</td></tr><tr><th>招商证券股份有限公司深圳福华三路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.19</td></tr><tr><th>招商证券股份有限公司深圳科技园高新南一道证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-1.0</td></tr><tr><th>招商证券股份有限公司深圳红岭路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>4.58</td></tr><tr><th>招商证券股份有限公司绥化人和街证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>3.04</td></tr><tr><th>摩根大通证券(中国)有限公司上海银城中路证券营业部</th><td>B</td><td>397</td><td>49.1</td><td>0.48</td></tr><tr><th>方正证券股份有限公司慈溪人和路证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>2.7</td></tr><tr><th>方正证券股份有限公司杭州白石巷证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-0.28</td></tr><tr><th>方正证券股份有限公司重庆金开大道证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>1.36</td></tr><tr><th>机构专用</th><td>B</td><td>2338</td><td>49.4</td><td>0.61</td></tr><tr><th>民生证券股份有限公司上海自贸试验区分公司</th><td>A</td><td>5</td><td>80.0</td><td>7.7</td></tr><tr><th>民生证券股份有限公司郑州桐柏路证券营业部</th><td>B</td><td>5</td><td>40.0</td><td>-0.01</td></tr><tr><th>汇丰前海证券有限责任公司深圳前海证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>4.01</td></tr><tr><th>江海证券有限公司北京东三环北路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>1.73</td></tr><tr><th>江海证券有限公司哈尔滨世茂大道证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-2.07</td></tr><tr><th>沪股通专用</th><td>B</td><td>1245</td><td>49.4</td><td>0.72</td></tr><tr><th>浙商证券股份有限公司宁波分公司</th><td>C</td><td>12</td><td>25.0</td><td>-2.07</td></tr><tr><th>浙商证券股份有限公司杭州五星路证券营业部</th><td>B</td><td>32</td><td>43.8</td><td>8.28</td></tr><tr><th>浙商证券股份有限公司杭州杭大路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>1.65</td></tr><tr><th>浙商证券股份有限公司温岭九龙大道证券营业部</th><td>P</td><td>3</td><td>100.0</td><td>5.91</td></tr><tr><th>深股通专用</th><td>B</td><td>1085</td><td>47.6</td><td>0.29</td></tr><tr><th>湘财证券股份有限公司北京北四环东路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>-0.36</td></tr><tr><th>爱建证券有限责任公司上海浦东新区前滩大道证券营业部</th><td>C</td><td>14</td><td>35.7</td><td>-0.29</td></tr><tr><th>爱建证券有限责任公司杭州富春路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-0.58</td></tr><tr><th>瑞银证券有限责任公司上海花园石桥路证券营业部</th><td>B</td><td>490</td><td>49.8</td><td>0.57</td></tr><tr><th>甬兴证券有限公司天津解放北路证券营业部</th><td>B</td><td>5</td><td>60.0</td><td>0.84</td></tr><tr><th>甬兴证券有限公司宁波和源路证券营业部</th><td>B</td><td>11</td><td>45.5</td><td>1.87</td></tr><tr><th>甬兴证券有限公司苏州分公司</th><td>B</td><td>5</td><td>40.0</td><td>-1.41</td></tr><tr><th>申万宏源证券有限公司上海杨浦区平凉路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>1.49</td></tr><tr><th>申万宏源证券有限公司上海第二分公司</th><td>B</td><td>7</td><td>42.9</td><td>-0.02</td></tr><tr><th>申万宏源证券有限公司上海闵行区东川路证券营业部</th><td>C</td><td>12</td><td>41.7</td><td>0.62</td></tr><tr><th>申万宏源证券有限公司上海闵行区莘松路证券营业部</th><td>C</td><td>8</td><td>25.0</td><td>-0.97</td></tr><tr><th>申万宏源证券有限公司上海黄浦区中山南一路证券营业部</th><td>B</td><td>5</td><td>60.0</td><td>-2.13</td></tr><tr><th>申万宏源证券有限公司深圳彩田路证券营业部</th><td>C</td><td>6</td><td>33.3</td><td>-1.68</td></tr><tr><th>申万宏源证券有限公司湘潭建设北路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>-0.97</td></tr><tr><th>第一创业证券股份有限公司温州雪山路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-0.26</td></tr><tr><th>联储证券股份有限公司上海松林路证券营业部</th><td>C</td><td>7</td><td>28.6</td><td>-0.5</td></tr><tr><th>联储证券股份有限公司宁波分公司</th><td>C</td><td>8</td><td>37.5</td><td>-1.09</td></tr><tr><th>联储证券股份有限公司杭州环城北路证券营业部</th><td>A</td><td>15</td><td>60.0</td><td>1.86</td></tr><tr><th>联储证券股份有限公司浙江分公司</th><td>C</td><td>10</td><td>40.0</td><td>-1.61</td></tr><tr><th>英大证券有限责任公司深圳华侨城证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-0.46</td></tr><tr><th>财达证券股份有限公司湖南分公司</th><td>C</td><td>6</td><td>33.3</td><td>0.66</td></tr><tr><th>财通证券股份有限公司上海分公司</th><td>B</td><td>5</td><td>60.0</td><td>-0.02</td></tr><tr><th>财通证券股份有限公司宁波天童南路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.67</td></tr><tr><th>财通证券股份有限公司徐州中山北路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-1.65</td></tr><tr><th>财通证券股份有限公司杭州东湖南路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>2.08</td></tr><tr><th>财通证券股份有限公司杭州丽水路证券营业部</th><td>P</td><td>4</td><td>75.0</td><td>4.45</td></tr><tr><th>财通证券股份有限公司温岭中华路证券营业部</th><td>P</td><td>4</td><td>25.0</td><td>-0.7</td></tr><tr><th>金融街证券股份有限公司上海浦东新区成山路证券营业部</th><td>B</td><td>6</td><td>50.0</td><td>-1.85</td></tr><tr><th>金融街证券股份有限公司上海第二分公司</th><td>P</td><td>3</td><td>66.7</td><td>2.35</td></tr><tr><th>银泰证券有限责任公司淄博华光路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>-0.59</td></tr><tr><th>长城证券股份有限公司上海长宁区延安西路证券营业部</th><td>P</td><td>3</td><td>33.3</td><td>0.31</td></tr><tr><th>长城证券股份有限公司成都天晖中街证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>2.32</td></tr><tr><th>长城证券股份有限公司西北分公司</th><td>S</td><td>18</td><td>66.7</td><td>4.52</td></tr><tr><th>长城证券股份有限公司长沙五一中路证券营业部</th><td>A</td><td>6</td><td>66.7</td><td>4.3</td></tr><tr><th>长江证券股份有限公司上海东明路证券营业部</th><td>C</td><td>12</td><td>41.7</td><td>-0.54</td></tr><tr><th>长江证券股份有限公司上海分公司</th><td>A</td><td>23</td><td>52.2</td><td>2.0</td></tr><tr><th>长江证券股份有限公司上海安远路证券营业部</th><td>P</td><td>3</td><td>66.7</td><td>3.63</td></tr><tr><th>长江证券股份有限公司上海徐汇区天钥桥路证券营业部</th><td>P</td><td>4</td><td>50.0</td><td>5.12</td></tr><tr><th>长江证券股份有限公司安徽分公司</th><td>A</td><td>5</td><td>80.0</td><td>5.84</td></tr><tr><th>长江证券股份有限公司江阴虹桥南路证券营业部</th><td>C</td><td>11</td><td>27.3</td><td>-0.41</td></tr><tr><th>长江证券股份有限公司长江证券上海分公司</th><td>S</td><td>6</td><td>83.3</td><td>9.51</td></tr><tr><th>高盛(中国)证券有限责任公司上海浦东新区世纪大道证券营业部</th><td>B</td><td>986</td><td>50.7</td><td>0.72</td></tr><tr><th>麦高证券有限责任公司北京分公司</th><td>B</td><td>14</td><td>50.0</td><td>2.5</td></tr><tr><th>麦高证券有限责任公司成都丽都路证券营业部</th><td>B</td><td>7</td><td>42.9</td><td>0.54</td></tr></table></div></div></details><!--/SEATLIB--></div></section><section id="research"><h2>五 自主深挖 · 席位孵化</h2><div class="card"><div class="" id="claim-lhb-31b5f2b5ea4621ee"><div class="claim-head"><span class="claim-role role-research">研究</span><span class="claim-source">深挖 · 结论</span></div><p class="mut">深挖 · 结论</p><p>承接 Master 指派 MA-20261104-05：①「宽度越大本路越瞎」已被量化成函数——覆盖率% = 43.08 − 0.2377×涨停数（n=66、Pearson −0.68、Spearman −0.755），分档均值 &lt;50 34.3% → 50-79 26.9% → 80-99 23.0% → ≥100 18.7%，单调下降成立，「温度≥45 且涨停≥100 时档位默认下调半档」可以从模糊半档改为按覆盖率折算的定量权；今日涨停 84 落 80-99 档（均值 23.0%），实际 26.2%，本路今日视野优于该档均值 3.2pp。②分层真实率口径已做成脚本落盘（_学习/lhb_分层真实率.py，口径写进 docstring，禁用改口径）并附自动判定字段「分层必要」（两组异号 = True），65 日跑出异号 49 日 / 同号 16 日；同时发现昨日「涨停层 &lt;30% 判强度不可读」阈值标错（历史中位 56.7%、≥30% 占 63/65），已改为 ≤20%。③「战绩画像_lhb_20261104.json 缺件」确为误报，今日已加文件存在性校验并通过（文件 5821 字节、可解析、57 日 / 109 笔 / 46 胜 / +0.13%）。</p></div><div class="" id="claim-lhb-7d12380ed14cda37"><div class="claim-head"><span class="claim-role role-research">研究</span><span class="claim-source">深挖 · 方法</span></div><p class="mut">深挖 · 方法</p><p>固定口径三源同日：票级 = {d}/lhb.csv 当日榜行（上榜原因不含 连续/累计/严重异常，按代码取首行不累加多榜）；席位侧 = _学习/_席位动向/{d}.csv 剔 类型 含 连续/累计/严重异常 后（代码,席位）去重取买入金额最大；分层键 = {d}/zt_pool.csv。覆盖率 = |当日榜码 ∩ 涨停| ÷ 涨停数；真实率 = 票级净买合计 ÷ 席位侧净额合计。回归用最小二乘，单调性用 Spearman。全部结果落 _学习/lhb_分层真实率_多日.json。</p></div><div class="" id="claim-lhb-ec8c0078caf10c38"><div class="claim-head"><span class="claim-role role-research">研究</span><span class="claim-source">深挖 · 可结算判定条件</span></div><p class="mut">深挖 · 可结算判定条件</p><p>明日(20261106)盘后按 _学习/lhb_分层真实率.py 复算，三条独立判定：①覆盖率函数——若 20261106 实际覆盖率与「43.08 − 0.2377×当日涨停数」的偏差 ≤ 5pp，则函数保留；&gt; 8pp 则本条判负、改为分档查表（&lt;50/50-79/80-99/≥100 四档均值）；②分层——若当日涨停层与非涨停层真实率仍异号，分层口径计分；若同号（连续第 2 次），则分层降级为「参考口径」；③阈值——若当日涨停层真实率落在 20-40% 而本路仍按 ≥40% 判「强度可读」出手，视为违反本条修订；复算与本文件数值差 &gt;1pp 即视为不可复现、本条不计分。</p></div></div></section><section id="cognition"><h2>六 我的认知迭代 · 最新</h2><div class="tl"><div class="tli" id="claim-lhb-2aa99cd516107c8a"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 日期</span></div><p class="mut">认知迭代 · 日期</p><p>20261105</p></div><details class="chain tlfold"><summary><b>其余认知与原文证据</b><span class="chip">19条</span></summary><div class="inner"><div class="tli" id="claim-lhb-b5971c676042ee8c"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 标题</span></div><p class="mut">认知迭代 · 标题</p><p>★「S/A 席在场」与「净买占比 10-20%」两门今日完全互斥，四门 AND 的联合命中率是结构性低，不是个案</p></div><div class="tli" id="claim-lhb-14f8dc71a7650c4e"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 正文</span></div><p class="mut">认知迭代 · 正文</p><p>今日 22 只涨停∩当日榜里：8 只落最优桶（10-20%）但 0 只有 S/A 席，4 只有 S/A 席但 0 只落最优桶，交集 0。原因可复算：净买占比 = 票级净买 ÷ 成交额，而 S/A 席集中的票多是高换手/大成交（002086 换手 53%、600261 换手 25.6%），分母一大，占比必然被压到 0-10%；反过来落 10-20% 的票（601929 换手 7.2%、002131 换手 8.5%、600683 换手 1.6%）都是低换手小成交票，这类票恰好不是 S/A 席的猎场。结果是「人 × 钱」AND 在结构上罕见同时成立，四门交集连续 3 日为 0 不是本路「越来越谨慎」，而是门的定义把两个负相关维度乘在一起。提案（不在今日执行，避免事后拟合）：把第 1 条由『S/A 席 ≥1000 万』改为『任一非小样本（n≥25）B 档以上席位净买 ≥5000 万，且不存在净卖 ≤−3000 万的大席』，其余三门不动；并用 65 日历史样本回测新门的联合命中率与格内期望，再决定是否替代。今日按旧门执行 0 荐票。</p></div><div class="tli" id="claim-lhb-daec035b7381ead1"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 证据</span></div><p class="mut">认知迭代 · 证据</p><p>_学习/lhb_分层真实率_多日.json#明细[20261105]；20261105/zt_pool.csv × 20261105/lhb.csv × _学习/_席位动向/20261105.csv 交叉（22 码分层桶与席位档归属见 判断.证据[6][7]）；_学习/_席位分档.json#基准（S 19 / A 45，全体 48.8%/+0.65%）</p></div><div class="tli" id="claim-lhb-a5377cffbab27a6e"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 日期</span></div><p class="mut">认知迭代 · 日期</p><p>20261105</p></div><div class="tli" id="claim-lhb-c7297d43be8f9991"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 标题</span></div><p class="mut">认知迭代 · 标题</p><p>★「涨停层真实率 &lt;30% 判强度不可读」这个阈值标错了：65 日的涨停层真实率中位 56.7%、≥30% 占 63/65，等于把 96.9% 的日子判成永不解锁</p></div><div class="tli" id="claim-lhb-90dd4c6b932adf37"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 正文</span></div><p class="mut">认知迭代 · 正文</p><p>昨日我把「涨停层真实率 ≥30% 才算强度可读」写成了规则，今日用 _学习/lhb_分层真实率.py 对 66 个可用日（涨停层有效 65 日）复算，涨停层真实率分布：中位 56.7%、≥50% 有 42 日、≥30% 有 63 日、&lt;30% 只有 2 日（20260713 的 +3.0% 与 20261104 的 +15.7%）。也就是说昨日那个 15.5% 是 p3 级别的尾部异常，我把它当成了常态并据此立门，结果 96.9% 的日子这条门是关着的、本路永远只能「判名单」。修正口径：涨停层真实率 **≤20%**（历史低分位附近）才判「强度不可读、只判名单」，20-40% 判「强度弱化、只给观察」，≥40% 判「强度可读、可参与四门」。今日 +58.2% 属常态区间，故今日的「钱」一维是可以给分而不是只能给否定分——这也是今日结论与过去 5 日不同的关键。</p></div><div class="tli" id="claim-lhb-057c38c0b78f2689"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 证据</span></div><p class="mut">认知迭代 · 证据</p><p>_学习/lhb_分层真实率_多日.json#明细（65 日 ok 明细）；同文件 涨停层真实率 排序统计由 lhb判断 复算脚本输出（中位 56.7、≥30% 63/65、≥50% 42/65）</p></div><div class="tli" id="claim-lhb-32ba1c8bff62eea0"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 日期</span></div><p class="mut">认知迭代 · 日期</p><p>20261105</p></div><div class="tli" id="claim-lhb-eb8c4e7fc64d0bcb"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 标题</span></div><p class="mut">认知迭代 · 标题</p><p>★覆盖率随宽度单调下降已量化为函数：覆盖率% = 43.08 − 0.2377 × 涨停数（n=66，Spearman −0.755），「宽度越大本路越瞎」从叙述变成可计算量</p></div><div class="tli" id="claim-lhb-57d3434cbbefd81f"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 正文</span></div><p class="mut">认知迭代 · 正文</p><p>用 66 个可用日（涨停层有效 65 日）做回归：覆盖率% = 43.08 − 0.2377×涨停数，Pearson −0.68、Spearman −0.755；分档均值单调：涨停 &lt;50 均值 34.3%（n=24）、50-79 均值 26.9%（n=28）、80-99 均值 23.0%（n=10）、≥100 均值 18.7%（n=4）。两点推论：①昨日「温度≥45 且涨停≥100 默认下调半档」可以改成定量式——档位权重按覆盖率折算，不必再用模糊的「半档」；②今日涨停 84 落在 80-99 档（均值 23.0%），实际 26.2%，本路今日视野比该档均值好 3.2pp，这也解释了为什么今天能第一次看清涨停层的真实率（样本 22 码，多于昨日的 19 码但分母从 118 降到 84）。</p></div><div class="tli" id="claim-lhb-ef97e483ee3c0222"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 证据</span></div><p class="mut">认知迭代 · 证据</p><p>_学习/lhb_分层真实率_多日.json#相关（pearson −0.68 / spearman −0.755）与 #明细 66 条；复算脚本 _学习/lhb_分层真实率.py</p></div><div class="tli" id="claim-lhb-2adb9dfee8bccfb9"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 日期</span></div><p class="mut">认知迭代 · 日期</p><p>20261105</p></div><div class="tli" id="claim-lhb-2d5e5aab449a383e"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 标题</span></div><p class="mut">认知迭代 · 标题</p><p>★机构与北向同日撤退、量化单日回补 4 倍，是本轮最干净的资金结构读数：活跃度上来了，承接力没上来</p></div><div class="tli" id="claim-lhb-b322e7531c151b42"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 正文</span></div><p class="mut">认知迭代 · 正文</p><p>资金温度：机构 26→27 席但金额 11.8→6.4 亿（−46%）、北向 20→30 席金额 38.1→23.1 亿（−39%）、量化 5→13 席金额 1.8→7.0 亿（+289%）、游资 142→156 席 34.0→35.4 亿（+4%），总分位 83→58。同期炸板率 21.9%→36.4%（+14.5pp）、涨停 118→84。读法：量化是宽度敏感型资金，它在宽度收缩日回补，说明它在做「高频接盘/做市」而不是「持有承接」；机构与北向同时减额 40-46%，才是承接力真降的证据。这条只作环境读数、不定档：本路不因量化回补上调档位（避免把活跃当强度），但把它写进档位下调的辅助证据链。</p></div><div class="tli" id="claim-lhb-b30143f20a1a5218"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 证据</span></div><p class="mut">认知迭代 · 证据</p><p>_学习/_资金温度.json#20261105 与 #20261104（末两条）；_学习/_市场温度表.json#20261105（炸板率 36.4%）</p></div><div class="tli" id="claim-lhb-ff014b56daa8ccfa"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 日期</span></div><p class="mut">认知迭代 · 日期</p><p>20261105</p></div><div class="tli" id="claim-lhb-3b27f00a764f43c4"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 标题</span></div><p class="mut">认知迭代 · 标题</p><p>★「真实率必须分层」经 65 日验证成立，可写入 09 号规格：异号 49 日 / 同号 16 日（75.4%）</p></div><div class="tli" id="claim-lhb-07eb1cdf2656907a"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 正文</span></div><p class="mut">认知迭代 · 正文</p><p>把昨日只写在叙述里的分层口径做成脚本并跨 65 日跑通：涨停层与非涨停层真实率异号（一正一负）的有 49 日、同号 16 日（同号日 20260709 / 20260716 / 20260814 / 20260821 / 20260825 / 20260827 / 20260828 / 20260904 / 20260911 / 20260914 / 20260918 / 20260929 / 20260930 / 20261013 / 20261019 / 20261030）。75.4% 的日子里「全场真实率」与「涨停层真实率」符号相反——说明全场口径会在四分之三的交易日误导方向。另有强证据：65 日里涨停层真实率只有 2 日 &lt;30%，即涨停层资金方向的读数长期稳定为正，而全场口径经常为负，二者不可互相替代。本条与技术脚本一起落盘，接任者可直接复算。</p></div><div class="tli" id="claim-lhb-ab161b37daa05804"><div class="claim-head"><span class="claim-role role-cognition">认知</span><span class="claim-source">认知迭代 · 证据</span></div><p class="mut">认知迭代 · 证据</p><p>_学习/lhb_分层真实率.py（口径写在文件 docstring）；_学习/lhb_分层真实率_多日.json#分层判定（异号日 49 / 同号日 16 / 同号日列表）</p></div></div></details></div></section><details class="chain"><summary>编辑说明与来源审计</summary><div class="inner"><ul><li>综合判断与资金温度分区呈现，席位名单、台账和分档库各归其位。</li><li>S 档小样本、反向资金与条件限定完整保留，不由重复度过滤。</li><li>当日结构化认知优先，标题是否含“我的”不影响可见性。</li></ul><div id="evidence-ev-lhb-248d5927227ee737"><b>ev-lhb-248d5927227ee737</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-248d5927227ee737&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/结论&quot;
+}
+</pre></div><div id="evidence-ev-lhb-87f265bd1cc2f9e7"><b>ev-lhb-87f265bd1cc2f9e7</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-87f265bd1cc2f9e7&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/0&quot;
+}
+</pre></div><div id="evidence-ev-lhb-0fae77b8a93299f2"><b>ev-lhb-0fae77b8a93299f2</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-0fae77b8a93299f2&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/1&quot;
+}
+</pre></div><div id="evidence-ev-lhb-805b64c23be5539b"><b>ev-lhb-805b64c23be5539b</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-805b64c23be5539b&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/2&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ed94671d6295421e"><b>ev-lhb-ed94671d6295421e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ed94671d6295421e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/3&quot;
+}
+</pre></div><div id="evidence-ev-lhb-10d8300d9b0dcc60"><b>ev-lhb-10d8300d9b0dcc60</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-10d8300d9b0dcc60&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/4&quot;
+}
+</pre></div><div id="evidence-ev-lhb-d2d75e2a1518549f"><b>ev-lhb-d2d75e2a1518549f</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-d2d75e2a1518549f&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/5&quot;
+}
+</pre></div><div id="evidence-ev-lhb-359cd462fd4ce084"><b>ev-lhb-359cd462fd4ce084</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-359cd462fd4ce084&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/6&quot;
+}
+</pre></div><div id="evidence-ev-lhb-77fce2772b15c375"><b>ev-lhb-77fce2772b15c375</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-77fce2772b15c375&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/7&quot;
+}
+</pre></div><div id="evidence-ev-lhb-e4c8cea70329eeff"><b>ev-lhb-e4c8cea70329eeff</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-e4c8cea70329eeff&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/8&quot;
+}
+</pre></div><div id="evidence-ev-lhb-a4a33d28c82fd495"><b>ev-lhb-a4a33d28c82fd495</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-a4a33d28c82fd495&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/9&quot;
+}
+</pre></div><div id="evidence-ev-lhb-97c7b111d2a4adbe"><b>ev-lhb-97c7b111d2a4adbe</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-97c7b111d2a4adbe&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/10&quot;
+}
+</pre></div><div id="evidence-ev-lhb-cca74ec03a05c569"><b>ev-lhb-cca74ec03a05c569</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-cca74ec03a05c569&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/11&quot;
+}
+</pre></div><div id="evidence-ev-lhb-0e6726ebf39a5a70"><b>ev-lhb-0e6726ebf39a5a70</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-0e6726ebf39a5a70&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/12&quot;
+}
+</pre></div><div id="evidence-ev-lhb-24a17703da0e253a"><b>ev-lhb-24a17703da0e253a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-24a17703da0e253a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/证据/13&quot;
+}
+</pre></div><div id="evidence-ev-lhb-1ffddbf7ffd70a2f"><b>ev-lhb-1ffddbf7ffd70a2f</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-1ffddbf7ffd70a2f&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/档位&quot;
+}
+</pre></div><div id="evidence-ev-lhb-5edd88818213be87"><b>ev-lhb-5edd88818213be87</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-5edd88818213be87&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/置信度&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b19e7a11967909a8"><b>ev-lhb-b19e7a11967909a8</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b19e7a11967909a8&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/可证伪条件&quot;
+}
+</pre></div><div id="evidence-ev-lhb-4eac4ea32ce28528"><b>ev-lhb-4eac4ea32ce28528</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-4eac4ea32ce28528&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/判断/独立盲区声明&quot;
+}
+</pre></div><div id="evidence-ev-lhb-f2e023b0d1674e43"><b>ev-lhb-f2e023b0d1674e43</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-f2e023b0d1674e43&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/结论&quot;
+}
+</pre></div><div id="evidence-ev-lhb-81807e31203ba227"><b>ev-lhb-81807e31203ba227</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-81807e31203ba227&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/0/代码&quot;
+}
+</pre></div><div id="evidence-ev-lhb-94dbccdca9536510"><b>ev-lhb-94dbccdca9536510</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-94dbccdca9536510&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/0/名称&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b621da12aee29389"><b>ev-lhb-b621da12aee29389</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b621da12aee29389&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/0/类型&quot;
+}
+</pre></div><div id="evidence-ev-lhb-bca83f78d3d572c0"><b>ev-lhb-bca83f78d3d572c0</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-bca83f78d3d572c0&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/0/历史对照&quot;
+}
+</pre></div><div id="evidence-ev-lhb-2551f8713e9bd68e"><b>ev-lhb-2551f8713e9bd68e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-2551f8713e9bd68e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/0/理由&quot;
+}
+</pre></div><div id="evidence-ev-lhb-f76cb80342b03d8f"><b>ev-lhb-f76cb80342b03d8f</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-f76cb80342b03d8f&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/1/代码&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b8228ef35e6e169b"><b>ev-lhb-b8228ef35e6e169b</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b8228ef35e6e169b&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/1/名称&quot;
+}
+</pre></div><div id="evidence-ev-lhb-d427a7313b23a53d"><b>ev-lhb-d427a7313b23a53d</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-d427a7313b23a53d&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/1/类型&quot;
+}
+</pre></div><div id="evidence-ev-lhb-52ea7c89a04cb4d2"><b>ev-lhb-52ea7c89a04cb4d2</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-52ea7c89a04cb4d2&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/1/历史对照&quot;
+}
+</pre></div><div id="evidence-ev-lhb-e02d985bab348037"><b>ev-lhb-e02d985bab348037</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-e02d985bab348037&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/1/理由&quot;
+}
+</pre></div><div id="evidence-ev-lhb-e0ebaf635405d029"><b>ev-lhb-e0ebaf635405d029</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-e0ebaf635405d029&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/2/代码&quot;
+}
+</pre></div><div id="evidence-ev-lhb-55633f2b2249d6d2"><b>ev-lhb-55633f2b2249d6d2</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-55633f2b2249d6d2&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/2/名称&quot;
+}
+</pre></div><div id="evidence-ev-lhb-7d1e3d495b7fa439"><b>ev-lhb-7d1e3d495b7fa439</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-7d1e3d495b7fa439&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/2/类型&quot;
+}
+</pre></div><div id="evidence-ev-lhb-93ca8501bfe9e0ab"><b>ev-lhb-93ca8501bfe9e0ab</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-93ca8501bfe9e0ab&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/2/历史对照&quot;
+}
+</pre></div><div id="evidence-ev-lhb-85d29c4701739974"><b>ev-lhb-85d29c4701739974</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-85d29c4701739974&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/荐票/标的/2/理由&quot;
+}
+</pre></div><div id="evidence-ev-lhb-2aa99cd516107c8a"><b>ev-lhb-2aa99cd516107c8a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-2aa99cd516107c8a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/日期&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b5971c676042ee8c"><b>ev-lhb-b5971c676042ee8c</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b5971c676042ee8c&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/标题&quot;
+}
+</pre></div><div id="evidence-ev-lhb-14f8dc71a7650c4e"><b>ev-lhb-14f8dc71a7650c4e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-14f8dc71a7650c4e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/正文&quot;
+}
+</pre></div><div id="evidence-ev-lhb-daec035b7381ead1"><b>ev-lhb-daec035b7381ead1</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-daec035b7381ead1&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/0/证据&quot;
+}
+</pre></div><div id="evidence-ev-lhb-a5377cffbab27a6e"><b>ev-lhb-a5377cffbab27a6e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-a5377cffbab27a6e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/1/日期&quot;
+}
+</pre></div><div id="evidence-ev-lhb-c7297d43be8f9991"><b>ev-lhb-c7297d43be8f9991</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-c7297d43be8f9991&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/1/标题&quot;
+}
+</pre></div><div id="evidence-ev-lhb-90dd4c6b932adf37"><b>ev-lhb-90dd4c6b932adf37</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-90dd4c6b932adf37&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/1/正文&quot;
+}
+</pre></div><div id="evidence-ev-lhb-057c38c0b78f2689"><b>ev-lhb-057c38c0b78f2689</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-057c38c0b78f2689&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/1/证据&quot;
+}
+</pre></div><div id="evidence-ev-lhb-32ba1c8bff62eea0"><b>ev-lhb-32ba1c8bff62eea0</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-32ba1c8bff62eea0&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/2/日期&quot;
+}
+</pre></div><div id="evidence-ev-lhb-eb8c4e7fc64d0bcb"><b>ev-lhb-eb8c4e7fc64d0bcb</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-eb8c4e7fc64d0bcb&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/2/标题&quot;
+}
+</pre></div><div id="evidence-ev-lhb-57d3434cbbefd81f"><b>ev-lhb-57d3434cbbefd81f</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-57d3434cbbefd81f&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/2/正文&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ef97e483ee3c0222"><b>ev-lhb-ef97e483ee3c0222</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ef97e483ee3c0222&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/2/证据&quot;
+}
+</pre></div><div id="evidence-ev-lhb-2adb9dfee8bccfb9"><b>ev-lhb-2adb9dfee8bccfb9</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-2adb9dfee8bccfb9&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/3/日期&quot;
+}
+</pre></div><div id="evidence-ev-lhb-2d5e5aab449a383e"><b>ev-lhb-2d5e5aab449a383e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-2d5e5aab449a383e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/3/标题&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b322e7531c151b42"><b>ev-lhb-b322e7531c151b42</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b322e7531c151b42&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/3/正文&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b30143f20a1a5218"><b>ev-lhb-b30143f20a1a5218</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b30143f20a1a5218&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/3/证据&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ff014b56daa8ccfa"><b>ev-lhb-ff014b56daa8ccfa</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ff014b56daa8ccfa&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/4/日期&quot;
+}
+</pre></div><div id="evidence-ev-lhb-3b27f00a764f43c4"><b>ev-lhb-3b27f00a764f43c4</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-3b27f00a764f43c4&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/4/标题&quot;
+}
+</pre></div><div id="evidence-ev-lhb-07eb1cdf2656907a"><b>ev-lhb-07eb1cdf2656907a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-07eb1cdf2656907a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/4/正文&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ab161b37daa05804"><b>ev-lhb-ab161b37daa05804</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ab161b37daa05804&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/认知迭代/4/证据&quot;
+}
+</pre></div><div id="evidence-ev-lhb-31b5f2b5ea4621ee"><b>ev-lhb-31b5f2b5ea4621ee</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-31b5f2b5ea4621ee&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖/结论&quot;
+}
+</pre></div><div id="evidence-ev-lhb-7d12380ed14cda37"><b>ev-lhb-7d12380ed14cda37</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-7d12380ed14cda37&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖/方法&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ec8c0078caf10c38"><b>ev-lhb-ec8c0078caf10c38</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ec8c0078caf10c38&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;lhb判断_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/深挖/可结算判定条件&quot;
+}
+</pre></div><div id="evidence-ev-lhb-caab50cf9b68efc4"><b>ev-lhb-caab50cf9b68efc4</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-caab50cf9b68efc4&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/heading/1&quot;
+}
+</pre></div><div id="evidence-ev-lhb-199cdf2409d2bb98"><b>ev-lhb-199cdf2409d2bb98</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-199cdf2409d2bb98&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/2&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ca577d49794910e4"><b>ev-lhb-ca577d49794910e4</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ca577d49794910e4&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/3&quot;
+}
+</pre></div><div id="evidence-ev-lhb-022330e645aadda7"><b>ev-lhb-022330e645aadda7</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-022330e645aadda7&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/4&quot;
+}
+</pre></div><div id="evidence-ev-lhb-d2fc207e41fd476a"><b>ev-lhb-d2fc207e41fd476a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-d2fc207e41fd476a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/5&quot;
+}
+</pre></div><div id="evidence-ev-lhb-3466782b8bac3951"><b>ev-lhb-3466782b8bac3951</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-3466782b8bac3951&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/6&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ffa3e9afdb17a796"><b>ev-lhb-ffa3e9afdb17a796</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ffa3e9afdb17a796&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/7&quot;
+}
+</pre></div><div id="evidence-ev-lhb-f59206f390e9ccd7"><b>ev-lhb-f59206f390e9ccd7</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-f59206f390e9ccd7&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/8&quot;
+}
+</pre></div><div id="evidence-ev-lhb-8a8151e8f40ec29e"><b>ev-lhb-8a8151e8f40ec29e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-8a8151e8f40ec29e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/9&quot;
+}
+</pre></div><div id="evidence-ev-lhb-1e7b1e8fd462472e"><b>ev-lhb-1e7b1e8fd462472e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-1e7b1e8fd462472e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/heading/10&quot;
+}
+</pre></div><div id="evidence-ev-lhb-7032bb5ed5da9162"><b>ev-lhb-7032bb5ed5da9162</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-7032bb5ed5da9162&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/11&quot;
+}
+</pre></div><div id="evidence-ev-lhb-3bde89453cec5262"><b>ev-lhb-3bde89453cec5262</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-3bde89453cec5262&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/12&quot;
+}
+</pre></div><div id="evidence-ev-lhb-1057607000844265"><b>ev-lhb-1057607000844265</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-1057607000844265&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/13&quot;
+}
+</pre></div><div id="evidence-ev-lhb-0b8793c0f151f45f"><b>ev-lhb-0b8793c0f151f45f</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-0b8793c0f151f45f&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/14&quot;
+}
+</pre></div><div id="evidence-ev-lhb-e7463596fba539e3"><b>ev-lhb-e7463596fba539e3</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-e7463596fba539e3&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/15&quot;
+}
+</pre></div><div id="evidence-ev-lhb-512be521e1c8aa4e"><b>ev-lhb-512be521e1c8aa4e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-512be521e1c8aa4e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/16&quot;
+}
+</pre></div><div id="evidence-ev-lhb-baf30d8cfb85b6bd"><b>ev-lhb-baf30d8cfb85b6bd</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-baf30d8cfb85b6bd&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/17&quot;
+}
+</pre></div><div id="evidence-ev-lhb-0ec7c9bc232cbaab"><b>ev-lhb-0ec7c9bc232cbaab</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-0ec7c9bc232cbaab&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/18&quot;
+}
+</pre></div><div id="evidence-ev-lhb-58640fbd7aa15d79"><b>ev-lhb-58640fbd7aa15d79</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-58640fbd7aa15d79&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/19&quot;
+}
+</pre></div><div id="evidence-ev-lhb-09278e98b7e13caa"><b>ev-lhb-09278e98b7e13caa</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-09278e98b7e13caa&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/20&quot;
+}
+</pre></div><div id="evidence-ev-lhb-e49ece8008c5f603"><b>ev-lhb-e49ece8008c5f603</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-e49ece8008c5f603&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/21&quot;
+}
+</pre></div><div id="evidence-ev-lhb-41ae118b105853d9"><b>ev-lhb-41ae118b105853d9</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-41ae118b105853d9&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/22&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b7b603067e130687"><b>ev-lhb-b7b603067e130687</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b7b603067e130687&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/23&quot;
+}
+</pre></div><div id="evidence-ev-lhb-25ec450a1de7f0d2"><b>ev-lhb-25ec450a1de7f0d2</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-25ec450a1de7f0d2&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/24&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ff8a4e71ba9def5c"><b>ev-lhb-ff8a4e71ba9def5c</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ff8a4e71ba9def5c&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/25&quot;
+}
+</pre></div><div id="evidence-ev-lhb-ab4787ccf9a0d0ba"><b>ev-lhb-ab4787ccf9a0d0ba</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-ab4787ccf9a0d0ba&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/26&quot;
+}
+</pre></div><div id="evidence-ev-lhb-675d88f67b36c219"><b>ev-lhb-675d88f67b36c219</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-675d88f67b36c219&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/27&quot;
+}
+</pre></div><div id="evidence-ev-lhb-35851061709bddbd"><b>ev-lhb-35851061709bddbd</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-35851061709bddbd&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/28&quot;
+}
+</pre></div><div id="evidence-ev-lhb-51adb7612b28da8f"><b>ev-lhb-51adb7612b28da8f</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-51adb7612b28da8f&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/29&quot;
+}
+</pre></div><div id="evidence-ev-lhb-eb5975979d8c5dee"><b>ev-lhb-eb5975979d8c5dee</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-eb5975979d8c5dee&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/30&quot;
+}
+</pre></div><div id="evidence-ev-lhb-d6ff453ed7615b5a"><b>ev-lhb-d6ff453ed7615b5a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-d6ff453ed7615b5a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/31&quot;
+}
+</pre></div><div id="evidence-ev-lhb-17e44cc43a919955"><b>ev-lhb-17e44cc43a919955</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-17e44cc43a919955&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/32&quot;
+}
+</pre></div><div id="evidence-ev-lhb-828d0a795aa6afe3"><b>ev-lhb-828d0a795aa6afe3</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-828d0a795aa6afe3&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/33&quot;
+}
+</pre></div><div id="evidence-ev-lhb-048f50c7844d2488"><b>ev-lhb-048f50c7844d2488</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-048f50c7844d2488&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/34&quot;
+}
+</pre></div><div id="evidence-ev-lhb-c03b04c5e4a49128"><b>ev-lhb-c03b04c5e4a49128</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-c03b04c5e4a49128&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/35&quot;
+}
+</pre></div><div id="evidence-ev-lhb-1fc8fe2b111dd83b"><b>ev-lhb-1fc8fe2b111dd83b</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-1fc8fe2b111dd83b&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/36&quot;
+}
+</pre></div><div id="evidence-ev-lhb-5fa7c0be8f2eb03a"><b>ev-lhb-5fa7c0be8f2eb03a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-5fa7c0be8f2eb03a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/37&quot;
+}
+</pre></div><div id="evidence-ev-lhb-29d89fe47fe12dc0"><b>ev-lhb-29d89fe47fe12dc0</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-29d89fe47fe12dc0&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/38&quot;
+}
+</pre></div><div id="evidence-ev-lhb-aefece00bb3271d1"><b>ev-lhb-aefece00bb3271d1</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-aefece00bb3271d1&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/39&quot;
+}
+</pre></div><div id="evidence-ev-lhb-a9537c0884ae2480"><b>ev-lhb-a9537c0884ae2480</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-a9537c0884ae2480&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/40&quot;
+}
+</pre></div><div id="evidence-ev-lhb-5c3690f45c7fae0c"><b>ev-lhb-5c3690f45c7fae0c</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-5c3690f45c7fae0c&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/41&quot;
+}
+</pre></div><div id="evidence-ev-lhb-14ddc33ae63134e5"><b>ev-lhb-14ddc33ae63134e5</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-14ddc33ae63134e5&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/42&quot;
+}
+</pre></div><div id="evidence-ev-lhb-2fb5ea9ae26dae2e"><b>ev-lhb-2fb5ea9ae26dae2e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-2fb5ea9ae26dae2e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/43&quot;
+}
+</pre></div><div id="evidence-ev-lhb-fef195e7569804e6"><b>ev-lhb-fef195e7569804e6</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-fef195e7569804e6&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/44&quot;
+}
+</pre></div><div id="evidence-ev-lhb-90e9e44327bbfff8"><b>ev-lhb-90e9e44327bbfff8</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-90e9e44327bbfff8&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/45&quot;
+}
+</pre></div><div id="evidence-ev-lhb-726dfba3ee8fa0a2"><b>ev-lhb-726dfba3ee8fa0a2</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-726dfba3ee8fa0a2&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/46&quot;
+}
+</pre></div><div id="evidence-ev-lhb-4c991721d2e9fe34"><b>ev-lhb-4c991721d2e9fe34</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-4c991721d2e9fe34&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/47&quot;
+}
+</pre></div><div id="evidence-ev-lhb-757339e56bd013aa"><b>ev-lhb-757339e56bd013aa</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-757339e56bd013aa&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/48&quot;
+}
+</pre></div><div id="evidence-ev-lhb-5194daf8c2e72871"><b>ev-lhb-5194daf8c2e72871</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-5194daf8c2e72871&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/49&quot;
+}
+</pre></div><div id="evidence-ev-lhb-bb3c25616f465882"><b>ev-lhb-bb3c25616f465882</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-bb3c25616f465882&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/50&quot;
+}
+</pre></div><div id="evidence-ev-lhb-23646d6c0f72961e"><b>ev-lhb-23646d6c0f72961e</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-23646d6c0f72961e&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/51&quot;
+}
+</pre></div><div id="evidence-ev-lhb-94472e1a7dd4f90a"><b>ev-lhb-94472e1a7dd4f90a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-94472e1a7dd4f90a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/52&quot;
+}
+</pre></div><div id="evidence-ev-lhb-414c86202b6bf098"><b>ev-lhb-414c86202b6bf098</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-414c86202b6bf098&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/53&quot;
+}
+</pre></div><div id="evidence-ev-lhb-0a8cdf22cd3cd9d4"><b>ev-lhb-0a8cdf22cd3cd9d4</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-0a8cdf22cd3cd9d4&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/54&quot;
+}
+</pre></div><div id="evidence-ev-lhb-2120ab9fdd3ebb70"><b>ev-lhb-2120ab9fdd3ebb70</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-2120ab9fdd3ebb70&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/55&quot;
+}
+</pre></div><div id="evidence-ev-lhb-febb6a0f5fdf6574"><b>ev-lhb-febb6a0f5fdf6574</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-febb6a0f5fdf6574&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/56&quot;
+}
+</pre></div><div id="evidence-ev-lhb-47266076c913e109"><b>ev-lhb-47266076c913e109</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-47266076c913e109&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/57&quot;
+}
+</pre></div><div id="evidence-ev-lhb-e69887a104ccf272"><b>ev-lhb-e69887a104ccf272</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-e69887a104ccf272&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/58&quot;
+}
+</pre></div><div id="evidence-ev-lhb-9076b3c33e93b510"><b>ev-lhb-9076b3c33e93b510</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-9076b3c33e93b510&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/59&quot;
+}
+</pre></div><div id="evidence-ev-lhb-852e158ceb38357a"><b>ev-lhb-852e158ceb38357a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-852e158ceb38357a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/60&quot;
+}
+</pre></div><div id="evidence-ev-lhb-183ae5c453241bce"><b>ev-lhb-183ae5c453241bce</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-183ae5c453241bce&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/61&quot;
+}
+</pre></div><div id="evidence-ev-lhb-61238a87fc68b3ef"><b>ev-lhb-61238a87fc68b3ef</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-61238a87fc68b3ef&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/62&quot;
+}
+</pre></div><div id="evidence-ev-lhb-f1d82da8a357456f"><b>ev-lhb-f1d82da8a357456f</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-f1d82da8a357456f&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/63&quot;
+}
+</pre></div><div id="evidence-ev-lhb-7b8f1331e3ffa734"><b>ev-lhb-7b8f1331e3ffa734</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-7b8f1331e3ffa734&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/64&quot;
+}
+</pre></div><div id="evidence-ev-lhb-255ff8040db9a09a"><b>ev-lhb-255ff8040db9a09a</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-255ff8040db9a09a&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/65&quot;
+}
+</pre></div><div id="evidence-ev-lhb-70b3eac6a5ba4e8d"><b>ev-lhb-70b3eac6a5ba4e8d</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-70b3eac6a5ba4e8d&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/66&quot;
+}
+</pre></div><div id="evidence-ev-lhb-f3d38e021be31006"><b>ev-lhb-f3d38e021be31006</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-f3d38e021be31006&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/67&quot;
+}
+</pre></div><div id="evidence-ev-lhb-e31e9c5c20a35116"><b>ev-lhb-e31e9c5c20a35116</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-e31e9c5c20a35116&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/68&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b8bbb1f1cfffa419"><b>ev-lhb-b8bbb1f1cfffa419</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b8bbb1f1cfffa419&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/69&quot;
+}
+</pre></div><div id="evidence-ev-lhb-884841ba4d8a2053"><b>ev-lhb-884841ba4d8a2053</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-884841ba4d8a2053&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/70&quot;
+}
+</pre></div><div id="evidence-ev-lhb-bb1dbeeaaa33d253"><b>ev-lhb-bb1dbeeaaa33d253</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-bb1dbeeaaa33d253&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/71&quot;
+}
+</pre></div><div id="evidence-ev-lhb-b4250c3590858ffc"><b>ev-lhb-b4250c3590858ffc</b><pre>{
+  &quot;id&quot;: &quot;ev-lhb-b4250c3590858ffc&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;judgment_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/bodies/lhb/block/72&quot;
+}
+</pre></div><div id="evidence-fact-130"><b>fact-130</b><pre>{
+  &quot;id&quot;: &quot;fact-130&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;fact_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/涨停数&quot;,
+  &quot;value&quot;: 84
+}
+</pre></div><div id="evidence-fact-131"><b>fact-131</b><pre>{
+  &quot;id&quot;: &quot;fact-131&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;fact_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/温度&quot;,
+  &quot;value&quot;: 49.3
+}
+</pre></div><div id="evidence-fact-132"><b>fact-132</b><pre>{
+  &quot;id&quot;: &quot;fact-132&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;fact_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/最高连板&quot;,
+  &quot;value&quot;: 4
+}
+</pre></div><div id="evidence-fact-133"><b>fact-133</b><pre>{
+  &quot;id&quot;: &quot;fact-133&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;fact_20261105.json&quot;,
+  &quot;pointer&quot;: &quot;/facts/成交额亿&quot;,
+  &quot;value&quot;: 21180.0
+}
+</pre></div><div id="evidence-kpi-source-0-0"><b>kpi-source-0-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-0&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/_资金温度.json&quot;,
+  &quot;sha256&quot;: &quot;1e4aaef1c666aa04868604e5da4fe3b6509eb7ca183888210df3f4a238d341aa&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-0-1"><b>kpi-source-0-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-0-1&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/席位荐票_20261105.json&quot;,
+  &quot;sha256&quot;: &quot;f0a6062c6b35c928ffdd322bdfc5644c82facc7b6e8c33da3bb12b35c904c349&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-0"><b>kpi-source-1-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-0&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/_资金温度.json&quot;,
+  &quot;sha256&quot;: &quot;1e4aaef1c666aa04868604e5da4fe3b6509eb7ca183888210df3f4a238d341aa&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-1-1"><b>kpi-source-1-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-1-1&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/席位荐票_20261105.json&quot;,
+  &quot;sha256&quot;: &quot;f0a6062c6b35c928ffdd322bdfc5644c82facc7b6e8c33da3bb12b35c904c349&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-0"><b>kpi-source-2-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-0&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/_资金温度.json&quot;,
+  &quot;sha256&quot;: &quot;1e4aaef1c666aa04868604e5da4fe3b6509eb7ca183888210df3f4a238d341aa&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-2-1"><b>kpi-source-2-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-2-1&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/席位荐票_20261105.json&quot;,
+  &quot;sha256&quot;: &quot;f0a6062c6b35c928ffdd322bdfc5644c82facc7b6e8c33da3bb12b35c904c349&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-0"><b>kpi-source-3-0</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-0&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/_资金温度.json&quot;,
+  &quot;sha256&quot;: &quot;1e4aaef1c666aa04868604e5da4fe3b6509eb7ca183888210df3f4a238d341aa&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><div id="evidence-kpi-source-3-1"><b>kpi-source-3-1</b><pre>{
+  &quot;id&quot;: &quot;kpi-source-3-1&quot;,
+  &quot;d&quot;: &quot;20261105&quot;,
+  &quot;source&quot;: &quot;_学习/席位荐票_20261105.json&quot;,
+  &quot;sha256&quot;: &quot;f0a6062c6b35c928ffdd322bdfc5644c82facc7b6e8c33da3bb12b35c904c349&quot;,
+  &quot;verification&quot;: &quot;file_hash&quot;
+}
+</pre></div><p><a href="audit/lhb.json">原文审计与来源条目</a> · <a href="models/lhb.json">结构化页面模型</a></p></div></details><div class="foot"><b>情绪盯盘台 v4</b> · 每天18:00更新,旧的进历史存档 · 五路:①竞价 ②龙虎榜 ③题材 ④产逻 ⑤涨停</div></div><script>
+(function(){
+  var wrap=document.querySelector('.wrap');
+  if(!wrap)return;
+  /* 阅读条已给出真实栏目锚点时，不再叠加第二份导航 */
+  if(wrap.querySelector('.reading-spine a.rs-step'))return;
+  var sections=Array.prototype.filter.call(wrap.children,function(el){return el.tagName==='SECTION';});
+  if(sections.length<3)return;
+  var map=document.createElement('nav');
+  map.className='page-map';
+  map.setAttribute('aria-label','本页阅读地图');
+  var label=document.createElement('span');
+  label.className='page-map-label';
+  label.textContent='本页阅读';
+  map.appendChild(label);
+  var links=[];
+  sections.forEach(function(sec,i){
+    var h=Array.prototype.find.call(sec.children,function(el){return el.tagName==='H2';});
+    if(!h)return;
+    if(!sec.id)sec.id='section-'+(i+1);
+    var a=document.createElement('a');
+    a.href='#'+sec.id;
+    a.textContent=h.textContent.replace(/^[一二三四五六七八九十]+\\s*/,'');
+    a.setAttribute('data-section',sec.id);
+    map.appendChild(a); links.push({a:a,sec:sec});
+  });
+  if(links.length)wrap.insertBefore(map,sections[0]);
+  if(!('IntersectionObserver' in window))return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(!entry.isIntersecting)return;
+      links.forEach(function(x){x.a.classList.toggle('active',x.sec===entry.target);});
+    });
+  },{rootMargin:'-88px 0px -64% 0px',threshold:0});
+  links.forEach(function(x){io.observe(x.sec);});
+})();
+</script></body></html>
